@@ -250,7 +250,10 @@
         "url": "https://es.wikiloc.com/rutas-alpinismo/balaitous-3144-m-desde-respomuso-por-la-gran-diagonal-14187843",
         "texto": "Ver la ruta en Wikiloc: Balaitous desde Respomuso por la Gran Diagonal"
       },
-      "curiosidad": "La primera ascensión documentada fue en 1825, a cargo de los geodestas franceses Pierre Peytier y Paul-Michel Hossard, que medían el Pirineo para la cartografía del ejército. Tuvieron que subir con instrumentos hasta una cumbre que hoy sigue exigiendo trepadas."
+      "curiosidad": "La primera ascensión documentada fue en 1825, a cargo de los geodestas franceses Pierre Peytier y Paul-Michel Hossard, que medían el Pirineo para la cartografía del ejército. Tuvieron que subir con instrumentos hasta una cumbre que hoy sigue exigiendo trepadas.",
+      "rutas": [
+        "local/balaitus-gran-diagonal"
+      ]
     },
     {
       "id": "garmo",

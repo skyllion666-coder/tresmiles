@@ -3,7 +3,8 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=3';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
+import { cargarRuta, crearRuta } from './ruta.js?v=5';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -60,6 +61,14 @@ async function boot() {
   const byId = Object.fromEntries(peaks.map((p) => [p.id, p]));
   const bal = peaks.find((p) => p.id === 'balaitus');
   const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
+
+  // recorridos (si existe el archivo; los de data/rutas/local/ no se publican)
+  const rutas = {};
+  for (const p of peaks) for (const rid of p.rutas ?? []) {
+    try { (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: await cargarRuta(rid) })); } catch { /* sin ruta en esta copia */ }
+  }
+  const rutasDe = (id) => rutas[id] ?? [];
+  let rutaOn = true;
 
   // etiquetas de ibones (solo con la cámara cerca)
   const lagoEls = (lagos?.nombrados ?? []).map((l) => {
@@ -259,9 +268,28 @@ async function boot() {
       <h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>
       <h3>Descripción</h3><p>${esc(p.descripcion)}</p>
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
+      ${rutaHTML(p)}
       ${p.enlace ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;
   }
+  const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
+  function rutaHTML(p) {
+    const r = rutasDe(p.id)[0]?.ruta; if (!r) return '';
+    return `<h3>Recorrido en el mapa</h3>
+      <p class="ruta-nombre">${esc(r.nombre)}</p>
+      <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
+      ${rutasDe(p.id)[0].perfil()}
+      <button type="button" class="btn-ruta" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
+      <p class="ruta-credito">Track: ${esc(r.autor || 'autor desconocido')}. Cifras calculadas a partir del track, con un trazado simplificado y colocado sobre un modelo de relieve: es una guía orientativa y no sustituye a un GPS ni a un mapa.</p>`;
+  }
+  function pintaRuta(id, { animar = true } = {}) {
+    for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
+  }
+  fichaBody.addEventListener('click', (e) => {
+    const b = e.target.closest('#btn-ruta'); if (!b) return;
+    rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
+    pintaRuta(S.active);
+  });
   async function openPeak(id, { instant = false, hash = true } = {}) {
     const p = byId[id]; if (!p) return;
     S.active = id; setList(false);
@@ -271,12 +299,14 @@ async function boot() {
     hideHints(); refreshLists();
     if (hash) history.replaceState(null, '', `#${id}`);
     fichaEl.focus({ preventScroll: true });
+    pintaRuta(null);
     await flyTo(peakState(p), { shift: viewShift(), instant });
+    if (S.active === id) pintaRuta(id, { animar: !instant });
     terrain.update(camera, 8);
   }
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
-    const was = S.active; S.active = null;
+    const was = S.active; S.active = null; pintaRuta(null);
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
     pinEls.get(was)?.focus({ preventScroll: true });
@@ -285,7 +315,7 @@ async function boot() {
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
   addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { $('#filters').hidden = true; } else closeFicha(); } });
-  const goHome = () => { S.active = null; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  const goHome = () => { S.active = null; pintaRuta(null); refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { closeFicha(); goHome(); } });
 
@@ -398,6 +428,7 @@ async function boot() {
     updatePins();
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt);
+    for (const l of Object.values(rutas)) for (const r of l) r.update(dt);
     const cerca = updateLagos(); updateHitos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
@@ -407,7 +438,7 @@ async function boot() {
   }
   requestAnimationFrame(frame);
   document.body.classList.remove('is-loading');
-  window.tresmiles = { openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido };
+  window.tresmiles = { openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {

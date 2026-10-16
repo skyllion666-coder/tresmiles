@@ -97,3 +97,10 @@ Se analizó la estructura, el diseño y la técnica de `explore.ownprimland.com`
 reproducir el tipo de experiencia: vuelo sobre el terreno, tutorial de arrastrar y acercar, puntos de interés,
 ficha lateral y selector inferior. No se ha copiado ningún texto, imagen, código ni recurso de esa web; el terreno,
 las fotos, los textos, la paleta y el código son propios o de licencia libre.
+
+## Recorridos (GPX)
+
+`tools/gpx2json.py archivo.gpx salida.json "Nombre" "Autor"` convierte un GPX en un JSON ligero (sin horas, trazado simplificado,
+con distancia, desnivel acumulado y altitud máxima). Se enlaza desde `data/peaks.json` con `"rutas": ["id"]`
+(el archivo es `data/rutas/<id>.json`). Los tracks de terceros se guardan en `data/rutas/local/`, que **no se publica**
+(`.gitignore`); en una copia donde falte el archivo, la ficha simplemente no muestra el recorrido.

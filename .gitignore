@@ -3,3 +3,7 @@ analisis/capturas/
 analisis/info-tecnica.json
 __pycache__/
 *.pyc
+
+# Tracks de terceros: solo uso local, no se publican
+data/rutas/local/
+*.gpx
