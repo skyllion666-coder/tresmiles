@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Convierte un GPX en un JSON ligero para dibujar la ruta sobre el mapa.
 
-Uso: python3 tools/gpx2json.py archivo.gpx salida.json "Nombre de la ruta" ["Autor"]
+Uso: python3 tools/gpx2json.py archivo.gpx salida.json "Nombre de la ruta" "Autor" URL_perfil_autor URL_ficha_wikiloc
 Se descartan las horas, se simplifica el trazado (Douglas-Peucker, ~EPS m) y se calculan
 distancia, desnivel acumulado y altitud máxima. Solo se guardan lon, lat y altitud.
 """
@@ -29,7 +29,7 @@ def dp(pts, eps):
         if dmax > eps: keep[im] = True; stack += [(a, im), (im, b)]
     return [p for p, k in zip(pts, keep) if k]
 
-def main(src, dst, nombre, autor=''):
+def main(src, dst, nombre, autor, autor_url, fuente_url):
     ns = {'g': 'http://www.topografix.com/GPX/1/1'}
     root = ET.parse(src).getroot()
     raw = [(float(p.get('lon')), float(p.get('lat')), float(p.findtext('g:ele', default='0', namespaces=ns)))
@@ -44,10 +44,12 @@ def main(src, dst, nombre, autor=''):
         if el - ref > UMBRAL: gain += el - ref; ref = el
         elif ref - el > UMBRAL: ref = el
         puntos.append([round(lo, 5), round(la, 5), round(el, 1), round(dist)])
-    out = {'nombre': nombre, 'autor': autor, 'puntos': puntos,
+    out = {'nombre': nombre, 'autor': autor, 'autorUrl': autor_url, 'fuenteUrl': fuente_url, 'puntos': puntos,
            'distancia': round(dist), 'desnivel': round(gain), 'max': round(mx), 'min': round(min(p[2] for p in simp))}
     json.dump(out, open(dst, 'w'), separators=(',', ':'), ensure_ascii=False)
     print(f"{len(raw)} puntos -> {len(puntos)}; {dist/1000:.1f} km; +{gain:.0f} m; máx {mx:.0f} m")
 
 if __name__ == '__main__':
-    main(*sys.argv[1:5])
+    if len(sys.argv) != 7:
+        sys.exit('Faltan datos: toda ruta necesita autor y enlace a su ficha (normas del proyecto).\n' + __doc__)
+    main(*sys.argv[1:7])

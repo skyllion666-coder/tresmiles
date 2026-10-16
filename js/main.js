@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=6';
+import { cargarRuta, crearRuta } from './ruta.js?v=7';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -65,7 +65,11 @@ async function boot() {
   // recorridos (si existe el archivo; los de data/rutas/local/ no se publican)
   const rutas = {};
   for (const p of peaks) for (const rid of p.rutas ?? []) {
-    try { (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: await cargarRuta(rid) })); } catch { /* sin ruta en esta copia */ }
+    try {
+      const ruta = await cargarRuta(rid);
+      if (!ruta.fuenteUrl || !ruta.autor) { console.warn(`Ruta ${rid} sin autor o sin enlace a su ficha: no se muestra`); continue; }
+      (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta }));
+    } catch { /* sin ruta en esta copia */ }
   }
   const rutasDe = (id) => rutas[id] ?? [];
   let rutaOn = true;
@@ -269,7 +273,7 @@ async function boot() {
       <h3>Descripción</h3><p>${esc(p.descripcion)}</p>
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${rutaHTML(p)}
-      ${p.enlace ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
+      ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;
   }
   const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
@@ -280,7 +284,8 @@ async function boot() {
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
       ${rutasDe(p.id)[0].perfil()}
       <button type="button" class="btn-ruta" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
-      <p class="ruta-credito">Track de ${r.autorUrl ? `<a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a>` : esc(r.autor || 'autor desconocido')} en ${r.fuenteUrl ? `<a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Wikiloc</a>` : 'Wikiloc'}, publicado con su permiso. Cifras calculadas a partir del track, con un trazado simplificado y colocado sobre un modelo de relieve: es una guía orientativa y no sustituye a un GPS ni a un mapa.</p>`;
+      <p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
+      <p class="ruta-credito">Ruta de ${r.autorUrl ? `<a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a>` : esc(r.autor)}, publicada con su permiso. Aquí solo se muestra como vista previa sobre el mapa; el track original, para descargar, está en su ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`;
   }
   function pintaRuta(id, { animar = true } = {}) {
     for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
