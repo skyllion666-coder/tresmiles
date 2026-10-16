@@ -154,10 +154,18 @@ async function boot() {
     const q = geo.toXZ(h.lon, h.lat);
     if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
-    el.innerHTML = `<i></i><b>${esc(h.nombre)}</b><small>${esc(TIPO_HITO[h.tipo] ?? '')}</small>`;
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em></b>`;
     el.title = h.nota; $('#pins').appendChild(el);
+    el.querySelector('.hito-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const abrir = !el.classList.contains('is-open');
+      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
+    });
     return { h, el, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
   }).filter(Boolean);
+  function closeHitos() { for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
+  addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') closeHitos(); });
   const hitoTmp = new THREE.Vector3();
   function updateHitos() {
     const W = innerWidth, H = innerHeight;
@@ -167,6 +175,7 @@ async function boot() {
       let show = S.mode === 'explore' && dist < 9500;
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
+      if (!show) o.el.classList.remove('is-open');
       if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
     }
   }

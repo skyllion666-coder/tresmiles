@@ -193,7 +193,13 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 #btn-sound.is-on .snd-off { display: none; } #btn-sound.is-on .snd-on { display: block; }
 .hito { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% -100%; display: flex; flex-direction: column; align-items: center; pointer-events: none; transition: opacity .3s; will-change: transform; }
 .hito.is-hidden { opacity: 0; }
-.hito i { order: 3; width: 11px; height: 11px; margin-top: 3px; background: #b9772f; border: 2px solid #fffbe7; box-shadow: 0 2px 6px rgba(0,0,0,.45); transform: rotate(45deg); }
+.hito.is-hidden .hito-btn { pointer-events: none; }
+.hito-btn { order: 2; pointer-events: auto; width: 28px; height: 28px; margin: 0; padding: 0; border: 0; background: none; display: grid; place-items: center; cursor: pointer; }
+.hito i { width: 11px; height: 11px; background: #b9772f; border: 2px solid #fffbe7; box-shadow: 0 2px 6px rgba(0,0,0,.45); transform: rotate(45deg); transition: transform .2s; }
+.hito-btn:hover i, .hito.is-open i { transform: rotate(45deg) scale(1.35); }
+.hito-btn:focus-visible { outline: 2px solid #fffbe7; outline-offset: -4px; }
 .hito-paso i { background: #456a4b; } .hito-vivac i { background: #5d7480; } .hito-cima i { background: #fffbe7; border-color: #456a4b; }
-.hito b { order: 1; white-space: nowrap; font: 600 .68rem/1.2 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.78); padding: 3px 7px; }
-.hito small { order: 2; display: none; }
+.hito b { order: 1; display: none; white-space: nowrap; text-align: center; font: 600 .68rem/1.25 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.88); padding: 4px 8px; margin-bottom: 2px; }
+.hito b em { display: block; font-style: normal; font-weight: 500; letter-spacing: .08em; text-transform: none; opacity: .8; }
+.hito.is-open b { display: block; }
+.hito.is-open { z-index: 5; }
