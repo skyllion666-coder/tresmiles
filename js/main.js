@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=5';
+import { cargarRuta, crearRuta } from './ruta.js?v=6';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -280,7 +280,7 @@ async function boot() {
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
       ${rutasDe(p.id)[0].perfil()}
       <button type="button" class="btn-ruta" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
-      <p class="ruta-credito">Track: ${esc(r.autor || 'autor desconocido')}. Cifras calculadas a partir del track, con un trazado simplificado y colocado sobre un modelo de relieve: es una guía orientativa y no sustituye a un GPS ni a un mapa.</p>`;
+      <p class="ruta-credito">Track de ${r.autorUrl ? `<a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a>` : esc(r.autor || 'autor desconocido')} en ${r.fuenteUrl ? `<a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Wikiloc</a>` : 'Wikiloc'}, publicado con su permiso. Cifras calculadas a partir del track, con un trazado simplificado y colocado sobre un modelo de relieve: es una guía orientativa y no sustituye a un GPS ni a un mapa.</p>`;
   }
   function pintaRuta(id, { animar = true } = {}) {
     for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
