@@ -1,0 +1,163 @@
+{
+  "activos": ["balaitus"],
+  "macizos": [
+    { "id": "ane", "nombre": "Aneto–Maladeta" },
+    { "id": "pos", "nombre": "Posets–Eriste" },
+    { "id": "per", "nombre": "Monte Perdido–Taillón" },
+    { "id": "prd", "nombre": "Perdiguero" },
+    { "id": "bac", "nombre": "Bachimala" },
+    { "id": "vig", "nombre": "Vignemale" },
+    { "id": "bal", "nombre": "Balaitús–Infiernos" }
+  ],
+  "dificultades": [
+    { "id": "moderada", "nombre": "Moderada" },
+    { "id": "alta", "nombre": "Alta" },
+    { "id": "muy-alta", "nombre": "Muy alta" }
+  ],
+  "picos": [
+    {
+      "id": "aneto", "nombre": "Aneto", "alias": "Tuca d’Aneto · Pico de Aneto",
+      "altitud": 3404, "otras": "", "macizo": "ane", "frontera": false,
+      "lat": 42.631139, "lon": 0.656639,
+      "acceso": "Benasque · La Besurta / Llanos del Hospital",
+      "ruta": "Refugio de La Renclusa → Portillón Superior → glaciar del Aneto → Paso de Mahoma → cumbre",
+      "desnivel": "≈ 1.300 m desde La Renclusa (≈ 1.500 m desde La Besurta)",
+      "dificultad": "alta", "grado": "PD · glaciar y cresta aérea",
+      "epoca": "Julio – septiembre",
+      "descripcion": "La cumbre más alta de los Pirineos. Se corona cruzando el glaciar del Aneto, hoy en franco retroceso, y la estrecha cresta de bloques del Paso de Mahoma, más impresionante que difícil. Pide crampones, piolet y encordarse sobre el hielo.",
+      "foto": "aneto", "pie": "Un alpinista cruza el Paso de Mahoma, cerca de la cumbre."
+    },
+    {
+      "id": "posets", "nombre": "Posets", "alias": "Llardana · Tuca de Llardana",
+      "altitud": 3369, "otras": "", "macizo": "pos", "frontera": false,
+      "lat": 42.654611, "lon": 0.43525,
+      "acceso": "Benasque · valle de Eriste (puente de la Espigantosa)",
+      "ruta": "Puente de la Espigantosa → refugio Ángel Orús (2.100 m) → Canal Fonda → cumbre",
+      "desnivel": "≈ 1.270 m desde el refugio (≈ 600 m hasta el refugio)",
+      "dificultad": "alta", "grado": "F · larga, terreno suelto",
+      "epoca": "Junio – octubre",
+      "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio.",
+      "foto": "posets", "pie": "El Posets con uno de sus glaciares."
+    },
+    {
+      "id": "perdido", "nombre": "Monte Perdido", "alias": "Mont Perdu · Punta de Treserols",
+      "altitud": 3348, "otras": "Otras fuentes: 3.355 m", "macizo": "per", "frontera": false,
+      "lat": 42.675583, "lon": 0.034389,
+      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+      "ruta": "Refugio de Góriz → Cuello de Góriz → Lago Helado → La Escupidera → cumbre",
+      "desnivel": "≈ 1.150 m desde Góriz",
+      "dificultad": "alta", "grado": "F/PD · La Escupidera exige cuidado",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Tercera cumbre del Pirineo y corazón del Parque Nacional de Ordesa y Monte Perdido, Patrimonio Mundial. Es uno de los macizos calcáreos más altos de Europa. La Escupidera, una fuerte pendiente de piedra suelta antes del último nevero, es el tramo que más accidentes causa: infórmate del estado en Góriz.",
+      "foto": "perdido", "pie": "El macizo de Monte Perdido desde la Senda de los Cazadores (Ordesa)."
+    },
+    {
+      "id": "cilindro", "nombre": "Cilindro de Marboré", "alias": "Mallo de Marmorés",
+      "altitud": 3325, "otras": "Otras fuentes: 3.328–3.335 m", "macizo": "per", "frontera": false,
+      "lat": 42.684694, "lon": 0.023944,
+      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+      "ruta": "Refugio de Góriz → Cuello de Góriz → Lago Helado → Cuello del Cilindro → cumbre (paso de II grado)",
+      "desnivel": "≈ 1.130 m desde Góriz",
+      "dificultad": "alta", "grado": "PD · paso de II de 20–30 m",
+      "epoca": "Mediados de junio – septiembre",
+      "descripcion": "Su silueta de torre cortada en seco, sobre el Lago Helado, es de las imágenes más reconocibles del Pirineo. Comparte camino con el Monte Perdido hasta el Cuello del Cilindro, donde un paso de II grado de unos 20–30 metros suele resolverse con cuerda.",
+      "foto": "cilindro", "pie": "El Cilindro de Marboré."
+    },
+    {
+      "id": "perdiguero", "nombre": "Perdiguero", "alias": "Tuca del Perdiguèro",
+      "altitud": 3219, "otras": "Otras fuentes: 3.222 m", "macizo": "prd", "frontera": true,
+      "lat": 42.691917, "lon": 0.518806,
+      "acceso": "Benasque · Llanos del Hospital (valles de Remuñé y Literola)",
+      "ruta": "Llanos del Hospital → valle de Remuñé → cresta final (bajada posible por Literola)",
+      "desnivel": "≈ 1.500 m desde Llanos del Hospital",
+      "dificultad": "moderada", "grado": "F · cresta final expuesta con nieve",
+      "epoca": "Junio – septiembre",
+      "descripcion": "Cumbre fronteriza que domina los valles de Astós, Remuñé y Literola. Las guías le dan una dificultad media y es de los tresmiles asequibles de la zona, pero la jornada es larga y, con nieve, la cresta final se vuelve expuesta.",
+      "foto": "perdiguero", "pie": "La coma del Perdiguero y el Frontonet desde el valle de Estós."
+    },
+    {
+      "id": "bachimala", "nombre": "Gran Bachimala", "alias": "Batchimale · Punta de Bachimala",
+      "altitud": 3176, "otras": "Otras fuentes: 3.177 m", "macizo": "bac", "frontera": true,
+      "lat": 42.698556, "lon": 0.394361,
+      "acceso": "Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós)",
+      "ruta": "Refugio de Biadós → promontorio sobre las bordas de Viadós → ladera hasta la cumbre",
+      "desnivel": "≈ 1.475 m (según tracks de la ruta normal)",
+      "dificultad": "alta", "grado": "F/PD · jornada larga",
+      "epoca": "Junio – septiembre",
+      "descripcion": "Cumbre fronteriza que se alza al norte del valle de Chistau, con acceso natural por el valle de Cinqueta y el refugio de Biadós. Los tracks de la ruta normal la sitúan en torno a 14 km y 1.500 m de desnivel: no es técnica, pero sí exigente.",
+      "foto": "bachimala", "pie": "El macizo de Bachimala (Batchimale)."
+    },
+    {
+      "id": "vignemale", "nombre": "Gran Vignemale", "alias": "Pique Longue · Punta de Camachibosa",
+      "altitud": 3299, "otras": "Francia: 3.298 m", "macizo": "vig", "frontera": true,
+      "lat": 42.774, "lon": -0.147306,
+      "acceso": "Valle de Bujaruelo (Torla) o valle de Ossoue (Francia)",
+      "ruta": "Refugio de Baysellance (2.650 m) → glaciar de Ossoue → placas y cresta fronteriza → cumbre",
+      "desnivel": "≈ 650 m desde Baysellance",
+      "dificultad": "alta", "grado": "PD · glaciar",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Gran cumbre fronteriza que se levanta sobre el glaciar de Ossoue, con una enorme pared norte sobre Francia. Desde Baysellance, el refugio guardado más alto del Pirineo, se cruza el glaciar y se remata por la cresta fronteriza, fácil si no hay nieve.",
+      "foto": "vignemale", "pie": "El Gran Vignemale con el sol naciente."
+    },
+    {
+      "id": "maladeta", "nombre": "Pico de la Maladeta", "alias": "Tuca de la Maladeta",
+      "altitud": 3312, "otras": "Otras fuentes: 3.308 m", "macizo": "ane", "frontera": false,
+      "lat": 42.646417, "lon": 0.640389,
+      "acceso": "Benasque · La Besurta / refugio de La Renclusa",
+      "ruta": "La Renclusa → Portillón Superior → glaciar → corredor de la Rimaya → collado → cumbre por cresta",
+      "desnivel": "≈ 1.170 m desde La Renclusa",
+      "dificultad": "alta", "grado": "PD · corredor de 45–50°",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Cumbre del extremo noroeste del gran macizo glaciar de la Maladeta; su nombre, «maldita», alude al respeto que imponían sus hielos. Comparte la aproximación con el Aneto hasta el Portillón Superior; después gira al sur, cruza el glaciar y trepa el corredor de la Rimaya.",
+      "foto": "maladeta", "pie": "El macizo de la Maladeta nevado."
+    },
+    {
+      "id": "tempestades", "nombre": "Pico de Tempestades", "alias": "Tuca de Tempestats",
+      "altitud": 3289, "otras": "", "macizo": "ane", "frontera": false,
+      "lat": 42.626139, "lon": 0.662722,
+      "acceso": "Benasque · La Besurta / refugio de La Renclusa",
+      "ruta": "Sin ruta senderista: aproximación desde La Renclusa por terreno glaciar y de alta montaña (consulta una guía específica)",
+      "desnivel": "≈ 1.150 m desde La Renclusa (orientativo)",
+      "dificultad": "muy-alta", "grado": "Alpinismo · consulta guía",
+      "epoca": "Julio – septiembre",
+      "descripcion": "A menos de un kilómetro al sureste del Aneto, pero mucho menos transitado. Su cresta con las Salenques —larga, aislada y con roca descompuesta en algunos tramos— es una de las travesías de alpinismo más famosas del Pirineo, solo para gente con experiencia.",
+      "foto": "tempestades", "pie": "El macizo del Aneto desde el Portillón Superior (la foto no es del Tempestades, que queda a menos de 1 km al sureste del Aneto)."
+    },
+    {
+      "id": "balaitus", "nombre": "Balaitús", "alias": "Balaïtous · Pico Moros",
+      "altitud": 3146, "otras": "Otras fuentes: 3.144 m", "macizo": "bal", "frontera": true,
+      "lat": 42.838917, "lon": -0.29025,
+      "acceso": "Valle de Tena · embalse de La Sarra → refugio de Respomuso (2.208 m)",
+      "ruta": "Refugio de Respomuso → Brecha de Latour → cresta cimera → cumbre (bajada posible por la Gran Diagonal)",
+      "desnivel": "≈ 940 m desde Respomuso (≈ 750 m hasta el refugio desde La Sarra)",
+      "dificultad": "muy-alta", "grado": "PD · terreno alpino, rápeles opcionales",
+      "epoca": "Julio – septiembre",
+      "descripcion": "El gran tresmil del Pirineo occidental y el más occidental de todos. Su cresta de roca se alcanza por la Brecha de Latour, un paso de dificultad moderada que pide experiencia en terreno alpino y, según las condiciones, casco y cuerda. La bajada por la Gran Diagonal evita los rápeles de la brecha.",
+      "foto": "balaitus", "pie": "El Balaïtous (Balaitús)."
+    },
+    {
+      "id": "garmo", "nombre": "Garmo Negro", "alias": "Punda dero Garmo Negro",
+      "altitud": 3064, "otras": "Otras fuentes: 3.066 m", "macizo": "bal", "frontera": false,
+      "lat": 42.771667, "lon": -0.264139,
+      "acceso": "Valle de Tena · Baños de Panticosa",
+      "ruta": "Baños de Panticosa → Collado de Argualas (2.860 m) → cumbre (200 m finales de pedrera)",
+      "desnivel": "≈ 1.430 m desde Baños de Panticosa",
+      "dificultad": "moderada", "grado": "F · pedreras sueltas, ≈ 6 h",
+      "epoca": "Julio – octubre",
+      "descripcion": "El tresmil más frecuentado de los Infiernos por la facilidad de su acceso desde Baños de Panticosa. Es largo y el último tramo es empinado y de piedra suelta; con niebla conviene llevar GPS, porque los muchos hitos pueden despistar.",
+      "foto": "garmo", "pie": "El Garmo Negro de las Argualas."
+    },
+    {
+      "id": "infiernos", "nombre": "Picos del Infierno", "alias": "Infierno Central · Punda Alta de Pondiellos",
+      "altitud": 3081, "otras": "Occidental 3.075 m · Oriental 3.076 m", "macizo": "bal", "frontera": false,
+      "lat": 42.781417, "lon": -0.2605,
+      "acceso": "Valle de Tena · Baños de Panticosa",
+      "ruta": "Circular desde Baños de Panticosa por el Collado de Pondiellos y la Marmolera; bajada por los Ibones Azules o la Mallata",
+      "desnivel": "≈ 1.450 m desde Baños de Panticosa",
+      "dificultad": "muy-alta", "grado": "PD · pasos de I+/II, cresta aérea",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Tres cumbres sobre los 3.000 m —Occidental, Central y Oriental— alzadas sobre el balneario de Panticosa; el Central, con 3.081 m, es el techo del grupo. La travesía de la Marmolera, entre el Occidental y el Central, es muy aérea y no se recomienda con vértigo; conviene llevar casco.",
+      "foto": "infiernos", "pie": "Cima del Infierno Central, con su piedra de cumbre."
+    }
+  ]
+}

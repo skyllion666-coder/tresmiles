@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tresmiles del Pirineo aragonés</title>
+  <meta name="description" content="Explorador 3D de los tresmiles del Pirineo aragonés: relieve real, vuelo de cámara hasta cada cumbre y ficha con ruta, desnivel y dificultad.">
+  <meta name="theme-color" content="#2d4a43">
+  <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="img/icono.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }</script>
+</head>
+<body class="is-loading">
+  <canvas id="gl" aria-label="Mapa 3D del Pirineo aragonés" role="img"></canvas>
+  <div id="pins" aria-label="Cumbres"></div>
+
+  <header class="top">
+    <a class="brand" href="#" id="brand" aria-label="Tresmiles, volver al inicio">
+      <svg viewBox="0 0 48 32" width="34" height="23" aria-hidden="true"><path d="M2 30 16 6l7 11 5-8 18 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m16 6 4 7-4 3-4-3z" fill="currentColor"/></svg>
+      <span class="b1">Tresmiles</span><span class="b2">Pirineo aragonés</span>
+    </a>
+    <button class="textbtn" id="btn-about" type="button">Acerca de</button>
+  </header>
+
+  <section id="intro" aria-live="polite">
+    <p class="eyebrow">En el corazón del Pirineo aragonés</p>
+    <h1>Los tresmiles</h1>
+    <p class="lead">Una vista de pájaro a las cumbres que superan los 3.000 metros. Empezamos por el Balaitús.</p>
+    <button class="cta" id="btn-start" type="button">Explorar el mapa</button>
+  </section>
+
+  <div id="hints" aria-hidden="true">
+    <div class="hint" id="hint-move"><b>Arrastra<br>para moverte</b><span class="rule"></span><small data-desktop>Mantén pulsado el botón izquierdo y arrastra · Botón derecho: girar</small><small data-touch>Desliza con un dedo · Dos dedos: girar y acercar</small></div>
+    <div class="hint" id="hint-zoom"><b>Rueda<br>para acercarte</b><span class="rule"></span><small data-desktop>Gira la rueda del ratón sobre el relieve</small><small data-touch>Pellizca para acercarte</small></div>
+  </div>
+
+  <nav id="dock" aria-label="Navegación del mapa">
+    <button type="button" id="btn-home" class="dock-home" aria-label="Vista general"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M3 11 12 4l9 7M6 10v10h12V10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></button>
+    <button type="button" id="btn-list" class="dock-main" aria-haspopup="listbox" aria-expanded="false"><span id="dock-label">Explorar las cumbres</span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    <ul id="list" role="listbox" hidden></ul>
+  </nav>
+
+  <div id="tools">
+    <button type="button" class="tool" id="btn-filters" aria-label="Filtros" aria-expanded="false" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <button type="button" class="tool" id="btn-light" aria-label="Cambiar la luz: mañana"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="tool-tip" id="light-name">Mañana</span></button>
+  </div>
+
+  <button type="button" id="compass" aria-label="Brújula: pulsa para orientar al norte"><svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="rgba(20,32,28,.28)" stroke="currentColor" stroke-width="1" stroke-dasharray="1.2 3.6"/><g id="needle"><path d="M32 8 38 32H26z" fill="currentColor"/><path d="M32 56 26 32h12z" fill="currentColor" opacity=".35"/></g><text x="32" y="6.5" text-anchor="middle" font-size="7" fill="currentColor" font-family="Barlow Semi Condensed, sans-serif">N</text></svg></button>
+
+  <section id="filters" class="panel" aria-label="Filtros" hidden>
+    <h2>Filtros</h2>
+    <fieldset><legend>Macizo</legend><div class="chips" id="f-macizo"></div></fieldset>
+    <fieldset><legend>Altitud mínima: <output id="f-alt-out">3.000 m</output></legend><input type="range" id="f-alt" min="3000" max="3400" step="50" value="3000"></fieldset>
+    <fieldset><legend>Dificultad</legend><div class="chips" id="f-dif"></div></fieldset>
+    <div class="panel-foot"><span id="f-count"></span><button type="button" class="textbtn dark" id="f-reset">Quitar filtros</button></div>
+  </section>
+
+  <aside id="ficha" aria-hidden="true" aria-label="Ficha de la cumbre" tabindex="-1">
+    <div class="ficha-head"><span id="ficha-macizo">Macizo</span><button type="button" id="ficha-close" aria-label="Cerrar la ficha"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+    <div class="ficha-body" id="ficha-body"></div>
+  </aside>
+
+  <dialog id="about">
+    <form method="dialog"><button class="about-close" aria-label="Cerrar">×</button></form>
+    <div id="about-body"></div>
+  </dialog>
+
+  <div id="loading" role="status"><div class="load-mark"></div><p id="load-text">Cargando el relieve…</p></div>
+  <noscript><p class="noscript">Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.</p></noscript>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

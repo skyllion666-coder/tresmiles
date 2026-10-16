@@ -1,0 +1,5 @@
+# capturas de la web de referencia: no se publican (no son propias)
+analisis/capturas/
+analisis/info-tecnica.json
+__pycache__/
+*.pyc
