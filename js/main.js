@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=7';
+import { cargarRuta, crearRuta } from './ruta.js?v=9';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -100,7 +100,15 @@ async function boot() {
     if (camera.position.y < g) camera.position.y = g;
     controls.target.copy(s.t); camera.lookAt(s.t);
   };
-  const peakState = (p) => ({ t: new THREE.Vector3(p.w.x, p.w.y - 60, p.w.z), theta: p.vista?.theta ?? -0.42, phi: p.vista?.phi ?? 1.17, r: p.vista?.r ?? 4300 });
+  const peakState = (p) => {
+    const R = rutaOn ? rutasDe(p.id)[0] : null;
+    if (R) {
+      // con ruta: se encuadra todo el recorrido, no solo la cumbre
+      const x = lerp(p.w.x, R.centro.x, 0.6), z = lerp(p.w.z, R.centro.z, 0.6);
+      return { t: new THREE.Vector3(x, p.w.y - 900, z), theta: p.vista?.theta ?? -0.42, phi: 0.95, r: clamp(R.extension * (isMobile() ? 3.2 : 1.5), 4300, 18000) };
+    }
+    return { t: new THREE.Vector3(p.w.x, p.w.y - 60, p.w.z), theta: p.vista?.theta ?? -0.42, phi: p.vista?.phi ?? 1.17, r: p.vista?.r ?? 4300 };
+  };
   const viewShift = () => (isMobile() ? { x: 0, y: Math.min(innerHeight * 0.66, 620) / 2 } : { x: Math.min(460, innerWidth) / 2, y: 0 });
 
   function flyTo(state, { dur, shift = { x: 0, y: 0 }, instant = false } = {}) {
