@@ -199,6 +199,8 @@ async function boot() {
       </dl>
       <h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>
       <h3>Descripción</h3><p>${esc(p.descripcion)}</p>
+      ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
+      ${p.enlace ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;
   }
   async function openPeak(id, { instant = false, hash = true } = {}) {

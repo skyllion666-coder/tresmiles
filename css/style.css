@@ -185,3 +185,5 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
   #intro { padding-top: 56px; } #intro h1 { font-size: 2.4rem; } .lead { margin: 10px 0 14px; } .hint .rule { height: 24px; margin: 8px auto; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01s !important; } }
+.ficha-body .enlace-ruta a { display: inline-block; padding: 9px 14px; border: 1px solid var(--green, #456a4b); color: var(--green, #456a4b); font: 600 .85rem/1.3 var(--sans); text-decoration: none; }
+.ficha-body .enlace-ruta a:hover { background: var(--green, #456a4b); color: #fffbe7; }
