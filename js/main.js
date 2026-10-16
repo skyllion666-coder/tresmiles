@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=12';
+import { cargarRuta, crearRuta } from './ruta.js?v=13';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -557,7 +557,7 @@ async function boot() {
     updatePins();
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt);
-    for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera); }
+    for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     const cerca = updateLagos(); updateHitos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
