@@ -4,11 +4,12 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=10';
+import { cargarRuta, crearRuta } from './ruta.js?v=12';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat('es-ES', { useGrouping: 'always' }).format(n);
+const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
 const json = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -85,7 +86,7 @@ async function boot() {
   controls.mouseButtons = { LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
   controls.touches = { ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_ROTATE };
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
 
   // — estados de cámara —
   const HOME = { t: new THREE.Vector3(0, 1400, -1500), theta: 0.1, phi: 0.66, r: 41000 };
@@ -100,16 +101,17 @@ async function boot() {
     if (camera.position.y < g) camera.position.y = g;
     controls.target.copy(s.t); camera.lookAt(s.t);
   };
-  const peakState = (p) => {
+  const peakState = (p, plegada = S.plegada) => {
     const R = rutaOn ? rutasDe(p.id)[0] : null;
     if (R) {
       // con ruta: se encuadra todo el recorrido, no solo la cumbre
       const x = lerp(p.w.x, R.centro.x, 0.6), z = lerp(p.w.z, R.centro.z, 0.6);
-      return { t: new THREE.Vector3(x, p.w.y - 900, z), theta: p.vista?.theta ?? -0.42, phi: 0.95, r: clamp(R.extension * (isMobile() ? 3.2 : 1.5), 4300, 18000) };
+      return { t: new THREE.Vector3(x, p.w.y - 900, z), theta: p.vista?.theta ?? -0.42, phi: 0.95, r: clamp(R.extension * (isMobile() ? (plegada ? 1.9 : 3.2) : plegada ? 1.15 : 1.5), 4300, 18000) };
     }
     return { t: new THREE.Vector3(p.w.x, p.w.y - 60, p.w.z), theta: p.vista?.theta ?? -0.42, phi: p.vista?.phi ?? 1.17, r: p.vista?.r ?? 4300 };
   };
-  const viewShift = () => (isMobile() ? { x: 0, y: Math.min(innerHeight * 0.66, 620) / 2 } : { x: Math.min(460, innerWidth) / 2, y: 0 });
+  const sheetH = () => S.sheetH ?? Math.min(innerHeight * 0.66, 620);
+  const viewShift = () => (isMobile() ? { x: 0, y: S.plegada ? 30 : sheetH() / 2 } : { x: S.plegada ? 0 : Math.min(460, innerWidth) / 2, y: 0 });
 
   function flyTo(state, { dur, shift = { x: 0, y: 0 }, instant = false } = {}) {
     S.shiftTo = shift;
@@ -176,6 +178,8 @@ async function boot() {
     if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
     el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em></b>`;
+    const cerca = Object.values(rutas).flat().map((R) => ({ R, ...R.cercano(q.x, q.z) })).filter((c) => c.metros < 220).sort((a, b) => a.metros - b.metros)[0];
+    if (cerca) el.querySelector('em').textContent += ` · km ${km(cerca.dist)} del recorrido`;
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
@@ -284,14 +288,17 @@ async function boot() {
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;
   }
-  const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
   function rutaHTML(p) {
     const r = rutasDe(p.id)[0]?.ruta; if (!r) return '';
     return `<h3>Recorrido en el mapa</h3>
       <p class="ruta-nombre">${esc(r.nombre)}</p>
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
       ${rutasDe(p.id)[0].perfil()}
-      <button type="button" class="btn-ruta" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
+      <div class="ruta-acciones">
+        <button type="button" class="btn-ruta" data-act="plegar">Ver el recorrido a pantalla completa</button>
+        <button type="button" class="btn-ruta" data-act="vuelo">Volar por la ruta</button>
+        <button type="button" class="btn-ruta btn-suave" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
+      </div>
       <p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
       <p class="ruta-credito">Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`;
   }
@@ -299,13 +306,120 @@ async function boot() {
     for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
   }
   fichaBody.addEventListener('click', (e) => {
+    const act = e.target.closest('[data-act]');
+    if (act?.dataset.act === 'plegar') { plegar(true); return; }
+    if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     const b = e.target.closest('#btn-ruta'); if (!b) return;
     rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
     pintaRuta(S.active);
   });
+  // — ficha plegable (ver el recorrido con el mapa libre) —
+  const tab = $('#ficha-tab'), foldBtn = $('#ficha-fold');
+  const aplicaAltura = () => { fichaEl.style.height = !S.plegada && S.sheetH && isMobile() ? `${S.sheetH}px` : ''; };
+  function plegar(v, { fly = true } = {}) {
+    const p = byId[S.active]; if (!p || S.plegada === v) return;
+    if (v === false) pararVuelo(false);
+    S.plegada = v;
+    document.body.classList.toggle('ficha-plegada', v); fichaEl.classList.toggle('is-folded', v);
+    tab.hidden = !v || isMobile(); $('#ficha-tab-name').textContent = p.nombre;
+    foldBtn.setAttribute('aria-label', v ? 'Abrir la ficha' : 'Recoger la ficha para ver el recorrido');
+    fichaEl.setAttribute('aria-hidden', 'false'); aplicaAltura();
+    if (fly) flyTo(peakState(p), { shift: viewShift() });
+    else S.shiftTo = viewShift();
+  }
+  foldBtn.addEventListener('click', () => plegar(!S.plegada));
+  tab.addEventListener('click', () => plegar(false));
+  // móvil: arrastrar el asa o la cabecera para subir/bajar la hoja; un toque en la barra plegada la abre
+  let arr = null;
+  const alturas = () => [54, innerHeight * 0.4, Math.min(innerHeight * 0.66, 620), innerHeight * 0.9];
+  for (const el of [fichaEl.querySelector('.ficha-grip'), fichaEl.querySelector('.ficha-head')]) {
+    el.addEventListener('pointerdown', (e) => {
+      if (!isMobile() || e.target.closest('button')) return;
+      arr = { y0: e.clientY, h0: S.plegada ? 54 : fichaEl.getBoundingClientRect().height, moved: false };
+      el.setPointerCapture?.(e.pointerId); fichaEl.style.transition = 'none';
+    });
+    el.addEventListener('pointermove', (e) => {
+      if (!arr) return;
+      if (Math.abs(e.clientY - arr.y0) > 6) arr.moved = true;
+      if (!arr.moved) return;
+      const h = clamp(arr.h0 + (arr.y0 - e.clientY), 54, innerHeight * 0.92);
+      fichaEl.style.height = `${h}px`; S.sheetH = Math.max(h, 54); S.shiftTo = { x: 0, y: h / 2 };
+    });
+    const fin = () => {
+      if (!arr) return; const a = arr; arr = null; fichaEl.style.transition = '';
+      if (!a.moved) { if (S.plegada) plegar(false); return; }
+      const h = parseFloat(fichaEl.style.height) || a.h0;
+      const snap = alturas().reduce((m, v) => (Math.abs(v - h) < Math.abs(m - h) ? v : m));
+      if (snap <= 54) { S.sheetH = null; plegar(true); return; }
+      S.sheetH = snap; const estabaPlegada = S.plegada;
+      if (estabaPlegada) plegar(false, { fly: false });
+      aplicaAltura(); S.shiftTo = viewShift();
+      if (estabaPlegada && byId[S.active]) flyTo(peakState(byId[S.active]), { shift: viewShift() });
+    };
+    el.addEventListener('pointerup', fin); el.addEventListener('pointercancel', fin);
+  }
+
+  // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
+  let perfilT = 0;
+  const sobrePerfil = (e) => {
+    const svg = e.target.closest?.('.perfil'); if (!svg) return;
+    const R = rutasDe(S.active)[0]; if (!R) return;
+    clearTimeout(perfilT);
+    const d = R.distanciaEn(svg, e.clientX); R.marcarPerfil(svg, d); R.cursor(d);
+    if (e.type === 'pointerdown' && e.pointerType !== 'mouse') svg.setPointerCapture?.(e.pointerId);
+  };
+  const sueltaPerfil = (e) => {
+    const svg = e.target.closest?.('.perfil'); if (!svg) return;
+    const R = rutasDe(S.active)[0]; if (!R) return;
+    const quita = () => { R.marcarPerfil(svg, null); R.cursor(null); };
+    if (e.pointerType === 'mouse') quita(); else perfilT = setTimeout(quita, 2500);
+  };
+  fichaBody.addEventListener('pointerdown', sobrePerfil);
+  fichaBody.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.buttons) sobrePerfil(e); });
+  fichaBody.addEventListener('pointerup', sueltaPerfil); fichaBody.addEventListener('pointerleave', sueltaPerfil, true);
+
+  // — vuelo por la ruta —
+  const hud = $('#vuelo-hud'), btnVuelo = $('#btn-vuelo');
+  function iniciarVuelo() {
+    const R = rutasDe(S.active)[0]; if (!R) return;
+    if (!rutaOn) { rutaOn = true; pintaRuta(S.active, { animar: false }); const b = $('#btn-ruta'); if (b) { b.setAttribute('aria-pressed', 'true'); b.textContent = 'Ocultar la ruta del mapa'; } }
+    else R.mostrar(true, { animar: false });
+    if (!S.plegada) plegar(true, { fly: false });
+    S.flight = null; controls.enabled = false; S.shiftTo = viewShift();
+    S.vuelo = { R, d: 0, vel: R.ruta.distancia / 75, pos: camera.position.clone(), look: controls.target.clone(), dir: null, fin: 0 };
+    hud.hidden = false; btnVuelo.setAttribute('aria-pressed', 'true');
+  }
+  function pararVuelo(volver = true) {
+    const V = S.vuelo; if (!V) return;
+    S.vuelo = null; V.R.cursor(null); hud.hidden = true; btnVuelo.setAttribute('aria-pressed', 'false');
+    controls.enabled = true; controls.update();
+    const p = byId[S.active]; if (volver && p) flyTo(peakState(p), { shift: viewShift() });
+  }
+  const _v = new THREE.Vector3(), _w = new THREE.Vector3(), _l = new THREE.Vector3();
+  function tickVuelo(dt) {
+    const V = S.vuelo, R = V.R, total = R.ruta.distancia;
+    if (V.d >= total) { V.fin += dt; if (V.fin > 3) pararVuelo(true); return; }
+    V.d = Math.min(total, V.d + V.vel * dt);
+    const a = R.en(V.d), b = R.en(V.d + 700);
+    _v.copy(b.pos).sub(a.pos); _v.y = 0;
+    if (_v.lengthSq() < 1) { if (!V.dir) _v.set(0, 0, -1); else _v.copy(V.dir); }
+    _v.normalize(); V.dir = V.dir ? V.dir.lerp(_v, 1 - Math.exp(-dt * 1.4)).normalize() : _v.clone();
+    _w.copy(a.pos).addScaledVector(V.dir, -1500); _w.y = Math.max(a.pos.y + 700, geo.heightAt(_w.x, _w.z) + 320);
+    const k = 1 - Math.exp(-dt * 2.2);
+    V.pos.lerp(_w, k); _l.copy(b.pos); _l.y -= 150; V.look.lerp(_l, k);
+    camera.position.copy(V.pos); controls.target.copy(V.look); camera.lookAt(V.look);
+    R.cursor(V.d);
+    $('#vuelo-txt').textContent = `${(V.d / 1000).toFixed(1).replace('.', ',')} km · ${fmt(Math.round(a.ele))} m`;
+  }
+  btnVuelo.addEventListener('click', () => (S.vuelo ? pararVuelo(true) : iniciarVuelo()));
+  $('#vuelo-stop').addEventListener('click', () => pararVuelo(true));
+  canvas.addEventListener('pointerdown', () => { if (S.vuelo) pararVuelo(false); });
+
   async function openPeak(id, { instant = false, hash = true } = {}) {
     const p = byId[id]; if (!p) return;
-    S.active = id; setList(false);
+    pararVuelo(false); S.active = id; setList(false);
+    if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
+    const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
@@ -319,7 +433,8 @@ async function boot() {
   }
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
-    const was = S.active; S.active = null; pintaRuta(null);
+    const was = S.active; pararVuelo(false); S.active = null; pintaRuta(null);
+    S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
     pinEls.get(was)?.focus({ preventScroll: true });
@@ -327,8 +442,8 @@ async function boot() {
   }
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { $('#filters').hidden = true; } else closeFicha(); } });
-  const goHome = () => { S.active = null; pintaRuta(null); refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { $('#filters').hidden = true; } else closeFicha(); } });
+  const goHome = () => { pararVuelo(false); S.active = null; pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { closeFicha(); goHome(); } });
 
@@ -419,7 +534,8 @@ async function boot() {
   let last = performance.now(), orbit = 0;
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
-    if (S.flight) tickFlight(dt);
+    if (S.vuelo) tickVuelo(dt);
+    else if (S.flight) tickFlight(dt);
     else if (S.mode === 'intro') {
       if (!reduced) { orbit += dt * 0.03; const s = introState(focusPeak); s.theta += orbit; applyState(s); }
     } else {
@@ -441,7 +557,7 @@ async function boot() {
     updatePins();
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt);
-    for (const l of Object.values(rutas)) for (const r of l) r.update(dt);
+    for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera); }
     const cerca = updateLagos(); updateHitos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);

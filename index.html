@@ -9,7 +9,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=12">
   <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }</script>
 </head>
 <body class="is-loading">
@@ -44,6 +44,7 @@
 
   <div id="tools">
     <button type="button" class="tool" id="btn-filters" aria-label="Filtros" aria-expanded="false" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <button type="button" class="tool" id="btn-vuelo" aria-label="Volar por la ruta" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span class="tool-tip">Volar por la ruta</span></button>
     <button type="button" class="tool" id="btn-light" aria-label="Cambiar la luz: mañana"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="tool-tip" id="light-name">Mañana</span></button>
     <button type="button" class="tool" id="btn-sound" aria-label="Activar el sonido ambiente" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path class="snd-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="snd-off" d="m16 9.5 5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   </div>
@@ -59,9 +60,12 @@
   </section>
 
   <aside id="ficha" aria-hidden="true" aria-label="Ficha de la cumbre" tabindex="-1">
-    <div class="ficha-head"><span id="ficha-macizo">Macizo</span><button type="button" id="ficha-close" aria-label="Cerrar la ficha"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
+    <div class="ficha-grip" aria-hidden="true"><i></i></div>
+    <div class="ficha-head"><span id="ficha-macizo">Macizo</span><span class="head-btns"><button type="button" id="ficha-fold" aria-label="Recoger la ficha para ver el recorrido"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="f-d" d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path class="f-m" d="m6 15 6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="ficha-close" aria-label="Cerrar la ficha"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></span></div>
     <div class="ficha-body" id="ficha-body"></div>
   </aside>
+  <button type="button" id="ficha-tab" aria-label="Abrir la ficha" hidden><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="ficha-tab-name">Ficha</span></button>
+  <div id="vuelo-hud" hidden><span id="vuelo-txt"></span><button type="button" id="vuelo-stop">Detener</button></div>
 
   <dialog id="about">
     <form method="dialog"><button class="about-close" aria-label="Cerrar">×</button></form>
@@ -71,6 +75,6 @@
   <div id="loading" role="status"><div class="load-mark"></div><p id="load-text">Cargando el relieve…</p></div>
   <noscript><p class="noscript">Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.</p></noscript>
 
-  <script type="module" src="js/main.js?v=10"></script>
+  <script type="module" src="js/main.js?v=12"></script>
 </body>
 </html>
