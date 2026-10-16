@@ -191,3 +191,9 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .lago.is-hidden { opacity: 0; }
 #btn-sound .snd-off { display: block; } #btn-sound .snd-on { display: none; }
 #btn-sound.is-on .snd-off { display: none; } #btn-sound.is-on .snd-on { display: block; }
+.hito { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% -100%; display: flex; flex-direction: column; align-items: center; pointer-events: none; transition: opacity .3s; will-change: transform; }
+.hito.is-hidden { opacity: 0; }
+.hito i { order: 3; width: 11px; height: 11px; margin-top: 3px; background: #b9772f; border: 2px solid #fffbe7; box-shadow: 0 2px 6px rgba(0,0,0,.45); transform: rotate(45deg); }
+.hito-paso i { background: #456a4b; } .hito-vivac i { background: #5d7480; } .hito-cima i { background: #fffbe7; border-color: #456a4b; }
+.hito b { order: 1; white-space: nowrap; font: 600 .68rem/1.2 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.78); padding: 3px 7px; }
+.hito small { order: 2; display: none; }

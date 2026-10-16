@@ -1,0 +1,50 @@
+[
+ {
+  "id": "respomuso",
+  "nombre": "Refugio de Respomuso",
+  "tipo": "refugio",
+  "lat": 42.81698,
+  "lon": -0.28766,
+  "nota": "Punto de partida habitual hacia el Balaitús, junto al embalse."
+ },
+ {
+  "id": "gran-diagonal",
+  "nombre": "Gran Diagonal",
+  "tipo": "paso",
+  "lat": 42.83784,
+  "lon": -0.30422,
+  "nota": "Itinerario de bajada que evita los rápeles de la brecha."
+ },
+ {
+  "id": "michaud",
+  "nombre": "Cueva André Michaud",
+  "tipo": "vivac",
+  "lat": 42.83768,
+  "lon": -0.29689,
+  "nota": "Refugio de emergencia a unos 2.680 m (según OpenStreetMap)."
+ },
+ {
+  "id": "latour",
+  "nombre": "Brecha de Latour",
+  "tipo": "paso",
+  "lat": 42.83479,
+  "lon": -0.28927,
+  "nota": "Paso clave hacia la cresta cimera."
+ },
+ {
+  "id": "frondiellas",
+  "nombre": "Punta Alta de las Frondiellas",
+  "tipo": "cima",
+  "lat": 42.83307,
+  "lon": -0.29031,
+  "nota": "Cima vecina de unos 3.070 m (según OpenStreetMap)."
+ },
+ {
+  "id": "arremoulit",
+  "nombre": "Refuge d'Arrémoulit",
+  "tipo": "refugio",
+  "lat": 42.84605,
+  "lon": -0.32916,
+  "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap)."
+ }
+]

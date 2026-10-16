@@ -148,6 +148,29 @@ async function boot() {
     }
   }
 
+  // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
+  const TIPO_HITO = { refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima' };
+  const hitos = (await json('data/hitos.json').catch(() => [])).map((h) => {
+    const q = geo.toXZ(h.lon, h.lat);
+    if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
+    const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
+    el.innerHTML = `<i></i><b>${esc(h.nombre)}</b><small>${esc(TIPO_HITO[h.tipo] ?? '')}</small>`;
+    el.title = h.nota; $('#pins').appendChild(el);
+    return { h, el, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
+  }).filter(Boolean);
+  const hitoTmp = new THREE.Vector3();
+  function updateHitos() {
+    const W = innerWidth, H = innerHeight;
+    for (const o of hitos) {
+      hitoTmp.set(o.x, o.y, o.z);
+      const dist = camera.position.distanceTo(hitoTmp);
+      let show = S.mode === 'explore' && dist < 9500;
+      if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
+      o.el.classList.toggle('is-hidden', !show);
+      if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+    }
+  }
+
   const lagoTmp = new THREE.Vector3();
   function updateLagos() {
     const W = innerWidth, H = innerHeight;
@@ -304,7 +327,7 @@ async function boot() {
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente: animación y síntesis propias; las aves son una ilustración, no seguimiento real.</li></ul>
+      <li>Contornos y nombres de los ibones, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente: animación y síntesis propias; las aves son una ilustración, no seguimiento real.</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
@@ -366,7 +389,7 @@ async function boot() {
     updatePins();
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt);
-    const cerca = updateLagos();
+    const cerca = updateLagos(); updateHitos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;
