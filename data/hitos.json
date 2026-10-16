@@ -5,7 +5,7 @@
   "tipo": "refugio",
   "lat": 42.81698,
   "lon": -0.28766,
-  "nota": "Punto de partida habitual hacia el Balaitús, junto al embalse."
+  "nota": "Refugio a 2.208 m. Punto de partida habitual hacia el Balaitús, junto al embalse."
  },
  {
   "id": "gran-diagonal",
@@ -46,5 +46,37 @@
   "lat": 42.84605,
   "lon": -0.32916,
   "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap)."
+ },
+ {
+  "id": "peytier-hossard",
+  "nombre": "Brecha Peytier-Hossard",
+  "tipo": "paso",
+  "lat": 42.83971,
+  "lon": -0.28909,
+  "nota": "Paso de la cresta cercano a la cumbre; su nombre recuerda a los geodestas que, según las crónicas, abrieron la ascensión en 1825."
+ },
+ {
+  "id": "wallon",
+  "nombre": "Collado Wallon",
+  "tipo": "paso",
+  "lat": 42.8359,
+  "lon": -0.30539,
+  "nota": "Collado a unos 2.506 m (según OpenStreetMap)."
+ },
+ {
+  "id": "col-arremoulit",
+  "nombre": "Col d'Arrémoulit",
+  "tipo": "paso",
+  "lat": 42.83966,
+  "lon": -0.32152,
+  "nota": "Collado a unos 2.448 m (según OpenStreetMap)."
+ },
+ {
+  "id": "col-arriel",
+  "nombre": "Col d'Arriel",
+  "tipo": "paso",
+  "lat": 42.83689,
+  "lon": -0.33368,
+  "nota": "Collado a unos 2.608 m (según OpenStreetMap)."
  }
 ]
