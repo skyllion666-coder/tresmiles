@@ -56,8 +56,10 @@ js/main.js            aplicación: cámara, vuelos, marcadores, ficha, filtros, 
 js/terrain.js         relieve por bloques con nivel de detalle y texturas en dos resoluciones
 js/geo.js             lon/lat → metros locales, altura bilineal, exageración vertical (×1,3)
 js/sky.js             cielo y nubes
+js/vida.js            agua de los ibones, aves planeando y sonido ambiente (Web Audio)
 data/peaks.json       fichas de las 12 cumbres y lista de las activas ("activos")
 data/fotos.json       autor, licencia y enlace de cada foto
+data/lagos.json       contornos y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
 data/terrain/         alturas (u16, decímetros) y texturas Sentinel-2 (512 px y 1536 px por bloque)
 img/peaks/            fotos (Wikimedia Commons)
 vendor/three/         three.js (MIT) y OrbitControls

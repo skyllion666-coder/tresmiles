@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
+import { crearLagos, crearAves, crearSonido } from './vida.js';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -43,6 +44,8 @@ async function boot() {
   const geo = makeGeo(meta, heights);
   const terrain = new Terrain({ scene, meta, heights, geo, renderer, base: 'data/terrain' });
   const clouds = new Clouds(scene, geo);
+  const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json' }).catch((e) => { console.warn('lagos', e); return null; });
+  const sonido = crearSonido();
 
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
@@ -55,6 +58,13 @@ async function boot() {
     return { ...p, inside: Math.abs(q.x) < geo.W / 2 - 800 && Math.abs(q.z) < geo.D / 2 - 800, w: geo.summitNear(q.x, q.z) };
   }).filter((p) => p.inside).sort((a, b) => b.altitud - a.altitud);
   const byId = Object.fromEntries(peaks.map((p) => [p.id, p]));
+  const bal = peaks.find((p) => p.id === 'balaitus');
+  const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
+
+  // etiquetas de ibones (solo con la cámara cerca)
+  const lagoEls = (lagos?.nombrados ?? []).map((l) => {
+    const el = document.createElement('span'); el.className = 'lago is-hidden'; el.textContent = l.nombre; $('#pins').appendChild(el); return { l, el };
+  });
 
   // — controles —
   const controls = new OrbitControls(camera, canvas);
@@ -136,6 +146,23 @@ async function boot() {
       el.classList.toggle('show-label', S.active === p.id || dist < 15000);
       el.classList.toggle('is-dim', !passes(p));
     }
+  }
+
+  const lagoTmp = new THREE.Vector3();
+  function updateLagos() {
+    const W = innerWidth, H = innerHeight;
+    let cerca = Infinity;
+    for (const { l, el } of lagoEls) {
+      lagoTmp.set(l.x, l.y, l.z);
+      const dist = camera.position.distanceTo(lagoTmp);
+      cerca = Math.min(cerca, dist);
+      const lim = 4000 + Math.sqrt(l.area) * 28;
+      let show = S.mode === 'explore' && dist < lim;
+      if (show) { lagoTmp.project(camera); show = lagoTmp.z < 1 && Math.abs(lagoTmp.x) < 1.05 && Math.abs(lagoTmp.y) < 1.05 && !occluded({ x: l.x, y: l.y + 8, z: l.z }); }
+      el.classList.toggle('is-hidden', !show);
+      if (show) el.style.transform = `translate3d(${((lagoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-lagoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+    }
+    return cerca;
   }
 
   // — filtros —
@@ -234,6 +261,7 @@ async function boot() {
   function setSun(i) {
     S.sun = i; const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
     sun.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).multiplyScalar(1000);
+    lagos?.setSol(sun.position, s.col);
     sun.color.set(s.col); sun.intensity = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1);
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', `Cambiar la luz: ${s.nombre.toLowerCase()}`);
   }
@@ -241,6 +269,12 @@ async function boot() {
     setSun((S.sun + 1) % SUN.length); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
   });
   setSun(0);
+
+  // — sonido (apagado por defecto; el navegador exige un gesto del usuario) —
+  const btnSound = $('#btn-sound');
+  const pintaSonido = () => { btnSound.setAttribute('aria-pressed', sonido.on); btnSound.setAttribute('aria-label', sonido.on ? 'Silenciar el sonido ambiente' : 'Activar el sonido ambiente'); btnSound.classList.toggle('is-on', sonido.on); };
+  btnSound.addEventListener('click', async () => { await sonido.set(!sonido.on); store.set('sonido', sonido.on ? '1' : '0'); pintaSonido(); });
+  pintaSonido();
 
   // — brújula —
   const needle = $('#needle');
@@ -269,7 +303,8 @@ async function boot() {
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
-      <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li></ul>
+      <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
+      <li>Contornos y nombres de los ibones: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente: animación y síntesis propias; las aves son una ilustración, no seguimiento real.</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
@@ -329,6 +364,10 @@ async function boot() {
     terrain.update(camera);
     clouds.update(dt, camera, !reduced);
     updatePins();
+    const tt = now / 1000;
+    lagos?.update(tt); aves?.update(tt);
+    const cerca = updateLagos();
+    sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;
     renderer.render(scene, camera);
@@ -336,7 +375,7 @@ async function boot() {
   }
   requestAnimationFrame(frame);
   document.body.classList.remove('is-loading');
-  window.tresmiles = { openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha };
+  window.tresmiles = { openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido };
 }
 
 boot().catch((err) => {
