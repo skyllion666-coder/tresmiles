@@ -277,5 +277,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Pic_des_GOURGS-BLANCS_vue_du_Pic_de_la_Hourque.JPG",
   "w": 1400,
   "h": 1050
+ },
+ "infierno-occidental": {
+  "archivo": "Infiernos marmolera.jpg",
+  "autor": "Jvelillagil",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Infiernos_marmolera.jpg",
+  "w": 1280,
+  "h": 960
+ },
+ "infierno-oriental": {
+  "archivo": "Picos los Infiernos.jpg",
+  "autor": "Hodei Casado",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Picos_los_Infiernos.jpg",
+  "w": 1280,
+  "h": 960
  }
 }

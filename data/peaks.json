@@ -30,7 +30,9 @@
   "munia",
   "vallibierna",
   "paul",
-  "gorgs"
+  "gorgs",
+  "infierno-occidental",
+  "infierno-oriental"
  ],
  "macizos": [
   {
@@ -1044,6 +1046,70 @@
     "pie": "Roquedo de la cresta, en la zona de cumbres del recorrido."
    },
    "curiosidad": "Es una cumbre fronteriza: por el lado español se sube desde el refugio de Estós (1.890 m), con unos 1.250 m de desnivel hasta la cima, según SummitPost. OpenStreetMap la registra como «Tuca de Gorgs Bllancs», a 3.129 m, y el track de esta ruta marca solo 3.027 m en la cima: las altitudes de GPS y las cifras publicadas difieren."
+  },
+  {
+   "macizo": "bal",
+   "frontera": false,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "desnivel": "≈ 1.450 m desde Baños de Panticosa",
+   "dificultad": "muy-alta",
+   "grado": "PD · pasos de I+/II, cresta aérea",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+    "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
+   },
+   "rutas": [
+    "infiernos-panticosa"
+   ],
+   "id": "infierno-occidental",
+   "nombre": "Infierno Occidental",
+   "alias": "Picos del Infierno · cumbre occidental",
+   "altitud": 3073,
+   "otras": "3.075 m (OpenStreetMap, Komoot)",
+   "lat": 42.7831,
+   "lon": -0.263277,
+   "ruta": "Circular desde Baños de Panticosa: ibones de Bachimaña y Azules, Cuello del Infierno, ibón de Tebarray y collado del Infierno, y cumbre del Occidental; sigue por la Marmolera hacia el Central",
+   "descripcion": "La cumbre occidental de los tres Infiernos. Se alcanza por el collado del Infierno, con una trepada de I+/II, y es el primer paso de la travesía hacia la Marmolera, la cresta de mármol que lo une con el Central.",
+   "foto": "infierno-occidental",
+   "pie": "Los Picos del Infierno, con sus crestas oscuras, vistos desde la zona de la Marmolera.",
+   "fotoCima": {
+    "foto": "inf-oriental",
+    "pie": "El Infierno Occidental, visto desde la cresta."
+   },
+   "curiosidad": "Las guías dan 3.073 m para el Occidental, aunque Komoot y OpenStreetMap lo sitúan en 3.075 m: las fuentes difieren. Junto a él, la Marmolera debe su nombre a una veta de mármol dolomítico incrustada en la montaña, que contrasta con los esquistos y granitos más oscuros del macizo."
+  },
+  {
+   "macizo": "bal",
+   "frontera": false,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "desnivel": "≈ 1.450 m desde Baños de Panticosa",
+   "dificultad": "muy-alta",
+   "grado": "PD · pasos de I+/II, cresta aérea",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+    "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
+   },
+   "rutas": [
+    "infiernos-panticosa"
+   ],
+   "id": "infierno-oriental",
+   "nombre": "Infierno Oriental",
+   "alias": "Picos del Infierno · cumbre oriental",
+   "altitud": 3076,
+   "otras": "3.069 m (altitud del GPS del track)",
+   "lat": 42.781439,
+   "lon": -0.259116,
+   "ruta": "Circular desde Baños de Panticosa: ibones de Bachimaña y Azules, Cuello del Infierno, cresta (Occidental, Marmolera, Central) y Oriental; bajada por el collado de Pondiellos",
+   "descripcion": "La cumbre oriental de los tres Infiernos, la última de la travesía. Tiene una bajada con destrepes de I+/II hacia el collado de Pondiellos, donde se cierra la circular hacia Panticosa.",
+   "foto": "infierno-oriental",
+   "pie": "Ibones y picos del Infierno, desde las alturas del macizo.",
+   "fotoCima": {
+    "foto": "w-inf-ori",
+    "pie": "Vista desde el Infierno Oriental sobre un ibón."
+   },
+   "curiosidad": "Bajo estas cumbres está el glaciar del Infierno, que según un estudio publicado en 2017 en la revista Lucas Mallada ha pasado de ser un glaciar «blanco» a uno cubierto de derrubios, y quizá acabe como glaciar rocoso."
   }
  ]
 }

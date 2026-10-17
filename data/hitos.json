@@ -430,7 +430,9 @@
    "infiernos",
    "garmo",
    "algas",
-   "argualas"
+   "argualas",
+   "infierno-occidental",
+   "infierno-oriental"
   ],
   "inicio": true
  },
@@ -443,7 +445,12 @@
   "lon": -0.233362,
   "nota": "Refugio junto al camino, al principio del recorrido. Altitud del GPS del track: 1.640 m.",
   "foto": "casa-piedra",
-  "pie": "El refugio Casa de Piedra, cerca del balneario de Panticosa."
+  "pie": "El refugio Casa de Piedra, cerca del balneario de Panticosa.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "mirador-reina",
@@ -454,7 +461,12 @@
   "lon": -0.232596,
   "nota": "Mirador sobre el valle, al inicio de la subida. Altitud del GPS del track: 1.729 m.",
   "foto": "inf-mirador-gorja",
-  "pie": "La garganta del Pino y el valle del Caldarés, en una fotografía antigua."
+  "pie": "La garganta del Pino y el valle del Caldarés, en una fotografía antigua.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "inf-cascada",
@@ -465,7 +477,12 @@
   "lon": -0.2312,
   "nota": "Cascada junto al camino. Altitud del GPS del track: 1.777 m.",
   "foto": "inf-cascada-salto",
-  "pie": "El Salto del Pino, en el río Caldarés."
+  "pie": "El Salto del Pino, en el río Caldarés.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "cuesta-fraile",
@@ -476,7 +493,12 @@
   "lon": -0.230873,
   "nota": "Comienza la subida de la Cuesta del Fraile. Altitud del GPS del track: 1.964 m.",
   "foto": "w-cuesta-fraile",
-  "pie": "La Cuesta del Fraile, con su cascada."
+  "pie": "La Cuesta del Fraile, con su cascada.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "vista-bachimana",
@@ -487,7 +509,12 @@
   "lon": -0.229065,
   "nota": "Desde aquí se ve el refugio de los Ibones de Bachimaña. Altitud del GPS del track: 2.191 m.",
   "foto": "bachimana-refugio",
-  "pie": "El refugio de los Ibones de Bachimaña."
+  "pie": "El refugio de los Ibones de Bachimaña.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "bachimana-alto",
@@ -497,7 +524,12 @@
   "lat": 42.783851,
   "lon": -0.224527,
   "nota": "Ibón alto de Bachimaña, junto al camino. Altitud del GPS del track: 2.234 m.",
-  "foto": "bachimana-alto"
+  "foto": "bachimana-alto",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "azul-inferior",
@@ -508,7 +540,12 @@
   "lon": -0.240484,
   "nota": "Uno de los ibones Azules, el más bajo. Altitud del GPS del track: 2.362 m.",
   "foto": "ibones-azules",
-  "pie": "Los ibones Azules, en el camino hacia el Cuello del Infierno."
+  "pie": "Los ibones Azules, en el camino hacia el Cuello del Infierno.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "azul-superior",
@@ -519,7 +556,12 @@
   "lon": -0.24395,
   "nota": "Uno de los ibones Azules, el más alto. Altitud del GPS del track: 2.412 m.",
   "foto": "w-azul-superior",
-  "pie": "El ibón Azul superior al atardecer."
+  "pie": "El ibón Azul superior al atardecer.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "cuello-infierno",
@@ -530,7 +572,12 @@
   "lon": -0.251203,
   "nota": "Aquí empieza la subida empinada hacia el collado. Altitud del GPS del track: 2.445 m.",
   "foto": "inf-cuello",
-  "pie": "La subida hacia el collado, con neveros y gente arriba."
+  "pie": "La subida hacia el collado, con neveros y gente arriba.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "tebarray",
@@ -541,7 +588,12 @@
   "lon": -0.264459,
   "nota": "Ibón de Tebarray y collado de los Infiernos; aquí el track gira a la izquierda hacia la cresta. Altitud del GPS del track: 2.723 m.",
   "foto": "tebarray",
-  "pie": "El Ibón de Tebarray, con el Infierno Central detrás."
+  "pie": "El Ibón de Tebarray, con el Infierno Central detrás.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "garmo-blanco",
@@ -552,7 +604,12 @@
   "lon": -0.264979,
   "nota": "Tramo de subida hacia la cresta de los Infiernos. Altitud del GPS del track: 2.972 m.",
   "foto": "w-garmo-blanco",
-  "pie": "El ibón visto desde el Garmo Blanco."
+  "pie": "El ibón visto desde el Garmo Blanco.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "inf-occ",
@@ -563,7 +620,12 @@
   "lon": -0.263277,
   "nota": "Cima del Infierno Occidental. Altitud del GPS del track: 3.063 m.",
   "foto": "inf-oriental",
-  "pie": "El Infierno Occidental, visto desde la cresta."
+  "pie": "El Infierno Occidental, visto desde la cresta.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "marmolera",
@@ -574,7 +636,12 @@
   "lon": -0.262447,
   "nota": "Cresta de mármol entre el Occidental y el Central, muy aérea. Altitud del GPS del track: 3.055 m.",
   "foto": "inf-occidental",
-  "pie": "La cresta, con un mojón y vistas lejanas."
+  "pie": "La cresta, con un mojón y vistas lejanas.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "inf-ori",
@@ -585,7 +652,12 @@
   "lon": -0.259116,
   "nota": "Cima del Infierno Oriental. Altitud del GPS del track: 3.069 m.",
   "foto": "w-inf-ori",
-  "pie": "Vista desde el Infierno Oriental sobre un ibón."
+  "pie": "Vista desde el Infierno Oriental sobre un ibón.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "collado-pondiellos",
@@ -596,7 +668,12 @@
   "lon": -0.259624,
   "nota": "Collado por el que se baja de la cresta. Altitud del GPS del track: 2.807 m.",
   "foto": "w-collado-pondiellos",
-  "pie": "Los ibones de Pondiellos desde el collado."
+  "pie": "Los ibones de Pondiellos desde el collado.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "inf-canal",
@@ -607,7 +684,12 @@
   "lon": -0.250952,
   "nota": "Canal bonita de la bajada. Altitud del GPS del track: 2.462 m.",
   "foto": "inf-canal",
-  "pie": "Un tramo de roca de la bajada, con gente al fondo."
+  "pie": "Un tramo de roca de la bajada, con gente al fondo.",
+  "picos": [
+   "infiernos",
+   "infierno-occidental",
+   "infierno-oriental"
+  ]
  },
  {
   "id": "fuente-laguna",
@@ -619,7 +701,9 @@
   "nota": "Fuente termal cerca del final del recorrido. Altitud del GPS del track: 1.660 m.",
   "picos": [
    "infiernos",
-   "garmo"
+   "garmo",
+   "infierno-occidental",
+   "infierno-oriental"
   ],
   "foto": "w-fuente-laguna",
   "pie": "La fuente termal de La Laguna."
