@@ -472,7 +472,7 @@
         "foto": "med-astorg",
         "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
       },
-      "curiosidad": "Las fuentes la dan entre 3.354 y 3.355 m, casi a la misma altura que el vecino Pico Maldito, con el que forma la cresta. Las fuentes difieren en la cifra."
+      "curiosidad": "Lleva el nombre del conde René d'Astorg, que la subió el 9 de julio de 1901 con Henri Brulle y los guías Célestin Passet y François Bernat-Salles (Beraldi sitúa la salida el día 8). Es el punto más alto de la Cresta del Medio y, según Wikipedia, se escaló unos 60 años después del Aneto."
     },
     {
       "macizo": "ane",
@@ -504,7 +504,7 @@
         "foto": "med-maldito",
         "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
       },
-      "curiosidad": "Su nombre evoca al de la Maladeta («montes malditos»), por el respeto que imponían estos hielos; las fuentes difieren, y lo escriben de varias formas (Maldito, Maudit, Maleït)."
+      "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio."
     },
     {
       "macizo": "ane",
@@ -532,7 +532,7 @@
       "descripcion": "Cumbre intermedia de la cresta, entre la Punta de Astorg y el Pico Coronas. Se llega con el flanqueo de un terreno muy roto.",
       "foto": "medio",
       "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-      "curiosidad": "Su nombre describe su posición: queda en medio de la cresta, entre el Maldito y el Pico Coronas."
+      "curiosidad": "Su nombre describe su posición: es la cumbre central de la cresta que une el Aneto y la Maladeta, por eso toda la travesía se llama Cresta del Medio. No he encontrado una fuente fiable sobre su primera ascensión."
     },
     {
       "macizo": "ane",
@@ -560,7 +560,7 @@
       "descripcion": "Última cumbre importante de la cresta antes del Collado de Coronas, que lo separa del Aneto. Desde aquí se baja por el glaciar de Coronas.",
       "foto": "coronas",
       "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-      "curiosidad": "Los nombres «Coronas» y «Corones» (en aranés) son el mismo: el valle, los ibones, el collado y el pico comparten raíz. Las fuentes dan 3.293 o 3.297 m."
+      "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto."
     }
   ]
 }
