@@ -41,10 +41,14 @@ def stitch(ways):   # une tramos abiertos de un multipolígono en anillos cerrad
         if r[0] == r[-1] and len(r) > 3: rings.append(r[:-1])
     return rings
 
+# Nombres que OpenStreetMap no trae, verificados en otras fuentes (id OSM -> nombre)
+NOMBRES_EXTRA = {49179050: 'Ibón Medio de Coronas'}   # el mayor de los ibones de Coronas, 5,1 ha, 2.735 m (lacsdespyrenees.com)
+
 pts = lambda g: [(round(p['lon'], 5), round(p['lat'], 5)) for p in g]
 out = []; vistos = set()
 for e in get()['elements']:
     t = e.get('tags', {}); nombre = t.get('name') or t.get('name:es') or None
+    nombre = NOMBRES_EXTRA.get(e['id'], nombre)
     nombre = {"Barage d'Ossoue": "Barrage d'Ossoue"}.get(nombre, nombre)   # errata de OpenStreetMap
     anillos = []
     if e['type'] == 'way' and len(e.get('geometry', [])) > 3 and e['geometry'][0] == e['geometry'][-1]: anillos = [pts(e['geometry'])[:-1]]
