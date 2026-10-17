@@ -93,5 +93,59 @@
   "fuente": "la ficha de Furgoxo en Wikiloc",
   "w": 894,
   "h": 673
+ },
+ "ossoue-lago": {
+  "archivo": "Lac d'Ossoue (Hautes-Pyrénées) 1.jpg",
+  "autor": "Sotos",
+  "licencia": "CC BY 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Lac_d%27Ossoue_(Hautes-Pyr%C3%A9n%C3%A9es)_1.jpg",
+  "w": 800,
+  "h": 520
+ },
+ "ossoue-glaciar-vista": {
+  "archivo": "Ossoue Glacier Vignemale Pyrennes.jpg",
+  "autor": "Sébastien D'ARCO",
+  "licencia": "CC BY 2.5",
+  "licencia_url": "https://creativecommons.org/licenses/by/2.5",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ossoue_Glacier_Vignemale_Pyrennes.jpg",
+  "w": 800,
+  "h": 193
+ },
+ "ossoue-glaciar": {
+  "archivo": "Massif du Vignemale et glacier d'Ossoue depuis le plateau des Cardous.jpg",
+  "autor": "Guillaume Baviere",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Massif_du_Vignemale_et_glacier_d%27Ossoue_depuis_le_plateau_des_Cardous.jpg",
+  "w": 800,
+  "h": 484
+ },
+ "ossoue-serac": {
+  "archivo": "Séracs du glacier d'Ossoue devant le Petit Vignemale - Fonds Trutat - MHNT.PHa.138.b26.008.jpg",
+  "autor": "Eugène Trutat (Museo de Historia Natural de Toulouse)",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:S%C3%A9racs_du_glacier_d%27Ossoue_devant_le_Petit_Vignemale_-_Fonds_Trutat_-_MHNT.PHa.138.b26.008.jpg",
+  "w": 800,
+  "h": 588
+ },
+ "russell": {
+  "archivo": "Villa Russell - Henry Russell et ses guides posant devant le grottes au Vignemale - btv1b10581617p.jpg",
+  "autor": "fotógrafo desconocido (BnF Gallica)",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Villa_Russell_-_Henry_Russell_et_ses_guides_posant_devant_le_grottes_au_Vignemale_-_btv1b10581617p.jpg",
+  "w": 800,
+  "h": 605
+ },
+ "baysellance": {
+  "archivo": "Refugi de Baysellance i Vinhamala al fons.jpg",
+  "autor": "Santiago Perdigó",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Refugi_de_Baysellance_i_Vinhamala_al_fons.jpg",
+  "w": 800,
+  "h": 328
  }
 }

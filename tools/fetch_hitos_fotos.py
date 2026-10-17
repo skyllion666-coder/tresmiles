@@ -7,6 +7,12 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 UA = {'User-Agent': 'tresmiles-web/1.0 (proyecto educativo)'}
 FOTOS = {
+    'ossoue-lago': "Lac d'Ossoue (Hautes-Pyrénées) 1.jpg",
+    'ossoue-glaciar-vista': "Ossoue Glacier Vignemale Pyrennes.jpg",
+    'ossoue-glaciar': "Massif du Vignemale et glacier d'Ossoue depuis le plateau des Cardous.jpg",
+    'ossoue-serac': "Séracs du glacier d'Ossoue devant le Petit Vignemale - Fonds Trutat - MHNT.PHa.138.b26.008.jpg",
+    'russell': 'Villa Russell - Henry Russell et ses guides posant devant le grottes au Vignemale - btv1b10581617p.jpg',
+    'baysellance': 'Refugi de Baysellance i Vinhamala al fons.jpg',
     'arriel-bajo': "L'ivó d'Arriel Bajo voltat de cims.jpeg",
 }
 def get(u, tries=8):

@@ -249,7 +249,8 @@
   "tipo": "lugar",
   "lat": 42.757286,
   "lon": -0.094033,
-  "nota": "Punto de partida del recorrido, con panel de información. Altitud del GPS del track: 1.843 m."
+  "nota": "Punto de partida del recorrido, con panel de información. Altitud del GPS del track: 1.843 m.",
+  "foto": "ossoue-lago"
  },
  {
   "id": "ossoue-llanos",
@@ -285,7 +286,8 @@
   "tipo": "lugar",
   "lat": 42.77554,
   "lon": -0.11938,
-  "nota": "Desde aquí se ve por primera vez el glaciar. Altitud del GPS del track: 2.369 m."
+  "nota": "Desde aquí se ve por primera vez el glaciar. Altitud del GPS del track: 2.369 m.",
+  "foto": "ossoue-glaciar-vista"
  },
  {
   "id": "grottes-belleveu",
@@ -303,7 +305,9 @@
   "tipo": "paso",
   "lat": 42.775488,
   "lon": -0.122618,
-  "nota": "Bifurcación hacia el refugio de Baysellance. Altitud del GPS del track: 2.442 m."
+  "nota": "Bifurcación hacia el refugio de Baysellance. Altitud del GPS del track: 2.442 m.",
+  "foto": "baysellance",
+  "pie": "El refugio de Baysellance, con el Vignemale al fondo."
  },
  {
   "id": "entrada-glaciar",
@@ -312,7 +316,9 @@
   "tipo": "paso",
   "lat": 42.772923,
   "lon": -0.13121,
-  "nota": "Aquí se calzan los crampones. Altitud del GPS del track: 2.688 m."
+  "nota": "Aquí se calzan los crampones. Altitud del GPS del track: 2.688 m.",
+  "foto": "ossoue-glaciar",
+  "pie": "El glaciar de Ossoue con el macizo del Vignemale al fondo."
  },
  {
   "id": "glaciar-exigente",
@@ -321,7 +327,9 @@
   "tipo": "paso",
   "lat": 42.772719,
   "lon": -0.135275,
-  "nota": "Tramo más exigente de la travesía del glaciar. Altitud del GPS del track: 2.753 m."
+  "nota": "Tramo más exigente de la travesía del glaciar. Altitud del GPS del track: 2.753 m.",
+  "foto": "ossoue-serac",
+  "pie": "Una fotografía antigua de Eugène Trutat: los séracs del glaciar de Ossoue. Desde entonces el glaciar ha retrocedido mucho."
  },
  {
   "id": "vig-grottes-russell",
@@ -330,7 +338,9 @@
   "tipo": "lugar",
   "lat": 42.772186,
   "lon": -0.145013,
-  "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m."
+  "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m.",
+  "foto": "russell",
+  "pie": "Henry Russell y sus guías posando ante las grutas, en una fotografía antigua."
  },
  {
   "id": "base-vignemale",

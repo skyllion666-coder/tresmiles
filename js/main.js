@@ -197,7 +197,7 @@ async function boot() {
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
@@ -281,6 +281,10 @@ async function boot() {
   qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = listUl.querySelector('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } } e.stopPropagation(); if (e.key === 'Escape') setList(false); });
   listUl.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } });
   document.addEventListener('pointerdown', (e) => { if (!e.target.closest('#dock')) setList(false); });
+  // el panel de filtros se cierra al tocar fuera, al abrir una cumbre o el selector
+  const cierraFiltros = () => { $('#filters').hidden = true; $('#btn-filters').setAttribute('aria-expanded', 'false'); };
+  document.addEventListener('pointerdown', (e) => { if (!$('#filters').hidden && !e.target.closest('#filters, #btn-filters')) cierraFiltros(); });
+  listBtn.addEventListener('click', cierraFiltros);
 
   // — ficha —
   const fichaEl = $('#ficha'), fichaBody = $('#ficha-body');
@@ -463,7 +467,7 @@ async function boot() {
   }
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { $('#filters').hidden = true; } else closeFicha(); } });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
   const goHome = () => { pararVuelo(false); S.active = null; pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { closeFicha(); goHome(); } });
@@ -523,7 +527,7 @@ async function boot() {
       <ul>${Object.values(rutas).flat().map((R) => `<li>${esc(R.ruta.nombre)}: vista previa orientativa del track de <a href="${esc(R.ruta.autorUrl)}" target="_blank" rel="noopener">${esc(R.ruta.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(R.ruta.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de aldaieta y de atiempo (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
-      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
       <h3>Seguridad</h3>
