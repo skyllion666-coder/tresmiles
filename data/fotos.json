@@ -223,5 +223,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Pico_Argualas.jpg",
   "w": 680,
   "h": 800
+ },
+ "frondiellas": {
+  "archivo": "Cabana de pastor amb el Frondella i el Balaïtous al fons.jpeg",
+  "autor": "Juli Soler i Santaló",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Cabana_de_pastor_amb_el_Frondella_i_el_Bala%C3%AFtous_al_fons.jpeg",
+  "w": 1024,
+  "h": 746
+ },
+ "abadias": {
+  "archivo": "Maladeta pirineu.JPG",
+  "autor": "Aimaras",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Maladeta_pirineu.JPG",
+  "w": 1400,
+  "h": 806
  }
 }

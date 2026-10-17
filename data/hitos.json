@@ -8,7 +8,11 @@
   "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido.",
   "foto": "respomuso",
   "pico": "balaitus",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "balaitus",
+   "frondiellas"
+  ]
  },
  {
   "id": "cueva",
@@ -28,7 +32,11 @@
   "lon": -0.29447,
   "nota": "Aquí arranca la travesía de la Gran Diagonal. Altitud del GPS del track: 2.862 m.",
   "foto": "diagonal",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "picos": [
+   "balaitus",
+   "frondiellas"
+  ]
  },
  {
   "id": "ibon-chelau",
@@ -2311,5 +2319,193 @@
   "lat": 42.766425,
   "lon": -0.266711,
   "nota": "Punta final de la cresta, junto al Argualas. Altitud del GPS del track: 3.017 m."
+ },
+ {
+  "id": "fro-vistas",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Vistas bajo la cima",
+  "tipo": "lugar",
+  "lat": 42.831125,
+  "lon": -0.291589,
+  "nota": "Último tramo antes de la cima, con vistas a Respomuso. Altitud del GPS del track: 2.941 m.",
+  "foto": "fro-vistas",
+  "pie": "El embalse de Respomuso y las cumbres del Pirineo desde la cresta."
+ },
+ {
+  "id": "fro-cima",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Pico de la Frondella",
+  "tipo": "cima",
+  "lat": 42.832748,
+  "lon": -0.290547,
+  "nota": "Cumbre de la Frondiella (3.071 m según OpenStreetMap). Altitud del GPS del track: 3.047 m.",
+  "foto": "fro-cima",
+  "pie": "La cima de la Frondiella, con nieve en las laderas."
+ },
+ {
+  "id": "fro-arriel-alto",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Ibón de Arriel Alto",
+  "tipo": "ibon",
+  "lat": 42.835457,
+  "lon": -0.31517,
+  "nota": "Ibón en la subida desde Arriel. Altitud del GPS del track: 2.230 m.",
+  "foto": "fro-arriel-alto",
+  "pie": "El ibón de Arriel Alto, con las cumbres al fondo."
+ },
+ {
+  "id": "fro-arriel-bajo",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Ibón Arriel Bajo",
+  "tipo": "ibon",
+  "lat": 42.831509,
+  "lon": -0.31723,
+  "nota": "Ibón al comienzo de la subida. Altitud del GPS del track: 2.169 m.",
+  "foto": "fro-arriel-bajo",
+  "pie": "El ibón de Arriel Bajo, tranquilo y reflejando el cielo."
+ },
+ {
+  "id": "fro-central",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Frondella Central",
+  "tipo": "cima",
+  "lat": 42.832168,
+  "lon": -0.292803,
+  "nota": "Cumbre vecina, a pocos pasos de la Frondiella. Altitud del GPS del track: 3.045 m."
+ },
+ {
+  "id": "fro-cruce",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Cruce de bajada hacia Respomuso",
+  "tipo": "paso",
+  "lat": 42.832025,
+  "lon": -0.292408,
+  "nota": "Punto donde la ruta deja la cresta y baja hacia el refugio de Respomuso. Altitud del GPS del track: 3.037 m."
+ },
+ {
+  "id": "fro-parking",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Parking de La Sarra",
+  "tipo": "lugar",
+  "lat": 42.797224,
+  "lon": -0.332342,
+  "nota": "Punto de partida y de llegada del recorrido. Altitud del GPS del track: 1.438 m.",
+  "inicio": true
+ },
+ {
+  "id": "fro-onso",
+  "pico": "frondiellas",
+  "picos": [
+   "frondiellas"
+  ],
+  "nombre": "Paso del Onso",
+  "tipo": "paso",
+  "lat": 42.818031,
+  "lon": -0.336263,
+  "nota": "Paso en la subida por el valle de Arriel. Altitud del GPS del track: 1.646 m."
+ },
+ {
+  "id": "aba-besurta",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "La Besurta",
+  "tipo": "lugar",
+  "lat": 42.678859,
+  "lon": 0.649867,
+  "nota": "Punto de partida del recorrido, en el valle de Benasque. Altitud del GPS del track: 1.900 m.",
+  "inicio": true,
+  "foto": "aba-besurta",
+  "pie": "El valle de la Besurta, con el Pico de Aneto al fondo."
+ },
+ {
+  "id": "aba-forau",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "Forau d'Aigualluts",
+  "tipo": "lugar",
+  "lat": 42.668385,
+  "lon": 0.665823,
+  "nota": "Sumidero donde el agua del Aneto desaparece bajo tierra. Altitud del GPS del track: 2.020 m.",
+  "foto": "aba-forau",
+  "pie": "El camino hacia el Forau d'Aigualluts, con la cresta de la Maladeta."
+ },
+ {
+  "id": "aba-plan",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "Plan d'Aigualluts",
+  "tipo": "lugar",
+  "lat": 42.664177,
+  "lon": 0.66913,
+  "nota": "Llano glaciar que se cruza antes de subir al Salterillo. Altitud del GPS del track: 2.040 m.",
+  "foto": "aba-plan",
+  "pie": "El Plan d'Aigualluts y la ladera de piedra del macizo."
+ },
+ {
+  "id": "aba-salterillo",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "Ibón del Salterillo",
+  "tipo": "ibon",
+  "lat": 42.654097,
+  "lon": 0.65821,
+  "nota": "Ibón del Salterillo, compartido con la ruta del Aneto. Altitud del GPS del track: 2.480 m.",
+  "foto": "aba-salterillo",
+  "pie": "El Ibón del Salterillo al amanecer."
+ },
+ {
+  "id": "aba-collado",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "Collado Maldito",
+  "tipo": "paso",
+  "lat": 42.641903,
+  "lon": 0.639714,
+  "nota": "Collado bajo el Abadías, con nieve en verano. Altitud del GPS del track: 3.204 m.",
+  "foto": "aba-collado",
+  "pie": "El glaciar al pie del Collado Maldito."
+ },
+ {
+  "id": "aba-cima",
+  "pico": "abadias",
+  "picos": [
+   "abadias"
+  ],
+  "nombre": "Cima del Pico Abadías",
+  "tipo": "cima",
+  "lat": 42.643228,
+  "lon": 0.638484,
+  "nota": "Cumbre del Pico Abadías (3.279 m según OpenStreetMap, 3.282 m según el track). Altitud del GPS del track: 3.255 m."
  }
 ]

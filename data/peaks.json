@@ -24,7 +24,9 @@
     "lliterola",
     "russell",
     "algas",
-    "argualas"
+    "argualas",
+    "frondiellas",
+    "abadias"
   ],
   "macizos": [
     {
@@ -846,6 +848,70 @@
         "pie": "La cima del Argualas."
       },
       "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m."
+    },
+    {
+      "id": "frondiellas",
+      "nombre": "Frondella (Frondiellas)",
+      "alias": "Frondiellas · Punta Alta de las Frondiellas",
+      "altitud": 3071,
+      "otras": "Otras fuentes: 3.055 y 3.062 m",
+      "macizo": "bal",
+      "frontera": true,
+      "lat": 42.832748,
+      "lon": -0.290547,
+      "acceso": "Valle de Tena · embalse de La Sarra (Sallent de Gállego)",
+      "ruta": "Parking de La Sarra → ibones de Arriel → Frondella → cruce de bajada → refugio de Respomuso → La Sarra",
+      "desnivel": "≈ 1.620 m desde La Sarra (≈ 20 km, circuito)",
+      "dificultad": "alta",
+      "grado": "PD · cresta con pedreras",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Conjunto de cuatro cumbres unidas por una cresta, junto al Balaitús, en la frontera con Francia. La ruta circular sube por los ibones de Arriel y baja por el refugio de Respomuso.",
+      "foto": "frondiellas",
+      "pie": "La cabaña de pastor con las Frondellas y el Balaitús al fondo, en una fotografía antigua.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+        "texto": "Ver la ruta en Wikiloc: Frondellas desde La Sarra, circular por Arrieles y Respomuso, de Alfredo Barberan"
+      },
+      "rutas": [
+        "frondiellas-sarra"
+      ],
+      "fotoCima": {
+        "foto": "fro-cima",
+        "pie": "La cima de la Frondiella, con nieve en las laderas."
+      },
+      "curiosidad": "SummitPost la describe como un conjunto de cuatro cumbres unidas por una cresta, por eso se usa el plural. Según un blog, el topónimo lo puso el montañero francés Henri Le Breton y aparece por primera vez en los diarios de Jean Arlaud, en 1932. Según Mendikat, la Frondella Oeste se subió por primera vez en 1906, por Louis Robach. Las alturas varían mucho de una fuente a otra."
+    },
+    {
+      "id": "abadias",
+      "nombre": "Pico Abadías",
+      "alias": "Roca de Cregüeña · Tuca d'Abadías",
+      "altitud": 3279,
+      "otras": "Otras fuentes: 3.271 y 3.272 m",
+      "macizo": "ane",
+      "frontera": false,
+      "lat": 42.643228,
+      "lon": 0.638484,
+      "acceso": "Benasque · La Besurta",
+      "ruta": "La Besurta → Forau d'Aigualluts → Plan d'Aigualluts → ibón del Salterillo → Collado Maldito → Pico Abadías",
+      "desnivel": "≈ 1.400 m desde La Besurta (≈ 18 km ida y vuelta)",
+      "dificultad": "alta",
+      "grado": "PD · glaciar y pedreras, crampones a principios de verano",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Cumbre sur de la Maladeta, sobre el valle de Cregüeña. Se sube desde La Besurta por el Plan d'Aigualluts y el Collado Maldito, con tramo de glaciar.",
+      "foto": "abadias",
+      "pie": "El macizo de la Maladeta nevado.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+        "texto": "Ver la ruta en Wikiloc: Pico Abadías (3.279 m) (Valle de Benasque), de albertrek"
+      },
+      "rutas": [
+        "abadias-besurta"
+      ],
+      "fotoCima": {
+        "foto": "aba-collado",
+        "pie": "El glaciar al pie del Collado Maldito."
+      },
+      "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente."
     }
   ]
 }

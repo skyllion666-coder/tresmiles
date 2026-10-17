@@ -1442,5 +1442,104 @@
   "w": 1000,
   "h": 752,
   "pos": "50% 50%"
+ },
+ "fro-vistas": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "fro-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "fro-arriel-alto": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "fro-arriel-bajo": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "aba-besurta": {
+  "archivo": "foto del autor del track",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
+ },
+ "aba-forau": {
+  "archivo": "foto del autor del track",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
+ },
+ "aba-plan": {
+  "archivo": "foto del autor del track",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "aba-salterillo": {
+  "archivo": "foto del autor del track",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
+ },
+ "aba-collado": {
+  "archivo": "foto del autor del track",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 666,
+  "pos": "50% 50%"
  }
 }
