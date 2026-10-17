@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { crearMontanero } from './montanero.js?v=3';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -24,11 +25,25 @@ export function crearRuta({ scene, geo, ruta }) {
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
   scene.add(mesh);
 
-  // punto que sigue al dedo sobre el perfil o a la cámara durante el vuelo
-  const marca = new THREE.Group();
-  marca.add(new THREE.Mesh(new THREE.SphereGeometry(30, 16, 12), new THREE.MeshBasicMaterial({ color: '#ffffff', fog: true })));
-  marca.add(new THREE.Mesh(new THREE.SphereGeometry(62, 16, 12), new THREE.MeshBasicMaterial({ color: '#ffa930', transparent: true, opacity: 0.38, depthWrite: false, fog: true })));
-  marca.visible = false; marca.renderOrder = 3; scene.add(marca);
+  // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta
+  const KM = 42;   // metros por unidad del muñeco (mide ~1,8): se escala además con la distancia de la cámara
+  const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6 }; };
+  const solo = mk({});
+  const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1)
+    mk({ chaqueta: '#d8362b', mochila: '#e8892b', mochilaTipo: 'grande', palos: 2 }),
+    mk({ chaqueta: '#2f6fb5', mochila: '#3a8f5a', pantalon: '#3a3a44', mochilaTipo: 'pequena', palos: 0 }),
+    mk({ chaqueta: '#e8b923', mochila: '#6a4a8f', pantalon: '#2f3b30', mochilaTipo: 'media', palos: 1 }),
+  ];
+  let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
+  function colocar(p, d, lat, andando) {
+    const a = en(d), b = en(d + 40), c = en(d - 40);
+    let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
+    const x = a.pos.x + dz * lat, z = a.pos.z - dx * lat;
+    p.h.position.set(x, geo.heightAt(x, z) + 4, z); p.h.rotation.y = Math.atan2(dx, dz);
+    p.m.pose(p.fase, andando ? 1 : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / L)) * 0.4);
+  }
+  const ver = () => { solo.h.visible = activo && cursorOn; for (const p of equipo) p.h.visible = activo && !cursorOn && !reducido; };
 
   let k = 1, activo = false, t0 = 0;
   const set = () => geom.setDrawRange(0, Math.floor(k * tub) * rad * 6);
@@ -69,15 +84,25 @@ export function crearRuta({ scene, geo, ruta }) {
   return {
     ruta, centro, extension, en, cercano, pasos,
     mostrar(v, { animar = true } = {}) {
-      activo = v; mesh.visible = v; if (!v) marca.visible = false;
-      if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); }
+      activo = v; mesh.visible = v; ver();
+      if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); dEquipo = 0; }
     },
     get visible() { return activo; },
-    update() { if (activo && k < 1) { k = Math.min(1, (performance.now() - t0) / 4500); set(); } },
-    escalar(cam) { if (marca.visible) marca.scale.setScalar(Math.min(5, Math.max(0.8, cam.distanceTo(marca.position) / 4500))); },
+    update(dt = 0.016) {
+      if (activo && k < 1) { k = Math.min(1, (performance.now() - t0) / 4500); set(); }
+      if (!activo) return;
+      if (cursorOn) { const anda = performance.now() - ultimoCursor < 250; if (anda) solo.fase += dt * 11; colocar(solo, dCursor, 0, anda); }
+      else if (!reducido) {
+        dEquipo += dt * 170; if (dEquipo > ruta.distancia + 500) dEquipo = 0;
+        equipo.forEach((p, i) => { const d = dEquipo - i * 110; p.fase += dt * 10; colocar(p, Math.max(0, Math.min(ruta.distancia, d)), [0, 34, -34][i], d > 0 && d < ruta.distancia); });
+      }
+    },
+    escalar(cam) { for (const p of [solo, ...equipo]) if (p.h.visible) p.h.scale.setScalar(KM * (p === solo ? 3.4 : 1.7) * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500))); },
+    posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
-      if (d == null || !activo) { marca.visible = false; return; }
-      marca.position.copy(en(d).pos); marca.position.y += 30; marca.visible = true;
+      if (d == null || !activo) { cursorOn = false; ver(); return; }
+      if (Math.abs(d - dCursor) > 0.5) ultimoCursor = performance.now();
+      dCursor = d; cursorOn = true; ver(); colocar(solo, d, 0, false);
     },
     perfil() {
       const lin = ruta.puntos.map((p) => `${X(p[3]).toFixed(1)},${Y(p[2]).toFixed(1)}`).join(' ');
