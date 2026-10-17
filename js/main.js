@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=7';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=8';
 import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);
@@ -460,11 +460,12 @@ async function boot() {
   });
   setSun(0);
 
-  // — sonido (apagado por defecto; el navegador exige un gesto del usuario) —
+  // — sonido (activo desde el inicio; si el navegador lo bloquea, arranca con el primer toque) —
   const btnSound = $('#btn-sound');
   const pintaSonido = () => { btnSound.setAttribute('aria-pressed', sonido.on); btnSound.setAttribute('aria-label', sonido.on ? 'Silenciar el sonido ambiente' : 'Activar el sonido ambiente'); btnSound.classList.toggle('is-on', sonido.on); };
   btnSound.addEventListener('click', async () => { await sonido.set(!sonido.on); store.set('sonido', sonido.on ? '1' : '0'); pintaSonido(); });
   pintaSonido();
+  if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }   // suena desde el principio; el botón lo silencia y se recuerda
 
   // — brújula —
   const needle = $('#needle');

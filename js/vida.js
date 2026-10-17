@@ -119,7 +119,7 @@ export function crearAves({ scene, geo, centro }) {
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
 export function crearSonido() {
-  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null;
+  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false;
   const ruido = (c) => {
     const len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
     let b0 = 0, b1 = 0, b2 = 0;
@@ -133,15 +133,17 @@ export function crearSonido() {
     const fuente = () => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.start(0, Math.random() * 3); return s; };
     // viento: ruido rosa filtrado, con ráfagas lentas
     windF = ctx.createBiquadFilter(); windF.type = 'bandpass'; windF.frequency.value = 420; windF.Q.value = 0.6;
-    windGain = ctx.createGain(); windGain.gain.value = 0.5;
-    fuente().connect(windF).connect(windGain).connect(master);
+    windGain = ctx.createGain(); windGain.gain.value = 0.12;
+    const windMod = ctx.createGain(); windMod.gain.value = 0.75;
+    fuente().connect(windF).connect(windMod).connect(windGain).connect(master);
     const lfo = (rate, depth, target) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = rate; g.gain.value = depth; o.connect(g).connect(target); o.start(); };
-    lfo(0.11, 0.28, windGain.gain); lfo(0.07, 160, windF.frequency);
+    lfo(0.11, 0.25, windMod.gain); lfo(0.07, 160, windF.frequency);
     // agua: ruido más agudo y suave
     const wf = ctx.createBiquadFilter(); wf.type = 'bandpass'; wf.frequency.value = 2100; wf.Q.value = 0.8;
     waterGain = ctx.createGain(); waterGain.gain.value = 0;
-    fuente().connect(wf).connect(waterGain).connect(master);
-    lfo(0.35, 0.02, waterGain.gain);
+    const waterMod = ctx.createGain(); waterMod.gain.value = 0.8;
+    fuente().connect(wf).connect(waterMod).connect(waterGain).connect(master);
+    lfo(0.35, 0.2, waterMod.gain);
     // música de fondo: bucle propio (instrumentos de VSCO-2 CE, CC0)
     musicGain = ctx.createGain(); musicGain.gain.value = 1.0; musicGain.connect(master);
     fetch('audio/ambiente.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => {
@@ -177,7 +179,17 @@ export function crearSonido() {
     get on() { return on; },
     async set(v) {
       on = v;
-      if (v) { if (!ctx) montar(); await ctx.resume(); master.gain.setTargetAtTime(0.5, ctx.currentTime, 0.6); }
+      if (v) {
+        if (!ctx) montar();
+        master.gain.setTargetAtTime(0.5, ctx.currentTime, 0.6);
+        // sin gesto previo el navegador deja el audio en pausa: se reanuda con la primera interacción
+        ctx.resume().catch(() => {});
+        if (ctx.state !== 'running' && !esperando) {
+          esperando = true;
+          const ya = () => { esperando = false; if (on && ctx) ctx.resume().catch(() => {}); ['pointerdown', 'keydown', 'touchend'].forEach((e) => removeEventListener(e, ya, true)); };
+          ['pointerdown', 'keydown', 'touchend'].forEach((e) => addEventListener(e, ya, true));
+        }
+      }
       else if (ctx) master.gain.setTargetAtTime(0, ctx.currentTime, 0.3);
     },
     // altura: m sobre el terreno; lago: distancia en m al ibón más cercano
@@ -186,7 +198,7 @@ export function crearSonido() {
       alturaAct = alturaSobreSuelo;
       const alto = Math.min(1, alturaSobreSuelo / 9000);
       windGain.gain.setTargetAtTime(0.12 + 0.35 * alto, ctx.currentTime, 0.5);
-      waterGain.gain.setTargetAtTime(0.0125 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
+      waterGain.gain.setTargetAtTime(0.012 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
     },
   };
 }
