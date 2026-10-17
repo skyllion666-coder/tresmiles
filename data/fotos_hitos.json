@@ -1607,5 +1607,71 @@
   "w": 750,
   "h": 1000,
   "pos": "50% 50%"
+ },
+ "val-subida": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "val-bajo": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "val-cresta": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "val-ibon-alto": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "val-tuca": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "val-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

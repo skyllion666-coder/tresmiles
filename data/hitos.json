@@ -2616,5 +2616,114 @@
   "lat": 42.700753,
   "lon": 0.123454,
   "nota": "Collado de la Munia, que da acceso a la cresta (OpenStreetMap). Altitud del GPS del track: 2.542 m."
+ },
+ {
+  "id": "val-presa",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Presa de Llauset",
+  "tipo": "lugar",
+  "lat": 42.581585,
+  "lon": 0.696173,
+  "nota": "Punto de partida y de llegada, junto al embalse de Llauset. Altitud del GPS del track: 2.197 m.",
+  "inicio": true
+ },
+ {
+  "id": "val-llauset",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Embalse de Llauset",
+  "tipo": "ibon",
+  "lat": 42.587024,
+  "lon": 0.679582,
+  "nota": "Embalse a cuyo borde se camina al comienzo y al final. Altitud del GPS del track: 2.228 m."
+ },
+ {
+  "id": "val-subida",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Subida por la pedrera",
+  "tipo": "paso",
+  "lat": 42.589094,
+  "lon": 0.656912,
+  "nota": "Tramo de pedrera en la subida hacia la cresta. Altitud del GPS del track: 2.632 m.",
+  "foto": "val-subida",
+  "pie": "La pedrera de la subida, con un arroyo de deshielo."
+ },
+ {
+  "id": "val-bajo",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Ibones bajo la cresta",
+  "tipo": "ibon",
+  "lat": 42.59121,
+  "lon": 0.649923,
+  "nota": "Valle de Vallibierna visto desde la subida. Altitud del GPS del track: 2.866 m.",
+  "foto": "val-bajo",
+  "pie": "La subida con el valle abajo, cerca de los 2.870 m."
+ },
+ {
+  "id": "val-cresta",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Cresta hacia el Vallibierna",
+  "tipo": "paso",
+  "lat": 42.593869,
+  "lon": 0.652774,
+  "nota": "Cresta que une la Tuca de Culebres con el Pico Vallibierna. Altitud del GPS del track: 3.036 m.",
+  "foto": "val-cresta",
+  "pie": "La cresta de piedra caliza entre las dos cumbres."
+ },
+ {
+  "id": "val-ibon-alto",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Ibón alto de Vallibierna",
+  "tipo": "ibon",
+  "lat": 42.595864,
+  "lon": 0.660967,
+  "nota": "Ibón de Vallibierna, a la vista desde la cresta. Altitud del GPS del track: 2.803 m.",
+  "foto": "val-ibon-alto",
+  "pie": "El ibón de Vallibierna visto desde la cresta, rodeado de pedreras."
+ },
+ {
+  "id": "val-tuca",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Cima de la Tuca de Culebres",
+  "tipo": "cima",
+  "lat": 42.593929,
+  "lon": 0.65162,
+  "nota": "Una de las dos cumbres, a unos 3.040 m según el track. Altitud del GPS del track: 3.040 m.",
+  "foto": "val-tuca",
+  "pie": "Cumbre de la Tuca de Culebres (3.062 m), con su cresta sinuosa."
+ },
+ {
+  "id": "val-cima",
+  "pico": "vallibierna",
+  "picos": [
+   "vallibierna"
+  ],
+  "nombre": "Cima del Pico Vallibierna",
+  "tipo": "cima",
+  "lat": 42.593919,
+  "lon": 0.652059,
+  "nota": "Cumbre más alta del macizo. Altitud del GPS del track: 3.042 m.",
+  "foto": "val-cima",
+  "pie": "Cumbre del Pico Vallibierna (3.067 m)."
  }
 ]

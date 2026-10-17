@@ -27,7 +27,8 @@
     "argualas",
     "frondiellas",
     "abadias",
-    "munia"
+    "munia",
+    "vallibierna"
   ],
   "macizos": [
     {
@@ -945,6 +946,38 @@
         "pie": "El cartel de la cima de la Munia."
       },
       "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid."
+    },
+    {
+      "id": "vallibierna",
+      "nombre": "Pico Vallibierna",
+      "alias": "Ballibierna · Tuca de Culebres",
+      "altitud": 3067,
+      "otras": "Otras fuentes: 3.059 m",
+      "macizo": "ane",
+      "frontera": false,
+      "lat": 42.5939,
+      "lon": 0.6521,
+      "acceso": "Ribagorza · presa de Llauset (Aneto)",
+      "ruta": "Presa de Llauset → valle de Vallibierna → cresta → Tuca de Culebres → Pico Vallibierna → bajada por los ibones",
+      "desnivel": "≈ 1.100 m desde la presa de Llauset (≈ 12 km, circuito)",
+      "dificultad": "alta",
+      "grado": "PD · cresta con el «Paso del Caballo»",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Macizo calizo al sur de la Maladeta formado por el Pico Vallibierna (3.067 m) y la Tuca de Culebres (3.062 m), unidos por una cresta afilada. La ruta circular parte de la presa de Llauset.",
+      "foto": "vallibierna",
+      "pie": "El Pico Vallibierna desde la zona alta.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+        "texto": "Ver la ruta en Wikiloc: Tuca de Culebras (3062 m) y Pico Vallibierna (3067 m) desde la presa de Llauset, de ᗩᒪTEᑕᗩ"
+      },
+      "rutas": [
+        "vallibierna-llauset"
+      ],
+      "fotoCima": {
+        "foto": "val-cima",
+        "pie": "Cumbre del Pico Vallibierna."
+      },
+      "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura."
     }
   ]
 }
