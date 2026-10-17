@@ -340,8 +340,8 @@
   "lat": 42.772186,
   "lon": -0.145013,
   "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m.",
-  "foto": "placa-russell",
-  "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta."
+  "foto": "russell",
+  "pie": "Henry Russell y sus guías posando ante las grutas, en una fotografía antigua."
  },
  {
   "id": "base-vignemale",
@@ -368,6 +368,8 @@
   "tipo": "vivac",
   "lat": 42.773719,
   "lon": -0.147464,
-  "nota": "Abrigo bajo roca cerca de la cima. Altitud del GPS del track: 3.256 m."
+  "nota": "Abrigo bajo roca cerca de la cima. Altitud del GPS del track: 3.256 m.",
+  "foto": "paradis",
+  "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta."
  }
 ]
