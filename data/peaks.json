@@ -40,7 +40,8 @@
   "alba",
   "diente-alba",
   "araguells",
-  "espalda-aneto"
+  "espalda-aneto",
+  "cerbillona"
  ],
  "macizos": [
   {
@@ -1374,6 +1375,38 @@
     "pie": "La cima de la Espalda de Aneto, entre bloques de granito."
    },
    "curiosidad": "La enciclopedia catalana describe la cresta principal que baja al sureste desde el Aneto como una línea que se hunde un poco hacia la Espatlla d’Aneto (3.350 m) antes de caer en picado hacia la brecha de Tempestades. La Aguja Daviú, vecina, figura con 3.350 m en SummitPost, pero algunas fichas de Wikiloc le dan 3.363–3.364 m: las fuentes difieren."
+  },
+  {
+   "id": "cerbillona",
+   "nombre": "Pico Cerbillona",
+   "alias": "Pic de Cerbillona",
+   "altitud": 3247,
+   "otras": "3.252 m (GPS del track)",
+   "macizo": "vig",
+   "frontera": true,
+   "lat": 42.7692,
+   "lon": -0.149805,
+   "acceso": "Valle de Bujaruelo · San Nicolás de Bujaruelo",
+   "ruta": "San Nicolás de Bujaruelo → valle de Ordiso → cabaña de Cerbillonar → La Labaza → Pic Central y Col Lady Lister → Cerbillona → Vignemale",
+   "desnivel": "≈ 1.900–2.300 m desde Bujaruelo (14 km ida y vuelta)",
+   "dificultad": "muy-alta",
+   "grado": "AD · glaciar, canal y cresta",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza del macizo del Vignemale, entre el Pic Central y el Clot de la Hount. Desde Bujaruelo se llega por el valle de Ordiso y la ladera de la Labaza; la ruta lleva al col de Lady Lister y enlaza con el Vignemale. Exige material de glaciar y mucha experiencia.",
+   "foto": "cerbillona",
+   "pie": "La Cerbillona vista desde Ordiso.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/refugio-de-bujaruelo-cabana-de-ordiso-pico-central-cerbillona-vignemale-147193700",
+    "texto": "Ver la ruta en Wikiloc: Bujaruelo, Pico Central, Cerbillona y Vignemale, de Vero Yarza"
+   },
+   "rutas": [
+    "cerbillona-bujaruelo"
+   ],
+   "fotoCima": {
+    "foto": "cer-central",
+    "pie": "El Pic Central, con nieve en su cumbre."
+   },
+   "curiosidad": "Según SummitPost, el collado que separa la Cerbillona del Pic Central se llama Col Lady Lister porque una mujer con ese nombre fue la primera en escalar el macizo por este punto, a la salida del famoso corredor de la Moskowa. Cerca del collado de Cerbillona están las Grutas Russell, donde el pirineísta Henry Russell se instalaba por temporadas."
   }
  ]
 }

@@ -392,7 +392,11 @@
   "lon": -0.147728,
   "nota": "Aquí se quitan los crampones, al pie de la parte rocosa. Altitud del GPS del track: 3.172 m.",
   "foto": "vig-base-sol",
-  "pie": "El Gran Vignemale al amanecer."
+  "pie": "El Gran Vignemale al amanecer.",
+  "picos": [
+   "vignemale",
+   "cerbillona"
+  ]
  },
  {
   "id": "vig-trepadas",
@@ -403,7 +407,11 @@
   "lon": -0.147306,
   "nota": "Comienzan las trepadas hacia la cima. Altitud del GPS del track: 3.204 m.",
   "foto": "w-vig-trepadas",
-  "pie": "Las trepadas de roca bajo el Vignemale."
+  "pie": "Las trepadas de roca bajo el Vignemale.",
+  "picos": [
+   "vignemale",
+   "cerbillona"
+  ]
  },
  {
   "id": "grotte-paradis",
@@ -414,7 +422,11 @@
   "lon": -0.147464,
   "nota": "Abrigo bajo roca cerca de la cima. Altitud del GPS del track: 3.256 m.",
   "foto": "paradis",
-  "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta."
+  "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta.",
+  "picos": [
+   "vignemale",
+   "cerbillona"
+  ]
  },
  {
   "id": "inf-parking",
@@ -3484,5 +3496,94 @@
   "nota": "Cumbre de 3.350 m según las guías; OpenStreetMap da 3.345 m. Altitud del GPS del track: 3.339 m.",
   "foto": "esp-cima",
   "pie": "La cima de la Espalda de Aneto, entre bloques de granito."
+ },
+ {
+  "id": "cer-bujaruelo",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "San Nicolás de Bujaruelo",
+  "tipo": "lugar",
+  "lat": 42.694445,
+  "lon": -0.107102,
+  "nota": "Punto de partida, junto al refugio de Bujaruelo. Altitud del GPS del track: 1.340 m.",
+  "inicio": true,
+  "foto": "cer-bujaruelo",
+  "pie": "El puente de piedra de San Nicolás de Bujaruelo."
+ },
+ {
+  "id": "cer-pradera",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Pradera de Laña Larga",
+  "tipo": "lugar",
+  "lat": 42.699589,
+  "lon": -0.115936,
+  "nota": "Pradera del camino por el valle de Ordiso."
+ },
+ {
+  "id": "cer-cabana",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Cabaña de Cerbillonar",
+  "tipo": "refugio",
+  "lat": 42.748606,
+  "lon": -0.152631,
+  "nota": "Cabaña de pastores que sirve de referencia en la subida. Altitud según OpenStreetMap."
+ },
+ {
+  "id": "cer-central",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Pic Central",
+  "tipo": "cima",
+  "lat": 42.768363,
+  "lon": -0.146563,
+  "nota": "Cumbre de 3.235 m según OpenStreetMap, entre el Vignemale y la Cerbillona.",
+  "foto": "cer-central",
+  "pie": "El Pic Central, con nieve en su cumbre."
+ },
+ {
+  "id": "cer-lister",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Col Lady Lister",
+  "tipo": "paso",
+  "lat": 42.768816,
+  "lon": -0.148373,
+  "nota": "Collado de unos 3.200 m entre el Pic Central y la Cerbillona."
+ },
+ {
+  "id": "cer-cima",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Pico Cerbillona",
+  "tipo": "cima",
+  "lat": 42.7692,
+  "lon": -0.149805,
+  "nota": "Cumbre de 3.247 m según OpenStreetMap."
+ },
+ {
+  "id": "cer-col",
+  "pico": "cerbillona",
+  "picos": [
+   "cerbillona"
+  ],
+  "nombre": "Col de Cerbillona",
+  "tipo": "paso",
+  "lat": 42.770913,
+  "lon": -0.15022,
+  "nota": "Collado de unos 3.195 m junto a la Cerbillona."
  }
 ]

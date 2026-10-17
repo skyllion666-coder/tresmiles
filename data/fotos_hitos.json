@@ -2045,5 +2045,25 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "cer-central": {
+  "archivo": "Pic Central.jpg",
+  "autor": "Bill kilgore",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pic_Central.jpg",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "cer-bujaruelo": {
+  "archivo": "PUENTE EN SAN NICOLAS DE BUJARUELO - panoramio.jpg",
+  "autor": "Manuel Velazquez",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:PUENTE_EN_SAN_NICOLAS_DE_BUJARUELO_-_panoramio.jpg",
+  "w": 1000,
+  "h": 664,
+  "pos": "50% 50%"
  }
 }
