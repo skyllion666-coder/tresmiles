@@ -7,7 +7,6 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 UA = {'User-Agent': 'tresmiles-web/1.0 (proyecto educativo)'}
 FOTOS = {
-    'respomuso': 'RefugioDeRespomuso20060814.jpg',
     'arriel-bajo': "L'ivó d'Arriel Bajo voltat de cims.jpeg",
     'gran-diagonal': 'Balaitús amb Gran Diagonal i estany Arriel Alto.png',
 }
@@ -18,7 +17,8 @@ def get(u, tries=8):
             print('  reintento', i + 1, e); time.sleep(20 * (i + 1))
     raise SystemExit('no se pudo descargar ' + u)
 clean = lambda x: re.sub('<[^>]+>', '', x).strip()
-out = {}
+fp = os.path.join(ROOT, 'data', 'fotos_hitos.json')
+out = json.load(open(fp, encoding='utf-8')) if os.path.exists(fp) else {}   # conserva las fotos propias
 for k, archivo in FOTOS.items():
     q = urllib.parse.urlencode(dict(action='query', format='json', titles='File:' + archivo, prop='imageinfo', iiprop='url|extmetadata', iiurlwidth=800))
     pg = list(json.loads(get('https://commons.wikimedia.org/w/api.php?' + q))['query']['pages'].values())[0]
@@ -31,4 +31,4 @@ for k, archivo in FOTOS.items():
                   pagina=ii['descriptionurl'], w=im.width, h=im.height)
     print(k, im.size, out[k]['licencia'], out[k]['autor'])
     time.sleep(3)
-json.dump(out, open(os.path.join(ROOT, 'data', 'fotos_hitos.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+json.dump(out, open(fp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
