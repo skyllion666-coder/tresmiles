@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=13';
+import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -178,8 +178,8 @@ async function boot() {
     if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
     el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em></b>`;
-    const cerca = Object.values(rutas).flat().map((R) => ({ R, ...R.cercano(q.x, q.z) })).filter((c) => c.metros < 220).sort((a, b) => a.metros - b.metros)[0];
-    if (cerca) el.querySelector('em').textContent += ` · km ${km(cerca.dist)} del recorrido`;
+    const R0 = Object.values(rutas).flat()[0], ps = R0 ? R0.pasos(q.x, q.z) : [];
+    if (ps.length) el.querySelector('em').textContent += ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`;
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
@@ -386,7 +386,7 @@ async function boot() {
     else R.mostrar(true, { animar: false });
     if (!S.plegada) plegar(true, { fly: false });
     S.flight = null; controls.enabled = false; S.shiftTo = viewShift();
-    S.vuelo = { R, d: 0, vel: R.ruta.distancia / 75, pos: camera.position.clone(), look: controls.target.clone(), dir: null, fin: 0 };
+    S.vuelo = { R, d: 0, vel: R.ruta.distancia / 25, pos: camera.position.clone(), look: controls.target.clone(), dir: null, fin: 0 };
     hud.hidden = false; btnVuelo.setAttribute('aria-pressed', 'true');
   }
   function pararVuelo(volver = true) {
@@ -405,7 +405,7 @@ async function boot() {
     if (_v.lengthSq() < 1) { if (!V.dir) _v.set(0, 0, -1); else _v.copy(V.dir); }
     _v.normalize(); V.dir = V.dir ? V.dir.lerp(_v, 1 - Math.exp(-dt * 1.4)).normalize() : _v.clone();
     _w.copy(a.pos).addScaledVector(V.dir, -1500); _w.y = Math.max(a.pos.y + 700, geo.heightAt(_w.x, _w.z) + 320);
-    const k = 1 - Math.exp(-dt * 2.2);
+    const k = 1 - Math.exp(-dt * 4);
     V.pos.lerp(_w, k); _l.copy(b.pos); _l.y -= 150; V.look.lerp(_l, k);
     camera.position.copy(V.pos); controls.target.copy(V.look); camera.lookAt(V.look);
     R.cursor(V.d);

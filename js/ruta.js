@@ -49,12 +49,24 @@ export function crearRuta({ scene, geo, ruta }) {
     return { metros: Math.sqrt(best), dist: dist[bi], ele: ruta.puntos[bi][2] };
   }
 
+  // todas las veces que el recorrido pasa a menos de `radio` m de un punto (subida y bajada), en orden
+  function pasos(x, z, radio = 220) {
+    const out = []; let cur = null;
+    for (let i = 0; i < pts.length; i++) {
+      const m = Math.hypot(pts[i].x - x, pts[i].z - z);
+      if (m > radio) { if (cur) { out.push(cur); cur = null; } continue; }
+      if (!cur) cur = { metros: m, dist: dist[i] }; else if (m < cur.metros) { cur.metros = m; cur.dist = dist[i]; }
+    }
+    if (cur) out.push(cur);
+    return out;
+  }
+
   const lo = Math.floor(ruta.min / 100) * 100, hi = Math.ceil(ruta.max / 100) * 100;
   const X = (m) => PL + (m / ruta.distancia) * (PW - PL - PR), Y = (e) => PT + (1 - (e - lo) / (hi - lo)) * (PH - PT - PB);
   const fmtKm = (m) => (m / 1000).toFixed(1).replace('.', ',');
 
   return {
-    ruta, centro, extension, en, cercano,
+    ruta, centro, extension, en, cercano, pasos,
     mostrar(v, { animar = true } = {}) {
       activo = v; mesh.visible = v; if (!v) marca.visible = false;
       if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); }
