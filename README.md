@@ -65,7 +65,7 @@ data/fotos_hitos.json autor, licencia y fuente de las fotos de los hitos
 data/rutas/           recorridos simplificados (autor y ficha de Wikiloc obligatorios)
 audio/ambiente.mp3    música de fondo (bucle de 90 s, composición propia con VSCO-2 CE, CC0)
 img/hitos/            fotos de los hitos
-data/lagos.json       contornos y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
+data/lagos.json       contornos (se regenera con tools/fetch_lagos.py) y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
 data/terrain/         alturas (u16, decímetros) y texturas Sentinel-2 (512 px y 1536 px por bloque)
 img/peaks/            fotos (Wikimedia Commons)
 vendor/three/         three.js (MIT) y OrbitControls
