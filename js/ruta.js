@@ -97,7 +97,7 @@ export function crearRuta({ scene, geo, ruta }) {
         equipo.forEach((p, i) => { const d = dEquipo - i * 110; p.fase += dt * 10; colocar(p, Math.max(0, Math.min(ruta.distancia, d)), [0, 34, -34][i], d > 0 && d < ruta.distancia); });
       }
     },
-    escalar(cam) { for (const p of [solo, ...equipo]) if (p.h.visible) p.h.scale.setScalar(KM * (p === solo ? 3.4 : 1.7) * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500))); },
+    escalar(cam) { for (const p of [solo, ...equipo]) if (p.h.visible) p.h.scale.setScalar(KM * (p === solo ? 2.55 : 1.275) * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500))); },
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }
