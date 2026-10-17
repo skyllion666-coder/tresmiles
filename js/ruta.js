@@ -40,7 +40,7 @@ export function crearRuta({ scene, geo, ruta }) {
     const a = en(d), b = en(d + 40), c = en(d - 40);
     let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
     const x = a.pos.x + dz * lat, z = a.pos.z - dx * lat;
-    p.h.position.set(x, Math.max(geo.heightAt(x, z), a.pos.y - 24) + 30, z);   // por encima del relieve dibujado (el nivel de detalle puede quedar más alto que la altura real) p.h.rotation.y = Math.atan2(dx, dz);
+    p.h.position.set(x, Math.max(geo.heightAt(x, z) + 30, a.pos.y + 13), z);   // los pies por encima del tubo de la ruta (radio 11 m) y del relieve dibujado   // por encima del relieve dibujado (el nivel de detalle puede quedar más alto que la altura real) p.h.rotation.y = Math.atan2(dx, dz);
     p.m.pose(p.fase, andando ? 1 : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / L)) * 0.4);
   }
   const ver = () => { solo.h.visible = activo && cursorOn; for (const p of equipo) p.h.visible = activo && !cursorOn && !reducido; };
