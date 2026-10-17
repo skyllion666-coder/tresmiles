@@ -1288,5 +1288,38 @@
   "w": 1000,
   "h": 667,
   "pos": "50% 50%"
+ },
+ "lli-blanco": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "lli-royo": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "lli-collado-sup": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
  }
 }

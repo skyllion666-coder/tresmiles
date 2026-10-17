@@ -20,7 +20,8 @@
     "llardaneta",
     "soum",
     "marbore",
-    "tallon"
+    "tallon",
+    "lliterola"
   ],
   "macizos": [
     {
@@ -718,6 +719,34 @@
         "tallon-goriz"
       ],
       "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente."
+    },
+    {
+      "id": "lliterola",
+      "nombre": "Tuca de Lliterola",
+      "alias": "Punta de Lliterola · Cresta de Lliterola",
+      "altitud": 3133,
+      "otras": "Otras fuentes: 3.095, 3.110 y 3.132 m",
+      "macizo": "prd",
+      "frontera": false,
+      "lat": 42.699,
+      "lon": 0.523,
+      "acceso": "Benasque · Llanos del Hospital (parking de Literola)",
+      "ruta": "Llanos del Hospital → Portal de Remuñé → Ibón Blanco → Collado Inferior → Aguja, Punta, Pico Royo y Tuca de Lliterola → Perdiguero → Hitos del Perdiguero → bajada por Literola",
+      "desnivel": "≈ 1.600 m (≈ 24 km, circuito de un día)",
+      "dificultad": "muy-alta",
+      "grado": "PD+ · cresta con nieve y crampones a principios de verano",
+      "epoca": "Julio – septiembre",
+      "descripcion": "La cresta de Lliterola une el Perdiguero con varias cumbres de 3.000 a 3.130 m: la Aguja, la Punta, el Pico Royo y la Tuca de Lliterola. Se suele encadenar con el Perdiguero en una jornada muy larga. Los nombres y las alturas varían según la fuente, y es fácil confundir la Punta con la Aguja.",
+      "foto": "lliterola",
+      "pie": "El ibón de Lliterola bajo la cresta.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
+        "texto": "Ver la ruta en Wikiloc: Cresta de Lliterola (Aguja, Punta, Pico Royo, Tuca, Perdiguero), de yivatosal"
+      },
+      "rutas": [
+        "lliterola-cresta"
+      ],
+      "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola»."
     }
   ]
 }

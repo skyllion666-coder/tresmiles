@@ -1032,7 +1032,11 @@
   "tipo": "barranco",
   "lat": 42.674757,
   "lon": 0.549671,
-  "nota": "Cascada en el barranco de Literola, en la subida. Altitud del GPS del track: 2.207 m."
+  "nota": "Cascada en el barranco de Literola, en la subida. Altitud del GPS del track: 2.207 m.",
+  "picos": [
+   "perdiguero",
+   "lliterola"
+  ]
  },
  {
   "id": "prd-ibonet",
@@ -1043,7 +1047,11 @@
   "lon": 0.540561,
   "nota": "Pequeño ibón en la subida por el valle de Literola. Altitud del GPS del track: 2.500 m.",
   "foto": "w-prd-ibonet",
-  "pie": "El Ibonet de Literola."
+  "pie": "El Ibonet de Literola.",
+  "picos": [
+   "perdiguero",
+   "lliterola"
+  ]
  },
  {
   "id": "prd-lliterola",
@@ -1065,7 +1073,11 @@
   "lon": 0.539883,
   "nota": "Paso entre los valles de Remuñé y Literola; el recorrido baja por aquí. Altitud del GPS del track: 2.821 m.",
   "foto": "w-prd-portal",
-  "pie": "Los ibones junto al Portal de Remuñé."
+  "pie": "Los ibones junto al Portal de Remuñé.",
+  "picos": [
+   "perdiguero",
+   "lliterola"
+  ]
  },
  {
   "id": "prd-oriental",
@@ -1074,7 +1086,11 @@
   "tipo": "cima",
   "lat": 42.690068,
   "lon": 0.525781,
-  "nota": "Hito oriental del Perdiguero, antes de la cumbre. Altitud del GPS del track: 3.123 m."
+  "nota": "Hito oriental del Perdiguero, antes de la cumbre. Altitud del GPS del track: 3.123 m.",
+  "picos": [
+   "perdiguero",
+   "lliterola"
+  ]
  },
  {
   "id": "prd-cima",
@@ -1085,7 +1101,11 @@
   "lon": 0.51886,
   "nota": "Cumbre del Perdiguero, en la frontera con Francia. Altitud del GPS del track: 3.206 m.",
   "foto": "prd-cima-aurora",
-  "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo."
+  "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo.",
+  "picos": [
+   "perdiguero",
+   "lliterola"
+  ]
  },
  {
   "id": "prd-inicio",
@@ -1840,5 +1860,144 @@
   "lat": 42.693721,
   "lon": -0.051338,
   "nota": "Cumbre del Tallón (Taillon), en la frontera con Francia. Altitud del GPS del track: 3.136 m."
+ },
+ {
+  "id": "lli-blanco",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Ibón Blanco de Lliterola",
+  "tipo": "ibon",
+  "lat": 42.691011,
+  "lon": 0.535977,
+  "nota": "Ibón bajo la cresta, donde se gira hacia el collado. Altitud del GPS del track: 2.787 m.",
+  "foto": "lli-blanco",
+  "pie": "El Ibón Blanco de Lliterola, con neveros."
+ },
+ {
+  "id": "lli-royo",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Pico Royo",
+  "tipo": "cima",
+  "lat": 42.697609,
+  "lon": 0.520862,
+  "nota": "Cumbre de la cresta (3.121 m según el track). Su nombre se atribuye a la roca rojiza. Altitud del GPS del track: 3.069 m.",
+  "foto": "lli-royo",
+  "pie": "Las rocas rojizas del Pico Royo."
+ },
+ {
+  "id": "lli-collado-sup",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Collado Superior de Lliterola",
+  "tipo": "paso",
+  "lat": 42.694689,
+  "lon": 0.520872,
+  "nota": "Collado entre la Tuca de Lliterola y el Perdiguero. Altitud del GPS del track: 3.060 m.",
+  "foto": "lli-collado-sup",
+  "pie": "Vista desde el Collado Superior de Lliterola."
+ },
+ {
+  "id": "lli-parking",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Aparcamiento (Parquin)",
+  "tipo": "lugar",
+  "lat": 42.682423,
+  "lon": 0.60277,
+  "nota": "Punto de partida del recorrido, en Llanos del Hospital. Altitud del GPS del track: 1.833 m.",
+  "inicio": true
+ },
+ {
+  "id": "lli-capellans",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Pleta des Capellans",
+  "tipo": "lugar",
+  "lat": 42.685406,
+  "lon": 0.581909,
+  "nota": "Pleta junto al camino, al empezar la subida. Altitud del GPS del track: 2.137 m."
+ },
+ {
+  "id": "lli-arenals",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Ibonet de les Arenals",
+  "tipo": "ibon",
+  "lat": 42.69008,
+  "lon": 0.55021,
+  "nota": "Pequeño ibón en el camino hacia el Portal de Remuñé. Altitud del GPS del track: 2.433 m."
+ },
+ {
+  "id": "lli-collado-inf",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Collado Inferior de Lliterola",
+  "tipo": "paso",
+  "lat": 42.701099,
+  "lon": 0.526459,
+  "nota": "Collado al que se sube con crampones a principios de verano. Altitud del GPS del track: 2.962 m."
+ },
+ {
+  "id": "lli-aguja",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Aguja de Lliterola",
+  "tipo": "cima",
+  "lat": 42.70051,
+  "lon": 0.526163,
+  "nota": "Primera cumbre de la cresta (3.028 m según el track). Altitud del GPS del track: 2.978 m."
+ },
+ {
+  "id": "lli-punta",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Punta de Lliterola (Tuca de Lliterola, 3.133 m en OpenStreetMap)",
+  "tipo": "cima",
+  "lat": 42.698835,
+  "lon": 0.522828,
+  "nota": "Cumbre más alta de la cresta, 3.132 m según el track. OpenStreetMap la llama «Tuca de Lliterola». Altitud del GPS del track: 3.039 m."
+ },
+ {
+  "id": "lli-tuca",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Tuca de Lliterola (3.095 m según el track)",
+  "tipo": "cima",
+  "lat": 42.695422,
+  "lon": 0.521216,
+  "nota": "Cumbre del track que su autor llama «Tuca de Lliterola», entre el Pico Royo y el Perdiguero. Altitud del GPS del track: 3.067 m."
+ },
+ {
+  "id": "lli-hito-occ",
+  "pico": "lliterola",
+  "picos": [
+   "lliterola"
+  ],
+  "nombre": "Hito Occidental del Perdiguero",
+  "tipo": "cima",
+  "lat": 42.691423,
+  "lon": 0.515302,
+  "nota": "Cumbre vecina del Perdiguero (3.176 m según el track). Altitud del GPS del track: 3.118 m."
  }
 ]
