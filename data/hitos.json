@@ -2507,5 +2507,114 @@
   "lat": 42.643228,
   "lon": 0.638484,
   "nota": "Cumbre del Pico Abadías (3.279 m según OpenStreetMap, 3.282 m según el track). Altitud del GPS del track: 3.255 m."
+ },
+ {
+  "id": "mun-pineta",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Parking de Pineta",
+  "tipo": "lugar",
+  "lat": 42.676357,
+  "lon": 0.085245,
+  "nota": "Punto de partida, en el valle de Pineta. Altitud del GPS del track: 1.306 m.",
+  "inicio": true,
+  "foto": "mun-pineta",
+  "pie": "El panel informativo de Pineta, junto al comienzo del camino."
+ },
+ {
+  "id": "mun-larri",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Cascada de La Larri",
+  "tipo": "barranco",
+  "lat": 42.703087,
+  "lon": 0.123487,
+  "nota": "Cascada por la que se sube hacia los ibones de la Munia. Altitud del GPS del track: 2.530 m.",
+  "foto": "mun-larri",
+  "pie": "La cascada de La Larri, con agua de deshielo."
+ },
+ {
+  "id": "mun-ibon",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Ibones de la Munia",
+  "tipo": "ibon",
+  "lat": 42.703949,
+  "lon": 0.124338,
+  "nota": "Ibones bajo la cresta, a la altura del Collado de la Munia. Altitud del GPS del track: 2.558 m.",
+  "foto": "mun-ibon",
+  "pie": "Uno de los ibones de la Munia, con neveros."
+ },
+ {
+  "id": "mun-gato",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Paso del Gato",
+  "tipo": "paso",
+  "lat": 42.714098,
+  "lon": 0.126344,
+  "nota": "Tramo más comprometido de la subida, de grado II según las guías. Altitud del GPS del track: 2.989 m.",
+  "foto": "mun-gato",
+  "pie": "El Paso del Gato, un tramo de trepada."
+ },
+ {
+  "id": "mun-vista",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Ibones desde la cresta",
+  "tipo": "lugar",
+  "lat": 42.714234,
+  "lon": 0.127529,
+  "nota": "Vista de los ibones desde la cresta, ya cerca de la cima. Altitud del GPS del track: 3.057 m.",
+  "foto": "mun-vista",
+  "pie": "Los ibones de la Munia desde la cresta, con el Paso del Gato más abajo."
+ },
+ {
+  "id": "mun-cima",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Cima de la Munia",
+  "tipo": "cima",
+  "lat": 42.714859,
+  "lon": 0.131916,
+  "nota": "Cumbre de la Munia, con su cartel de madera. Altitud del GPS del track: 3.133 m.",
+  "foto": "mun-cima",
+  "pie": "El cartel de la cima de la Munia."
+ },
+ {
+  "id": "mun-pasarela",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Cabaña y senda de Pineta",
+  "tipo": "lugar",
+  "lat": 42.69096,
+  "lon": 0.088313,
+  "nota": "Tramo de senda por el bosque de Pineta, camino de La Larri. Altitud del GPS del track: 1.603 m."
+ },
+ {
+  "id": "mun-collado",
+  "pico": "munia",
+  "picos": [
+   "munia"
+  ],
+  "nombre": "Collado de la Munia",
+  "tipo": "paso",
+  "lat": 42.700753,
+  "lon": 0.123454,
+  "nota": "Collado de la Munia, que da acceso a la cresta (OpenStreetMap). Altitud del GPS del track: 2.542 m."
  }
 ]

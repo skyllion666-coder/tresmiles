@@ -1541,5 +1541,71 @@
   "w": 1000,
   "h": 666,
   "pos": "50% 50%"
+ },
+ "mun-pineta": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mun-larri": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "mun-ibon": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mun-gato": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "mun-vista": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mun-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
  }
 }

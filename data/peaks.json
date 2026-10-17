@@ -26,7 +26,8 @@
     "algas",
     "argualas",
     "frondiellas",
-    "abadias"
+    "abadias",
+    "munia"
   ],
   "macizos": [
     {
@@ -912,6 +913,38 @@
         "pie": "El glaciar al pie del Collado Maldito."
       },
       "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente."
+    },
+    {
+      "id": "munia",
+      "nombre": "La Munia",
+      "alias": "Almunia · La Dama del Pirineo",
+      "altitud": 3133,
+      "otras": "Otras fuentes: 3.134 m",
+      "macizo": "per",
+      "frontera": true,
+      "lat": 42.714859,
+      "lon": 0.131916,
+      "acceso": "Bielsa · valle de Pineta",
+      "ruta": "Parking de Pineta → barranco de La Larri → ibones de la Munia → Collado de la Munia → Paso del Gato → cumbre",
+      "desnivel": "≈ 1.850 m desde Pineta (≈ 22 km ida y vuelta)",
+      "dificultad": "alta",
+      "grado": "PD · Paso del Gato (II) y pedreras",
+      "epoca": "Julio – septiembre",
+      "descripcion": "La Munia (o L'Almunia) es el punto culminante de los circos de Troumouse, Barroude y Barrosa, en la frontera con Francia. La subida típica arranca en Pineta, remonta el barranco de La Larri hasta los ibones y pasa el Paso del Gato.",
+      "foto": "munia",
+      "pie": "La Munia vista desde el puerto de Barrosa, en una fotografía antigua.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+        "texto": "Ver la ruta en Wikiloc: Pico de la Munia (3133 m) desde el parking de Pineta, de ᗩᒪTEᑕᗩ"
+      },
+      "rutas": [
+        "munia-pineta"
+      ],
+      "fotoCima": {
+        "foto": "mun-cima",
+        "pie": "El cartel de la cima de la Munia."
+      },
+      "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid."
     }
   ]
 }
