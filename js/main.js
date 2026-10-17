@@ -181,7 +181,7 @@ async function boot() {
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
     el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
     if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
-    const R0 = Object.values(rutas).flat()[0], ps = R0 ? R0.pasos(q.x, q.z) : [];
+    const R0 = rutasDe(h.pico ?? 'balaitus')[0], ps = R0 ? R0.pasos(q.x, q.z) : [];
     if (ps.length) el.querySelector('em').textContent += ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`;
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
@@ -514,7 +514,7 @@ async function boot() {
       <ul>${Object.values(rutas).flat().map((R) => `<li>${esc(R.ruta.nombre)}: vista previa orientativa del track de <a href="${esc(R.ruta.autorUrl)}" target="_blank" rel="noopener">${esc(R.ruta.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(R.ruta.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de aldaieta y de atiempo (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
-      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (k === 'cima' ? 'Piedra de la cima del Balaitús' : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
       <h3>Seguridad</h3>

@@ -1,6 +1,7 @@
 {
   "activos": [
-    "balaitus"
+    "balaitus",
+    "vignemale"
   ],
   "macizos": [
     {
@@ -179,13 +180,24 @@
       "lon": -0.147306,
       "acceso": "Valle de Bujaruelo (Torla) o valle de Ossoue (Francia)",
       "ruta": "Refugio de Baysellance (2.650 m) → glaciar de Ossoue → placas y cresta fronteriza → cumbre",
-      "desnivel": "≈ 650 m desde Baysellance",
+      "desnivel": "≈ 1.450 m desde el embalse de Ossoue (≈ 650 m desde Baysellance)",
       "dificultad": "alta",
       "grado": "PD · glaciar",
       "epoca": "Julio – septiembre",
       "descripcion": "Gran cumbre fronteriza que se levanta sobre el glaciar de Ossoue, con una enorme pared norte sobre Francia. Desde Baysellance, el refugio guardado más alto del Pirineo, se cruza el glaciar y se remata por la cresta fronteriza, fácil si no hay nieve.",
       "foto": "vignemale",
-      "pie": "El Gran Vignemale con el sol naciente."
+      "pie": "El Gran Vignemale con el sol naciente.",
+      "fotoCima": {
+        "foto": "vig-cima",
+        "pie": "La cima del Vignemale, con los pañuelos y banderas que dejan los montañeros alrededor del vértice."
+      },
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/vignemale-o-pique-longue3-299m-desde-el-embalse-de-ossoue-gavarniefrancia-18758608",
+        "texto": "Ver la ruta en Wikiloc: Vignemale (Pique Longue) desde el embalse de Ossoue, de Furgoxo"
+      },
+      "rutas": [
+        "vignemale-ossoue"
+      ]
     },
     {
       "id": "maladeta",

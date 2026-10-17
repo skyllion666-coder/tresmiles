@@ -6,7 +6,8 @@
   "lat": 42.816932,
   "lon": -0.287902,
   "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido.",
-  "foto": "respomuso"
+  "foto": "respomuso",
+  "pico": "balaitus"
  },
  {
   "id": "cueva",
@@ -15,7 +16,8 @@
   "lat": 42.83765,
   "lon": -0.29691,
   "nota": "Refugio de emergencia en la ladera, junto a la ruta. Altitud del GPS del track: 2.688 m.",
-  "foto": "cueva"
+  "foto": "cueva",
+  "pico": "balaitus"
  },
  {
   "id": "inicio-diagonal",
@@ -24,7 +26,8 @@
   "lat": 42.83878,
   "lon": -0.29447,
   "nota": "Aquí arranca la travesía de la Gran Diagonal. Altitud del GPS del track: 2.862 m.",
-  "foto": "diagonal"
+  "foto": "diagonal",
+  "pico": "balaitus"
  },
  {
   "id": "ibon-chelau",
@@ -33,7 +36,8 @@
   "lat": 42.83805,
   "lon": -0.3063,
   "nota": "Ibón junto al recorrido.",
-  "foto": "chelau"
+  "foto": "chelau",
+  "pico": "balaitus"
  },
  {
   "id": "ibon-arriel",
@@ -42,7 +46,8 @@
   "lat": 42.83105,
   "lon": -0.31654,
   "nota": "Ibón de Arriel Bajo, junto al camino. Altitud del GPS del track: 2.158 m.",
-  "foto": "arriel-bajo"
+  "foto": "arriel-bajo",
+  "pico": "balaitus"
  },
  {
   "id": "ibon-arriel-alto",
@@ -52,7 +57,8 @@
   "lon": -0.315192,
   "nota": "Ibón de Arriel Alto, junto al recorrido. Altitud del GPS del track: 2.253 m.",
   "foto": "arriel-alto",
-  "pie": "Enfrente, el collado de Arriel (2.446 m), que lleva al refugio de Arrémoulit."
+  "pie": "Enfrente, el collado de Arriel (2.446 m), que lleva al refugio de Arrémoulit.",
+  "pico": "balaitus"
  },
  {
   "id": "desvio-respomuso",
@@ -60,7 +66,8 @@
   "tipo": "paso",
   "lat": 42.829922,
   "lon": -0.319517,
-  "nota": "Bifurcación del camino hacia Respomuso. Altitud del GPS del track: 2.157 m."
+  "nota": "Bifurcación del camino hacia Respomuso. Altitud del GPS del track: 2.157 m.",
+  "pico": "balaitus"
  },
  {
   "id": "desvio-arriel",
@@ -68,7 +75,8 @@
   "tipo": "paso",
   "lat": 42.817397,
   "lon": -0.336975,
-  "nota": "Bifurcación del camino hacia el pico Arriel. Altitud del GPS del track: 1.641 m."
+  "nota": "Bifurcación del camino hacia el pico Arriel. Altitud del GPS del track: 1.641 m.",
+  "pico": "balaitus"
  },
  {
   "id": "ermita",
@@ -76,7 +84,8 @@
   "tipo": "lugar",
   "lat": 42.816675,
   "lon": -0.2976,
-  "nota": "Ermita junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Ermita junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "ibon-respomuso",
@@ -84,7 +93,8 @@
   "tipo": "ibon",
   "lat": 42.816645,
   "lon": -0.296721,
-  "nota": "Ibón sin nombre junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Ibón sin nombre junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "desvio-1",
@@ -92,7 +102,8 @@
   "tipo": "paso",
   "lat": 42.817949,
   "lon": -0.300064,
-  "nota": "Bifurcación marcada en el track. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Bifurcación marcada en el track. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "desvio-2",
@@ -100,7 +111,8 @@
   "tipo": "paso",
   "lat": 42.79731,
   "lon": -0.332619,
-  "nota": "Bifurcación marcada en el track, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Bifurcación marcada en el track, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "barranco-1",
@@ -108,7 +120,8 @@
   "tipo": "barranco",
   "lat": 42.799249,
   "lon": -0.334297,
-  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "barranco-2",
@@ -116,7 +129,8 @@
   "tipo": "barranco",
   "lat": 42.803662,
   "lon": -0.336283,
-  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "barranco-3",
@@ -124,7 +138,8 @@
   "tipo": "barranco",
   "lat": 42.808146,
   "lon": -0.339356,
-  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "barranco-4",
@@ -132,7 +147,8 @@
   "tipo": "barranco",
   "lat": 42.816592,
   "lon": -0.337819,
-  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "barranco-5",
@@ -140,7 +156,8 @@
   "tipo": "barranco",
   "lat": 42.822751,
   "lon": -0.326644,
-  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "puente",
@@ -148,7 +165,8 @@
   "tipo": "lugar",
   "lat": 42.797258,
   "lon": -0.332744,
-  "nota": "Puente sobre el río, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Puente sobre el río, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc).",
+  "pico": "balaitus"
  },
  {
   "id": "area-recreativa",
@@ -156,7 +174,8 @@
   "tipo": "lugar",
   "lat": 42.79665,
   "lon": -0.331364,
-  "nota": "Área recreativa junto al final del recorrido."
+  "nota": "Área recreativa junto al final del recorrido.",
+  "pico": "balaitus"
  },
  {
   "id": "frondiellas",
@@ -164,7 +183,8 @@
   "tipo": "cima",
   "lat": 42.83307,
   "lon": -0.29031,
-  "nota": "Cima vecina de unos 3.070 m (según OpenStreetMap)."
+  "nota": "Cima vecina de unos 3.070 m (según OpenStreetMap).",
+  "pico": "balaitus"
  },
  {
   "id": "arremoulit",
@@ -172,7 +192,8 @@
   "tipo": "refugio",
   "lat": 42.84605,
   "lon": -0.32916,
-  "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap)."
+  "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap).",
+  "pico": "balaitus"
  },
  {
   "id": "wallon",
@@ -180,7 +201,8 @@
   "tipo": "paso",
   "lat": 42.8359,
   "lon": -0.30539,
-  "nota": "Collado a unos 2.506 m (según OpenStreetMap)."
+  "nota": "Collado a unos 2.506 m (según OpenStreetMap).",
+  "pico": "balaitus"
  },
  {
   "id": "col-arremoulit",
@@ -188,7 +210,8 @@
   "tipo": "paso",
   "lat": 42.83966,
   "lon": -0.32152,
-  "nota": "Collado a unos 2.448 m (según OpenStreetMap)."
+  "nota": "Collado a unos 2.448 m (según OpenStreetMap).",
+  "pico": "balaitus"
  },
  {
   "id": "col-arriel",
@@ -196,7 +219,8 @@
   "tipo": "paso",
   "lat": 42.83689,
   "lon": -0.33368,
-  "nota": "Collado a unos 2.608 m (según OpenStreetMap)."
+  "nota": "Collado a unos 2.608 m (según OpenStreetMap).",
+  "pico": "balaitus"
  },
  {
   "id": "canal",
@@ -205,7 +229,8 @@
   "lat": 42.839648,
   "lon": -0.29083,
   "nota": "Punto marcado por el autor del track como buen comienzo de la canal hacia la cumbre. La foto es de la bajada por la canal.",
-  "foto": "canal"
+  "foto": "canal",
+  "pico": "balaitus"
  },
  {
   "id": "parking-sarra",
@@ -214,6 +239,124 @@
   "lat": 42.797327,
   "lon": -0.332508,
   "nota": "Aparcamiento donde empieza y acaba la excursión desde el valle. Altitud del GPS del track: 1.446 m.",
-  "foto": "parking"
+  "foto": "parking",
+  "pico": "balaitus"
+ },
+ {
+  "id": "ossoue-embalse",
+  "pico": "vignemale",
+  "nombre": "Cabecera del embalse de Ossoue",
+  "tipo": "lugar",
+  "lat": 42.757286,
+  "lon": -0.094033,
+  "nota": "Punto de partida del recorrido, con panel de información. Altitud del GPS del track: 1.843 m."
+ },
+ {
+  "id": "ossoue-llanos",
+  "pico": "vignemale",
+  "nombre": "Llanos de Ossoue",
+  "tipo": "lugar",
+  "lat": 42.759969,
+  "lon": -0.102137,
+  "nota": "Llanos que se cruzan al principio del valle. Altitud del GPS del track: 1.844 m."
+ },
+ {
+  "id": "ossoue-puente",
+  "pico": "vignemale",
+  "nombre": "Puente",
+  "tipo": "lugar",
+  "lat": 42.76255,
+  "lon": -0.108397,
+  "nota": "Puente en el camino del valle. Altitud del GPS del track: 1.866 m."
+ },
+ {
+  "id": "ossoue-cascada",
+  "pico": "vignemale",
+  "nombre": "Cascada",
+  "tipo": "lugar",
+  "lat": 42.764177,
+  "lon": -0.112084,
+  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.938 m."
+ },
+ {
+  "id": "vig-vista-glaciar",
+  "pico": "vignemale",
+  "nombre": "Primera vista del glaciar",
+  "tipo": "lugar",
+  "lat": 42.77554,
+  "lon": -0.11938,
+  "nota": "Desde aquí se ve por primera vez el glaciar. Altitud del GPS del track: 2.369 m."
+ },
+ {
+  "id": "grottes-belleveu",
+  "pico": "vignemale",
+  "nombre": "Grottes de Belleveu",
+  "tipo": "vivac",
+  "lat": 42.775519,
+  "lon": -0.121589,
+  "nota": "Abrigos bajo roca junto al camino. Nombre tal como figura en el track. Altitud del GPS del track: 2.412 m."
+ },
+ {
+  "id": "desvio-baysellance",
+  "pico": "vignemale",
+  "nombre": "Desvío al refugio de Baysellance",
+  "tipo": "paso",
+  "lat": 42.775488,
+  "lon": -0.122618,
+  "nota": "Bifurcación hacia el refugio de Baysellance. Altitud del GPS del track: 2.442 m."
+ },
+ {
+  "id": "entrada-glaciar",
+  "pico": "vignemale",
+  "nombre": "Entrada al glaciar",
+  "tipo": "paso",
+  "lat": 42.772923,
+  "lon": -0.13121,
+  "nota": "Aquí se calzan los crampones. Altitud del GPS del track: 2.688 m."
+ },
+ {
+  "id": "glaciar-exigente",
+  "pico": "vignemale",
+  "nombre": "Tramo exigente del glaciar",
+  "tipo": "paso",
+  "lat": 42.772719,
+  "lon": -0.135275,
+  "nota": "Tramo más exigente de la travesía del glaciar. Altitud del GPS del track: 2.753 m."
+ },
+ {
+  "id": "vig-grottes-russell",
+  "pico": "vignemale",
+  "nombre": "Vista del collado Cerbillona y las Grottes Henry Russell",
+  "tipo": "lugar",
+  "lat": 42.772186,
+  "lon": -0.145013,
+  "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m."
+ },
+ {
+  "id": "base-vignemale",
+  "pico": "vignemale",
+  "nombre": "Base del Vignemale",
+  "tipo": "paso",
+  "lat": 42.772901,
+  "lon": -0.147728,
+  "nota": "Aquí se quitan los crampones, al pie de la parte rocosa. Altitud del GPS del track: 3.172 m."
+ },
+ {
+  "id": "vig-trepadas",
+  "pico": "vignemale",
+  "nombre": "Trepadas",
+  "tipo": "paso",
+  "lat": 42.773252,
+  "lon": -0.147306,
+  "nota": "Comienzan las trepadas hacia la cima. Altitud del GPS del track: 3.204 m."
+ },
+ {
+  "id": "grotte-paradis",
+  "pico": "vignemale",
+  "nombre": "Grotte Paradis",
+  "tipo": "vivac",
+  "lat": 42.773719,
+  "lon": -0.147464,
+  "nota": "Abrigo bajo roca cerca de la cima. Altitud del GPS del track: 3.256 m."
  }
 ]
