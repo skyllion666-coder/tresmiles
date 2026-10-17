@@ -651,7 +651,7 @@ async function boot() {
         .sort((a, b) => b.ps.filter((p) => p.activo).length - a.ps.filter((p) => p.activo).length);
       cont.innerHTML = zonas.length ? zonas.map((z, k) => {
         const act = z.ps.filter((p) => p.activo).length;
-        return `<details${(k === 0 && act) || f ? ' open' : ''}><summary>${esc(z.m.nombre)}<small>${act ? `${act} disponible${act > 1 ? 's' : ''}` : 'Próximamente'}</small></summary>${z.ps.map((p) => p.activo
+        return `<details${(k === 0 && act && !matchMedia('(max-width: 700px)').matches) || f ? ' open' : ''}><summary>${esc(z.m.nombre)}<small>${act ? `${act} disponible${act > 1 ? 's' : ''}` : 'Próximamente'}</small></summary>${z.ps.map((p) => p.activo
           ? `<button type="button" role="option" data-ir="${p.id}"><span>${esc(p.nombre)}</span><i>${fmt(p.altitud)} m</i></button>`
           : `<span class="prox"><span>${esc(p.nombre)}</span><i>Próximamente</i></span>`).join('')}</details>`;
       }).join('') : '<p class="empty">Ninguna cumbre coincide.</p>';
