@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=10';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=27';
 
 const $ = (s) => document.querySelector(s);

@@ -42,7 +42,10 @@ def stitch(ways):   # une tramos abiertos de un multipolígono en anillos cerrad
     return rings
 
 # Nombres que OpenStreetMap no trae, verificados en otras fuentes (id OSM -> nombre)
-NOMBRES_EXTRA = {49179050: 'Ibón Medio de Coronas'}   # el mayor de los ibones de Coronas, 5,1 ha, 2.735 m (lacsdespyrenees.com)
+NOMBRES_EXTRA = {49179050: 'Ibón Medio de Coronas', 49179048: 'Ibonet de Coronas',   # el nivel del relieve y lacsdespyrenees.com cuadran (2.239 m / 2.235 m)
+                 49179049: 'Ibón Inferior de Coronas', 49179052: 'Ibón Superior de Coronas'}   # por altura (2.626 m / 2.770 m) y posición bajo el glaciar; el Superior es menos seguro
+# Ibones sin polígono en OpenStreetMap: (nombre, lon, lat, m² según lacsdespyrenees.com), se dibujan como círculo y siempre llevan etiqueta
+LAGOS_EXTRA = [('Ibón Maldito', 0.64216, 42.63415, 1000), ('Ibón Coronado', 0.6528, 42.63456, 2000)]   # el mayor de los ibones de Coronas, 5,1 ha, 2.735 m (lacsdespyrenees.com)
 
 pts = lambda g: [(round(p['lon'], 5), round(p['lat'], 5)) for p in g]
 out = []; vistos = set()
@@ -57,6 +60,9 @@ for e in get()['elements']:
         a = area(r)
         if a < 600: continue
         out.append(dict(id=e['id'], nombre=nombre, tipo='lake', area=int(a), poly=[list(p) for p in r]))
+for k, (nom, lo, la, a) in enumerate(LAGOS_EXTRA):
+    r = math.sqrt(a / math.pi)
+    out.append(dict(id=-1 - k, nombre=nom, tipo='lake', area=a, etiqueta=True, poly=[[round(lo + r * math.cos(t) / (111320 * math.cos(math.radians(la))), 5), round(la + r * math.sin(t) / 111132, 5)] for t in [i * math.pi / 8 for i in range(16)]]))
 out.sort(key=lambda l: -l['area'])
 json.dump(out, open(os.path.join(ROOT, 'data', 'lagos.json'), 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False)
 print(len(out), 'lagos,', sum(1 for l in out if l['nombre']), 'con nombre')

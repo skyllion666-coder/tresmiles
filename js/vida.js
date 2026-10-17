@@ -62,7 +62,7 @@ export async function crearLagos({ scene, geo, url, meta }) {
       const m = new THREE.Mesh(g, mat);
       m.position.y = y; m.renderOrder = 1; m.frustumCulled = false;
       scene.add(m); n++;
-      if (l.nombre && l.area >= 2500 && !etiquetados.has(l.nombre)) {
+      if (l.nombre && (l.area >= 2500 || l.etiqueta) && !etiquetados.has(l.nombre)) {
         etiquetados.add(l.nombre);
         const e = { nombre: l.nombre, x: cx, y: y + 6, z: cz, area: l.area }; nombrados.push(e); nuevos.push(e);
       }
