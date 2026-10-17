@@ -3794,5 +3794,142 @@
   "nota": "Cima de 3.125 m según la lista de tresmiles; OpenStreetMap da 3.129 m. Altitud del GPS del track: 3.120 m.",
   "foto": "vet-cima",
   "pie": "La cumbre del Pico de los Veteranos, con restos de nieve."
+ },
+ {
+  "id": "eri-viados",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Bordas de Viadós",
+  "tipo": "lugar",
+  "lat": 42.66039,
+  "lon": 0.382303,
+  "nota": "Punto de partida de la ruta, en el valle de Chistau. Altitud del GPS del track: 1.711 m.",
+  "inicio": true,
+  "foto": "eri-viados",
+  "pie": "Las bordas y el refugio de Viadós, sobre una ladera de pasto."
+ },
+ {
+  "id": "eri-incante",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Fuen del Incante",
+  "tipo": "barranco",
+  "lat": 42.65015,
+  "lon": 0.39642,
+  "nota": "Fuente junto al camino de subida. Altitud del GPS del track: 1.933 m."
+ },
+ {
+  "id": "eri-gralla",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Paso de la Gralla",
+  "tipo": "paso",
+  "lat": 42.624095,
+  "lon": 0.408965,
+  "nota": "Collado de 2.997 m según OpenStreetMap, junto a las Bagüeñola. Altitud del GPS del track: 2.977 m."
+ },
+ {
+  "id": "eri-sur",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Eriste Sur",
+  "tipo": "cima",
+  "lat": 42.623141,
+  "lon": 0.409031,
+  "nota": "Cumbre de 3.041 m según OpenStreetMap («Punta de Peña Solana»). Altitud del GPS del track: 3.044 m."
+ },
+ {
+  "id": "eri-gran",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Gran Pico Eriste",
+  "tipo": "cima",
+  "lat": 42.625069,
+  "lon": 0.409321,
+  "nota": "Cumbre de 3.056 m según OpenStreetMap («Punta Alta d’es Leners»), la más alta del grupo. Altitud del GPS del track: 3.051 m."
+ },
+ {
+  "id": "eri-norte",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Pico Eriste Norte",
+  "tipo": "cima",
+  "lat": 42.62664,
+  "lon": 0.413042,
+  "nota": "Cumbre de 3.031 m según OpenStreetMap, también llamada Pico Beraldi. Altitud del GPS del track: 3.009 m.",
+  "foto": "eri-norte",
+  "pie": "Los picos de Eriste, vistos entre pinos."
+ },
+ {
+  "id": "eri-millares",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Collado de Millares",
+  "tipo": "paso",
+  "lat": 42.629805,
+  "lon": 0.416391,
+  "nota": "Collado de 2.826 m según OpenStreetMap («Collado de Millares o de Sahún»). Altitud del GPS del track: 2.808 m."
+ },
+ {
+  "id": "eri-forqueta-sur",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Forqueta Sur",
+  "tipo": "cima",
+  "lat": 42.63073,
+  "lon": 0.426617,
+  "nota": "Cumbre de 3.007 m según OpenStreetMap. Altitud del GPS del track: 3.007 m."
+ },
+ {
+  "id": "eri-forqueta",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Forqueta Norte",
+  "tipo": "cima",
+  "lat": 42.631571,
+  "lon": 0.425697,
+  "nota": "Cumbre de 3.011 m según OpenStreetMap. Altitud del GPS del track: 2.990 m.",
+  "foto": "eri-forqueta",
+  "pie": "Las Forquetas, con un ibón a sus pies."
+ },
+ {
+  "id": "eri-collado",
+  "pico": "eriste-norte",
+  "picos": [
+   "eriste-norte",
+   "forqueta"
+  ],
+  "nombre": "Collado de Eriste o de la Forqueta",
+  "tipo": "paso",
+  "lat": 42.63376,
+  "lon": 0.427592,
+  "nota": "Collado de 2.862 m según OpenStreetMap. Altitud del GPS del track: 2.839 m."
  }
 ]

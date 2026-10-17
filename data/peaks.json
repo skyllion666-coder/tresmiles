@@ -44,7 +44,9 @@
   "cerbillona",
   "montferrat",
   "petit-vignemale",
-  "veteranos"
+  "veteranos",
+  "eriste-norte",
+  "forqueta"
  ],
  "macizos": [
   {
@@ -1502,6 +1504,70 @@
     "pie": "La cumbre del Pico de los Veteranos, con restos de nieve."
    },
    "curiosidad": "Según SummitPost, tanto el Veteranos como los Gemelos Ravier se escalaban desde hacía tiempo pero no tenían nombre hasta que entraron en la lista de tresmiles del Pirineo. Se pensó en dedicar este pico a Juan Buyse, pero él prefirió un nombre que honrara a todos los montañeros veteranos del Pirineo; el dato procede de una sola fuente."
+  },
+  {
+   "macizo": "pos",
+   "frontera": false,
+   "acceso": "Valle de Chistau · Bordas de Viadós",
+   "desnivel": "≈ 2.100 m desde las Bordas de Viadós (19 km ida y vuelta)",
+   "dificultad": "muy-alta",
+   "epoca": "Julio – septiembre",
+   "ruta": "Bordas de Viadós → fuen del Incante → Paso de la Gralla → Eriste Sur, Gran Pico y Eriste Norte → collado de Millares → Forqueta Sur y Norte → collado de Eriste → bajada a Viadós",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/refugio-de-viados-eriste-norte-gran-pico-eriste-eriste-sur-forqueta-sw-y-forqueta-140420382",
+    "texto": "Ver la ruta en Wikiloc: Refugio de Viadós, Eriste Norte, Gran Pico Eriste, Eriste Sur, Forqueta SW y Forqueta, de Pablo Turrado Martínez"
+   },
+   "rutas": [
+    "eriste-forqueta-viados"
+   ],
+   "id": "eriste-norte",
+   "nombre": "Pico de Eriste Norte",
+   "alias": "Pico Beraldi · Eriste Norte",
+   "altitud": 3025,
+   "otras": "3.031 m (OpenStreetMap)",
+   "lat": 42.62664,
+   "lon": 0.413042,
+   "grado": "AD · cresta de roca mala",
+   "descripcion": "La cumbre norte de los picos de Eriste, el grupo de tres cimas del este del Posets. La ruta enlaza la cresta completa —Eriste Sur, Gran Pico y Eriste Norte— con las Forquetas, en una jornada larga y exigente.",
+   "foto": "eriste-norte",
+   "pie": "Los picos de Eriste (Eristes), con restos de nieve.",
+   "fotoCima": {
+    "foto": "eri-norte",
+    "pie": "Los picos de Eriste, vistos entre pinos."
+   },
+   "curiosidad": "El grupo se llama Picos de Eriste en el lado del valle de Eriste y Picos de Bagüeñola en el lado de Plan, según SummitPost. Las alturas varían: unas fuentes dan 3.025 m al Eriste Norte o Beraldi y otras 3.031 m; el Gran Pico, entre 3.053 y 3.056 m."
+  },
+  {
+   "macizo": "pos",
+   "frontera": false,
+   "acceso": "Valle de Chistau · Bordas de Viadós",
+   "desnivel": "≈ 2.100 m desde las Bordas de Viadós (19 km ida y vuelta)",
+   "dificultad": "muy-alta",
+   "epoca": "Julio – septiembre",
+   "ruta": "Bordas de Viadós → fuen del Incante → Paso de la Gralla → Eriste Sur, Gran Pico y Eriste Norte → collado de Millares → Forqueta Sur y Norte → collado de Eriste → bajada a Viadós",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/refugio-de-viados-eriste-norte-gran-pico-eriste-eriste-sur-forqueta-sw-y-forqueta-140420382",
+    "texto": "Ver la ruta en Wikiloc: Refugio de Viadós, Eriste Norte, Gran Pico Eriste, Eriste Sur, Forqueta SW y Forqueta, de Pablo Turrado Martínez"
+   },
+   "rutas": [
+    "eriste-forqueta-viados"
+   ],
+   "id": "forqueta",
+   "nombre": "Pico de la Forqueta",
+   "alias": "Tuca de la Forqueta · Las Forquetas",
+   "altitud": 3007,
+   "otras": "3.011 m (Forqueta Norte, OpenStreetMap)",
+   "lat": 42.63073,
+   "lon": 0.426617,
+   "grado": "PD+ · cresta y pedreras",
+   "descripcion": "Cumbre doble al este del Posets, sobre el collado de Eriste. En esta ruta se visita tras las crestas de Eriste, con las dos Forquetas —Norte y Sur— a un paso una de otra.",
+   "foto": "forqueta",
+   "pie": "Las Forquetas, vistas desde el Diente Royo.",
+   "fotoCima": {
+    "foto": "eri-forqueta",
+    "pie": "Las Forquetas, con un ibón a sus pies."
+   },
+   "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta."
   }
  ]
 }

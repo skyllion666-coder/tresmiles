@@ -2153,5 +2153,35 @@
   "w": 750,
   "h": 1000,
   "pos": "50% 50%"
+ },
+ "eri-viados": {
+  "archivo": "Refugio de Viados 20170714 153028.jpg",
+  "autor": "Josefito123",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Refugio_de_Viados_20170714_153028.jpg",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "eri-norte": {
+  "archivo": "Picos de Eriste.JPG",
+  "autor": "Francisco Lera",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Picos_de_Eriste.JPG",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "eri-forqueta": {
+  "archivo": "Les Forquetes.JPG",
+  "autor": "Montfranc",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Les_Forquetes.JPG",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

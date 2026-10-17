@@ -403,5 +403,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Pocets.jpg",
   "w": 1280,
   "h": 768
+ },
+ "eriste-norte": {
+  "archivo": "Eristes.JPG",
+  "autor": "Francisco Lera",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Eristes.JPG",
+  "w": 1280,
+  "h": 854
+ },
+ "forqueta": {
+  "archivo": "Las Forquetas des del Diente Royo.JPG",
+  "autor": "Montfranc",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Las_Forquetas_des_del_Diente_Royo.JPG",
+  "w": 1280,
+  "h": 960
  }
 }
