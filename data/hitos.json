@@ -3644,5 +3644,90 @@
   "lat": 42.766628,
   "lon": -0.138288,
   "nota": "Cumbre de 3.219 m según OpenStreetMap; el track pasa a pocos metros. Altitud del GPS del track: 3.252 m."
+ },
+ {
+  "id": "pet-refugio",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Refugio de Baysellance",
+  "tipo": "refugio",
+  "lat": 42.779334,
+  "lon": -0.124288,
+  "nota": "Punto de partida, junto al refugio de Baysellance. Altitud del GPS del track: 2.650 m.",
+  "inicio": true,
+  "foto": "pet-senda",
+  "pie": "El refugio de Baysellance al fondo, con unas lagunillas de deshielo."
+ },
+ {
+  "id": "pet-collado",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Collado de Ossoue",
+  "tipo": "paso",
+  "lat": 42.77938,
+  "lon": -0.131078,
+  "nota": "Collado de la Hourquette d’Ossoue. Altitud del GPS del track: 2.729 m.",
+  "foto": "pet-collado",
+  "pie": "Un grupo de montañeros sube hacia el collado, entre nubes."
+ },
+ {
+  "id": "pet-glaciares",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Glaciares",
+  "tipo": "lugar",
+  "lat": 42.779545,
+  "lon": -0.131591,
+  "nota": "Vista de los restos de glaciar bajo las paredes del Vignemale. Altitud del GPS del track: 2.740 m.",
+  "foto": "pet-glaciares",
+  "pie": "Los restos del glaciar, bajo las paredes del Vignemale."
+ },
+ {
+  "id": "pet-hitos",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Hitos",
+  "tipo": "paso",
+  "lat": 42.775428,
+  "lon": -0.132825,
+  "nota": "Tramo de la cresta noreste marcado con hitos. Altitud del GPS del track: 2.937 m.",
+  "foto": "pet-hitos",
+  "pie": "Un hito entre las lajas de la cresta."
+ },
+ {
+  "id": "pet-vistas",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Vistas",
+  "tipo": "lugar",
+  "lat": 42.776152,
+  "lon": -0.1325,
+  "nota": "Mirador de la subida, con vistas hacia el valle. Altitud del GPS del track: 2.897 m.",
+  "foto": "pet-vistas",
+  "pie": "Vista desde la subida, entre nubes."
+ },
+ {
+  "id": "pet-cima",
+  "pico": "petit-vignemale",
+  "picos": [
+   "petit-vignemale"
+  ],
+  "nombre": "Petit Vignemale",
+  "tipo": "cima",
+  "lat": 42.774827,
+  "lon": -0.134892,
+  "nota": "Cumbre de 3.032 m. Altitud del GPS del track: 3.029 m.",
+  "foto": "pet-cima",
+  "pie": "La roca de la cima, con la inscripción «Pic du Petit Vignemale 3032 m»."
  }
 ]

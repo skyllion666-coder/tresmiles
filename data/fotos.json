@@ -385,5 +385,14 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Pic_Montferrat.jpg",
   "w": 1280,
   "h": 960
+ },
+ "petit-vignemale": {
+  "archivo": "Glacier du Petit Vignemale IMGP0858.JPG",
+  "autor": "En rouge",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Glacier_du_Petit_Vignemale_IMGP0858.JPG",
+  "w": 1280,
+  "h": 960
  }
 }

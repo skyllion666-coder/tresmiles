@@ -42,7 +42,8 @@
   "araguells",
   "espalda-aneto",
   "cerbillona",
-  "montferrat"
+  "montferrat",
+  "petit-vignemale"
  ],
  "macizos": [
   {
@@ -1436,6 +1437,38 @@
     "montferrat-ossoue"
    ],
    "curiosidad": "Una ruta clásica enlaza las cinco cumbres de la «corona» del Vignemale, todas por encima de 3.200 m: Pique Longue (3.298 m), Clot de la Hount (3.289 m), Cerbillona (3.247 m), Pic Central (3.235 m) y Montferrat (3.219 m). Según las guías, el paso por el Pic Central incluye pasajes de trepada de II y III grado."
+  },
+  {
+   "id": "petit-vignemale",
+   "nombre": "Pequeño Vignemale",
+   "alias": "Petit Vignemale · Pic du Petit Vignemale",
+   "altitud": 3032,
+   "otras": "3.035 m (guía de Hautes-Pyrénées)",
+   "macizo": "vig",
+   "frontera": true,
+   "lat": 42.774827,
+   "lon": -0.134892,
+   "acceso": "Valle de Ossoue (Francia) · refugio de Baysellance",
+   "ruta": "Refugio de Baysellance → Hourquette d’Ossoue (collado de Ossoue) → cresta noreste → cumbre; vuelta por el mismo camino",
+   "desnivel": "≈ 400 m desde el refugio de Baysellance (3,2 km ida y vuelta)",
+   "dificultad": "moderada",
+   "grado": "F+ · senda y pedreras",
+   "epoca": "Julio – septiembre",
+   "descripcion": "El más fácil de los grandes picos del macizo del Vignemale, a un paso del refugio de Baysellance. Se sube por el collado de Ossoue y la amplia cresta noreste, entre lajas y hitos, con vistas al glaciar de Ossoue y al circo de Gavarnie.",
+   "foto": "petit-vignemale",
+   "pie": "El glaciar del Petit Vignemale.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/petit-vignemale-3032-m-ascension-desde-el-refugio-de-baysellance-187408091",
+    "texto": "Ver la ruta en Wikiloc: Petit Vignemale desde el refugio de Baysellance, de revellín"
+   },
+   "rutas": [
+    "petit-vignemale-baysellance"
+   ],
+   "fotoCima": {
+    "foto": "pet-cima",
+    "pie": "La roca de la cima, con la inscripción «Pic du Petit Vignemale 3032 m»."
+   },
+   "curiosidad": "Según SummitPost, la ruta normal sale al oeste del refugio de Baysellance (2.651 m) hacia la Hourquette d’Ossoue (2.734 m) y gira a la izquierda por la amplia cresta noreste. Una guía de Hautes-Pyrénées le da 3.035 m, tres más que la cifra habitual: las fuentes difieren."
   }
  ]
 }
