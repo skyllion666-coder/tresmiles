@@ -39,7 +39,8 @@ async function boot() {
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(HORIZON, 24000, 100000);
   const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 60, 260000);
-  scene.add(makeSky());
+  const sky = makeSky(); scene.add(sky);
+  renderer.setClearColor(HORIZON);
   const hemi = new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 0.78 * Math.PI);
   const sun = new THREE.DirectionalLight(0xffffff, 0.62 * Math.PI);
   scene.add(hemi, sun);
@@ -158,6 +159,46 @@ async function boot() {
     pinsEl.appendChild(b); pinEls.set(p.id, b);
   }
   const tmp = new THREE.Vector3();
+
+  // — tocar cualquier punto del mapa: dice el pico con nombre más cercano (OpenStreetMap, se descarga la primera vez) —
+  let picosOSM = null, picoSel = null, picoTimer = 0;
+  const picoEl = document.createElement('div'); picoEl.className = 'pico-osm is-hidden'; picoEl.hidden = true; $('#pins').appendChild(picoEl);
+  const cargaPicos = () => (picosOSM ??= json('data/picos_osm.json').then((l) => l.map(([nombre, lon, lat, ele]) => ({ nombre, ele, ...geo.toXZ(lon, lat) }))).catch(() => []));
+  const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  function puntoDelRelieve(cx, cy) {
+    ndc.set((cx / innerWidth) * 2 - 1, -(cy / innerHeight) * 2 + 1); ray.setFromCamera(ndc, camera);
+    const o = ray.ray.origin, d = ray.ray.direction; let t = 0, prev = 0;
+    for (let i = 0; i < 2600; i++) {
+      t += Math.max(30, t * 0.012);
+      const x = o.x + d.x * t, y = o.y + d.y * t, z = o.z + d.z * t;
+      if (Math.abs(x) > geo.W / 2 || Math.abs(z) > geo.D / 2) return null;
+      if (y < geo.heightAt(x, z)) { let a = prev, b = t; for (let k = 0; k < 14; k++) { const m = (a + b) / 2; if (o.y + d.y * m < geo.heightAt(o.x + d.x * m, o.z + d.z * m)) b = m; else a = m; } return { x: o.x + d.x * b, z: o.z + d.z * b }; }
+      prev = t;
+    }
+    return null;
+  }
+  async function nombrePico(cx, cy) {
+    const pt = puntoDelRelieve(cx, cy); if (!pt) return;
+    const lista = await cargaPicos(); if (!lista.length) return;
+    const dist = Math.hypot(pt.x - camera.position.x, pt.z - camera.position.z);
+    const radio = clamp(dist * 0.05, 500, 1800);   // cuanto más lejos está la cámara, más margen al tocar
+    let mejor = null, md = 1e18;
+    for (const p of lista) { const d = Math.hypot(p.x - pt.x, p.z - pt.z) - (p.ele ? (p.ele - 2000) / 40 : 0); if (d < md && Math.hypot(p.x - pt.x, p.z - pt.z) < radio) { md = d; mejor = p; } }
+    clearTimeout(picoTimer);
+    if (!mejor) { picoSel = null; picoEl.hidden = true; return; }
+    const y = geo.heightAt(mejor.x, mejor.z);
+    picoSel = { x: mejor.x, y, z: mejor.z };
+    picoEl.innerHTML = `<b>${esc(mejor.nombre)}</b><i>${mejor.ele ? `${fmt(mejor.ele)} m` : 'altitud sin datos'}</i>`;
+    picoEl.hidden = false; picoEl.classList.remove('is-hidden');
+    picoTimer = setTimeout(() => { picoSel = null; picoEl.hidden = true; }, 7000);
+  }
+  let toque = null;
+  canvas.addEventListener('pointerdown', (e) => { toque = { x: e.clientX, y: e.clientY, t: performance.now() }; if (picoSel) { picoSel = null; picoEl.hidden = true; } });
+  canvas.addEventListener('pointerup', (e) => {
+    if (!toque || S.mode !== 'explore' || S.vuelo || S.flight) { toque = null; return; }
+    const mov = Math.hypot(e.clientX - toque.x, e.clientY - toque.y), dur = performance.now() - toque.t; toque = null;
+    if (mov < 7 && dur < 450) nombrePico(e.clientX, e.clientY);
+  });
   function occluded(pt) {
     const c = camera.position;
     for (let i = 1; i <= 26; i++) {
@@ -169,6 +210,12 @@ async function boot() {
   }
   function updatePins() {
     const W = innerWidth, H = innerHeight;
+    if (picoSel) {   // pico que se ha tocado en el mapa
+      tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
+      const ok = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
+      picoEl.classList.toggle('is-hidden', !ok);
+      if (ok) picoEl.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+    }
     for (const p of peaks) {
       const el = pinEls.get(p.id);
       tmp.set(p.w.x, p.w.y + 25, p.w.z);
@@ -667,6 +714,7 @@ async function boot() {
     if (Math.abs(S.shift.x) + Math.abs(S.shift.y) > 0.5) camera.setViewOffset(innerWidth, innerHeight, S.shift.x, S.shift.y, innerWidth, innerHeight);
     else if (camera.view?.enabled) camera.clearViewOffset();
     camera.updateMatrixWorld();
+    sky.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     terrain.update(camera);
     clouds.update(dt, camera, !reduced);
     updatePins();
@@ -682,7 +730,7 @@ async function boot() {
   }
   requestAnimationFrame(frame);
   document.body.classList.remove('is-loading');
-  window.tresmiles = { openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido, rutas };
+  window.tresmiles = { nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {

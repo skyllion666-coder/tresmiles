@@ -324,3 +324,10 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
 #intro-picos .prox { color: var(--ink-2); opacity: .6; }
 #intro-picos .prox i { font-style: italic; text-transform: none; letter-spacing: .02em; }
 #intro-picos .empty { padding: 12px 18px; font-size: .85rem; color: var(--ink-2); }
+
+/* nombre de un pico tocado en el mapa (OpenStreetMap) */
+.pico-osm { position: absolute; left: 0; top: 0; z-index: 4; pointer-events: none; translate: -50% calc(-100% - 12px); text-align: center; background: rgba(36,48,44,.92); color: var(--cream); padding: 6px 12px; box-shadow: 0 6px 18px rgba(0,0,0,.35); will-change: transform; }
+.pico-osm::after { content: ""; position: absolute; left: 50%; bottom: -12px; width: 10px; height: 10px; margin-left: -5px; border-radius: 50%; background: #ffa930; box-shadow: 0 0 0 2px var(--cream); }
+.pico-osm b { display: block; font: 600 .74rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; }
+.pico-osm i { display: block; font: 500 .72rem var(--sans); font-style: normal; opacity: .85; }
+.pico-osm.is-hidden, .pico-osm[hidden] { display: none; }
