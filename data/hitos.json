@@ -1002,9 +1002,7 @@
   "tipo": "cima",
   "lat": 42.690068,
   "lon": 0.525781,
-  "nota": "Hito oriental del Perdiguero, antes de la cumbre. Altitud del GPS del track: 3.123 m.",
-  "foto": "prd-oriental",
-  "pie": "En el Perdiguero Oriental, camino de la cumbre (agosto de 2026)."
+  "nota": "Hito oriental del Perdiguero, antes de la cumbre. Altitud del GPS del track: 3.123 m."
  },
  {
   "id": "prd-cima",
@@ -1015,7 +1013,7 @@
   "lon": 0.51886,
   "nota": "Cumbre del Perdiguero, en la frontera con Francia. Altitud del GPS del track: 3.206 m.",
   "foto": "prd-cima",
-  "pie": "La cima, con el cartel «Pic Perdiguère 3222» (agosto de 2026)."
+  "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo."
  },
  {
   "id": "prd-inicio",
