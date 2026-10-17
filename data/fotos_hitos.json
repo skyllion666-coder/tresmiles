@@ -1869,5 +1869,38 @@
   "w": 1000,
   "h": 494,
   "pos": "50% 50%"
+ },
+ "alb-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "diegitok2",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/banos-de-benasquepico-de-alba-3118-m-banos-de-benasque-5123600",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "alb-collado": {
+  "archivo": "foto del autor del track",
+  "autor": "diegitok2",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/banos-de-benasquepico-de-alba-3118-m-banos-de-benasque-5123600",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "alb-ibon": {
+  "archivo": "foto del autor del track",
+  "autor": "diegitok2",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/banos-de-benasquepico-de-alba-3118-m-banos-de-benasque-5123600",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

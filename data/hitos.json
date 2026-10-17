@@ -3212,5 +3212,60 @@
   "nota": "Cima de 3.241 m según las guías. Altitud del GPS del track: 3.249 m.",
   "foto": "mar-cima",
   "pie": "Vista desde la cima de la Margalida, con el Russell y el Vallibierna al fondo."
+ },
+ {
+  "id": "alb-parking",
+  "pico": "alba",
+  "picos": [
+   "alba"
+  ],
+  "nombre": "Parking de Baños de Benasque",
+  "tipo": "lugar",
+  "lat": 42.661468,
+  "lon": 0.585591,
+  "nota": "Punto de partida, en el valle de Benasque. Altitud del GPS del track: 1.680 m.",
+  "inicio": true
+ },
+ {
+  "id": "alb-ibon",
+  "pico": "alba",
+  "picos": [
+   "alba"
+  ],
+  "nombre": "Ibón",
+  "tipo": "ibon",
+  "lat": 42.664806,
+  "lon": 0.605149,
+  "nota": "Ibón del camino. Altitud del GPS del track: 2.244 m.",
+  "foto": "alb-ibon",
+  "pie": "Un ibón del camino, con las cumbres de la Maladeta al fondo."
+ },
+ {
+  "id": "alb-collado",
+  "pico": "alba",
+  "picos": [
+   "alba"
+  ],
+  "nombre": "Collado",
+  "tipo": "paso",
+  "lat": 42.657814,
+  "lon": 0.617187,
+  "nota": "Collado previo a la cima. Altitud del GPS del track: 2.892 m.",
+  "foto": "alb-collado",
+  "pie": "El collado, con el mar de nubes por debajo."
+ },
+ {
+  "id": "alb-cima",
+  "pico": "alba",
+  "picos": [
+   "alba"
+  ],
+  "nombre": "Pico de Alba",
+  "tipo": "cima",
+  "lat": 42.65565,
+  "lon": 0.620933,
+  "nota": "Cima de 3.118 m según las guías. Altitud del GPS del track: 3.095 m.",
+  "foto": "alb-cima",
+  "pie": "El hito de la cima, entre nubes."
  }
 ]

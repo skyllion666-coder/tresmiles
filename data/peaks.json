@@ -36,7 +36,8 @@
   "arnales",
   "gran-facha",
   "olas",
-  "margalida"
+  "margalida",
+  "alba"
  ],
  "macizos": [
   {
@@ -1242,6 +1243,38 @@
     "pie": "Vista desde la cima de la Margalida, con el Russell y el Vallibierna al fondo."
    },
    "curiosidad": "Una página de SummitPost dice que el nombre se debe a Margalide, primera mujer de Henri Le Bondidier, que se lo habría dado a la cumbre; es un dato de una sola fuente, no contrastado. Un artículo catalán de 1921 la daba con 3.258 m y la describía como un gran gendarme de la cresta; hoy se da 3.241 m."
+  },
+  {
+   "id": "alba",
+   "nombre": "Pico de Alba",
+   "alias": "Tuca d'Alba · Quixal d'Alba",
+   "altitud": 3118,
+   "otras": "3.112 m (OpenStreetMap, Tuca d'Alba) · 3.095 m (GPS del track)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.65565,
+   "lon": 0.620933,
+   "acceso": "Benasque · Baños de Benasque",
+   "ruta": "Parking de Baños de Benasque → ibón → collado → cumbre → vuelta por el mismo camino",
+   "desnivel": "≈ 1.440 m desde Baños de Benasque (10,9 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "F+ · senda, pedreras y último tramo con hitos",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Extremo noroccidental de la gran cresta de la Maladeta, sobre los Baños de Benasque. Sube por un ibón hasta un collado y remata por pedreras hasta la cima; un recorrido largo pero sin grandes dificultades técnicas.",
+   "foto": "alba",
+   "pie": "Los tucs d’Alba con los Baños de Benasque en la ladera, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/banos-de-benasquepico-de-alba-3118-m-banos-de-benasque-5123600",
+    "texto": "Ver la ruta en Wikiloc: Baños de Benasque + Pico de Alba 3118 m, de diegitok2"
+   },
+   "rutas": [
+    "alba-banos-benasque"
+   ],
+   "fotoCima": {
+    "foto": "alb-cima",
+    "pie": "El hito de la cima, entre nubes."
+   },
+   "curiosidad": "La UIAA lo incluye en su lista de los tresmiles del Pirineo, en la zona de Maladeta-Aneto, con 3.118 m. Alrededor hay varios puntos con el mismo nombre, como el Gendarme de Alba (3.054 m) y el Collado inferior de Alba (3.020 m), y algunos, como la Muela de Alba (3.118 m), no figuran en la lista oficial; en OpenStreetMap la cumbre aparece como «Tuca d'Alba», con 3.112 m."
   }
  ]
 }
