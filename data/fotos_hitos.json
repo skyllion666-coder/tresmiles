@@ -1781,5 +1781,16 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "gf-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Knes Montañeros",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-facha-cuspide-de-bachimana-3-005-m-banos-de-panticosa-con-perros-139068392",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

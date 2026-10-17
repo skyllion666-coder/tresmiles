@@ -433,7 +433,8 @@
    "argualas",
    "infierno-occidental",
    "infierno-oriental",
-   "arnales"
+   "arnales",
+   "gran-facha"
   ],
   "inicio": true
  },
@@ -451,7 +452,8 @@
    "infiernos",
    "infierno-occidental",
    "infierno-oriental",
-   "arnales"
+   "arnales",
+   "gran-facha"
   ]
  },
  {
@@ -467,7 +469,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "gran-facha"
   ]
  },
  {
@@ -483,7 +486,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "gran-facha"
   ]
  },
  {
@@ -499,7 +503,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "gran-facha"
   ]
  },
  {
@@ -515,7 +520,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "gran-facha"
   ]
  },
  {
@@ -530,7 +536,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "gran-facha"
   ]
  },
  {
@@ -3065,5 +3072,19 @@
   "nota": "Cima de 3.006 m según la UIAA; altitud del GPS del track: 3.008 m.",
   "foto": "arn-cima",
   "pie": "La cresta de la cima del Arnales, con nieve."
+ },
+ {
+  "id": "gf-cima",
+  "pico": "gran-facha",
+  "picos": [
+   "gran-facha"
+  ],
+  "nombre": "Gran Facha",
+  "tipo": "cima",
+  "lat": 42.808,
+  "lon": -0.2376,
+  "nota": "Cima fronteriza de 3.005 m; la inscripción de la cima marca 3.006 m. Altitud del GPS del track: 3.008 m.",
+  "foto": "gf-cima",
+  "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
  }
 ]

@@ -33,7 +33,8 @@
   "gorgs",
   "infierno-occidental",
   "infierno-oriental",
-  "arnales"
+  "arnales",
+  "gran-facha"
  ],
  "macizos": [
   {
@@ -1143,6 +1144,38 @@
     "pie": "La cresta de la cima del Arnales, con nieve."
    },
    "curiosidad": "La UIAA lo incluyó en 1995 entre los tresmiles del Pirineo con 3.006 m, pero la cartografía no está de acuerdo: el mapa 1:25.000 del IGN le da 2.996 m y la cartografía aragonesa 2.999,9 m, redondeados a 3.000,0 m en una orden de 2020. Según la fuente, es o no es un tresmil."
+  },
+  {
+   "id": "gran-facha",
+   "nombre": "Gran Facha",
+   "alias": "Grande Fache · Cúspide de Bachimaña",
+   "altitud": 3005,
+   "otras": "3.006 m (inscripción de la cima) · 3.008 m (GPS del track)",
+   "macizo": "bal",
+   "frontera": true,
+   "lat": 42.808,
+   "lon": -0.2376,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Baños de Panticosa → cascada y Cuesta del Fraile → refugio e ibón de Bachimaña Alto → collado de la Facha → cumbre fronteriza",
+   "desnivel": "≈ 2.000 m desde Baños de Panticosa (19 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · cresta final con pasos de I+/II",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza del Pirineo central, entre el valle de Tena y el valle francés de Wallon. Desde Panticosa se sube por los ibones de Bachimaña hasta el collado de la Facha y se remata por una cresta de bloques con algún paso fácil de trepada.",
+   "foto": "gran-facha",
+   "pie": "La Gran Facha (Grande Fache), con su vertiente de pedreras.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/gran-facha-cuspide-de-bachimana-3-005-m-banos-de-panticosa-con-perros-139068392",
+    "texto": "Ver la ruta en Wikiloc: Gran Facha/Cúspide de Bachimaña, de Knes Montañeros"
+   },
+   "rutas": [
+    "gran-facha-panticosa"
+   ],
+   "fotoCima": {
+    "foto": "gf-cima",
+    "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
+   },
+   "curiosidad": "En español su nombre original es Pico de Bachimaña (o Cúspide de Bachimaña), y Gran Facha es la traducción del francés Grande Fache. Según una fuente, la primera ascensión la hicieron en 1874 Henry Russell y Latour, de Cauterets; el dato procede de una sola fuente en inglés."
   }
  ]
 }
