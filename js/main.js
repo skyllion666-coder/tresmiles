@@ -236,11 +236,12 @@ async function boot() {
 
   // — filtros —
   const passes = (p) => (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
-  const visiblePeaks = () => peaks.filter(passes);
+  const visiblePeaks = () => peaks.filter(passes);   // solo las activas (navegación anterior/siguiente)
+  const norm = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
   function buildFilters() {
     if (peaks.length < 2) return;
     $('#btn-filters').hidden = false;
-    const mac = [...new Set(peaks.map((p) => p.macizo))];
+    const mac = [...new Set(data.picos.map((p) => p.macizo))];
     $('#f-macizo').innerHTML = mac.map((m) => `<button type="button" class="chip" aria-pressed="false" data-k="macizo" data-v="${m}">${esc(macizoName[m])}</button>`).join('');
     $('#f-dif').innerHTML = data.dificultades.map((d) => `<button type="button" class="chip" aria-pressed="false" data-k="dif" data-v="${d.id}">${esc(d.nombre)}</button>`).join('');
     $('#filters').addEventListener('click', (e) => {
@@ -259,18 +260,26 @@ async function boot() {
   }
 
   // — selector inferior —
-  const listEl = $('#list'), listBtn = $('#btn-list');
+  const listEl = $('#picker'), listUl = $('#list'), qEl = $('#q'), listBtn = $('#btn-list');
+  const activas = new Set(peaks.map((p) => p.id));
   function refreshLists() {
-    const vis = visiblePeaks();
-    listEl.innerHTML = vis.length
-      ? vis.map((p) => `<li role="presentation"><button type="button" role="option" aria-selected="${S.active === p.id}" data-id="${p.id}"><span>${esc(p.nombre)}</span><span>${fmt(p.altitud)} m</span></button></li>`).join('')
-      : '<li class="empty">Ninguna cumbre cumple los filtros.</li>';
-    const fc = $('#f-count'); if (fc) fc.textContent = `${vis.length} de ${peaks.length} cumbres`;
+    const q = norm(qEl.value.trim());
+    const hit = data.picos.filter((p) => passes(p) && (!q || norm(`${p.nombre} ${p.alias} ${macizoName[p.macizo]}`).includes(q)));
+    const grupos = data.macizos.map((m) => ({ m, ps: hit.filter((p) => p.macizo === m.id).sort((a, b) => b.altitud - a.altitud) }))
+      .filter((g) => g.ps.length).sort((a, b) => b.ps.filter((p) => activas.has(p.id)).length - a.ps.filter((p) => activas.has(p.id)).length);
+    listUl.innerHTML = grupos.length
+      ? grupos.map((g) => `<li class="grupo" role="presentation">${esc(g.m.nombre)}</li>` + g.ps.map((p) => activas.has(p.id)
+          ? `<li role="presentation"><button type="button" role="option" aria-selected="${S.active === p.id}" data-id="${p.id}"><span>${esc(p.nombre)}</span><span>${fmt(p.altitud)} m</span></button></li>`
+          : `<li class="prox" role="presentation"><span>${esc(p.nombre)}</span><span>Próximamente</span></li>`).join('')).join('')
+      : '<li class="empty">Ninguna cumbre coincide.</li>';
+    const fc = $('#f-count'); if (fc) fc.textContent = `${hit.length} de ${data.picos.length} cumbres`;
     $('#dock-label').textContent = S.active ? byId[S.active].nombre : peaks.length === 1 ? `Explorar el ${peaks[0].nombre}` : 'Explorar las cumbres';
   }
-  const setList = (open) => { listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); };
+  const setList = (open) => { listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); if (open) { qEl.value = ''; refreshLists(); if (matchMedia('(hover: hover)').matches) qEl.focus(); } };
   listBtn.addEventListener('click', () => setList(listEl.hidden));
-  listEl.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } });
+  qEl.addEventListener('input', refreshLists);
+  qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = listUl.querySelector('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } } e.stopPropagation(); if (e.key === 'Escape') setList(false); });
+  listUl.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } });
   document.addEventListener('pointerdown', (e) => { if (!e.target.closest('#dock')) setList(false); });
 
   // — ficha —

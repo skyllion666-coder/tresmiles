@@ -63,7 +63,13 @@ body.is-ready #dock { opacity: 1; pointer-events: auto; }
 .dock-main { background: var(--cream); color: var(--spruce); min-width: min(270px, 62vw); display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 18px; height: 44px; font: 600 .78rem var(--cond); letter-spacing: .2em; text-transform: uppercase; }
 .dock-main svg { transition: transform .25s; }
 .dock-main[aria-expanded="true"] svg { transform: rotate(180deg); }
-#list { position: absolute; left: 44px; right: 0; bottom: 48px; margin: 0; padding: 6px 0; list-style: none; background: var(--cream); color: var(--ink); max-height: 46vh; overflow: auto; }
+#picker { position: absolute; left: 44px; right: 0; bottom: 48px; background: var(--cream); color: var(--ink); }
+#q { display: block; width: 100%; border: 0; border-bottom: 1px solid rgba(0,0,0,.12); background: var(--cream-2); padding: 12px 18px; font: 500 .8rem var(--cond); letter-spacing: .1em; color: var(--ink); outline: none; border-radius: 0; -webkit-appearance: none; appearance: none; }
+#q:focus { background: #fff8e6; }
+#list { margin: 0; padding: 6px 0; list-style: none; max-height: 46vh; overflow: auto; }
+#list .grupo { padding: 10px 18px 4px; font: 600 .62rem var(--cond); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-2); }
+#list .prox { display: flex; justify-content: space-between; gap: 14px; padding: 9px 18px; font: 500 .78rem var(--cond); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); opacity: .55; }
+#list .prox span:last-child { text-transform: none; letter-spacing: .02em; font-style: italic; }
 #list li button { width: 100%; display: flex; justify-content: space-between; gap: 14px; text-align: left; padding: 11px 18px; font: 500 .8rem var(--cond); letter-spacing: .12em; text-transform: uppercase; }
 #list li button:hover, #list li button[aria-selected="true"] { background: var(--cream-2); color: var(--spruce); }
 #list li button span:last-child { text-transform: none; color: var(--ink-2); font-variant-numeric: tabular-nums; }
@@ -177,7 +183,7 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
   body.ficha-open #dock, body.ficha-open #tools, body.ficha-open #compass { opacity: 0; pointer-events: none; }
   .panel { bottom: 76px; }
   .dock-main { min-width: min(250px, 60vw); padding: 0 12px; gap: 8px; font-size: .72rem; letter-spacing: .12em; white-space: nowrap; }
-  #list { max-height: 40vh; }
+  #list { max-height: 36vh; }
   #compass { bottom: calc(max(18px, env(safe-area-inset-bottom)) + 52px); }
   #compass svg { width: 52px; height: 52px; }
   .eyebrow { letter-spacing: .2em; font-size: .72rem; }
