@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=5';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=6';
 import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);

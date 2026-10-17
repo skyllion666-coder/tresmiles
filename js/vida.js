@@ -143,7 +143,7 @@ export function crearSonido() {
     fuente().connect(wf).connect(waterGain).connect(master);
     lfo(0.35, 0.02, waterGain.gain);
     // música de fondo: bucle propio (instrumentos de VSCO-2 CE, CC0)
-    musicGain = ctx.createGain(); musicGain.gain.value = 0.55; musicGain.connect(master);
+    musicGain = ctx.createGain(); musicGain.gain.value = 1.0; musicGain.connect(master);
     fetch('audio/ambiente.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => {
       const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.connect(musicGain); s.start();
     }).catch(() => {});
@@ -185,8 +185,8 @@ export function crearSonido() {
       if (!ctx || !on) return;
       alturaAct = alturaSobreSuelo;
       const alto = Math.min(1, alturaSobreSuelo / 9000);
-      windGain.gain.setTargetAtTime(0.25 + 0.55 * alto, ctx.currentTime, 0.5);
-      waterGain.gain.setTargetAtTime(0.10 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
+      windGain.gain.setTargetAtTime(0.12 + 0.35 * alto, ctx.currentTime, 0.5);
+      waterGain.gain.setTargetAtTime(0.025 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
     },
   };
 }
