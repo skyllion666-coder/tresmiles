@@ -13,6 +13,11 @@ FOTOS = {
     'russell': 'Villa Russell - Henry Russell et ses guides posant devant le grottes au Vignemale - btv1b10581617p.jpg',
     'panticosa': 'Balneario de Panticosa.jpg',
     'bachimana-refugio': 'Refugio de Bachimaña 01.jpg',
+    'goriz': 'Refugio de Góriz 02.jpg',
+    'casa-piedra': 'Refugi Casa de Piedra 01.jpg',
+    'bachimana-alto': 'Ibón de Bachimaña Alto 01.jpg',
+    'ibones-azules': 'Ibones azules.jpg',
+    'arremoulit': "Refuge d'Arrémoulit 20060812a.jpg",
     'baysellance': 'Refugi de Baysellance i Vinhamala al fons.jpg',
     'arriel-bajo': "L'ivó d'Arriel Bajo voltat de cims.jpeg",
 }

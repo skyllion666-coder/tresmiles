@@ -194,7 +194,9 @@
   "lat": 42.84605,
   "lon": -0.32916,
   "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "arremoulit",
+  "pie": "El refugio de Arrémoulit, en la vertiente francesa."
  },
  {
   "id": "wallon",
@@ -397,7 +399,9 @@
   "tipo": "refugio",
   "lat": 42.762382,
   "lon": -0.233362,
-  "nota": "Refugio junto al camino, al principio del recorrido. Altitud del GPS del track: 1.640 m."
+  "nota": "Refugio junto al camino, al principio del recorrido. Altitud del GPS del track: 1.640 m.",
+  "foto": "casa-piedra",
+  "pie": "El refugio Casa de Piedra, cerca del balneario de Panticosa."
  },
  {
   "id": "mirador-reina",
@@ -444,7 +448,8 @@
   "tipo": "ibon",
   "lat": 42.783851,
   "lon": -0.224527,
-  "nota": "Ibón alto de Bachimaña, junto al camino. Altitud del GPS del track: 2.234 m."
+  "nota": "Ibón alto de Bachimaña, junto al camino. Altitud del GPS del track: 2.234 m.",
+  "foto": "bachimana-alto"
  },
  {
   "id": "azul-inferior",
@@ -453,7 +458,9 @@
   "tipo": "ibon",
   "lat": 42.788106,
   "lon": -0.240484,
-  "nota": "Uno de los ibones Azules, el más bajo. Altitud del GPS del track: 2.362 m."
+  "nota": "Uno de los ibones Azules, el más bajo. Altitud del GPS del track: 2.362 m.",
+  "foto": "ibones-azules",
+  "pie": "Los ibones Azules, en el camino hacia el Cuello del Infierno."
  },
  {
   "id": "azul-superior",
@@ -602,7 +609,9 @@
   "picos": [
    "perdido",
    "cilindro"
-  ]
+  ],
+  "foto": "goriz",
+  "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
  },
  {
   "id": "cadenas",
