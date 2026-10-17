@@ -68,7 +68,9 @@
   "lat": 42.829922,
   "lon": -0.319517,
   "nota": "Bifurcación del camino hacia Respomuso. Altitud del GPS del track: 2.157 m.",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-desvio-respomuso",
+  "pie": "El desvío hacia Respomuso, con neveros a comienzos de temporada."
  },
  {
   "id": "desvio-arriel",
@@ -77,7 +79,9 @@
   "lat": 42.817397,
   "lon": -0.336975,
   "nota": "Bifurcación del camino hacia el pico Arriel. Altitud del GPS del track: 1.641 m.",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-desvio-arriel",
+  "pie": "Camino hacia los ibones de Arriel, entre el bosque."
  },
  {
   "id": "ermita",
@@ -86,7 +90,9 @@
   "lat": 42.816675,
   "lon": -0.2976,
   "nota": "Ermita junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-ermita",
+  "pie": "La ermita, entre pinos y neveros."
  },
  {
   "id": "ibon-respomuso",
@@ -113,7 +119,9 @@
   "lat": 42.79731,
   "lon": -0.332619,
   "nota": "Bifurcación marcada en el track, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-desvio-2",
+  "pie": "El barranco junto al desvío, con el pico al fondo."
  },
  {
   "id": "barranco-1",
@@ -131,7 +139,9 @@
   "lat": 42.803662,
   "lon": -0.336283,
   "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-barranco-2",
+  "pie": "Pasarela sobre el barranco."
  },
  {
   "id": "barranco-3",
@@ -140,7 +150,9 @@
   "lat": 42.808146,
   "lon": -0.339356,
   "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-barranco-3",
+  "pie": "La cascada del barranco de Balsaroleta."
  },
  {
   "id": "barranco-4",
@@ -158,7 +170,9 @@
   "lat": 42.822751,
   "lon": -0.326644,
   "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-barranco-5",
+  "pie": "El último barranco antes del collado."
  },
  {
   "id": "puente",
@@ -176,7 +190,9 @@
   "lat": 42.79665,
   "lon": -0.331364,
   "nota": "Área recreativa junto al final del recorrido.",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-area-recreativa",
+  "pie": "La pista y las mesas del área recreativa de La Sarra."
  },
  {
   "id": "frondiellas",
@@ -185,7 +201,9 @@
   "lat": 42.83307,
   "lon": -0.29031,
   "nota": "Cima vecina de unos 3.070 m (según OpenStreetMap).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-frondiellas",
+  "pie": "La piedra de la cima de la Punta Alta de las Frondiellas."
  },
  {
   "id": "arremoulit",
@@ -214,7 +232,9 @@
   "lat": 42.83966,
   "lon": -0.32152,
   "nota": "Collado a unos 2.448 m (según OpenStreetMap).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-col-arremoulit",
+  "pie": "El ibón de Arrémoulit visto desde el collado."
  },
  {
   "id": "col-arriel",
@@ -223,7 +243,9 @@
   "lat": 42.83689,
   "lon": -0.33368,
   "nota": "Collado a unos 2.608 m (según OpenStreetMap).",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "foto": "w-col-arriel",
+  "pie": "Las crestas desde el Col d'Arriel."
  },
  {
   "id": "canal",
@@ -263,7 +285,9 @@
   "tipo": "lugar",
   "lat": 42.759969,
   "lon": -0.102137,
-  "nota": "Llanos que se cruzan al principio del valle. Altitud del GPS del track: 1.844 m."
+  "nota": "Llanos que se cruzan al principio del valle. Altitud del GPS del track: 1.844 m.",
+  "foto": "w-ossoue-llanos",
+  "pie": "Los llanos de Ossoue, con la cresta al fondo."
  },
  {
   "id": "ossoue-puente",
@@ -272,7 +296,9 @@
   "tipo": "lugar",
   "lat": 42.76255,
   "lon": -0.108397,
-  "nota": "Puente en el camino del valle. Altitud del GPS del track: 1.866 m."
+  "nota": "Puente en el camino del valle. Altitud del GPS del track: 1.866 m.",
+  "foto": "w-ossoue-puente",
+  "pie": "El puente sobre el torrente en los llanos de Ossoue."
  },
  {
   "id": "ossoue-cascada",
@@ -301,7 +327,9 @@
   "tipo": "vivac",
   "lat": 42.775519,
   "lon": -0.121589,
-  "nota": "Abrigos bajo roca junto al camino. Nombre tal como figura en el track. Altitud del GPS del track: 2.412 m."
+  "nota": "Abrigos bajo roca junto al camino. Nombre tal como figura en el track. Altitud del GPS del track: 2.412 m.",
+  "foto": "w-grottes-belleveu",
+  "pie": "La entrada de una de las grutas de Belleveu."
  },
  {
   "id": "desvio-baysellance",
@@ -365,7 +393,9 @@
   "tipo": "paso",
   "lat": 42.773252,
   "lon": -0.147306,
-  "nota": "Comienzan las trepadas hacia la cima. Altitud del GPS del track: 3.204 m."
+  "nota": "Comienzan las trepadas hacia la cima. Altitud del GPS del track: 3.204 m.",
+  "foto": "w-vig-trepadas",
+  "pie": "Las trepadas de roca bajo el Vignemale."
  },
  {
   "id": "grotte-paradis",
@@ -434,7 +464,9 @@
   "tipo": "paso",
   "lat": 42.775861,
   "lon": -0.230873,
-  "nota": "Comienza la subida de la Cuesta del Fraile. Altitud del GPS del track: 1.964 m."
+  "nota": "Comienza la subida de la Cuesta del Fraile. Altitud del GPS del track: 1.964 m.",
+  "foto": "w-cuesta-fraile",
+  "pie": "La Cuesta del Fraile, con su cascada."
  },
  {
   "id": "vista-bachimana",
@@ -475,7 +507,9 @@
   "tipo": "ibon",
   "lat": 42.789689,
   "lon": -0.24395,
-  "nota": "Uno de los ibones Azules, el más alto. Altitud del GPS del track: 2.412 m."
+  "nota": "Uno de los ibones Azules, el más alto. Altitud del GPS del track: 2.412 m.",
+  "foto": "w-azul-superior",
+  "pie": "El ibón Azul superior al atardecer."
  },
  {
   "id": "cuello-infierno",
@@ -506,7 +540,9 @@
   "tipo": "paso",
   "lat": 42.785178,
   "lon": -0.264979,
-  "nota": "Tramo de subida hacia la cresta de los Infiernos. Altitud del GPS del track: 2.972 m."
+  "nota": "Tramo de subida hacia la cresta de los Infiernos. Altitud del GPS del track: 2.972 m.",
+  "foto": "w-garmo-blanco",
+  "pie": "El ibón visto desde el Garmo Blanco."
  },
  {
   "id": "inf-occ",
@@ -537,7 +573,9 @@
   "tipo": "cima",
   "lat": 42.781439,
   "lon": -0.259116,
-  "nota": "Cima del Infierno Oriental. Altitud del GPS del track: 3.069 m."
+  "nota": "Cima del Infierno Oriental. Altitud del GPS del track: 3.069 m.",
+  "foto": "w-inf-ori",
+  "pie": "Vista desde el Infierno Oriental sobre un ibón."
  },
  {
   "id": "collado-pondiellos",
@@ -546,7 +584,9 @@
   "tipo": "paso",
   "lat": 42.774558,
   "lon": -0.259624,
-  "nota": "Collado por el que se baja de la cresta. Altitud del GPS del track: 2.807 m."
+  "nota": "Collado por el que se baja de la cresta. Altitud del GPS del track: 2.807 m.",
+  "foto": "w-collado-pondiellos",
+  "pie": "Los ibones de Pondiellos desde el collado."
  },
  {
   "id": "inf-canal",
@@ -570,7 +610,9 @@
   "picos": [
    "infiernos",
    "garmo"
-  ]
+  ],
+  "foto": "w-fuente-laguna",
+  "pie": "La fuente termal de La Laguna."
  },
  {
   "id": "mallata-alta",
@@ -579,7 +621,9 @@
   "tipo": "vivac",
   "lat": 42.76786,
   "lon": -0.249007,
-  "nota": "Mallata Alta, donde el autor del track hizo vivac. Altitud del GPS del track: 2.220 m."
+  "nota": "Mallata Alta, donde el autor del track hizo vivac. Altitud del GPS del track: 2.220 m.",
+  "foto": "w-mallata-alta",
+  "pie": "La subida hacia la Mallata Alta."
  },
  {
   "id": "garmo-pedrera",
@@ -983,7 +1027,9 @@
   "tipo": "ibon",
   "lat": 42.681238,
   "lon": 0.540561,
-  "nota": "Pequeño ibón en la subida por el valle de Literola. Altitud del GPS del track: 2.500 m."
+  "nota": "Pequeño ibón en la subida por el valle de Literola. Altitud del GPS del track: 2.500 m.",
+  "foto": "w-prd-ibonet",
+  "pie": "El Ibonet de Literola."
  },
  {
   "id": "prd-lliterola",
@@ -1003,7 +1049,9 @@
   "tipo": "paso",
   "lat": 42.690004,
   "lon": 0.539883,
-  "nota": "Paso entre los valles de Remuñé y Literola; el recorrido baja por aquí. Altitud del GPS del track: 2.821 m."
+  "nota": "Paso entre los valles de Remuñé y Literola; el recorrido baja por aquí. Altitud del GPS del track: 2.821 m.",
+  "foto": "w-prd-portal",
+  "pie": "Los ibones junto al Portal de Remuñé."
  },
  {
   "id": "prd-oriental",
