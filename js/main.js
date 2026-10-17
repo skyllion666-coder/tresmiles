@@ -191,6 +191,10 @@ async function boot() {
     });
     return { h, el, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
   }).filter(Boolean);
+  function figCima(p) {
+    const c = p.fotoCima, f = c && fotosHitos[c.foto]; if (!f) return '';
+    return `<figure class="fig-cima"><img src="img/hitos/${esc(c.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} Foto: ${esc(f.autor)}.</figcaption></figure>`;
+  }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
     return `<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.pagina ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">Wikimedia Commons</a>` : ''}</small>`;
@@ -292,6 +296,7 @@ async function boot() {
       <h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>
       <h3>Descripción</h3><p>${esc(p.descripcion)}</p>
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
+      ${figCima(p)}
       ${rutaHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;

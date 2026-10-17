@@ -111,6 +111,7 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .ficha-head button { width: 40px; height: 40px; display: grid; place-items: center; margin-right: -10px; }
 .ficha-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 26px 28px 40px; -webkit-overflow-scrolling: touch; }
 .ficha-body figure { margin: 0 0 22px; }
+.ficha-body .fig-cima { margin: 22px 0; }
 .ficha-body img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: var(--cream-2); }
 .ficha-body figcaption { margin-top: 8px; font-size: .72rem; line-height: 1.45; color: var(--ink-2); }
 .ficha-body figcaption a { color: inherit; }

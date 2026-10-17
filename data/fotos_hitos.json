@@ -54,5 +54,14 @@
   "w": 800,
   "h": 1422,
   "pos": "50% 25%"
+ },
+ "cima": {
+  "archivo": "foto propia",
+  "autor": "Frank (Skyllion)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 1100,
+  "h": 619
  }
 }

@@ -251,6 +251,10 @@
         "texto": "Ver la ruta en Wikiloc: Respomuso – Gran Diagonal – Balaitús – La Sarra, de aldaieta"
       },
       "curiosidad": "La primera ascensión documentada fue en 1825, a cargo de los geodestas franceses Pierre Peytier y Paul-Michel Hossard, que medían el Pirineo para la cartografía del ejército. Tuvieron que subir con instrumentos hasta una cumbre que hoy sigue exigiendo trepadas.",
+      "fotoCima": {
+        "foto": "cima",
+        "pie": "La piedra que corona la cima, con la altitud pintada a mano: 3.145 m. Ese día el mar de nubes tapaba los picos del fondo."
+      },
       "rutas": [
         "respomuso-gran-diagonal-balaitus-la-sarra"
       ]
