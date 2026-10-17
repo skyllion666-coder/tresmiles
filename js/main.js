@@ -657,7 +657,17 @@ async function boot() {
       }).join('') : '<p class="empty">Ninguna cumbre coincide.</p>';
     }
     pinta();
-    const abre = (v) => { lista.hidden = !v; btn.setAttribute('aria-expanded', v); if (v) { q.value = ''; pinta(); if (matchMedia('(hover: hover)').matches) q.focus(); } };
+    // el desplegable se ajusta al espacio real: se abre hacia el lado con más sitio y se desplaza por dentro (en el móvil el botón está a mitad de pantalla)
+    const ajusta = () => {
+      if (lista.hidden) return;
+      const r = btn.getBoundingClientRect(), vh = window.innerHeight, abajo = vh - r.bottom - 20, arriba = r.top - 96;   // 96 px: deja libre la cabecera con el logo
+      const sube = abajo < 300 && arriba > abajo;
+      lista.classList.toggle('arriba', sube);
+      lista.style.maxHeight = Math.max(180, Math.min(sube ? arriba : abajo, vh * 0.7)) + 'px';
+    };
+    const abre = (v) => { lista.hidden = !v; btn.setAttribute('aria-expanded', v); if (v) { q.value = ''; pinta(); ajusta(); if (matchMedia('(hover: hover)').matches) q.focus(); } };
+    window.addEventListener('resize', ajusta);
+    cont.addEventListener('toggle', (e) => { if (e.target.open) e.target.scrollIntoView({ block: 'nearest' }); }, true);
     btn.addEventListener('click', () => abre(lista.hidden));
     q.addEventListener('input', pinta);
     q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = cont.querySelector('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); } if (e.key === 'Escape') abre(false); e.stopPropagation(); });
