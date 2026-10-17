@@ -186,7 +186,7 @@ export function crearSonido() {
       alturaAct = alturaSobreSuelo;
       const alto = Math.min(1, alturaSobreSuelo / 9000);
       windGain.gain.setTargetAtTime(0.12 + 0.35 * alto, ctx.currentTime, 0.5);
-      waterGain.gain.setTargetAtTime(0.025 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
+      waterGain.gain.setTargetAtTime(0.0125 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
     },
   };
 }
