@@ -182,15 +182,17 @@ async function boot() {
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
     el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
     if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
-    const R0 = rutasDe(h.pico ?? 'balaitus')[0], ps = R0 ? R0.pasos(q.x, q.z) : [];
-    if (ps.length) el.querySelector('em').textContent += ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`;
+    // km del hito sobre la ruta de cada cumbre a la que pertenece (h.picos, o h.pico)
+    const picos = h.picos ?? [h.pico ?? 'balaitus'], kms = {};
+    for (const id of picos) { const R0 = rutasDe(id)[0], ps = R0 ? R0.pasos(q.x, q.z) : []; if (ps.length) kms[id] = ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`; }
+    const tipoTxt = TIPO_HITO[h.tipo] ?? '';
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const abrir = !el.classList.contains('is-open');
       closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
     });
-    return { h, el, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
+    return { h, el, picos, kms, tipoTxt, last: null, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
   }).filter(Boolean);
   function figCima(p) {
     const c = p.fotoCima, f = c && fotosHitos[c.foto]; if (!f) return '';
@@ -209,8 +211,9 @@ async function boot() {
     for (const o of hitos) {
       hitoTmp.set(o.x, o.y, o.z);
       const dist = camera.position.distanceTo(hitoTmp);
-      const zona = byId[S.active]?.macizo;   // solo los hitos de la zona (macizo) de la cumbre abierta
-      let show = S.mode === 'explore' && !!zona && zona === byId[o.h.pico ?? 'balaitus']?.macizo && dist < 9500;
+      // solo los hitos de la cumbre abierta (o compartidos con ella)
+      let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 9500;
+      if (show && o.last !== S.active) { o.last = S.active; o.el.querySelector('em').textContent = o.tipoTxt + (o.kms[S.active] ?? ''); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');

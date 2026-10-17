@@ -381,7 +381,11 @@
   "lon": -0.235461,
   "nota": "Punto de partida y de llegada del recorrido, junto al balneario. Altitud del GPS del track: 1.635 m.",
   "foto": "panticosa",
-  "pie": "El balneario de Panticosa, de donde sale el recorrido."
+  "pie": "El balneario de Panticosa, de donde sale el recorrido.",
+  "picos": [
+   "infiernos",
+   "garmo"
+  ]
  },
  {
   "id": "casa-piedra",
@@ -546,7 +550,11 @@
   "tipo": "lugar",
   "lat": 42.761338,
   "lon": -0.238331,
-  "nota": "Fuente termal cerca del final del recorrido. Altitud del GPS del track: 1.660 m."
+  "nota": "Fuente termal cerca del final del recorrido. Altitud del GPS del track: 1.660 m.",
+  "picos": [
+   "infiernos",
+   "garmo"
+  ]
  },
  {
   "id": "mallata-alta",
