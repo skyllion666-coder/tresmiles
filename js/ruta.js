@@ -3,7 +3,7 @@ import { crearMontanero } from './montanero.js?v=3';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
-  const r = await fetch(`data/rutas/${id}.json`);
+  const r = await fetch(`data/rutas/${id}.json?dv=${window.DATOS_V || 0}`);
   if (!r.ok) throw new Error(`ruta ${id} ${r.status}`);
   return r.json();
 }

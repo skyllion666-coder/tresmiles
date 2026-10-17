@@ -4,14 +4,15 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=27';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=12';
+import { cargarRuta, crearRuta } from './ruta.js?v=28';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat('es-ES', { useGrouping: 'always' }).format(n);
 const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
-const json = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
+const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);   // sube DATOS_V en index.html al cambiar datos
+const json = (u) => fetch(conV(u)).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
