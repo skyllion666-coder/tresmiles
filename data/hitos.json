@@ -3729,5 +3729,70 @@
   "nota": "Cumbre de 3.032 m. Altitud del GPS del track: 3.029 m.",
   "foto": "pet-cima",
   "pie": "La roca de la cima, con la inscripción «Pic du Petit Vignemale 3032 m»."
+ },
+ {
+  "id": "vet-refugio",
+  "pico": "veteranos",
+  "picos": [
+   "veteranos"
+  ],
+  "nombre": "Refugio de Estós",
+  "tipo": "refugio",
+  "lat": 42.67526,
+  "lon": 0.485799,
+  "nota": "Punto de partida, junto al refugio de Estós, a 1.890 m. Altitud del GPS del track: 1.891 m.",
+  "inicio": true,
+  "foto": "vet-refugio",
+  "pie": "El refugio de Estós, con sus contraventanas rojas."
+ },
+ {
+  "id": "vet-cascada",
+  "pico": "veteranos",
+  "picos": [
+   "veteranos"
+  ],
+  "nombre": "Cascada de Clarabide",
+  "tipo": "barranco",
+  "lat": 42.680401,
+  "lon": 0.458359,
+  "nota": "Cascada del barranco de Clarabide, junto al camino."
+ },
+ {
+  "id": "vet-ibones",
+  "pico": "veteranos",
+  "picos": [
+   "veteranos"
+  ],
+  "nombre": "Ibones del Pico Royo",
+  "tipo": "ibon",
+  "lat": 42.671914,
+  "lon": 0.43698,
+  "nota": "Pequeños ibones al pie del Pico Royo."
+ },
+ {
+  "id": "vet-collada",
+  "pico": "veteranos",
+  "picos": [
+   "veteranos"
+  ],
+  "nombre": "Collada Negra",
+  "tipo": "paso",
+  "lat": 42.670651,
+  "lon": 0.43458,
+  "nota": "Collado de 2.874 m según OpenStreetMap."
+ },
+ {
+  "id": "vet-cima",
+  "pico": "veteranos",
+  "picos": [
+   "veteranos"
+  ],
+  "nombre": "Pico de los Veteranos",
+  "tipo": "cima",
+  "lat": 42.665062,
+  "lon": 0.437421,
+  "nota": "Cima de 3.125 m según la lista de tresmiles; OpenStreetMap da 3.129 m. Altitud del GPS del track: 3.120 m.",
+  "foto": "vet-cima",
+  "pie": "La cumbre del Pico de los Veteranos, con restos de nieve."
  }
 ]

@@ -2131,5 +2131,27 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "vet-refugio": {
+  "archivo": "foto del autor del track",
+  "autor": "balasitxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-los-veteranos-desde-el-refugio-de-estos-pirineo-aragones-165558",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "vet-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "balasitxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-de-los-veteranos-desde-el-refugio-de-estos-pirineo-aragones-165558",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
  }
 }
