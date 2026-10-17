@@ -119,7 +119,7 @@ export function crearAves({ scene, geo, centro }) {
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
 export function crearSonido() {
-  let ctx = null, master, windGain, waterGain, windF, on = false;
+  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null;
   const ruido = (c) => {
     const len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
     let b0 = 0, b1 = 0, b2 = 0;
@@ -142,6 +142,35 @@ export function crearSonido() {
     waterGain = ctx.createGain(); waterGain.gain.value = 0;
     fuente().connect(wf).connect(waterGain).connect(master);
     lfo(0.35, 0.02, waterGain.gain);
+    // música de fondo: bucle propio (instrumentos de VSCO-2 CE, CC0)
+    musicGain = ctx.createGain(); musicGain.gain.value = 0.55; musicGain.connect(master);
+    fetch('audio/ambiente.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => {
+      const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.connect(musicGain); s.start();
+    }).catch(() => {});
+    programaAve();
+  }
+  // pájaros sintetizados: tres cantos distintos, más frecuentes cerca del suelo
+  function canto(tipo, t0, pan) {
+    const out = ctx.createGain(), p = ctx.createStereoPanner(); p.pan.value = pan; out.connect(p).connect(master);
+    const nota = (t, f0, f1, dur, vol) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine'; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + dur * 0.15); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(out); o.start(t); o.stop(t + dur + 0.05);
+    };
+    const base = 2600 + Math.random() * 1800;
+    if (tipo === 0) for (let i = 0; i < 4 + (Math.random() * 4 | 0); i++) nota(t0 + i * 0.13, base, base * 1.35, 0.09, 0.05);                 // trino
+    else if (tipo === 1) { nota(t0, base * 0.8, base * 1.3, 0.16, 0.06); nota(t0 + 0.24, base * 1.3, base * 0.9, 0.22, 0.05); }           // dos notas
+    else for (let i = 0; i < 6; i++) nota(t0 + i * 0.11, base * (1.25 - i * 0.06), base * (1.15 - i * 0.07), 0.1, 0.045);                // descendente
+    setTimeout(() => out.disconnect(), 2500);
+  }
+  function programaAve() {
+    clearTimeout(timerAves);
+    const espera = 3500 + Math.random() * 9000 + Math.min(1, alturaAct / 3000) * 14000;
+    timerAves = setTimeout(() => {
+      if (on && ctx && ctx.state === 'running' && alturaAct < 6000) canto((Math.random() * 3) | 0, ctx.currentTime + 0.05, Math.random() * 1.6 - 0.8);
+      programaAve();
+    }, espera);
   }
   document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
   return {
@@ -154,6 +183,7 @@ export function crearSonido() {
     // altura: m sobre el terreno; lago: distancia en m al ibón más cercano
     update(alturaSobreSuelo, lago) {
       if (!ctx || !on) return;
+      alturaAct = alturaSobreSuelo;
       const alto = Math.min(1, alturaSobreSuelo / 9000);
       windGain.gain.setTargetAtTime(0.25 + 0.55 * alto, ctx.currentTime, 0.5);
       waterGain.gain.setTargetAtTime(0.10 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);

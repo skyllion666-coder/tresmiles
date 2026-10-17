@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=4';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=5';
 import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);
@@ -494,7 +494,7 @@ async function boot() {
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente: animación y síntesis propias; las aves son una ilustración, no seguimiento real.</li></ul>
+      <li>Contornos y nombres de los ibones, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
