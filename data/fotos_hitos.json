@@ -1255,5 +1255,38 @@
   "w": 1000,
   "h": 562,
   "pos": "50% 50%"
+ },
+ "tal-circo": {
+  "archivo": "foto del autor del track",
+  "autor": "David RunnerLife",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
+ },
+ "tal-sarrios": {
+  "archivo": "foto del autor del track",
+  "autor": "David RunnerLife",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
+ },
+ "tal-brecha": {
+  "archivo": "foto del autor del track",
+  "autor": "David RunnerLife",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 667,
+  "pos": "50% 50%"
  }
 }

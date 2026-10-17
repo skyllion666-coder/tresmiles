@@ -19,7 +19,8 @@
     "espadas",
     "llardaneta",
     "soum",
-    "marbore"
+    "marbore",
+    "tallon"
   ],
   "macizos": [
     {
@@ -689,6 +690,34 @@
         "pie": "La cumbre del Marboré, con su refugio de piedra."
       },
       "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente."
+    },
+    {
+      "id": "tallon",
+      "nombre": "Tallón",
+      "alias": "Punda Negra · Pic du Taillon",
+      "altitud": 3144,
+      "otras": "Otras fuentes: 3.147 m",
+      "macizo": "per",
+      "frontera": true,
+      "lat": 42.693724,
+      "lon": -0.051335,
+      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+      "ruta": "Refugio de Góriz → fuente de los Gabachos → gruta helada de Casteret → paso de los Sarrios → Brecha de Rolando → El Dedo → cumbre",
+      "desnivel": "≈ 1.000 m desde Góriz (≈ 17 km ida y vuelta)",
+      "dificultad": "alta",
+      "grado": "F/PD · nieve y pedreras junto a la Brecha",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Cumbre fronteriza junto a la Brecha de Rolando, considerada uno de los tresmiles más sencillos sobre el circo de Gavarnie. Desde Góriz se llega a la Brecha por la gruta helada de Casteret y el paso de los Sarrios, y de ahí se sigue la cresta este hasta la cima. El track que se muestra termina a unos 3.136 m.",
+      "foto": "tallon",
+      "pie": "El Taillon al amanecer, con la cara sur iluminada.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
+        "texto": "Ver la ruta en Wikiloc: Brecha de Rolando y Taillón desde Góriz por la Gruta Helada Casteret y paso Sarrios, de David RunnerLife"
+      },
+      "rutas": [
+        "tallon-goriz"
+      ],
+      "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente."
     }
   ]
 }

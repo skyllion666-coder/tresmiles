@@ -660,7 +660,8 @@
    "perdido",
    "cilindro",
    "soum",
-   "marbore"
+   "marbore",
+   "tallon"
   ],
   "foto": "goriz",
   "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
@@ -1749,5 +1750,95 @@
   "lat": 42.685329,
   "lon": 0.000239,
   "nota": "Última cumbre del circuito, antes de volver a Góriz. Altitud del GPS del track: 3.026 m."
+ },
+ {
+  "id": "tal-circo",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Circo",
+  "tipo": "lugar",
+  "lat": 42.671962,
+  "lon": -0.001205,
+  "nota": "Circo de nieve y piedra al oeste de Góriz, camino de la Brecha. Altitud del GPS del track: 2.339 m.",
+  "foto": "tal-circo",
+  "pie": "El circo, con neveros a principios de verano."
+ },
+ {
+  "id": "tal-sarrios",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Paso de los Sarrios",
+  "tipo": "paso",
+  "lat": 42.688006,
+  "lon": -0.030503,
+  "nota": "Paso por una canal bajo las paredes, antes de la Brecha de Rolando. Altitud del GPS del track: 2.726 m.",
+  "foto": "tal-sarrios",
+  "pie": "El paso de los Sarrios, bajo la pared de roca."
+ },
+ {
+  "id": "tal-brecha",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Brecha de Rolando",
+  "tipo": "paso",
+  "lat": 42.690839,
+  "lon": -0.033643,
+  "nota": "Famosa brecha de la frontera, abierta en el muro de roca. Altitud del GPS del track: 2.791 m.",
+  "foto": "tal-brecha",
+  "pie": "Una de las torres de roca junto a la Brecha de Rolando."
+ },
+ {
+  "id": "tal-fuente",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Fuente de los Gabachos",
+  "tipo": "lugar",
+  "lat": 42.673764,
+  "lon": -0.015736,
+  "nota": "Fuente junto al camino, en la subida desde Góriz. Altitud del GPS del track: 2.453 m."
+ },
+ {
+  "id": "tal-gruta",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Gruta Helada de Casteret",
+  "tipo": "lugar",
+  "lat": 42.68188,
+  "lon": -0.02987,
+  "nota": "Entrada de la cueva de hielo, que da nombre al camino. Altitud del GPS del track: 2.620 m."
+ },
+ {
+  "id": "tal-dedo",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "El Dedo",
+  "tipo": "paso",
+  "lat": 42.691331,
+  "lon": -0.041242,
+  "nota": "Aguja de roca en la cresta, tras la Brecha de Rolando. Altitud del GPS del track: 2.889 m."
+ },
+ {
+  "id": "tal-cima",
+  "pico": "tallon",
+  "picos": [
+   "tallon"
+  ],
+  "nombre": "Cima del Tallón",
+  "tipo": "cima",
+  "lat": 42.693721,
+  "lon": -0.051338,
+  "nota": "Cumbre del Tallón (Taillon), en la frontera con Francia. Altitud del GPS del track: 3.136 m."
  }
 ]
