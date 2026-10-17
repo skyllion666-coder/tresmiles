@@ -2,7 +2,8 @@
   "activos": [
     "balaitus",
     "vignemale",
-    "infiernos"
+    "infiernos",
+    "garmo"
   ],
   "macizos": [
     {
@@ -291,7 +292,19 @@
       "epoca": "Julio – octubre",
       "descripcion": "El tresmil más frecuentado de los Infiernos por la facilidad de su acceso desde Baños de Panticosa. Es largo y el último tramo es empinado y de piedra suelta; con niebla conviene llevar GPS, porque los muchos hitos pueden despistar.",
       "foto": "garmo",
-      "pie": "El Garmo Negro de las Argualas."
+      "pie": "El Garmo Negro de las Argualas.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
+        "texto": "Ver la ruta en Wikiloc: Garmo Negro desde el balneario de Panticosa, de Bitxus"
+      },
+      "rutas": [
+        "garmo-panticosa"
+      ],
+      "fotoCima": {
+        "foto": "garmo-cima",
+        "pie": "La piedra de la cima, con «Garmo Negro 3065» pintado a mano."
+      },
+      "curiosidad": "Su altitud cambia según la fuente, entre 3.051 y 3.066 m, y la piedra de la cima lleva pintado «3065». Desde arriba se abren las vistas hacia Ordesa y Monte Perdido, y el camino empieza junto a los manantiales termales del balneario de Panticosa."
     },
     {
       "id": "infiernos",

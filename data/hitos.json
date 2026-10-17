@@ -547,5 +547,36 @@
   "lat": 42.761338,
   "lon": -0.238331,
   "nota": "Fuente termal cerca del final del recorrido. Altitud del GPS del track: 1.660 m."
+ },
+ {
+  "id": "mallata-alta",
+  "pico": "garmo",
+  "nombre": "Mallata Alta",
+  "tipo": "vivac",
+  "lat": 42.76786,
+  "lon": -0.249007,
+  "nota": "Mallata Alta, donde el autor del track hizo vivac. Altitud del GPS del track: 2.220 m."
+ },
+ {
+  "id": "garmo-pedrera",
+  "pico": "garmo",
+  "nombre": "Subida por la pedrera",
+  "tipo": "paso",
+  "lat": 42.770386,
+  "lon": -0.258767,
+  "nota": "Tramo de pedrera de la subida. Altitud del GPS del track: 2.649 m.",
+  "foto": "garmo-pedrera",
+  "pie": "La pedrera de la subida, con el sendero marcado."
+ },
+ {
+  "id": "garmo-alto",
+  "pico": "garmo",
+  "nombre": "Tramo alto antes de la cima",
+  "tipo": "paso",
+  "lat": 42.769095,
+  "lon": -0.265406,
+  "nota": "Tramo alto de la subida, con vistas hacia el este. Altitud del GPS del track: 2.850 m.",
+  "foto": "garmo-alto",
+  "pie": "Vista desde el tramo alto de la subida, con las cumbres del fondo."
  }
 ]

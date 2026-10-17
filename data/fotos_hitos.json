@@ -240,5 +240,38 @@
   "w": 900,
   "h": 1200,
   "pos": "50% 40%"
+ },
+ "garmo-alto": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 40%"
+ },
+ "garmo-pedrera": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 50%"
+ },
+ "garmo-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }
