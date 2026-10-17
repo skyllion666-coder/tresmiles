@@ -58,7 +58,8 @@ export function crearRuta({ scene, geo, ruta }) {
       if (!cur) cur = { metros: m, dist: dist[i] }; else if (m < cur.metros) { cur.metros = m; cur.dist = dist[i]; }
     }
     if (cur) out.push(cur);
-    return out;
+    // pasadas casi seguidas (vueltas del track, GPS) cuentan como una sola
+    return out.reduce((a, c) => { const u = a[a.length - 1]; if (u && c.dist - u.dist < 1500) { if (c.metros < u.metros) { u.metros = c.metros; u.dist = c.dist; } } else a.push({ ...c }); return a; }, []);
   }
 
   const lo = Math.floor(ruta.min / 100) * 100, hi = Math.ceil(ruta.max / 100) * 100;

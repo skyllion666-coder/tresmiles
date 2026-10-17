@@ -104,7 +104,7 @@ las fotos, los textos, la paleta y el código son propios o de licencia libre.
 con distancia, desnivel acumulado y altitud máxima). Se enlaza desde `data/peaks.json` con `"rutas": ["id"]`
 (el archivo es `data/rutas/<id>.json`). Los tracks de terceros solo deben publicarse con permiso de su autor y con crédito
 (campos `autor`, `autorUrl` y `fuenteUrl`); si no lo hay, guárdalos en `data/rutas/local/`, que no se publica (`.gitignore`).
-El track actual del Balaitús es de Santialpino (Wikiloc), publicado con su permiso.
+El track actual del Balaitús es «Respomuso – Balaitús – La Sarra (intento)» de atiempo (Wikiloc); sus waypoints son los hitos de `data/hitos.json`. El anterior (Santialpino, publicado con su permiso) queda guardado en `data/rutas/local/`, que no se publica.
 
 **Norma del proyecto:** toda ruta enlaza a la ficha de Wikiloc de su autor (para descargar el GPX original). En el mapa solo
 se muestra como vista previa. Una ruta sin `autor` y `fuenteUrl` no se carga.

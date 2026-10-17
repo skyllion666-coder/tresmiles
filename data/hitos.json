@@ -3,33 +3,169 @@
   "id": "respomuso",
   "nombre": "Refugio de Respomuso",
   "tipo": "refugio",
-  "lat": 42.81698,
-  "lon": -0.28766,
-  "nota": "Refugio a 2.208 m. Punto de partida habitual hacia el Balaitús, junto al embalse."
+  "lat": 42.816932,
+  "lon": -0.287902,
+  "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido."
  },
  {
-  "id": "gran-diagonal",
-  "nombre": "Gran Diagonal",
-  "tipo": "paso",
-  "lat": 42.83784,
-  "lon": -0.30422,
-  "nota": "Travesía en diagonal por la que discurre este recorrido."
- },
- {
-  "id": "michaud",
-  "nombre": "Cueva André Michaud",
+  "id": "cueva",
+  "nombre": "Cueva-abrigo",
   "tipo": "vivac",
-  "lat": 42.83768,
-  "lon": -0.29689,
-  "nota": "Refugio de emergencia a unos 2.680 m (según OpenStreetMap)."
+  "lat": 42.83765,
+  "lon": -0.29691,
+  "nota": "Refugio de emergencia en la ladera, junto a la ruta (coincide con la cueva André Michaud de OpenStreetMap). Altitud del GPS del track: 2.688 m."
  },
  {
-  "id": "latour",
-  "nombre": "Brecha de Latour",
+  "id": "inicio-diagonal",
+  "nombre": "Inicio de la Gran Diagonal",
   "tipo": "paso",
-  "lat": 42.83479,
-  "lon": -0.28927,
-  "nota": "Paso clave hacia la cresta cimera."
+  "lat": 42.83878,
+  "lon": -0.29447,
+  "nota": "Aquí arranca la travesía de la Gran Diagonal. Altitud del GPS del track: 2.862 m."
+ },
+ {
+  "id": "ibon-chelau",
+  "nombre": "Ibón Chelau",
+  "tipo": "ibon",
+  "lat": 42.83805,
+  "lon": -0.3063,
+  "nota": "Ibón junto al recorrido. Altitud del GPS del track: 2.426 m."
+ },
+ {
+  "id": "ibon-arriel",
+  "nombre": "Ibón de Arriel (bajo)",
+  "tipo": "ibon",
+  "lat": 42.83105,
+  "lon": -0.31654,
+  "nota": "Ibón de Arriel; el nombre venía abreviado en el track. Altitud del GPS del track: 2.158 m."
+ },
+ {
+  "id": "desvio-respomuso",
+  "nombre": "Desvío a Respomuso",
+  "tipo": "paso",
+  "lat": 42.829922,
+  "lon": -0.319517,
+  "nota": "Bifurcación del camino hacia Respomuso. Altitud del GPS del track: 2.157 m."
+ },
+ {
+  "id": "desvio-arriel",
+  "nombre": "Desvío al pico Arriel",
+  "tipo": "paso",
+  "lat": 42.817397,
+  "lon": -0.336975,
+  "nota": "Bifurcación del camino hacia el pico Arriel. Altitud del GPS del track: 1.641 m."
+ },
+ {
+  "id": "tornalizas",
+  "nombre": "Tornalizas",
+  "tipo": "lugar",
+  "lat": 42.804861,
+  "lon": -0.336472,
+  "nota": "Nombre abreviado en el track. Altitud del GPS del track: 1.482 m."
+ },
+ {
+  "id": "ermita",
+  "nombre": "Ermita",
+  "tipo": "lugar",
+  "lat": 42.816675,
+  "lon": -0.2976,
+  "nota": "Ermita junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "ibon-respomuso",
+  "nombre": "Ibón",
+  "tipo": "ibon",
+  "lat": 42.816645,
+  "lon": -0.296721,
+  "nota": "Ibón sin nombre junto a Respomuso. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "desvio-1",
+  "nombre": "Desvío",
+  "tipo": "paso",
+  "lat": 42.817949,
+  "lon": -0.300064,
+  "nota": "Bifurcación marcada en el track. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "desvio-2",
+  "nombre": "Desvío (La Sarra)",
+  "tipo": "paso",
+  "lat": 42.79731,
+  "lon": -0.332619,
+  "nota": "Bifurcación marcada en el track, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "parque-1",
+  "nombre": "Parque Natural (1)",
+  "tipo": "lugar",
+  "lat": 42.819477,
+  "lon": -0.334894,
+  "nota": "Marca del track con el nombre «PNATURA». Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "parque-2",
+  "nombre": "Parque Natural (2)",
+  "tipo": "lugar",
+  "lat": 42.821146,
+  "lon": -0.331948,
+  "nota": "Marca del track con el nombre «PNATURA». Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "barranco-1",
+  "nombre": "Barranco 1",
+  "tipo": "barranco",
+  "lat": 42.799249,
+  "lon": -0.334297,
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "barranco-2",
+  "nombre": "Barranco 2",
+  "tipo": "barranco",
+  "lat": 42.803662,
+  "lon": -0.336283,
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "barranco-3",
+  "nombre": "Barranco 3",
+  "tipo": "barranco",
+  "lat": 42.808146,
+  "lon": -0.339356,
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "barranco-4",
+  "nombre": "Barranco 4",
+  "tipo": "barranco",
+  "lat": 42.816592,
+  "lon": -0.337819,
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "barranco-5",
+  "nombre": "Barranco 5",
+  "tipo": "barranco",
+  "lat": 42.822751,
+  "lon": -0.326644,
+  "nota": "Cruce de barranco. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "puente",
+  "nombre": "Puente",
+  "tipo": "lugar",
+  "lat": 42.797258,
+  "lon": -0.332744,
+  "nota": "Puente sobre el río, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc)."
+ },
+ {
+  "id": "area-recreativa",
+  "nombre": "Área recreativa de La Sarra",
+  "tipo": "lugar",
+  "lat": 42.79665,
+  "lon": -0.331364,
+  "nota": "Final del recorrido. Punto marcado en el track de atiempo (Wikiloc)."
  },
  {
   "id": "frondiellas",
@@ -46,14 +182,6 @@
   "lat": 42.84605,
   "lon": -0.32916,
   "nota": "Refugio de la vertiente francesa, a unos 2.265 m (según OpenStreetMap)."
- },
- {
-  "id": "peytier-hossard",
-  "nombre": "Brecha Peytier-Hossard",
-  "tipo": "paso",
-  "lat": 42.83971,
-  "lon": -0.28909,
-  "nota": "Paso de la cresta cercano a la cumbre; su nombre recuerda a los geodestas que, según las crónicas, abrieron la ascensión en 1825."
  },
  {
   "id": "wallon",

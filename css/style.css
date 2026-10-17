@@ -198,7 +198,8 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .hito i { width: 11px; height: 11px; background: #b9772f; border: 2px solid #fffbe7; box-shadow: 0 2px 6px rgba(0,0,0,.45); transform: rotate(45deg); transition: transform .2s; }
 .hito-btn:hover i, .hito.is-open i { transform: rotate(45deg) scale(1.35); }
 .hito-btn:focus-visible { outline: 2px solid #fffbe7; outline-offset: -4px; }
-.hito-paso i { background: #456a4b; } .hito-vivac i { background: #5d7480; } .hito-cima i { background: #fffbe7; border-color: #456a4b; }
+.hito-paso i { background: #456a4b; } .hito-vivac i { background: #5d7480; } .hito-ibon i { background: #3f7f93; } .hito-barranco i { background: #8a7a5c; } .hito-lugar i { background: #7a6f86; }
+.hito-cima i { background: #fffbe7; border-color: #456a4b; }
 .hito b { order: 1; display: none; white-space: nowrap; text-align: center; font: 600 .68rem/1.25 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.88); padding: 4px 8px; margin-bottom: 2px; }
 .hito b em { display: block; font-style: normal; font-weight: 500; letter-spacing: .08em; text-transform: none; opacity: .8; }
 .hito.is-open b { display: block; }
