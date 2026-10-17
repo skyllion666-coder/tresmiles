@@ -166,7 +166,8 @@ async function boot() {
       if (!show) continue;
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
       el.classList.toggle('is-active', S.active === p.id);
-      el.classList.toggle('show-label', S.active === p.id || dist < 15000);
+      el.classList.toggle('is-other', !!S.active && S.active !== p.id);
+      el.classList.toggle('show-label', !!S.active || dist < 15000);
       el.classList.toggle('is-dim', !passes(p));
     }
   }
@@ -208,7 +209,8 @@ async function boot() {
     for (const o of hitos) {
       hitoTmp.set(o.x, o.y, o.z);
       const dist = camera.position.distanceTo(hitoTmp);
-      let show = S.mode === 'explore' && dist < 9500;
+      const zona = byId[S.active]?.macizo;   // solo los hitos de la zona (macizo) de la cumbre abierta
+      let show = S.mode === 'explore' && !!zona && zona === byId[o.h.pico ?? 'balaitus']?.macizo && dist < 9500;
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');
