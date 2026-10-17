@@ -211,6 +211,7 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .hito.con-foto b > :not(img) { padding: 0 10px; }
 .hito.con-foto b em { margin-bottom: 4px; }
 .hito b img { display: block; width: 100%; height: auto; max-height: 230px; object-fit: cover; object-position: 50% 40%; margin: 0 0 6px; }
+.hito b .hito-pie { margin: 0 0 6px; padding: 0 10px; font: 400 .7rem/1.35 var(--sans); letter-spacing: 0; text-transform: none; opacity: .9; }
 .hito b small { display: block; padding: 4px 10px 0; font: 400 .6rem/1.35 var(--sans, sans-serif); letter-spacing: 0; text-transform: none; opacity: .75; }
 .hito b small a { color: #fffbe7; }
 .hito.is-open { z-index: 5; }

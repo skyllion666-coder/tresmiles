@@ -197,7 +197,7 @@ async function boot() {
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });

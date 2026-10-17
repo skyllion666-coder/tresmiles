@@ -17,15 +17,6 @@
   "w": 800,
   "h": 581
  },
- "gran-diagonal": {
-  "archivo": "Balaitús amb Gran Diagonal i estany Arriel Alto.png",
-  "autor": "Jordi Guilleumes",
-  "licencia": "CC BY 3.0",
-  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Balait%C3%BAs_amb_Gran_Diagonal_i_estany_Arriel_Alto.png",
-  "w": 800,
-  "h": 476
- },
  "cueva": {
   "archivo": "foto propia",
   "autor": "Frank (Skyllion)",
@@ -82,5 +73,15 @@
   "fuente": "Ojo Digital",
   "w": 1000,
   "h": 717
+ },
+ "arriel-alto": {
+  "archivo": "foto de terceros",
+  "autor": "Josemibaena",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://foro.ojodigital.com/t/ibon-chelau-y-balaitous/12447",
+  "fuente": "Ojo Digital",
+  "w": 1000,
+  "h": 667
  }
 }

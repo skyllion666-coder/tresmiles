@@ -8,7 +8,6 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 UA = {'User-Agent': 'tresmiles-web/1.0 (proyecto educativo)'}
 FOTOS = {
     'arriel-bajo': "L'ivó d'Arriel Bajo voltat de cims.jpeg",
-    'gran-diagonal': 'Balaitús amb Gran Diagonal i estany Arriel Alto.png',
 }
 def get(u, tries=8):
     for i in range(tries):
