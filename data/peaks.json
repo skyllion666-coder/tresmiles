@@ -17,7 +17,8 @@
     "medio",
     "coronas",
     "espadas",
-    "llardaneta"
+    "llardaneta",
+    "soum"
   ],
   "macizos": [
     {
@@ -623,6 +624,38 @@
       "foto": "llardaneta",
       "pie": "La Tuca de Llardaneta, la Tuqueta Roya y el Posets.",
       "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál."
+    },
+    {
+      "id": "soum",
+      "nombre": "Soum de Ramond",
+      "alias": "Pico de Añisclo · Pic d'Añisclo",
+      "altitud": 3254,
+      "otras": "Otras fuentes: 3.257 y 3.263 m",
+      "macizo": "per",
+      "frontera": false,
+      "lat": 42.669589,
+      "lon": 0.043133,
+      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+      "ruta": "Refugio de Góriz → Punta de las Olas → Baudrimont SE → Soum de Ramond → Monte Perdido → Cilindro de Marboré → Góriz",
+      "desnivel": "≈ 1.780 m desde Góriz (≈ 18 km, circuito de un día)",
+      "dificultad": "alta",
+      "grado": "PD · circuito de las Tres Sorores",
+      "epoca": "Julio – septiembre",
+      "descripcion": "La más oriental de las Tres Sorores, junto a Monte Perdido y el Cilindro de Marboré. Se visita en un circuito largo desde Góriz que encadena las tres cumbres, con pedreras y neveros.",
+      "foto": "soum",
+      "pie": "El cimero de Soum de Ramond con neveros, en una fotografía antigua.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+        "texto": "Ver la ruta en Wikiloc: Monte Perdido-Soum de Ramond-Cilindro de Marboré (Las Tres Sorores), de Oscar Elorza"
+      },
+      "rutas": [
+        "soum-tres-sorores"
+      ],
+      "fotoCima": {
+        "foto": "soum-cima",
+        "pie": "La subida final a Soum de Ramond."
+      },
+      "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m."
     }
   ]
 }

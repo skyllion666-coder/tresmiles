@@ -658,7 +658,8 @@
   "inicio": true,
   "picos": [
    "perdido",
-   "cilindro"
+   "cilindro",
+   "soum"
   ],
   "foto": "goriz",
   "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
@@ -688,7 +689,8 @@
   "pie": "El Lago Helado, visto desde arriba, en otoño.",
   "picos": [
    "perdido",
-   "cilindro"
+   "cilindro",
+   "soum"
   ]
  },
  {
@@ -1488,5 +1490,109 @@
   "lat": 42.654655,
   "lon": 0.435192,
   "nota": "Final de la cresta: la cumbre del Posets. Altitud del GPS del track: 3.354 m."
+ },
+ {
+  "id": "soum-olas",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Punta de las Olas",
+  "tipo": "cima",
+  "lat": 42.662119,
+  "lon": 0.053701,
+  "nota": "Primera cumbre del circuito, al este de Góriz. Altitud del GPS del track: 3.014 m.",
+  "foto": "soum-olas",
+  "pie": "La Punta de las Olas, con las cumbres del macizo al fondo."
+ },
+ {
+  "id": "soum-baudrimont",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Baudrimont SE",
+  "tipo": "cima",
+  "lat": 42.669638,
+  "lon": 0.052139,
+  "nota": "Cumbre intermedia entre la Punta de las Olas y Soum de Ramond. Altitud del GPS del track: 3.001 m.",
+  "foto": "soum-baudrimont",
+  "pie": "La subida a la cresta de Baudrimont SE."
+ },
+ {
+  "id": "soum-collado",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Collado Oriental de Monte Perdido",
+  "tipo": "paso",
+  "lat": 42.674204,
+  "lon": 0.04034,
+  "nota": "Collado entre Soum de Ramond y Monte Perdido. Altitud del GPS del track: 3.160 m.",
+  "foto": "soum-collado",
+  "pie": "El Collado Oriental de Monte Perdido y la cima al fondo."
+ },
+ {
+  "id": "soum-cima",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Soum de Ramond (Pico de Añisclo)",
+  "tipo": "cima",
+  "lat": 42.669589,
+  "lon": 0.043133,
+  "nota": "Cumbre de Soum de Ramond, la más oriental de las Tres Sorores. Altitud del GPS del track: 3.248 m.",
+  "foto": "soum-cima",
+  "pie": "La subida final a Soum de Ramond."
+ },
+ {
+  "id": "soum-gr11",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Abandonar el GR 11",
+  "tipo": "paso",
+  "lat": 42.654951,
+  "lon": 0.058234,
+  "nota": "Bifurcación donde el recorrido deja el GR 11 hacia la Punta de las Olas. Altitud del GPS del track: 2.671 m."
+ },
+ {
+  "id": "soum-olas-collado",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Collado SE de la Punta de las Olas",
+  "tipo": "paso",
+  "lat": 42.66042,
+  "lon": 0.055185,
+  "nota": "Collado al pie de la Punta de las Olas. Altitud del GPS del track: 2.944 m."
+ },
+ {
+  "id": "soum-perdido",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Monte Perdido",
+  "tipo": "cima",
+  "lat": 42.675571,
+  "lon": 0.034425,
+  "nota": "Tercera cumbre del Pirineo, a la que sube el circuito después de Soum de Ramond. Altitud del GPS del track: 3.343 m."
+ },
+ {
+  "id": "soum-cilindro",
+  "pico": "soum",
+  "picos": [
+   "soum"
+  ],
+  "nombre": "Cilindro de Marboré",
+  "tipo": "cima",
+  "lat": 42.684715,
+  "lon": 0.023979,
+  "nota": "Última cumbre del circuito de las Tres Sorores. Altitud del GPS del track: 3.318 m."
  }
 ]

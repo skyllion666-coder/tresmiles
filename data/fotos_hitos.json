@@ -1156,5 +1156,49 @@
   "w": 480,
   "h": 640,
   "pos": "50% 50%"
+ },
+ "soum-olas": {
+  "archivo": "foto del autor del track",
+  "autor": "Oscar Elorza",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "soum-baudrimont": {
+  "archivo": "foto del autor del track",
+  "autor": "Oscar Elorza",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "soum-collado": {
+  "archivo": "foto del autor del track",
+  "autor": "Oscar Elorza",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "soum-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Oscar Elorza",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 669,
+  "pos": "50% 50%"
  }
 }
