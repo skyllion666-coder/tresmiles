@@ -318,8 +318,8 @@
   "lat": 42.772923,
   "lon": -0.13121,
   "nota": "Aquí se calzan los crampones. Altitud del GPS del track: 2.688 m.",
-  "foto": "ossoue-glaciar",
-  "pie": "El glaciar de Ossoue con el macizo del Vignemale al fondo."
+  "foto": "ossoue-serac",
+  "pie": "Una fotografía antigua de Eugène Trutat: los séracs del glaciar de Ossoue. Desde entonces el glaciar ha retrocedido mucho."
  },
  {
   "id": "glaciar-exigente",
@@ -329,8 +329,8 @@
   "lat": 42.772719,
   "lon": -0.135275,
   "nota": "Tramo más exigente de la travesía del glaciar. Altitud del GPS del track: 2.753 m.",
-  "foto": "ossoue-serac",
-  "pie": "Una fotografía antigua de Eugène Trutat: los séracs del glaciar de Ossoue. Desde entonces el glaciar ha retrocedido mucho."
+  "foto": "glaciar",
+  "pie": "Una pendiente del glaciar de Ossoue, mirando hacia arriba."
  },
  {
   "id": "vig-grottes-russell",

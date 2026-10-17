@@ -112,15 +112,6 @@
   "w": 800,
   "h": 193
  },
- "ossoue-glaciar": {
-  "archivo": "Massif du Vignemale et glacier d'Ossoue depuis le plateau des Cardous.jpg",
-  "autor": "Guillaume Baviere",
-  "licencia": "CC BY-SA 2.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Massif_du_Vignemale_et_glacier_d%27Ossoue_depuis_le_plateau_des_Cardous.jpg",
-  "w": 800,
-  "h": 484
- },
  "ossoue-serac": {
   "archivo": "Séracs du glacier d'Ossoue devant le Petit Vignemale - Fonds Trutat - MHNT.PHa.138.b26.008.jpg",
   "autor": "Eugène Trutat",
@@ -166,5 +157,15 @@
   "w": 900,
   "h": 1200,
   "pos": "50% 50%"
+ },
+ "glaciar": {
+  "archivo": "foto propia de un compañero",
+  "autor": "Joszaro",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 900,
+  "h": 900,
+  "pos": "50% 30%"
  }
 }
