@@ -202,7 +202,8 @@
   "tipo": "paso",
   "lat": 42.839648,
   "lon": -0.29083,
-  "nota": "Punto marcado por el autor del track como buen comienzo de la canal hacia la cumbre."
+  "nota": "Punto marcado por el autor del track como buen comienzo de la canal hacia la cumbre. La foto es de la bajada por la canal.",
+  "foto": "canal"
  },
  {
   "id": "parking-sarra",
