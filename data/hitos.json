@@ -893,5 +893,59 @@
   "nota": "Cumbre del Pico de Tempestades. Altitud del GPS del track: 3.264 m.",
   "foto": "tem-cima",
   "pie": "Vista desde la cima de Tempestades, con las crestas del macizo."
+ },
+ {
+  "id": "pos-parking",
+  "pico": "posets",
+  "nombre": "Parking de la Espigantosa",
+  "tipo": "lugar",
+  "lat": 42.613877,
+  "lon": 0.478393,
+  "nota": "Punto de partida del recorrido, en el valle de Eriste. Altitud del GPS del track: 1.531 m.",
+  "inicio": true
+ },
+ {
+  "id": "pos-cascada",
+  "pico": "posets",
+  "nombre": "Cascada de la Espigantosa",
+  "tipo": "lugar",
+  "lat": 42.61582,
+  "lon": 0.47665,
+  "nota": "Cascada junto al camino de subida al refugio.",
+  "foto": "pos-cascada",
+  "pie": "La cascada de la Espigantosa, en una fotografía antigua."
+ },
+ {
+  "id": "pos-orus",
+  "pico": "posets",
+  "nombre": "Refugio Ángel Orús",
+  "tipo": "refugio",
+  "lat": 42.62744,
+  "lon": 0.45739,
+  "nota": "Refugio guardado a 2.150 m, en el valle de Eriste. Aquí se pernocta antes de subir al Posets.",
+  "foto": "pos-orus",
+  "pie": "El refugio Ángel Orús, en el valle de Eriste."
+ },
+ {
+  "id": "pos-diente",
+  "pico": "posets",
+  "nombre": "Collado Diente Llardana",
+  "tipo": "paso",
+  "lat": 42.64798,
+  "lon": 0.43576,
+  "nota": "Collado en la subida a la cumbre. Altitud del GPS del track: 3.021 m.",
+  "foto": "pos-diente",
+  "pie": "La subida por el nevero hacia el collado (junio de 2024)."
+ },
+ {
+  "id": "pos-cima",
+  "pico": "posets",
+  "nombre": "Cima del Posets",
+  "tipo": "cima",
+  "lat": 42.65463,
+  "lon": 0.43523,
+  "nota": "Tuca de Posets, segunda cumbre del Pirineo. Altitud del GPS del track: 3.370 m.",
+  "foto": "pos-cima",
+  "pie": "Vista desde el tramo final, a unos 3.230 m, poco antes de la cumbre (junio de 2024)."
  }
 ]

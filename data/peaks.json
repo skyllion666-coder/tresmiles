@@ -8,7 +8,8 @@
     "cilindro",
     "aneto",
     "maladeta",
-    "tempestades"
+    "tempestades",
+    "posets"
   ],
   "macizos": [
     {
@@ -97,15 +98,27 @@
       "frontera": false,
       "lat": 42.654611,
       "lon": 0.43525,
-      "acceso": "Benasque · valle de Eriste (puente de la Espigantosa)",
-      "ruta": "Puente de la Espigantosa → refugio Ángel Orús (2.100 m) → Canal Fonda → cumbre",
-      "desnivel": "≈ 1.270 m desde el refugio (≈ 600 m hasta el refugio)",
+      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+      "ruta": "Parking de la Espigantosa → refugio Ángel Orús (2.150 m) → Collado Diente Llardana → cumbre",
+      "desnivel": "≈ 1.220 m desde el refugio (≈ 620 m hasta el refugio)",
       "dificultad": "alta",
       "grado": "F · larga, terreno suelto",
       "epoca": "Junio – octubre",
-      "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio.",
+      "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio. El track que se muestra pernocta en el refugio (junio de 2024), sube a la cumbre por el Collado Diente Llardana, con nieve, y vuelve al refugio.",
       "foto": "posets",
-      "pie": "El Posets con uno de sus glaciares."
+      "pie": "El Posets con uno de sus glaciares.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
+        "texto": "Ver la ruta en Wikiloc: Pico Posets 3375 desde parking Espigantosa, pernoctando en Refugio Angel Orus, de soylouiss"
+      },
+      "rutas": [
+        "posets-espigantosa"
+      ],
+      "fotoCima": {
+        "foto": "pos-cima",
+        "pie": "Vista desde el tramo final, poco antes de la cumbre del Posets."
+      },
+      "curiosidad": "Según varias fuentes, la primera ascensión fue el 6 de agosto de 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; la segunda, en 1861, de Charles Packe. Las fuentes escriben el apellido de formas distintas (Halkett o Halket)."
     },
     {
       "id": "perdido",

@@ -567,5 +567,45 @@
   "w": 1000,
   "h": 461,
   "pos": "50% 50%"
+ },
+ "pos-diente": {
+  "archivo": "foto del autor del track",
+  "autor": "soylouiss",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "pos-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "soylouiss",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "pos-orus": {
+  "archivo": "Eriste - Espigantosa - Refugio Ángel Orús 01.jpg",
+  "autor": "Basotxerri",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Eriste_-_Espigantosa_-_Refugio_%C3%81ngel_Or%C3%BAs_01.jpg",
+  "w": 960,
+  "h": 739
+ },
+ "pos-cascada": {
+  "archivo": "La cascada de la Espigantosa.jpeg",
+  "autor": "Juli Soler i Santaló",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:La_cascada_de_la_Espigantosa.jpeg",
+  "w": 559,
+  "h": 768
  }
 }
