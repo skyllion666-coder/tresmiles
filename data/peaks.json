@@ -9,7 +9,8 @@
     "aneto",
     "maladeta",
     "tempestades",
-    "posets"
+    "posets",
+    "perdiguero"
   ],
   "macizos": [
     {
@@ -195,14 +196,26 @@
       "lat": 42.691917,
       "lon": 0.518806,
       "acceso": "Benasque · Llanos del Hospital (valles de Remuñé y Literola)",
-      "ruta": "Llanos del Hospital → valle de Remuñé → cresta final (bajada posible por Literola)",
-      "desnivel": "≈ 1.500 m desde Llanos del Hospital",
+      "ruta": "Inicio del track (1.612 m) → valle de Literola → Lliterola → Perdiguero Oriental → cumbre; bajada por el Portal de Remuñé hasta el parking de Literola",
+      "desnivel": "≈ 1.600 m desde el inicio del track (≈ 22 km, circuito)",
       "dificultad": "moderada",
       "grado": "F · cresta final expuesta con nieve",
       "epoca": "Junio – septiembre",
-      "descripcion": "Cumbre fronteriza que domina los valles de Astós, Remuñé y Literola. Las guías le dan una dificultad media y es de los tresmiles asequibles de la zona, pero la jornada es larga y, con nieve, la cresta final se vuelve expuesta.",
+      "descripcion": "Cumbre fronteriza que domina los valles de Astós, Remuñé y Literola. Las guías le dan una dificultad media y es de los tresmiles asequibles de la zona, pero la jornada es larga y, con nieve, la cresta final se vuelve expuesta. El track que se muestra (agosto de 2026) empieza a 1.612 m, sube por Literola, baja por Remuñé y acaba en el parking de Literola, en Llanos del Hospital.",
       "foto": "perdiguero",
-      "pie": "La coma del Perdiguero y el Frontonet desde el valle de Estós."
+      "pie": "La coma del Perdiguero y el Frontonet desde el valle de Estós.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
+        "texto": "Ver la ruta en Wikiloc: 02-08-2026. PERDIGUERO, 3222 m. Ida por Literola, vuelta por Remuñé, de antonioisb62"
+      },
+      "rutas": [
+        "perdiguero-literola-remune"
+      ],
+      "fotoCima": {
+        "foto": "prd-cima",
+        "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222»."
+      },
+      "curiosidad": "Es una cumbre fronteriza: su cima marca el límite entre España y Francia, y su altitud se cita como 3.219 o 3.222 m según la fuente. La bajada por el Portal de Remuñé cruza una planicie con pequeños ibones a unos 2.800 m. Las fuentes difieren en las cifras."
     },
     {
       "id": "bachimala",

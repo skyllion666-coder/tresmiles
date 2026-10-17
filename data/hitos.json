@@ -947,5 +947,84 @@
   "nota": "Tuca de Posets, segunda cumbre del Pirineo. Altitud del GPS del track: 3.370 m.",
   "foto": "pos-cima",
   "pie": "Vista desde el tramo final, a unos 3.230 m, poco antes de la cumbre (junio de 2024)."
+ },
+ {
+  "id": "prd-parking",
+  "pico": "perdiguero",
+  "nombre": "Parking Literola",
+  "tipo": "lugar",
+  "lat": 42.683841,
+  "lon": 0.609611,
+  "nota": "Parking de Llanos del Hospital, donde termina el recorrido. Altitud del GPS del track: 1.749 m."
+ },
+ {
+  "id": "prd-cascada",
+  "pico": "perdiguero",
+  "nombre": "Cascada en el Barranco de Literola",
+  "tipo": "barranco",
+  "lat": 42.674757,
+  "lon": 0.549671,
+  "nota": "Cascada en el barranco de Literola, en la subida. Altitud del GPS del track: 2.207 m."
+ },
+ {
+  "id": "prd-ibonet",
+  "pico": "perdiguero",
+  "nombre": "Ibonet de Literola",
+  "tipo": "ibon",
+  "lat": 42.681238,
+  "lon": 0.540561,
+  "nota": "Pequeño ibón en la subida por el valle de Literola. Altitud del GPS del track: 2.500 m."
+ },
+ {
+  "id": "prd-lliterola",
+  "pico": "perdiguero",
+  "nombre": "Lliterola",
+  "tipo": "lugar",
+  "lat": 42.688418,
+  "lon": 0.531536,
+  "nota": "Pedrera alta del valle de Literola, camino de la cresta. Altitud del GPS del track: 2.878 m.",
+  "foto": "prd-lliterola",
+  "pie": "La pedrera de la subida, cerca de Lliterola (agosto de 2026)."
+ },
+ {
+  "id": "prd-portal",
+  "pico": "perdiguero",
+  "nombre": "Portal de Remuñé",
+  "tipo": "paso",
+  "lat": 42.690004,
+  "lon": 0.539883,
+  "nota": "Paso entre los valles de Remuñé y Literola; el recorrido baja por aquí. Altitud del GPS del track: 2.821 m."
+ },
+ {
+  "id": "prd-oriental",
+  "pico": "perdiguero",
+  "nombre": "Perdiguero Oriental",
+  "tipo": "cima",
+  "lat": 42.690068,
+  "lon": 0.525781,
+  "nota": "Hito oriental del Perdiguero, antes de la cumbre. Altitud del GPS del track: 3.123 m.",
+  "foto": "prd-oriental",
+  "pie": "En el Perdiguero Oriental, camino de la cumbre (agosto de 2026)."
+ },
+ {
+  "id": "prd-cima",
+  "pico": "perdiguero",
+  "nombre": "Cima del Perdiguero",
+  "tipo": "cima",
+  "lat": 42.692,
+  "lon": 0.51886,
+  "nota": "Cumbre del Perdiguero, en la frontera con Francia. Altitud del GPS del track: 3.206 m.",
+  "foto": "prd-cima",
+  "pie": "La cima, con el cartel «Pic Perdiguère 3222» (agosto de 2026)."
+ },
+ {
+  "id": "prd-inicio",
+  "pico": "perdiguero",
+  "nombre": "Inicio del recorrido",
+  "tipo": "lugar",
+  "lat": 42.667312,
+  "lon": 0.578239,
+  "nota": "Primer punto registrado del track, a unos 300 m del Plan de Turpí (OpenStreetMap). Altitud del GPS del track: 1.612 m.",
+  "inicio": true
  }
 ]

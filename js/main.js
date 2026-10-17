@@ -278,7 +278,7 @@ async function boot() {
       hitoTmp.set(o.x, o.y, o.z);
       const dist = camera.position.distanceTo(hitoTmp);
       // solo los hitos de la cumbre abierta (o compartidos con ella)
-      let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 9500;
+      let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 15000;
       if (show && o.last !== S.active) { o.last = S.active; o.kms[S.active] ??= kmTexto(o, S.active); o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : o.kms[S.active]); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);

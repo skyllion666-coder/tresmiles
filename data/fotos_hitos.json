@@ -607,5 +607,38 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:La_cascada_de_la_Espigantosa.jpeg",
   "w": 559,
   "h": 768
+ },
+ "prd-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "antonioisb62",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "prd-oriental": {
+  "archivo": "foto del autor del track",
+  "autor": "antonioisb62",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "prd-lliterola": {
+  "archivo": "foto del autor del track",
+  "autor": "antonioisb62",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
  }
 }
