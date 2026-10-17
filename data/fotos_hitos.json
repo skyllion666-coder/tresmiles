@@ -1792,5 +1792,71 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "ola-arrablo": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "ola-gr119": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "ola-paso": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "ola-pintada": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "ola-refugio": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "ola-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "hellowmotogps",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
  }
 }

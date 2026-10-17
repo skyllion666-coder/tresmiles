@@ -766,7 +766,8 @@
    "cilindro",
    "soum",
    "marbore",
-   "tallon"
+   "tallon",
+   "olas"
   ],
   "foto": "goriz",
   "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
@@ -1624,7 +1625,8 @@
   "id": "soum-olas",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "olas"
   ],
   "nombre": "Punta de las Olas",
   "tipo": "cima",
@@ -1680,7 +1682,8 @@
   "id": "soum-gr11",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "olas"
   ],
   "nombre": "Abandonar el GR 11",
   "tipo": "paso",
@@ -1692,7 +1695,8 @@
   "id": "soum-olas-collado",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "olas"
   ],
   "nombre": "Collado SE de la Punta de las Olas",
   "tipo": "paso",
@@ -3086,5 +3090,75 @@
   "nota": "Cima fronteriza de 3.005 m; la inscripción de la cima marca 3.006 m. Altitud del GPS del track: 3.008 m.",
   "foto": "gf-cima",
   "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
+ },
+ {
+  "id": "ola-arrablo",
+  "pico": "olas",
+  "picos": [
+   "olas"
+  ],
+  "nombre": "Collado de Arrablo",
+  "tipo": "paso",
+  "lat": 42.654478,
+  "lon": 0.032288,
+  "nota": "Cruce del GR 11 con el desvío a la Faja de las Olas, a unos 2.340 m según el panel del collado.",
+  "foto": "ola-arrablo",
+  "pie": "El panel informativo del GR 11 en el collado de Arrablo."
+ },
+ {
+  "id": "ola-gr119",
+  "pico": "olas",
+  "picos": [
+   "olas"
+  ],
+  "nombre": "GR 11.9 hacia la Faja de las Olas",
+  "tipo": "paso",
+  "lat": 42.659702,
+  "lon": 0.047763,
+  "nota": "Tramo ascendente por el GR 11.9.",
+  "foto": "ola-gr119",
+  "pie": "La subida por el GR 11.9, entre pedreras."
+ },
+ {
+  "id": "ola-paso",
+  "pico": "olas",
+  "picos": [
+   "olas"
+  ],
+  "nombre": "Paso de montaña",
+  "tipo": "paso",
+  "lat": 42.655892,
+  "lon": 0.058158,
+  "nota": "Paso de montaña donde conviene seguir los hitos tanto a la subida como a la bajada.",
+  "foto": "ola-paso",
+  "pie": "Uno de los hitos del paso, que sirven de guía en la subida y la bajada."
+ },
+ {
+  "id": "ola-pintada",
+  "pico": "olas",
+  "picos": [
+   "olas"
+  ],
+  "nombre": "Subiendo a la cima",
+  "tipo": "paso",
+  "lat": 42.66192,
+  "lon": 0.053678,
+  "nota": "Tramo final de la subida, con trepadas sencillas.",
+  "foto": "ola-pintada",
+  "pie": "Una roca con «OLAS» pintado en rojo, en la subida a la cima."
+ },
+ {
+  "id": "ola-refugio",
+  "pico": "olas",
+  "picos": [
+   "olas"
+  ],
+  "nombre": "Refugio de Góriz a la vista",
+  "tipo": "lugar",
+  "lat": 42.661057,
+  "lon": 0.018267,
+  "nota": "Punto de la vuelta desde el que se ve ya el refugio de Góriz.",
+  "foto": "ola-refugio",
+  "pie": "El sendero de vuelta hacia el refugio de Góriz."
  }
 ]

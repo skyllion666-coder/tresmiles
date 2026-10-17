@@ -34,7 +34,8 @@
   "infierno-occidental",
   "infierno-oriental",
   "arnales",
-  "gran-facha"
+  "gran-facha",
+  "olas"
  ],
  "macizos": [
   {
@@ -1176,6 +1177,38 @@
     "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
    },
    "curiosidad": "En español su nombre original es Pico de Bachimaña (o Cúspide de Bachimaña), y Gran Facha es la traducción del francés Grande Fache. Según una fuente, la primera ascensión la hicieron en 1874 Henry Russell y Latour, de Cauterets; el dato procede de una sola fuente en inglés."
+  },
+  {
+   "id": "olas",
+   "nombre": "Punta de las Olas",
+   "alias": "Punda deras Solas · Punta de las Olas",
+   "altitud": 3022,
+   "otras": "3.002 m (SummitPost) · 3.017 m (GPS del track)",
+   "macizo": "per",
+   "frontera": false,
+   "lat": 42.66213,
+   "lon": 0.053748,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · refugio de Góriz",
+   "ruta": "Refugio de Góriz → collado de Arrablo → GR 11.9 hacia la Faja de las Olas → collado SE → cumbre por pedreras y trepadas sencillas → vuelta por el mismo itinerario",
+   "desnivel": "≈ 940 m desde Góriz (12 km ida y vuelta)",
+   "dificultad": "moderada",
+   "grado": "F · pedreras y trepadas sencillas",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Última cumbre oriental del gran macizo calizo del Monte Perdido. Desde el refugio de Góriz se llega por el GR 11.9 y se remata por pedreras con alguna trepada sencilla; sin sendero claro en la parte alta, hay que seguir los hitos.",
+   "foto": "olas",
+   "pie": "El macizo de Monte Perdido, del que la Punta de las Olas es la última cumbre oriental.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/punta-de-las-olas-3022-desde-ref-goriz-pn-ordesa-y-monte-perdido-220926001",
+    "texto": "Ver la ruta en Wikiloc: Punta de las Olas (3022) desde Ref. Góriz, de hellowmotogps"
+   },
+   "rutas": [
+    "olas-goriz"
+   ],
+   "fotoCima": {
+    "foto": "ola-cima",
+    "pie": "Vistas al sur desde la cima, con el cañón de Añisclo al fondo."
+   },
+   "curiosidad": "Según SummitPost, ocupa el puesto 208 de 212 entre los tresmiles del Pirineo por altura, junto a la Punta Passet y el Pico Simó, y le da 3.002 m, frente a los 3.022 m que figuran en Wikiloc: las fuentes difieren."
   }
  ]
 }
