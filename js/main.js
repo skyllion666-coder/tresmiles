@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=10';
-import { cargarRuta, crearRuta } from './ruta.js?v=23';
+import { cargarRuta, crearRuta } from './ruta.js?v=24';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -435,7 +435,7 @@ async function boot() {
     _v.copy(b.pos).sub(a.pos); _v.y = 0;
     if (_v.lengthSq() < 1) { if (!V.dir) _v.set(0, 0, -1); else _v.copy(V.dir); }
     _v.normalize(); V.dir = V.dir ? V.dir.lerp(_v, 1 - Math.exp(-dt * 1.4)).normalize() : _v.clone();
-    _w.copy(a.pos).addScaledVector(V.dir, -1500); _w.y = Math.max(a.pos.y + 700, geo.heightAt(_w.x, _w.z) + 320);
+    _w.copy(a.pos).addScaledVector(V.dir, -800); _w.y = Math.max(a.pos.y + 400, geo.heightAt(_w.x, _w.z) + 260);
     const k = 1 - Math.exp(-dt * 4);
     V.pos.lerp(_w, k); _l.copy(b.pos); _l.y -= 150; V.look.lerp(_l, k);
     camera.position.copy(V.pos); controls.target.copy(V.look); camera.lookAt(V.look);
