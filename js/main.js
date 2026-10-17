@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=9';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=10';
 import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);
@@ -518,7 +518,7 @@ async function boot() {
     S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out');
     flyTo(HOME, { dur: 4.2 }).then(() => { if (!S.active) showHints(); });
   }
-  $('#btn-start').addEventListener('click', startExplore);
+  $('#btn-start').addEventListener('click', () => { if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); } startExplore(); });
 
   addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();

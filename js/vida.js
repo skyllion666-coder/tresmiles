@@ -119,7 +119,7 @@ export function crearAves({ scene, geo, centro }) {
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
 export function crearSonido() {
-  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false;
+  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null;
   const ruido = (c) => {
     const len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
     let b0 = 0, b1 = 0, b2 = 0;
@@ -129,6 +129,7 @@ export function crearSonido() {
   function montar() {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+    analizador = ctx.createAnalyser(); analizador.fftSize = 2048; master.connect(analizador);
     const buf = ruido(ctx);
     const fuente = () => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.start(0, Math.random() * 3); return s; };
     // viento: ruido rosa filtrado, con ráfagas lentas
@@ -177,6 +178,7 @@ export function crearSonido() {
   document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
   return {
     get on() { return on; },
+    get nivel() { if (!analizador) return 0; const d = new Float32Array(analizador.fftSize); analizador.getFloatTimeDomainData(d); return Math.sqrt(d.reduce((a, x) => a + x * x, 0) / d.length); },
     get estado() { return ctx ? ctx.state : 'sin iniciar'; },
     async set(v) {
       on = v;
@@ -187,8 +189,12 @@ export function crearSonido() {
         ctx.resume().catch(() => {});
         if (ctx.state !== 'running' && !esperando) {
           esperando = true;
-          const ya = () => { esperando = false; if (on && ctx) ctx.resume().catch(() => {}); ['pointerdown', 'keydown', 'touchend'].forEach((e) => removeEventListener(e, ya, true)); };
-          ['pointerdown', 'keydown', 'touchend'].forEach((e) => addEventListener(e, ya, true));
+          const evs = ['pointerdown', 'mousedown', 'click', 'keydown', 'touchstart', 'touchend'];
+          const ya = () => {
+            if (!on || !ctx) { esperando = false; evs.forEach((e) => removeEventListener(e, ya, true)); return; }
+            ctx.resume().then(() => { if (ctx.state === 'running') { esperando = false; evs.forEach((e) => removeEventListener(e, ya, true)); } }).catch(() => {});
+          };
+          evs.forEach((e) => addEventListener(e, ya, true));
         }
       }
       else if (ctx) master.gain.setTargetAtTime(0, ctx.currentTime, 0.3);
