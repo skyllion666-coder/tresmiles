@@ -130,15 +130,6 @@
   "w": 800,
   "h": 588
  },
- "russell": {
-  "archivo": "Villa Russell - Henry Russell et ses guides posant devant le grottes au Vignemale - btv1b10581617p.jpg",
-  "autor": "fotógrafo desconocido (BnF Gallica)",
-  "licencia": "Public domain",
-  "licencia_url": "",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Villa_Russell_-_Henry_Russell_et_ses_guides_posant_devant_le_grottes_au_Vignemale_-_btv1b10581617p.jpg",
-  "w": 800,
-  "h": 605
- },
  "baysellance": {
   "archivo": "Refugi de Baysellance i Vinhamala al fons.jpg",
   "autor": "Santiago Perdigó",
@@ -147,5 +138,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Refugi_de_Baysellance_i_Vinhamala_al_fons.jpg",
   "w": 800,
   "h": 328
+ },
+ "cascada": {
+  "archivo": "foto propia de un compañero",
+  "autor": "Joszaro",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 900,
+  "h": 900
+ },
+ "placa-russell": {
+  "archivo": "foto propia de un compañero",
+  "autor": "Joszaro",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 900,
+  "h": 900
  }
 }

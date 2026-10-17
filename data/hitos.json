@@ -277,7 +277,8 @@
   "tipo": "lugar",
   "lat": 42.764177,
   "lon": -0.112084,
-  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.938 m."
+  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.938 m.",
+  "foto": "cascada"
  },
  {
   "id": "vig-vista-glaciar",
@@ -339,8 +340,8 @@
   "lat": 42.772186,
   "lon": -0.145013,
   "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m.",
-  "foto": "russell",
-  "pie": "Henry Russell y sus guías posando ante las grutas, en una fotografía antigua."
+  "foto": "placa-russell",
+  "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta."
  },
  {
   "id": "base-vignemale",
