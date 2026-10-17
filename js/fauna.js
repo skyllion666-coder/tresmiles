@@ -1,10 +1,13 @@
-// Fauna 3D: quebrantahuesos de `models/quebrantahuesos.glb` (hecho en Blender, tools/modelos/quebrantahuesos.py).
-// Planean en círculos sobre la cumbre abierta y de vez en cuando dan unos aleteos lentos. Es una ilustración, no seguimiento real.
+// Fauna 3D hecha en Blender (tools/modelos/): quebrantahuesos y rebeco. Es una ilustración, no seguimiento real.
+// Los quebrantahuesos planean en círculos sobre la cumbre abierta y de vez en cuando dan unos aleteos lentos;
+// los rebecos (un grupito) se quedan quietos, se ponen alerta y pasean por las laderas pedregosas de esa cumbre.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 
 const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
+const KM_REBECO = 42 * 1.275;   // misma exageración que los montañeros (ruta.js), para que se vean a la vez
+const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
 export function crearFauna({ scene, geo, centro, camera }) {
   const defs = [
@@ -30,6 +33,93 @@ export function crearFauna({ scene, geo, centro, camera }) {
     listo = true;
   }, undefined, () => { /* sin modelo: las aves sencillas de vida.js siguen volando */ });
 
+
+  // — rebecos —
+  const rebecos = [];
+  let anclaje = null;       // { x, z, y } de la cumbre abierta
+  const R_CANTIDAD = 4;
+  new GLTFLoader().load('models/rebeco.glb?v=1', (gltf) => {
+    for (let i = 0; i < R_CANTIDAD; i++) {
+      const obj = clone(gltf.scene);
+      obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = true; } });
+      const g = new THREE.Group(); g.add(obj); g.visible = false; scene.add(g);
+      const mixer = new THREE.AnimationMixer(obj);
+      const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
+      const cria = i === 3;
+      const r = { g, obj, mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
+      acc.Quieto.play(); acc.Quieto.time = Math.random() * 6;
+      rebecos.push(r);
+    }
+    if (anclaje) colocaRebecos();
+  }, undefined, () => { /* sin modelo de rebeco: no pasa nada */ });
+
+  const pendiente = (x, z) => {
+    const e = 40, hx = geo.heightAt(x + e, z) - geo.heightAt(x - e, z), hz = geo.heightAt(x, z + e) - geo.heightAt(x, z - e);
+    return { s: Math.hypot(hx, hz) / (2 * e), n: new THREE.Vector3(-hx / (2 * e), 1, -hz / (2 * e)).normalize() };
+  };
+  // busca laderas con pendiente moderada algo por debajo de la cumbre y reparte el grupo
+  function colocaRebecos() {
+    if (!anclaje || !rebecos.length) return;
+    let base = null;
+    for (let i = 0; i < 90 && !base; i++) {
+      const a = rnd() * 6.28, d = 250 + rnd() * 1250, x = anclaje.x + Math.cos(a) * d, z = anclaje.z + Math.sin(a) * d;
+      const h = geo.heightAt(x, z), { s } = pendiente(x, z);
+      if (s > 0.28 && s < 0.85 && h < anclaje.y - 80 && h > anclaje.y - 900) base = { x, z };
+    }
+    for (const r of rebecos) {
+      if (!base) { r.ok = false; r.g.visible = false; continue; }
+      const a = rnd() * 6.28, d = 30 + rnd() * 140;
+      r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
+      r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
+      r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.resta = 2 + rnd() * 8;
+      for (const n of ['Quieto', 'Alerta', 'Andar']) r.acc[n].setEffectiveWeight(n === 'Quieto' ? 1 : 0);
+    }
+  }
+  function cambia(r, nuevo, resta) {
+    if (r.estado !== nuevo) { r.acc[nuevo].reset().setEffectiveWeight(1).fadeIn(0.45).play(); r.acc[r.estado].fadeOut(0.45); }
+    r.estado = nuevo; r.resta = resta;
+  }
+  const _q = new THREE.Quaternion(), _qy = new THREE.Quaternion(), _up = new THREE.Vector3(0, 1, 0);
+  function actualizaRebecos(dt) {
+    for (const r of rebecos) {
+      if (!r.ok) continue;
+      const dist = camera.position.distanceTo(r.g.position);
+      r.g.visible = dist < 14000; if (!r.g.visible) continue;
+      const esc = KM_REBECO * Math.min(3, Math.max(0.8, dist / 4500)) * (r.cria ? 0.62 : 1);
+      r.g.scale.setScalar(esc);
+      r.resta -= dt;
+      const cerca = dist < 450;
+      if (cerca && r.estado === 'Quieto') cambia(r, 'Alerta', 3 + Math.random() * 2);
+      if (r.resta <= 0) {
+        if (r.estado === 'Quieto') cambia(r, Math.random() < 0.4 ? 'Alerta' : 'Andar', r.estado === 'Alerta' ? 3 : 4 + Math.random() * 6);
+        else if (r.estado === 'Alerta') {
+          // si la cámara está cerca, se aleja de ella
+          if (cerca) r.rumbo = Math.atan2(r.g.position.z - camera.position.z, r.g.position.x - camera.position.x);
+          cambia(r, 'Andar', 4 + Math.random() * 5);
+        } else { if (Math.random() < 0.3) r.rumbo += (Math.random() - 0.5) * 1.5; cambia(r, 'Quieto', 6 + Math.random() * 10); }
+      }
+      if (r.estado === 'Andar') {
+        const v = 0.9 * esc * dt;
+        const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
+        const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600;
+        if (s > 1.1 || lejos) { r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
+        else { r.x = nx; r.z = nz; }
+      }
+      // gira suavemente hacia su rumbo y se apoya en la ladera
+      const objetivo = Math.atan2(Math.cos(r.rumbo), Math.sin(r.rumbo));   // el modelo mira a +Z: yaw = atan2(dx, dz)
+      let d = objetivo - r.yaw; d = Math.atan2(Math.sin(d), Math.cos(d));
+      r.yaw += d * Math.min(1, dt * (r.estado === 'Andar' ? 2.5 : 0.8));
+      const y = geo.heightAt(r.x, r.z) + 14;
+      r.g.position.set(r.x, y, r.z);
+      const { n } = pendiente(r.x, r.z);
+      _qy.setFromAxisAngle(_up, r.yaw);
+      r.nrm.lerp(n, Math.min(1, dt * 3));
+      _q.setFromUnitVectors(_up, r.nrm.clone().lerp(_up, 0.6).normalize());
+      r.g.quaternion.copy(_q).multiply(_qy);
+      r.mixer.update(dt);
+    }
+  }
+
   const pos = (d, t) => {
     const ang = d.fase + t * d.vel;
     const lx = Math.cos(ang) * d.rx, lz = Math.sin(ang) * d.rz, cs = Math.cos(d.rot), sn = Math.sin(d.rot);
@@ -41,8 +131,11 @@ export function crearFauna({ scene, geo, centro, camera }) {
   return {
     get listo() { return listo; },
     aves,
-    setCentro(x, z) { destino.x = x; destino.z = z; },
+    rebecos,
+    // x, z: cumbre; y (opcional): su altura, para repartir los rebecos por sus laderas
+    setCentro(x, z, y) { destino.x = x; destino.z = z; if (y != null) { anclaje = { x, z, y }; colocaRebecos(); } },
     update(t, dt) {
+      actualizaRebecos(dt);
       if (!listo) return;
       const k = 1 - Math.exp(-dt * 0.35);
       c.x += (destino.x - c.x) * k; c.z += (destino.z - c.z) * k;
