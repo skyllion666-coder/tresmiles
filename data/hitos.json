@@ -371,5 +371,181 @@
   "nota": "Abrigo bajo roca cerca de la cima. Altitud del GPS del track: 3.256 m.",
   "foto": "paradis",
   "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta."
+ },
+ {
+  "id": "inf-parking",
+  "pico": "infiernos",
+  "nombre": "Aparcamiento de Baños de Panticosa",
+  "tipo": "lugar",
+  "lat": 42.761276,
+  "lon": -0.235461,
+  "nota": "Punto de partida y de llegada del recorrido, junto al balneario. Altitud del GPS del track: 1.635 m.",
+  "foto": "panticosa",
+  "pie": "El balneario de Panticosa, de donde sale el recorrido."
+ },
+ {
+  "id": "casa-piedra",
+  "pico": "infiernos",
+  "nombre": "Refugio Casa de Piedra",
+  "tipo": "refugio",
+  "lat": 42.762382,
+  "lon": -0.233362,
+  "nota": "Refugio junto al camino, al principio del recorrido. Altitud del GPS del track: 1.640 m."
+ },
+ {
+  "id": "mirador-reina",
+  "pico": "infiernos",
+  "nombre": "Mirador de la Reina",
+  "tipo": "lugar",
+  "lat": 42.763944,
+  "lon": -0.232596,
+  "nota": "Mirador sobre el valle, al inicio de la subida. Altitud del GPS del track: 1.729 m."
+ },
+ {
+  "id": "inf-cascada",
+  "pico": "infiernos",
+  "nombre": "Cascada",
+  "tipo": "lugar",
+  "lat": 42.765492,
+  "lon": -0.2312,
+  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.777 m."
+ },
+ {
+  "id": "cuesta-fraile",
+  "pico": "infiernos",
+  "nombre": "Inicio de la Cuesta del Fraile",
+  "tipo": "paso",
+  "lat": 42.775861,
+  "lon": -0.230873,
+  "nota": "Comienza la subida de la Cuesta del Fraile. Altitud del GPS del track: 1.964 m."
+ },
+ {
+  "id": "vista-bachimana",
+  "pico": "infiernos",
+  "nombre": "Vista del refugio de Bachimaña",
+  "tipo": "refugio",
+  "lat": 42.781058,
+  "lon": -0.229065,
+  "nota": "Desde aquí se ve el refugio de los Ibones de Bachimaña. Altitud del GPS del track: 2.191 m.",
+  "foto": "bachimana-refugio",
+  "pie": "El refugio de los Ibones de Bachimaña."
+ },
+ {
+  "id": "bachimana-alto",
+  "pico": "infiernos",
+  "nombre": "Ibón de Bachimaña Alto",
+  "tipo": "ibon",
+  "lat": 42.783851,
+  "lon": -0.224527,
+  "nota": "Ibón alto de Bachimaña, junto al camino. Altitud del GPS del track: 2.234 m."
+ },
+ {
+  "id": "azul-inferior",
+  "pico": "infiernos",
+  "nombre": "Ibón Azul inferior",
+  "tipo": "ibon",
+  "lat": 42.788106,
+  "lon": -0.240484,
+  "nota": "Uno de los ibones Azules, el más bajo. Altitud del GPS del track: 2.362 m."
+ },
+ {
+  "id": "azul-superior",
+  "pico": "infiernos",
+  "nombre": "Ibón Azul superior",
+  "tipo": "ibon",
+  "lat": 42.789689,
+  "lon": -0.24395,
+  "nota": "Uno de los ibones Azules, el más alto. Altitud del GPS del track: 2.412 m."
+ },
+ {
+  "id": "cuello-infierno",
+  "pico": "infiernos",
+  "nombre": "Entrada al Cuello del Infierno",
+  "tipo": "paso",
+  "lat": 42.790538,
+  "lon": -0.251203,
+  "nota": "Aquí empieza la subida empinada hacia el collado. Altitud del GPS del track: 2.445 m.",
+  "foto": "inf-cuello",
+  "pie": "La subida hacia el collado, con neveros y gente arriba."
+ },
+ {
+  "id": "tebarray",
+  "pico": "infiernos",
+  "nombre": "Ibón de Tebarray y collado del Infierno",
+  "tipo": "ibon",
+  "lat": 42.789301,
+  "lon": -0.264459,
+  "nota": "Ibón de Tebarray y collado de los Infiernos; aquí el track gira a la izquierda hacia la cresta. Altitud del GPS del track: 2.723 m.",
+  "foto": "tebarray",
+  "pie": "El Ibón de Tebarray, con el Infierno Central detrás."
+ },
+ {
+  "id": "garmo-blanco",
+  "pico": "infiernos",
+  "nombre": "Garmo Blanco",
+  "tipo": "paso",
+  "lat": 42.785178,
+  "lon": -0.264979,
+  "nota": "Tramo de subida hacia la cresta de los Infiernos. Altitud del GPS del track: 2.972 m."
+ },
+ {
+  "id": "inf-occ",
+  "pico": "infiernos",
+  "nombre": "Infierno Occidental",
+  "tipo": "cima",
+  "lat": 42.7831,
+  "lon": -0.263277,
+  "nota": "Cima del Infierno Occidental. Altitud del GPS del track: 3.063 m.",
+  "foto": "inf-oriental",
+  "pie": "El Infierno Occidental, visto desde la cresta."
+ },
+ {
+  "id": "marmolera",
+  "pico": "infiernos",
+  "nombre": "La Marmolera",
+  "tipo": "paso",
+  "lat": 42.782739,
+  "lon": -0.262447,
+  "nota": "Cresta de mármol entre el Occidental y el Central, muy aérea. Altitud del GPS del track: 3.055 m.",
+  "foto": "inf-occidental",
+  "pie": "La cresta, con un mojón y vistas lejanas."
+ },
+ {
+  "id": "inf-ori",
+  "pico": "infiernos",
+  "nombre": "Infierno Oriental",
+  "tipo": "cima",
+  "lat": 42.781439,
+  "lon": -0.259116,
+  "nota": "Cima del Infierno Oriental. Altitud del GPS del track: 3.069 m."
+ },
+ {
+  "id": "collado-pondiellos",
+  "pico": "infiernos",
+  "nombre": "Collado de Pondiellos",
+  "tipo": "paso",
+  "lat": 42.774558,
+  "lon": -0.259624,
+  "nota": "Collado por el que se baja de la cresta. Altitud del GPS del track: 2.807 m."
+ },
+ {
+  "id": "inf-canal",
+  "pico": "infiernos",
+  "nombre": "Canal de bajada",
+  "tipo": "paso",
+  "lat": 42.770754,
+  "lon": -0.250952,
+  "nota": "Canal bonita de la bajada. Altitud del GPS del track: 2.462 m.",
+  "foto": "inf-canal",
+  "pie": "Un tramo de roca de la bajada, con gente al fondo."
+ },
+ {
+  "id": "fuente-laguna",
+  "pico": "infiernos",
+  "nombre": "Fuente termal de La Laguna",
+  "tipo": "lugar",
+  "lat": 42.761338,
+  "lon": -0.238331,
+  "nota": "Fuente termal cerca del final del recorrido. Altitud del GPS del track: 1.660 m."
  }
 ]

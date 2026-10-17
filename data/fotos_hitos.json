@@ -141,7 +141,7 @@
  },
  "russell": {
   "archivo": "Villa Russell - Henry Russell et ses guides posant devant le grottes au Vignemale - btv1b10581617p.jpg",
-  "autor": "fotógrafo desconocido (BnF Gallica)",
+  "autor": "Autor desconocido",
   "licencia": "Public domain",
   "licencia_url": "",
   "pagina": "https://commons.wikimedia.org/wiki/File:Villa_Russell_-_Henry_Russell_et_ses_guides_posant_devant_le_grottes_au_Vignemale_-_btv1b10581617p.jpg",
@@ -167,5 +167,78 @@
   "w": 900,
   "h": 900,
   "pos": "50% 30%"
+ },
+ "panticosa": {
+  "archivo": "Balneario de Panticosa.jpg",
+  "autor": "Garrondo",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Balneario_de_Panticosa.jpg",
+  "w": 800,
+  "h": 531
+ },
+ "bachimana-refugio": {
+  "archivo": "Refugio de Bachimaña 01.jpg",
+  "autor": "Pacopac",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Refugio_de_Bachima%C3%B1a_01.jpg",
+  "w": 800,
+  "h": 480
+ },
+ "inf-occidental": {
+  "archivo": "foto del autor del track",
+  "autor": "RUTAS por el MONTE BLOG",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 675,
+  "pos": "50% 40%"
+ },
+ "inf-oriental": {
+  "archivo": "foto del autor del track",
+  "autor": "RUTAS por el MONTE BLOG",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 675,
+  "pos": "50% 40%"
+ },
+ "tebarray": {
+  "archivo": "foto del autor del track",
+  "autor": "RUTAS por el MONTE BLOG",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 675,
+  "pos": "50% 40%"
+ },
+ "inf-canal": {
+  "archivo": "foto del autor del track",
+  "autor": "RUTAS por el MONTE BLOG",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 40%"
+ },
+ "inf-cuello": {
+  "archivo": "foto del autor del track",
+  "autor": "RUTAS por el MONTE BLOG",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 40%"
  }
 }

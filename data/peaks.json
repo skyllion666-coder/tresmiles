@@ -1,7 +1,8 @@
 {
   "activos": [
     "balaitus",
-    "vignemale"
+    "vignemale",
+    "infiernos"
   ],
   "macizos": [
     {
@@ -303,14 +304,22 @@
       "lat": 42.781417,
       "lon": -0.2605,
       "acceso": "Valle de Tena · Baños de Panticosa",
-      "ruta": "Circular desde Baños de Panticosa por el Collado de Pondiellos y la Marmolera; bajada por los Ibones Azules o la Mallata",
+      "ruta": "Circular desde Baños de Panticosa: ibones de Bachimaña y Azules, Cuello del Infierno, Ibón de Tebarray, cresta (Occidental, Marmolera, Central y Oriental) y bajada por el Collado de Pondiellos",
       "desnivel": "≈ 1.450 m desde Baños de Panticosa",
       "dificultad": "muy-alta",
       "grado": "PD · pasos de I+/II, cresta aérea",
       "epoca": "Julio – septiembre",
       "descripcion": "Tres cumbres sobre los 3.000 m —Occidental, Central y Oriental— alzadas sobre el balneario de Panticosa; el Central, con 3.081 m, es el techo del grupo. La travesía de la Marmolera, entre el Occidental y el Central, es muy aérea y no se recomienda con vértigo; conviene llevar casco.",
       "foto": "infiernos",
-      "pie": "Cima del Infierno Central, con su piedra de cumbre."
+      "pie": "Cima del Infierno Central, con su piedra de cumbre.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+        "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
+      },
+      "rutas": [
+        "infiernos-panticosa"
+      ],
+      "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente)."
     }
   ]
 }
