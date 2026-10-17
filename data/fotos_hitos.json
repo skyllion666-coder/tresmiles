@@ -1770,5 +1770,16 @@
   "w": 960,
   "h": 720,
   "pos": "50% 50%"
+ },
+ "arn-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "tomanu",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-arnales-3006-desde-casa-de-piedra-banos-de-panticosa-191087239",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
  }
 }

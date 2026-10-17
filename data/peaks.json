@@ -32,7 +32,8 @@
   "paul",
   "gorgs",
   "infierno-occidental",
-  "infierno-oriental"
+  "infierno-oriental",
+  "arnales"
  ],
  "macizos": [
   {
@@ -1110,6 +1111,38 @@
     "pie": "Vista desde el Infierno Oriental sobre un ibón."
    },
    "curiosidad": "Bajo estas cumbres está el glaciar del Infierno, que según un estudio publicado en 2017 en la revista Lucas Mallada ha pasado de ser un glaciar «blanco» a uno cubierto de derrubios, y quizá acabe como glaciar rocoso."
+  },
+  {
+   "id": "arnales",
+   "nombre": "Pico de los Arnales",
+   "alias": "Pico Arnales · Pic d’Arnales",
+   "altitud": 3006,
+   "otras": "3.003 m (GPS del track) · 2.999,9 m (cartografía de Aragón)",
+   "macizo": "bal",
+   "frontera": false,
+   "lat": 42.78015,
+   "lon": -0.255976,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Baños de Panticosa → Casa de Piedra → collado de Pondiellos → brecha de Arnales → cumbre por la cresta final",
+   "desnivel": "≈ 1.500 m desde Baños de Panticosa (10,5 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · cresta final con pasos de I+",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre vecina de los Picos del Infierno, a la que se llega por el collado de Pondiellos y la brecha de Arnales. El último tramo es una cresta con pasos de I+ que, con nieve o hielo, pide piolet y crampones.",
+   "foto": "arnales",
+   "pie": "El Pico de Pondiellos y el pico de ros Arnals, con el cuello de Saretas.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-arnales-3006-desde-casa-de-piedra-banos-de-panticosa-191087239",
+    "texto": "Ver la ruta en Wikiloc: Pico Arnales (3006) desde Casa de Piedra, de tomanu"
+   },
+   "rutas": [
+    "arnales-casa-piedra"
+   ],
+   "fotoCima": {
+    "foto": "arn-cima",
+    "pie": "La cresta de la cima del Arnales, con nieve."
+   },
+   "curiosidad": "La UIAA lo incluyó en 1995 entre los tresmiles del Pirineo con 3.006 m, pero la cartografía no está de acuerdo: el mapa 1:25.000 del IGN le da 2.996 m y la cartografía aragonesa 2.999,9 m, redondeados a 3.000,0 m en una orden de 2020. Según la fuente, es o no es un tresmil."
   }
  ]
 }

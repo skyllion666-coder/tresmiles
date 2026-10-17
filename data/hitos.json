@@ -432,7 +432,8 @@
    "algas",
    "argualas",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "arnales"
   ],
   "inicio": true
  },
@@ -449,7 +450,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "arnales"
   ]
  },
  {
@@ -672,7 +674,8 @@
   "picos": [
    "infiernos",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "arnales"
   ]
  },
  {
@@ -703,7 +706,8 @@
    "infiernos",
    "garmo",
    "infierno-occidental",
-   "infierno-oriental"
+   "infierno-oriental",
+   "arnales"
   ],
   "foto": "w-fuente-laguna",
   "pie": "La fuente termal de La Laguna."
@@ -2333,7 +2337,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "arnales"
   ],
   "nombre": "Desvío a Arnales",
   "tipo": "paso",
@@ -3046,5 +3051,19 @@
   "nota": "Cumbre de 3.129 m según OpenStreetMap; el track llega aquí con 3.027 m de altitud GPS.",
   "foto": "gor-cima",
   "pie": "Roquedo de la cresta, en la zona de cumbres del recorrido."
+ },
+ {
+  "id": "arn-cima",
+  "pico": "arnales",
+  "picos": [
+   "arnales"
+  ],
+  "nombre": "Pico de los Arnales",
+  "tipo": "cima",
+  "lat": 42.78015,
+  "lon": -0.255976,
+  "nota": "Cima de 3.006 m según la UIAA; altitud del GPS del track: 3.008 m.",
+  "foto": "arn-cima",
+  "pie": "La cresta de la cima del Arnales, con nieve."
  }
 ]
