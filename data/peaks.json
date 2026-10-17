@@ -21,7 +21,8 @@
     "soum",
     "marbore",
     "tallon",
-    "lliterola"
+    "lliterola",
+    "russell"
   ],
   "macizos": [
     {
@@ -747,6 +748,38 @@
         "lliterola-cresta"
       ],
       "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola»."
+    },
+    {
+      "id": "russell",
+      "nombre": "Pico Russell",
+      "alias": "Tuca del Cap de la Vall · Cap de la Vall",
+      "altitud": 3207,
+      "otras": "Otras fuentes: 3.205 y 3.199 m",
+      "macizo": "ane",
+      "frontera": false,
+      "lat": 42.618433,
+      "lon": 0.670588,
+      "acceso": "Ribagorza · embalse de Llauset (Aneto)",
+      "ruta": "Embalse de Llauset → Collado de Vallibierna → Collada de los Bucardos → Punta Russell Oriental → Pico Russell SE → Pico Russell → ibón de la Cap de la Vall → refugio Cap de Llauset",
+      "desnivel": "≈ 1.170 m desde el embalse de Llauset (≈ 15 km, circuito)",
+      "dificultad": "alta",
+      "grado": "PD · circuito con pedreras y algún paso de trepada",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Cumbre más alta de un pequeño macizo del extremo sur de la Maladeta, por encima del embalse de Llauset, en la Ribagorza. Se sube por la Collada de los Bucardos, pasa por la antecima sureste y se baja junto al ibón de la Cap de la Vall.",
+      "foto": "russell",
+      "pie": "El embalse de Llauset nevado, en la base de la zona.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+        "texto": "Ver la ruta en Wikiloc: PICOS RUSSELL (3207 m) circular desde embalse Llauset, de Alfredo Barberan"
+      },
+      "rutas": [
+        "russell-llauset"
+      ],
+      "fotoCima": {
+        "foto": "rus-cima",
+        "pie": "Vista desde la cima del Pico Russell."
+      },
+      "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente."
     }
   ]
 }

@@ -1321,5 +1321,71 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "rus-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "rus-se": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 700,
+  "h": 525,
+  "pos": "50% 50%"
+ },
+ "rus-ibon-llauset": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 700,
+  "h": 525,
+  "pos": "50% 50%"
+ },
+ "rus-refugio": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "rus-estany": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 700,
+  "h": 525,
+  "pos": "50% 50%"
+ },
+ "rus-botornas": {
+  "archivo": "foto del autor del track",
+  "autor": "Alfredo Barberan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+  "fuente": "su ficha de Wikiloc",
+  "w": 700,
+  "h": 525,
+  "pos": "50% 50%"
  }
 }

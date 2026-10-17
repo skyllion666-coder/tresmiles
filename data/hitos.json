@@ -1999,5 +1999,162 @@
   "lat": 42.691423,
   "lon": 0.515302,
   "nota": "Cumbre vecina del Perdiguero (3.176 m según el track). Altitud del GPS del track: 3.118 m."
+ },
+ {
+  "id": "rus-cima",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Cima del Pico Russell",
+  "tipo": "cima",
+  "lat": 42.618433,
+  "lon": 0.670588,
+  "nota": "Cumbre del Pico Russell (3.207 m según el track). Altitud del GPS del track: 3.201 m.",
+  "foto": "rus-cima",
+  "pie": "Vista desde la cima del Pico Russell."
+ },
+ {
+  "id": "rus-se",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Pico Russell SE (antecima)",
+  "tipo": "cima",
+  "lat": 42.617423,
+  "lon": 0.671789,
+  "nota": "Antecima sureste del Russell (3.205 m según el track), que OpenStreetMap llama «Antecima SE de Russell». Altitud del GPS del track: 3.197 m.",
+  "foto": "rus-se",
+  "pie": "La antecima SE del Russell, entre nubes."
+ },
+ {
+  "id": "rus-ibon-llauset",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Ibón Cap de Llauset",
+  "tipo": "ibon",
+  "lat": 42.596383,
+  "lon": 0.686946,
+  "nota": "Ibón junto al refugio, en la bajada hacia el embalse. Altitud del GPS del track: 2.465 m.",
+  "foto": "rus-ibon-llauset",
+  "pie": "El ibón de Cap de Llauset."
+ },
+ {
+  "id": "rus-refugio",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Refugio Cap de Llauset",
+  "tipo": "refugio",
+  "lat": 42.596212,
+  "lon": 0.6831,
+  "nota": "Refugio de montaña sobre el embalse de Llauset. Altitud del GPS del track: 2.421 m.",
+  "foto": "rus-refugio",
+  "pie": "El refugio de Cap de Llauset."
+ },
+ {
+  "id": "rus-estany",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Estany de la Cap de la Vall",
+  "tipo": "ibon",
+  "lat": 42.608828,
+  "lon": 0.688649,
+  "nota": "Ibón en la bajada del Russell, que da nombre a la cumbre (Cap de la Vall). Altitud del GPS del track: 2.670 m.",
+  "foto": "rus-estany",
+  "pie": "El ibón de la Cap de la Vall visto desde la Collada de los Bucardos."
+ },
+ {
+  "id": "rus-botornas",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Refugio de Botornás",
+  "tipo": "refugio",
+  "lat": 42.589564,
+  "lon": 0.681672,
+  "nota": "Refugio junto al camino de vuelta al embalse. Altitud del GPS del track: 2.345 m.",
+  "foto": "rus-botornas",
+  "pie": "El refugio de Botornás, una cabaña de piedra."
+ },
+ {
+  "id": "rus-parking",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Aparcamiento del embalse de Llauset",
+  "tipo": "lugar",
+  "lat": 42.581724,
+  "lon": 0.696197,
+  "nota": "Punto de partida y de llegada del recorrido. Altitud del GPS del track: 2.195 m.",
+  "inicio": true
+ },
+ {
+  "id": "rus-vallibierna",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Collado de Vallibierna",
+  "tipo": "paso",
+  "lat": 42.602769,
+  "lon": 0.675015,
+  "nota": "Collado en la subida, hacia el valle de Vallibierna. Altitud del GPS del track: 2.723 m."
+ },
+ {
+  "id": "rus-bucardos",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Collada de los Bucardos o de Isards",
+  "tipo": "paso",
+  "lat": 42.606118,
+  "lon": 0.676196,
+  "nota": "Collada desde la que se ve el ibón de la Cap de la Vall. Altitud del GPS del track: 2.793 m."
+ },
+ {
+  "id": "rus-oriental",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Punta Russell Oriental",
+  "tipo": "cima",
+  "lat": 42.616585,
+  "lon": 0.67708,
+  "nota": "Cumbre menor al este del Russell (3.051 m según el track). Altitud del GPS del track: 3.040 m."
+ },
+ {
+  "id": "rus-negre",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Collado de Estany Negre",
+  "tipo": "paso",
+  "lat": 42.602467,
+  "lon": 0.689503,
+  "nota": "Collado en la bajada, sobre el Estany Negre. Altitud del GPS del track: 2.689 m."
+ },
+ {
+  "id": "rus-ibones",
+  "pico": "russell",
+  "picos": [
+   "russell"
+  ],
+  "nombre": "Collado de los Ibones",
+  "tipo": "paso",
+  "lat": 42.5956,
+  "lon": 0.689145,
+  "nota": "Último collado antes de bajar al embalse. Altitud del GPS del track: 2.533 m."
  }
 ]
