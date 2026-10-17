@@ -38,7 +38,8 @@
   "olas",
   "margalida",
   "alba",
-  "diente-alba"
+  "diente-alba",
+  "araguells"
  ],
  "macizos": [
   {
@@ -1308,6 +1309,38 @@
     "pie": "Excursionista sobre un bloque en la cumbre."
    },
    "curiosidad": "La UIAA lista el Diente de Alba con 3.136 m, pero las fuentes no se ponen de acuerdo sobre qué cumbre es cuál: el autor del track llama «Diente» a la de 3.118 m y «Muela» a la de 3.136 m, mientras OpenStreetMap registra un «Dien d’Alba» de 3.121 m. La Muela de Alba (3.118 m en otras fuentes) tampoco figura en la lista oficial."
+  },
+  {
+   "id": "araguells",
+   "nombre": "Pico de Aragüells",
+   "alias": "Eroueil · Tuca d’Aragüells",
+   "altitud": 3037,
+   "otras": "3.030–3.048 m según los mapas · 3.048 m (OpenStreetMap)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.631355,
+   "lon": 0.627815,
+   "acceso": "Benasque · puente de Coronas · refugio de Pescadores",
+   "ruta": "Puente de Coronas → refugio de Pescadores → ibonet y ibones de Coronas → pedreras → cumbre; vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.060–1.090 m desde el puente de Coronas (8,5 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "F+ · pedreras y bloques",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre piramidal que cierra por el este el valle de Cregüeña, en el Parque Natural Posets-Maladeta. Desde el puente de Coronas se sube por los ibones de Coronas y una larga pedrera de bloques hasta la cima, con unas vistas muy amplias sobre la Maladeta.",
+   "foto": "araguells",
+   "pie": "El Pico de Aragüells, con restos de nieve en sus laderas.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/refugio-de-coronas-ibones-de-coronas-pico-araguells-3-037-m-refugio-de-coronas-21231536",
+    "texto": "Ver la ruta en Wikiloc: Refugio de Coronas – Ibones de Coronas – Pico Aragüells, de Coronando Picos"
+   },
+   "rutas": [
+    "araguells-coronas"
+   ],
+   "fotoCima": {
+    "foto": "ara-cima",
+    "pie": "La pirámide de la cima del Aragüells, entre bloques."
+   },
+   "curiosidad": "Según SummitPost, Henry Russell y el guía Firmin Barrau lo ascendieron por primera vez el 7 de julio de 1880, desde los Baños de Benasque por el ibón y el collado de Cregüeña; la primera ascensión invernal, con esquís, fue el 28 de diciembre de 1932. La cifra de 3.037 m es la de la lista más extendida de tresmiles, pero los mapas dan entre 3.030 y 3.048 m."
   }
  ]
 }

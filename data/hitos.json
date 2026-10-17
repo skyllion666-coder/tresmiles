@@ -974,7 +974,8 @@
   "pie": "El refugio libre de pescadores, en el valle de Coronas.",
   "picos": [
    "tempestades",
-   "margalida"
+   "margalida",
+   "araguells"
   ]
  },
  {
@@ -989,7 +990,8 @@
   "pie": "Señales con los desvíos a los ibones de Llosás y de Ballibierna.",
   "picos": [
    "tempestades",
-   "margalida"
+   "margalida",
+   "araguells"
   ]
  },
  {
@@ -1364,7 +1366,8 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "araguells"
   ],
   "nombre": "Ibón Medio de Coronas",
   "tipo": "ibon",
@@ -1466,7 +1469,8 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "araguells"
   ],
   "nombre": "Inicio del recorrido (Puente de Coronas)",
   "tipo": "lugar",
@@ -3353,5 +3357,47 @@
   "nota": "Collado de 3.030 m según el track.",
   "foto": "die-collado",
   "pie": "Bloques en el collado de Alba."
+ },
+ {
+  "id": "ara-ibonet",
+  "pico": "araguells",
+  "picos": [
+   "araguells"
+  ],
+  "nombre": "Ibonet de Coronas",
+  "tipo": "ibon",
+  "lat": 42.618483,
+  "lon": 0.63125,
+  "nota": "Pequeño ibón del camino de subida.",
+  "foto": "ara-ibonet",
+  "pie": "El ibonet de Coronas, con las pedreras detrás."
+ },
+ {
+  "id": "ara-inferior",
+  "pico": "araguells",
+  "picos": [
+   "araguells"
+  ],
+  "nombre": "Ibón de Coronas Inferior",
+  "tipo": "ibon",
+  "lat": 42.623365,
+  "lon": 0.638592,
+  "nota": "Uno de los ibones de Coronas, en el camino a la cumbre.",
+  "foto": "ara-inferior",
+  "pie": "El ibón de Coronas inferior, con restos de hielo y nieve."
+ },
+ {
+  "id": "ara-cima",
+  "pico": "araguells",
+  "picos": [
+   "araguells"
+  ],
+  "nombre": "Pico Aragüells",
+  "tipo": "cima",
+  "lat": 42.631355,
+  "lon": 0.627815,
+  "nota": "Cima de 3.037 m según la lista más extendida de tresmiles. Altitud del GPS del track: 2.980 m.",
+  "foto": "ara-cima",
+  "pie": "La pirámide de la cima del Aragüells, entre bloques."
  }
 ]

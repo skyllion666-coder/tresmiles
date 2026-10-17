@@ -1968,5 +1968,38 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "ara-ibonet": {
+  "archivo": "foto del autor del track",
+  "autor": "Coronando Picos",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-de-coronas-ibones-de-coronas-pico-araguells-3-037-m-refugio-de-coronas-21231536",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "ara-inferior": {
+  "archivo": "foto del autor del track",
+  "autor": "Coronando Picos",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-de-coronas-ibones-de-coronas-pico-araguells-3-037-m-refugio-de-coronas-21231536",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "ara-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Coronando Picos",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-de-coronas-ibones-de-coronas-pico-araguells-3-037-m-refugio-de-coronas-21231536",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }
