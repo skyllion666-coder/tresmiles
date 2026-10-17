@@ -671,5 +671,79 @@
   "lat": 42.676655,
   "lon": 0.03473,
   "nota": "Antecima antes de la cumbre. Altitud del GPS del track: 3.301 m."
+ },
+ {
+  "id": "renclusa",
+  "pico": "aneto",
+  "nombre": "Refugio de La Renclusa",
+  "tipo": "refugio",
+  "lat": 42.669311,
+  "lon": 0.650557,
+  "nota": "Refugio guardado al pie del Aneto, punto de partida del recorrido. Altitud del GPS del track: 2.143 m.",
+  "foto": "aneto-renclusa",
+  "pie": "El refugio de La Renclusa, con sus paneles solares.",
+  "inicio": true
+ },
+ {
+  "id": "salterillo",
+  "pico": "aneto",
+  "nombre": "Ibón de Salterillo",
+  "tipo": "ibon",
+  "lat": 42.654512,
+  "lon": 0.65882,
+  "nota": "Pequeño ibón junto al camino de subida. Altitud del GPS del track: 2.460 m.",
+  "foto": "aneto-salterillo",
+  "pie": "La basa del Salterillo, vista desde lo alto."
+ },
+ {
+  "id": "aneto-collado",
+  "pico": "aneto",
+  "nombre": "Collado de La Renclusa",
+  "tipo": "paso",
+  "lat": 42.666647,
+  "lon": 0.654212,
+  "nota": "Collado en el camino entre el refugio y el ibón de Salterillo. Altitud del GPS del track: 2.263 m."
+ },
+ {
+  "id": "aneto-panoramica",
+  "pico": "aneto",
+  "nombre": "Panorámica",
+  "tipo": "lugar",
+  "lat": 42.635869,
+  "lon": 0.655234,
+  "nota": "Punto marcado como «Panorámica» en el track, sobre el glaciar. Altitud del GPS del track: 3.130 m.",
+  "foto": "aneto-panoramica",
+  "pie": "Vista desde el punto «Panorámica», con el hielo entre las rocas."
+ },
+ {
+  "id": "oliveras",
+  "pico": "aneto",
+  "nombre": "Punta Oliveras: chimenea y nevero",
+  "tipo": "paso",
+  "lat": 42.633636,
+  "lon": 0.655198,
+  "nota": "Tramo de chimenea y nevero junto a la punta Oliveras. Altitud del GPS del track: 3.277 m."
+ },
+ {
+  "id": "mahoma",
+  "pico": "aneto",
+  "nombre": "Paso de Mahoma",
+  "tipo": "paso",
+  "lat": 42.6315,
+  "lon": 0.656446,
+  "nota": "Estrecha cresta de bloques justo antes de la cumbre. Altitud del GPS del track: 3.392 m.",
+  "foto": "aneto-mahoma",
+  "pie": "Alpinistas sobre los bloques del Paso de Mahoma."
+ },
+ {
+  "id": "aneto-cima",
+  "pico": "aneto",
+  "nombre": "Cima del Aneto",
+  "tipo": "cima",
+  "lat": 42.631164,
+  "lon": 0.656689,
+  "nota": "La cumbre más alta de los Pirineos. Altitud del GPS del track: 3.396 m.",
+  "foto": "aneto-cima",
+  "pie": "La piedra de la cima, con «Aneto 3404» pintado."
  }
 ]

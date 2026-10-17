@@ -373,5 +373,56 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Refuge_d%27Arr%C3%A9moulit_20060812a.jpg",
   "w": 800,
   "h": 600
+ },
+ "aneto-renclusa": {
+  "archivo": "foto del autor del track",
+  "autor": "David Walden",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 50%"
+ },
+ "aneto-panoramica": {
+  "archivo": "foto del autor del track",
+  "autor": "David Walden",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 50%"
+ },
+ "aneto-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "David Walden",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 40%"
+ },
+ "aneto-mahoma": {
+  "archivo": "Paso de Mahoma.jpg",
+  "autor": "Faras",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Paso_de_Mahoma.jpg",
+  "w": 960,
+  "h": 640
+ },
+ "aneto-salterillo": {
+  "archivo": "BASA DEL SALTERILLO - panoramio.jpg",
+  "autor": "Manuel Velazquez",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:BASA_DEL_SALTERILLO_-_panoramio.jpg",
+  "w": 960,
+  "h": 640
  }
 }

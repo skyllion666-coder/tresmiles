@@ -5,7 +5,8 @@
     "infiernos",
     "garmo",
     "perdido",
-    "cilindro"
+    "cilindro",
+    "aneto"
   ],
   "macizos": [
     {
@@ -63,14 +64,26 @@
       "lat": 42.631139,
       "lon": 0.656639,
       "acceso": "Benasque · La Besurta / Llanos del Hospital",
-      "ruta": "Refugio de La Renclusa → Portillón Superior → glaciar del Aneto → Paso de Mahoma → cumbre",
-      "desnivel": "≈ 1.300 m desde La Renclusa (≈ 1.500 m desde La Besurta)",
+      "ruta": "Refugio de La Renclusa → ibón de Salterillo → glaciar del Aneto → Punta Oliveras → Paso de Mahoma → cumbre",
+      "desnivel": "≈ 1.500 m desde La Renclusa (11,4 km ida y vuelta)",
       "dificultad": "alta",
       "grado": "PD · glaciar y cresta aérea",
       "epoca": "Julio – septiembre",
       "descripcion": "La cumbre más alta de los Pirineos. Se corona cruzando el glaciar del Aneto, hoy en franco retroceso, y la estrecha cresta de bloques del Paso de Mahoma, más impresionante que difícil. Pide crampones, piolet y encordarse sobre el hielo.",
       "foto": "aneto",
-      "pie": "Un alpinista cruza el Paso de Mahoma, cerca de la cumbre."
+      "pie": "Un alpinista cruza el Paso de Mahoma, cerca de la cumbre.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
+        "texto": "Ver la ruta en Wikiloc: Aneto, de David Walden"
+      },
+      "rutas": [
+        "aneto-renclusa"
+      ],
+      "fotoCima": {
+        "foto": "aneto-cima",
+        "pie": "La piedra de la cima, con «Aneto 3404» pintado, y la placa del vértice."
+      },
+      "curiosidad": "El Aneto recibe también el nombre de Tuca de Aneto; su nombre antiguo, Pic de Néthou, viene de «Nethon» (en aranés, «maldito»). Según la tradición su primera ascensión fue en 1842, del ruso Platon de Tchihatcheff con los guías Pierre Sanio y Jean Sors, aunque las fuentes difieren en los detalles."
     },
     {
       "id": "posets",
