@@ -782,5 +782,116 @@
   "nota": "Cumbre del Pico de la Maladeta. Altitud del GPS del track: 3.302 m.",
   "foto": "maladeta-cima",
   "pie": "La cima de la Maladeta, con nieve de invierno."
+ },
+ {
+  "id": "tem-parada",
+  "pico": "tempestades",
+  "nombre": "Parada de autobús",
+  "tipo": "lugar",
+  "lat": 42.610753,
+  "lon": 0.620363,
+  "nota": "Parada del autobús, punto de partida del recorrido, junto al GR 11. Altitud del GPS del track: 1.960 m.",
+  "foto": "tem-parada",
+  "pie": "Panel del GR 11 «Puente y Refugio de Coronas», junto a la parada.",
+  "inicio": true
+ },
+ {
+  "id": "tem-refugio",
+  "pico": "tempestades",
+  "nombre": "Refugio de Pescadores",
+  "tipo": "refugio",
+  "lat": 42.610302,
+  "lon": 0.621092,
+  "nota": "Refugio libre junto al arranque de la ruta. Altitud del GPS del track: 1.960 m.",
+  "foto": "tem-refugio",
+  "pie": "El refugio libre de pescadores, en el valle de Coronas."
+ },
+ {
+  "id": "tem-desvio",
+  "pico": "tempestades",
+  "nombre": "Desvío a los ibones de Coronas",
+  "tipo": "paso",
+  "lat": 42.610618,
+  "lon": 0.626312,
+  "nota": "Bifurcación de senderos hacia los ibones. Altitud del GPS del track: 2.010 m.",
+  "foto": "tem-desvio",
+  "pie": "Señales con los desvíos a los ibones de Llosás y de Ballibierna."
+ },
+ {
+  "id": "tem-pradera",
+  "pico": "tempestades",
+  "nombre": "Pradera",
+  "tipo": "lugar",
+  "lat": 42.606609,
+  "lon": 0.636624,
+  "nota": "Pradera abierta en el valle. Altitud del GPS del track: 2.087 m.",
+  "foto": "tem-pradera",
+  "pie": "La pradera, con las cumbres del fondo."
+ },
+ {
+  "id": "tem-gr11",
+  "pico": "tempestades",
+  "nombre": "Abandonar el GR 11",
+  "tipo": "paso",
+  "lat": 42.608732,
+  "lon": 0.641861,
+  "nota": "Aquí se deja el GR 11 para subir hacia Llosás. Altitud del GPS del track: 2.200 m.",
+  "foto": "tem-gr11",
+  "pie": "El cruce donde se abandona el GR 11, con la señal hacia el ibón de Llosás."
+ },
+ {
+  "id": "tem-humedales",
+  "pico": "tempestades",
+  "nombre": "Humedales de Llosás",
+  "tipo": "lugar",
+  "lat": 42.609859,
+  "lon": 0.642892,
+  "nota": "Zona de humedales y praderas antes del ibón. Altitud del GPS del track: 2.214 m.",
+  "foto": "tem-humedales",
+  "pie": "Los humedales de Llosás."
+ },
+ {
+  "id": "tem-llosas",
+  "pico": "tempestades",
+  "nombre": "Ibón de Llosás",
+  "tipo": "ibon",
+  "lat": 42.616396,
+  "lon": 0.653622,
+  "nota": "Ibón de Llosás, bajo los muros de la cabecera del valle. Altitud del GPS del track: 2.480 m.",
+  "foto": "tem-llosas",
+  "pie": "El ibón de Llosás."
+ },
+ {
+  "id": "tem-ibonet",
+  "pico": "tempestades",
+  "nombre": "Ibonet de Llosás",
+  "tipo": "ibon",
+  "lat": 42.614121,
+  "lon": 0.65727,
+  "nota": "Pequeño ibón por encima del de Llosás. Altitud del GPS del track: 2.520 m.",
+  "foto": "tem-ibonet",
+  "pie": "El Ibonet de Llosás, visto desde arriba."
+ },
+ {
+  "id": "tem-bloques",
+  "pico": "tempestades",
+  "nombre": "Bloques y rocas",
+  "tipo": "paso",
+  "lat": 42.621725,
+  "lon": 0.661836,
+  "nota": "Tramo de bloques y roca suelta bajo la cumbre. Altitud del GPS del track: 3.000 m.",
+  "foto": "tem-bloques",
+  "pie": "Pedrera de bloques en la parte alta."
+ },
+ {
+  "id": "tem-cima",
+  "pico": "tempestades",
+  "nombre": "Cima del Pico de Tempestades",
+  "tipo": "cima",
+  "lat": 42.626138,
+  "lon": 0.662785,
+  "nota": "Cumbre del Pico de Tempestades. Altitud del GPS del track: 3.264 m.",
+  "foto": "tem-cima",
+  "pie": "Vista desde la cima de Tempestades, con las crestas del macizo."
  }
 ]

@@ -457,5 +457,115 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "tem-parada": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-refugio": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-desvio": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-pradera": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-gr11": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-humedales": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-llosas": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-ibonet": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-bloques": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "tem-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Kurruskera",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
  }
 }
