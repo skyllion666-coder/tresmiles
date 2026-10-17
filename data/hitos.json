@@ -822,7 +822,8 @@
    "soum",
    "marbore",
    "tallon",
-   "olas"
+   "olas",
+   "casco"
   ],
   "foto": "goriz",
   "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
@@ -1857,7 +1858,8 @@
   "id": "mar-trepada",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Trepada de grado I",
   "tipo": "paso",
@@ -1869,7 +1871,8 @@
   "id": "mar-ciudad",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Ciudad de Piedra",
   "tipo": "lugar",
@@ -1911,7 +1914,8 @@
   "id": "mar-escaleras",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Senda a la Punta de las Escaleras",
   "tipo": "paso",
@@ -1923,7 +1927,8 @@
   "id": "mar-faja-roya",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Faja Roya",
   "tipo": "paso",
@@ -1935,7 +1940,8 @@
   "id": "mar-paso-clave",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Paso clave",
   "tipo": "paso",
@@ -1947,7 +1953,8 @@
   "id": "mar-oriental",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Pico Oriental de la Cascada",
   "tipo": "cima",
@@ -1959,7 +1966,8 @@
   "id": "mar-brulle",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Pico Central de la Cascada (Pico Brulle)",
   "tipo": "cima",
@@ -1971,7 +1979,8 @@
   "id": "mar-espalda",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "casco"
   ],
   "nombre": "Espalda de Marboré",
   "tipo": "cima",
@@ -1983,7 +1992,8 @@
   "id": "tal-circo",
   "pico": "tallon",
   "picos": [
-   "tallon"
+   "tallon",
+   "casco"
   ],
   "nombre": "Circo",
   "tipo": "lugar",
@@ -1997,7 +2007,8 @@
   "id": "tal-sarrios",
   "pico": "tallon",
   "picos": [
-   "tallon"
+   "tallon",
+   "casco"
   ],
   "nombre": "Paso de los Sarrios",
   "tipo": "paso",
@@ -2037,7 +2048,8 @@
   "id": "tal-gruta",
   "pico": "tallon",
   "picos": [
-   "tallon"
+   "tallon",
+   "casco"
   ],
   "nombre": "Gruta Helada de Casteret",
   "tipo": "lugar",
@@ -3931,5 +3943,47 @@
   "lat": 42.63376,
   "lon": 0.427592,
   "nota": "Collado de 2.862 m según OpenStreetMap. Altitud del GPS del track: 2.839 m."
+ },
+ {
+  "id": "casco-millaris",
+  "pico": "casco",
+  "picos": [
+   "casco"
+  ],
+  "nombre": "Collado de Millaris",
+  "tipo": "paso",
+  "lat": 42.674375,
+  "lon": -0.015922,
+  "nota": "Collado con poste indicador, en el camino hacia la Brecha de Rolando. Altitud del GPS del track: 2.459 m.",
+  "foto": "casco-millaris",
+  "pie": "Un poste señala el collado de Millaris, con las paredes de Marboré al fondo."
+ },
+ {
+  "id": "casco-torre",
+  "pico": "casco",
+  "picos": [
+   "casco"
+  ],
+  "nombre": "Torre de Marboré",
+  "tipo": "cima",
+  "lat": 42.685661,
+  "lon": -0.017016,
+  "nota": "Cumbre de 3.009 m según el autor del track. Altitud del GPS del track: 2.999 m.",
+  "foto": "casco-torre",
+  "pie": "La Torre de Marboré, con el recorrido de ascenso dibujado en amarillo."
+ },
+ {
+  "id": "casco-cima",
+  "pico": "casco",
+  "picos": [
+   "casco"
+  ],
+  "nombre": "Casco de Marboré",
+  "tipo": "cima",
+  "lat": 42.687721,
+  "lon": -0.026758,
+  "nota": "Cumbre fronteriza de 3.006 m. Altitud del GPS del track: 3.000 m.",
+  "foto": "casco-cima",
+  "pie": "El gran hito de la cumbre del Casco, entre la niebla."
  }
 ]

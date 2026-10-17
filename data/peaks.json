@@ -46,7 +46,8 @@
   "petit-vignemale",
   "veteranos",
   "eriste-norte",
-  "forqueta"
+  "forqueta",
+  "casco"
  ],
  "macizos": [
   {
@@ -1568,6 +1569,38 @@
     "pie": "Las Forquetas, con un ibón a sus pies."
    },
    "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta."
+  },
+  {
+   "id": "casco",
+   "nombre": "Casco de Marboré",
+   "alias": "Casque du Marboré · Le Casque",
+   "altitud": 3006,
+   "otras": "3.000 m (GPS del track)",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.687721,
+   "lon": -0.026758,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · refugio de Góriz",
+   "ruta": "Refugio de Góriz → collado de Millaris → Ciudad de Piedra → Pico Marboré y Picos de la Cascada → Torre de Marboré → Casco de Marboré; vuelta por el paso de los Sarrios y la gruta de Casteret",
+   "desnivel": "≈ 1.670 m desde Góriz (18 km en circular)",
+   "dificultad": "alta",
+   "grado": "PD · cresta y pasos de I",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza que domina la Brecha de Rolando por el lado de Gavarnie. Desde Góriz se va por la Ciudad de Piedra y las crestas de Marboré hasta la Torre y el Casco, una jornada larga entre calizas, neveros y grandes vistas.",
+   "foto": "casco",
+   "pie": "La cima del Casco de Marboré con nieve, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/refugio-goriz-picos-el-casco-la-torre-picos-de-la-cascada-y-marbore-84572856",
+    "texto": "Ver la ruta en Wikiloc: Refugio de Góriz, Picos El Casco, La Torre, Picos de la Cascada y Marboré, de Toniagustí"
+   },
+   "rutas": [
+    "casco-goriz"
+   ],
+   "fotoCima": {
+    "foto": "casco-cima",
+    "pie": "El gran hito de la cumbre del Casco, entre la niebla."
+   },
+   "curiosidad": "«Casque» significa casco en francés: el nombre viene de la forma de la montaña. Marboré, según Wikipedia, procede de una palabra que alude al mármol, roca metamórfica de la zona. A sus pies se abre la Brecha de Rolando, que la leyenda atribuye a un tajo de la espada de Roldán, aunque geológicamente la abrió la erosión glaciar."
   }
  ]
 }

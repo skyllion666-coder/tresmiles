@@ -2183,5 +2183,38 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "casco-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Toniagustí",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-goriz-picos-el-casco-la-torre-picos-de-la-cascada-y-marbore-84572856",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
+ },
+ "casco-torre": {
+  "archivo": "foto del autor del track",
+  "autor": "Toniagustí",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-goriz-picos-el-casco-la-torre-picos-de-la-cascada-y-marbore-84572856",
+  "fuente": "su ficha de Wikiloc",
+  "w": 800,
+  "h": 600,
+  "pos": "50% 50%"
+ },
+ "casco-millaris": {
+  "archivo": "foto del autor del track",
+  "autor": "Toniagustí",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/refugio-goriz-picos-el-casco-la-torre-picos-de-la-cascada-y-marbore-84572856",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 461,
+  "pos": "50% 50%"
  }
 }
