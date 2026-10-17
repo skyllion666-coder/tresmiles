@@ -6,7 +6,8 @@
     "garmo",
     "perdido",
     "cilindro",
-    "aneto"
+    "aneto",
+    "maladeta"
   ],
   "macizos": [
     {
@@ -252,14 +253,26 @@
       "lat": 42.646417,
       "lon": 0.640389,
       "acceso": "Benasque · La Besurta / refugio de La Renclusa",
-      "ruta": "La Renclusa → Portillón Superior → glaciar → corredor de la Rimaya → collado → cumbre por cresta",
-      "desnivel": "≈ 1.170 m desde La Renclusa",
+      "ruta": "Refugio de La Renclusa → Portillón Superior → glaciar → canal de la Rimaya → Collado de la Rimaya → cumbre",
+      "desnivel": "≈ 1.180 m desde La Renclusa (8 km ida y vuelta)",
       "dificultad": "alta",
       "grado": "PD · corredor de 45–50°",
       "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre del extremo noroeste del gran macizo glaciar de la Maladeta; su nombre, «maldita», alude al respeto que imponían sus hielos. Comparte la aproximación con el Aneto hasta el Portillón Superior; después gira al sur, cruza el glaciar y trepa el corredor de la Rimaya.",
+      "descripcion": "Cumbre del extremo noroeste del gran macizo glaciar de la Maladeta; su nombre, «maldita», alude al respeto que imponían sus hielos. Comparte la aproximación con el Aneto hasta el Portillón Superior; después gira al sur, cruza el glaciar y trepa el corredor de la Rimaya. El track que se muestra es de una ascensión invernal (febrero de 2024): en verano el estado del glaciar y del corredor cambia mucho.",
       "foto": "maladeta",
-      "pie": "El macizo de la Maladeta nevado."
+      "pie": "El macizo de la Maladeta nevado.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
+        "texto": "Ver la ruta en Wikiloc: Pico Maladeta (3308 mts), desde la Renclusa por la Canal de La Rimaya, de Carlos 1."
+      },
+      "rutas": [
+        "maladeta-renclusa"
+      ],
+      "fotoCima": {
+        "foto": "maladeta-cima",
+        "pie": "La cumbre de la Maladeta en invierno, con el Pirineo de fondo."
+      },
+      "curiosidad": "Según varias fuentes, la primera ascensión a la Maladeta fue en 1817, del naturalista alemán Friedrich Parrot con el guía Pierre Barrau, casi veinticinco años antes de la del Aneto (1842). Las fuentes difieren en algunos detalles. El nombre, «montes malditos», acabó dando nombre a todo el macizo."
     },
     {
       "id": "tempestades",

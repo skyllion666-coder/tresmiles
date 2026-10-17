@@ -682,7 +682,11 @@
   "nota": "Refugio guardado al pie del Aneto, punto de partida del recorrido. Altitud del GPS del track: 2.143 m.",
   "foto": "aneto-renclusa",
   "pie": "El refugio de La Renclusa, con sus paneles solares.",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "aneto",
+   "maladeta"
+  ]
  },
  {
   "id": "salterillo",
@@ -745,5 +749,38 @@
   "nota": "La cumbre más alta de los Pirineos. Altitud del GPS del track: 3.396 m.",
   "foto": "aneto-cima",
   "pie": "La piedra de la cima, con «Aneto 3404» pintado."
+ },
+ {
+  "id": "maladeta-portillon",
+  "pico": "maladeta",
+  "nombre": "Portillón Superior",
+  "tipo": "paso",
+  "lat": 42.654867,
+  "lon": 0.64349,
+  "nota": "Paso de montaña en la subida desde La Renclusa, compartido con la ruta al Aneto. Altitud del GPS del track: 2.863 m.",
+  "foto": "maladeta-portillon",
+  "pie": "Huellas en la nieve cerca del Portillón Superior (febrero de 2024)."
+ },
+ {
+  "id": "maladeta-rimaya",
+  "pico": "maladeta",
+  "nombre": "Collado de la Rimaya",
+  "tipo": "paso",
+  "lat": 42.646587,
+  "lon": 0.639023,
+  "nota": "Collado al final del corredor de la Rimaya, justo bajo la cumbre. Altitud del GPS del track: 3.248 m.",
+  "foto": "maladeta-rimaya",
+  "pie": "Vista desde el Collado de la Rimaya (febrero de 2024)."
+ },
+ {
+  "id": "maladeta-cima",
+  "pico": "maladeta",
+  "nombre": "Cima de la Maladeta",
+  "tipo": "cima",
+  "lat": 42.646403,
+  "lon": 0.640378,
+  "nota": "Cumbre del Pico de la Maladeta. Altitud del GPS del track: 3.302 m.",
+  "foto": "maladeta-cima",
+  "pie": "La cima de la Maladeta, con nieve de invierno."
  }
 ]

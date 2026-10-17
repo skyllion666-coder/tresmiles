@@ -424,5 +424,38 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:BASA_DEL_SALTERILLO_-_panoramio.jpg",
   "w": 960,
   "h": 640
+ },
+ "maladeta-portillon": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos 1.",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "maladeta-rimaya": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos 1.",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "maladeta-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos 1.",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }
