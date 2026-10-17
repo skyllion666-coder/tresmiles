@@ -1,983 +1,1016 @@
 {
-  "activos": [
-    "balaitus",
-    "vignemale",
-    "infiernos",
-    "garmo",
-    "perdido",
-    "cilindro",
-    "aneto",
-    "maladeta",
-    "tempestades",
-    "posets",
-    "perdiguero",
-    "bachimala",
-    "astorg",
-    "maldito",
-    "medio",
-    "coronas",
-    "espadas",
-    "llardaneta",
-    "soum",
-    "marbore",
-    "tallon",
-    "lliterola",
-    "russell",
-    "algas",
-    "argualas",
-    "frondiellas",
-    "abadias",
-    "munia",
-    "vallibierna"
-  ],
-  "macizos": [
-    {
-      "id": "ane",
-      "nombre": "Aneto–Maladeta"
-    },
-    {
-      "id": "pos",
-      "nombre": "Posets–Eriste"
-    },
-    {
-      "id": "per",
-      "nombre": "Monte Perdido–Taillón"
-    },
-    {
-      "id": "prd",
-      "nombre": "Perdiguero"
-    },
-    {
-      "id": "bac",
-      "nombre": "Bachimala"
-    },
-    {
-      "id": "vig",
-      "nombre": "Vignemale · Gavarnie"
-    },
-    {
-      "id": "bal",
-      "nombre": "Valle de Tena · Balaitús–Infiernos"
-    }
-  ],
-  "dificultades": [
-    {
-      "id": "moderada",
-      "nombre": "Moderada"
-    },
-    {
-      "id": "alta",
-      "nombre": "Alta"
-    },
-    {
-      "id": "muy-alta",
-      "nombre": "Muy alta"
-    }
-  ],
-  "picos": [
-    {
-      "id": "aneto",
-      "nombre": "Aneto",
-      "alias": "Tuca d’Aneto · Pico de Aneto",
-      "altitud": 3404,
-      "otras": "",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.631139,
-      "lon": 0.656639,
-      "acceso": "Benasque · La Besurta / Llanos del Hospital",
-      "ruta": "Refugio de La Renclusa → ibón de Salterillo → glaciar del Aneto → Punta Oliveras → Paso de Mahoma → cumbre",
-      "desnivel": "≈ 1.500 m desde La Renclusa (11,4 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · glaciar y cresta aérea",
-      "epoca": "Julio – septiembre",
-      "descripcion": "La cumbre más alta de los Pirineos. Se corona cruzando el glaciar del Aneto, hoy en franco retroceso, y la estrecha cresta de bloques del Paso de Mahoma, más impresionante que difícil. Pide crampones, piolet y encordarse sobre el hielo.",
-      "foto": "aneto",
-      "pie": "Un alpinista cruza el Paso de Mahoma, cerca de la cumbre.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
-        "texto": "Ver la ruta en Wikiloc: Aneto, de David Walden"
-      },
-      "rutas": [
-        "aneto-renclusa"
-      ],
-      "fotoCima": {
-        "foto": "aneto-cima",
-        "pie": "La piedra de la cima, con «Aneto 3404» pintado, y la placa del vértice."
-      },
-      "curiosidad": "El Aneto recibe también el nombre de Tuca de Aneto; su nombre antiguo, Pic de Néthou, viene de «Nethon» (en aranés, «maldito»). Según la tradición su primera ascensión fue en 1842, del ruso Platon de Tchihatcheff con los guías Pierre Sanio y Jean Sors, aunque las fuentes difieren en los detalles."
-    },
-    {
-      "id": "posets",
-      "nombre": "Posets",
-      "alias": "Llardana · Tuca de Llardana",
-      "altitud": 3369,
-      "otras": "",
-      "macizo": "pos",
-      "frontera": false,
-      "lat": 42.654611,
-      "lon": 0.43525,
-      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
-      "ruta": "Parking de la Espigantosa → refugio Ángel Orús (2.150 m) → Collado Diente Llardana → cumbre",
-      "desnivel": "≈ 1.220 m desde el refugio (≈ 620 m hasta el refugio)",
-      "dificultad": "alta",
-      "grado": "F · larga, terreno suelto",
-      "epoca": "Junio – octubre",
-      "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio. El track que se muestra pernocta en el refugio (junio de 2024), sube a la cumbre por el Collado Diente Llardana, con nieve, y vuelve al refugio.",
-      "foto": "posets",
-      "pie": "El Posets con uno de sus glaciares.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
-        "texto": "Ver la ruta en Wikiloc: Pico Posets 3375 desde parking Espigantosa, pernoctando en Refugio Angel Orus, de soylouiss"
-      },
-      "rutas": [
-        "posets-espigantosa"
-      ],
-      "fotoCima": {
-        "foto": "pos-cima",
-        "pie": "Vista desde el tramo final, poco antes de la cumbre del Posets."
-      },
-      "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket)."
-    },
-    {
-      "id": "perdido",
-      "nombre": "Monte Perdido",
-      "alias": "Mont Perdu · Punta de Treserols",
-      "altitud": 3348,
-      "otras": "Otras fuentes: 3.355 m",
-      "macizo": "per",
-      "frontera": false,
-      "lat": 42.675583,
-      "lon": 0.034389,
-      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
-      "ruta": "Refugio de Góriz → Paso de las Cadenas → Lago Helado → La Escupidera → antecima → cumbre",
-      "desnivel": "≈ 1.150 m desde Góriz",
-      "dificultad": "alta",
-      "grado": "F/PD · La Escupidera exige cuidado",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Tercera cumbre del Pirineo y corazón del Parque Nacional de Ordesa y Monte Perdido, Patrimonio Mundial. Es uno de los macizos calcáreos más altos de Europa. La Escupidera, una fuerte pendiente de piedra suelta antes del último nevero, es el tramo que más accidentes causa: infórmate del estado en Góriz.",
-      "foto": "perdido",
-      "pie": "El macizo de Monte Perdido desde la Senda de los Cazadores (Ordesa).",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
-        "texto": "Ver la ruta en Wikiloc: Monte Perdido (3.355 m) por el refugio de Góriz, de ᗩᒪTEᑕᗩ"
-      },
-      "rutas": [
-        "perdido-goriz"
-      ],
-      "fotoCima": {
-        "foto": "perdido-cima",
-        "pie": "El vértice de la cima, cubierto de banderas y pañuelos."
-      },
-      "curiosidad": "Monte Perdido es el macizo calcáreo más alto de Europa. Su primera ascensión documentada fue en 1802, de los guías Laurens y Rondo, pagados por el naturalista Louis Ramond de Carbonnières, que había fracasado en varios intentos (la fecha del primer éxito no está del todo clara)."
-    },
-    {
-      "id": "cilindro",
-      "nombre": "Cilindro de Marboré",
-      "alias": "Mallo de Marmorés",
-      "altitud": 3325,
-      "otras": "Otras fuentes: 3.328–3.335 m",
-      "macizo": "per",
-      "frontera": false,
-      "lat": 42.684694,
-      "lon": 0.023944,
-      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
-      "ruta": "Refugio de Góriz → Cuello de Góriz → Lago Helado → Cuello del Cilindro → cumbre (paso de II grado)",
-      "desnivel": "≈ 1.130 m desde Góriz",
-      "dificultad": "alta",
-      "grado": "PD · paso de II de 20–30 m",
-      "epoca": "Mediados de junio – septiembre",
-      "descripcion": "Su silueta de torre cortada en seco, sobre el Lago Helado, es de las imágenes más reconocibles del Pirineo. Comparte camino con el Monte Perdido hasta el Cuello del Cilindro, donde un paso de II grado de unos 20–30 metros suele resolverse con cuerda.",
-      "foto": "cilindro",
-      "pie": "El Cilindro de Marboré.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/b-ref-goriz-cilindro-de-marbore-pico-marbore-ref-goriz-7792890",
-        "texto": "Ver la ruta en Wikiloc: Cilindro de Marboré y Pico Marboré desde Góriz, de malexluces"
-      },
-      "rutas": [
-        "cilindro-goriz"
-      ],
-      "fotoCima": {
-        "foto": "cil-cima",
-        "pie": "La cima del Cilindro de Marboré, con el nombre escrito a mano en la piedra."
-      },
-      "curiosidad": "El Cilindro de Marboré y el Monte Perdido forman, junto al Soum de Ramond, las «Tres Sorores» (o Treserols), tres hermanas calcáreas que dominan el Parque Nacional de Ordesa y Monte Perdido. La forma de torre del Cilindro, cortada en seco, es una de las imágenes más reconocibles del Pirineo."
-    },
-    {
-      "id": "perdiguero",
-      "nombre": "Perdiguero",
-      "alias": "Tuca del Perdiguèro",
-      "altitud": 3219,
-      "otras": "Otras fuentes: 3.222 m",
-      "macizo": "prd",
-      "frontera": true,
-      "lat": 42.691917,
-      "lon": 0.518806,
-      "acceso": "Benasque · Llanos del Hospital (valles de Remuñé y Literola)",
-      "ruta": "Inicio del track (1.612 m) → valle de Literola → Lliterola → Perdiguero Oriental → cumbre; bajada por el Portal de Remuñé hasta el parking de Literola",
-      "desnivel": "≈ 1.600 m desde el inicio del track (≈ 22 km, circuito)",
-      "dificultad": "moderada",
-      "grado": "F · cresta final expuesta con nieve",
-      "epoca": "Junio – septiembre",
-      "descripcion": "Cumbre fronteriza que domina los valles de Astós, Remuñé y Literola. Las guías le dan una dificultad media y es de los tresmiles asequibles de la zona, pero la jornada es larga y, con nieve, la cresta final se vuelve expuesta. El track que se muestra (agosto de 2026) empieza a 1.612 m, sube por Literola, baja por Remuñé y acaba en el parking de Literola, en Llanos del Hospital.",
-      "foto": "perdiguero",
-      "pie": "La coma del Perdiguero y el Frontonet desde el valle de Estós.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
-        "texto": "Ver la ruta en Wikiloc: 02-08-2026. PERDIGUERO, 3222 m. Ida por Literola, vuelta por Remuñé, de antonioisb62"
-      },
-      "rutas": [
-        "perdiguero-literola-remune"
-      ],
-      "fotoCima": {
-        "foto": "prd-cima-aurora",
-        "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo."
-      },
-      "curiosidad": "Es una cumbre fronteriza: su cima marca el límite entre España y Francia, y su altitud se cita como 3.219 o 3.222 m según la fuente. La bajada por el Portal de Remuñé cruza una planicie con pequeños ibones a unos 2.800 m. Las fuentes difieren en las cifras."
-    },
-    {
-      "id": "bachimala",
-      "nombre": "Gran Bachimala",
-      "alias": "Batchimale · Punta de Bachimala",
-      "altitud": 3176,
-      "otras": "Otras fuentes: 3.177 m",
-      "macizo": "bac",
-      "frontera": true,
-      "lat": 42.698556,
-      "lon": 0.394361,
-      "acceso": "Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós)",
-      "ruta": "Refugio de Biadós → cabaña de Sarrao → Collado Señal de Viadós → collado bajo la cresta → cresta final → cumbre",
-      "desnivel": "≈ 1.450 m desde el refugio (14 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "F/PD · jornada larga",
-      "epoca": "Junio – septiembre",
-      "descripcion": "Cumbre fronteriza que se alza al norte del valle de Chistau, con acceso natural por el valle de Cinqueta y el refugio de Biadós. Los tracks de la ruta normal la sitúan en torno a 14 km y 1.500 m de desnivel: no es técnica, pero sí exigente. El track que se muestra es de septiembre de 2026 y sigue la versión clásica por el Collado Señal de Viadós.",
-      "foto": "bachimala",
-      "pie": "El macizo de Bachimala (Batchimale).",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
-        "texto": "Ver la ruta en Wikiloc: Cima del Gran Bachimala (3.177 m) por la versión clásica con Collado Señal de Viadós, de Peplo007"
-      },
-      "rutas": [
-        "bachimala-biados"
-      ],
-      "fotoCima": {
-        "foto": "bac-cima",
-        "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
-      },
-      "curiosidad": "También se le llama Pico Schrader, en honor al cartógrafo y pirineísta francés Franz Schrader. Su altitud se da como 3.176 o 3.177 m según la fuente, y el nombre aparece escrito de varias formas (Bachimala, Batchimale). Las fuentes difieren."
-    },
-    {
-      "id": "vignemale",
-      "nombre": "Gran Vignemale",
-      "alias": "Pique Longue · Punta de Camachibosa",
-      "altitud": 3299,
-      "otras": "Francia: 3.298 m",
-      "macizo": "vig",
-      "frontera": true,
-      "lat": 42.774,
-      "lon": -0.147306,
-      "acceso": "Valle de Bujaruelo (Torla) o valle de Ossoue (Francia)",
-      "ruta": "Refugio de Baysellance (2.650 m) → glaciar de Ossoue → placas y cresta fronteriza → cumbre",
-      "desnivel": "≈ 1.450 m desde el embalse de Ossoue (≈ 650 m desde Baysellance)",
-      "dificultad": "alta",
-      "grado": "PD · glaciar",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Gran cumbre fronteriza que se levanta sobre el glaciar de Ossoue, con una enorme pared norte sobre Francia. Desde Baysellance, el refugio guardado más alto del Pirineo, se cruza el glaciar y se remata por la cresta fronteriza, fácil si no hay nieve.",
-      "foto": "vignemale",
-      "pie": "El Gran Vignemale con el sol naciente.",
-      "fotoCima": {
-        "foto": "vig-cima",
-        "pie": "La cima del Vignemale, con los pañuelos y banderas que dejan los montañeros alrededor del vértice."
-      },
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/vignemale-o-pique-longue3-299m-desde-el-embalse-de-ossoue-gavarniefrancia-18758608",
-        "texto": "Ver la ruta en Wikiloc: Vignemale (Pique Longue) desde el embalse de Ossoue, de Furgoxo"
-      },
-      "rutas": [
-        "vignemale-ossoue"
-      ],
-      "curiosidad": "El gran enamorado del Vignemale fue el conde Henry Russell, un excéntrico pirineísta irlandés-francés que subió decenas de veces a la cima y mandó excavar grutas en su ladera para dormir y recibir visitas; según algunas fuentes llegó a arrendar la montaña por 99 años a un precio simbólico. Antes que él, los guías Henri Cazaux y Bernard Guillembet abrieron el camino hacia 1837, y la inglesa Anne Lister fue la primera persona documentada en la cima, en 1838 (las fuentes difieren en fechas y detalles)."
-    },
-    {
-      "id": "maladeta",
-      "nombre": "Pico de la Maladeta",
-      "alias": "Tuca de la Maladeta",
-      "altitud": 3312,
-      "otras": "Otras fuentes: 3.308 m",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.646417,
-      "lon": 0.640389,
-      "acceso": "Benasque · La Besurta / refugio de La Renclusa",
-      "ruta": "Refugio de La Renclusa → Portillón Superior → glaciar → canal de la Rimaya → Collado de la Rimaya → cumbre",
-      "desnivel": "≈ 1.180 m desde La Renclusa (8 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · corredor de 45–50°",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre del extremo noroeste del gran macizo glaciar de la Maladeta; su nombre, «maldita», alude al respeto que imponían sus hielos. Comparte la aproximación con el Aneto hasta el Portillón Superior; después gira al sur, cruza el glaciar y trepa el corredor de la Rimaya. El track que se muestra es de una ascensión invernal (febrero de 2024): en verano el estado del glaciar y del corredor cambia mucho.",
-      "foto": "maladeta",
-      "pie": "El macizo de la Maladeta nevado.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
-        "texto": "Ver la ruta en Wikiloc: Pico Maladeta (3308 mts), desde la Renclusa por la Canal de La Rimaya, de Carlos 1."
-      },
-      "rutas": [
-        "maladeta-renclusa"
-      ],
-      "fotoCima": {
-        "foto": "maladeta-cima",
-        "pie": "La cumbre de la Maladeta en invierno, con el Pirineo de fondo."
-      },
-      "curiosidad": "Según varias fuentes, la primera ascensión a la Maladeta fue en 1817, del naturalista alemán Friedrich Parrot con el guía Pierre Barrau, casi veinticinco años antes de la del Aneto (1842). Las fuentes difieren en algunos detalles. El nombre, «montes malditos», acabó dando nombre a todo el macizo."
-    },
-    {
-      "id": "tempestades",
-      "nombre": "Pico de Tempestades",
-      "alias": "Tuca de Tempestats",
-      "altitud": 3289,
-      "otras": "",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.626139,
-      "lon": 0.662722,
-      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
-      "ruta": "Puente de Coronas → Humedales de Llosás → Ibón de Llosás → Ibonet de Llosás → bloques y rocas → cumbre",
-      "desnivel": "≈ 1.340 m desde el Puente de Coronas (12 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "Alpinismo · bloques y roca suelta",
-      "epoca": "Julio – septiembre",
-      "descripcion": "A menos de un kilómetro al sureste del Aneto, pero mucho menos transitado. Su cresta con las Salenques —larga, aislada y con roca descompuesta en algunos tramos— es una de las travesías de alpinismo más famosas del Pirineo, solo para gente con experiencia. La ruta que se muestra no sigue la cresta: sube por el valle de Llosás, junto a sus ibones, y remata por una pedrera de bloques sueltos.",
-      "foto": "tempestades",
-      "pie": "El macizo del Aneto desde el Portillón Superior (la foto no es del Tempestades, que queda a menos de 1 km al sureste del Aneto).",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
-        "texto": "Ver la ruta en Wikiloc: PICO TEMPESTADES 3290 m., de Kurruskera"
-      },
-      "rutas": [
-        "tempestades-llosas"
-      ],
-      "fotoCima": {
-        "foto": "tem-cima",
-        "pie": "Vista desde la cumbre de Tempestades."
-      },
-      "curiosidad": "Es una cumbre con varios nombres y varias alturas: Tuca de Tempestats o Tuca Gran de Llosás (según OpenStreetMap), y 3.289 o 3.290 m según la fuente. Las fuentes difieren."
-    },
-    {
-      "id": "balaitus",
-      "nombre": "Balaitús",
-      "alias": "Balaïtous · Pico Moros",
-      "altitud": 3146,
-      "otras": "Otras fuentes: 3.144 m",
-      "macizo": "bal",
-      "frontera": true,
-      "lat": 42.838917,
-      "lon": -0.29025,
-      "acceso": "Valle de Tena · embalse de La Sarra → refugio de Respomuso (2.208 m)",
-      "ruta": "Refugio de Respomuso → Brecha de Latour → cresta cimera → cumbre (bajada posible por la Gran Diagonal)",
-      "desnivel": "≈ 950 m desde Respomuso (≈ 1.700 m desde La Sarra hasta la cumbre)",
-      "dificultad": "muy-alta",
-      "grado": "PD · terreno alpino, rápeles opcionales",
-      "epoca": "Julio – septiembre",
-      "descripcion": "El gran tresmil del Pirineo occidental y el más occidental de todos. Su cresta de roca se alcanza por la Brecha de Latour, un paso de dificultad moderada que pide experiencia en terreno alpino y, según las condiciones, casco y cuerda. La bajada por la Gran Diagonal evita los rápeles de la brecha.",
-      "foto": "balaitus",
-      "pie": "El Balaïtous (Balaitús).",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/respomuso-gran-diagonal-balaitus-la-sarra-19309920",
-        "texto": "Ver la ruta en Wikiloc: Respomuso – Gran Diagonal – Balaitús – La Sarra, de aldaieta"
-      },
-      "curiosidad": "La primera ascensión documentada fue en 1825, a cargo de los geodestas franceses Pierre Peytier y Paul-Michel Hossard, que medían el Pirineo para la cartografía del ejército. Tuvieron que subir con instrumentos hasta una cumbre que hoy sigue exigiendo trepadas.",
-      "fotoCima": {
-        "foto": "cima",
-        "pie": "La piedra que corona la cima, con la altitud pintada a mano: 3.145 m. Ese día el mar de nubes tapaba los picos del fondo."
-      },
-      "rutas": [
-        "respomuso-gran-diagonal-balaitus-la-sarra"
-      ]
-    },
-    {
-      "id": "garmo",
-      "nombre": "Garmo Negro",
-      "alias": "Punda dero Garmo Negro",
-      "altitud": 3064,
-      "otras": "Otras fuentes: 3.066 m",
-      "macizo": "bal",
-      "frontera": false,
-      "lat": 42.771667,
-      "lon": -0.264139,
-      "acceso": "Valle de Tena · Baños de Panticosa",
-      "ruta": "Baños de Panticosa → Collado de Argualas (2.860 m) → cumbre (200 m finales de pedrera)",
-      "desnivel": "≈ 1.430 m desde Baños de Panticosa",
-      "dificultad": "moderada",
-      "grado": "F · pedreras sueltas, ≈ 6 h",
-      "epoca": "Julio – octubre",
-      "descripcion": "El tresmil más frecuentado de los Infiernos por la facilidad de su acceso desde Baños de Panticosa. Es largo y el último tramo es empinado y de piedra suelta; con niebla conviene llevar GPS, porque los muchos hitos pueden despistar.",
-      "foto": "garmo",
-      "pie": "El Garmo Negro de las Argualas.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
-        "texto": "Ver la ruta en Wikiloc: Garmo Negro desde el balneario de Panticosa, de Bitxus"
-      },
-      "rutas": [
-        "garmo-panticosa"
-      ],
-      "fotoCima": {
-        "foto": "garmo-cima",
-        "pie": "La piedra de la cima, con «Garmo Negro 3065» pintado a mano."
-      },
-      "curiosidad": "Su altitud cambia según la fuente, entre 3.051 y 3.066 m, y la piedra de la cima lleva pintado «3065». Desde arriba se abren las vistas hacia Ordesa y Monte Perdido, y el camino empieza junto a los manantiales termales del balneario de Panticosa."
-    },
-    {
-      "id": "infiernos",
-      "nombre": "Picos del Infierno",
-      "alias": "Infierno Central · Punda Alta de Pondiellos",
-      "altitud": 3081,
-      "otras": "Occidental 3.075 m · Oriental 3.076 m",
-      "macizo": "bal",
-      "frontera": false,
-      "lat": 42.781417,
-      "lon": -0.2605,
-      "acceso": "Valle de Tena · Baños de Panticosa",
-      "ruta": "Circular desde Baños de Panticosa: ibones de Bachimaña y Azules, Cuello del Infierno, Ibón de Tebarray, cresta (Occidental, Marmolera, Central y Oriental) y bajada por el Collado de Pondiellos",
-      "desnivel": "≈ 1.450 m desde Baños de Panticosa",
-      "dificultad": "muy-alta",
-      "grado": "PD · pasos de I+/II, cresta aérea",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Tres cumbres sobre los 3.000 m —Occidental, Central y Oriental— alzadas sobre el balneario de Panticosa; el Central, con 3.081 m, es el techo del grupo. La travesía de la Marmolera, entre el Occidental y el Central, es muy aérea y no se recomienda con vértigo; conviene llevar casco.",
-      "foto": "infiernos",
-      "pie": "Cima del Infierno Central, con su piedra de cumbre.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
-        "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
-      },
-      "rutas": [
-        "infiernos-panticosa"
-      ],
-      "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente)."
-    },
-    {
-      "macizo": "ane",
-      "frontera": false,
-      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
-      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
-      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
-      "dificultad": "muy-alta",
-      "grado": "Alpinismo · cresta con pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
-      },
-      "rutas": [
-        "cresta-del-medio"
-      ],
-      "id": "astorg",
-      "nombre": "Punta de Astorg",
-      "alias": "Punta Astorg",
-      "altitud": 3355,
-      "otras": "Otras fuentes: 3.354 m",
-      "lat": 42.63945,
-      "lon": 0.64261,
-      "descripcion": "Cumbre de la cresta que une el Pico Maldito y el Pico del Medio, en el corazón del macizo glaciar de la Maladeta. Se visita en una travesía de cresta con pasos de trepada, no es una ascensión de senderismo.",
-      "foto": "astorg",
-      "pie": "La cresta Maldito–Punta Astorg.",
-      "fotoCima": {
-        "foto": "med-astorg",
-        "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
-      },
-      "curiosidad": "Lleva el nombre del conde René d'Astorg, que la subió el 9 de julio de 1901 con Henri Brulle y los guías Célestin Passet y François Bernat-Salles (Beraldi sitúa la salida el día 8). Es el punto más alto de la Cresta del Medio y, según Wikipedia, se escaló unos 60 años después del Aneto."
-    },
-    {
-      "macizo": "ane",
-      "frontera": false,
-      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
-      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
-      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
-      "dificultad": "muy-alta",
-      "grado": "Alpinismo · cresta con pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
-      },
-      "rutas": [
-        "cresta-del-medio"
-      ],
-      "id": "maldito",
-      "nombre": "Pico Maldito",
-      "alias": "Pico Maldito · Pic Maudit",
-      "altitud": 3350,
-      "otras": "Otras fuentes: 3.354 m",
-      "lat": 42.639577,
-      "lon": 0.641345,
-      "descripcion": "Primera cumbre de la cresta que baja desde el Aneto hacia la Maladeta. Hay que remontar un corredor y salvar el paso de la «Regleta» (grado III) antes de pisar la cima.",
-      "foto": "maldito",
-      "pie": "La cresta Maldito–Punta Astorg.",
-      "fotoCima": {
-        "foto": "med-maldito",
-        "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
-      },
-      "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio."
-    },
-    {
-      "macizo": "ane",
-      "frontera": false,
-      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
-      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
-      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
-      "dificultad": "muy-alta",
-      "grado": "Alpinismo · cresta con pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
-      },
-      "rutas": [
-        "cresta-del-medio"
-      ],
-      "id": "medio",
-      "nombre": "Pico del Medio",
-      "alias": "Pic du Milieu",
-      "altitud": 3346,
-      "otras": "",
-      "lat": 42.638642,
-      "lon": 0.645158,
-      "descripcion": "Cumbre intermedia de la cresta, entre la Punta de Astorg y el Pico Coronas. Se llega con el flanqueo de un terreno muy roto.",
-      "foto": "medio",
-      "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-      "curiosidad": "Su nombre describe su posición: es la cumbre central de la cresta que une el Aneto y la Maladeta, por eso toda la travesía se llama Cresta del Medio. No he encontrado una fuente fiable sobre su primera ascensión."
-    },
-    {
-      "macizo": "ane",
-      "frontera": false,
-      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
-      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
-      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
-      "dificultad": "muy-alta",
-      "grado": "Alpinismo · cresta con pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
-      },
-      "rutas": [
-        "cresta-del-medio"
-      ],
-      "id": "coronas",
-      "nombre": "Pico Coronas",
-      "alias": "Tuca de Corones",
-      "altitud": 3293,
-      "otras": "Otras fuentes: 3.297 m",
-      "lat": 42.637153,
-      "lon": 0.649313,
-      "descripcion": "Última cumbre importante de la cresta antes del Collado de Coronas, que lo separa del Aneto. Desde aquí se baja por el glaciar de Coronas.",
-      "foto": "coronas",
-      "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-      "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto."
-    },
-    {
-      "macizo": "pos",
-      "frontera": false,
-      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
-      "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
-      "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
-      "dificultad": "alta",
-      "grado": "PD+ · cresta con dos pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
-        "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
-      },
-      "rutas": [
-        "cresta-espadas"
-      ],
-      "id": "espadas",
-      "nombre": "Las Espadas",
-      "alias": "Punta Llardaneta · Pico Espadas",
-      "altitud": 3332,
-      "otras": "Otras fuentes: 3.328 m",
-      "lat": 42.649793,
-      "lon": 0.426636,
-      "descripcion": "Cumbre de la larga cresta que une Pavots con el Posets. La travesía es una clásica de iniciación a la alta montaña: casi todo es de grado II, con dos pasos de III y el aéreo Paso del Funambulista.",
-      "foto": "espadas",
-      "pie": "El macizo de Punta Llardaneta o Pico Espadas, en una fotografía antigua.",
-      "fotoCima": {
-        "foto": "esp-espadas",
-        "pie": "La cresta de Las Espadas, con su roca estratificada."
-      },
-      "curiosidad": "Su cresta hasta el Posets se recorre en una jornada larga y su tramo más característico es el Paso del Funambulista, entre las Espadas y la Tuca de Llardaneta. No hemos hallado el origen del nombre «Espadas»; las fuentes también lo citan como Llardaneta o Punta Llardaneta."
-    },
-    {
-      "macizo": "pos",
-      "frontera": false,
-      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
-      "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
-      "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
-      "dificultad": "alta",
-      "grado": "PD+ · cresta con dos pasos de III",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
-        "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
-      },
-      "rutas": [
-        "cresta-espadas"
-      ],
-      "id": "llardaneta",
-      "nombre": "Tuca de Llardaneta",
-      "alias": "Mallo de la Lit · El Tuconet",
-      "altitud": 3311,
-      "otras": "",
-      "lat": 42.6525,
-      "lon": 0.430602,
-      "descripcion": "Cumbre intermedia de la cresta de las Espadas, entre el Paso del Funambulista y la Tuqueta Roya, ya a la vista del Posets.",
-      "foto": "llardaneta",
-      "pie": "La Tuca de Llardaneta, la Tuqueta Roya y el Posets.",
-      "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál."
-    },
-    {
-      "id": "soum",
-      "nombre": "Soum de Ramond",
-      "alias": "Pico de Añisclo · Pic d'Añisclo",
-      "altitud": 3254,
-      "otras": "Otras fuentes: 3.257 y 3.263 m",
-      "macizo": "per",
-      "frontera": false,
-      "lat": 42.669589,
-      "lon": 0.043133,
-      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
-      "ruta": "Refugio de Góriz → Punta de las Olas → Baudrimont SE → Soum de Ramond → Monte Perdido → Cilindro de Marboré → Góriz",
-      "desnivel": "≈ 1.780 m desde Góriz (≈ 18 km, circuito de un día)",
-      "dificultad": "alta",
-      "grado": "PD · circuito de las Tres Sorores",
-      "epoca": "Julio – septiembre",
-      "descripcion": "La más oriental de las Tres Sorores, junto a Monte Perdido y el Cilindro de Marboré. Se visita en un circuito largo desde Góriz que encadena las tres cumbres, con pedreras y neveros.",
-      "foto": "soum",
-      "pie": "El cimero de Soum de Ramond con neveros, en una fotografía antigua.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
-        "texto": "Ver la ruta en Wikiloc: Monte Perdido-Soum de Ramond-Cilindro de Marboré (Las Tres Sorores), de Oscar Elorza"
-      },
-      "rutas": [
-        "soum-tres-sorores"
-      ],
-      "fotoCima": {
-        "foto": "soum-cima",
-        "pie": "La subida final a Soum de Ramond."
-      },
-      "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m."
-    },
-    {
-      "id": "marbore",
-      "nombre": "Pico de Marboré",
-      "alias": "Pic de Marboré",
-      "altitud": 3248,
-      "otras": "",
-      "macizo": "per",
-      "frontera": true,
-      "lat": 42.692686,
-      "lon": 0.011518,
-      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
-      "ruta": "Refugio de Góriz → Ciudad de Piedra → Faja Roya → embudo del Marboré → arista norte → cumbre; cresta de los picos de la Cascada",
-      "desnivel": "≈ 1.250 m desde Góriz (≈ 25 km con los picos de la Cascada, solo ida)",
-      "dificultad": "alta",
-      "grado": "PD · trepadas de I y II, paso clave",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre fronteriza sobre el circo de Gavarnie, parte de la cresta que separa Ordesa de Francia. Se sube desde Góriz por un camino de bloques, lapiaz y trepadas fáciles, y se puede enlazar con los picos de la Cascada y la Espalda de Marboré.",
-      "foto": "marbore",
-      "pie": "El Pico de Marboré y los picos de la Cascada sobre el circo de Gavarnie.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
-        "texto": "Ver la ruta en Wikiloc: Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz, de Santialpino"
-      },
-      "rutas": [
-        "marbore-cascada"
-      ],
-      "fotoCima": {
-        "foto": "mar-cima",
-        "pie": "La cumbre del Marboré, con su refugio de piedra."
-      },
-      "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente."
-    },
-    {
-      "id": "tallon",
-      "nombre": "Tallón",
-      "alias": "Punda Negra · Pic du Taillon",
-      "altitud": 3144,
-      "otras": "Otras fuentes: 3.147 m",
-      "macizo": "per",
-      "frontera": true,
-      "lat": 42.693724,
-      "lon": -0.051335,
-      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
-      "ruta": "Refugio de Góriz → fuente de los Gabachos → gruta helada de Casteret → paso de los Sarrios → Brecha de Rolando → El Dedo → cumbre",
-      "desnivel": "≈ 1.000 m desde Góriz (≈ 17 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "F/PD · nieve y pedreras junto a la Brecha",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre fronteriza junto a la Brecha de Rolando, considerada uno de los tresmiles más sencillos sobre el circo de Gavarnie. Desde Góriz se llega a la Brecha por la gruta helada de Casteret y el paso de los Sarrios, y de ahí se sigue la cresta este hasta la cima. El track que se muestra termina a unos 3.136 m.",
-      "foto": "tallon",
-      "pie": "El Taillon al amanecer, con la cara sur iluminada.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
-        "texto": "Ver la ruta en Wikiloc: Brecha de Rolando y Taillón desde Góriz por la Gruta Helada Casteret y paso Sarrios, de David RunnerLife"
-      },
-      "rutas": [
-        "tallon-goriz"
-      ],
-      "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente."
-    },
-    {
-      "id": "lliterola",
-      "nombre": "Tuca de Lliterola",
-      "alias": "Punta de Lliterola · Cresta de Lliterola",
-      "altitud": 3133,
-      "otras": "Otras fuentes: 3.095, 3.110 y 3.132 m",
-      "macizo": "prd",
-      "frontera": false,
-      "lat": 42.699,
-      "lon": 0.523,
-      "acceso": "Benasque · Llanos del Hospital (parking de Literola)",
-      "ruta": "Llanos del Hospital → Portal de Remuñé → Ibón Blanco → Collado Inferior → Aguja, Punta, Pico Royo y Tuca de Lliterola → Perdiguero → Hitos del Perdiguero → bajada por Literola",
-      "desnivel": "≈ 1.600 m (≈ 24 km, circuito de un día)",
-      "dificultad": "muy-alta",
-      "grado": "PD+ · cresta con nieve y crampones a principios de verano",
-      "epoca": "Julio – septiembre",
-      "descripcion": "La cresta de Lliterola une el Perdiguero con varias cumbres de 3.000 a 3.130 m: la Aguja, la Punta, el Pico Royo y la Tuca de Lliterola. Se suele encadenar con el Perdiguero en una jornada muy larga. Los nombres y las alturas varían según la fuente, y es fácil confundir la Punta con la Aguja.",
-      "foto": "lliterola",
-      "pie": "El ibón de Lliterola bajo la cresta.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
-        "texto": "Ver la ruta en Wikiloc: Cresta de Lliterola (Aguja, Punta, Pico Royo, Tuca, Perdiguero), de yivatosal"
-      },
-      "rutas": [
-        "lliterola-cresta"
-      ],
-      "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola»."
-    },
-    {
-      "id": "russell",
-      "nombre": "Pico Russell",
-      "alias": "Tuca del Cap de la Vall · Cap de la Vall",
-      "altitud": 3207,
-      "otras": "Otras fuentes: 3.205 y 3.199 m",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.618433,
-      "lon": 0.670588,
-      "acceso": "Ribagorza · embalse de Llauset (Aneto)",
-      "ruta": "Embalse de Llauset → Collado de Vallibierna → Collada de los Bucardos → Punta Russell Oriental → Pico Russell SE → Pico Russell → ibón de la Cap de la Vall → refugio Cap de Llauset",
-      "desnivel": "≈ 1.170 m desde el embalse de Llauset (≈ 15 km, circuito)",
-      "dificultad": "alta",
-      "grado": "PD · circuito con pedreras y algún paso de trepada",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre más alta de un pequeño macizo del extremo sur de la Maladeta, por encima del embalse de Llauset, en la Ribagorza. Se sube por la Collada de los Bucardos, pasa por la antecima sureste y se baja junto al ibón de la Cap de la Vall.",
-      "foto": "russell",
-      "pie": "El embalse de Llauset nevado, en la base de la zona.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
-        "texto": "Ver la ruta en Wikiloc: PICOS RUSSELL (3207 m) circular desde embalse Llauset, de Alfredo Barberan"
-      },
-      "rutas": [
-        "russell-llauset"
-      ],
-      "fotoCima": {
-        "foto": "rus-cima",
-        "pie": "Vista desde la cima del Pico Russell."
-      },
-      "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente."
-    },
-    {
-      "macizo": "bal",
-      "frontera": false,
-      "acceso": "Valle de Tena · Baños de Panticosa",
-      "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
-      "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · cresta con pedreras y una ligera trepada",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
-      },
-      "rutas": [
-        "algas-argualas"
-      ],
-      "id": "algas",
-      "nombre": "Pico Algas",
-      "alias": "Algas · Pico de Algas",
-      "altitud": 3036,
-      "otras": "Otras fuentes: 3.033 m",
-      "lat": 42.7683,
-      "lon": -0.2706,
-      "descripcion": "Cumbre de la cresta que une el Garmo Negro con el Argualas, sobre el balneario de Panticosa. La ruta clásica las encadena en una jornada y pasa por Algas Norte, cuyo estatus de tresmil oficial se discute por su poca prominencia.",
-      "foto": "algas",
-      "pie": "Las cumbres de Garmo Negro, Algas y Argualas sobre el balneario de Panticosa.",
-      "fotoCima": {
-        "foto": "alg-pico",
-        "pie": "La cima del Pico Algas, con los bastones sobre el mojón."
-      },
-      "curiosidad": "La toponimia de este grupo es confusa: según una fuente, al Argualas se le ha llamado también Algas, Arollas o Arualas, y al Garmo Negro, Arnales o Pundillos. Otra propone que «Argualas» deriva de «aruela», un lugar pedregoso. El Algas Norte ha perdido la consideración de tresmil oficial por no tener 10 m de prominencia."
-    },
-    {
-      "macizo": "bal",
-      "frontera": false,
-      "acceso": "Valle de Tena · Baños de Panticosa",
-      "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
-      "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · cresta con pedreras y una ligera trepada",
-      "epoca": "Julio – septiembre",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
-        "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
-      },
-      "rutas": [
-        "algas-argualas"
-      ],
-      "id": "argualas",
-      "nombre": "Pico Argualas",
-      "alias": "Pico de la Bandera",
-      "altitud": 3044,
-      "otras": "Otras fuentes: 3.046 m",
-      "lat": 42.7665,
-      "lon": -0.2669,
-      "descripcion": "Cumbre final de la cresta de Algas, justo sobre el balneario de Panticosa. Se le llama Pico de la Bandera porque en verano ondea una bandera blanca en su cima, visible desde el balneario.",
-      "foto": "argualas",
-      "pie": "El Pico Argualas nevado.",
-      "fotoCima": {
-        "foto": "alg-argualas",
-        "pie": "La cima del Argualas."
-      },
-      "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m."
-    },
-    {
-      "id": "frondiellas",
-      "nombre": "Frondella (Frondiellas)",
-      "alias": "Frondiellas · Punta Alta de las Frondiellas",
-      "altitud": 3071,
-      "otras": "Otras fuentes: 3.055 y 3.062 m",
-      "macizo": "bal",
-      "frontera": true,
-      "lat": 42.832748,
-      "lon": -0.290547,
-      "acceso": "Valle de Tena · embalse de La Sarra (Sallent de Gállego)",
-      "ruta": "Parking de La Sarra → ibones de Arriel → Frondella → cruce de bajada → refugio de Respomuso → La Sarra",
-      "desnivel": "≈ 1.620 m desde La Sarra (≈ 20 km, circuito)",
-      "dificultad": "alta",
-      "grado": "PD · cresta con pedreras",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Conjunto de cuatro cumbres unidas por una cresta, junto al Balaitús, en la frontera con Francia. La ruta circular sube por los ibones de Arriel y baja por el refugio de Respomuso.",
-      "foto": "frondiellas",
-      "pie": "La cabaña de pastor con las Frondellas y el Balaitús al fondo, en una fotografía antigua.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
-        "texto": "Ver la ruta en Wikiloc: Frondellas desde La Sarra, circular por Arrieles y Respomuso, de Alfredo Barberan"
-      },
-      "rutas": [
-        "frondiellas-sarra"
-      ],
-      "fotoCima": {
-        "foto": "fro-cima",
-        "pie": "La cima de la Frondiella, con nieve en las laderas."
-      },
-      "curiosidad": "SummitPost la describe como un conjunto de cuatro cumbres unidas por una cresta, por eso se usa el plural. Según un blog, el topónimo lo puso el montañero francés Henri Le Breton y aparece por primera vez en los diarios de Jean Arlaud, en 1932. Según Mendikat, la Frondella Oeste se subió por primera vez en 1906, por Louis Robach. Las alturas varían mucho de una fuente a otra."
-    },
-    {
-      "id": "abadias",
-      "nombre": "Pico Abadías",
-      "alias": "Roca de Cregüeña · Tuca d'Abadías",
-      "altitud": 3279,
-      "otras": "Otras fuentes: 3.271 y 3.272 m",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.643228,
-      "lon": 0.638484,
-      "acceso": "Benasque · La Besurta",
-      "ruta": "La Besurta → Forau d'Aigualluts → Plan d'Aigualluts → ibón del Salterillo → Collado Maldito → Pico Abadías",
-      "desnivel": "≈ 1.400 m desde La Besurta (≈ 18 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · glaciar y pedreras, crampones a principios de verano",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Cumbre sur de la Maladeta, sobre el valle de Cregüeña. Se sube desde La Besurta por el Plan d'Aigualluts y el Collado Maldito, con tramo de glaciar.",
-      "foto": "abadias",
-      "pie": "El macizo de la Maladeta nevado.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
-        "texto": "Ver la ruta en Wikiloc: Pico Abadías (3.279 m) (Valle de Benasque), de albertrek"
-      },
-      "rutas": [
-        "abadias-besurta"
-      ],
-      "fotoCima": {
-        "foto": "aba-collado",
-        "pie": "El glaciar al pie del Collado Maldito."
-      },
-      "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente."
-    },
-    {
-      "id": "munia",
-      "nombre": "La Munia",
-      "alias": "Almunia · La Dama del Pirineo",
-      "altitud": 3133,
-      "otras": "Otras fuentes: 3.134 m",
-      "macizo": "per",
-      "frontera": true,
-      "lat": 42.714859,
-      "lon": 0.131916,
-      "acceso": "Bielsa · valle de Pineta",
-      "ruta": "Parking de Pineta → barranco de La Larri → ibones de la Munia → Collado de la Munia → Paso del Gato → cumbre",
-      "desnivel": "≈ 1.850 m desde Pineta (≈ 22 km ida y vuelta)",
-      "dificultad": "alta",
-      "grado": "PD · Paso del Gato (II) y pedreras",
-      "epoca": "Julio – septiembre",
-      "descripcion": "La Munia (o L'Almunia) es el punto culminante de los circos de Troumouse, Barroude y Barrosa, en la frontera con Francia. La subida típica arranca en Pineta, remonta el barranco de La Larri hasta los ibones y pasa el Paso del Gato.",
-      "foto": "munia",
-      "pie": "La Munia vista desde el puerto de Barrosa, en una fotografía antigua.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
-        "texto": "Ver la ruta en Wikiloc: Pico de la Munia (3133 m) desde el parking de Pineta, de ᗩᒪTEᑕᗩ"
-      },
-      "rutas": [
-        "munia-pineta"
-      ],
-      "fotoCima": {
-        "foto": "mun-cima",
-        "pie": "El cartel de la cima de la Munia."
-      },
-      "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid."
-    },
-    {
-      "id": "vallibierna",
-      "nombre": "Pico Vallibierna",
-      "alias": "Ballibierna · Tuca de Culebres",
-      "altitud": 3067,
-      "otras": "Otras fuentes: 3.059 m",
-      "macizo": "ane",
-      "frontera": false,
-      "lat": 42.5939,
-      "lon": 0.6521,
-      "acceso": "Ribagorza · presa de Llauset (Aneto)",
-      "ruta": "Presa de Llauset → valle de Vallibierna → cresta → Tuca de Culebres → Pico Vallibierna → bajada por los ibones",
-      "desnivel": "≈ 1.100 m desde la presa de Llauset (≈ 12 km, circuito)",
-      "dificultad": "alta",
-      "grado": "PD · cresta con el «Paso del Caballo»",
-      "epoca": "Julio – septiembre",
-      "descripcion": "Macizo calizo al sur de la Maladeta formado por el Pico Vallibierna (3.067 m) y la Tuca de Culebres (3.062 m), unidos por una cresta afilada. La ruta circular parte de la presa de Llauset.",
-      "foto": "vallibierna",
-      "pie": "El Pico Vallibierna desde la zona alta.",
-      "enlace": {
-        "url": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
-        "texto": "Ver la ruta en Wikiloc: Tuca de Culebras (3062 m) y Pico Vallibierna (3067 m) desde la presa de Llauset, de ᗩᒪTEᑕᗩ"
-      },
-      "rutas": [
-        "vallibierna-llauset"
-      ],
-      "fotoCima": {
-        "foto": "val-cima",
-        "pie": "Cumbre del Pico Vallibierna."
-      },
-      "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura."
-    }
-  ]
+ "activos": [
+  "balaitus",
+  "vignemale",
+  "infiernos",
+  "garmo",
+  "perdido",
+  "cilindro",
+  "aneto",
+  "maladeta",
+  "tempestades",
+  "posets",
+  "perdiguero",
+  "bachimala",
+  "astorg",
+  "maldito",
+  "medio",
+  "coronas",
+  "espadas",
+  "llardaneta",
+  "soum",
+  "marbore",
+  "tallon",
+  "lliterola",
+  "russell",
+  "algas",
+  "argualas",
+  "frondiellas",
+  "abadias",
+  "munia",
+  "vallibierna",
+  "paul"
+ ],
+ "macizos": [
+  {
+   "id": "ane",
+   "nombre": "Aneto–Maladeta"
+  },
+  {
+   "id": "pos",
+   "nombre": "Posets–Eriste"
+  },
+  {
+   "id": "per",
+   "nombre": "Monte Perdido–Taillón"
+  },
+  {
+   "id": "prd",
+   "nombre": "Perdiguero"
+  },
+  {
+   "id": "bac",
+   "nombre": "Bachimala"
+  },
+  {
+   "id": "vig",
+   "nombre": "Vignemale · Gavarnie"
+  },
+  {
+   "id": "bal",
+   "nombre": "Valle de Tena · Balaitús–Infiernos"
+  }
+ ],
+ "dificultades": [
+  {
+   "id": "moderada",
+   "nombre": "Moderada"
+  },
+  {
+   "id": "alta",
+   "nombre": "Alta"
+  },
+  {
+   "id": "muy-alta",
+   "nombre": "Muy alta"
+  }
+ ],
+ "picos": [
+  {
+   "id": "aneto",
+   "nombre": "Aneto",
+   "alias": "Tuca d’Aneto · Pico de Aneto",
+   "altitud": 3404,
+   "otras": "",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.631139,
+   "lon": 0.656639,
+   "acceso": "Benasque · La Besurta / Llanos del Hospital",
+   "ruta": "Refugio de La Renclusa → ibón de Salterillo → glaciar del Aneto → Punta Oliveras → Paso de Mahoma → cumbre",
+   "desnivel": "≈ 1.500 m desde La Renclusa (11,4 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · glaciar y cresta aérea",
+   "epoca": "Julio – septiembre",
+   "descripcion": "La cumbre más alta de los Pirineos. Se corona cruzando el glaciar del Aneto, hoy en franco retroceso, y la estrecha cresta de bloques del Paso de Mahoma, más impresionante que difícil. Pide crampones, piolet y encordarse sobre el hielo.",
+   "foto": "aneto",
+   "pie": "Un alpinista cruza el Paso de Mahoma, cerca de la cumbre.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/aneto-279919168",
+    "texto": "Ver la ruta en Wikiloc: Aneto, de David Walden"
+   },
+   "rutas": [
+    "aneto-renclusa"
+   ],
+   "fotoCima": {
+    "foto": "aneto-cima",
+    "pie": "La piedra de la cima, con «Aneto 3404» pintado, y la placa del vértice."
+   },
+   "curiosidad": "El Aneto recibe también el nombre de Tuca de Aneto; su nombre antiguo, Pic de Néthou, viene de «Nethon» (en aranés, «maldito»). Según la tradición su primera ascensión fue en 1842, del ruso Platon de Tchihatcheff con los guías Pierre Sanio y Jean Sors, aunque las fuentes difieren en los detalles."
+  },
+  {
+   "id": "posets",
+   "nombre": "Posets",
+   "alias": "Llardana · Tuca de Llardana",
+   "altitud": 3369,
+   "otras": "",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.654611,
+   "lon": 0.43525,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús (2.150 m) → Collado Diente Llardana → cumbre",
+   "desnivel": "≈ 1.220 m desde el refugio (≈ 620 m hasta el refugio)",
+   "dificultad": "alta",
+   "grado": "F · larga, terreno suelto",
+   "epoca": "Junio – octubre",
+   "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio. El track que se muestra pernocta en el refugio (junio de 2024), sube a la cumbre por el Collado Diente Llardana, con nieve, y vuelve al refugio.",
+   "foto": "posets",
+   "pie": "El Posets con uno de sus glaciares.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
+    "texto": "Ver la ruta en Wikiloc: Pico Posets 3375 desde parking Espigantosa, pernoctando en Refugio Angel Orus, de soylouiss"
+   },
+   "rutas": [
+    "posets-espigantosa"
+   ],
+   "fotoCima": {
+    "foto": "pos-cima",
+    "pie": "Vista desde el tramo final, poco antes de la cumbre del Posets."
+   },
+   "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket)."
+  },
+  {
+   "id": "perdido",
+   "nombre": "Monte Perdido",
+   "alias": "Mont Perdu · Punta de Treserols",
+   "altitud": 3348,
+   "otras": "Otras fuentes: 3.355 m",
+   "macizo": "per",
+   "frontera": false,
+   "lat": 42.675583,
+   "lon": 0.034389,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+   "ruta": "Refugio de Góriz → Paso de las Cadenas → Lago Helado → La Escupidera → antecima → cumbre",
+   "desnivel": "≈ 1.150 m desde Góriz",
+   "dificultad": "alta",
+   "grado": "F/PD · La Escupidera exige cuidado",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Tercera cumbre del Pirineo y corazón del Parque Nacional de Ordesa y Monte Perdido, Patrimonio Mundial. Es uno de los macizos calcáreos más altos de Europa. La Escupidera, una fuerte pendiente de piedra suelta antes del último nevero, es el tramo que más accidentes causa: infórmate del estado en Góriz.",
+   "foto": "perdido",
+   "pie": "El macizo de Monte Perdido desde la Senda de los Cazadores (Ordesa).",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+    "texto": "Ver la ruta en Wikiloc: Monte Perdido (3.355 m) por el refugio de Góriz, de ᗩᒪTEᑕᗩ"
+   },
+   "rutas": [
+    "perdido-goriz"
+   ],
+   "fotoCima": {
+    "foto": "perdido-cima",
+    "pie": "El vértice de la cima, cubierto de banderas y pañuelos."
+   },
+   "curiosidad": "Monte Perdido es el macizo calcáreo más alto de Europa. Su primera ascensión documentada fue en 1802, de los guías Laurens y Rondo, pagados por el naturalista Louis Ramond de Carbonnières, que había fracasado en varios intentos (la fecha del primer éxito no está del todo clara)."
+  },
+  {
+   "id": "cilindro",
+   "nombre": "Cilindro de Marboré",
+   "alias": "Mallo de Marmorés",
+   "altitud": 3325,
+   "otras": "Otras fuentes: 3.328–3.335 m",
+   "macizo": "per",
+   "frontera": false,
+   "lat": 42.684694,
+   "lon": 0.023944,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+   "ruta": "Refugio de Góriz → Cuello de Góriz → Lago Helado → Cuello del Cilindro → cumbre (paso de II grado)",
+   "desnivel": "≈ 1.130 m desde Góriz",
+   "dificultad": "alta",
+   "grado": "PD · paso de II de 20–30 m",
+   "epoca": "Mediados de junio – septiembre",
+   "descripcion": "Su silueta de torre cortada en seco, sobre el Lago Helado, es de las imágenes más reconocibles del Pirineo. Comparte camino con el Monte Perdido hasta el Cuello del Cilindro, donde un paso de II grado de unos 20–30 metros suele resolverse con cuerda.",
+   "foto": "cilindro",
+   "pie": "El Cilindro de Marboré.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/b-ref-goriz-cilindro-de-marbore-pico-marbore-ref-goriz-7792890",
+    "texto": "Ver la ruta en Wikiloc: Cilindro de Marboré y Pico Marboré desde Góriz, de malexluces"
+   },
+   "rutas": [
+    "cilindro-goriz"
+   ],
+   "fotoCima": {
+    "foto": "cil-cima",
+    "pie": "La cima del Cilindro de Marboré, con el nombre escrito a mano en la piedra."
+   },
+   "curiosidad": "El Cilindro de Marboré y el Monte Perdido forman, junto al Soum de Ramond, las «Tres Sorores» (o Treserols), tres hermanas calcáreas que dominan el Parque Nacional de Ordesa y Monte Perdido. La forma de torre del Cilindro, cortada en seco, es una de las imágenes más reconocibles del Pirineo."
+  },
+  {
+   "id": "perdiguero",
+   "nombre": "Perdiguero",
+   "alias": "Tuca del Perdiguèro",
+   "altitud": 3219,
+   "otras": "Otras fuentes: 3.222 m",
+   "macizo": "prd",
+   "frontera": true,
+   "lat": 42.691917,
+   "lon": 0.518806,
+   "acceso": "Benasque · Llanos del Hospital (valles de Remuñé y Literola)",
+   "ruta": "Inicio del track (1.612 m) → valle de Literola → Lliterola → Perdiguero Oriental → cumbre; bajada por el Portal de Remuñé hasta el parking de Literola",
+   "desnivel": "≈ 1.600 m desde el inicio del track (≈ 22 km, circuito)",
+   "dificultad": "moderada",
+   "grado": "F · cresta final expuesta con nieve",
+   "epoca": "Junio – septiembre",
+   "descripcion": "Cumbre fronteriza que domina los valles de Astós, Remuñé y Literola. Las guías le dan una dificultad media y es de los tresmiles asequibles de la zona, pero la jornada es larga y, con nieve, la cresta final se vuelve expuesta. El track que se muestra (agosto de 2026) empieza a 1.612 m, sube por Literola, baja por Remuñé y acaba en el parking de Literola, en Llanos del Hospital.",
+   "foto": "perdiguero",
+   "pie": "La coma del Perdiguero y el Frontonet desde el valle de Estós.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/02-08-2026-perdiguero-3222-m-ida-por-literola-vta-por-remune-desde-llanos-del-hospital-benasque-pir-278727896",
+    "texto": "Ver la ruta en Wikiloc: 02-08-2026. PERDIGUERO, 3222 m. Ida por Literola, vuelta por Remuñé, de antonioisb62"
+   },
+   "rutas": [
+    "perdiguero-literola-remune"
+   ],
+   "fotoCima": {
+    "foto": "prd-cima-aurora",
+    "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo."
+   },
+   "curiosidad": "Es una cumbre fronteriza: su cima marca el límite entre España y Francia, y su altitud se cita como 3.219 o 3.222 m según la fuente. La bajada por el Portal de Remuñé cruza una planicie con pequeños ibones a unos 2.800 m. Las fuentes difieren en las cifras."
+  },
+  {
+   "id": "bachimala",
+   "nombre": "Gran Bachimala",
+   "alias": "Batchimale · Punta de Bachimala",
+   "altitud": 3176,
+   "otras": "Otras fuentes: 3.177 m",
+   "macizo": "bac",
+   "frontera": true,
+   "lat": 42.698556,
+   "lon": 0.394361,
+   "acceso": "Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós)",
+   "ruta": "Refugio de Biadós → cabaña de Sarrao → Collado Señal de Viadós → collado bajo la cresta → cresta final → cumbre",
+   "desnivel": "≈ 1.450 m desde el refugio (14 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "F/PD · jornada larga",
+   "epoca": "Junio – septiembre",
+   "descripcion": "Cumbre fronteriza que se alza al norte del valle de Chistau, con acceso natural por el valle de Cinqueta y el refugio de Biadós. Los tracks de la ruta normal la sitúan en torno a 14 km y 1.500 m de desnivel: no es técnica, pero sí exigente. El track que se muestra es de septiembre de 2026 y sigue la versión clásica por el Collado Señal de Viadós.",
+   "foto": "bachimala",
+   "pie": "El macizo de Bachimala (Batchimale).",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+    "texto": "Ver la ruta en Wikiloc: Cima del Gran Bachimala (3.177 m) por la versión clásica con Collado Señal de Viadós, de Peplo007"
+   },
+   "rutas": [
+    "bachimala-biados"
+   ],
+   "fotoCima": {
+    "foto": "bac-cima",
+    "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
+   },
+   "curiosidad": "También se le llama Pico Schrader, en honor al cartógrafo y pirineísta francés Franz Schrader. Su altitud se da como 3.176 o 3.177 m según la fuente, y el nombre aparece escrito de varias formas (Bachimala, Batchimale). Las fuentes difieren."
+  },
+  {
+   "id": "vignemale",
+   "nombre": "Gran Vignemale",
+   "alias": "Pique Longue · Punta de Camachibosa",
+   "altitud": 3299,
+   "otras": "Francia: 3.298 m",
+   "macizo": "vig",
+   "frontera": true,
+   "lat": 42.774,
+   "lon": -0.147306,
+   "acceso": "Valle de Bujaruelo (Torla) o valle de Ossoue (Francia)",
+   "ruta": "Refugio de Baysellance (2.650 m) → glaciar de Ossoue → placas y cresta fronteriza → cumbre",
+   "desnivel": "≈ 1.450 m desde el embalse de Ossoue (≈ 650 m desde Baysellance)",
+   "dificultad": "alta",
+   "grado": "PD · glaciar",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Gran cumbre fronteriza que se levanta sobre el glaciar de Ossoue, con una enorme pared norte sobre Francia. Desde Baysellance, el refugio guardado más alto del Pirineo, se cruza el glaciar y se remata por la cresta fronteriza, fácil si no hay nieve.",
+   "foto": "vignemale",
+   "pie": "El Gran Vignemale con el sol naciente.",
+   "fotoCima": {
+    "foto": "vig-cima",
+    "pie": "La cima del Vignemale, con los pañuelos y banderas que dejan los montañeros alrededor del vértice."
+   },
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/vignemale-o-pique-longue3-299m-desde-el-embalse-de-ossoue-gavarniefrancia-18758608",
+    "texto": "Ver la ruta en Wikiloc: Vignemale (Pique Longue) desde el embalse de Ossoue, de Furgoxo"
+   },
+   "rutas": [
+    "vignemale-ossoue"
+   ],
+   "curiosidad": "El gran enamorado del Vignemale fue el conde Henry Russell, un excéntrico pirineísta irlandés-francés que subió decenas de veces a la cima y mandó excavar grutas en su ladera para dormir y recibir visitas; según algunas fuentes llegó a arrendar la montaña por 99 años a un precio simbólico. Antes que él, los guías Henri Cazaux y Bernard Guillembet abrieron el camino hacia 1837, y la inglesa Anne Lister fue la primera persona documentada en la cima, en 1838 (las fuentes difieren en fechas y detalles)."
+  },
+  {
+   "id": "maladeta",
+   "nombre": "Pico de la Maladeta",
+   "alias": "Tuca de la Maladeta",
+   "altitud": 3312,
+   "otras": "Otras fuentes: 3.308 m",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.646417,
+   "lon": 0.640389,
+   "acceso": "Benasque · La Besurta / refugio de La Renclusa",
+   "ruta": "Refugio de La Renclusa → Portillón Superior → glaciar → canal de la Rimaya → Collado de la Rimaya → cumbre",
+   "desnivel": "≈ 1.180 m desde La Renclusa (8 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · corredor de 45–50°",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre del extremo noroeste del gran macizo glaciar de la Maladeta; su nombre, «maldita», alude al respeto que imponían sus hielos. Comparte la aproximación con el Aneto hasta el Portillón Superior; después gira al sur, cruza el glaciar y trepa el corredor de la Rimaya. El track que se muestra es de una ascensión invernal (febrero de 2024): en verano el estado del glaciar y del corredor cambia mucho.",
+   "foto": "maladeta",
+   "pie": "El macizo de la Maladeta nevado.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-maladeta-3308-mts-desde-la-renclusa-por-la-canal-de-la-rimaya-161770206",
+    "texto": "Ver la ruta en Wikiloc: Pico Maladeta (3308 mts), desde la Renclusa por la Canal de La Rimaya, de Carlos 1."
+   },
+   "rutas": [
+    "maladeta-renclusa"
+   ],
+   "fotoCima": {
+    "foto": "maladeta-cima",
+    "pie": "La cumbre de la Maladeta en invierno, con el Pirineo de fondo."
+   },
+   "curiosidad": "Según varias fuentes, la primera ascensión a la Maladeta fue en 1817, del naturalista alemán Friedrich Parrot con el guía Pierre Barrau, casi veinticinco años antes de la del Aneto (1842). Las fuentes difieren en algunos detalles. El nombre, «montes malditos», acabó dando nombre a todo el macizo."
+  },
+  {
+   "id": "tempestades",
+   "nombre": "Pico de Tempestades",
+   "alias": "Tuca de Tempestats",
+   "altitud": 3289,
+   "otras": "",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.626139,
+   "lon": 0.662722,
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "ruta": "Puente de Coronas → Humedales de Llosás → Ibón de Llosás → Ibonet de Llosás → bloques y rocas → cumbre",
+   "desnivel": "≈ 1.340 m desde el Puente de Coronas (12 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "Alpinismo · bloques y roca suelta",
+   "epoca": "Julio – septiembre",
+   "descripcion": "A menos de un kilómetro al sureste del Aneto, pero mucho menos transitado. Su cresta con las Salenques —larga, aislada y con roca descompuesta en algunos tramos— es una de las travesías de alpinismo más famosas del Pirineo, solo para gente con experiencia. La ruta que se muestra no sigue la cresta: sube por el valle de Llosás, junto a sus ibones, y remata por una pedrera de bloques sueltos.",
+   "foto": "tempestades",
+   "pie": "El macizo del Aneto desde el Portillón Superior (la foto no es del Tempestades, que queda a menos de 1 km al sureste del Aneto).",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-tempestades-3290-m-78591573",
+    "texto": "Ver la ruta en Wikiloc: PICO TEMPESTADES 3290 m., de Kurruskera"
+   },
+   "rutas": [
+    "tempestades-llosas"
+   ],
+   "fotoCima": {
+    "foto": "tem-cima",
+    "pie": "Vista desde la cumbre de Tempestades."
+   },
+   "curiosidad": "Es una cumbre con varios nombres y varias alturas: Tuca de Tempestats o Tuca Gran de Llosás (según OpenStreetMap), y 3.289 o 3.290 m según la fuente. Las fuentes difieren."
+  },
+  {
+   "id": "balaitus",
+   "nombre": "Balaitús",
+   "alias": "Balaïtous · Pico Moros",
+   "altitud": 3146,
+   "otras": "Otras fuentes: 3.144 m",
+   "macizo": "bal",
+   "frontera": true,
+   "lat": 42.838917,
+   "lon": -0.29025,
+   "acceso": "Valle de Tena · embalse de La Sarra → refugio de Respomuso (2.208 m)",
+   "ruta": "Refugio de Respomuso → Brecha de Latour → cresta cimera → cumbre (bajada posible por la Gran Diagonal)",
+   "desnivel": "≈ 950 m desde Respomuso (≈ 1.700 m desde La Sarra hasta la cumbre)",
+   "dificultad": "muy-alta",
+   "grado": "PD · terreno alpino, rápeles opcionales",
+   "epoca": "Julio – septiembre",
+   "descripcion": "El gran tresmil del Pirineo occidental y el más occidental de todos. Su cresta de roca se alcanza por la Brecha de Latour, un paso de dificultad moderada que pide experiencia en terreno alpino y, según las condiciones, casco y cuerda. La bajada por la Gran Diagonal evita los rápeles de la brecha.",
+   "foto": "balaitus",
+   "pie": "El Balaïtous (Balaitús).",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/respomuso-gran-diagonal-balaitus-la-sarra-19309920",
+    "texto": "Ver la ruta en Wikiloc: Respomuso – Gran Diagonal – Balaitús – La Sarra, de aldaieta"
+   },
+   "curiosidad": "La primera ascensión documentada fue en 1825, a cargo de los geodestas franceses Pierre Peytier y Paul-Michel Hossard, que medían el Pirineo para la cartografía del ejército. Tuvieron que subir con instrumentos hasta una cumbre que hoy sigue exigiendo trepadas.",
+   "fotoCima": {
+    "foto": "cima",
+    "pie": "La piedra que corona la cima, con la altitud pintada a mano: 3.145 m. Ese día el mar de nubes tapaba los picos del fondo."
+   },
+   "rutas": [
+    "respomuso-gran-diagonal-balaitus-la-sarra"
+   ]
+  },
+  {
+   "id": "garmo",
+   "nombre": "Garmo Negro",
+   "alias": "Punda dero Garmo Negro",
+   "altitud": 3064,
+   "otras": "Otras fuentes: 3.066 m",
+   "macizo": "bal",
+   "frontera": false,
+   "lat": 42.771667,
+   "lon": -0.264139,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Baños de Panticosa → Collado de Argualas (2.860 m) → cumbre (200 m finales de pedrera)",
+   "desnivel": "≈ 1.430 m desde Baños de Panticosa",
+   "dificultad": "moderada",
+   "grado": "F · pedreras sueltas, ≈ 6 h",
+   "epoca": "Julio – octubre",
+   "descripcion": "El tresmil más frecuentado de los Infiernos por la facilidad de su acceso desde Baños de Panticosa. Es largo y el último tramo es empinado y de piedra suelta; con niebla conviene llevar GPS, porque los muchos hitos pueden despistar.",
+   "foto": "garmo",
+   "pie": "El Garmo Negro de las Argualas.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/08-22-garmo-negro-3-064m-desde-el-balneario-de-panticosa-111236783",
+    "texto": "Ver la ruta en Wikiloc: Garmo Negro desde el balneario de Panticosa, de Bitxus"
+   },
+   "rutas": [
+    "garmo-panticosa"
+   ],
+   "fotoCima": {
+    "foto": "garmo-cima",
+    "pie": "La piedra de la cima, con «Garmo Negro 3065» pintado a mano."
+   },
+   "curiosidad": "Su altitud cambia según la fuente, entre 3.051 y 3.066 m, y la piedra de la cima lleva pintado «3065». Desde arriba se abren las vistas hacia Ordesa y Monte Perdido, y el camino empieza junto a los manantiales termales del balneario de Panticosa."
+  },
+  {
+   "id": "infiernos",
+   "nombre": "Picos del Infierno",
+   "alias": "Infierno Central · Punda Alta de Pondiellos",
+   "altitud": 3081,
+   "otras": "Occidental 3.075 m · Oriental 3.076 m",
+   "macizo": "bal",
+   "frontera": false,
+   "lat": 42.781417,
+   "lon": -0.2605,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Circular desde Baños de Panticosa: ibones de Bachimaña y Azules, Cuello del Infierno, Ibón de Tebarray, cresta (Occidental, Marmolera, Central y Oriental) y bajada por el Collado de Pondiellos",
+   "desnivel": "≈ 1.450 m desde Baños de Panticosa",
+   "dificultad": "muy-alta",
+   "grado": "PD · pasos de I+/II, cresta aérea",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Tres cumbres sobre los 3.000 m —Occidental, Central y Oriental— alzadas sobre el balneario de Panticosa; el Central, con 3.081 m, es el techo del grupo. La travesía de la Marmolera, entre el Occidental y el Central, es muy aérea y no se recomienda con vértigo; conviene llevar casco.",
+   "foto": "infiernos",
+   "pie": "Cima del Infierno Central, con su piedra de cumbre.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
+    "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
+   },
+   "rutas": [
+    "infiernos-panticosa"
+   ],
+   "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente)."
+  },
+  {
+   "macizo": "ane",
+   "frontera": false,
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+   "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+   },
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "id": "astorg",
+   "nombre": "Punta de Astorg",
+   "alias": "Punta Astorg",
+   "altitud": 3355,
+   "otras": "Otras fuentes: 3.354 m",
+   "lat": 42.63945,
+   "lon": 0.64261,
+   "descripcion": "Cumbre de la cresta que une el Pico Maldito y el Pico del Medio, en el corazón del macizo glaciar de la Maladeta. Se visita en una travesía de cresta con pasos de trepada, no es una ascensión de senderismo.",
+   "foto": "astorg",
+   "pie": "La cresta Maldito–Punta Astorg.",
+   "fotoCima": {
+    "foto": "med-astorg",
+    "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
+   },
+   "curiosidad": "Lleva el nombre del conde René d'Astorg, que la subió el 9 de julio de 1901 con Henri Brulle y los guías Célestin Passet y François Bernat-Salles (Beraldi sitúa la salida el día 8). Es el punto más alto de la Cresta del Medio y, según Wikipedia, se escaló unos 60 años después del Aneto."
+  },
+  {
+   "macizo": "ane",
+   "frontera": false,
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+   "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+   },
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "id": "maldito",
+   "nombre": "Pico Maldito",
+   "alias": "Pico Maldito · Pic Maudit",
+   "altitud": 3350,
+   "otras": "Otras fuentes: 3.354 m",
+   "lat": 42.639577,
+   "lon": 0.641345,
+   "descripcion": "Primera cumbre de la cresta que baja desde el Aneto hacia la Maladeta. Hay que remontar un corredor y salvar el paso de la «Regleta» (grado III) antes de pisar la cima.",
+   "foto": "maldito",
+   "pie": "La cresta Maldito–Punta Astorg.",
+   "fotoCima": {
+    "foto": "med-maldito",
+    "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
+   },
+   "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio."
+  },
+  {
+   "macizo": "ane",
+   "frontera": false,
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+   "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+   },
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "id": "medio",
+   "nombre": "Pico del Medio",
+   "alias": "Pic du Milieu",
+   "altitud": 3346,
+   "otras": "",
+   "lat": 42.638642,
+   "lon": 0.645158,
+   "descripcion": "Cumbre intermedia de la cresta, entre la Punta de Astorg y el Pico Coronas. Se llega con el flanqueo de un terreno muy roto.",
+   "foto": "medio",
+   "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
+   "curiosidad": "Su nombre describe su posición: es la cumbre central de la cresta que une el Aneto y la Maladeta, por eso toda la travesía se llama Cresta del Medio. No he encontrado una fuente fiable sobre su primera ascensión."
+  },
+  {
+   "macizo": "ane",
+   "frontera": false,
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+   "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+   },
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "id": "coronas",
+   "nombre": "Pico Coronas",
+   "alias": "Tuca de Corones",
+   "altitud": 3293,
+   "otras": "Otras fuentes: 3.297 m",
+   "lat": 42.637153,
+   "lon": 0.649313,
+   "descripcion": "Última cumbre importante de la cresta antes del Collado de Coronas, que lo separa del Aneto. Desde aquí se baja por el glaciar de Coronas.",
+   "foto": "coronas",
+   "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
+   "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto."
+  },
+  {
+   "macizo": "pos",
+   "frontera": false,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
+   "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
+   "dificultad": "alta",
+   "grado": "PD+ · cresta con dos pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+    "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
+   },
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "id": "espadas",
+   "nombre": "Las Espadas",
+   "alias": "Punta Llardaneta · Pico Espadas",
+   "altitud": 3332,
+   "otras": "Otras fuentes: 3.328 m",
+   "lat": 42.649793,
+   "lon": 0.426636,
+   "descripcion": "Cumbre de la larga cresta que une Pavots con el Posets. La travesía es una clásica de iniciación a la alta montaña: casi todo es de grado II, con dos pasos de III y el aéreo Paso del Funambulista.",
+   "foto": "espadas",
+   "pie": "El macizo de Punta Llardaneta o Pico Espadas, en una fotografía antigua.",
+   "fotoCima": {
+    "foto": "esp-espadas",
+    "pie": "La cresta de Las Espadas, con su roca estratificada."
+   },
+   "curiosidad": "Su cresta hasta el Posets se recorre en una jornada larga y su tramo más característico es el Paso del Funambulista, entre las Espadas y la Tuca de Llardaneta. No hemos hallado el origen del nombre «Espadas»; las fuentes también lo citan como Llardaneta o Punta Llardaneta."
+  },
+  {
+   "macizo": "pos",
+   "frontera": false,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
+   "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
+   "dificultad": "alta",
+   "grado": "PD+ · cresta con dos pasos de III",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+    "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
+   },
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "id": "llardaneta",
+   "nombre": "Tuca de Llardaneta",
+   "alias": "Mallo de la Lit · El Tuconet",
+   "altitud": 3311,
+   "otras": "",
+   "lat": 42.6525,
+   "lon": 0.430602,
+   "descripcion": "Cumbre intermedia de la cresta de las Espadas, entre el Paso del Funambulista y la Tuqueta Roya, ya a la vista del Posets.",
+   "foto": "llardaneta",
+   "pie": "La Tuca de Llardaneta, la Tuqueta Roya y el Posets.",
+   "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál."
+  },
+  {
+   "id": "soum",
+   "nombre": "Soum de Ramond",
+   "alias": "Pico de Añisclo · Pic d'Añisclo",
+   "altitud": 3254,
+   "otras": "Otras fuentes: 3.257 y 3.263 m",
+   "macizo": "per",
+   "frontera": false,
+   "lat": 42.669589,
+   "lon": 0.043133,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+   "ruta": "Refugio de Góriz → Punta de las Olas → Baudrimont SE → Soum de Ramond → Monte Perdido → Cilindro de Marboré → Góriz",
+   "desnivel": "≈ 1.780 m desde Góriz (≈ 18 km, circuito de un día)",
+   "dificultad": "alta",
+   "grado": "PD · circuito de las Tres Sorores",
+   "epoca": "Julio – septiembre",
+   "descripcion": "La más oriental de las Tres Sorores, junto a Monte Perdido y el Cilindro de Marboré. Se visita en un circuito largo desde Góriz que encadena las tres cumbres, con pedreras y neveros.",
+   "foto": "soum",
+   "pie": "El cimero de Soum de Ramond con neveros, en una fotografía antigua.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-soum-de-ramond-o-pico-de-anisclo-cilindro-de-marbore-las-tres-sorores-punta-las-olas-11016914",
+    "texto": "Ver la ruta en Wikiloc: Monte Perdido-Soum de Ramond-Cilindro de Marboré (Las Tres Sorores), de Oscar Elorza"
+   },
+   "rutas": [
+    "soum-tres-sorores"
+   ],
+   "fotoCima": {
+    "foto": "soum-cima",
+    "pie": "La subida final a Soum de Ramond."
+   },
+   "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m."
+  },
+  {
+   "id": "marbore",
+   "nombre": "Pico de Marboré",
+   "alias": "Pic de Marboré",
+   "altitud": 3248,
+   "otras": "",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.692686,
+   "lon": 0.011518,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+   "ruta": "Refugio de Góriz → Ciudad de Piedra → Faja Roya → embudo del Marboré → arista norte → cumbre; cresta de los picos de la Cascada",
+   "desnivel": "≈ 1.250 m desde Góriz (≈ 25 km con los picos de la Cascada, solo ida)",
+   "dificultad": "alta",
+   "grado": "PD · trepadas de I y II, paso clave",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza sobre el circo de Gavarnie, parte de la cresta que separa Ordesa de Francia. Se sube desde Góriz por un camino de bloques, lapiaz y trepadas fáciles, y se puede enlazar con los picos de la Cascada y la Espalda de Marboré.",
+   "foto": "marbore",
+   "pie": "El Pico de Marboré y los picos de la Cascada sobre el circo de Gavarnie.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+    "texto": "Ver la ruta en Wikiloc: Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz, de Santialpino"
+   },
+   "rutas": [
+    "marbore-cascada"
+   ],
+   "fotoCima": {
+    "foto": "mar-cima",
+    "pie": "La cumbre del Marboré, con su refugio de piedra."
+   },
+   "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente."
+  },
+  {
+   "id": "tallon",
+   "nombre": "Tallón",
+   "alias": "Punda Negra · Pic du Taillon",
+   "altitud": 3144,
+   "otras": "Otras fuentes: 3.147 m",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.693724,
+   "lon": -0.051335,
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+   "ruta": "Refugio de Góriz → fuente de los Gabachos → gruta helada de Casteret → paso de los Sarrios → Brecha de Rolando → El Dedo → cumbre",
+   "desnivel": "≈ 1.000 m desde Góriz (≈ 17 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "F/PD · nieve y pedreras junto a la Brecha",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza junto a la Brecha de Rolando, considerada uno de los tresmiles más sencillos sobre el circo de Gavarnie. Desde Góriz se llega a la Brecha por la gruta helada de Casteret y el paso de los Sarrios, y de ahí se sigue la cresta este hasta la cima. El track que se muestra termina a unos 3.136 m.",
+   "foto": "tallon",
+   "pie": "El Taillon al amanecer, con la cara sur iluminada.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/brecha-de-rolando-y-taillon-desde-goriz-por-la-gruta-helada-casteret-y-paso-sarrios-etapa-2-3-ascen-26475736",
+    "texto": "Ver la ruta en Wikiloc: Brecha de Rolando y Taillón desde Góriz por la Gruta Helada Casteret y paso Sarrios, de David RunnerLife"
+   },
+   "rutas": [
+    "tallon-goriz"
+   ],
+   "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente."
+  },
+  {
+   "id": "lliterola",
+   "nombre": "Tuca de Lliterola",
+   "alias": "Punta de Lliterola · Cresta de Lliterola",
+   "altitud": 3133,
+   "otras": "Otras fuentes: 3.095, 3.110 y 3.132 m",
+   "macizo": "prd",
+   "frontera": false,
+   "lat": 42.699,
+   "lon": 0.523,
+   "acceso": "Benasque · Llanos del Hospital (parking de Literola)",
+   "ruta": "Llanos del Hospital → Portal de Remuñé → Ibón Blanco → Collado Inferior → Aguja, Punta, Pico Royo y Tuca de Lliterola → Perdiguero → Hitos del Perdiguero → bajada por Literola",
+   "desnivel": "≈ 1.600 m (≈ 24 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "PD+ · cresta con nieve y crampones a principios de verano",
+   "epoca": "Julio – septiembre",
+   "descripcion": "La cresta de Lliterola une el Perdiguero con varias cumbres de 3.000 a 3.130 m: la Aguja, la Punta, el Pico Royo y la Tuca de Lliterola. Se suele encadenar con el Perdiguero en una jornada muy larga. Los nombres y las alturas varían según la fuente, y es fácil confundir la Punta con la Aguja.",
+   "foto": "lliterola",
+   "pie": "El ibón de Lliterola bajo la cresta.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/2017-07-perdiguero-y-cresta-por-remune-vuelta-por-lliterola-19782472",
+    "texto": "Ver la ruta en Wikiloc: Cresta de Lliterola (Aguja, Punta, Pico Royo, Tuca, Perdiguero), de yivatosal"
+   },
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola»."
+  },
+  {
+   "id": "russell",
+   "nombre": "Pico Russell",
+   "alias": "Tuca del Cap de la Vall · Cap de la Vall",
+   "altitud": 3207,
+   "otras": "Otras fuentes: 3.205 y 3.199 m",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.618433,
+   "lon": 0.670588,
+   "acceso": "Ribagorza · embalse de Llauset (Aneto)",
+   "ruta": "Embalse de Llauset → Collado de Vallibierna → Collada de los Bucardos → Punta Russell Oriental → Pico Russell SE → Pico Russell → ibón de la Cap de la Vall → refugio Cap de Llauset",
+   "desnivel": "≈ 1.170 m desde el embalse de Llauset (≈ 15 km, circuito)",
+   "dificultad": "alta",
+   "grado": "PD · circuito con pedreras y algún paso de trepada",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre más alta de un pequeño macizo del extremo sur de la Maladeta, por encima del embalse de Llauset, en la Ribagorza. Se sube por la Collada de los Bucardos, pasa por la antecima sureste y se baja junto al ibón de la Cap de la Vall.",
+   "foto": "russell",
+   "pie": "El embalse de Llauset nevado, en la base de la zona.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/picos-russell-3207-m-circular-desde-embalse-llauset-subiendo-por-collado-bucardos-y-bajando-por-ibo-233961199",
+    "texto": "Ver la ruta en Wikiloc: PICOS RUSSELL (3207 m) circular desde embalse Llauset, de Alfredo Barberan"
+   },
+   "rutas": [
+    "russell-llauset"
+   ],
+   "fotoCima": {
+    "foto": "rus-cima",
+    "pie": "Vista desde la cima del Pico Russell."
+   },
+   "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente."
+  },
+  {
+   "macizo": "bal",
+   "frontera": false,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
+   "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · cresta con pedreras y una ligera trepada",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
+   },
+   "rutas": [
+    "algas-argualas"
+   ],
+   "id": "algas",
+   "nombre": "Pico Algas",
+   "alias": "Algas · Pico de Algas",
+   "altitud": 3036,
+   "otras": "Otras fuentes: 3.033 m",
+   "lat": 42.7683,
+   "lon": -0.2706,
+   "descripcion": "Cumbre de la cresta que une el Garmo Negro con el Argualas, sobre el balneario de Panticosa. La ruta clásica las encadena en una jornada y pasa por Algas Norte, cuyo estatus de tresmil oficial se discute por su poca prominencia.",
+   "foto": "algas",
+   "pie": "Las cumbres de Garmo Negro, Algas y Argualas sobre el balneario de Panticosa.",
+   "fotoCima": {
+    "foto": "alg-pico",
+    "pie": "La cima del Pico Algas, con los bastones sobre el mojón."
+   },
+   "curiosidad": "La toponimia de este grupo es confusa: según una fuente, al Argualas se le ha llamado también Algas, Arollas o Arualas, y al Garmo Negro, Arnales o Pundillos. Otra propone que «Argualas» deriva de «aruela», un lugar pedregoso. El Algas Norte ha perdido la consideración de tresmil oficial por no tener 10 m de prominencia."
+  },
+  {
+   "macizo": "bal",
+   "frontera": false,
+   "acceso": "Valle de Tena · Baños de Panticosa",
+   "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
+   "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · cresta con pedreras y una ligera trepada",
+   "epoca": "Julio – septiembre",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+    "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
+   },
+   "rutas": [
+    "algas-argualas"
+   ],
+   "id": "argualas",
+   "nombre": "Pico Argualas",
+   "alias": "Pico de la Bandera",
+   "altitud": 3044,
+   "otras": "Otras fuentes: 3.046 m",
+   "lat": 42.7665,
+   "lon": -0.2669,
+   "descripcion": "Cumbre final de la cresta de Algas, justo sobre el balneario de Panticosa. Se le llama Pico de la Bandera porque en verano ondea una bandera blanca en su cima, visible desde el balneario.",
+   "foto": "argualas",
+   "pie": "El Pico Argualas nevado.",
+   "fotoCima": {
+    "foto": "alg-argualas",
+    "pie": "La cima del Argualas."
+   },
+   "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m."
+  },
+  {
+   "id": "frondiellas",
+   "nombre": "Frondella (Frondiellas)",
+   "alias": "Frondiellas · Punta Alta de las Frondiellas",
+   "altitud": 3071,
+   "otras": "Otras fuentes: 3.055 y 3.062 m",
+   "macizo": "bal",
+   "frontera": true,
+   "lat": 42.832748,
+   "lon": -0.290547,
+   "acceso": "Valle de Tena · embalse de La Sarra (Sallent de Gállego)",
+   "ruta": "Parking de La Sarra → ibones de Arriel → Frondella → cruce de bajada → refugio de Respomuso → La Sarra",
+   "desnivel": "≈ 1.620 m desde La Sarra (≈ 20 km, circuito)",
+   "dificultad": "alta",
+   "grado": "PD · cresta con pedreras",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Conjunto de cuatro cumbres unidas por una cresta, junto al Balaitús, en la frontera con Francia. La ruta circular sube por los ibones de Arriel y baja por el refugio de Respomuso.",
+   "foto": "frondiellas",
+   "pie": "La cabaña de pastor con las Frondellas y el Balaitús al fondo, en una fotografía antigua.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/frondellas-o-frondiellas-desde-la-sarra-circular-subiendo-por-arrieles-y-bajando-por-refugio-respom-13947625",
+    "texto": "Ver la ruta en Wikiloc: Frondellas desde La Sarra, circular por Arrieles y Respomuso, de Alfredo Barberan"
+   },
+   "rutas": [
+    "frondiellas-sarra"
+   ],
+   "fotoCima": {
+    "foto": "fro-cima",
+    "pie": "La cima de la Frondiella, con nieve en las laderas."
+   },
+   "curiosidad": "SummitPost la describe como un conjunto de cuatro cumbres unidas por una cresta, por eso se usa el plural. Según un blog, el topónimo lo puso el montañero francés Henri Le Breton y aparece por primera vez en los diarios de Jean Arlaud, en 1932. Según Mendikat, la Frondella Oeste se subió por primera vez en 1906, por Louis Robach. Las alturas varían mucho de una fuente a otra."
+  },
+  {
+   "id": "abadias",
+   "nombre": "Pico Abadías",
+   "alias": "Roca de Cregüeña · Tuca d'Abadías",
+   "altitud": 3279,
+   "otras": "Otras fuentes: 3.271 y 3.272 m",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.643228,
+   "lon": 0.638484,
+   "acceso": "Benasque · La Besurta",
+   "ruta": "La Besurta → Forau d'Aigualluts → Plan d'Aigualluts → ibón del Salterillo → Collado Maldito → Pico Abadías",
+   "desnivel": "≈ 1.400 m desde La Besurta (≈ 18 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · glaciar y pedreras, crampones a principios de verano",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre sur de la Maladeta, sobre el valle de Cregüeña. Se sube desde La Besurta por el Plan d'Aigualluts y el Collado Maldito, con tramo de glaciar.",
+   "foto": "abadias",
+   "pie": "El macizo de la Maladeta nevado.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-abadias-3-279-m-valle-de-benasque-182246385",
+    "texto": "Ver la ruta en Wikiloc: Pico Abadías (3.279 m) (Valle de Benasque), de albertrek"
+   },
+   "rutas": [
+    "abadias-besurta"
+   ],
+   "fotoCima": {
+    "foto": "aba-collado",
+    "pie": "El glaciar al pie del Collado Maldito."
+   },
+   "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente."
+  },
+  {
+   "id": "munia",
+   "nombre": "La Munia",
+   "alias": "Almunia · La Dama del Pirineo",
+   "altitud": 3133,
+   "otras": "Otras fuentes: 3.134 m",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.714859,
+   "lon": 0.131916,
+   "acceso": "Bielsa · valle de Pineta",
+   "ruta": "Parking de Pineta → barranco de La Larri → ibones de la Munia → Collado de la Munia → Paso del Gato → cumbre",
+   "desnivel": "≈ 1.850 m desde Pineta (≈ 22 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD · Paso del Gato (II) y pedreras",
+   "epoca": "Julio – septiembre",
+   "descripcion": "La Munia (o L'Almunia) es el punto culminante de los circos de Troumouse, Barroude y Barrosa, en la frontera con Francia. La subida típica arranca en Pineta, remonta el barranco de La Larri hasta los ibones y pasa el Paso del Gato.",
+   "foto": "munia",
+   "pie": "La Munia vista desde el puerto de Barrosa, en una fotografía antigua.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-de-la-munia-3133-m-desde-el-parking-de-pineta-77154991",
+    "texto": "Ver la ruta en Wikiloc: Pico de la Munia (3133 m) desde el parking de Pineta, de ᗩᒪTEᑕᗩ"
+   },
+   "rutas": [
+    "munia-pineta"
+   ],
+   "fotoCima": {
+    "foto": "mun-cima",
+    "pie": "El cartel de la cima de la Munia."
+   },
+   "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid."
+  },
+  {
+   "id": "vallibierna",
+   "nombre": "Pico Vallibierna",
+   "alias": "Ballibierna · Tuca de Culebres",
+   "altitud": 3067,
+   "otras": "Otras fuentes: 3.059 m",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.5939,
+   "lon": 0.6521,
+   "acceso": "Ribagorza · presa de Llauset (Aneto)",
+   "ruta": "Presa de Llauset → valle de Vallibierna → cresta → Tuca de Culebres → Pico Vallibierna → bajada por los ibones",
+   "desnivel": "≈ 1.100 m desde la presa de Llauset (≈ 12 km, circuito)",
+   "dificultad": "alta",
+   "grado": "PD · cresta con el «Paso del Caballo»",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Macizo calizo al sur de la Maladeta formado por el Pico Vallibierna (3.067 m) y la Tuca de Culebres (3.062 m), unidos por una cresta afilada. La ruta circular parte de la presa de Llauset.",
+   "foto": "vallibierna",
+   "pie": "El Pico Vallibierna desde la zona alta.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/tuca-de-culebras-3062-m-y-pico-vallibierna-3067-m-desde-la-presa-de-llauset-53161393",
+    "texto": "Ver la ruta en Wikiloc: Tuca de Culebras (3062 m) y Pico Vallibierna (3067 m) desde la presa de Llauset, de ᗩᒪTEᑕᗩ"
+   },
+   "rutas": [
+    "vallibierna-llauset"
+   ],
+   "fotoCima": {
+    "foto": "val-cima",
+    "pie": "Cumbre del Pico Vallibierna."
+   },
+   "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura."
+  },
+  {
+   "id": "paul",
+   "nombre": "Pico de la Paúl",
+   "alias": "La Paúl · cresta de Bardamina",
+   "altitud": 3079,
+   "otras": "3.078 m (track) · Bardamina 3.079 m · Paúl Inferior 3.073 m",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.66046,
+   "lon": 0.446147,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús → ibones de Eriste y de les Alforches → Bardamina → Pico de la Paúl → Paúl Inferior → collado de la Paúl → Balls des Ibóns",
+   "desnivel": "≈ 1.820 m desde la Espigantosa (19 km, circuito)",
+   "dificultad": "alta",
+   "grado": "PD+ · cresta con trepadas y destrepes",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cresta aérea sobre el valle de Eriste con tres cumbres de más de 3.000 m seguidas: Bardamina, la Paúl y la Paúl Inferior. Se hace en circuito, con trepadas, pasos acrobáticos y gendarmes que exigen manos y cabeza fría.",
+   "foto": "paul",
+   "pie": "La coma de la Paúl al pie del Posets, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-bardamina-bardamina-3079-m-la-paul-3078-m-inferior-de-la-paul-3063-m-por-la-balls-des-ibo-187377168",
+    "texto": "Ver la ruta en Wikiloc: Cresta de Bardamina, de yivatosal"
+   },
+   "rutas": [
+    "paul-bardamina"
+   ],
+   "fotoCima": {
+    "foto": "pau-gendarmes",
+    "pie": "Los gendarmes de la cresta, entre la Paúl y su cumbre Inferior."
+   },
+   "curiosidad": "La cresta tiene tres cumbres casi iguales: Pico de la Paúl Inferior (3.073 m), Pico de la Paúl (3.078 m) y Bardamina (3.079 m). Según SummitPost, la cifra de 3.079 m corresponde a Bardamina y no a la Paúl, aunque las fuentes difieren; y las rutas normales de ambas no siguen la cresta completa."
+  }
+ ]
 }

@@ -972,7 +972,8 @@
   "picos": [
    "posets",
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "paul"
   ]
  },
  {
@@ -999,7 +1000,8 @@
   "picos": [
    "posets",
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "paul"
   ]
  },
  {
@@ -2725,5 +2727,125 @@
   "nota": "Cumbre más alta del macizo. Altitud del GPS del track: 3.042 m.",
   "foto": "val-cima",
   "pie": "Cumbre del Pico Vallibierna (3.067 m)."
+ },
+ {
+  "id": "pau-eriste",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Ibón de Eriste",
+  "tipo": "ibon",
+  "lat": 42.643343,
+  "lon": 0.464552,
+  "nota": "Primer ibón del camino, bajo la cresta. Altitud del GPS del track: 2.423 m.",
+  "foto": "pau-eriste",
+  "pie": "El ibón de Eriste, con el valle al fondo."
+ },
+ {
+  "id": "pau-alforches",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Ibón de les Alforches",
+  "tipo": "ibon",
+  "lat": 42.648738,
+  "lon": 0.461435,
+  "nota": "Ibón alto del valle de Eriste. Altitud del GPS del track: 2.467 m.",
+  "foto": "pau-alforches",
+  "pie": "El ibón de les Alforches, bajo las paredes de la cresta."
+ },
+ {
+  "id": "pau-bardamina",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Pico Bardamina",
+  "tipo": "cima",
+  "lat": 42.662402,
+  "lon": 0.451053,
+  "nota": "Cima de 3.079 m según el nombre del punto del track (altitud del GPS: 2.968 m). Las fuentes difieren sobre cuál de las dos cumbres es la más alta."
+ },
+ {
+  "id": "pau-acrobatico",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Paso acrobático",
+  "tipo": "paso",
+  "lat": 42.661523,
+  "lon": 0.449217,
+  "nota": "Tramo de trepada de la cresta entre Bardamina y la Paúl. Altitud del GPS del track: 2.947 m.",
+  "foto": "pau-acrobatico",
+  "pie": "Rocas de la cresta en el paso acrobático."
+ },
+ {
+  "id": "pau-cima",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Pico de la Paúl",
+  "tipo": "cima",
+  "lat": 42.66046,
+  "lon": 0.446147,
+  "nota": "Cima de 3.078 m según el nombre del punto del track (altitud del GPS: 2.960 m)."
+ },
+ {
+  "id": "pau-gendarmes",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Gendarmes",
+  "tipo": "paso",
+  "lat": 42.659248,
+  "lon": 0.444653,
+  "nota": "Torres de roca de la cresta entre la Paúl y su cima Inferior. Altitud del GPS del track: 2.986 m.",
+  "foto": "pau-gendarmes",
+  "pie": "Los gendarmes de la cresta de la Paúl."
+ },
+ {
+  "id": "pau-inferior",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Pico Inferior de la Paúl",
+  "tipo": "cima",
+  "lat": 42.658557,
+  "lon": 0.443473,
+  "nota": "Cima occidental, 3.073 m según el nombre del punto del track (altitud del GPS: 2.977 m)."
+ },
+ {
+  "id": "pau-collado",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Collado de la Paúl",
+  "tipo": "paso",
+  "lat": 42.658028,
+  "lon": 0.443147,
+  "nota": "Collado desde el que se baja de la cresta. Altitud del GPS del track: 3.006 m.",
+  "foto": "pau-collado",
+  "pie": "El collado de la Paúl, con la cresta al fondo."
+ },
+ {
+  "id": "pau-farradura",
+  "pico": "paul",
+  "picos": [
+   "paul"
+  ],
+  "nombre": "Ibón de Farradura",
+  "tipo": "ibon",
+  "lat": 42.649172,
+  "lon": 0.45555,
+  "nota": "Ibón en el descenso. Altitud del GPS del track: 2.535 m.",
+  "foto": "pau-farradura",
+  "pie": "El ibón de Farradura, desde arriba."
  }
 ]
