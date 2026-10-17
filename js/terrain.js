@@ -3,11 +3,12 @@ import { EXAG } from './geo.js';
 
 const SKIRT = 160; // faldón bajo los bordes de cada bloque para ocultar grietas entre niveles de detalle
 const MAX_HI = 8;  // texturas de alta resolución simultáneas
+const MAX_DESCARGAS = 4;   // alturas que se piden a la vez
 
 // Relieve por bloques de 512 celdas con nivel de detalle según la distancia a la cámara.
 export class Terrain {
-  constructor({ scene, meta, heights, geo, renderer, base }) {
-    this.meta = meta; this.heights = heights; this.geo = geo; this.base = base;
+  constructor({ scene, meta, store, geo, renderer, base }) {
+    this.meta = meta; this.store = store; this.geo = geo; this.base = base;
     this.group = new THREE.Group(); scene.add(this.group);
     this.loader = new THREE.TextureLoader();
     this.aniso = Math.min(8, renderer.capabilities.getMaxAnisotropy());
@@ -41,16 +42,16 @@ export class Terrain {
     const key = `${c.id}:${s}`;
     let g = this.cache.get(key);
     if (g) { this.cache.delete(key); this.cache.set(key, g); return g; }
-    const { chunk: CH } = this.meta, { dx, dz, hCell } = this.geo;
+    const { chunk: CH } = this.meta, { dx, dz } = this.geo;
     const hs = this.meta.hscale * EXAG;
     const n = CH / s, vn = n + 1, nGrid = vn * vn, nTot = nGrid + 4 * vn;
+    const arr = this.store.cell(c.t.i, c.t.j)[s], dim = n + 3;   // nivel con 1 muestra de margen por lado
     const pos = new Float32Array(nTot * 3), nor = new Float32Array(nTot * 3), uv = new Float32Array(nTot * 2);
-    const c0 = c.t.i * CH, r0 = c.t.j * CH;
     for (let gz = 0; gz < vn; gz++) for (let gx = 0; gx < vn; gx++) {
-      const k = gz * vn + gx, col = c0 + gx * s, row = r0 + gz * s;
-      pos[k * 3] = c.x0 + gx * s * dx; pos[k * 3 + 1] = hCell(col, row); pos[k * 3 + 2] = c.z0 + gz * s * dz;
-      const nx = (hCell(col - s, row) - hCell(col + s, row)) / (2 * s * dx);
-      const nz = (hCell(col, row - s) - hCell(col, row + s)) / (2 * s * dz);
+      const k = gz * vn + gx, q0 = (gz + 1) * dim + gx + 1;
+      pos[k * 3] = c.x0 + gx * s * dx; pos[k * 3 + 1] = arr[q0] * hs; pos[k * 3 + 2] = c.z0 + gz * s * dz;
+      const nx = (arr[q0 - 1] - arr[q0 + 1]) * hs / (2 * s * dx);
+      const nz = (arr[q0 - dim] - arr[q0 + dim]) * hs / (2 * s * dz);
       const il = 1 / Math.hypot(nx, 1, nz);
       nor[k * 3] = nx * il; nor[k * 3 + 1] = il; nor[k * 3 + 2] = nz * il;
       uv[k * 2] = gx / n; uv[k * 2 + 1] = 1 - gz / n;
@@ -96,14 +97,17 @@ export class Terrain {
 
   // Llamar cada fotograma. `budget` = geometrías que se pueden construir en este fotograma.
   update(cam, budget = 2) {
-    const px = cam.position.x, py = cam.position.y, pz = cam.position.z;
-    const pending = [];
+    const px = cam.position.x, py = cam.position.y, pz = cam.position.z, st = this.store;
+    const pending = [], faltan = [];
     for (const c of this.chunks) {
       const ddx = Math.max(c.x0 - px, 0, px - c.x1), ddz = Math.max(c.z0 - pz, 0, pz - c.z1);
       const d = Math.hypot(ddx, ddz, Math.max(0, py - 3500));
       c.dist = d;
       c.wantStride = d < 8000 ? 1 : d < 18000 ? 2 : d < 40000 ? 4 : 8;
-      if (c.wantStride !== c.stride) pending.push(c);
+      // se dibuja con el nivel pedido si ya está cargado; si no, con el más cercano más grueso que haya (siempre existe el 8)
+      c.use = [1, 2, 4, 8].find((s) => s >= c.wantStride && st.has(c.t.i, c.t.j, s));
+      if (c.use !== c.stride) pending.push(c);
+      if (!st.has(c.t.i, c.t.j, c.wantStride)) faltan.push(c);
       // textura de alta resolución solo cerca
       if (d < 22000 && !c.hi && !c.hiLoading && this.chunks.filter((k) => k.hi || k.hiLoading).length < MAX_HI) {
         c.hiLoading = true;
@@ -112,16 +116,29 @@ export class Terrain {
         c.mat.map = c.lo; c.mat.needsUpdate = true; c.hi.dispose(); c.hi = null;
       }
     }
+    // pide las alturas que faltan, las más cercanas primero
+    faltan.sort((a, b) => a.dist - b.dist);
+    for (const c of faltan) { if (st.activas >= MAX_DESCARGAS) break; st.load(c.t.i, c.t.j, c.wantStride); }
     pending.sort((a, b) => a.dist - b.dist);
     for (const c of pending.slice(0, budget)) {
-      const g = this._geometry(c, c.wantStride);
+      const g = this._geometry(c, c.use);
       if (!c.mesh) { c.mesh = new THREE.Mesh(g, c.mat); c.mesh.matrixAutoUpdate = false; c.mesh.updateMatrix(); this.group.add(c.mesh); }
       else c.mesh.geometry = g;
-      c.stride = c.wantStride;
+      c.stride = c.use;
     }
     if (pending.length) this._trim();
   }
 
-  // Fuerza el nivel de detalle final alrededor de un punto (para capturas y vuelos).
-  settle(cam) { for (let i = 0; i < 40; i++) this.update(cam, 8); }
+  // carga el nivel s de las alturas en los bloques que cruzan los puntos dados [{x, z}] (rutas, ibones…) y espera a tenerlo
+  asegurar(puntos, s = 1) {
+    const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo, vistos = new Set(), pr = [];
+    for (const p of puntos) {
+      const i = Math.min(this.meta.nci - 1, Math.max(0, Math.floor((p.x + W / 2) / dx / CH))), j = Math.min(this.meta.ncj - 1, Math.max(0, Math.floor((p.z + D / 2) / dz / CH)));
+      const k = `${i}_${j}`; if (vistos.has(k)) continue; vistos.add(k); pr.push(this.store.load(i, j, s));
+    }
+    return Promise.all(pr);
+  }
+
+  // Fuerza el nivel de detalle que ya esté cargado alrededor de un punto (para capturas y vuelos).
+  settle(cam) { for (let i = 0; i < 6; i++) this.update(cam, 12); }
 }

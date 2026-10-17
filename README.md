@@ -35,8 +35,8 @@ Con **dos o más** cumbres activas aparece además el botón de **filtros** (mac
 
 ## Cómo publicarlo
 
-Es un sitio **estático** (sin compilación): se publica copiando la carpeta tal cual. Pesa unos 16 MB
-(unos 35 MB con las doce cumbres).
+Es un sitio **estático** (sin compilación): se publica copiando la carpeta tal cual. Pesa unos 40 MB en total, pero el visitante
+solo descarga ≈ 5 MB al entrar y ≈ 2 MB más por cada zona que abre.
 
 - **GitHub Pages**: crea un repositorio, sube el contenido de `tresmiles/` (sin `analisis/` si no quieres publicarlo) y
   en *Settings → Pages* elige la rama `main` y la carpeta `/ (root)`. El archivo `.nojekyll` ya está incluido.
@@ -54,6 +54,7 @@ index.html            página única
 css/style.css         estilos (responsive; ficha lateral en escritorio, hoja inferior en móvil)
 js/main.js            aplicación: cámara, vuelos, marcadores, ficha, filtros, selector, luz
 js/terrain.js         relieve por bloques con nivel de detalle y texturas en dos resoluciones
+js/heights.js         almacén de alturas por bloque y nivel (se descargan al acercarse)
 js/geo.js             lon/lat → metros locales, altura bilineal, exageración vertical (×1,3)
 js/sky.js             cielo y nubes
 js/vida.js            agua de los ibones, aves planeando, sonido ambiente y música (Web Audio)
@@ -66,7 +67,7 @@ data/rutas/           recorridos simplificados (autor y ficha de Wikiloc obligat
 audio/ambiente.mp3    música de fondo (bucle de 90 s, composición propia con VSCO-2 CE, CC0)
 img/hitos/            fotos de los hitos
 data/lagos.json       contornos (se regenera con tools/fetch_lagos.py) y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
-data/terrain/         alturas (u16, decímetros) y texturas Sentinel-2 (512 px y 1536 px por bloque)
+data/terrain/         relieve por zonas: overview.bin (vista general), h/ (alturas por nivel y bloque) y texturas Sentinel-2 lo/ (384 px) y hi/ (1536 px)
 img/peaks/            fotos (Wikimedia Commons)
 vendor/three/         three.js (MIT) y OrbitControls
 fonts/                Cormorant Garamond y Barlow (SIL OFL)
@@ -78,7 +79,7 @@ analisis/             análisis de la web de referencia (capturas y resumen)
 
 1. En `data/peaks.json`, añade el `id` de la cumbre a `"activos"` (por ejemplo `"aneto"`).
 2. Si cae fuera del terreno cargado, amplía el relieve. El actual cubre la zona occidental (bloques 0–3 × 0–2);
-   para los doce picos basta `python3 tools/build_terrain.py 0 9 0 3` (necesita el proyecto `~/Tresmiles` con sus datos).
+   el relieve de los doce picos ya está generado (`python3 tools/build_terrain.py`, necesita el proyecto `~/Tresmiles`).
 3. Para renovar las fotos y sus créditos: `python3 tools/fetch_photos.py`.
 
 Cada cumbre tiene `vista` opcional (`theta`, `phi`, `r`) para ajustar el ángulo del vuelo de cámara.

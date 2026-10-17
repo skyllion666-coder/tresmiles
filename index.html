@@ -9,7 +9,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=23">
+  <link rel="stylesheet" href="css/style.css?v=26">
   <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }</script>
 </head>
 <body class="is-loading">
@@ -27,9 +27,12 @@
   <section id="intro" aria-live="polite">
     <p class="eyebrow">En el corazón del Pirineo aragonés</p>
     <h1>Los tresmiles</h1>
-    <p class="lead">Una vista de pájaro a las cumbres que superan los 3.000 metros. Empezamos por el Balaitús.</p>
-    <button class="cta" id="btn-start" type="button">Explorar el mapa</button>
+    <p class="lead">Una vista de pájaro a las cumbres que superan los 3.000 metros. Elige a dónde quieres ir.</p>
+    <div id="intro-picos" aria-label="Elegir una cumbre"></div>
+    <button class="cta" id="btn-start" type="button">Explorar todo el mapa</button>
   </section>
+
+  <div id="zona-carga" role="status" hidden></div>
 
   <div id="hints" aria-hidden="true">
     <div class="hint" id="hint-move"><b>Arrastra<br>para moverte</b><span class="rule"></span><small data-desktop>Mantén pulsado el botón izquierdo y arrastra · Botón derecho: girar</small><small data-touch>Desliza con un dedo · Dos dedos: girar y acercar</small></div>
@@ -75,6 +78,6 @@
   <div id="loading" role="status"><div class="load-mark"></div><p id="load-text">Cargando el relieve…</p></div>
   <noscript><p class="noscript">Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.</p></noscript>
 
-  <script type="module" src="js/main.js?v=69"></script>
+  <script type="module" src="js/main.js?v=72"></script>
 </body>
 </html>

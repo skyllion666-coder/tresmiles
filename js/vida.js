@@ -38,30 +38,39 @@ const waterMat = () => new THREE.ShaderMaterial({
     }`,
 });
 
-export async function crearLagos({ scene, geo, url }) {
+// Los ibones se dibujan por bloques, cuando ya hay alturas suficientes (nivel 2 o mejor) en el bloque: `construirBloque(i, j)`.
+export async function crearLagos({ scene, geo, url, meta }) {
   const data = await fetch(url).then((r) => r.json());
-  const mat = waterMat();
-  const porNombre = new Map();
+  const mat = waterMat(), CH = meta.chunk;
+  const porBloque = new Map(), etiquetados = new Set(), nombrados = [];
   let n = 0;
   for (const l of data) {
     const pts = l.poly.map(([lon, lat]) => geo.toXZ(lon, lat));
     if (pts.some((p) => Math.abs(p.x) > geo.W / 2 - 100 || Math.abs(p.z) > geo.D / 2 - 100)) continue;
-    const y = median(pts.map((p) => geo.heightAt(p.x, p.z))) + 4;
-    const shape = new THREE.Shape(pts.map((p) => new THREE.Vector2(p.x, p.z)));
-    const g = new THREE.ShapeGeometry(shape);
-    g.rotateX(Math.PI / 2);
-    const m = new THREE.Mesh(g, mat);
-    m.position.y = y; m.renderOrder = 1; m.frustumCulled = false;
-    scene.add(m); n++;
-    if (l.nombre) {
-      const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length, cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
-      const prev = porNombre.get(l.nombre);
-      if (!prev || l.area > prev.area) porNombre.set(l.nombre, { nombre: l.nombre, x: cx, y: y + 6, z: cz, area: l.area });
-    }
+    const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length, cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
+    const i = Math.min(meta.nci - 1, Math.max(0, Math.floor((cx + geo.W / 2) / geo.dx / CH))), j = Math.min(meta.ncj - 1, Math.max(0, Math.floor((cz + geo.D / 2) / geo.dz / CH)));
+    const k = `${i}_${j}`; if (!porBloque.has(k)) porBloque.set(k, { lista: [], hecho: false });
+    porBloque.get(k).lista.push({ l, pts, cx, cz });
   }
-  const nombrados = [...porNombre.values()].filter((l) => l.area >= 2500);
+  function construirBloque(i, j) {
+    const b = porBloque.get(`${i}_${j}`); if (!b || b.hecho) return [];
+    b.hecho = true; const nuevos = [];
+    for (const { l, pts, cx, cz } of b.lista) {
+      const y = median(pts.map((p) => geo.heightAt(p.x, p.z))) + 4;
+      const g = new THREE.ShapeGeometry(new THREE.Shape(pts.map((p) => new THREE.Vector2(p.x, p.z))));
+      g.rotateX(Math.PI / 2);
+      const m = new THREE.Mesh(g, mat);
+      m.position.y = y; m.renderOrder = 1; m.frustumCulled = false;
+      scene.add(m); n++;
+      if (l.nombre && l.area >= 2500 && !etiquetados.has(l.nombre)) {
+        etiquetados.add(l.nombre);
+        const e = { nombre: l.nombre, x: cx, y: y + 6, z: cz, area: l.area }; nombrados.push(e); nuevos.push(e);
+      }
+    }
+    return nuevos;
+  }
   return {
-    count: n, nombrados,
+    get count() { return n; }, nombrados, construirBloque,
     setSol(dir, col) { mat.uniforms.uSunDir.value.copy(dir).normalize(); mat.uniforms.uSunCol.value.set(col); },
     update(t) { mat.uniforms.uT.value = t; },
   };

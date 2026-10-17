@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
+import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=10';
 import { cargarRuta, crearRuta } from './ruta.js?v=27';
@@ -27,7 +28,7 @@ const SUN = [
 
 async function boot() {
   const [data, fotos, meta] = await Promise.all([json('data/peaks.json'), json('data/fotos.json'), json('data/terrain/meta.json')]);
-  const heights = new Uint16Array(await (await fetch('data/terrain/heights.bin')).arrayBuffer());
+  const relieve = new HeightStore(meta, 'data/terrain'); await relieve.init();   // vista general ligera; el detalle se pide por zonas
   $('#load-text').textContent = 'Preparando el mapa…';
 
   // — motor —
@@ -43,10 +44,10 @@ async function boot() {
   const sun = new THREE.DirectionalLight(0xffffff, 0.62 * Math.PI);
   scene.add(hemi, sun);
 
-  const geo = makeGeo(meta, heights);
-  const terrain = new Terrain({ scene, meta, heights, geo, renderer, base: 'data/terrain' });
+  const geo = makeGeo(meta, relieve);
+  const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain' });
   const clouds = new Clouds(scene, geo);
-  const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json' }).catch((e) => { console.warn('lagos', e); return null; });
+  const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   const sonido = crearSonido();
 
   // — cumbres activas (dentro del terreno cargado) —
@@ -55,29 +56,40 @@ async function boot() {
   const macizoName = Object.fromEntries(data.macizos.map((m) => [m.id, m.nombre]));
   const difName = Object.fromEntries(data.dificultades.map((d) => [d.id, d.nombre]));
   const difN = { moderada: 1, alta: 2, 'muy-alta': 3 };
-  const peaks = data.picos.filter((p) => activos.includes(p.id)).map((p) => {
+  // todas las cumbres del proyecto; solo las `activo` tienen ficha, ruta y hitos (el resto sale como «Próximamente»)
+  const peaks = data.picos.map((p) => {
     const q = geo.toXZ(p.lon, p.lat);
-    return { ...p, inside: Math.abs(q.x) < geo.W / 2 - 800 && Math.abs(q.z) < geo.D / 2 - 800, w: geo.summitNear(q.x, q.z) };
+    return { ...p, q, activo: activos.includes(p.id), inside: Math.abs(q.x) < geo.W / 2 - 800 && Math.abs(q.z) < geo.D / 2 - 800, w: { x: q.x, y: p.altitud * geo.hs / meta.hscale - 40, z: q.z } };
   }).filter((p) => p.inside).sort((a, b) => b.altitud - a.altitud);
   const byId = Object.fromEntries(peaks.map((p) => [p.id, p]));
+  const activas = new Set(peaks.filter((p) => p.activo).map((p) => p.id));
   const bal = peaks.find((p) => p.id === 'balaitus');
   const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
 
-  // recorridos (si existe el archivo; los de data/rutas/local/ no se publican)
-  const rutas = {};
-  for (const p of peaks) for (const rid of p.rutas ?? []) {
+  // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
+  const rutas = {}, rutaDatos = {};
+  for (const p of peaks) for (const rid of p.activo ? p.rutas ?? [] : []) {
     try {
       const ruta = await cargarRuta(rid);
       if (!ruta.fuenteUrl || !ruta.autor) { console.warn(`Ruta ${rid} sin autor o sin enlace a su ficha: no se muestra`); continue; }
-      (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta }));
+      (rutaDatos[p.id] ??= []).push(ruta);
     } catch { /* sin ruta en esta copia */ }
   }
   const rutasDe = (id) => rutas[id] ?? [];
   let rutaOn = true;
 
   // etiquetas de ibones (solo con la cámara cerca)
-  const lagoEls = (lagos?.nombrados ?? []).map((l) => {
-    const el = document.createElement('span'); el.className = 'lago is-hidden'; el.textContent = l.nombre; $('#pins').appendChild(el); return { l, el };
+  const lagoEls = [];
+  const añadirLagos = (nuevos) => { for (const l of nuevos) { const el = document.createElement('span'); el.className = 'lago is-hidden'; el.textContent = l.nombre; $('#pins').appendChild(el); lagoEls.push({ l, el }); } };
+  // al llegar las alturas de un bloque se dibujan sus ibones y se afina la posición de sus cumbres
+  relieve.onLevel((i, j, nivel) => {
+    if (nivel > 2) return;
+    if (lagos) añadirLagos(lagos.construirBloque(i, j));
+    const CH = meta.chunk;
+    for (const p of peaks) {
+      const pi = Math.min(meta.nci - 1, Math.floor((p.q.x + geo.W / 2) / geo.dx / CH)), pj = Math.min(meta.ncj - 1, Math.floor((p.q.z + geo.D / 2) / geo.dz / CH));
+      if (pi === i && pj === j) p.w = geo.summitNear(p.q.x, p.q.z, nivel === 1 ? 90 : 160);
+    }
   });
 
   // — controles —
@@ -89,7 +101,8 @@ async function boot() {
   const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
 
   // — estados de cámara —
-  const HOME = { t: new THREE.Vector3(0, 1400, -1500), theta: 0.1, phi: 0.66, r: 41000 };
+  const hq = geo.toXZ(-0.05, 42.79);
+  const HOME = { t: new THREE.Vector3(hq.x, 1400, hq.z), theta: 0.1, phi: 0.66, r: 70000 };
   const camState = () => {
     const o = camera.position.clone().sub(controls.target); const r = o.length();
     return { t: controls.target.clone(), r, phi: Math.acos(clamp(o.y / r, -1, 1)), theta: Math.atan2(o.x, o.z) };
@@ -138,10 +151,10 @@ async function boot() {
   const pinEls = new Map();
   for (const p of peaks) {
     const b = document.createElement('button');
-    b.className = 'pin is-hidden'; b.type = 'button'; b.dataset.id = p.id;
-    b.setAttribute('aria-label', `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha`);
-    b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m</i></span>`;
-    b.addEventListener('click', () => openPeak(p.id));
+    b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}`; b.type = 'button'; b.dataset.id = p.id;
+    b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
+    b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span>`;
+    b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
     pinsEl.appendChild(b); pinEls.set(p.id, b);
   }
   const tmp = new THREE.Vector3();
@@ -166,8 +179,8 @@ async function boot() {
       if (!show) continue;
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
       el.classList.toggle('is-active', S.active === p.id);
-      el.classList.toggle('is-other', !!S.active && S.active !== p.id);
-      el.classList.toggle('show-label', !!S.active || dist < 15000);
+      el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
+      el.classList.toggle('show-label', (!!S.active && p.activo) || dist < (p.activo ? 15000 : 30000));
       el.classList.toggle('is-dim', !passes(p));
     }
   }
@@ -176,24 +189,29 @@ async function boot() {
   const TIPO_HITO = { refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima', ibon: 'Ibón', barranco: 'Barranco', lugar: 'Lugar' };
   const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
   let hitoTimer = 0;
-  const hitos = (await json('data/hitos.json').catch(() => [])).map((h) => {
-    const q = geo.toXZ(h.lon, h.lat);
-    if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
-    const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
-    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
-    if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
-    // km del hito sobre la ruta de cada cumbre a la que pertenece (h.picos, o h.pico)
-    const picos = h.picos ?? [h.pico ?? 'balaitus'], kms = {};
-    for (const id of picos) { const R0 = rutasDe(id)[0], ps = R0 ? R0.pasos(q.x, q.z) : []; if (ps.length) kms[id] = ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`; }
-    const tipoTxt = h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? '');
-    el.title = h.nota; $('#pins').appendChild(el);
-    el.querySelector('.hito-btn').addEventListener('click', (e) => {
-      e.stopPropagation();
-      const abrir = !el.classList.contains('is-open');
-      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
-    });
-    return { h, el, picos, kms, tipoTxt, last: null, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
-  }).filter(Boolean);
+  const hitosDatos = await json('data/hitos.json').catch(() => []);
+  const hitos = [];
+  const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido` : ''; };
+  // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
+  function crearHitosDe(picoId) {
+    for (const h of hitosDatos) {
+      const picos = h.picos ?? [h.pico ?? 'balaitus'];
+      if (!picos.includes(picoId) || h._hecho) continue;
+      const q = geo.toXZ(h.lon, h.lat);
+      if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) continue;
+      h._hecho = true;
+      const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
+      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
+      if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
+      el.title = h.nota; $('#pins').appendChild(el);
+      el.querySelector('.hito-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const abrir = !el.classList.contains('is-open');
+        closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
+      });
+      hitos.push({ h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z });
+    }
+  }
   function figCima(p) {
     const c = p.fotoCima, f = c && fotosHitos[c.foto]; if (!f) return '';
     return `<figure class="fig-cima"><img src="img/hitos/${esc(c.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} Foto: ${esc(f.autor)}.</figcaption></figure>`;
@@ -213,7 +231,7 @@ async function boot() {
       const dist = camera.position.distanceTo(hitoTmp);
       // solo los hitos de la cumbre abierta (o compartidos con ella)
       let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 9500;
-      if (show && o.last !== S.active) { o.last = S.active; o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : (o.kms[S.active] ?? '')); }
+      if (show && o.last !== S.active) { o.last = S.active; o.kms[S.active] ??= kmTexto(o, S.active); o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : o.kms[S.active]); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');
@@ -241,10 +259,10 @@ async function boot() {
 
   // — filtros —
   const passes = (p) => (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
-  const visiblePeaks = () => peaks.filter(passes);   // solo las activas (navegación anterior/siguiente)
+  const visiblePeaks = () => peaks.filter((p) => p.activo && passes(p));   // solo las activas (navegación anterior/siguiente)
   const norm = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
   function buildFilters() {
-    if (peaks.length < 2) return;
+    if (activas.size < 2) return;
     $('#btn-filters').hidden = false;
     const mac = [...new Set(data.picos.map((p) => p.macizo))];
     $('#f-macizo').innerHTML = mac.map((m) => `<button type="button" class="chip" aria-pressed="false" data-k="macizo" data-v="${m}">${esc(macizoName[m])}</button>`).join('');
@@ -266,7 +284,6 @@ async function boot() {
 
   // — selector inferior —
   const listEl = $('#picker'), listUl = $('#list'), qEl = $('#q'), listBtn = $('#btn-list');
-  const activas = new Set(peaks.map((p) => p.id));
   function refreshLists() {
     const q = norm(qEl.value.trim());
     const hit = data.picos.filter((p) => passes(p) && (!q || norm(`${p.nombre} ${p.alias} ${macizoName[p.macizo]}`).includes(q)));
@@ -278,7 +295,7 @@ async function boot() {
           : `<li class="prox" role="presentation"><span>${esc(p.nombre)}</span><span>Próximamente</span></li>`).join('')).join('')
       : '<li class="empty">Ninguna cumbre coincide.</li>';
     const fc = $('#f-count'); if (fc) fc.textContent = `${hit.length} de ${data.picos.length} cumbres`;
-    $('#dock-label').textContent = S.active ? byId[S.active].nombre : peaks.length === 1 ? `Explorar el ${peaks[0].nombre}` : 'Explorar las cumbres';
+    $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? `Explorar el ${peaks.find((p) => p.activo).nombre}` : 'Explorar las cumbres';
   }
   const setList = (open) => { listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); if (open) { qEl.value = ''; refreshLists(); if (matchMedia('(hover: hover)').matches) qEl.focus(); } };
   listBtn.addEventListener('click', () => setList(listEl.hidden));
@@ -449,9 +466,35 @@ async function boot() {
   $('#vuelo-stop').addEventListener('click', () => pararVuelo(true));
   canvas.addEventListener('pointerdown', () => { if (S.vuelo) pararVuelo(false); });
 
+  // — carga por zonas: las alturas finas, la ruta y los hitos de un pico se preparan al abrirlo —
+  let openTok = 0;
+  const preparados = new Map(), zonaCarga = $('#zona-carga');
+  const avisoCarga = (txt) => { zonaCarga.textContent = txt ?? ''; zonaCarga.hidden = !txt; };
+  function cargarZona(p) {
+    if (!preparados.has(p.id)) preparados.set(p.id, (async () => {
+      const datos = rutaDatos[p.id] ?? [];
+      const pts = [p.q]; for (const r of datos) for (const q of r.puntos) pts.push(geo.toXZ(q[0], q[1]));
+      await terrain.asegurar(pts, 1);
+      p.w = geo.summitNear(p.q.x, p.q.z);
+      for (const r of datos) (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: r }));
+      crearHitosDe(p.id);
+    })());
+    return preparados.get(p.id);
+  }
+  // cumbre sin ficha todavía: se puede ver la zona (vista previa) y sale «Próximamente»
+  function verPrevia(p) {
+    if (S.mode !== 'explore') return;
+    closeFicha();
+    flyTo({ t: new THREE.Vector3(p.w.x, p.w.y - 300, p.w.z), theta: -0.45, phi: 1.0, r: 15000 }, { shift: { x: 0, y: 0 } });
+    avisoCarga(`${p.nombre}: próximamente`); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
+  }
   async function openPeak(id, { instant = false, hash = true } = {}) {
-    const p = byId[id]; if (!p) return;
-    pararVuelo(false); S.active = id; setList(false);
+    const p = byId[id]; if (!p || !p.activo) return;
+    pararVuelo(false); setList(false);
+    const tok = ++openTok, t = setTimeout(() => avisoCarga('Cargando la zona…'), 300);
+    try { await cargarZona(p); } finally { clearTimeout(t); avisoCarga(null); }
+    if (tok !== openTok) return;
+    S.active = id;
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
@@ -518,7 +561,7 @@ async function boot() {
   // — acerca de —
   const about = $('#about');
   function buildAbout() {
-    const usadas = peaks.map((p) => ({ p, f: fotos[p.foto] }));
+    const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] }));
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Por ahora incluye el Balaitús; el resto de las grandes cumbres se irá añadiendo.</p>
@@ -532,16 +575,31 @@ async function boot() {
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Recorrido y hitos</h3>
-      <ul>${Object.values(rutas).flat().map((R) => `<li>${esc(R.ruta.nombre)}: vista previa orientativa del track de <a href="${esc(R.ruta.autorUrl)}" target="_blank" rel="noopener">${esc(R.ruta.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(R.ruta.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
-      <li>Los hitos del recorrido salen de los puntos marcados en los tracks de aldaieta y de atiempo (Wikiloc).</li></ul>
+      <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
+      <li>Los hitos del recorrido salen de los puntos marcados en los tracks de sus autores (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
-      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
       <h3>Seguridad</h3>
       <p>Esta web no sustituye a una guía, a un parte de condiciones ni a la experiencia en alta montaña. Consulta siempre la previsión y el estado de la ruta antes de salir.</p>`;
   }
   buildAbout();
+
+  // pantalla de inicio: elegir una cumbre por zonas (las activas, primero; las demás, «Próximamente»)
+  function irDesdeInicio(id) {
+    if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }
+    S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out');
+    openPeak(id);
+  }
+  (function buildIntro() {
+    const zonas = data.macizos.map((m) => ({ m, ps: peaks.filter((p) => p.macizo === m.id).sort((a, b) => b.altitud - a.altitud) })).filter((z) => z.ps.length)
+      .sort((a, b) => b.ps.filter((p) => p.activo).length - a.ps.filter((p) => p.activo).length);
+    $('#intro-picos').innerHTML = zonas.map((z) => `<div class="zona"><h2>${esc(z.m.nombre)}</h2>${z.ps.map((p) => p.activo
+      ? `<button type="button" data-ir="${p.id}"><span>${esc(p.nombre)}</span><i>${fmt(p.altitud)} m</i></button>`
+      : `<span class="prox"><span>${esc(p.nombre)}</span><i>Próximamente</i></span>`).join('')}</div>`).join('');
+    $('#intro-picos').addEventListener('click', (e) => { const b = e.target.closest('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); });
+  })();
   $('#btn-about').addEventListener('click', () => about.showModal());
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
 
