@@ -64,14 +64,6 @@
   "nota": "Bifurcación del camino hacia el pico Arriel. Altitud del GPS del track: 1.641 m."
  },
  {
-  "id": "tornalizas",
-  "nombre": "Tornalizas",
-  "tipo": "lugar",
-  "lat": 42.804861,
-  "lon": -0.336472,
-  "nota": "Nombre abreviado en el track. Altitud del GPS del track: 1.482 m."
- },
- {
   "id": "ermita",
   "nombre": "Ermita",
   "tipo": "lugar",
@@ -102,22 +94,6 @@
   "lat": 42.79731,
   "lon": -0.332619,
   "nota": "Bifurcación marcada en el track, cerca de La Sarra. Punto marcado en el track de atiempo (Wikiloc)."
- },
- {
-  "id": "parque-1",
-  "nombre": "Parque Natural (1)",
-  "tipo": "lugar",
-  "lat": 42.819477,
-  "lon": -0.334894,
-  "nota": "Marca del track con el nombre «PNATURA». Punto marcado en el track de atiempo (Wikiloc)."
- },
- {
-  "id": "parque-2",
-  "nombre": "Parque Natural (2)",
-  "tipo": "lugar",
-  "lat": 42.821146,
-  "lon": -0.331948,
-  "nota": "Marca del track con el nombre «PNATURA». Punto marcado en el track de atiempo (Wikiloc)."
  },
  {
   "id": "barranco-1",
