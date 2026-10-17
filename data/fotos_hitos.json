@@ -273,5 +273,49 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "perdido-escupidera1": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 40%"
+ },
+ "perdido-escupidera2": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+  "fuente": "su ficha de Wikiloc",
+  "w": 900,
+  "h": 1200,
+  "pos": "50% 40%"
+ },
+ "perdido-lago": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "perdido-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

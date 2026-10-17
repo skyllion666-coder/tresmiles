@@ -3,7 +3,8 @@
     "balaitus",
     "vignemale",
     "infiernos",
-    "garmo"
+    "garmo",
+    "perdido"
   ],
   "macizos": [
     {
@@ -101,14 +102,26 @@
       "lat": 42.675583,
       "lon": 0.034389,
       "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
-      "ruta": "Refugio de Góriz → Cuello de Góriz → Lago Helado → La Escupidera → cumbre",
+      "ruta": "Refugio de Góriz → Paso de las Cadenas → Lago Helado → La Escupidera → antecima → cumbre",
       "desnivel": "≈ 1.150 m desde Góriz",
       "dificultad": "alta",
       "grado": "F/PD · La Escupidera exige cuidado",
       "epoca": "Julio – septiembre",
       "descripcion": "Tercera cumbre del Pirineo y corazón del Parque Nacional de Ordesa y Monte Perdido, Patrimonio Mundial. Es uno de los macizos calcáreos más altos de Europa. La Escupidera, una fuerte pendiente de piedra suelta antes del último nevero, es el tramo que más accidentes causa: infórmate del estado en Góriz.",
       "foto": "perdido",
-      "pie": "El macizo de Monte Perdido desde la Senda de los Cazadores (Ordesa)."
+      "pie": "El macizo de Monte Perdido desde la Senda de los Cazadores (Ordesa).",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/monte-perdido-3355-m-por-refugio-de-goriz-19962849",
+        "texto": "Ver la ruta en Wikiloc: Monte Perdido (3.355 m) por el refugio de Góriz, de ᗩᒪTEᑕᗩ"
+      },
+      "rutas": [
+        "perdido-goriz"
+      ],
+      "fotoCima": {
+        "foto": "perdido-cima",
+        "pie": "El vértice de la cima, cubierto de banderas y pañuelos."
+      },
+      "curiosidad": "Monte Perdido es el macizo calcáreo más alto de Europa. Su primera ascensión documentada fue en 1802, de los guías Laurens y Rondo, pagados por el naturalista Louis Ramond de Carbonnières, que había fracasado en varios intentos (la fecha del primer éxito no está del todo clara)."
     },
     {
       "id": "cilindro",

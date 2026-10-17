@@ -589,5 +589,70 @@
   "nota": "Tramo alto de la subida, con vistas hacia el este. Altitud del GPS del track: 2.850 m.",
   "foto": "garmo-alto",
   "pie": "Vista desde el tramo alto de la subida, con las cumbres del fondo."
+ },
+ {
+  "id": "goriz",
+  "pico": "perdido",
+  "nombre": "Refugio de Góriz",
+  "tipo": "refugio",
+  "lat": 42.662585,
+  "lon": 0.015403,
+  "nota": "Refugio de Góriz, punto de partida del recorrido. Altitud del GPS del track: 2.172 m.",
+  "inicio": true,
+  "picos": [
+   "perdido",
+   "cilindro"
+  ]
+ },
+ {
+  "id": "cadenas",
+  "pico": "perdido",
+  "nombre": "Paso de las Cadenas",
+  "tipo": "paso",
+  "lat": 42.67768,
+  "lon": 0.02641,
+  "nota": "Tramo equipado con cadenas. Altitud del GPS del track: 2.897 m."
+ },
+ {
+  "id": "lago-helado",
+  "pico": "perdido",
+  "nombre": "Lago Helado",
+  "tipo": "ibon",
+  "lat": 42.680542,
+  "lon": 0.026715,
+  "nota": "Lago Helado de Monte Perdido. Altitud del GPS del track: 2.990 m.",
+  "foto": "perdido-lago",
+  "pie": "El Lago Helado, visto desde arriba, en otoño."
+ },
+ {
+  "id": "escupidera-inicio",
+  "pico": "perdido",
+  "nombre": "Inicio de la Escupidera",
+  "tipo": "paso",
+  "lat": 42.67747,
+  "lon": 0.031345,
+  "nota": "Aquí empieza la Escupidera, una fuerte pendiente de piedra suelta. Altitud del GPS del track: 3.137 m.",
+  "foto": "perdido-escupidera1",
+  "pie": "El inicio de la Escupidera, con neveros."
+ },
+ {
+  "id": "escupidera",
+  "pico": "perdido",
+  "nombre": "La Escupidera",
+  "tipo": "paso",
+  "lat": 42.677022,
+  "lon": 0.03216,
+  "nota": "Tramo de subida por la Escupidera. Altitud del GPS del track: 3.182 m.",
+  "foto": "perdido-escupidera2",
+  "pie": "La parte alta de la Escupidera."
+ },
+ {
+  "id": "antecima",
+  "pico": "perdido",
+  "nombre": "Antecima",
+  "tipo": "paso",
+  "lat": 42.676655,
+  "lon": 0.03473,
+  "nota": "Antecima antes de la cumbre. Altitud del GPS del track: 3.301 m."
  }
 ]
