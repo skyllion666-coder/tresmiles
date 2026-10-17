@@ -7,7 +7,8 @@
   "lon": -0.287902,
   "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido.",
   "foto": "respomuso",
-  "pico": "balaitus"
+  "pico": "balaitus",
+  "inicio": true
  },
  {
   "id": "cueva",
@@ -250,7 +251,8 @@
   "lat": 42.757286,
   "lon": -0.094033,
   "nota": "Punto de partida del recorrido, con panel de información. Altitud del GPS del track: 1.843 m.",
-  "foto": "ossoue-lago"
+  "foto": "ossoue-lago",
+  "inicio": true
  },
  {
   "id": "ossoue-llanos",
@@ -385,7 +387,8 @@
   "picos": [
    "infiernos",
    "garmo"
-  ]
+  ],
+  "inicio": true
  },
  {
   "id": "casa-piedra",

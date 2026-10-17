@@ -179,13 +179,13 @@ async function boot() {
   const hitos = (await json('data/hitos.json').catch(() => [])).map((h) => {
     const q = geo.toXZ(h.lon, h.lat);
     if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
-    const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
+    const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
     el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
     if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
     // km del hito sobre la ruta de cada cumbre a la que pertenece (h.picos, o h.pico)
     const picos = h.picos ?? [h.pico ?? 'balaitus'], kms = {};
     for (const id of picos) { const R0 = rutasDe(id)[0], ps = R0 ? R0.pasos(q.x, q.z) : []; if (ps.length) kms[id] = ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`; }
-    const tipoTxt = TIPO_HITO[h.tipo] ?? '';
+    const tipoTxt = h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? '');
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
@@ -213,7 +213,7 @@ async function boot() {
       const dist = camera.position.distanceTo(hitoTmp);
       // solo los hitos de la cumbre abierta (o compartidos con ella)
       let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 9500;
-      if (show && o.last !== S.active) { o.last = S.active; o.el.querySelector('em').textContent = o.tipoTxt + (o.kms[S.active] ?? ''); }
+      if (show && o.last !== S.active) { o.last = S.active; o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : (o.kms[S.active] ?? '')); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');

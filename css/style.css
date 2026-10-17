@@ -108,10 +108,9 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin-label { position: absolute; top: 36px; left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: var(--cream); color: var(--ink); padding: 5px 10px; font: 600 .72rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .25s; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
 .pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: var(--ink-2); }
 .pin:hover .pin-label, .pin:focus-visible .pin-label, .pin.show-label .pin-label { opacity: 1; }
-.pin.is-other { background: rgba(255,255,255,.55); }
-.pin.is-other .pin-label { font-size: .86rem; background: rgba(247,242,230,.5); color: rgba(36,48,44,.85); box-shadow: none; backdrop-filter: blur(2px); opacity: .75; }
-.pin.is-other .pin-label i { color: rgba(36,48,44,.7); }
-.pin.is-other:hover .pin-label { opacity: 1; background: var(--cream); }
+.pin.is-other { background: rgba(255,255,255,.6); }
+.pin.is-other .pin-label, .pin.is-other.show-label .pin-label { opacity: 0; }   /* solo el punto: el nombre sale al pasar el ratón o al enfocar */
+.pin.is-other:hover .pin-label, .pin.is-other:focus-visible .pin-label { opacity: 1; }
 @keyframes ping { 0% { transform: scale(.7); opacity: .9; } 80%, 100% { transform: scale(1.5); opacity: 0; } }
 
 /* — ficha — */
@@ -211,6 +210,8 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .hito-btn:hover i, .hito.is-open i { transform: rotate(45deg) scale(1.35); }
 .hito-btn:focus-visible { outline: 2px solid #fffbe7; outline-offset: -4px; }
 .hito-paso i { background: #456a4b; } .hito-vivac i { background: #5d7480; } .hito-ibon i { background: #3f7f93; } .hito-barranco i { background: #8a7a5c; } .hito-lugar i { background: #7a6f86; }
+.hito-inicio i { background: #2f9e4f; width: 13px; height: 13px; border-radius: 50%; transform: none; }
+.hito-inicio .hito-btn:hover i, .hito-inicio.is-open i { transform: scale(1.35); }
 .hito-cima i { background: #fffbe7; border-color: #456a4b; }
 .hito b { order: 1; display: none; white-space: nowrap; text-align: center; font: 600 .68rem/1.25 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.88); padding: 4px 8px; margin-bottom: 2px; }
 .hito b em { display: block; font-style: normal; font-weight: 500; letter-spacing: .08em; text-transform: none; opacity: .8; }
