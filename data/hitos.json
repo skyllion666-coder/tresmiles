@@ -284,7 +284,11 @@
   "lon": -0.094033,
   "nota": "Punto de partida del recorrido, con panel de información. Altitud del GPS del track: 1.843 m.",
   "foto": "ossoue-lago",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "ossoue-llanos",
@@ -295,7 +299,11 @@
   "lon": -0.102137,
   "nota": "Llanos que se cruzan al principio del valle. Altitud del GPS del track: 1.844 m.",
   "foto": "w-ossoue-llanos",
-  "pie": "Los llanos de Ossoue, con la cresta al fondo."
+  "pie": "Los llanos de Ossoue, con la cresta al fondo.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "ossoue-puente",
@@ -306,7 +314,11 @@
   "lon": -0.108397,
   "nota": "Puente en el camino del valle. Altitud del GPS del track: 1.866 m.",
   "foto": "w-ossoue-puente",
-  "pie": "El puente sobre el torrente en los llanos de Ossoue."
+  "pie": "El puente sobre el torrente en los llanos de Ossoue.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "ossoue-cascada",
@@ -316,7 +328,11 @@
   "lat": 42.764177,
   "lon": -0.112084,
   "nota": "Cascada junto al camino. Altitud del GPS del track: 1.938 m.",
-  "foto": "cascada"
+  "foto": "cascada",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "vig-vista-glaciar",
@@ -326,7 +342,11 @@
   "lat": 42.77554,
   "lon": -0.11938,
   "nota": "Desde aquí se ve por primera vez el glaciar. Altitud del GPS del track: 2.369 m.",
-  "foto": "ossoue-glaciar-vista"
+  "foto": "ossoue-glaciar-vista",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "grottes-belleveu",
@@ -337,7 +357,11 @@
   "lon": -0.121589,
   "nota": "Abrigos bajo roca junto al camino. Nombre tal como figura en el track. Altitud del GPS del track: 2.412 m.",
   "foto": "w-grottes-belleveu",
-  "pie": "La entrada de una de las grutas de Belleveu."
+  "pie": "La entrada de una de las grutas de Belleveu.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "desvio-baysellance",
@@ -348,7 +372,11 @@
   "lon": -0.122618,
   "nota": "Bifurcación hacia el refugio de Baysellance. Altitud del GPS del track: 2.442 m.",
   "foto": "baysellance",
-  "pie": "El refugio de Baysellance, con el Vignemale al fondo."
+  "pie": "El refugio de Baysellance, con el Vignemale al fondo.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "entrada-glaciar",
@@ -359,7 +387,11 @@
   "lon": -0.13121,
   "nota": "Aquí se calzan los crampones. Altitud del GPS del track: 2.688 m.",
   "foto": "ossoue-serac",
-  "pie": "Una fotografía antigua de Eugène Trutat: los séracs del glaciar de Ossoue. Desde entonces el glaciar ha retrocedido mucho."
+  "pie": "Una fotografía antigua de Eugène Trutat: los séracs del glaciar de Ossoue. Desde entonces el glaciar ha retrocedido mucho.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "glaciar-exigente",
@@ -370,7 +402,11 @@
   "lon": -0.135275,
   "nota": "Tramo más exigente de la travesía del glaciar. Altitud del GPS del track: 2.753 m.",
   "foto": "glaciar",
-  "pie": "Una pendiente del glaciar de Ossoue, mirando hacia arriba."
+  "pie": "Una pendiente del glaciar de Ossoue, mirando hacia arriba.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "vig-grottes-russell",
@@ -381,7 +417,11 @@
   "lon": -0.145013,
   "nota": "Punto con vistas al collado de la Cerbillona y a las Grottes Henry Russell. Altitud del GPS del track: 3.167 m.",
   "foto": "russell",
-  "pie": "Henry Russell y sus guías posando ante las grutas, en una fotografía antigua."
+  "pie": "Henry Russell y sus guías posando ante las grutas, en una fotografía antigua.",
+  "picos": [
+   "vignemale",
+   "montferrat"
+  ]
  },
  {
   "id": "base-vignemale",
@@ -395,7 +435,8 @@
   "pie": "El Gran Vignemale al amanecer.",
   "picos": [
    "vignemale",
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ]
  },
  {
@@ -410,7 +451,8 @@
   "pie": "Las trepadas de roca bajo el Vignemale.",
   "picos": [
    "vignemale",
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ]
  },
  {
@@ -425,7 +467,8 @@
   "pie": "Placa en recuerdo del conde Henry Russell, «creador de los abrigos del Vignemale», junto a la entrada de la gruta.",
   "picos": [
    "vignemale",
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ]
  },
  {
@@ -3540,7 +3583,8 @@
   "id": "cer-central",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ],
   "nombre": "Pic Central",
   "tipo": "cima",
@@ -3554,7 +3598,8 @@
   "id": "cer-lister",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ],
   "nombre": "Col Lady Lister",
   "tipo": "paso",
@@ -3566,7 +3611,8 @@
   "id": "cer-cima",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ],
   "nombre": "Pico Cerbillona",
   "tipo": "cima",
@@ -3578,12 +3624,25 @@
   "id": "cer-col",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "montferrat"
   ],
   "nombre": "Col de Cerbillona",
   "tipo": "paso",
   "lat": 42.770913,
   "lon": -0.15022,
   "nota": "Collado de unos 3.195 m junto a la Cerbillona."
+ },
+ {
+  "id": "mon-cima",
+  "pico": "montferrat",
+  "picos": [
+   "montferrat"
+  ],
+  "nombre": "Pico Montferrat",
+  "tipo": "cima",
+  "lat": 42.766628,
+  "lon": -0.138288,
+  "nota": "Cumbre de 3.219 m según OpenStreetMap; el track pasa a pocos metros. Altitud del GPS del track: 3.252 m."
  }
 ]

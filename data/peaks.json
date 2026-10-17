@@ -41,7 +41,8 @@
   "diente-alba",
   "araguells",
   "espalda-aneto",
-  "cerbillona"
+  "cerbillona",
+  "montferrat"
  ],
  "macizos": [
   {
@@ -1407,6 +1408,34 @@
     "pie": "El Pic Central, con nieve en su cumbre."
    },
    "curiosidad": "Según SummitPost, el collado que separa la Cerbillona del Pic Central se llama Col Lady Lister porque una mujer con ese nombre fue la primera en escalar el macizo por este punto, a la salida del famoso corredor de la Moskowa. Cerca del collado de Cerbillona están las Grutas Russell, donde el pirineísta Henry Russell se instalaba por temporadas."
+  },
+  {
+   "id": "montferrat",
+   "nombre": "Pico Montferrat",
+   "alias": "Pic de Montferrat · Montferrato",
+   "altitud": 3219,
+   "otras": "3.252 m (GPS del track)",
+   "macizo": "vig",
+   "frontera": true,
+   "lat": 42.766628,
+   "lon": -0.138288,
+   "acceso": "Valle de Ossoue (Francia) · presa de Ossoue",
+   "ruta": "Presa de Ossoue → llanos de Ossoue → refugio de Baysellance → glaciar de Ossoue → Vignemale (Pique Longue) → Cerbillona y Pic Central → Montferrat → vuelta por el glaciar",
+   "desnivel": "≈ 1.970 m desde la presa de Ossoue (19 km ida y vuelta)",
+   "dificultad": "muy-alta",
+   "grado": "AD · glaciar y cresta",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre fronteriza que cierra por el sur la cresta de las grandes cumbres del Vignemale. La ruta recorre la «corona»: sube por el glaciar de Ossoue hasta el Vignemale y enlaza con la Cerbillona, el Pic Central y el Montferrat. Exige material de glaciar y mucha experiencia.",
+   "foto": "montferrat",
+   "pie": "El Pic Montferrat, con el glaciar a sus pies.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/corona-del-vignemale-pique-longue-montferrat-desde-ossoue-por-bayssellance-28419183",
+    "texto": "Ver la ruta en Wikiloc: Corona del Vignemale (Pique Longue – Montferrat) desde Ossoue, de fermin_y_ana"
+   },
+   "rutas": [
+    "montferrat-ossoue"
+   ],
+   "curiosidad": "Una ruta clásica enlaza las cinco cumbres de la «corona» del Vignemale, todas por encima de 3.200 m: Pique Longue (3.298 m), Clot de la Hount (3.289 m), Cerbillona (3.247 m), Pic Central (3.235 m) y Montferrat (3.219 m). Según las guías, el paso por el Pic Central incluye pasajes de trepada de II y III grado."
   }
  ]
 }
