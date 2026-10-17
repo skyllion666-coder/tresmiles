@@ -5,7 +5,8 @@
   "tipo": "refugio",
   "lat": 42.816932,
   "lon": -0.287902,
-  "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido."
+  "nota": "Refugio guardado a 2.208 m, junto al embalse. Punto de partida del recorrido.",
+  "foto": "respomuso"
  },
  {
   "id": "cueva",
@@ -21,7 +22,8 @@
   "tipo": "paso",
   "lat": 42.83878,
   "lon": -0.29447,
-  "nota": "Aquí arranca la travesía de la Gran Diagonal. Altitud del GPS del track: 2.862 m."
+  "nota": "Aquí arranca la travesía de la Gran Diagonal. Altitud del GPS del track: 2.862 m.",
+  "foto": "gran-diagonal"
  },
  {
   "id": "ibon-chelau",
@@ -37,7 +39,8 @@
   "tipo": "ibon",
   "lat": 42.83105,
   "lon": -0.31654,
-  "nota": "Ibón de Arriel Bajo, junto al camino. Altitud del GPS del track: 2.158 m."
+  "nota": "Ibón de Arriel Bajo, junto al camino. Altitud del GPS del track: 2.158 m.",
+  "foto": "arriel-bajo"
  },
  {
   "id": "ibon-arriel-alto",
@@ -45,7 +48,8 @@
   "tipo": "ibon",
   "lat": 42.835436,
   "lon": -0.315192,
-  "nota": "Ibón de Arriel Alto, junto al recorrido. Altitud del GPS del track: 2.253 m."
+  "nota": "Ibón de Arriel Alto, junto al recorrido. Altitud del GPS del track: 2.253 m.",
+  "foto": "gran-diagonal"
  },
  {
   "id": "desvio-respomuso",

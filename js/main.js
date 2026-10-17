@@ -173,22 +173,29 @@ async function boot() {
 
   // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
   const TIPO_HITO = { refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima', ibon: 'Ibón', barranco: 'Barranco', lugar: 'Lugar' };
+  const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
+  let hitoTimer = 0;
   const hitos = (await json('data/hitos.json').catch(() => [])).map((h) => {
     const q = geo.toXZ(h.lon, h.lat);
     if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) return null;
     const el = document.createElement('span'); el.className = `hito hito-${h.tipo} is-hidden`;
-    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em></b>`;
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
+    if (h.foto && fotosHitos[h.foto]) el.classList.add('con-foto');
     const R0 = Object.values(rutas).flat()[0], ps = R0 ? R0.pasos(q.x, q.z) : [];
     if (ps.length) el.querySelector('em').textContent += ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido`;
     el.title = h.nota; $('#pins').appendChild(el);
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const abrir = !el.classList.contains('is-open');
-      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
+      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
     });
     return { h, el, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z };
   }).filter(Boolean);
-  function closeHitos() { for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
+  function fotoHito(h) {
+    const f = fotosHitos[h.foto]; if (!f) return '';
+    return `<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"><small>Foto: ${esc(f.autor)}, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">Wikimedia Commons</a></small>`;
+  }
+  function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') closeHitos(); });
   const hitoTmp = new THREE.Vector3();

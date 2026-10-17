@@ -203,6 +203,12 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .hito b { order: 1; display: none; white-space: nowrap; text-align: center; font: 600 .68rem/1.25 var(--cond); letter-spacing: .1em; text-transform: uppercase; color: #fffbe7; background: rgba(36,48,44,.88); padding: 4px 8px; margin-bottom: 2px; }
 .hito b em { display: block; font-style: normal; font-weight: 500; letter-spacing: .08em; text-transform: none; opacity: .8; }
 .hito.is-open b { display: block; }
+.hito.con-foto.is-open b { width: 260px; white-space: normal; pointer-events: auto; padding: 0 0 6px; overflow: hidden; }
+.hito.con-foto b > :not(img) { padding: 0 10px; }
+.hito.con-foto b em { margin-bottom: 4px; }
+.hito b img { display: block; width: 100%; height: auto; max-height: 190px; object-fit: cover; margin: 0 0 6px; }
+.hito b small { display: block; padding: 4px 10px 0; font: 400 .6rem/1.35 var(--sans, sans-serif); letter-spacing: 0; text-transform: none; opacity: .75; }
+.hito b small a { color: #fffbe7; }
 .hito.is-open { z-index: 5; }
 .ruta-nombre { font-family: var(--sans); font: 500 1rem/1.4 var(--sans); margin: 0 0 12px; }
 .ruta-datos { display: flex; gap: 8px; margin: 0 0 12px; }
