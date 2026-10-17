@@ -955,7 +955,11 @@
   "nota": "Parada del autobús, punto de partida del recorrido, junto al GR 11. Altitud del GPS del track: 1.960 m.",
   "foto": "tem-parada",
   "pie": "Panel del GR 11 «Puente y Refugio de Coronas», junto a la parada.",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-refugio",
@@ -966,7 +970,11 @@
   "lon": 0.621092,
   "nota": "Refugio libre junto al arranque de la ruta. Altitud del GPS del track: 1.960 m.",
   "foto": "tem-refugio",
-  "pie": "El refugio libre de pescadores, en el valle de Coronas."
+  "pie": "El refugio libre de pescadores, en el valle de Coronas.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-desvio",
@@ -977,7 +985,11 @@
   "lon": 0.626312,
   "nota": "Bifurcación de senderos hacia los ibones. Altitud del GPS del track: 2.010 m.",
   "foto": "tem-desvio",
-  "pie": "Señales con los desvíos a los ibones de Llosás y de Ballibierna."
+  "pie": "Señales con los desvíos a los ibones de Llosás y de Ballibierna.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-pradera",
@@ -988,7 +1000,11 @@
   "lon": 0.636624,
   "nota": "Pradera abierta en el valle. Altitud del GPS del track: 2.087 m.",
   "foto": "tem-pradera",
-  "pie": "La pradera, con las cumbres del fondo."
+  "pie": "La pradera, con las cumbres del fondo.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-gr11",
@@ -999,7 +1015,11 @@
   "lon": 0.641861,
   "nota": "Aquí se deja el GR 11 para subir hacia Llosás. Altitud del GPS del track: 2.200 m.",
   "foto": "tem-gr11",
-  "pie": "El cruce donde se abandona el GR 11, con la señal hacia el ibón de Llosás."
+  "pie": "El cruce donde se abandona el GR 11, con la señal hacia el ibón de Llosás.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-humedales",
@@ -1010,7 +1030,11 @@
   "lon": 0.642892,
   "nota": "Zona de humedales y praderas antes del ibón. Altitud del GPS del track: 2.214 m.",
   "foto": "tem-humedales",
-  "pie": "Los humedales de Llosás."
+  "pie": "Los humedales de Llosás.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-llosas",
@@ -1021,7 +1045,11 @@
   "lon": 0.653622,
   "nota": "Ibón de Llosás, bajo los muros de la cabecera del valle. Altitud del GPS del track: 2.480 m.",
   "foto": "tem-llosas",
-  "pie": "El ibón de Llosás."
+  "pie": "El ibón de Llosás.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-ibonet",
@@ -1032,7 +1060,11 @@
   "lon": 0.65727,
   "nota": "Pequeño ibón por encima del de Llosás. Altitud del GPS del track: 2.520 m.",
   "foto": "tem-ibonet",
-  "pie": "El Ibonet de Llosás, visto desde arriba."
+  "pie": "El Ibonet de Llosás, visto desde arriba.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-bloques",
@@ -1043,7 +1075,11 @@
   "lon": 0.661836,
   "nota": "Tramo de bloques y roca suelta bajo la cumbre. Altitud del GPS del track: 3.000 m.",
   "foto": "tem-bloques",
-  "pie": "Pedrera de bloques en la parte alta."
+  "pie": "Pedrera de bloques en la parte alta.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "tem-cima",
@@ -1054,7 +1090,11 @@
   "lon": 0.662785,
   "nota": "Cumbre del Pico de Tempestades. Altitud del GPS del track: 3.264 m.",
   "foto": "tem-cima",
-  "pie": "Vista desde la cima de Tempestades, con las crestas del macizo."
+  "pie": "Vista desde la cima de Tempestades, con las crestas del macizo.",
+  "picos": [
+   "tempestades",
+   "margalida"
+  ]
  },
  {
   "id": "pos-parking",
@@ -1741,20 +1781,6 @@
   "nota": "Primer resalte de trepada tras salir de Góriz. Altitud del GPS del track: 2.364 m."
  },
  {
-  "id": "mar-vivac",
-  "pico": "marbore",
-  "picos": [
-   "marbore"
-  ],
-  "nombre": "Vivac",
-  "tipo": "vivac",
-  "lat": 42.670038,
-  "lon": 0.023996,
-  "nota": "Abrigo bajo un gran bloque, junto a la subida. Altitud del GPS del track: 2.593 m.",
-  "foto": "mar-vivac",
-  "pie": "El vivac, bajo la roca."
- },
- {
   "id": "mar-ciudad",
   "pico": "marbore",
   "picos": [
@@ -1795,20 +1821,6 @@
   "nota": "Arista final, ya a la vista de la cumbre. Altitud del GPS del track: 3.182 m.",
   "foto": "mar-arista",
   "pie": "La arista final, con el Pirineo francés al fondo."
- },
- {
-  "id": "mar-cima",
-  "pico": "marbore",
-  "picos": [
-   "marbore"
-  ],
-  "nombre": "Cima del Pico de Marboré",
-  "tipo": "cima",
-  "lat": 42.692686,
-  "lon": 0.011518,
-  "nota": "Cumbre del Pico de Marboré, sobre el circo de Gavarnie. Altitud del GPS del track: 3.200 m.",
-  "foto": "mar-cima",
-  "pie": "La cumbre del Marboré, con su refugio de piedra."
  },
  {
   "id": "mar-escaleras",
@@ -3160,5 +3172,45 @@
   "nota": "Punto de la vuelta desde el que se ve ya el refugio de Góriz.",
   "foto": "ola-refugio",
   "pie": "El sendero de vuelta hacia el refugio de Góriz."
+ },
+ {
+  "id": "mar-cresta",
+  "pico": "margalida",
+  "picos": [
+   "margalida"
+  ],
+  "nombre": "Zona de ascenso a la cresta",
+  "tipo": "paso",
+  "lat": 42.624068,
+  "lon": 0.665685,
+  "nota": "Punto donde se deja la pedrera para subir a la cresta. Altitud del GPS del track: 3.178 m.",
+  "foto": "mar-cresta",
+  "pie": "Bloques de granito de la subida a la cresta."
+ },
+ {
+  "id": "mar-vivac",
+  "pico": "margalida",
+  "picos": [
+   "margalida"
+  ],
+  "nombre": "Vivac",
+  "tipo": "lugar",
+  "lat": 42.625012,
+  "lon": 0.664542,
+  "nota": "Punto de la cresta marcado como «Bivac» en el track. Altitud del GPS del track: 3.185 m."
+ },
+ {
+  "id": "mar-cima",
+  "pico": "margalida",
+  "picos": [
+   "margalida"
+  ],
+  "nombre": "Pico Margalida",
+  "tipo": "cima",
+  "lat": 42.624527,
+  "lon": 0.666,
+  "nota": "Cima de 3.241 m según las guías. Altitud del GPS del track: 3.249 m.",
+  "foto": "mar-cima",
+  "pie": "Vista desde la cima de la Margalida, con el Russell y el Vallibierna al fondo."
  }
 ]

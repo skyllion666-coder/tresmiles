@@ -1247,13 +1247,13 @@
  },
  "mar-cima": {
   "archivo": "foto del autor del track",
-  "autor": "Santialpino",
+  "autor": "Germinal V.",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-margalida-i-pico-tempestades-des-del-puen-de-coronas-massis-maladeta-oriental-84649146",
   "fuente": "su ficha de Wikiloc",
   "w": 1000,
-  "h": 562,
+  "h": 750,
   "pos": "50% 50%"
  },
  "tal-circo": {
@@ -1857,6 +1857,17 @@
   "fuente": "su ficha de Wikiloc",
   "w": 750,
   "h": 1000,
+  "pos": "50% 50%"
+ },
+ "mar-cresta": {
+  "archivo": "foto del autor del track",
+  "autor": "Germinal V.",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-margalida-i-pico-tempestades-des-del-puen-de-coronas-massis-maladeta-oriental-84649146",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 494,
   "pos": "50% 50%"
  }
 }

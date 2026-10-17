@@ -35,7 +35,8 @@
   "infierno-oriental",
   "arnales",
   "gran-facha",
-  "olas"
+  "olas",
+  "margalida"
  ],
  "macizos": [
   {
@@ -1209,6 +1210,38 @@
     "pie": "Vistas al sur desde la cima, con el cañón de Añisclo al fondo."
    },
    "curiosidad": "Según SummitPost, ocupa el puesto 208 de 212 entre los tresmiles del Pirineo por altura, junto a la Punta Passet y el Pico Simó, y le da 3.002 m, frente a los 3.022 m que figuran en Wikiloc: las fuentes difieren."
+  },
+  {
+   "id": "margalida",
+   "nombre": "Pico Margalida",
+   "alias": "Margalida · Margalide",
+   "altitud": 3241,
+   "otras": "3.258 m (artículo de 1921)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.624527,
+   "lon": 0.666,
+   "acceso": "Benasque · valle de Llauset/Remuñe · puente de Coronas",
+   "ruta": "Aparcamiento del puente de Coronas → refugio de Pescadores → pleta e ibón de Llosás → ibonet → pedreras y cresta → Margalida → cresta hacia el Tempestades",
+   "desnivel": "≈ 1.550 m desde el puente de Coronas (13 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD+ · cresta con bloques y trepadas",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Aguja de la cresta oriental de la Maladeta, entre las torres de Salenques y el Pico Tempestades. Se sube desde el puente de Coronas por el ibón de Llosás y una pedrera hasta la cresta, que se recorre con trepadas hasta la cima.",
+   "foto": "margalida",
+   "pie": "El ibón de Llosás con un pico al fondo, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-margalida-i-pico-tempestades-des-del-puen-de-coronas-massis-maladeta-oriental-84649146",
+    "texto": "Ver la ruta en Wikiloc: Pico Margalida y Pico Tempestades desde el puente de Coronas, de Germinal V."
+   },
+   "rutas": [
+    "margalida-coronas"
+   ],
+   "fotoCima": {
+    "foto": "mar-cima",
+    "pie": "Vista desde la cima de la Margalida, con el Russell y el Vallibierna al fondo."
+   },
+   "curiosidad": "Una página de SummitPost dice que el nombre se debe a Margalide, primera mujer de Henri Le Bondidier, que se lo habría dado a la cumbre; es un dato de una sola fuente, no contrastado. Un artículo catalán de 1921 la daba con 3.258 m y la describía como un gran gendarme de la cresta; hoy se da 3.241 m."
   }
  ]
 }
