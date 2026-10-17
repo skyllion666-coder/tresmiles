@@ -510,6 +510,11 @@ async function boot() {
       <li>Contornos y nombres de los ibones, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
+      <h3>Recorrido y hitos</h3>
+      <ul>${Object.values(rutas).flat().map((R) => `<li>${esc(R.ruta.nombre)}: vista previa orientativa del track de <a href="${esc(R.ruta.autorUrl)}" target="_blank" rel="noopener">${esc(R.ruta.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(R.ruta.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
+      <li>Los hitos del recorrido salen de los puntos marcados en los tracks de aldaieta y de atiempo (Wikiloc).</li></ul>
+      <h3>Fotografías de los hitos</h3>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitos.find((o) => o.h.foto === k)?.h.nombre ?? (k === 'cima' ? 'Piedra de la cima del Balaitús' : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
       <h3>Seguridad</h3>

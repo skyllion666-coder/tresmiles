@@ -56,15 +56,21 @@ js/main.js            aplicación: cámara, vuelos, marcadores, ficha, filtros, 
 js/terrain.js         relieve por bloques con nivel de detalle y texturas en dos resoluciones
 js/geo.js             lon/lat → metros locales, altura bilineal, exageración vertical (×1,3)
 js/sky.js             cielo y nubes
-js/vida.js            agua de los ibones, aves planeando y sonido ambiente (Web Audio)
+js/vida.js            agua de los ibones, aves planeando, sonido ambiente y música (Web Audio)
+js/ruta.js            recorridos GPX: línea sobre el relieve, perfil de altura y vuelo por la ruta
 data/peaks.json       fichas de las 12 cumbres y lista de las activas ("activos")
 data/fotos.json       autor, licencia y enlace de cada foto
+data/hitos.json       refugios, pasos e ibones (waypoints de los tracks y OpenStreetMap); `foto` enlaza con fotos_hitos.json
+data/fotos_hitos.json autor, licencia y fuente de las fotos de los hitos
+data/rutas/           recorridos simplificados (autor y ficha de Wikiloc obligatorios)
+audio/ambiente.mp3    música de fondo (bucle de 90 s, composición propia con VSCO-2 CE, CC0)
+img/hitos/            fotos de los hitos
 data/lagos.json       contornos y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
 data/terrain/         alturas (u16, decímetros) y texturas Sentinel-2 (512 px y 1536 px por bloque)
 img/peaks/            fotos (Wikimedia Commons)
 vendor/three/         three.js (MIT) y OrbitControls
 fonts/                Cormorant Garamond y Barlow (SIL OFL)
-tools/                scripts de preparación de datos
+tools/                scripts de preparación de datos (terreno, fotos, GPX → JSON, fotos de Commons para hitos)
 analisis/             análisis de la web de referencia (capturas y resumen)
 ```
 
