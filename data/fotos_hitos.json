@@ -608,17 +608,6 @@
   "w": 559,
   "h": 768
  },
- "prd-cima": {
-  "archivo": "foto enviada por el usuario",
-  "autor": "Aurora On The Mountains",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "",
-  "fuente": "foto enviada por el usuario",
-  "w": 400,
-  "h": 300,
-  "pos": "50% 50%"
- },
  "prd-lliterola": {
   "archivo": "foto del autor del track",
   "autor": "antonioisb62",
@@ -628,6 +617,17 @@
   "fuente": "su ficha de Wikiloc",
   "w": 1000,
   "h": 461,
+  "pos": "50% 50%"
+ },
+ "prd-cima-aurora": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Aurora On The Mountains",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "foto enviada por el usuario",
+  "w": 400,
+  "h": 300,
   "pos": "50% 50%"
  }
 }
