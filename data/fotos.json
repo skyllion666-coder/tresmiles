@@ -106,5 +106,41 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Massif_de_Batchimale_11.06.2008.jpg",
   "w": 1400,
   "h": 933
+ },
+ "astorg": {
+  "archivo": "Punta Astorg.jpg",
+  "autor": "Philippe Quéinnec",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Punta_Astorg.jpg",
+  "w": 671,
+  "h": 488
+ },
+ "coronas": {
+  "archivo": "Pico de Corones and other peaks seen from Aneto.JPG",
+  "autor": "Valugi",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pico_de_Corones_and_other_peaks_seen_from_Aneto.JPG",
+  "w": 1400,
+  "h": 931
+ },
+ "maldito": {
+  "archivo": "Punta Astorg.jpg",
+  "autor": "Philippe Quéinnec",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Punta_Astorg.jpg",
+  "w": 671,
+  "h": 488
+ },
+ "medio": {
+  "archivo": "Pico de Corones and other peaks seen from Aneto.JPG",
+  "autor": "Valugi",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pico_de_Corones_and_other_peaks_seen_from_Aneto.JPG",
+  "w": 1400,
+  "h": 931
  }
 }

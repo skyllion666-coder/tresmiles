@@ -1173,5 +1173,183 @@
   "nota": "Cumbre del Gran Bachimala, en la frontera con Francia. Altitud del GPS del track: 3.179 m.",
   "foto": "bac-cima",
   "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
+ },
+ {
+  "id": "med-ibon",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Ibón Medio de Coronas",
+  "tipo": "ibon",
+  "lat": 42.628068,
+  "lon": 0.635445,
+  "nota": "El mayor de los ibones de Coronas, en la subida. Altitud del GPS del track: 2.740 m.",
+  "foto": "med-ibon",
+  "pie": "El Ibón Medio de Coronas, con la cabecera del valle al fondo."
+ },
+ {
+  "id": "med-corredor",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Corredor de acceso a la cresta",
+  "tipo": "paso",
+  "lat": 42.63823,
+  "lon": 0.640352,
+  "nota": "Corredor de piedra suelta que da acceso a la cresta. Altitud del GPS del track: 3.211 m.",
+  "foto": "med-corredor",
+  "pie": "El corredor de acceso a la cresta."
+ },
+ {
+  "id": "med-regleta",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Paso de la «Regleta»",
+  "tipo": "paso",
+  "lat": 42.638815,
+  "lon": 0.64065,
+  "nota": "Paso de trepada de grado III, que se asegura con cuerda. Altitud del GPS del track: 3.241 m.",
+  "foto": "med-regleta",
+  "pie": "El paso de la «Regleta», que se asegura con cuerda."
+ },
+ {
+  "id": "med-maldito",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Pico Maldito",
+  "tipo": "cima",
+  "lat": 42.639577,
+  "lon": 0.641345,
+  "nota": "Primera cumbre de la cresta. Altitud del GPS del track: 3.274 m.",
+  "foto": "med-maldito",
+  "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
+ },
+ {
+  "id": "med-astorg",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Punta de Astorg",
+  "tipo": "cima",
+  "lat": 42.63945,
+  "lon": 0.64261,
+  "nota": "Segunda cumbre de la cresta. Altitud del GPS del track: 3.266 m.",
+  "foto": "med-astorg",
+  "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
+ },
+ {
+  "id": "med-collado",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Collado de Coronas",
+  "tipo": "paso",
+  "lat": 42.634083,
+  "lon": 0.653148,
+  "nota": "Collado al final de la cresta, junto a las agujas de Coronas. Altitud del GPS del track: 3.178 m.",
+  "foto": "med-collado",
+  "pie": "Los ibones desde el Collado de Coronas."
+ },
+ {
+  "id": "med-inicio",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Inicio del recorrido (Puente de Coronas)",
+  "tipo": "lugar",
+  "lat": 42.610833,
+  "lon": 0.620342,
+  "nota": "Punto de partida del recorrido, junto al refugio de pescadores. Altitud del GPS del track: 1.944 m.",
+  "inicio": true
+ },
+ {
+  "id": "med-medio",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Pico del Medio",
+  "tipo": "cima",
+  "lat": 42.638642,
+  "lon": 0.645158,
+  "nota": "Cumbre de la cresta entre el Astorg y el Pico Coronas. Altitud del GPS del track: 3.264 m."
+ },
+ {
+  "id": "med-coronas",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Pico Coronas",
+  "tipo": "cima",
+  "lat": 42.637153,
+  "lon": 0.649313,
+  "nota": "Cumbre de la cresta, ya cerca del Collado de Coronas. Altitud del GPS del track: 3.259 m."
+ },
+ {
+  "id": "med-tuca",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Tuca del Collado de Coronas",
+  "tipo": "cima",
+  "lat": 42.63596,
+  "lon": 0.650995,
+  "nota": "Pequeña cumbre sobre el Collado de Coronas. Altitud del GPS del track: 3.249 m."
+ },
+ {
+  "id": "med-aguja",
+  "pico": "maldito",
+  "picos": [
+   "maldito",
+   "astorg",
+   "medio",
+   "coronas"
+  ],
+  "nombre": "Aguja del Collado de Coronas",
+  "tipo": "cima",
+  "lat": 42.634288,
+  "lon": 0.65254,
+  "nota": "Aguja junto al Collado de Coronas. Altitud del GPS del track: 3.171 m."
  }
 ]

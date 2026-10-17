@@ -11,7 +11,11 @@
     "tempestades",
     "posets",
     "perdiguero",
-    "bachimala"
+    "bachimala",
+    "astorg",
+    "maldito",
+    "medio",
+    "coronas"
   ],
   "macizos": [
     {
@@ -437,6 +441,126 @@
         "infiernos-panticosa"
       ],
       "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente)."
+    },
+    {
+      "macizo": "ane",
+      "frontera": false,
+      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+      "dificultad": "muy-alta",
+      "grado": "Alpinismo · cresta con pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+      },
+      "rutas": [
+        "cresta-del-medio"
+      ],
+      "id": "astorg",
+      "nombre": "Punta de Astorg",
+      "alias": "Punta Astorg",
+      "altitud": 3355,
+      "otras": "Otras fuentes: 3.354 m",
+      "lat": 42.63945,
+      "lon": 0.64261,
+      "descripcion": "Cumbre de la cresta que une el Pico Maldito y el Pico del Medio, en el corazón del macizo glaciar de la Maladeta. Se visita en una travesía de cresta con pasos de trepada, no es una ascensión de senderismo.",
+      "foto": "astorg",
+      "pie": "La cresta Maldito–Punta Astorg.",
+      "fotoCima": {
+        "foto": "med-astorg",
+        "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
+      },
+      "curiosidad": "Las fuentes la dan entre 3.354 y 3.355 m, casi a la misma altura que el vecino Pico Maldito, con el que forma la cresta. Las fuentes difieren en la cifra."
+    },
+    {
+      "macizo": "ane",
+      "frontera": false,
+      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+      "dificultad": "muy-alta",
+      "grado": "Alpinismo · cresta con pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+      },
+      "rutas": [
+        "cresta-del-medio"
+      ],
+      "id": "maldito",
+      "nombre": "Pico Maldito",
+      "alias": "Pico Maldito · Pic Maudit",
+      "altitud": 3350,
+      "otras": "Otras fuentes: 3.354 m",
+      "lat": 42.639577,
+      "lon": 0.641345,
+      "descripcion": "Primera cumbre de la cresta que baja desde el Aneto hacia la Maladeta. Hay que remontar un corredor y salvar el paso de la «Regleta» (grado III) antes de pisar la cima.",
+      "foto": "maldito",
+      "pie": "La cresta Maldito–Punta Astorg.",
+      "fotoCima": {
+        "foto": "med-maldito",
+        "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
+      },
+      "curiosidad": "Su nombre evoca al de la Maladeta («montes malditos»), por el respeto que imponían estos hielos; las fuentes difieren, y lo escriben de varias formas (Maldito, Maudit, Maleït)."
+    },
+    {
+      "macizo": "ane",
+      "frontera": false,
+      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+      "dificultad": "muy-alta",
+      "grado": "Alpinismo · cresta con pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+      },
+      "rutas": [
+        "cresta-del-medio"
+      ],
+      "id": "medio",
+      "nombre": "Pico del Medio",
+      "alias": "Pic du Milieu",
+      "altitud": 3346,
+      "otras": "",
+      "lat": 42.638642,
+      "lon": 0.645158,
+      "descripcion": "Cumbre intermedia de la cresta, entre la Punta de Astorg y el Pico Coronas. Se llega con el flanqueo de un terreno muy roto.",
+      "foto": "medio",
+      "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
+      "curiosidad": "Su nombre describe su posición: queda en medio de la cresta, entre el Maldito y el Pico Coronas."
+    },
+    {
+      "macizo": "ane",
+      "frontera": false,
+      "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+      "ruta": "Puente de Coronas → ibones de Coronas → corredor → cresta: Pico Maldito, Punta de Astorg, Pico del Medio, Pico Coronas → Collado de Coronas",
+      "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+      "dificultad": "muy-alta",
+      "grado": "Alpinismo · cresta con pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Medio (Maldito, Astorg, Pico del Medio, Pico de Coronas…), de yivatosal"
+      },
+      "rutas": [
+        "cresta-del-medio"
+      ],
+      "id": "coronas",
+      "nombre": "Pico Coronas",
+      "alias": "Tuca de Corones",
+      "altitud": 3293,
+      "otras": "Otras fuentes: 3.297 m",
+      "lat": 42.637153,
+      "lon": 0.649313,
+      "descripcion": "Última cumbre importante de la cresta antes del Collado de Coronas, que lo separa del Aneto. Desde aquí se baja por el glaciar de Coronas.",
+      "foto": "coronas",
+      "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
+      "curiosidad": "Los nombres «Coronas» y «Corones» (en aranés) son el mismo: el valle, los ibones, el collado y el pico comparten raíz. Las fuentes dan 3.293 o 3.297 m."
     }
   ]
 }

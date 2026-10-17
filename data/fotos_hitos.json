@@ -1035,5 +1035,71 @@
   "w": 750,
   "h": 1000,
   "pos": "50% 50%"
+ },
+ "med-ibon": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "med-corredor": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "med-regleta": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "med-maldito": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "med-astorg": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "med-collado": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-medio-152845698",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
  }
 }
