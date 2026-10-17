@@ -83,6 +83,17 @@ async function boot() {
   // etiquetas de ibones (solo con la cámara cerca)
   const lagoEls = [];
   const añadirLagos = (nuevos) => { for (const l of nuevos) { const el = document.createElement('span'); el.className = 'lago is-hidden'; el.textContent = l.nombre; $('#pins').appendChild(el); lagoEls.push({ l, el }); } };
+  // etiquetas de pueblos y aldeas (OpenStreetMap): los grandes se ven de más lejos, las aldeas solo de cerca
+  const puebloEls = [];
+  json('data/pueblos.json').then((lista) => {
+    for (const [nombre, lon, lat, tipo, pob] of lista) {
+      const q = geo.toXZ(lon, lat);
+      if (Math.abs(q.x) > geo.W / 2 || Math.abs(q.z) > geo.D / 2) continue;
+      const grande = tipo === 'village' && pob >= 500, el = document.createElement('span');
+      el.className = `pueblo ${grande ? 'pueblo-grande' : tipo === 'hamlet' ? 'pueblo-aldea' : ''} is-hidden`; el.textContent = nombre; $('#pins').appendChild(el);
+      puebloEls.push({ x: q.x, z: q.z, lim: grande ? 42000 : tipo === 'hamlet' ? 9000 : 22000, el });
+    }
+  }).catch(() => {});
   // al llegar las alturas de un bloque se dibujan sus ibones y se afina la posición de sus cumbres
   relieve.onLevel((i, j, nivel) => {
     if (nivel > 2) return;
@@ -285,6 +296,19 @@ async function boot() {
       if (!show) o.el.classList.remove('is-open');
       if (show) o.el.classList.toggle('abajo', (-hitoTmp.y * 0.5 + 0.5) * H < (o.el.classList.contains('con-foto') ? 340 : 90));
       if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+    }
+  }
+
+  const puebloTmp = new THREE.Vector3();
+  function updatePueblos() {
+    const W = innerWidth, H = innerHeight;
+    for (const o of puebloEls) {
+      puebloTmp.set(o.x, 0, o.z);
+      let show = S.mode === 'explore' && Math.hypot(camera.position.x - o.x, camera.position.z - o.z) < o.lim;
+      if (show) { puebloTmp.y = geo.heightAt(o.x, o.z) + 6; show = camera.position.distanceTo(puebloTmp) < o.lim; }
+      if (show) { puebloTmp.project(camera); show = puebloTmp.z < 1 && Math.abs(puebloTmp.x) < 1.05 && Math.abs(puebloTmp.y) < 1.05 && !occluded({ x: o.x, y: geo.heightAt(o.x, o.z) + 10, z: o.z }); }
+      o.el.classList.toggle('is-hidden', !show);
+      if (show) o.el.style.transform = `translate3d(${((puebloTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-puebloTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
     }
   }
 
@@ -619,7 +643,7 @@ async function boot() {
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
+      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Recorrido y hitos</h3>
@@ -734,7 +758,7 @@ async function boot() {
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
-    const cerca = updateLagos(); updateHitos();
+    const cerca = updateLagos(); updateHitos(); updatePueblos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;

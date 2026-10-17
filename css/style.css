@@ -200,6 +200,14 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .ficha-body .enlace-ruta a:hover { background: var(--green, #456a4b); color: #fffbe7; }
 .lago { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); margin: -8px 0 0; translate: -50% 0; white-space: nowrap; pointer-events: none; font: italic 500 .84rem/1.2 var(--serif, 'Cormorant Garamond', serif); color: #f2fbff; text-shadow: 0 0 3px rgba(12,38,48,.95), 0 1px 6px rgba(12,38,48,.8); letter-spacing: .02em; transition: opacity .3s; will-change: transform; }
 .lago.is-hidden { opacity: 0; }
+/* pueblos y aldeas: punto + nombre en versalitas */
+.pueblo { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% 0; margin: -4px 0 0; white-space: nowrap; pointer-events: none; text-align: center; font: 600 .6rem/1 var(--cond, 'Barlow Condensed', sans-serif); letter-spacing: .16em; text-transform: uppercase; color: #fff8e6; text-shadow: 0 0 3px rgba(22,28,24,.95), 0 1px 5px rgba(22,28,24,.85); transition: opacity .3s; will-change: transform; }
+.pueblo::before { content: ""; display: block; width: 5px; height: 5px; margin: 0 auto 3px; border-radius: 50%; background: #fff8e6; box-shadow: 0 0 0 1px rgba(22,28,24,.7); }
+.pueblo-grande { font-size: .72rem; letter-spacing: .2em; }
+.pueblo-grande::before { width: 7px; height: 7px; }
+.pueblo-aldea { font-size: .54rem; letter-spacing: .12em; opacity: .9; }
+.pueblo-aldea::before { width: 4px; height: 4px; }
+.pueblo.is-hidden { opacity: 0; }
 #btn-sound .snd-off { display: block; } #btn-sound .snd-on { display: none; }
 #btn-sound.is-on .snd-off { display: none; } #btn-sound.is-on .snd-on { display: block; }
 .hito { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% -100%; display: flex; flex-direction: column; align-items: center; pointer-events: none; transition: opacity .3s; will-change: transform; }
