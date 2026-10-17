@@ -34,5 +34,15 @@
   "pagina": "",
   "w": 800,
   "h": 1422
+ },
+ "diagonal": {
+  "archivo": "foto propia",
+  "autor": "Frank (Skyllion)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 800,
+  "h": 1422,
+  "pos": "50% 60%"
  }
 }
