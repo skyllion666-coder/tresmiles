@@ -717,5 +717,59 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "aneto-col-renclusa": {
+  "archivo": "Descenso desde el Coll de la Renclusa hacia el refugio de la Reclusa (Camino de Antonio) 20180714 145923 Richtone(HDR).jpg",
+  "autor": "Josefito123",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Descenso_desde_el_Coll_de_la_Renclusa_hacia_el_refugio_de_la_Reclusa_(Camino_de_Antonio)_20180714_145923_Richtone(HDR).jpg",
+  "w": 800,
+  "h": 600
+ },
+ "prd-hospital": {
+  "archivo": "Llanos del Hospital de Benasque.jpg",
+  "autor": "Rafael Jiménez",
+  "licencia": "CC BY-SA 2.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Llanos_del_Hospital_de_Benasque.jpg",
+  "w": 600,
+  "h": 800
+ },
+ "prd-turpi": {
+  "archivo": "Benasque - Plan de Turpí - Ésera 01.jpg",
+  "autor": "Basotxerri",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Benasque_-_Plan_de_Turp%C3%AD_-_%C3%89sera_01.jpg",
+  "w": 800,
+  "h": 601
+ },
+ "inf-cascada-salto": {
+  "archivo": "Salto del pino-2.jpg",
+  "autor": "Alberto-g-rovi",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_del_pino-2.jpg",
+  "w": 600,
+  "h": 800
+ },
+ "inf-mirador-gorja": {
+  "archivo": "La gorja del Pino amb el riu Caldarés i vista de la vall.jpeg",
+  "autor": "Juli Soler i Santaló",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:La_gorja_del_Pino_amb_el_riu_Caldar%C3%A9s_i_vista_de_la_vall.jpeg",
+  "w": 800,
+  "h": 589
+ },
+ "vig-base-sol": {
+  "archivo": "Grand Vignemale au soleil levant.jpg",
+  "autor": "Philippe Manael",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Grand_Vignemale_au_soleil_levant.jpg",
+  "w": 800,
+  "h": 536
  }
 }

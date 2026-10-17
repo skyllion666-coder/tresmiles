@@ -354,7 +354,9 @@
   "tipo": "paso",
   "lat": 42.772901,
   "lon": -0.147728,
-  "nota": "Aquí se quitan los crampones, al pie de la parte rocosa. Altitud del GPS del track: 3.172 m."
+  "nota": "Aquí se quitan los crampones, al pie de la parte rocosa. Altitud del GPS del track: 3.172 m.",
+  "foto": "vig-base-sol",
+  "pie": "El Gran Vignemale al amanecer."
  },
  {
   "id": "vig-trepadas",
@@ -410,7 +412,9 @@
   "tipo": "lugar",
   "lat": 42.763944,
   "lon": -0.232596,
-  "nota": "Mirador sobre el valle, al inicio de la subida. Altitud del GPS del track: 1.729 m."
+  "nota": "Mirador sobre el valle, al inicio de la subida. Altitud del GPS del track: 1.729 m.",
+  "foto": "inf-mirador-gorja",
+  "pie": "La garganta del Pino y el valle del Caldarés, en una fotografía antigua."
  },
  {
   "id": "inf-cascada",
@@ -419,7 +423,9 @@
   "tipo": "lugar",
   "lat": 42.765492,
   "lon": -0.2312,
-  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.777 m."
+  "nota": "Cascada junto al camino. Altitud del GPS del track: 1.777 m.",
+  "foto": "inf-cascada-salto",
+  "pie": "El Salto del Pino, en el río Caldarés."
  },
  {
   "id": "cuesta-fraile",
@@ -706,7 +712,9 @@
   "tipo": "paso",
   "lat": 42.666647,
   "lon": 0.654212,
-  "nota": "Collado en el camino entre el refugio y el ibón de Salterillo. Altitud del GPS del track: 2.263 m."
+  "nota": "Collado en el camino entre el refugio y el ibón de Salterillo. Altitud del GPS del track: 2.263 m.",
+  "foto": "aneto-col-renclusa",
+  "pie": "El refugio de La Renclusa visto desde el collado, en la bajada."
  },
  {
   "id": "aneto-panoramica",
@@ -955,7 +963,9 @@
   "tipo": "lugar",
   "lat": 42.683841,
   "lon": 0.609611,
-  "nota": "Parking de Llanos del Hospital, donde termina el recorrido. Altitud del GPS del track: 1.749 m."
+  "nota": "Parking de Llanos del Hospital, donde termina el recorrido. Altitud del GPS del track: 1.749 m.",
+  "foto": "prd-hospital",
+  "pie": "Los Llanos del Hospital de Benasque, donde termina el recorrido."
  },
  {
   "id": "prd-cascada",
@@ -1023,7 +1033,9 @@
   "lat": 42.667312,
   "lon": 0.578239,
   "nota": "Primer punto registrado del track, a unos 300 m del Plan de Turpí (OpenStreetMap). Altitud del GPS del track: 1.612 m.",
-  "inicio": true
+  "inicio": true,
+  "foto": "prd-turpi",
+  "pie": "El río Ésera junto al Plan de Turpí, cerca del inicio del track."
  },
  {
   "id": "bac-refugio",
