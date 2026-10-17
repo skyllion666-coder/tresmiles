@@ -1101,5 +1101,60 @@
   "w": 1000,
   "h": 561,
   "pos": "50% 50%"
+ },
+ "esp-diente": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "esp-diente-royo": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 351,
+  "pos": "50% 50%"
+ },
+ "esp-ibon": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 516,
+  "pos": "50% 50%"
+ },
+ "esp-pavots": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 356,
+  "pos": "50% 50%"
+ },
+ "esp-espadas": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 480,
+  "h": 640,
+  "pos": "50% 50%"
  }
 }

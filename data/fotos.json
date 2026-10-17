@@ -142,5 +142,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Pico_de_Corones_and_other_peaks_seen_from_Aneto.JPG",
   "w": 1400,
   "h": 931
+ },
+ "espadas": {
+  "archivo": "Massís muntanyós de Punta Llardaneta o Pico Espada amb congestes de neu.jpeg",
+  "autor": "Juli Soler i Santaló",
+  "licencia": "Public domain",
+  "licencia_url": "",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mass%C3%ADs_muntany%C3%B3s_de_Punta_Llardaneta_o_Pico_Espada_amb_congestes_de_neu.jpeg",
+  "w": 1024,
+  "h": 748
+ },
+ "llardaneta": {
+  "archivo": "Tuca de Llardaneta, Tuqueta Roya i Posets.jpg",
+  "autor": "Montfranc",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Tuca_de_Llardaneta,_Tuqueta_Roya_i_Posets.jpg",
+  "w": 1269,
+  "h": 861
  }
 }

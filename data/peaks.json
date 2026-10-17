@@ -15,7 +15,9 @@
     "astorg",
     "maldito",
     "medio",
-    "coronas"
+    "coronas",
+    "espadas",
+    "llardaneta"
   ],
   "macizos": [
     {
@@ -124,7 +126,7 @@
         "foto": "pos-cima",
         "pie": "Vista desde el tramo final, poco antes de la cumbre del Posets."
       },
-      "curiosidad": "Según varias fuentes, la primera ascensión fue el 6 de agosto de 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; la segunda, en 1861, de Charles Packe. Las fuentes escriben el apellido de formas distintas (Halkett o Halket)."
+      "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket)."
     },
     {
       "id": "perdido",
@@ -561,6 +563,66 @@
       "foto": "coronas",
       "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
       "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto."
+    },
+    {
+      "macizo": "pos",
+      "frontera": false,
+      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+      "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
+      "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
+      "dificultad": "alta",
+      "grado": "PD+ · cresta con dos pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+        "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
+      },
+      "rutas": [
+        "cresta-espadas"
+      ],
+      "id": "espadas",
+      "nombre": "Las Espadas",
+      "alias": "Punta Llardaneta · Pico Espadas",
+      "altitud": 3332,
+      "otras": "Otras fuentes: 3.328 m",
+      "lat": 42.649793,
+      "lon": 0.426636,
+      "descripcion": "Cumbre de la larga cresta que une Pavots con el Posets. La travesía es una clásica de iniciación a la alta montaña: casi todo es de grado II, con dos pasos de III y el aéreo Paso del Funambulista.",
+      "foto": "espadas",
+      "pie": "El macizo de Punta Llardaneta o Pico Espadas, en una fotografía antigua.",
+      "fotoCima": {
+        "foto": "esp-espadas",
+        "pie": "La cresta de Las Espadas, con su roca estratificada."
+      },
+      "curiosidad": "Su cresta hasta el Posets se recorre en una jornada larga y su tramo más característico es el Paso del Funambulista, entre las Espadas y la Tuca de Llardaneta. No hemos hallado el origen del nombre «Espadas»; las fuentes también lo citan como Llardaneta o Punta Llardaneta."
+    },
+    {
+      "macizo": "pos",
+      "frontera": false,
+      "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+      "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Diente Royo → Pavots → Las Espadas → Tuca de Llardaneta → Tuqueta Roya → Posets",
+      "desnivel": "≈ 1.900 m desde la Espigantosa (≈ 18 km, circuito con noche opcional en el refugio)",
+      "dificultad": "alta",
+      "grado": "PD+ · cresta con dos pasos de III",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+        "texto": "Ver la ruta en Wikiloc: CRESTA DE ESPADAS (POSETS), de El porquet de Sant Antoni"
+      },
+      "rutas": [
+        "cresta-espadas"
+      ],
+      "id": "llardaneta",
+      "nombre": "Tuca de Llardaneta",
+      "alias": "Mallo de la Lit · El Tuconet",
+      "altitud": 3311,
+      "otras": "",
+      "lat": 42.6525,
+      "lon": 0.430602,
+      "descripcion": "Cumbre intermedia de la cresta de las Espadas, entre el Paso del Funambulista y la Tuqueta Roya, ya a la vista del Posets.",
+      "foto": "llardaneta",
+      "pie": "La Tuca de Llardaneta, la Tuqueta Roya y el Posets.",
+      "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál."
     }
   ]
 }

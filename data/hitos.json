@@ -954,7 +954,12 @@
   "lat": 42.613877,
   "lon": 0.478393,
   "nota": "Punto de partida del recorrido, en el valle de Eriste. Altitud del GPS del track: 1.531 m.",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "posets",
+   "espadas",
+   "llardaneta"
+  ]
  },
  {
   "id": "pos-cascada",
@@ -976,7 +981,12 @@
   "lon": 0.45739,
   "nota": "Refugio guardado a 2.150 m, en el valle de Eriste. Aquí se pernocta antes de subir al Posets.",
   "foto": "pos-orus",
-  "pie": "El refugio Ángel Orús, en el valle de Eriste."
+  "pie": "El refugio Ángel Orús, en el valle de Eriste.",
+  "picos": [
+   "posets",
+   "espadas",
+   "llardaneta"
+  ]
  },
  {
   "id": "pos-diente",
@@ -1351,5 +1361,132 @@
   "lat": 42.634288,
   "lon": 0.65254,
   "nota": "Aguja junto al Collado de Coronas. Altitud del GPS del track: 3.171 m."
+ },
+ {
+  "id": "esp-diente",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Collado del Diente",
+  "tipo": "paso",
+  "lat": 42.647688,
+  "lon": 0.435738,
+  "nota": "Collado en la cresta, entre el Posets y el Diente de Llardana. Altitud del GPS del track: 3.011 m.",
+  "foto": "esp-diente",
+  "pie": "La bajada nevada desde el Collado del Diente."
+ },
+ {
+  "id": "esp-diente-royo",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Diente Royo",
+  "tipo": "cima",
+  "lat": 42.637663,
+  "lon": 0.427816,
+  "nota": "Primer resalte de la cresta, camino de Pavots. Altitud del GPS del track: 2.980 m.",
+  "foto": "esp-diente-royo",
+  "pie": "La cresta desde el Diente Royo."
+ },
+ {
+  "id": "esp-ibon",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Ibón de Llardaneta",
+  "tipo": "ibon",
+  "lat": 42.637935,
+  "lon": 0.43666,
+  "nota": "Ibón bajo la cresta, a mitad de subida. Altitud del GPS del track: 2.677 m.",
+  "foto": "esp-ibon",
+  "pie": "El Ibón de Llardaneta, con la cresta al fondo."
+ },
+ {
+  "id": "esp-pavots",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Pavots",
+  "tipo": "cima",
+  "lat": 42.640808,
+  "lon": 0.423965,
+  "nota": "Cumbre intermedia de la cresta. Altitud del GPS del track: 3.114 m.",
+  "foto": "esp-pavots",
+  "pie": "Vista de la cresta desde Pavots."
+ },
+ {
+  "id": "esp-espadas",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Las Espadas",
+  "tipo": "cima",
+  "lat": 42.649793,
+  "lon": 0.426636,
+  "nota": "Cumbre de Las Espadas, en la cresta que lleva al Posets. Altitud del GPS del track: 3.322 m.",
+  "foto": "esp-espadas",
+  "pie": "La cresta de Las Espadas, con su roca estratificada."
+ },
+ {
+  "id": "esp-funambulista",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Paso del Funambulista",
+  "tipo": "paso",
+  "lat": 42.651502,
+  "lon": 0.428687,
+  "nota": "Tramo más característico de la cresta, entre Las Espadas y la Tuca de Llardaneta. Altitud del GPS del track: 3.264 m."
+ },
+ {
+  "id": "esp-llardaneta",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Tuca de Llardaneta",
+  "tipo": "cima",
+  "lat": 42.6525,
+  "lon": 0.430602,
+  "nota": "Cumbre de la cresta, antes de la Tuqueta Roya. Altitud del GPS del track: 3.282 m."
+ },
+ {
+  "id": "esp-tuqueta",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Tuqueta Roya",
+  "tipo": "cima",
+  "lat": 42.653095,
+  "lon": 0.432729,
+  "nota": "Cumbre de la cresta, justo antes del Posets. Altitud del GPS del track: 3.256 m."
+ },
+ {
+  "id": "esp-posets",
+  "pico": "espadas",
+  "picos": [
+   "espadas",
+   "llardaneta"
+  ],
+  "nombre": "Cima del Posets",
+  "tipo": "cima",
+  "lat": 42.654655,
+  "lon": 0.435192,
+  "nota": "Final de la cresta: la cumbre del Posets. Altitud del GPS del track: 3.354 m."
  }
 ]
