@@ -208,6 +208,7 @@ async function boot() {
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');
+      if (show) o.el.classList.toggle('abajo', (-hitoTmp.y * 0.5 + 0.5) * H < (o.el.classList.contains('con-foto') ? 340 : 90));
       if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
     }
   }

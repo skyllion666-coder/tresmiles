@@ -204,6 +204,7 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .hito b em { display: block; font-style: normal; font-weight: 500; letter-spacing: .08em; text-transform: none; opacity: .8; }
 .hito.is-open b { display: block; }
 .hito.con-foto.is-open b { width: 260px; white-space: normal; pointer-events: auto; padding: 0 0 6px; overflow: hidden; }
+.hito.abajo { translate: -50% -14px; } .hito.abajo b { order: 3; margin: 2px 0 0; }
 .hito.con-foto b > :not(img) { padding: 0 10px; }
 .hito.con-foto b em { margin-bottom: 4px; }
 .hito b img { display: block; width: 100%; height: auto; max-height: 190px; object-fit: cover; margin: 0 0 6px; }
