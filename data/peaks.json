@@ -48,7 +48,8 @@
   "eriste-norte",
   "forqueta",
   "casco",
-  "robinera"
+  "robinera",
+  "culfreda"
  ],
  "macizos": [
   {
@@ -1634,6 +1635,38 @@
     "pie": "La piedra de la cima, con «ROBIÑERA 3003» grabado."
    },
    "curiosidad": "La Robiñera forma parte de la sierra de Liena, que separa los valles de Chisagüés y de Barrosa, y su cima apenas pasa los 3.000 m: OpenStreetMap la registra como «Pico de Rubiñera», con 3.001 m. Suele combinarse con La Munia en un circuito largo y exigente por el circo de Barrosa."
+  },
+  {
+   "id": "culfreda",
+   "nombre": "Pico de Culfreda",
+   "alias": "Batoua · Culfreda Batoua",
+   "altitud": 3034,
+   "otras": "3.031 m (guías francesas) · 3.035 m (PeakVisor) · 3.022 m (GPS del track)",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.708704,
+   "lon": 0.336307,
+   "acceso": "Valle de Chistau · Tabernés",
+   "ruta": "Tabernés → desvío del puerto de la Madera → puerto de la Madera → Pico Cauarère → cresta de Culfreda → Culfreda o Batoua → Culfreda Central y NE; vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.560 m desde Tabernés (19 km ida y vuelta)",
+   "dificultad": "moderada",
+   "grado": "F+ · senda, pedreras y cresta fácil",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cresta fronteriza con tres cumbres de más de 3.000 m en el límite entre Bielsa y Francia. Desde Tabernés se sube al puerto de la Madera, se pasa por el Cauarère y se sigue la cresta hasta las tres cumbres de Culfreda.",
+   "foto": "culfreda",
+   "pie": "La cresta de Culfreda, desde el Cauarère.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+    "texto": "Ver la ruta en Wikiloc: Pico Cauarère, Culfreda o Batoua, Culfreda Central y NE desde Tabernés, de yivatosal"
+   },
+   "rutas": [
+    "culfreda-tabernes"
+   ],
+   "fotoCima": {
+    "foto": "cul-cima",
+    "pie": "La cresta rocosa de Culfreda, con los picos de la frontera."
+   },
+   "curiosidad": "Culfreda es, en realidad, una cresta fronteriza orientada de suroeste a noreste con tres cumbres, y a los franceses les suena como «Batoua». La cumbre principal es oficialmente la del suroeste: la guía alpina española le da 3.034 m, las guías francesas 3.031 m y PeakVisor 3.035 m, y para la cumbre del nordeste todas coinciden en unos 3.032 m."
   }
  ]
 }

@@ -2282,5 +2282,71 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "cul-tabernes": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "cul-descanso": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "cul-madera": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "cul-foto": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "cul-rodeo": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "cul-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/2017-07-picos-culfreda-desde-tabernes-19782538",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
  }
 }

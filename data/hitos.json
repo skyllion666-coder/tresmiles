@@ -4082,5 +4082,126 @@
   "nota": "Cumbre de 3.003 m según la lista de tresmiles; OpenStreetMap da 3.001 m. Altitud del GPS del track: 2.918 m.",
   "foto": "rob-cima",
   "pie": "La piedra de la cima, con «ROBIÑERA 3003» grabado."
+ },
+ {
+  "id": "cul-tabernes",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Tabernés",
+  "tipo": "lugar",
+  "lat": 42.674015,
+  "lon": 0.360884,
+  "nota": "Punto de partida, en el valle de Chistau. Altitud del GPS del track: 1.758 m.",
+  "inicio": true,
+  "foto": "cul-tabernes",
+  "pie": "Las crestas de Culfreda vistas al amanecer desde el valle."
+ },
+ {
+  "id": "cul-descanso",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Descanso",
+  "tipo": "lugar",
+  "lat": 42.689082,
+  "lon": 0.331492,
+  "nota": "Pausa en el camino de subida. Altitud del GPS del track: 2.372 m.",
+  "foto": "cul-descanso",
+  "pie": "La cresta de Culfreda sobre la ladera de pasto."
+ },
+ {
+  "id": "cul-madera",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Puerto de la Madera",
+  "tipo": "paso",
+  "lat": 42.693004,
+  "lon": 0.323365,
+  "nota": "Collado de 2.526 m según OpenStreetMap.",
+  "foto": "cul-madera",
+  "pie": "La ladera de subida hacia el puerto, entre la niebla."
+ },
+ {
+  "id": "cul-foto",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Vistas del valle",
+  "tipo": "lugar",
+  "lat": 42.699612,
+  "lon": 0.325125,
+  "nota": "Mirador sobre el valle y las cumbres de la frontera. Altitud del GPS del track: 2.730 m.",
+  "foto": "cul-foto",
+  "pie": "El valle y las cumbres de la frontera, desde la subida."
+ },
+ {
+  "id": "cul-cauarere",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Pico Cauarère",
+  "tipo": "cima",
+  "lat": 42.705256,
+  "lon": 0.325553,
+  "nota": "Cumbre de 2.899 m según OpenStreetMap («Punta Cabalera»); el autor del track la llama «Pico Cauarère 2899 m»."
+ },
+ {
+  "id": "cul-rodeo",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Rodeo",
+  "tipo": "paso",
+  "lat": 42.707236,
+  "lon": 0.332428,
+  "nota": "Tramo en que se rodea la cresta, camino de las cumbres. Altitud del GPS del track: 2.934 m.",
+  "foto": "cul-rodeo",
+  "pie": "Las montañas de la frontera, vistas desde el rodeo."
+ },
+ {
+  "id": "cul-cima",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Culfreda o Batoua",
+  "tipo": "cima",
+  "lat": 42.708704,
+  "lon": 0.336307,
+  "nota": "Cumbre principal de 3.034 m. Altitud del GPS del track: 3.022 m.",
+  "foto": "cul-cima",
+  "pie": "La cresta rocosa de Culfreda, con los picos de la frontera."
+ },
+ {
+  "id": "cul-central",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Culfreda Central",
+  "tipo": "cima",
+  "lat": 42.709931,
+  "lon": 0.338023,
+  "nota": "Cumbre de 3.031 m según OpenStreetMap; el track la marca con 3.028 m."
+ },
+ {
+  "id": "cul-ne",
+  "pico": "culfreda",
+  "picos": [
+   "culfreda"
+  ],
+  "nombre": "Culfreda Norte",
+  "tipo": "cima",
+  "lat": 42.710503,
+  "lon": 0.339503,
+  "nota": "Cumbre de 3.033 m según OpenStreetMap; el track la llama «Culfreda NE 3032 m»."
  }
 ]
