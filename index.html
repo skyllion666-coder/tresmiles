@@ -9,7 +9,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=26">
+  <link rel="stylesheet" href="css/style.css?v=27">
   <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }</script>
 </head>
 <body class="is-loading">
@@ -28,8 +28,13 @@
     <p class="eyebrow">En el corazón del Pirineo aragonés</p>
     <h1>Los tresmiles</h1>
     <p class="lead">Una vista de pájaro a las cumbres que superan los 3.000 metros. Elige a dónde quieres ir.</p>
-    <div id="intro-picos" aria-label="Elegir una cumbre"></div>
-    <button class="cta" id="btn-start" type="button">Explorar todo el mapa</button>
+    <div class="intro-acciones">
+      <div id="intro-elegir">
+        <button class="cta" id="btn-elegir" type="button" aria-haspopup="listbox" aria-expanded="false">Elegir cumbre <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+        <div id="intro-picos" role="listbox" aria-label="Elegir una cumbre" hidden></div>
+      </div>
+      <button class="cta cta-2" id="btn-start" type="button">Explorar todo el mapa</button>
+    </div>
   </section>
 
   <div id="zona-carga" role="status" hidden></div>
@@ -78,6 +83,6 @@
   <div id="loading" role="status"><div class="load-mark"></div><p id="load-text">Cargando el relieve…</p></div>
   <noscript><p class="noscript">Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.</p></noscript>
 
-  <script type="module" src="js/main.js?v=72"></script>
+  <script type="module" src="js/main.js?v=73"></script>
 </body>
 </html>

@@ -593,12 +593,28 @@ async function boot() {
     openPeak(id);
   }
   (function buildIntro() {
-    const zonas = data.macizos.map((m) => ({ m, ps: peaks.filter((p) => p.macizo === m.id).sort((a, b) => b.altitud - a.altitud) })).filter((z) => z.ps.length)
-      .sort((a, b) => b.ps.filter((p) => p.activo).length - a.ps.filter((p) => p.activo).length);
-    $('#intro-picos').innerHTML = zonas.map((z) => `<div class="zona"><h2>${esc(z.m.nombre)}</h2>${z.ps.map((p) => p.activo
-      ? `<button type="button" data-ir="${p.id}"><span>${esc(p.nombre)}</span><i>${fmt(p.altitud)} m</i></button>`
-      : `<span class="prox"><span>${esc(p.nombre)}</span><i>Próximamente</i></span>`).join('')}</div>`).join('');
-    $('#intro-picos').addEventListener('click', (e) => { const b = e.target.closest('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); });
+    const lista = $('#intro-picos'), btn = $('#btn-elegir');
+    const norm2 = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+    lista.innerHTML = '<input id="intro-q" type="search" placeholder="Buscar cumbre…" autocomplete="off" spellcheck="false" aria-label="Buscar cumbre"><div id="intro-zonas"></div>';
+    const q = $('#intro-q'), cont = $('#intro-zonas');
+    function pinta() {
+      const f = norm2(q.value.trim());
+      const zonas = data.macizos.map((m) => ({ m, ps: peaks.filter((p) => p.macizo === m.id && (!f || norm2(`${p.nombre} ${p.alias} ${m.nombre}`).includes(f))).sort((a, b) => b.altitud - a.altitud) })).filter((z) => z.ps.length)
+        .sort((a, b) => b.ps.filter((p) => p.activo).length - a.ps.filter((p) => p.activo).length);
+      cont.innerHTML = zonas.length ? zonas.map((z, k) => {
+        const act = z.ps.filter((p) => p.activo).length;
+        return `<details${(k === 0 && act) || f ? ' open' : ''}><summary>${esc(z.m.nombre)}<small>${act ? `${act} disponible${act > 1 ? 's' : ''}` : 'Próximamente'}</small></summary>${z.ps.map((p) => p.activo
+          ? `<button type="button" role="option" data-ir="${p.id}"><span>${esc(p.nombre)}</span><i>${fmt(p.altitud)} m</i></button>`
+          : `<span class="prox"><span>${esc(p.nombre)}</span><i>Próximamente</i></span>`).join('')}</details>`;
+      }).join('') : '<p class="empty">Ninguna cumbre coincide.</p>';
+    }
+    pinta();
+    const abre = (v) => { lista.hidden = !v; btn.setAttribute('aria-expanded', v); if (v) { q.value = ''; pinta(); if (matchMedia('(hover: hover)').matches) q.focus(); } };
+    btn.addEventListener('click', () => abre(lista.hidden));
+    q.addEventListener('input', pinta);
+    q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = cont.querySelector('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); } if (e.key === 'Escape') abre(false); e.stopPropagation(); });
+    lista.addEventListener('click', (e) => { const b = e.target.closest('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); });
+    document.addEventListener('pointerdown', (e) => { if (!lista.hidden && !e.target.closest('#intro-elegir')) abre(false); });
   })();
   $('#btn-about').addEventListener('click', () => about.showModal());
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
