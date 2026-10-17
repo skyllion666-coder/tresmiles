@@ -5,6 +5,7 @@ import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=13';
+import { crearFauna } from './fauna.js?v=1';
 import { cargarRuta, crearRuta } from './ruta.js?v=29';
 
 const $ = (s) => document.querySelector(s);
@@ -67,6 +68,8 @@ async function boot() {
   const activas = new Set(peaks.filter((p) => p.activo).map((p) => p.id));
   const bal = peaks.find((p) => p.id === 'balaitus');
   const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
+  const pDef = byId.perdido || bal;
+  const fauna = pDef && !reduced ? crearFauna({ scene, geo, centro: { x: pDef.w.x, z: pDef.w.z }, camera }) : null;
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
@@ -566,7 +569,7 @@ async function boot() {
     const tok = ++openTok, t = setTimeout(() => avisoCarga('Cargando la zona…'), 300);
     try { await cargarZona(p); } finally { clearTimeout(t); avisoCarga(null); }
     if (tok !== openTok) return;
-    S.active = id;
+    S.active = id; fauna?.setCentro(p.w.x, p.w.z);
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
@@ -591,7 +594,7 @@ async function boot() {
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
   addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
-  const goHome = () => { pararVuelo(false); S.active = null; pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  const goHome = () => { pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { closeFicha(); goHome(); } });
 
@@ -643,7 +646,7 @@ async function boot() {
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
+      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos 3D es un modelo propio hecho con Blender. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Recorrido y hitos</h3>
@@ -756,7 +759,7 @@ async function boot() {
     clouds.update(dt, camera, !reduced);
     updatePins();
     const tt = now / 1000;
-    lagos?.update(tt); aves?.update(tt);
+    lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     const cerca = updateLagos(); updateHitos(); updatePueblos();
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
@@ -767,7 +770,7 @@ async function boot() {
   }
   requestAnimationFrame(frame);
   document.body.classList.remove('is-loading');
-  window.tresmiles = { nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, lagos, sonido, rutas };
+  window.tresmiles = { nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {
