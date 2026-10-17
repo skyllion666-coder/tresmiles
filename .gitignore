@@ -7,3 +7,6 @@ __pycache__/
 # Tracks de terceros: solo uso local, no se publican
 data/rutas/local/
 *.gpx
+
+# Notas privadas de relevo (copia local, no se publican)
+NOTAS.md
