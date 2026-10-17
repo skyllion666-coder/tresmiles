@@ -4,7 +4,8 @@
     "vignemale",
     "infiernos",
     "garmo",
-    "perdido"
+    "perdido",
+    "cilindro"
   ],
   "macizos": [
     {
@@ -141,7 +142,19 @@
       "epoca": "Mediados de junio – septiembre",
       "descripcion": "Su silueta de torre cortada en seco, sobre el Lago Helado, es de las imágenes más reconocibles del Pirineo. Comparte camino con el Monte Perdido hasta el Cuello del Cilindro, donde un paso de II grado de unos 20–30 metros suele resolverse con cuerda.",
       "foto": "cilindro",
-      "pie": "El Cilindro de Marboré."
+      "pie": "El Cilindro de Marboré.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/b-ref-goriz-cilindro-de-marbore-pico-marbore-ref-goriz-7792890",
+        "texto": "Ver la ruta en Wikiloc: Cilindro de Marboré y Pico Marboré desde Góriz, de malexluces"
+      },
+      "rutas": [
+        "cilindro-goriz"
+      ],
+      "fotoCima": {
+        "foto": "cil-cima",
+        "pie": "La cima del Cilindro de Marboré, con el nombre escrito a mano en la piedra."
+      },
+      "curiosidad": "El Cilindro de Marboré y el Monte Perdido forman, junto al Soum de Ramond, las «Tres Sorores» (o Treserols), tres hermanas calcáreas que dominan el Parque Nacional de Ordesa y Monte Perdido. La forma de torre del Cilindro, cortada en seco, es una de las imágenes más reconocibles del Pirineo."
     },
     {
       "id": "perdiguero",

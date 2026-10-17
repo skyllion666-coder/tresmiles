@@ -317,5 +317,16 @@
   "w": 1000,
   "h": 750,
   "pos": "50% 50%"
+ },
+ "cil-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "malexluces",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/b-ref-goriz-cilindro-de-marbore-pico-marbore-ref-goriz-7792890",
+  "fuente": "su ficha de Wikiloc",
+  "w": 700,
+  "h": 467,
+  "pos": "50% 40%"
  }
 }

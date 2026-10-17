@@ -611,7 +611,11 @@
   "tipo": "paso",
   "lat": 42.67768,
   "lon": 0.02641,
-  "nota": "Tramo equipado con cadenas. Altitud del GPS del track: 2.897 m."
+  "nota": "Tramo equipado con cadenas. Altitud del GPS del track: 2.897 m.",
+  "picos": [
+   "perdido",
+   "cilindro"
+  ]
  },
  {
   "id": "lago-helado",
@@ -622,7 +626,11 @@
   "lon": 0.026715,
   "nota": "Lago Helado de Monte Perdido. Altitud del GPS del track: 2.990 m.",
   "foto": "perdido-lago",
-  "pie": "El Lago Helado, visto desde arriba, en otoño."
+  "pie": "El Lago Helado, visto desde arriba, en otoño.",
+  "picos": [
+   "perdido",
+   "cilindro"
+  ]
  },
  {
   "id": "escupidera-inicio",
