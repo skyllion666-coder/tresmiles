@@ -97,7 +97,11 @@ export function crearRuta({ scene, geo, ruta }) {
         equipo.forEach((p, i) => { const d = dEquipo - i * 110; p.fase += dt * 10; colocar(p, Math.max(0, Math.min(ruta.distancia, d)), [0, 34, -34][i], d > 0 && d < ruta.distancia); });
       }
     },
-    escalar(cam) { for (const p of [solo, ...equipo]) if (p.h.visible) p.h.scale.setScalar(KM * (p === solo ? 0.8 : 1.275) * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500))); },
+    escalar(cam) {
+      for (const p of equipo) if (p.h.visible) p.h.scale.setScalar(KM * 1.275 * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500)));
+      // el montañero solo mantiene siempre un tamaño parecido en pantalla (~3 % del alto), esté la cámara cerca o lejos
+      if (solo.h.visible) solo.h.scale.setScalar(Math.max(KM * 0.64, 0.015 * cam.distanceTo(solo.h.position)));
+    },
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }

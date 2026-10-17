@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=10';
-import { cargarRuta, crearRuta } from './ruta.js?v=24';
+import { cargarRuta, crearRuta } from './ruta.js?v=25';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -407,7 +407,10 @@ async function boot() {
   };
   fichaBody.addEventListener('pointerdown', sobrePerfil);
   fichaBody.addEventListener('pointermove', (e) => { if (e.pointerType === 'mouse' || e.buttons) sobrePerfil(e); });
-  fichaBody.addEventListener('pointerup', sueltaPerfil); fichaBody.addEventListener('pointerleave', sueltaPerfil, true);
+  // con ratón, el montañero se queda mientras el puntero esté sobre el perfil; con el dedo, 2,5 s tras soltar
+  fichaBody.addEventListener('pointerup', (e) => { if (e.pointerType !== 'mouse') sueltaPerfil(e); });
+  fichaBody.addEventListener('pointercancel', sueltaPerfil);
+  fichaBody.addEventListener('pointerout', (e) => { if (e.relatedTarget?.closest?.('.perfil')) return; sueltaPerfil(e); });
 
   // — vuelo por la ruta —
   const hud = $('#vuelo-hud'), btnVuelo = $('#btn-vuelo');
