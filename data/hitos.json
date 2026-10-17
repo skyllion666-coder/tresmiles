@@ -29,15 +29,23 @@
   "tipo": "ibon",
   "lat": 42.83805,
   "lon": -0.3063,
-  "nota": "Ibón junto al recorrido. Altitud del GPS del track: 2.426 m."
+  "nota": "Ibón junto al recorrido."
  },
  {
   "id": "ibon-arriel",
-  "nombre": "Ibón de Arriel (bajo)",
+  "nombre": "Ibón de Arriel Bajo",
   "tipo": "ibon",
   "lat": 42.83105,
   "lon": -0.31654,
-  "nota": "Ibón de Arriel; el nombre venía abreviado en el track. Altitud del GPS del track: 2.158 m."
+  "nota": "Ibón de Arriel Bajo, junto al camino. Altitud del GPS del track: 2.158 m."
+ },
+ {
+  "id": "ibon-arriel-alto",
+  "nombre": "Ibón de Arriel Alto",
+  "tipo": "ibon",
+  "lat": 42.835436,
+  "lon": -0.315192,
+  "nota": "Ibón de Arriel Alto, junto al recorrido. Altitud del GPS del track: 2.253 m."
  },
  {
   "id": "desvio-respomuso",
@@ -165,7 +173,7 @@
   "tipo": "lugar",
   "lat": 42.79665,
   "lon": -0.331364,
-  "nota": "Final del recorrido. Punto marcado en el track de atiempo (Wikiloc)."
+  "nota": "Área recreativa junto al final del recorrido."
  },
  {
   "id": "frondiellas",
@@ -206,5 +214,21 @@
   "lat": 42.83689,
   "lon": -0.33368,
   "nota": "Collado a unos 2.608 m (según OpenStreetMap)."
+ },
+ {
+  "id": "canal",
+  "nombre": "Comienzo de la canal",
+  "tipo": "paso",
+  "lat": 42.839648,
+  "lon": -0.29083,
+  "nota": "Punto marcado por el autor del track como buen comienzo de la canal hacia la cumbre."
+ },
+ {
+  "id": "parking-sarra",
+  "nombre": "Aparcamiento de La Sarra",
+  "tipo": "lugar",
+  "lat": 42.797327,
+  "lon": -0.332508,
+  "nota": "Aparcamiento donde empieza y acaba la excursión desde el valle. Altitud del GPS del track: 1.446 m."
  }
 ]
