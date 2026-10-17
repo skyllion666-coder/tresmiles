@@ -659,7 +659,8 @@
   "picos": [
    "perdido",
    "cilindro",
-   "soum"
+   "soum",
+   "marbore"
   ],
   "foto": "goriz",
   "pie": "El refugio de Góriz, junto al arranque de las rutas a Monte Perdido y al Cilindro."
@@ -1594,5 +1595,159 @@
   "lat": 42.684715,
   "lon": 0.023979,
   "nota": "Última cumbre del circuito de las Tres Sorores. Altitud del GPS del track: 3.318 m."
+ },
+ {
+  "id": "mar-trepada",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Trepada de grado I",
+  "tipo": "paso",
+  "lat": 42.663993,
+  "lon": 0.020532,
+  "nota": "Primer resalte de trepada tras salir de Góriz. Altitud del GPS del track: 2.364 m."
+ },
+ {
+  "id": "mar-vivac",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Vivac",
+  "tipo": "vivac",
+  "lat": 42.670038,
+  "lon": 0.023996,
+  "nota": "Abrigo bajo un gran bloque, junto a la subida. Altitud del GPS del track: 2.593 m.",
+  "foto": "mar-vivac",
+  "pie": "El vivac, bajo la roca."
+ },
+ {
+  "id": "mar-ciudad",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Ciudad de Piedra",
+  "tipo": "lugar",
+  "lat": 42.67263,
+  "lon": 0.024568,
+  "nota": "Zona de bloques y lapiaz bajo el Cilindro. Altitud del GPS del track: 2.682 m.",
+  "foto": "mar-ciudad",
+  "pie": "Lapiaz y bloques de la Ciudad de Piedra, con el Cilindro al fondo."
+ },
+ {
+  "id": "mar-embudo",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Embudo del Marboré",
+  "tipo": "paso",
+  "lat": 42.686678,
+  "lon": 0.014191,
+  "nota": "Canal estrecho de subida hacia la cresta. Altitud del GPS del track: 2.903 m.",
+  "foto": "mar-embudo",
+  "pie": "El embudo del Marboré, entre paredes."
+ },
+ {
+  "id": "mar-arista",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Arista norte del Marboré",
+  "tipo": "paso",
+  "lat": 42.693128,
+  "lon": 0.013769,
+  "nota": "Arista final, ya a la vista de la cumbre. Altitud del GPS del track: 3.182 m.",
+  "foto": "mar-arista",
+  "pie": "La arista final, con el Pirineo francés al fondo."
+ },
+ {
+  "id": "mar-cima",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Cima del Pico de Marboré",
+  "tipo": "cima",
+  "lat": 42.692686,
+  "lon": 0.011518,
+  "nota": "Cumbre del Pico de Marboré, sobre el circo de Gavarnie. Altitud del GPS del track: 3.200 m.",
+  "foto": "mar-cima",
+  "pie": "La cumbre del Marboré, con su refugio de piedra."
+ },
+ {
+  "id": "mar-escaleras",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Senda a la Punta de las Escaleras",
+  "tipo": "paso",
+  "lat": 42.666928,
+  "lon": 0.021872,
+  "nota": "Desvío de la senda hacia la Punta de las Escaleras. Altitud del GPS del track: 2.495 m."
+ },
+ {
+  "id": "mar-faja-roya",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Faja Roya",
+  "tipo": "paso",
+  "lat": 42.674448,
+  "lon": 0.024842,
+  "nota": "Faja que atraviesa la ladera hacia el oeste. Altitud del GPS del track: 2.715 m."
+ },
+ {
+  "id": "mar-paso-clave",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Paso clave",
+  "tipo": "paso",
+  "lat": 42.683633,
+  "lon": 0.012814,
+  "nota": "Paso más delicado del recorrido, antes del embudo. Altitud del GPS del track: 2.864 m."
+ },
+ {
+  "id": "mar-oriental",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Pico Oriental de la Cascada",
+  "tipo": "cima",
+  "lat": 42.689976,
+  "lon": 0.007875,
+  "nota": "Primera de las tres puntas de los picos de la Cascada. Altitud del GPS del track: 3.114 m."
+ },
+ {
+  "id": "mar-brulle",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Pico Central de la Cascada (Pico Brulle)",
+  "tipo": "cima",
+  "lat": 42.688849,
+  "lon": 0.004644,
+  "nota": "Cumbre central de los picos de la Cascada. Altitud del GPS del track: 3.058 m."
+ },
+ {
+  "id": "mar-espalda",
+  "pico": "marbore",
+  "picos": [
+   "marbore"
+  ],
+  "nombre": "Espalda de Marboré",
+  "tipo": "cima",
+  "lat": 42.685329,
+  "lon": 0.000239,
+  "nota": "Última cumbre del circuito, antes de volver a Góriz. Altitud del GPS del track: 3.026 m."
  }
 ]

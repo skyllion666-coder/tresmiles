@@ -1200,5 +1200,60 @@
   "w": 1000,
   "h": 669,
   "pos": "50% 50%"
+ },
+ "mar-vivac": {
+  "archivo": "foto del autor del track",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 668,
+  "pos": "50% 50%"
+ },
+ "mar-ciudad": {
+  "archivo": "foto del autor del track",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 562,
+  "pos": "50% 50%"
+ },
+ "mar-embudo": {
+  "archivo": "foto del autor del track",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 562,
+  "pos": "50% 50%"
+ },
+ "mar-arista": {
+  "archivo": "foto del autor del track",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 562,
+  "pos": "50% 50%"
+ },
+ "mar-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 562,
+  "pos": "50% 50%"
  }
 }

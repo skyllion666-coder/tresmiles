@@ -18,7 +18,8 @@
     "coronas",
     "espadas",
     "llardaneta",
-    "soum"
+    "soum",
+    "marbore"
   ],
   "macizos": [
     {
@@ -656,6 +657,38 @@
         "pie": "La subida final a Soum de Ramond."
       },
       "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m."
+    },
+    {
+      "id": "marbore",
+      "nombre": "Pico de Marboré",
+      "alias": "Pic de Marboré",
+      "altitud": 3248,
+      "otras": "",
+      "macizo": "per",
+      "frontera": true,
+      "lat": 42.692686,
+      "lon": 0.011518,
+      "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+      "ruta": "Refugio de Góriz → Ciudad de Piedra → Faja Roya → embudo del Marboré → arista norte → cumbre; cresta de los picos de la Cascada",
+      "desnivel": "≈ 1.250 m desde Góriz (≈ 25 km con los picos de la Cascada, solo ida)",
+      "dificultad": "alta",
+      "grado": "PD · trepadas de I y II, paso clave",
+      "epoca": "Julio – septiembre",
+      "descripcion": "Cumbre fronteriza sobre el circo de Gavarnie, parte de la cresta que separa Ordesa de Francia. Se sube desde Góriz por un camino de bloques, lapiaz y trepadas fáciles, y se puede enlazar con los picos de la Cascada y la Espalda de Marboré.",
+      "foto": "marbore",
+      "pie": "El Pico de Marboré y los picos de la Cascada sobre el circo de Gavarnie.",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+        "texto": "Ver la ruta en Wikiloc: Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz, de Santialpino"
+      },
+      "rutas": [
+        "marbore-cascada"
+      ],
+      "fotoCima": {
+        "foto": "mar-cima",
+        "pie": "La cumbre del Marboré, con su refugio de piedra."
+      },
+      "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente."
     }
   ]
 }
