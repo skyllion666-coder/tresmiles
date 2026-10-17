@@ -612,7 +612,7 @@ async function boot() {
     const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] }));
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
-      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Por ahora incluye el Balaitús; el resto de las grandes cumbres se irá añadiendo.</p>
+      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya doce cumbres, cada una con su ruta de ejemplo, sus hitos y sus fotografías.</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>
@@ -629,6 +629,8 @@ async function boot() {
       <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
+      <h3>Visitas</h3>
+      <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página.</p>
       <h3>Seguridad</h3>
       <p>Esta web no sustituye a una guía, a un parte de condiciones ni a la experiencia en alta montaña. Consulta siempre la previsión y el estado de la ruta antes de salir.</p>`;
   }
