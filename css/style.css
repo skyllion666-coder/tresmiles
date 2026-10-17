@@ -11,7 +11,8 @@
   --serif: "Cormorant Garamond", Georgia, serif; --sans: "Barlow", system-ui, sans-serif; --cond: "Barlow Semi Condensed", "Barlow", system-ui, sans-serif;
   --gutter: 20px; --panel-w: 460px;
 }
-* { box-sizing: border-box; }
+* { box-sizing: border-box; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+input, textarea { -webkit-user-select: text; user-select: text; }
 html, body { height: 100%; margin: 0; }
 body { background: #1c2724; color: var(--cream); font-family: var(--sans); overflow: hidden; -webkit-font-smoothing: antialiased; touch-action: none; }
 button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
