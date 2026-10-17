@@ -40,7 +40,7 @@ const waterMat = () => new THREE.ShaderMaterial({
 
 // Los ibones se dibujan por bloques, cuando ya hay alturas suficientes (nivel 2 o mejor) en el bloque: `construirBloque(i, j)`.
 export async function crearLagos({ scene, geo, url, meta }) {
-  const data = await fetch(`${url}?dv=${window.DATOS_V || 0}`).then((r) => r.json());
+  const data = await fetch(`${url}?dv=${window.DATOS_V || 0}`, { cache: 'no-cache' }).then((r) => r.json());
   const mat = waterMat(), CH = meta.chunk;
   const porBloque = new Map(), etiquetados = new Set(), nombrados = [];
   let n = 0;
