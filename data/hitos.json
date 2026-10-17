@@ -10,11 +10,12 @@
  },
  {
   "id": "cueva",
-  "nombre": "Cueva-abrigo",
+  "nombre": "Cueva André Michaud",
   "tipo": "vivac",
   "lat": 42.83765,
   "lon": -0.29691,
-  "nota": "Refugio de emergencia en la ladera, junto a la ruta (coincide con la cueva André Michaud de OpenStreetMap). Altitud del GPS del track: 2.688 m."
+  "nota": "Refugio de emergencia en la ladera, junto a la ruta. Altitud del GPS del track: 2.688 m.",
+  "foto": "cueva"
  },
  {
   "id": "inicio-diagonal",
