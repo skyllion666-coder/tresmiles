@@ -420,7 +420,9 @@
   "pie": "El balneario de Panticosa, de donde sale el recorrido.",
   "picos": [
    "infiernos",
-   "garmo"
+   "garmo",
+   "algas",
+   "argualas"
   ],
   "inicio": true
  },
@@ -2156,5 +2158,158 @@
   "lat": 42.5956,
   "lon": 0.689145,
   "nota": "Último collado antes de bajar al embalse. Altitud del GPS del track: 2.533 m."
+ },
+ {
+  "id": "alg-collado-arg",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Collado Argualas",
+  "tipo": "paso",
+  "lat": 42.769415,
+  "lon": -0.265496,
+  "nota": "Collado entre el Garmo Negro y las cumbres de Algas y Argualas. Altitud del GPS del track: 2.866 m.",
+  "foto": "alg-collado-arg",
+  "pie": "La vista desde el Collado Argualas hacia el valle."
+ },
+ {
+  "id": "alg-norte",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Algas Norte",
+  "tipo": "cima",
+  "lat": 42.769592,
+  "lon": -0.270919,
+  "nota": "Cumbre de la cresta (3.032 m según el título del track). Según algunas fuentes no cuenta como tresmil oficial por su escasa prominencia. Altitud del GPS del track: 3.011 m.",
+  "foto": "alg-norte",
+  "pie": "La cima de Algas Norte, con los bastones sobre el mojón."
+ },
+ {
+  "id": "alg-pico",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Pico Algas",
+  "tipo": "cima",
+  "lat": 42.768291,
+  "lon": -0.270656,
+  "nota": "Cumbre del Pico Algas (3.036 m según el título del track). Altitud del GPS del track: 3.017 m.",
+  "foto": "alg-pico",
+  "pie": "La cima del Pico Algas, con los bastones sobre el mojón."
+ },
+ {
+  "id": "alg-argualas",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Argualas",
+  "tipo": "cima",
+  "lat": 42.766475,
+  "lon": -0.267369,
+  "nota": "Cumbre del Argualas, también llamado Pico de la Bandera. Altitud del GPS del track: 3.030 m.",
+  "foto": "alg-argualas",
+  "pie": "La cima del Argualas."
+ },
+ {
+  "id": "alg-ibon",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Pequeño ibón del circo de Argualas",
+  "tipo": "ibon",
+  "lat": 42.76955,
+  "lon": -0.266175,
+  "nota": "Ibón pequeño bajo el Collado Argualas, que conserva nieve en verano. Altitud del GPS del track: 2.874 m.",
+  "foto": "alg-ibon",
+  "pie": "El ibón del circo de Argualas, con un nevero."
+ },
+ {
+  "id": "alg-arnales",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Desvío a Arnales",
+  "tipo": "paso",
+  "lat": 42.767329,
+  "lon": -0.247324,
+  "nota": "Bifurcación donde el camino a los Arnales sigue recto. Altitud del GPS del track: 2.169 m."
+ },
+ {
+  "id": "alg-pondiellos",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Senda bajo el Collado de Pondiellos",
+  "tipo": "paso",
+  "lat": 42.771077,
+  "lon": -0.254243,
+  "nota": "Tramo en que se deja a la izquierda el collado de Pondiellos. Altitud del GPS del track: 2.525 m."
+ },
+ {
+  "id": "alg-garmo",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Garmo Negro",
+  "tipo": "cima",
+  "lat": 42.771685,
+  "lon": -0.264144,
+  "nota": "Primera cumbre de la cresta (3.066 m según el título del track). Altitud del GPS del track: 3.059 m."
+ },
+ {
+  "id": "alg-collado-algas",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Collado Algas",
+  "tipo": "paso",
+  "lat": 42.770536,
+  "lon": -0.268324,
+  "nota": "Collado entre el Garmo Negro y Algas Norte. Altitud del GPS del track: 2.929 m."
+ },
+ {
+  "id": "alg-trepada",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Ligera trepada (precaución)",
+  "tipo": "paso",
+  "lat": 42.76694,
+  "lon": -0.26798,
+  "nota": "Paso de trepada fácil antes de la cima del Argualas. Altitud del GPS del track: 3.000 m."
+ },
+ {
+  "id": "alg-punta",
+  "pico": "algas",
+  "picos": [
+   "algas",
+   "argualas"
+  ],
+  "nombre": "Punta Argualas",
+  "tipo": "cima",
+  "lat": 42.766425,
+  "lon": -0.266711,
+  "nota": "Punta final de la cresta, junto al Argualas. Altitud del GPS del track: 3.017 m."
  }
 ]

@@ -205,5 +205,23 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Estany_de_Llauset_(Ribagor%C3%A7a_aragonesa)_01.jpg",
   "w": 1400,
   "h": 1050
+ },
+ "algas": {
+  "archivo": "Pico Argualas (2).jpg",
+  "autor": "Alberto-g-rovi",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pico_Argualas_(2).jpg",
+  "w": 1400,
+  "h": 934
+ },
+ "argualas": {
+  "archivo": "Pico Argualas.jpg",
+  "autor": "FDV",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pico_Argualas.jpg",
+  "w": 680,
+  "h": 800
  }
 }

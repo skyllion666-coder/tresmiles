@@ -1387,5 +1387,60 @@
   "w": 700,
   "h": 525,
   "pos": "50% 50%"
+ },
+ "alg-collado-arg": {
+  "archivo": "foto del autor del track",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+  "fuente": "su ficha de Wikiloc",
+  "w": 889,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "alg-norte": {
+  "archivo": "foto del autor del track",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+  "fuente": "su ficha de Wikiloc",
+  "w": 889,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "alg-pico": {
+  "archivo": "foto del autor del track",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+  "fuente": "su ficha de Wikiloc",
+  "w": 889,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "alg-argualas": {
+  "archivo": "foto del autor del track",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+  "fuente": "su ficha de Wikiloc",
+  "w": 889,
+  "h": 669,
+  "pos": "50% 50%"
+ },
+ "alg-ibon": {
+  "archivo": "foto del autor del track",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 752,
+  "pos": "50% 50%"
  }
 }

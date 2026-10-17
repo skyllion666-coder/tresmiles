@@ -22,7 +22,9 @@
     "marbore",
     "tallon",
     "lliterola",
-    "russell"
+    "russell",
+    "algas",
+    "argualas"
   ],
   "macizos": [
     {
@@ -780,6 +782,70 @@
         "pie": "Vista desde la cima del Pico Russell."
       },
       "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente."
+    },
+    {
+      "macizo": "bal",
+      "frontera": false,
+      "acceso": "Valle de Tena · Baños de Panticosa",
+      "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
+      "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
+      "dificultad": "alta",
+      "grado": "PD · cresta con pedreras y una ligera trepada",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
+      },
+      "rutas": [
+        "algas-argualas"
+      ],
+      "id": "algas",
+      "nombre": "Pico Algas",
+      "alias": "Algas · Pico de Algas",
+      "altitud": 3036,
+      "otras": "Otras fuentes: 3.033 m",
+      "lat": 42.7683,
+      "lon": -0.2706,
+      "descripcion": "Cumbre de la cresta que une el Garmo Negro con el Argualas, sobre el balneario de Panticosa. La ruta clásica las encadena en una jornada y pasa por Algas Norte, cuyo estatus de tresmil oficial se discute por su poca prominencia.",
+      "foto": "algas",
+      "pie": "Las cumbres de Garmo Negro, Algas y Argualas sobre el balneario de Panticosa.",
+      "fotoCima": {
+        "foto": "alg-pico",
+        "pie": "La cima del Pico Algas, con los bastones sobre el mojón."
+      },
+      "curiosidad": "La toponimia de este grupo es confusa: según una fuente, al Argualas se le ha llamado también Algas, Arollas o Arualas, y al Garmo Negro, Arnales o Pundillos. Otra propone que «Argualas» deriva de «aruela», un lugar pedregoso. El Algas Norte ha perdido la consideración de tresmil oficial por no tener 10 m de prominencia."
+    },
+    {
+      "macizo": "bal",
+      "frontera": false,
+      "acceso": "Valle de Tena · Baños de Panticosa",
+      "ruta": "Baños de Panticosa → Mallata Baja → Collado Argualas → Garmo Negro → Algas Norte → Pico Algas → Argualas",
+      "desnivel": "≈ 1.430 m desde Baños de Panticosa (≈ 12 km ida y vuelta)",
+      "dificultad": "alta",
+      "grado": "PD · cresta con pedreras y una ligera trepada",
+      "epoca": "Julio – septiembre",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-del-garmo-negro3-066m-algas-norte3-032m-pico-algas3-036m-y-argualas3-046m-desde-banos-de-pan-10881769",
+        "texto": "Ver la ruta en Wikiloc: Cresta del Garmo Negro, Algas Norte, Pico Algas y Argualas desde Baños de Panticosa, de Furgoxo"
+      },
+      "rutas": [
+        "algas-argualas"
+      ],
+      "id": "argualas",
+      "nombre": "Pico Argualas",
+      "alias": "Pico de la Bandera",
+      "altitud": 3044,
+      "otras": "Otras fuentes: 3.046 m",
+      "lat": 42.7665,
+      "lon": -0.2669,
+      "descripcion": "Cumbre final de la cresta de Algas, justo sobre el balneario de Panticosa. Se le llama Pico de la Bandera porque en verano ondea una bandera blanca en su cima, visible desde el balneario.",
+      "foto": "argualas",
+      "pie": "El Pico Argualas nevado.",
+      "fotoCima": {
+        "foto": "alg-argualas",
+        "pie": "La cima del Argualas."
+      },
+      "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m."
     }
   ]
 }
