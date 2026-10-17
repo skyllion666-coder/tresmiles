@@ -2847,5 +2847,120 @@
   "nota": "Ibón en el descenso. Altitud del GPS del track: 2.535 m.",
   "foto": "pau-farradura",
   "pie": "El ibón de Farradura, desde arriba."
+ },
+ {
+  "id": "gor-parking",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Parking de Estós",
+  "tipo": "lugar",
+  "lat": 42.6291,
+  "lon": 0.54089,
+  "nota": "Punto de partida, en el valle de Estós. Altitud del GPS del track: 1.301 m.",
+  "inicio": true
+ },
+ {
+  "id": "gor-galantes",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Gorgas de los Galantes",
+  "tipo": "barranco",
+  "lat": 42.666325,
+  "lon": 0.511597,
+  "nota": "Estrechamiento del río Estós, a la subida hacia el refugio.",
+  "foto": "gor-galantes",
+  "pie": "El valle de Estós con el Perdiguero al fondo, cerca de las Gorgas de los Galantes."
+ },
+ {
+  "id": "gor-tormo",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Cabaña del Tormo",
+  "tipo": "lugar",
+  "lat": 42.668258,
+  "lon": 0.508583,
+  "nota": "Cabaña de piedra junto al camino, en el valle de Estós.",
+  "foto": "gor-tormo",
+  "pie": "La cabaña del Tormo, junto al camino del valle de Estós."
+ },
+ {
+  "id": "gor-forau",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Forau de O",
+  "tipo": "lugar",
+  "lat": 42.684441,
+  "lon": 0.48493,
+  "nota": "Paraje del valle, en la subida hacia los ibones de Gías."
+ },
+ {
+  "id": "gor-gias",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Ibones de Gías o de O",
+  "tipo": "ibon",
+  "lat": 42.691418,
+  "lon": 0.478694,
+  "nota": "Conjunto de ibones bajo el puerto de Gías. Altitud según OpenStreetMap."
+ },
+ {
+  "id": "gor-puerto",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Puerto de Guías o de Puxebres",
+  "tipo": "paso",
+  "lat": 42.698291,
+  "lon": 0.471186,
+  "nota": "Collado de la frontera, a 2.927 m según OpenStreetMap."
+ },
+ {
+  "id": "gor-tuca-o",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Tuca de O",
+  "tipo": "cima",
+  "lat": 42.699634,
+  "lon": 0.481174,
+  "nota": "Cumbre de 3.065 m según OpenStreetMap, en la cresta fronteriza."
+ },
+ {
+  "id": "gor-armengaud",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Torre Armengaud",
+  "tipo": "cima",
+  "lat": 42.700025,
+  "lon": 0.476412,
+  "nota": "Cumbre de 3.114 m según OpenStreetMap, junto a Gorgs Blancs."
+ },
+ {
+  "id": "gor-cima",
+  "pico": "gorgs",
+  "picos": [
+   "gorgs"
+  ],
+  "nombre": "Tuca de Gorgs Blancs",
+  "tipo": "cima",
+  "lat": 42.700022,
+  "lon": 0.477723,
+  "nota": "Cumbre de 3.129 m según OpenStreetMap; el track llega aquí con 3.027 m de altitud GPS.",
+  "foto": "gor-cima",
+  "pie": "Roquedo de la cresta, en la zona de cumbres del recorrido."
  }
 ]

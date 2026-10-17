@@ -1739,5 +1739,36 @@
   "w": 700,
   "h": 393,
   "pos": "50% 50%"
+ },
+ "gor-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Genis Lopez Artiga",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/parquing-estos-refugi-destos-a-gorgs-blancscircular-dels-3mil-222239235",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "gor-galantes": {
+  "archivo": "Perdiguero from Estós Valley - panoramio.jpg",
+  "autor": "Santiago Puig Vilado…",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Perdiguero_from_Est%C3%B3s_Valley_-_panoramio.jpg",
+  "w": 960,
+  "h": 720,
+  "pos": "50% 50%"
+ },
+ "gor-tormo": {
+  "archivo": "Cabaña del Tormo 20230725 131544.jpg",
+  "autor": "Josefito123",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Caba%C3%B1a_del_Tormo_20230725_131544.jpg",
+  "w": 960,
+  "h": 720,
+  "pos": "50% 50%"
  }
 }
