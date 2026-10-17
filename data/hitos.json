@@ -845,7 +845,8 @@
   "inicio": true,
   "picos": [
    "aneto",
-   "maladeta"
+   "maladeta",
+   "diente-alba"
   ]
  },
  {
@@ -3258,7 +3259,8 @@
   "id": "alb-cima",
   "pico": "alba",
   "picos": [
-   "alba"
+   "alba",
+   "diente-alba"
   ],
   "nombre": "Pico de Alba",
   "tipo": "cima",
@@ -3267,5 +3269,89 @@
   "nota": "Cima de 3.118 m según las guías. Altitud del GPS del track: 3.095 m.",
   "foto": "alb-cima",
   "pie": "El hito de la cima, entre nubes."
+ },
+ {
+  "id": "die-puente",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Pasamos el puente",
+  "tipo": "paso",
+  "lat": 42.669018,
+  "lon": 0.643548,
+  "nota": "Pasarela de madera sobre el arroyo, en el camino desde La Renclusa.",
+  "foto": "die-puente",
+  "pie": "La pasarela de madera sobre el arroyo."
+ },
+ {
+  "id": "die-ibon",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Ibón de la Renclusa",
+  "tipo": "ibon",
+  "lat": 42.668098,
+  "lon": 0.64247,
+  "nota": "Aquí el track gira a la derecha, hacia las pedreras de Alba.",
+  "foto": "die-ibon",
+  "pie": "El entorno del ibón de la Renclusa."
+ },
+ {
+  "id": "die-chimenea",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Chimenea de subida",
+  "tipo": "paso",
+  "lat": 42.654897,
+  "lon": 0.625497,
+  "nota": "Chimenea que sube hacia la cima, marcada en el track como «Chimenea de subida a la Muela».",
+  "foto": "die-chimenea",
+  "pie": "La chimenea de subida, a contraluz."
+ },
+ {
+  "id": "die-vecina",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Cima vecina del Diente de Alba",
+  "tipo": "cima",
+  "lat": 42.653828,
+  "lon": 0.62472,
+  "nota": "Cumbre marcada en el track como «Cima Diente del Alba 3118 m». Las fuentes difieren sobre cuál de las dos cumbres es cada una.",
+  "foto": "die-vecina",
+  "pie": "Un excursionista en la cumbre vecina, visto desde atrás."
+ },
+ {
+  "id": "die-cima",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Diente de Alba",
+  "tipo": "cima",
+  "lat": 42.653532,
+  "lon": 0.625193,
+  "nota": "Cumbre de 3.136 m según la UIAA; en el track figura como «Cima Muela del Alba 3136 m». Altitud del GPS: 3.121 m.",
+  "foto": "die-cima",
+  "pie": "Excursionista sobre un bloque en la cumbre."
+ },
+ {
+  "id": "die-collado",
+  "pico": "diente-alba",
+  "picos": [
+   "diente-alba"
+  ],
+  "nombre": "Collado de Alba",
+  "tipo": "paso",
+  "lat": 42.652872,
+  "lon": 0.627053,
+  "nota": "Collado de 3.030 m según el track.",
+  "foto": "die-collado",
+  "pie": "Bloques en el collado de Alba."
  }
 ]

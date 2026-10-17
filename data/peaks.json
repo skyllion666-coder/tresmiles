@@ -37,7 +37,8 @@
   "gran-facha",
   "olas",
   "margalida",
-  "alba"
+  "alba",
+  "diente-alba"
  ],
  "macizos": [
   {
@@ -1275,6 +1276,38 @@
     "pie": "El hito de la cima, entre nubes."
    },
    "curiosidad": "La UIAA lo incluye en su lista de los tresmiles del Pirineo, en la zona de Maladeta-Aneto, con 3.118 m. Alrededor hay varios puntos con el mismo nombre, como el Gendarme de Alba (3.054 m) y el Collado inferior de Alba (3.020 m), y algunos, como la Muela de Alba (3.118 m), no figuran en la lista oficial; en OpenStreetMap la cumbre aparece como «Tuca d'Alba», con 3.112 m."
+  },
+  {
+   "id": "diente-alba",
+   "nombre": "Diente de Alba",
+   "alias": "Muela de Alba · Dien d’Alba",
+   "altitud": 3136,
+   "otras": "3.118 m (Wikiloc) · 3.121 m (OpenStreetMap)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.653532,
+   "lon": 0.625193,
+   "acceso": "Benasque · refugio de La Renclusa",
+   "ruta": "Refugio de La Renclusa → ibón de la Renclusa → pedreras de Alba → Pico de Alba → arista → Diente y Muela de Alba → collado de Alba → vuelta por la pedrera",
+   "desnivel": "≈ 1.140–1.490 m desde La Renclusa (9,5 km en circular)",
+   "dificultad": "alta",
+   "grado": "PD · arista con trepadas y chimenea",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Segunda cumbre de la parte occidental de la Maladeta, en la arista que sigue al Pico de Alba. Desde La Renclusa se sube por las pedreras hasta el Pico de Alba y se enlaza por la arista, con una chimenea y trepadas, hasta el Diente y la Muela.",
+   "foto": "diente-alba",
+   "pie": "El ibón inferior de Alba rodeado de montañas, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/tk-ruta-712-pico-del-alba-muela-del-alba-y-diente-del-alba-desde-la-renclusa-149646305",
+    "texto": "Ver la ruta en Wikiloc: TK. Ruta 712, Pico, Muela y Diente del Alba, de Tony Kuriel"
+   },
+   "rutas": [
+    "diente-alba-renclusa"
+   ],
+   "fotoCima": {
+    "foto": "die-cima",
+    "pie": "Excursionista sobre un bloque en la cumbre."
+   },
+   "curiosidad": "La UIAA lista el Diente de Alba con 3.136 m, pero las fuentes no se ponen de acuerdo sobre qué cumbre es cuál: el autor del track llama «Diente» a la de 3.118 m y «Muela» a la de 3.136 m, mientras OpenStreetMap registra un «Dien d’Alba» de 3.121 m. La Muela de Alba (3.118 m en otras fuentes) tampoco figura en la lista oficial."
   }
  ]
 }
