@@ -16,7 +16,7 @@ tools/serve.sh            # o: python3 -m http.server 8765 --bind 127.0.0.1
 # abre http://127.0.0.1:8765/
 ```
 
-- Enlace directo a una cumbre (salta la introducción): `http://127.0.0.1:8765/#balaitus`
+- Enlace directo a una cumbre (salta la introducción): `http://127.0.0.1:8765/?directo#balaitus`
 - Vista de desarrollo con todas las cumbres que caen dentro del terreno cargado: `?todos`
 - Requiere un navegador con WebGL (Chrome, Firefox, Edge, Safari recientes).
 

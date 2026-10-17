@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=8';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=9';
 import { cargarRuta, crearRuta } from './ruta.js?v=14';
 
 const $ = (s) => document.querySelector(s);
@@ -424,7 +424,6 @@ async function boot() {
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
-    if (hash) history.replaceState(null, '', `#${id}`);
     fichaEl.focus({ preventScroll: true });
     pintaRuta(null);
     await flyTo(peakState(p), { shift: viewShift(), instant });
@@ -525,10 +524,12 @@ async function boot() {
     renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
     if (S.active) S.shiftTo = viewShift();
   });
-  addEventListener('hashchange', () => { const id = location.hash.slice(1); if (byId[id] && S.mode === 'explore' && S.active !== id) openPeak(id, { hash: false }); });
+  addEventListener('hashchange', () => { if (!new URLSearchParams(location.search).has('directo')) return; const id = location.hash.slice(1); if (byId[id] && S.mode === 'explore' && S.active !== id) openPeak(id, { hash: false }); });
 
-  // enlace directo a una cumbre: se salta la introducción
-  const direct = byId[location.hash.slice(1)];
+  // enlace directo a una cumbre (solo con ?directo#id): se salta la introducción. Sin ?directo se ignora el # para que
+  // recargar o restaurar la pestaña nunca abra una ficha sola.
+  const direct = new URLSearchParams(location.search).has('directo') ? byId[location.hash.slice(1)] : null;
+  if (!direct && location.hash) history.replaceState(null, '', location.pathname + location.search);
   if (direct) { S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out'); await openPeak(direct.id, { instant: true, hash: false }); }
 
   // — bucle —
