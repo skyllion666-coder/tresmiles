@@ -39,7 +39,8 @@
   "margalida",
   "alba",
   "diente-alba",
-  "araguells"
+  "araguells",
+  "espalda-aneto"
  ],
  "macizos": [
   {
@@ -1341,6 +1342,38 @@
     "pie": "La pirámide de la cima del Aragüells, entre bloques."
    },
    "curiosidad": "Según SummitPost, Henry Russell y el guía Firmin Barrau lo ascendieron por primera vez el 7 de julio de 1880, desde los Baños de Benasque por el ibón y el collado de Cregüeña; la primera ascensión invernal, con esquís, fue el 28 de diciembre de 1932. La cifra de 3.037 m es la de la lista más extendida de tresmiles, pero los mapas dan entre 3.030 y 3.048 m."
+  },
+  {
+   "id": "espalda-aneto",
+   "nombre": "Espalda de Aneto",
+   "alias": "Espatlla de l'Aneto · Esquena de l'Aneto",
+   "altitud": 3350,
+   "otras": "3.345 m (OpenStreetMap) · 3.339 m (GPS del track)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.62932,
+   "lon": 0.65973,
+   "acceso": "Benasque · La Besurta / Llanos del Hospital",
+   "ruta": "La Besurta → barranco de La Escaleta → ibón del Salterillo → glaciar y canales de la antecima del Aneto → Aguja Daviú → Espalda de Aneto → vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.730 m desde La Besurta (16,8 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "PD+ · cresta rocosa, glaciar y trepadas",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre de la cresta sureste del Aneto, que se visita al bajar de la cima o desde la antecima. Hay que cruzar el glaciar, las canales de la antecima y la arista de la Aguja Daviú; pide material de glaciar y mucha experiencia.",
+   "foto": "espalda-aneto",
+   "pie": "El macizo nevado del Aneto.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/ascenso-al-aneto-3-404-m-espalda-del-aneto-3-350-m-y-aguja-daviu-3-350-m-por-el-ibon-del-salterillo-284229933",
+    "texto": "Ver la ruta en Wikiloc: Aneto, Espalda del Aneto y Aguja Daviú por el ibón del Salterillo, de Carlos_cumbres"
+   },
+   "rutas": [
+    "espalda-aneto-salterillo"
+   ],
+   "fotoCima": {
+    "foto": "esp-cima",
+    "pie": "La cima de la Espalda de Aneto, entre bloques de granito."
+   },
+   "curiosidad": "La enciclopedia catalana describe la cresta principal que baja al sureste desde el Aneto como una línea que se hunde un poco hacia la Espatlla d’Aneto (3.350 m) antes de caer en picado hacia la brecha de Tempestades. La Aguja Daviú, vecina, figura con 3.350 m en SummitPost, pero algunas fichas de Wikiloc le dan 3.363–3.364 m: las fuentes difieren."
   }
  ]
 }

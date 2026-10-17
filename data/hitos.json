@@ -846,7 +846,8 @@
   "picos": [
    "aneto",
    "maladeta",
-   "diente-alba"
+   "diente-alba",
+   "espalda-aneto"
   ]
  },
  {
@@ -858,7 +859,11 @@
   "lon": 0.65882,
   "nota": "Pequeño ibón junto al camino de subida. Altitud del GPS del track: 2.460 m.",
   "foto": "aneto-salterillo",
-  "pie": "La basa del Salterillo, vista desde lo alto."
+  "pie": "La basa del Salterillo, vista desde lo alto.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "aneto-collado",
@@ -869,7 +874,11 @@
   "lon": 0.654212,
   "nota": "Collado en el camino entre el refugio y el ibón de Salterillo. Altitud del GPS del track: 2.263 m.",
   "foto": "aneto-col-renclusa",
-  "pie": "El refugio de La Renclusa visto desde el collado, en la bajada."
+  "pie": "El refugio de La Renclusa visto desde el collado, en la bajada.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "aneto-panoramica",
@@ -880,7 +889,11 @@
   "lon": 0.655234,
   "nota": "Punto marcado como «Panorámica» en el track, sobre el glaciar. Altitud del GPS del track: 3.130 m.",
   "foto": "aneto-panoramica",
-  "pie": "Vista desde el punto «Panorámica», con el hielo entre las rocas."
+  "pie": "Vista desde el punto «Panorámica», con el hielo entre las rocas.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "oliveras",
@@ -889,7 +902,11 @@
   "tipo": "paso",
   "lat": 42.633636,
   "lon": 0.655198,
-  "nota": "Tramo de chimenea y nevero junto a la punta Oliveras. Altitud del GPS del track: 3.277 m."
+  "nota": "Tramo de chimenea y nevero junto a la punta Oliveras. Altitud del GPS del track: 3.277 m.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "mahoma",
@@ -900,7 +917,11 @@
   "lon": 0.656446,
   "nota": "Estrecha cresta de bloques justo antes de la cumbre. Altitud del GPS del track: 3.392 m.",
   "foto": "aneto-mahoma",
-  "pie": "Alpinistas sobre los bloques del Paso de Mahoma."
+  "pie": "Alpinistas sobre los bloques del Paso de Mahoma.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "aneto-cima",
@@ -911,7 +932,11 @@
   "lon": 0.656689,
   "nota": "La cumbre más alta de los Pirineos. Altitud del GPS del track: 3.396 m.",
   "foto": "aneto-cima",
-  "pie": "La piedra de la cima, con «Aneto 3404» pintado."
+  "pie": "La piedra de la cima, con «Aneto 3404» pintado.",
+  "picos": [
+   "aneto",
+   "espalda-aneto"
+  ]
  },
  {
   "id": "maladeta-portillon",
@@ -2548,7 +2573,8 @@
   "id": "aba-besurta",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "espalda-aneto"
   ],
   "nombre": "La Besurta",
   "tipo": "lugar",
@@ -2563,7 +2589,8 @@
   "id": "aba-forau",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "espalda-aneto"
   ],
   "nombre": "Forau d'Aigualluts",
   "tipo": "lugar",
@@ -2577,7 +2604,8 @@
   "id": "aba-plan",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "espalda-aneto"
   ],
   "nombre": "Plan d'Aigualluts",
   "tipo": "lugar",
@@ -2591,7 +2619,8 @@
   "id": "aba-salterillo",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "espalda-aneto"
   ],
   "nombre": "Ibón del Salterillo",
   "tipo": "ibon",
@@ -3399,5 +3428,61 @@
   "nota": "Cima de 3.037 m según la lista más extendida de tresmiles. Altitud del GPS del track: 2.980 m.",
   "foto": "ara-cima",
   "pie": "La pirámide de la cima del Aragüells, entre bloques."
+ },
+ {
+  "id": "esp-escaleta",
+  "pico": "espalda-aneto",
+  "picos": [
+   "espalda-aneto"
+  ],
+  "nombre": "Barranco de La Escaleta",
+  "tipo": "barranco",
+  "lat": 42.65535,
+  "lon": 0.66406,
+  "nota": "Barranco que se remonta desde el ibón del Salterillo. Altitud del GPS del track: 2.258 m.",
+  "foto": "esp-escaleta",
+  "pie": "Un cruce de senderos junto al barranco de La Escaleta."
+ },
+ {
+  "id": "esp-canales",
+  "pico": "espalda-aneto",
+  "picos": [
+   "espalda-aneto"
+  ],
+  "nombre": "Canales de la antecima",
+  "tipo": "paso",
+  "lat": 42.633746,
+  "lon": 0.655158,
+  "nota": "Canales de la antecima del Aneto, de roca descompuesta. Altitud del GPS del track: 3.266 m.",
+  "foto": "esp-canales",
+  "pie": "Las canales de la antecima, entre bloques."
+ },
+ {
+  "id": "esp-daviu",
+  "pico": "espalda-aneto",
+  "picos": [
+   "espalda-aneto"
+  ],
+  "nombre": "Aguja Daviú",
+  "tipo": "cima",
+  "lat": 42.63032,
+  "lon": 0.655659,
+  "nota": "Aguja de la cresta, de 3.350 m según SummitPost; algunas fichas la dan hasta con 3.364 m. Altitud del GPS del track: 3.377 m.",
+  "foto": "esp-daviu",
+  "pie": "La arista rocosa de la Aguja Daviú."
+ },
+ {
+  "id": "esp-cima",
+  "pico": "espalda-aneto",
+  "picos": [
+   "espalda-aneto"
+  ],
+  "nombre": "Espalda de Aneto",
+  "tipo": "cima",
+  "lat": 42.62932,
+  "lon": 0.65973,
+  "nota": "Cumbre de 3.350 m según las guías; OpenStreetMap da 3.345 m. Altitud del GPS del track: 3.339 m.",
+  "foto": "esp-cima",
+  "pie": "La cima de la Espalda de Aneto, entre bloques de granito."
  }
 ]
