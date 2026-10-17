@@ -10,7 +10,8 @@
     "maladeta",
     "tempestades",
     "posets",
-    "perdiguero"
+    "perdiguero",
+    "bachimala"
   ],
   "macizos": [
     {
@@ -228,14 +229,26 @@
       "lat": 42.698556,
       "lon": 0.394361,
       "acceso": "Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós)",
-      "ruta": "Refugio de Biadós → promontorio sobre las bordas de Viadós → ladera hasta la cumbre",
-      "desnivel": "≈ 1.475 m (según tracks de la ruta normal)",
+      "ruta": "Refugio de Biadós → cabaña de Sarrao → Collado Señal de Viadós → collado bajo la cresta → cresta final → cumbre",
+      "desnivel": "≈ 1.450 m desde el refugio (14 km ida y vuelta)",
       "dificultad": "alta",
       "grado": "F/PD · jornada larga",
       "epoca": "Junio – septiembre",
-      "descripcion": "Cumbre fronteriza que se alza al norte del valle de Chistau, con acceso natural por el valle de Cinqueta y el refugio de Biadós. Los tracks de la ruta normal la sitúan en torno a 14 km y 1.500 m de desnivel: no es técnica, pero sí exigente.",
+      "descripcion": "Cumbre fronteriza que se alza al norte del valle de Chistau, con acceso natural por el valle de Cinqueta y el refugio de Biadós. Los tracks de la ruta normal la sitúan en torno a 14 km y 1.500 m de desnivel: no es técnica, pero sí exigente. El track que se muestra es de septiembre de 2026 y sigue la versión clásica por el Collado Señal de Viadós.",
       "foto": "bachimala",
-      "pie": "El macizo de Bachimala (Batchimale)."
+      "pie": "El macizo de Bachimala (Batchimale).",
+      "enlace": {
+        "url": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+        "texto": "Ver la ruta en Wikiloc: Cima del Gran Bachimala (3.177 m) por la versión clásica con Collado Señal de Viadós, de Peplo007"
+      },
+      "rutas": [
+        "bachimala-biados"
+      ],
+      "fotoCima": {
+        "foto": "bac-cima",
+        "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
+      },
+      "curiosidad": "También se le llama Pico Schrader, en honor al cartógrafo y pirineísta francés Franz Schrader. Su altitud se da como 3.176 o 3.177 m según la fuente, y el nombre aparece escrito de varias formas (Bachimala, Batchimale). Las fuentes difieren."
     },
     {
       "id": "vignemale",

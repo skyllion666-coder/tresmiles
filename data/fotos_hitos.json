@@ -629,5 +629,93 @@
   "w": 400,
   "h": 300,
   "pos": "50% 50%"
+ },
+ "bac-refugio": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "bac-cabana": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "bac-ordesa": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "bac-senal": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "bac-paso": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "bac-cresta": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "bac-sabre": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "bac-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }

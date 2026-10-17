@@ -1024,5 +1024,94 @@
   "lon": 0.578239,
   "nota": "Primer punto registrado del track, a unos 300 m del Plan de Turpí (OpenStreetMap). Altitud del GPS del track: 1.612 m.",
   "inicio": true
+ },
+ {
+  "id": "bac-refugio",
+  "pico": "bachimala",
+  "nombre": "Refugio de Biadós",
+  "tipo": "refugio",
+  "lat": 42.660753,
+  "lon": 0.377211,
+  "nota": "Refugio de Biadós (Viadós), punto de partida y de llegada del recorrido. Altitud del GPS del track: 1.730 m.",
+  "foto": "bac-refugio",
+  "pie": "El mapa de la zona colgado en el refugio.",
+  "inicio": true
+ },
+ {
+  "id": "bac-cabana",
+  "pico": "bachimala",
+  "nombre": "Cabaña de pastores de Sarrao",
+  "tipo": "lugar",
+  "lat": 42.668111,
+  "lon": 0.3737,
+  "nota": "Cabaña de pastores junto al camino de subida. Altitud del GPS del track: 2.035 m.",
+  "foto": "bac-cabana",
+  "pie": "La cabaña de pastores de Sarrao (septiembre de 2026)."
+ },
+ {
+  "id": "bac-ordesa",
+  "pico": "bachimala",
+  "nombre": "Collado con vistas a Ordesa",
+  "tipo": "paso",
+  "lat": 42.673572,
+  "lon": 0.373878,
+  "nota": "Collado de respiro con vistas al Parque Nacional de Ordesa. Altitud del GPS del track: 2.186 m.",
+  "foto": "bac-ordesa",
+  "pie": "Vista desde el collado, con las cumbres al fondo."
+ },
+ {
+  "id": "bac-senal",
+  "pico": "bachimala",
+  "nombre": "Collado Señal de Viadós",
+  "tipo": "paso",
+  "lat": 42.683721,
+  "lon": 0.390357,
+  "nota": "Collado de la variante clásica, con un mojón. Altitud del GPS del track: 2.530 m.",
+  "foto": "bac-senal",
+  "pie": "El mojón del Collado Señal de Viadós."
+ },
+ {
+  "id": "bac-paso",
+  "pico": "bachimala",
+  "nombre": "Paso señalizado",
+  "tipo": "paso",
+  "lat": 42.692,
+  "lon": 0.384514,
+  "nota": "Paso señalizado que evita un tramo expuesto, desviándose un poco a la izquierda. Altitud del GPS del track: 2.692 m.",
+  "foto": "bac-paso",
+  "pie": "El paso señalizado, sobre laderas de pizarra."
+ },
+ {
+  "id": "bac-cresta",
+  "pico": "bachimala",
+  "nombre": "Inicio de la cresta",
+  "tipo": "paso",
+  "lat": 42.698758,
+  "lon": 0.392413,
+  "nota": "Aquí empieza la cresta final, con tramos sencillos de trepada. Altitud del GPS del track: 3.131 m.",
+  "foto": "bac-cresta",
+  "pie": "El arranque de la cresta final."
+ },
+ {
+  "id": "bac-sabre",
+  "pico": "bachimala",
+  "nombre": "Cresta hacia Punta de Sabre",
+  "tipo": "lugar",
+  "lat": 42.698441,
+  "lon": 0.394541,
+  "nota": "Panorámica de la cresta hacia la Punta de Sabre (nombre según el autor del track). Altitud del GPS del track: 3.172 m.",
+  "foto": "bac-sabre",
+  "pie": "La cresta que continúa hacia la Punta de Sabre."
+ },
+ {
+  "id": "bac-cima",
+  "pico": "bachimala",
+  "nombre": "Cima del Gran Bachimala",
+  "tipo": "cima",
+  "lat": 42.698575,
+  "lon": 0.394331,
+  "nota": "Cumbre del Gran Bachimala, en la frontera con Francia. Altitud del GPS del track: 3.179 m.",
+  "foto": "bac-cima",
+  "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
  }
 ]
