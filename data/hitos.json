@@ -3985,5 +3985,102 @@
   "nota": "Cumbre fronteriza de 3.006 m. Altitud del GPS del track: 3.000 m.",
   "foto": "casco-cima",
   "pie": "El gran hito de la cumbre del Casco, entre la niebla."
+ },
+ {
+  "id": "rob-poste",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Poste indicador",
+  "tipo": "lugar",
+  "lat": 42.683199,
+  "lon": 0.129654,
+  "nota": "Punto de partida, junto a los paneles informativos del valle de Barrosa. Altitud del GPS del track: 1.902 m.",
+  "inicio": true,
+  "foto": "rob-poste",
+  "pie": "El poste indicador del inicio del camino."
+ },
+ {
+  "id": "rob-pradera",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Pradera",
+  "tipo": "lugar",
+  "lat": 42.688432,
+  "lon": 0.123671,
+  "nota": "Pradera de altura en la subida. Altitud del GPS del track: 2.219 m.",
+  "foto": "rob-pradera",
+  "pie": "Un prado de hierba alta, con las cumbres al fondo."
+ },
+ {
+  "id": "rob-lago",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Lago de la Munia",
+  "tipo": "ibon",
+  "lat": 42.698889,
+  "lon": 0.125537,
+  "nota": "Lago junto al collado de las Puertas. Altitud del GPS del track: 2.505 m.",
+  "foto": "rob-lago",
+  "pie": "El lago, con restos de nieve en las orillas."
+ },
+ {
+  "id": "rob-collado",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Collado de las Puertas",
+  "tipo": "paso",
+  "lat": 42.698872,
+  "lon": 0.126037,
+  "nota": "Collado de 2.531 m según OpenStreetMap."
+ },
+ {
+  "id": "rob-ibones",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Vista de los ibones",
+  "tipo": "lugar",
+  "lat": 42.70169,
+  "lon": 0.133429,
+  "nota": "Mirador de la subida final, con los ibones abajo. Altitud del GPS del track: 2.914 m.",
+  "foto": "rob-ibones",
+  "pie": "Los dos ibones de la Munia, vistos desde la cresta."
+ },
+ {
+  "id": "rob-arco",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Arco de roca",
+  "tipo": "paso",
+  "lat": 42.702837,
+  "lon": 0.132886,
+  "nota": "Paso rocoso con una ventana natural en la cresta. Altitud del GPS del track: 2.902 m.",
+  "foto": "rob-arco",
+  "pie": "Una ventana natural en la roca de la cresta."
+ },
+ {
+  "id": "rob-cima",
+  "pico": "robinera",
+  "picos": [
+   "robinera"
+  ],
+  "nombre": "Pico Robiñera",
+  "tipo": "cima",
+  "lat": 42.703996,
+  "lon": 0.132549,
+  "nota": "Cumbre de 3.003 m según la lista de tresmiles; OpenStreetMap da 3.001 m. Altitud del GPS del track: 2.918 m.",
+  "foto": "rob-cima",
+  "pie": "La piedra de la cima, con «ROBIÑERA 3003» grabado."
  }
 ]

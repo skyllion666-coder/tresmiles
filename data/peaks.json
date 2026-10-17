@@ -47,7 +47,8 @@
   "veteranos",
   "eriste-norte",
   "forqueta",
-  "casco"
+  "casco",
+  "robinera"
  ],
  "macizos": [
   {
@@ -1601,6 +1602,38 @@
     "pie": "El gran hito de la cumbre del Casco, entre la niebla."
    },
    "curiosidad": "«Casque» significa casco en francés: el nombre viene de la forma de la montaña. Marboré, según Wikipedia, procede de una palabra que alude al mármol, roca metamórfica de la zona. A sus pies se abre la Brecha de Rolando, que la leyenda atribuye a un tajo de la espada de Roldán, aunque geológicamente la abrió la erosión glaciar."
+  },
+  {
+   "id": "robinera",
+   "nombre": "Pico Robiñera",
+   "alias": "Rubiñera · La Robiñera",
+   "altitud": 3003,
+   "otras": "3.001 m (OpenStreetMap)",
+   "macizo": "per",
+   "frontera": true,
+   "lat": 42.703996,
+   "lon": 0.132549,
+   "acceso": "Valle de Barrosa · Bielsa · Parzán",
+   "ruta": "Poste indicador del valle de Barrosa → pradera → lago de la Munia y collado de las Puertas → cresta con ventana de roca → cumbre; vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.200 m desde el valle de Barrosa (10 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "F+ · pedreras y cresta de bloques",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre de la sierra de Liena, entre los valles de Chisagüés y de Barrosa, junto a Bielsa. Se sube por una pradera, el lago de la Munia y una larga pedrera hasta una cresta con ventana de roca que lleva a la cima.",
+   "foto": "robinera",
+   "pie": "El Pic Rubiñera visto desde el puerto de Barrosa, en una fotografía antigua de Juli Soler i Santaló.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+    "texto": "Ver la ruta en Wikiloc: (7/22) Pico Robiñera (3003 m) Lagos la Munia, de Bitxus"
+   },
+   "rutas": [
+    "robinera-munia"
+   ],
+   "fotoCima": {
+    "foto": "rob-cima",
+    "pie": "La piedra de la cima, con «ROBIÑERA 3003» grabado."
+   },
+   "curiosidad": "La Robiñera forma parte de la sierra de Liena, que separa los valles de Chisagüés y de Barrosa, y su cima apenas pasa los 3.000 m: OpenStreetMap la registra como «Pico de Rubiñera», con 3.001 m. Suele combinarse con La Munia en un circuito largo y exigente por el circo de Barrosa."
   }
  ]
 }

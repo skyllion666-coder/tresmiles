@@ -2216,5 +2216,71 @@
   "w": 1000,
   "h": 461,
   "pos": "50% 50%"
+ },
+ "rob-poste": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 750,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "rob-pradera": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "rob-lago": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "rob-ibones": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "rob-arco": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "rob-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Bitxus",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/7-22-pico-robinera-3003m-lagos-la-munia-106940403",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
  }
 }
