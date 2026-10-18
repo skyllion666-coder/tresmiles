@@ -3,12 +3,12 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=16';
 import { crearVegetacion } from './vegetacion.js?v=5';
-import { crearCumbres } from './cumbres.js?v=25';
+import { crearCumbres } from './cumbres.js?v=27';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=33';
+import { cargarRuta, crearRuta } from './ruta.js?v=34';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -261,8 +261,8 @@ async function boot() {
       if (!show) continue;
       const det = dist < 450 && cumbres.detalle.includes(p.id);
       if (det) cimaCerca = p.w;
-      const LIFT = det ? (isMobile() ? 120 : 110) : isMobile() ? 38 : 34;
-      el.classList.toggle('pin-alto', det); if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
+      const LIFT = det ? (isMobile() ? 160 : 140) : isMobile() ? 38 : 34;
+      el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
         const lb = el.firstElementChild, act = S.active === p.id;

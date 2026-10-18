@@ -30,7 +30,9 @@ export function crearRuta({ scene, geo, ruta }) {
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
       float Rn = clamp(dd * 0.0013, 0.22, 11.0);
       float lift = clamp(dd * 0.0035, 5.0, 24.0);
-      transformed = ctr + normal * Rn; transformed.y += lift - 24.0;`);
+      transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd;`).replace('#include <common>', '#include <common>\nvarying float vDd;');
+    // muy cerca, la línea se aclara para no competir con la cuerda y los montañeros
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd;').replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
   };
   mat.customProgramCacheKey = () => 'ruta-fina';
   const mesh = new THREE.Mesh(geom, mat);
@@ -191,7 +193,8 @@ export function crearRuta({ scene, geo, ruta }) {
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
-    escalar() { /* el tamaño de los muñecos es fijo (ESC_M): ya no crece con la distancia a la cámara */ },
+    // tamaño fijo (ESC_M) a lo largo de todo el recorrido; solo con la cámara muy cerca (< 350 m) encogen hasta un 55 % para no verse gigantes junto a la cima
+    escalar(cam) { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M * Math.min(1, Math.max(0.55, cam.distanceTo(p.h.position) / 350))); },
     setPaso, _est: est,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {

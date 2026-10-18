@@ -50,7 +50,29 @@
    "nota": "Eje: OSM way 451568261 (antecima\u2192cruz). Sector estrecho (central) seg\u00fan el ancho del MDT05 a -3 m de la cresta (11-12 m, ca\u00eddas de 10-20 m a 15 m del eje). corredor/aproximacion/salida en metros; central en fracci\u00f3n del eje."
   },
   "nota": "Datos: MDT05 IGN (CC BY 4.0) y OpenStreetMap (ODbL). Los bloques son procedurales.",
-  "roca": "granito"
+  "roca": "granito",
+  "modelo": "models/cima-aneto.glb",
+  "escalaModelo": 11.5,
+  "separacion": 26,
+  "elementos": [
+   {
+    "nodo": "Cruz",
+    "x": 44655.36,
+    "z": 16156.55,
+    "giro": 0.5,
+    "ancla": true,
+    "huella": 0.7,
+    "ref": "Cruz OSM summit:cross=yes; forma seg\u00fan fotos de la cima"
+   },
+   {
+    "nodo": "Columna",
+    "x": 44658.36,
+    "z": 16157.55,
+    "giro": 0.5,
+    "huella": 0.4,
+    "ref": "Columna con la Virgen, seg\u00fan fotos de la cima; posici\u00f3n relativa estimada"
+   }
+  ]
  },
  "posets": {
   "x0": 26462.88,

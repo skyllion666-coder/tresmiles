@@ -15,8 +15,8 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   const MAX = movil ? 1 : 3, CARGA = movil ? 5500 : 7500, DESCARGA = movil ? 8000 : 11000, FUNDE = 90, INSET = 4;
   let indice = null, cuenta = 0;
   let ficha = null;
-  const fichaListo = fetch('data/terrain/cumbres/detalles.json').then((r) => (r.ok ? r.json() : null)).then((j) => { ficha = j; return j; }).catch(() => null);
-  const listo = fetch('data/terrain/cumbres/index.json').then((r) => (r.ok ? r.json() : null)).then((j) => { indice = j; }).catch(() => {});
+  const fichaListo = fetch(`data/terrain/cumbres/detalles.json?v=${window.WEB_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((j) => { ficha = j; return j; }).catch(() => null);
+  const listo = fetch(`data/terrain/cumbres/index.json?v=${window.WEB_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((j) => { indice = j; }).catch(() => {});
   const piezas = new Map();   // id -> { H, x0, z0, n, paso, mesh, mat, ch, hueco }
   const cargando = new Map();
 
@@ -100,7 +100,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   }
   function granito(x, z) {
     let h = 0;
-    for (const [S, amp, w, sd] of [[9, 2.0, 0.55, 0], [3.6, 1.0, 0.45, 5]]) {
+    for (const [S, amp, w, sd] of [[9, 1.4, 0.55, 0], [3.6, 0.6, 0.45, 5]]) {
       const [f1, f2, id, cx, cz] = voronoi(x, z, S), tx = (hash2(Math.round(id * 1e4), 3, 41 + sd) - 0.5) * 0.9, tz = (hash2(Math.round(id * 1e4), 5, 43 + sd) - 0.5) * 0.9;
       const junta = 1 - sstep(0.015, 0.1 + 0.03 * id, f2 - f1);   // diaclasa: más estrecha en unos bloques que en otros
       h += w * ((id - 0.5) * 2 * amp + tx * (x - cx) + tz * (z - cz) - 0.55 * junta * (S / 4));
@@ -124,7 +124,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     if (detalles.has(id) || detCarga.has(id) || !ficha?.[id] || !piezas.has(id)) return;
     const d = ficha[id], pz = piezas.get(id); detCarga.add(id);
     try {
-      const r = await fetch(`data/terrain/cumbres/${d.archivo}`);
+      const r = await fetch(`data/terrain/cumbres/${d.archivo}?v=${window.WEB_V || 0}`);
       if (!r.ok || typeof DecompressionStream === 'undefined') throw new Error('sin datos');
       const raw = new Uint16Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()), n = d.n, paso = d.paso, hs = geo.hs;
       if (raw.length !== n * n) throw new Error('tamaño');
@@ -144,7 +144,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
         const k = j * n + i, x = d.x0 + i * paso, z = d.z0 + j * paso, dc = Math.hypot(x - cxm, z - czm);
         const cr = d.cresta ? 1 - sstep(5, 15, distSeg(x, z, d.cresta)) : cvx[k], mask = Math.max(sstep(0.35, 0.85, sl[k]) * 0.8, cr) * (1 - sstep(50, 112, dc));
-        const base = H[k] + bloques(x, z, d.roca, H[k] / EXAG) * EXAG * mask * (1 + 2.2 * cr);   // más relieve de bloques sobre la propia arista   // metros reales × exageración vertical
+        const base = H[k] + bloques(x, z, d.roca, H[k] / EXAG) * EXAG * mask * (1 + 1.1 * cr);   // más relieve de bloques sobre la propia arista   // metros reales × exageración vertical
         const hb = sample(pz, x, z) ?? base, bd = Math.min(i, j, n - 1 - i, n - 1 - j) * paso;
         F[k] = hb + (base - hb) * sstep(0, 14, bd);
       }
@@ -195,7 +195,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         inst.instanceMatrix.needsUpdate = true; if (inst.instanceColor) inst.instanceColor.needsUpdate = true; inst.computeBoundingSphere(); scene.add(inst); insts.push(inst);
       });
       let cruz = null;
-      if (d.cruz) {
+      if (d.cruz && !d.modelo) {   // cruz sencilla solo si no hay modelo de la cima hecho en Blender
       // cruz de cumbre (OSM summit:cross=yes en la cima): ~32 m de alto en el modelo (escala 14), 1,5 veces un montañero (21 m) y cuatro veces el tamaño anterior
       cruz = new THREE.Group(); const fe = new THREE.MeshLambertMaterial({ color: 0xc9cdd1, emissive: 0x2a2d30 })   // metal claro: se ve contra el cielo y la roca oscura;
       const v = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.3, 0.1), fe); v.position.y = 1.15; const hbx = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.1, 0.1), fe); hbx.position.y = 1.75; cruz.add(v, hbx);
@@ -204,7 +204,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       // elementos de cumbre modelados en Blender a partir de fotografías (p. ej. Monte Perdido: vértice roto y mojón con buzón)
       const extras = [];
       if (d.modelo && d.elementos?.length) {
-        const gl = await cargaModelo(d.modelo);
+        const gl = await cargaModelo(`${d.modelo}?v=${window.WEB_V || 0}`);   // la versión de la web evita modelos viejos en caché
         if (gl && detalles.has(id)) {
           const S = d.escalaModelo ?? 1, an = d.elementos.find((e) => e.ancla) ?? d.elementos[0];
           for (const e of d.elementos) {
@@ -238,7 +238,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
 
   return {
     get cargadas() { return [...piezas.keys()]; },
-    get cruz() { const d = detalles.get('aneto'); return d?.cruz ? { x: d.cruz.position.x, y: d.cruz.position.y, z: d.cruz.position.z, s: d.cruz.scale.x, visible: d.cruz.visible } : null; },
+    get cruz() { const d = detalles.get('aneto'), o = d?.cruz ?? d?.extras?.[0]; return o ? { x: o.position.x, y: o.position.y, z: o.position.z, s: o.scale.x, visible: o.visible } : null; },
     get detalle() { return [...detalles.keys()]; },
     ficha: () => ficha, fichaListo,
     carga,
