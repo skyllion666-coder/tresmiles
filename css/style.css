@@ -419,3 +419,16 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
   dl.stats dd { font-size: .94rem; }
   dl.stats > div { padding: 10px 0; }
 }
+
+/* — tresmiles subidos — */
+.hecho-box { margin: 16px 0 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.btn-hecho { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border: 1px solid var(--spruce); color: var(--spruce); background: transparent; font: 600 .78rem var(--cond); letter-spacing: .12em; text-transform: uppercase; border-radius: 999px; }
+.btn-hecho i { width: 14px; height: 18px; position: relative; flex: none; }
+.btn-hecho i::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: currentColor; }
+.btn-hecho i::after { content: ""; position: absolute; left: 2px; top: 1px; width: 12px; height: 9px; clip-path: polygon(0 0, 100% 50%, 0 100%); background: repeating-linear-gradient(#f6c315 0 1.2px, #d7261b 1.2px 2.2px); }
+.btn-hecho[aria-pressed="true"] { background: var(--spruce); color: var(--cream); }
+.hecho-cuenta { font: 500 .74rem var(--cond); letter-spacing: .08em; color: var(--ink-2); }
+.hechos-copia { margin: 10px 0 0; font-size: .74rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.hechos-copia label { cursor: pointer; }
+.pin.is-hecho::after { box-shadow: 0 0 0 2px rgba(240, 196, 60, .95), 0 0 8px rgba(240, 196, 60, .45); }
+#list button.hecho span:first-child::after { content: " ⚑"; color: #d7261b; }

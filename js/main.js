@@ -4,6 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=16';
 import { crearVegetacion } from './vegetacion.js?v=5';
 import { crearCumbres } from './cumbres.js?v=27';
+import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=2';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
@@ -51,6 +52,7 @@ async function boot() {
 
   const geo = makeGeo(meta, relieve);
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: isMobile() || matchMedia('(pointer: coarse)').matches });
+  const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
   const clouds = new Clouds(scene, geo);
@@ -132,7 +134,7 @@ async function boot() {
   }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null } };
 
   // — estados de cámara —
   const hq = geo.toXZ(-0.05, 42.79);
@@ -501,7 +503,8 @@ async function boot() {
   }
 
   // — filtros —
-  const passes = (p) => (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
+  const hechos = leerHechos();
+  const passes = (p) => (!S.filters.hecho || (S.filters.hecho === 'si') === hechos.has(p.id)) && (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
   const visiblePeaks = () => peaks.filter((p) => p.activo && passes(p));   // solo las activas (navegación anterior/siguiente)
   const norm = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
   function buildFilters() {
@@ -512,12 +515,13 @@ async function boot() {
     $('#f-dif').innerHTML = data.dificultades.map((d) => `<button type="button" class="chip" aria-pressed="false" data-k="dif" data-v="${d.id}">${esc(d.nombre)}</button>`).join('');
     $('#filters').addEventListener('click', (e) => {
       const c = e.target.closest('.chip'); if (!c) return;
+      if (c.dataset.k === 'hecho') { const on = c.getAttribute('aria-pressed') !== 'true'; document.querySelectorAll('#f-hecho .chip').forEach((b) => b.setAttribute('aria-pressed', 'false')); c.setAttribute('aria-pressed', on); S.filters.hecho = on ? c.dataset.v : null; refreshLists(); return; }
       const set = S.filters[c.dataset.k], on = c.getAttribute('aria-pressed') !== 'true';
       c.setAttribute('aria-pressed', on); on ? set.add(c.dataset.v) : set.delete(c.dataset.v); refreshLists();
     });
     $('#f-alt').addEventListener('input', (e) => { S.filters.alt = +e.target.value; $('#f-alt-out').textContent = `${fmt(S.filters.alt)} m`; refreshLists(); });
     $('#f-reset').addEventListener('click', () => {
-      S.filters.macizo.clear(); S.filters.dif.clear(); S.filters.alt = 3000; $('#f-alt').value = 3000; $('#f-alt-out').textContent = '3.000 m';
+      S.filters.macizo.clear(); S.filters.dif.clear(); S.filters.hecho = null; S.filters.alt = 3000; $('#f-alt').value = 3000; $('#f-alt-out').textContent = '3.000 m';
       document.querySelectorAll('#filters .chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); refreshLists();
     });
     $('#btn-filters').addEventListener('click', () => {
@@ -534,7 +538,7 @@ async function boot() {
       .filter((g) => g.ps.length).sort((a, b) => b.ps.filter((p) => activas.has(p.id)).length - a.ps.filter((p) => activas.has(p.id)).length);
     listUl.innerHTML = grupos.length
       ? grupos.map((g) => `<li class="grupo" role="presentation">${esc(g.m.nombre)}</li>` + g.ps.map((p) => activas.has(p.id)
-          ? `<li role="presentation"><button type="button" role="option" aria-selected="${S.active === p.id}" data-id="${p.id}"><span>${esc(p.nombre)}</span><span>${fmt(p.altitud)} m</span></button></li>`
+          ? `<li role="presentation"><button type="button" role="option" aria-selected="${S.active === p.id}" data-id="${p.id}"${hechos.has(p.id) ? ' class="hecho"' : ''}><span>${esc(p.nombre)}</span><span>${fmt(p.altitud)} m</span></button></li>`
           : `<li class="prox" role="presentation"><span>${esc(p.nombre)}</span><span>Próximamente</span></li>`).join('')).join('')
       : '<li class="empty">Ninguna cumbre coincide.</li>';
     const fc = $('#f-count'); if (fc) fc.textContent = `${hit.length} de ${data.picos.length} cumbres`;
@@ -566,6 +570,7 @@ async function boot() {
       ${foto}
       <h2>${esc(p.nombre)}</h2><p class="alias">${esc(p.alias)}</p>
       <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras">${/^otras/i.test(p.otras) ? '' : '<b>Otras cifras</b> '}${esc(p.otras)}</p>` : ''}
+      ${p.activo ? `<div class="hecho-box"><button type="button" class="btn-hecho" data-act="hecho" aria-pressed="${hechos.has(p.id)}">${hechos.has(p.id) ? '<i aria-hidden="true"></i>Subido · banderín puesto' : '<i aria-hidden="true"></i>He subido este tresmil'}</button><span class="hecho-cuenta">${resumenHechos()}</span></div>` : ''}
       <p class="lede">${esc(p.descripcion)}</p>
       <dl class="stats">
         <div><dt>Macizo</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
@@ -605,6 +610,7 @@ async function boot() {
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
+    if (act?.dataset.act === 'hecho') { marcaHecho(S.active); return; }
     const b = e.target.closest('#btn-ruta'); if (!b) return;
     rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
     pintaRuta(S.active);
@@ -758,6 +764,36 @@ async function boot() {
     if (S.active === id) pintaRuta(id, { animar: !instant });
     terrain.update(camera, 8);
   }
+  // — tresmiles subidos: banderín de Aragón en la cima, aro dorado en el marcador y contador —
+  const totalActivas = () => peaks.filter((p) => p.activo).length;
+  function resumenHechos() { const n = [...hechos].filter((id) => byId[id]?.activo).length; return `${n} de ${totalActivas()} tresmiles subidos`; }
+  function pintaHechos() {
+    for (const p of peaks) pinEls.get(p.id)?.classList.toggle('is-hecho', hechos.has(p.id));
+    const c = $('#hechos-cuenta'); if (c) c.textContent = resumenHechos();
+  }
+  function marcaHecho(id) {
+    const p = byId[id]; if (!p) return;
+    if (hechos.has(id)) { hechos.delete(id); banderines.quita(id); sonido.fx('desactivar'); }
+    else { hechos.add(id); banderines.pone(p, true); sonido.fx('activar'); }
+    guardarHechos(hechos); pintaHechos();
+    const b = fichaBody.querySelector('.btn-hecho');
+    if (b) { const on = hechos.has(id); b.setAttribute('aria-pressed', on); b.innerHTML = `<i aria-hidden="true"></i>${on ? 'Subido · banderín puesto' : 'He subido este tresmil'}`; fichaBody.querySelector('.hecho-cuenta').textContent = resumenHechos(); }
+    refreshLists();
+  }
+  // copia de seguridad: exportar e importar la lista en un archivo
+  $('#hechos-exportar')?.addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({ app: 'tresmiles', hechos: [...hechos] }, null, 1)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mis-tresmiles.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+  $('#hechos-importar')?.addEventListener('change', async (e) => {
+    const f = e.target.files?.[0]; if (!f) return;
+    try { const j = JSON.parse(await f.text()); const ids = (j.hechos ?? j).filter((id) => byId[id]); for (const id of ids) { hechos.add(id); banderines.pone(byId[id], false); } guardarHechos(hechos); pintaHechos(); refreshLists(); avisoCarga(`${ids.length} tresmiles importados`); setTimeout(() => avisoCarga(null), 2200); }
+    catch { avisoCarga('Ese archivo no es una copia de tus tresmiles'); setTimeout(() => avisoCarga(null), 2600); }
+    e.target.value = '';
+  });
+  for (const id of hechos) if (byId[id]) banderines.pone(byId[id], false);
+  pintaHechos();
+
   // vista opcional de detalle del Paso de Mahoma: la cámara se acerca con el vuelo de siempre y el usuario conserva el control
   async function vistaMahoma(cual) {
     if (S.active !== 'aneto') return;
@@ -1002,7 +1038,7 @@ async function boot() {
     else if (camera.view?.enabled) camera.clearViewOffset();
     camera.updateMatrixWorld();
     sky.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
-    terrain.update(camera); cumbres.update(camera); veg.update(camera);
+    terrain.update(camera); cumbres.update(camera); veg.update(camera); banderines.update(camera, now / 1000);
     clouds.update(dt, camera, !reduced);
     updatePins();
     const tt = now / 1000;

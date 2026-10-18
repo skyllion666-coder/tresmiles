@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 180;
+  window.WEB_V = 182;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -16,7 +16,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=43">
+  <link rel="stylesheet" href="css/style.css?v=44">
   <link rel="stylesheet" href="css/cine.css?v=5">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
@@ -88,6 +88,8 @@
     <fieldset><legend>Macizo</legend><div class="chips" id="f-macizo"></div></fieldset>
     <fieldset><legend>Altitud mínima: <output id="f-alt-out">3.000 m</output></legend><input type="range" id="f-alt" min="3000" max="3400" step="50" value="3000"></fieldset>
     <fieldset><legend>Dificultad</legend><div class="chips" id="f-dif"></div></fieldset>
+    <fieldset><legend>Mis tresmiles · <output id="hechos-cuenta"></output></legend><div class="chips" id="f-hecho"><button type="button" class="chip" aria-pressed="false" data-k="hecho" data-v="si">Subidos</button><button type="button" class="chip" aria-pressed="false" data-k="hecho" data-v="no">Pendientes</button></div>
+      <p class="hechos-copia">Se guardan en este móvil. <button type="button" class="textbtn dark" id="hechos-exportar">Guardar copia</button> <label class="textbtn dark">Recuperar copia<input type="file" id="hechos-importar" accept=".json,application/json" hidden></label></p></fieldset>
     <div class="panel-foot"><span id="f-count"></span><button type="button" class="textbtn dark" id="f-reset">Quitar filtros</button></div>
   </section>
 
@@ -118,7 +120,7 @@
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 134;</script>
-  <script type="module" src="js/main.js?v=180"></script>
+  <script type="module" src="js/main.js?v=182"></script>
   <script defer src="js/cine.js?v=6"></script>
 </body>
 </html>
