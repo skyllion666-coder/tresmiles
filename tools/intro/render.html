@@ -1,0 +1,184 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Render de la introducción (herramienta, no se publica en la web)</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+<canvas id="gl"></canvas>
+<script type="importmap">{ "imports": { "three": "../../vendor/three/three.module.js" } }</script>
+<script type="module">
+// Fotogramas de la introducción: se dibujan con el mismo relieve real de la web (js/terrain.js) pero con la luz del
+// amanecer: sol bajo, sombras proyectadas por las crestas, cielo del alba, bruma en los valles y velo de nubes finas.
+// Uso: tools/intro/render.py  →  abre esta página con Playwright, fija el tiempo con window.setT(t) y guarda cada fotograma.
+import * as THREE from 'three';
+import { makeGeo } from '../../js/geo.js';
+import { Terrain } from './terrain-render.js';
+import { HeightStore } from '../../js/heights.js';
+
+const DUR = 13.5;
+const W = +new URLSearchParams(location.search).get('w') || 1280, H = +new URLSearchParams(location.search).get('h') || 720;
+const meta = await (await fetch('../../data/terrain/meta.json')).json();
+const relieve = new HeightStore(meta, '../../data/terrain'); await relieve.init();
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(38, W / H, 80, 260000);
+const geo = makeGeo(meta, relieve);
+
+// — mapa de alturas grueso para las sombras —
+const TW = 1152, TH = 384, HN = 5200;
+const hd = new Uint16Array(TW * TH);
+for (let j = 0; j < TH; j++) for (let i = 0; i < TW; i++) {
+  const h = relieve.sample(i / (TW - 1) * (meta.ncols - 1), j / (TH - 1) * (meta.nrows - 1)) * geo.hs;
+  hd[j * TW + i] = THREE.DataUtils.toHalfFloat(h / HN);
+}
+const hTex = new THREE.DataTexture(hd, TW, TH, THREE.RedFormat, THREE.HalfFloatType);
+hTex.minFilter = hTex.magFilter = THREE.LinearFilter; hTex.needsUpdate = true;
+
+const U = {
+  uH: { value: hTex }, uSun: { value: new THREE.Vector3(1, 0.1, 0) }, uSize: { value: new THREE.Vector2(geo.W, geo.D) },
+  uTime: { value: 0 }, uMistCol: { value: new THREE.Color('#e9c9b4') }, uMist: { value: 0.7 }, uWarm: { value: new THREE.Color('#ffb070') },
+  uCam: { value: new THREE.Vector3() },
+};
+const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: '../../data/terrain' });
+const fallo = new Set();   // texturas que no existen (algún bloque no tiene versión fina)
+const _tex = terrain._tex.bind(terrain); terrain._tex = (path) => _tex(path).then((t) => { if (!t) fallo.add(path); return t; });
+const NOISE = `
+float h21(vec2 p){ p = fract(p*vec2(123.34,456.21)); p += dot(p,p+45.32); return fract(p.x*p.y); }
+float vn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
+  return mix(mix(h21(i),h21(i+vec2(1,0)),f.x), mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),f.x), f.y); }
+float fbm(vec2 p){ float a=.5, s=0.; for(int k=0;k<4;k++){ s+=a*vn(p); p=p*2.03+17.1; a*=.5; } return s; }`;
+// sombras por marcha de rayo sobre el mapa de alturas + bruma baja que se mueve
+for (const c of terrain.chunks) {
+  c.mat.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U);
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWP;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWP = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>
+      varying vec3 vWP; uniform sampler2D uH; uniform vec3 uSun, uCam; uniform vec2 uSize; uniform float uTime, uMist; uniform vec3 uMistCol, uWarm;
+      ${NOISE}
+      float sombra(vec3 p){
+        float s = 1.0;
+        for (int i = 1; i <= 44; i++) {
+          float d = 90.0 * pow(float(i), 1.45);
+          vec3 q = p + uSun * d;
+          vec2 uv = (q.xz + uSize * 0.5) / uSize;
+          if (uv.x < 0. || uv.x > 1. || uv.y < 0. || uv.y > 1. || q.y > 4600.) break;
+          float h = texture2D(uH, uv).r * ${HN.toFixed(1)};
+          s = min(s, clamp((q.y - h) / (0.06 * d + 25.0) + 0.15, 0., 1.));
+        }
+        return s;
+      }`)
+      .replace('#include <lights_fragment_end>', `#include <lights_fragment_end>
+      { float sm = sombra(vWP + vec3(0., 12., 0.)); reflectedLight.directDiffuse *= sm; }`)
+      .replace('#include <fog_fragment>', `#include <fog_fragment>
+      {
+        float dist = distance(vWP, uCam);
+        vec2 q = vWP.xz * 0.00011 + vec2(uTime * 0.012, -uTime * 0.004);
+        float n = fbm(q + fbm(q * 1.7 + 4.0) * 0.8);
+        float low = 1.0 - smoothstep(1250.0, 2700.0, vWP.y + (n - 0.5) * 900.0);
+        float veil = low * smoothstep(0.30, 0.78, n + 0.18) * (1.0 - exp(-dist / 7000.0)) * uMist;
+        gl_FragColor.rgb = mix(gl_FragColor.rgb, uMistCol, clamp(veil, 0., 0.86));
+      }`);
+  };
+}
+
+// — cielo del alba —
+const skyMat = new THREE.ShaderMaterial({
+  side: THREE.BackSide, depthWrite: false, fog: false,
+  uniforms: { uTop: { value: new THREE.Color() }, uMid: { value: new THREE.Color() }, uHor: { value: new THREE.Color() }, uSun: U.uSun, uWarm: U.uWarm, uTime: U.uTime },
+  vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
+  fragmentShader: `varying vec3 vP; uniform vec3 uTop, uMid, uHor, uSun, uWarm; uniform float uTime; ${NOISE}
+    void main(){
+      vec3 d = normalize(vP); float h = clamp(d.y, 0.0, 1.0);
+      vec3 c = mix(uHor, uMid, smoothstep(0.0, 0.38, h)); c = mix(c, uTop, smoothstep(0.10, 0.80, h));
+      float g = max(dot(d, normalize(uSun)), 0.0);
+      c += uWarm * (pow(g, 6.0) * 0.28 + pow(g, 40.0) * 0.55 + pow(g, 700.0) * 2.0) * (1.0 - smoothstep(0.0, 0.5, h));
+      // cirros muy finos, casi inmóviles
+      if (d.y > 0.02) { vec2 p = d.xz / (d.y + 0.35) * 2.2 + vec2(uTime * 0.004, 0.0); float n = fbm(p * vec2(1.0, 3.2));
+        float ci = smoothstep(0.50, 0.85, n) * smoothstep(0.02, 0.2, d.y) * (1.0 - smoothstep(0.55, 0.95, d.y));
+        c = mix(c, mix(uHor, uWarm, 0.5) * 1.05 + 0.05, ci * 0.32); }
+      gl_FragColor = vec4(c, 1.0);
+    }`,
+});
+const sky = new THREE.Mesh(new THREE.SphereGeometry(200000, 32, 16), skyMat); sky.frustumCulled = false; sky.renderOrder = -10; scene.add(sky);
+
+// — velo de nubes finas (dos capas) —
+const cloudMat = (alt, op, sc, spd) => new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, side: THREE.DoubleSide,
+  uniforms: { ...U, uOp: { value: op }, uSc: { value: sc }, uSpd: { value: spd } },
+  vertexShader: 'varying vec3 vWP; void main(){ vec4 w = modelMatrix * vec4(position,1.0); vWP = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }',
+  fragmentShader: `varying vec3 vWP; uniform float uTime, uOp, uSc, uSpd; uniform vec3 uCam, uMistCol, uWarm; ${NOISE}
+    void main(){
+      vec2 p = vWP.xz * uSc + vec2(uTime * uSpd, uTime * uSpd * 0.3);
+      float n = fbm(p + fbm(p * 1.9) * 0.9);
+      float a = smoothstep(0.50, 0.80, n);
+      float dist = distance(vWP, uCam);
+      a *= smoothstep(3500.0, 11000.0, dist) * (1.0 - smoothstep(60000.0, 110000.0, dist));
+      gl_FragColor = vec4(mix(uMistCol, uWarm * 1.1, 0.35), a * uOp);
+    }`,
+});
+for (const [alt, op, sc, spd] of [[2350, 0.5, 0.000075, 5], [3900, 0.22, 0.00005, 9]]) {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(260000, 260000), cloudMat(alt, op, sc, spd));
+  m.rotation.x = -Math.PI / 2; m.position.y = alt; m.frustumCulled = false; m.renderOrder = 5; scene.add(m);
+}
+scene.fog = new THREE.Fog('#d8b9a4', 30000, 130000);
+const hemi = new THREE.HemisphereLight(0x9fb4d8, 0x4a4a52, 0.55 * Math.PI);
+const sun = new THREE.DirectionalLight(0xffb070, 1.9 * Math.PI);
+scene.add(hemi, sun);
+
+// — trayectoria de cámara (lon, lat, altura sobre el nivel del mar; objetivo lon, lat, altura) —
+const K = [
+  { t: 0.0, p: [0.62, 42.93, 4300], l: [0.28, 42.72, 2200] },
+  { t: 4.5, p: [0.40, 42.92, 4000], l: [0.02, 42.69, 2500] },
+  { t: 9.0, p: [0.10, 42.95, 3600], l: [-0.20, 42.80, 2600] },
+  { t: 13.5, p: [-0.09, 42.95, 3250], l: [-0.22, 42.84, 2950] },
+];
+// las alturas del relieve están en m·EXAG (hs/hscale = EXAG): se escalan igual
+const Y = (m) => m * (geo.hs / meta.hscale);
+const P = K.map((k) => ({ t: k.t, p: ((q) => new THREE.Vector3(q.x, Y(k.p[2]), q.z))(geo.toXZ(k.p[0], k.p[1])), l: ((q) => new THREE.Vector3(q.x, Y(k.l[2]), q.z))(geo.toXZ(k.l[0], k.l[1])) }));
+const cr = (a, b, c, d, t) => 0.5 * ((2 * b) + (-a + c) * t + (2 * a - 5 * b + 4 * c - d) * t * t + (-a + 3 * b - 3 * c + d) * t * t * t);
+function spline(arr, key, t) {
+  let i = 0; while (i < arr.length - 2 && t > arr[i + 1].t) i++;
+  const a = arr[Math.max(0, i - 1)][key], b = arr[i][key], c = arr[i + 1][key], d = arr[Math.min(arr.length - 1, i + 2)][key];
+  let u = (t - arr[i].t) / (arr[i + 1].t - arr[i].t); u = Math.min(1, Math.max(0, u));
+  return new THREE.Vector3(cr(a.x, b.x, c.x, d.x, u), cr(a.y, b.y, c.y, d.y, u), cr(a.z, b.z, c.z, d.z, u));
+}
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (x) => x * x * (3 - 2 * x);
+const col = (a, b, t) => new THREE.Color(a).lerp(new THREE.Color(b), t);
+
+window.setT = (t) => {
+  // sol: del alba (justo bajo el horizonte) a la mañana dorada; acimut ESE, algo desplazado
+  const k = smooth(Math.min(1, t / DUR));
+  const el = THREE.MathUtils.degToRad(lerp(2.5, 12, k)), az = THREE.MathUtils.degToRad(lerp(82, 98, k));
+  U.uSun.value.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).normalize();
+  sun.position.copy(U.uSun.value).multiplyScalar(1000);
+  sun.color.copy(col('#ff9a5c', '#ffd7a0', Math.min(1, k * 1.3)));
+  sun.intensity = lerp(1.3, 2.2, k) * Math.PI;
+  hemi.color.copy(col('#7d93c4', '#a9c2e6', k)); hemi.groundColor.set('#46464f'); hemi.intensity = lerp(0.55, 0.62, k) * Math.PI;
+  U.uTime.value = t;
+  U.uMistCol.value.copy(col('#d9b9ae', '#f2d9c0', k)); U.uWarm.value.copy(col('#ff9658', '#ffcf94', k));
+  skyMat.uniforms.uTop.value.copy(col('#1d3260', '#3f78b8', k));
+  skyMat.uniforms.uMid.value.copy(col('#6f84b4', '#9dc0de', k));
+  skyMat.uniforms.uHor.value.copy(col('#eeb3a0', '#f8d9b0', k));
+  scene.fog.color.copy(skyMat.uniforms.uHor.value); scene.fog.near = 7000; scene.fog.far = lerp(78000, 98000, k);
+  const kk = smooth(t / DUR);
+  const pos = spline(P, 'p', t), look = spline(P, 'l', t);
+  pos.y = Math.max(pos.y, geo.heightAt(pos.x, pos.z) + 700);
+  camera.position.copy(pos); camera.up.set(0, 1, 0); camera.lookAt(look);
+  // deriva lateral muy suave y leve respiración del encuadre (dron)
+  camera.rotateZ(Math.sin(t * 0.5) * 0.004);
+  camera.updateMatrixWorld(); U.uCam.value.copy(pos); sky.position.copy(pos);
+  terrain.update(camera, 40);
+};
+window.listo = () => {
+  terrain.update(camera, 40);
+  const st = relieve;
+  const falta = terrain.chunks.some((c) => c.use !== c.stride || !st.has(c.t.i, c.t.j, c.wantStride) || c.hiLoading || !c.lo || (c.dist < 22000 && !c.hi && !fallo.has('hi/' + c.t.f)));
+  return !falta && st.activas === 0;
+};
+window.__T = terrain; window.__F = fallo;
+window.draw = () => { renderer.render(scene, camera); };
+await terrain.ready;
+window.__ok = true;
+</script>

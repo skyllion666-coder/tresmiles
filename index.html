@@ -10,6 +10,17 @@
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css?v=30">
+  <link rel="stylesheet" href="css/cine.css?v=1">
+  <script>
+    // introducción: solo la primera vez (o con ?intro); nunca con ?directo, con movimiento reducido ni con ahorro de datos
+    (function () {
+      try {
+        var q = location.search, visto = false; try { visto = localStorage.getItem('tresmiles-intro-vista') === '1'; } catch (e) {}
+        var no = /[?&](directo|sinintro)\b/.test(q) || matchMedia('(prefers-reduced-motion: reduce)').matches || (navigator.connection && navigator.connection.saveData);
+        if (no || (visto && !/[?&]intro\b/.test(q))) document.documentElement.classList.add('sin-cine');
+      } catch (e) { document.documentElement.classList.add('sin-cine'); }
+    })();
+  </script>
   <script type="importmap">{ "imports": { "three": "./vendor/three/three.module.js", "three/addons/": "./vendor/three/" } }</script>
 </head>
 <body class="is-loading">
@@ -83,8 +94,17 @@
   <div id="loading" role="status"><div class="load-mark"></div><p id="load-text">Cargando el relieve…</p></div>
   <noscript><p class="noscript">Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.</p></noscript>
 
+  <div id="cine" role="region" aria-label="Introducción">
+    <video id="cine-video" muted playsinline preload="metadata" poster="img/intro-poster.webp" aria-hidden="true"></video>
+    <div class="cine-vel"></div>
+    <div class="cine-titulo"><h2><span>Los tresmiles</span><span>del Pirineo aragonés</span></h2><i class="linea"></i></div>
+    <div class="cine-luz"></div>
+    <div class="cine-ctl"><button type="button" id="cine-sonido" aria-pressed="false">Sonido</button><button type="button" id="cine-saltar">Saltar introducción</button></div>
+  </div>
+
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 130;</script>
   <script type="module" src="js/main.js?v=130"></script>
+  <script defer src="js/cine.js?v=1"></script>
 </body>
 </html>

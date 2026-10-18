@@ -1,0 +1,25 @@
+/* Introducción cinematográfica: capa independiente sobre la web (no toca el mapa ni sus estilos). */
+#cine { position: fixed; inset: 0; z-index: 100; background: #121a2e; color: #fbf3e2; overflow: hidden; transition: opacity .9s ease; }
+.sin-cine #cine { display: none; }
+#cine.fuera { opacity: 0; pointer-events: none; }
+#cine video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #121a2e; }
+#cine .cine-vel { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(8,12,24,.38) 100%); }
+#cine .cine-luz { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .75s ease-in; background: radial-gradient(ellipse at 55% 60%, #fff3d6 0%, #ffd9a0 45%, #f2b27a 100%); }
+#cine.luz .cine-luz { opacity: .96; }
+/* título: ocupa el cielo (parte alta), nunca las cumbres */
+#cine .cine-titulo { position: absolute; left: 0; right: 0; top: clamp(70px, 13vh, 150px); text-align: center; padding: 0 var(--gutter, 20px); pointer-events: none; text-shadow: 0 2px 30px rgba(20, 22, 50, .55), 0 0 60px rgba(255, 190, 120, .35); }
+#cine .cine-titulo h2 { margin: 0; font: 500 clamp(1.5rem, 5.2vw, 3.7rem)/1.18 "Cormorant Garamond", Georgia, serif; letter-spacing: .26em; padding-left: .26em; text-transform: uppercase; }
+#cine .cine-titulo h2 span { display: block; opacity: 0; filter: blur(10px); letter-spacing: .46em; transform: translateY(8px); transition: opacity 2.2s ease, filter 2.2s ease, letter-spacing 3.2s cubic-bezier(.2, .6, .2, 1), transform 2.4s ease; }
+#cine .cine-titulo h2 span:nth-child(2) { transition-delay: .7s; }
+#cine .cine-titulo .linea { display: block; width: 0; height: 1px; margin: 18px auto 0; background: linear-gradient(90deg, transparent, #ffd9a8, transparent); transition: width 3s ease .5s; }
+#cine.t-in .cine-titulo h2 span { opacity: 1; filter: blur(0); letter-spacing: .26em; transform: none; }
+#cine.t-in .cine-titulo .linea { width: min(46vw, 360px); }
+#cine.t-out .cine-titulo { opacity: 0; transition: opacity 1s ease; }
+#cine .cine-ctl { position: absolute; left: 0; right: 0; bottom: max(18px, env(safe-area-inset-bottom)); display: flex; justify-content: space-between; align-items: center; padding: 0 var(--gutter, 20px); }
+#cine .cine-ctl button { font: 500 .74rem "Barlow Semi Condensed", system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: #fbf3e2; background: rgba(14, 20, 38, .35); border: 1px solid rgba(251, 243, 226, .38); padding: 10px 16px; min-height: 40px; cursor: pointer; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: background .2s, border-color .2s; }
+#cine .cine-ctl button:hover { background: rgba(14, 20, 38, .6); border-color: rgba(251, 243, 226, .7); }
+#cine .cine-ctl button[aria-pressed="true"] { border-color: #ffd9a8; }
+/* botón para volver a ver la introducción (en la cabecera de la web) */
+#btn-reintro { padding: 6px 8px; margin-right: 14px; color: var(--cream, #f7f2e4); opacity: .85; text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+#btn-reintro:hover { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { #cine { display: none; } }
