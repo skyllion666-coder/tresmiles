@@ -68,7 +68,29 @@
   "paso": 1.0,
   "archivo": "perdido-cima.bin.gz",
   "roca": "caliza",
-  "ref": "OSM peak 42.675548,0.034357; IGN v\u00e9rtice 14660 (pilar 1,2 m, 1982) a 2 m, destruido el 26-12-2023; \u00abEl monte es muy pedregoso\u00bb (IGN). Macizo calc\u00e1reo (Ordesa-Monte Perdido)."
+  "ref": "OSM peak 42.675548,0.034357; IGN v\u00e9rtice 14660 (pilar 1,2 m, 1982) a 2 m, destruido el 26-12-2023; \u00abEl monte es muy pedregoso\u00bb (IGN). Macizo calc\u00e1reo (Ordesa-Monte Perdido).",
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -6191.63,
+    "z": 11221.88,
+    "giro": 0.4,
+    "ref": "IGN v\u00e9rtice 14660 (ETRS89); pilar roto seg\u00fan foto de la cima",
+    "ancla": false
+   },
+   {
+    "nodo": "Mojon",
+    "x": -6187.12,
+    "z": 11222.08,
+    "giro": 0.9,
+    "ref": "Moj\u00f3n con buz\u00f3n, seg\u00fan fotos de la cima; colocado en el punto m\u00e1s alto del MDT05 (aprox.)",
+    "ancla": true
+   }
+  ],
+  "modelo": "models/cima-perdido.glb",
+  "escalaModelo": 11.5,
+  "separacion": 32,
+  "notaModelo": "Escala \u00d711,5, la misma que los monta\u00f1eros (proporci\u00f3n coherente con ellos); por eso el pilar se separa ~32 m del moj\u00f3n en lugar de los ~4,5 m reales, para que no se solapen."
  },
  "maladeta": {
   "x0": 43217.39,

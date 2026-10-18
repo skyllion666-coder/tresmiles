@@ -5,6 +5,9 @@
 // así que rutas, montañeros, rebecos y árboles se apoyan en la misma superficie.
 import * as THREE from 'three';
 import { EXAG } from './geo.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const modelos = new Map();   // url -> Promise<gltf>
+const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().load(url, res, undefined, () => res(null)))); return modelos.get(url); };
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
@@ -197,12 +200,30 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       const v = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.3, 0.1), fe); v.position.y = 1.15; const hbx = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.1, 0.1), fe); hbx.position.y = 1.75; cruz.add(v, hbx);
       cruz.scale.setScalar(14); cruz.position.set(d.cruz.x, (sample(detalles.get(id), d.cruz.x, d.cruz.z) ?? 0) - 0.5, d.cruz.z); scene.add(cruz);
       }
-      Object.assign(detalles.get(id), { mesh, mat, insts, cruz, pieza: pz });
+      // elementos de cumbre modelados en Blender a partir de fotografías (p. ej. Monte Perdido: vértice roto y mojón con buzón)
+      const extras = [];
+      if (d.modelo && d.elementos?.length) {
+        const gl = await cargaModelo(d.modelo);
+        if (gl && detalles.has(id)) {
+          const S = d.escalaModelo ?? 1, an = d.elementos.find((e) => e.ancla) ?? d.elementos[0];
+          for (const e of d.elementos) {
+            const src = gl.scene.getObjectByName(e.nodo); if (!src) continue;
+            const o = src.clone(true); o.position.set(0, 0, 0); o.scale.setScalar(S); o.rotation.set(0, e.giro ?? 0, 0);
+            let px = e.x, pz2 = e.z;
+            if (e !== an) { const vx = e.x - an.x, vz = e.z - an.z, L = Math.hypot(vx, vz) || 1; px = an.x + (vx / L) * (d.separacion ?? L); pz2 = an.z + (vz / L) * (d.separacion ?? L); }
+            const R0 = (e.ancla ? 1.6 : 0.7) * S; let y = 1e9;   // se apoya en el punto más bajo de su huella (queda algo enterrado, nunca flotando)
+            for (const [ox, oz] of [[0, 0], [R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
+            o.position.set(px, y - 0.04 * S, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
+            scene.add(o); extras.push(o);
+          }
+        }
+      }
+      Object.assign(detalles.get(id), { mesh, mat, insts, cruz, extras, pieza: pz });
     } catch (e) { console.warn('detalle', id, e); detalles.delete(id); } finally { detCarga.delete(id); }
   }
   function quitaDetalle(id) {
     const d = detalles.get(id); if (!d) { detalles.delete(id); return; }
-    for (const o of [d.mesh, ...(d.insts ?? []), d.cruz]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
+    for (const o of [d.mesh, ...(d.insts ?? []), d.cruz, ...(d.extras ?? [])]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
     d.mat?.dispose(); d.pieza?.mat.userData.holes.value[0].set(1e9, 1e9, 1e9, 1e9); detalles.delete(id);
   }
 
