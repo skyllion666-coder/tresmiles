@@ -15,6 +15,7 @@ float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.
 float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
   return mix(mix(mix(h31(i),h31(i+vec3(1,0,0)),f.x),mix(h31(i+vec3(0,1,0)),h31(i+vec3(1,1,0)),f.x),f.y),
              mix(mix(h31(i+vec3(0,0,1)),h31(i+vec3(1,0,1)),f.x),mix(h31(i+vec3(0,1,1)),h31(i+vec3(1,1,1)),f.x),f.y),f.z); }
+float worley(vec2 p){ vec2 i=floor(p), f=fract(p); float d=1.; for(int y=-1;y<=1;y++) for(int x=-1;x<=1;x++){ vec2 g=vec2(float(x),float(y)); vec2 o=vec2(h31(vec3(i+g,1.)),h31(vec3(i+g,7.))); d=min(d,length(g+o-f)); } return d; }
 float fbm(vec3 p){ float a=.5,s=0.; for(int i=0;i<4;i++){ if(float(i)>=uOct) break; s+=a*vn(p); p=p*2.03+vec3(11.,7.,3.); a*=.5; } return s; }
 `;
 const GLSL_COLOR = `
@@ -22,29 +23,46 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   vec3 N = normalize(vWNrm); float sl = 1. - N.y;
   float dist = distance(vWPos, cameraPosition);
   float fa = 1. - smoothstep(2500., 15000., dist), fc = 1. - smoothstep(250., 3500., dist);
+  const vec3 LW = vec3(.30, .59, .11);
+  vec3 c = diffuseColor.rgb;
+#ifdef USE_MAP
+  // nitidez: máscara de enfoque sobre la imagen de satélite (la fuente tiene 10 m por píxel; esto recupera contraste de borde sin inventar datos)
+  { vec2 ts = 1. / vec2(textureSize(map, 0)); vec3 bl = (texture2D(map, vMapUv + vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv - vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv + vec2(0., ts.y)).rgb + texture2D(map, vMapUv - vec2(0., ts.y)).rgb) * .25;
+    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5), 0.); }
+#endif
+  float lm = dot(c, LW);
+  float nieve = smoothstep(.60, .80, lm);
+  c *= 1. + .38 * (1. - smoothstep(.012, .085, lm)) * (1. - nieve);   // levanta las sombras muy oscuras que trae la imagen de satélite
   float cl = 0.;
   if (uHasCover > .5) { vec2 w = (vec2(vn(vWPos * .017), vn(vWPos * .017 + 9.)) - .5) * .004; cl = floor(texture2D(uCover, vec2(vCUv.x, 1. - vCUv.y) + w).r * 255. + .5); }
   float tree = step(abs(cl - 1.), .5), shrub = step(abs(cl - 2.), .5), grass = step(abs(cl - 3.), .5), bare = max(step(abs(cl - 4.), .5), step(abs(cl - 8.), .5));
-  float rock = max(bare, smoothstep(.30, .56, sl)); rock = max(rock, 0.) * (1. - tree * .6);
+  float steep = smoothstep(.34, .62, sl);
+  float rock = max(bare, steep); rock = rock * (1. - tree * .6) * (1. - nieve * .85);
   float n1 = fbm(vWPos * vec3(.011, .017, .011)), n2 = fbm(vWPos * .085), n3 = vn(vWPos * .65);
-  vec3 c = diffuseColor.rgb;
-  float nieve = smoothstep(.60, .80, dot(c, vec3(.30, .59, .11))); rock *= 1. - nieve * .85;
-  // roca: variación de tono, estratos en las paredes y fracturas
+  // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
+  float lm2 = dot(c, LW);
+  vec3 rc = vec3(lm2) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
+  c = mix(c, rc, steep * (1. - nieve * .5) * (1. - tree * .5) * .78);
+  // la roca desnuda pierde el verde de la imagen y gana grises y ocres
+  c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
-  float st = sin((vWPos.y + n1 * 46.) * .55) * .5 + .5;
-  c *= 1. + (st - .5) * .15 * smoothstep(.32, .6, sl) * fa * (.6 + .8 * n1);
-  if (uBump > .5) {   // fracturas solo en calidad alta
+  float st = fbm(vWPos * vec3(.017, .12, .017) + 5.);   // estratos irregulares (sin bandas periódicas)
+  c *= 1. + (st - .5) * .36 * smoothstep(.40, .65, sl) * fa * (1. - nieve);
+  if (uBump > .5) {   // calidad alta: fracturas y astillas angulosas de roca, y copas de árboles agrupadas
+    vec2 pq = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
     float rid = 1. - abs(2. * fbm(vWPos * vec3(.07, .022, .07) + 3.) - 1.);
     c *= 1. - .20 * smoothstep(.90, .985, rid) * smoothstep(.30, .50, sl) * rock * fa;
+    if (rock > .05 && fc > .02) { float wk = worley(pq * .33); c *= 1. + (wk - .55) * .55 * rock * fc; }
+    if (tree > .5 && fc > .02) { float wk = worley(vWPos.xz / 15.); c *= .78 + .5 * smoothstep(.05, .75, wk) * (1. - .2 * fc) + (n3 - .5) * .12; c = mix(c, vec3(dot(c, LW)) * vec3(.88, 1., .78), .15); }
   }
   // canchal: ladera de piedra suelta de pendiente media
   float scree = bare * smoothstep(.10, .26, sl) * (1. - smoothstep(.42, .58, sl));
-  c = mix(c, c * (.78 + .55 * n3) * vec3(1.02, 1., .97), scree * fc);
-  // pradera y matorral: moteado suave; bosque: oscurece y rompe el tono
-  c *= 1. + (n2 - .5) * .22 * (grass + shrub) * fa;
+  c = mix(c, c * (.74 + .62 * n3) * vec3(1.02, 1., .97), scree * fc);
+  // pradera y matorral: moteado y matices de pasto alpino; bosque: oscurece y rompe el tono
+  c *= 1. + (n2 - .5) * .26 * (grass + shrub) * fa;
+  c = mix(c, c * vec3(1.10, 1.02, .80), (grass + shrub) * smoothstep(.45, .8, n1) * .35 * fa);
   c *= 1. + (vn(vWPos * .21) - .5) * .38 * tree * fa;
-  // granulado cercano
-  c *= 1. + (n3 - .5) * .07 * fc * (1. - nieve * .6);
+  c *= 1. + (n3 - .5) * .10 * fc * (1. - nieve * .6);   // granulado cercano
   diffuseColor.rgb = c;
 }
 `;

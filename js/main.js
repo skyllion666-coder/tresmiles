@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=4';
+import { Terrain } from './terrain.js?v=6';
 import { crearVegetacion } from './vegetacion.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
