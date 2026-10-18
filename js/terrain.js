@@ -46,13 +46,18 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float n1 = fbm(vWPos * vec3(.011, .017, .011)), n2 = fbm(vWPos * .085), n3 = vn(vWPos * .65);
   // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
   float lm2 = dot(c, LW);
-  vec3 rc = vec3(min(lm2, .34) * .85 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
+  vec3 rc = vec3(mix(min(lm2, .34), .27, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
   c = mix(c, rc, steep * (1. - nieve * .5) * (1. - tree * .5) * .78);
   // la roca desnuda pierde el verde de la imagen y gana grises y ocres
   c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
   float st = fbm(vWPos * vec3(.017, .12, .017) + 5.);   // estratos irregulares (sin bandas periódicas)
   c *= 1. + (st - .5) * .36 * smoothstep(.40, .65, sl) * fa * (1. - nieve);
+  if (uBump < .5 && rock > .05 && fc > .02) {   // calidad móvil: textura de roca nítida y barata (dos escalas de ruido de valor)
+    vec2 pq2 = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
+    float g1 = vn(vec3(pq2 * .9, 1.7)), g2 = vn(vec3(pq2 * 3.1, 4.3));
+    c *= 1. + ((g1 - .5) * .45 + (g2 - .5) * .35) * rock * fc;
+  }
   if (uBump > .5) {   // calidad alta: fracturas y astillas angulosas de roca, y copas de árboles agrupadas
     vec2 pq = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
     float rid = 1. - abs(2. * fbm(vWPos * vec3(.07, .022, .07) + 3.) - 1.);

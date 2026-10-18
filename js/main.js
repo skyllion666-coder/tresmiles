@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=10';
+import { Terrain } from './terrain.js?v=11';
 import { crearVegetacion } from './vegetacion.js?v=5';
-import { crearCumbres } from './cumbres.js?v=5';
+import { crearCumbres } from './cumbres.js?v=7';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
@@ -52,7 +52,7 @@ async function boot() {
   const geo = makeGeo(meta, relieve);
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: isMobile() || matchMedia('(pointer: coarse)').matches });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
-  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r) });
+  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   const sonido = crearSonido();

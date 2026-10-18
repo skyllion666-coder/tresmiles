@@ -8,7 +8,7 @@ import { EXAG } from './geo.js';
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-export function crearCumbres({ scene, geo, terrain, movil, alCargar }) {
+export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   const MAX = movil ? 1 : 3, CARGA = movil ? 5500 : 7500, DESCARGA = movil ? 8000 : 11000, FUNDE = 90, INSET = 4;
   let indice = null, cuenta = 0;
   const listo = fetch('data/terrain/cumbres/index.json').then((r) => (r.ok ? r.json() : null)).then((j) => { indice = j; }).catch(() => {});
@@ -43,7 +43,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar }) {
         const borde = Math.min(i, j, n - 1 - i, n - 1 - j) * paso;
         H[j * n + i] = v ? base + (v * hs - base) * sstep(0, FUNDE, borde) : base;   // sin dato o borde: relieve general
       }
-      const m = movil ? 2 : 1, nm = Math.floor((n - 1) / m) + 1;   // en móvil la malla usa una de cada dos muestras (12 m)
+      const m = 1, nm = Math.floor((n - 1) / m) + 1;
       const pos = new Float32Array(nm * nm * 3), nor = new Float32Array(nm * nm * 3), uv = new Float32Array(nm * nm * 2);
       const cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
       for (let b = 0; b < nm; b++) for (let a = 0; a < nm; a++) {
@@ -72,7 +72,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar }) {
       const p = { id, H, x0, z0, n, paso, mesh, mat, ch, hueco }; piezas.set(id, p);
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
-    })().catch(() => null).finally(() => cargando.delete(id));
+    })().catch((e) => { console.warn("cumbres", id, e); return null; }).finally(() => cargando.delete(id));
     cargando.set(id, pr); return pr;
   }
 
@@ -90,7 +90,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar }) {
       const cerca = [];
       for (const [id, d] of Object.entries(indice)) {
         const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
-        if (piezas.has(id)) { if (dist > DESCARGA) quita(id); } else if (dist < CARGA) cerca.push([dist, id]);
+        if (piezas.has(id)) { if (dist > DESCARGA && id !== fijo?.()) quita(id); } else if (dist < CARGA) cerca.push([dist, id]);
       }
       cerca.sort((a, b) => a[0] - b[0]);
       let n = piezas.size + cargando.size;
