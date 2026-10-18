@@ -25,7 +25,11 @@
 #cine #cine-hint.quita { opacity: 0; }
 #cine.sin-sonido { cursor: pointer; }
 @keyframes cine-latido { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+/* «Saltar introducción»: arriba a la derecha, discreto y semitransparente */
+#cine #cine-saltar { position: absolute; top: max(14px, env(safe-area-inset-top)); right: var(--gutter, 20px); padding: 8px 4px; font: 400 .7rem "Barlow Semi Condensed", system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(251, 243, 226, .6); background: none; border: 0; border-bottom: 1px solid transparent; cursor: pointer; transition: color .25s, border-color .25s; }
+#cine #cine-saltar:hover, #cine #cine-saltar:focus-visible { color: rgba(251, 243, 226, .95); border-color: rgba(251, 243, 226, .6); }
 /* botón para volver a ver la introducción (en la cabecera de la web) */
-#btn-reintro { padding: 6px 8px; margin-right: 14px; color: var(--cream, #f7f2e4); opacity: .85; text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+#btn-reintro { position: absolute; left: var(--gutter, 20px); top: max(16px, env(safe-area-inset-top)); display: inline-flex; align-items: center; gap: 8px; font-size: .68rem; letter-spacing: .18em; opacity: .72; }
 #btn-reintro:hover { opacity: 1; }
+@media (max-width: 640px) { #btn-reintro span { display: none; } #btn-reintro svg { width: 20px; height: 14px; } }
 @media (prefers-reduced-motion: reduce) { #cine { display: none; } }
