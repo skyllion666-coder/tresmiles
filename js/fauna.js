@@ -38,20 +38,27 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
   const rebecos = [];
   let anclaje = null;       // { x, z, y } de la cumbre abierta
   const R_CANTIDAD = 4;
-  new GLTFLoader().load('models/rebeco.glb?v=1', (gltf) => {
+  // pelaje según la época (fecha del dispositivo): invierno de noviembre a abril; grupo de un macho, dos hembras y una cría
+  const mes = new Date().getMonth(), pel = mes >= 10 || mes <= 3 ? 'invierno' : 'verano';
+  const TIPOS = ['macho', 'hembra', 'hembra', 'cria'];
+  const cargaGLB = (u) => new Promise((res) => new GLTFLoader().load(u, res, undefined, () => res(null)));
+  Promise.all(['macho', 'hembra', 'cria'].map((t) => cargaGLB(`models/rebeco-${t}-${pel}.glb?v=2`))).then(([gm, gh, gc]) => {
+    const por = { macho: gm, hembra: gh, cria: gc };
+    if (!gm && !gh) return;   // sin modelos: no pasa nada
     for (let i = 0; i < R_CANTIDAD; i++) {
+      const gltf = por[TIPOS[i]] ?? gh ?? gm;
       const obj = clone(gltf.scene);
       obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = true; } });
       const g = new THREE.Group(); g.add(obj); g.visible = false; scene.add(g);
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
-      const cria = i === 3;
+      const cria = TIPOS[i] === 'cria';
       const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
       acc.Quieto.play(); acc.Quieto.time = Math.random() * 6;
       rebecos.push(r);
     }
     if (anclaje) colocaRebecos();
-  }, undefined, () => { /* sin modelo de rebeco: no pasa nada */ });
+  });
 
   // sombra de contacto: una mancha elíptica difuminada (textura de canvas compartida) que se apoya en la ladera
   const texSombra = (() => {
@@ -86,11 +93,13 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
       r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
       r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.resta = 2 + rnd() * 8;
-      for (const n of ['Quieto', 'Alerta', 'Andar']) r.acc[n].setEffectiveWeight(n === 'Quieto' ? 1 : 0);
+      for (const n of Object.keys(r.acc)) r.acc[n].setEffectiveWeight(n === 'Quieto' ? 1 : 0);
     }
   }
   function cambia(r, nuevo, resta) {
-    if (r.estado !== nuevo) { r.acc[nuevo].reset().setEffectiveWeight(1).fadeIn(0.45).play(); r.acc[r.estado].fadeOut(0.45); }
+    if (!r.acc[nuevo]) nuevo = 'Quieto';
+    if (nuevo === 'Brinco') { r.acc.Brinco.setLoop(THREE.LoopOnce, 1); r.acc.Brinco.clampWhenFinished = true; }
+    if (r.estado !== nuevo) { const f = nuevo === 'Brinco' || r.estado === 'Brinco' ? 0.15 : 0.45; r.acc[nuevo].reset().setEffectiveWeight(1).fadeIn(f).play(); r.acc[r.estado].fadeOut(f); }
     r.estado = nuevo; r.resta = resta;
   }
   const _q = new THREE.Quaternion(), _qy = new THREE.Quaternion(), _up = new THREE.Vector3(0, 1, 0);
@@ -103,17 +112,21 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       r.g.scale.setScalar(esc);
       r.resta -= dt;
       const cerca = dist < 450;
-      if (cerca && r.estado === 'Quieto') cambia(r, 'Alerta', 3 + Math.random() * 2);
+      if (cerca && (r.estado === 'Quieto' || r.estado === 'Pastar' || r.estado === 'Mirar')) cambia(r, 'Alerta', 2 + Math.random() * 2);
       if (r.resta <= 0) {
-        if (r.estado === 'Quieto') cambia(r, Math.random() < 0.4 ? 'Alerta' : 'Andar', r.estado === 'Alerta' ? 3 : 4 + Math.random() * 6);
+        const z = Math.random();
+        if (r.estado === 'Quieto') cambia(r, z < 0.25 ? 'Alerta' : z < 0.55 ? 'Pastar' : z < 0.68 ? 'Mirar' : 'Andar', 4 + Math.random() * 6);
+        else if (r.estado === 'Pastar') cambia(r, z < 0.5 ? 'Quieto' : z < 0.7 ? 'Mirar' : 'Andar', 4 + Math.random() * 6);
+        else if (r.estado === 'Mirar') cambia(r, 'Quieto', 3 + Math.random() * 6);
         else if (r.estado === 'Alerta') {
-          // si la cámara está cerca, se aleja de ella
-          if (cerca) r.rumbo = Math.atan2(r.g.position.z - camera.position.z, r.g.position.x - camera.position.x);
-          cambia(r, 'Andar', 4 + Math.random() * 5);
-        } else { if (Math.random() < 0.3) r.rumbo += (Math.random() - 0.5) * 1.5; cambia(r, 'Quieto', 6 + Math.random() * 10); }
+          // si la cámara está cerca, da un brinco y se aleja de ella (no todos: el grupo reacciona a destiempo)
+          if (cerca) { r.rumbo = Math.atan2(r.g.position.z - camera.position.z, r.g.position.x - camera.position.x); cambia(r, Math.random() < 0.6 ? 'Brinco' : 'Andar', 1.0); }
+          else cambia(r, z < 0.3 ? 'Mirar' : 'Andar', 3 + Math.random() * 5);
+        } else if (r.estado === 'Brinco') cambia(r, 'Andar', 4 + Math.random() * 4);
+        else { if (Math.random() < 0.3) r.rumbo += (Math.random() - 0.5) * 1.5; cambia(r, z < 0.5 ? 'Quieto' : 'Pastar', 6 + Math.random() * 10); }
       }
-      if (r.estado === 'Andar') {
-        const v = 0.9 * esc * dt;
+      if (r.estado === 'Andar' || r.estado === 'Brinco') {
+        const v = (r.estado === 'Brinco' ? 2.6 : 0.9) * esc * dt;
         const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
         const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600;
         if (s > 1.1 || lejos) { r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
@@ -122,7 +135,7 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       // gira suavemente hacia su rumbo y se apoya en la ladera
       const objetivo = Math.atan2(Math.cos(r.rumbo), Math.sin(r.rumbo));   // el modelo mira a +Z: yaw = atan2(dx, dz)
       let d = objetivo - r.yaw; d = Math.atan2(Math.sin(d), Math.cos(d));
-      r.yaw += d * Math.min(1, dt * (r.estado === 'Andar' ? 2.5 : 0.8));
+      r.yaw += d * Math.min(1, dt * (r.estado === 'Andar' || r.estado === 'Brinco' ? 2.5 : 0.8));
       const y = geo.heightAt(r.x, r.z) + 14;
       r.g.position.set(r.x, y, r.z);
       const { n } = pendiente(r.x, r.z);
