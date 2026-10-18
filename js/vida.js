@@ -207,14 +207,23 @@ export function crearSonido() {
       tono(t + 0.05, 740, 988, 0.2, 0.07);
     },
   };
+  // ducking: la música baja un 40 % en ~30 ms mientras suena el efecto y recupera su nivel en ~0,7 s; si llegan más pulsaciones, parte del valor actual (sin saltos)
+  function baja(dur) {
+    if (!musicGain) return;
+    const g = musicGain.gain, t = ctx.currentTime;
+    g.cancelScheduledValues(t); g.setValueAtTime(g.value, t);
+    g.setTargetAtTime(0.6, t, 0.02);
+    g.setTargetAtTime(1.0, t + dur, 0.22);
+  }
   function fx(tipo) {
     try {
       if (!on || !ctx || ctx.state !== 'running' || !FX[tipo] || document.hidden) return;
       const ahora = performance.now();
       if (ahora - ultimoFx < 110) return;   // una acción, un sonido: las llamadas casi simultáneas se descartan
       ultimoFx = ahora;
-      if (!fxGain) { fxGain = ctx.createGain(); fxGain.gain.value = 0.9; fxGain.connect(ctx.destination); }
+      if (!fxGain) { fxGain = ctx.createGain(); fxGain.gain.value = 1.3; fxGain.connect(ctx.destination); }
       FX[tipo](ctx.currentTime + 0.01);
+      baja(tipo === 'ficha' ? 0.5 : 0.3);
     } catch (e) { /* sin audio: la web sigue igual */ }
   }
   document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
