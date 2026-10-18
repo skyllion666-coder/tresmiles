@@ -514,11 +514,15 @@ async function boot() {
     const vis = visiblePeaks(), i = vis.findIndex((x) => x.id === p.id);
     const nav = vis.length > 1 && i >= 0
       ? `<div class="nav2"><button type="button" data-go="${vis[(i - 1 + vis.length) % vis.length].id}">← Anterior</button><button type="button" data-go="${vis[(i + 1) % vis.length].id}">Siguiente →</button></div>` : '';
+    const foto = f
+      ? `<figure><img src="img/peaks/${p.foto}.jpg" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}" decoding="async" onerror="this.parentNode.classList.add('sin-foto')">
+        <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>.</figcaption></figure>`
+      : '<figure class="sin-foto" aria-hidden="true"></figure>';   // sin imagen: marco con la silueta de una montaña
     return `
-      <figure><img src="img/peaks/${p.foto}.jpg" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}">
-        <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>.</figcaption></figure>
+      ${foto}
       <h2>${esc(p.nombre)}</h2><p class="alias">${esc(p.alias)}</p>
-      <div class="alt"><strong>${fmt(p.altitud)}</strong><span>metros</span></div>${p.otras ? `<p class="otras">${esc(p.otras)}</p>` : ''}
+      <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras"><b>Otras cifras</b> ${esc(p.otras)}</p>` : ''}
+      <p class="lede">${esc(p.descripcion)}</p>
       <dl class="stats">
         <div><dt>Macizo</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
         <div><dt>Situación</dt><dd>${p.frontera ? 'Frontera Aragón–Francia' : 'Aragón'}</dd></div>
@@ -528,7 +532,6 @@ async function boot() {
         <div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>
       </dl>
       <h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>
-      <h3>Descripción</h3><p>${esc(p.descripcion)}</p>
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
