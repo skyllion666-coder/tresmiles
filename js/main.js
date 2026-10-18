@@ -5,7 +5,7 @@ import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=13';
-import { crearFauna } from './fauna.js?v=2';
+import { crearFauna } from './fauna.js?v=3';
 import { cargarRuta, crearRuta } from './ruta.js?v=29';
 
 const $ = (s) => document.querySelector(s);
@@ -69,7 +69,7 @@ async function boot() {
   const bal = peaks.find((p) => p.id === 'balaitus');
   const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
   const pDef = byId.perdido || bal;
-  const fauna = pDef && !reduced ? crearFauna({ scene, geo, centro: { x: pDef.w.x, z: pDef.w.z }, camera }) : null;
+  const fauna = pDef && !reduced ? crearFauna({ scene, geo, centro: { x: pDef.w.x, z: pDef.w.z }, camera, sol: sun.position }) : null;
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};

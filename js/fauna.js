@@ -9,7 +9,7 @@ const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
 const KM_REBECO = 42 * 1.275;   // misma exageración que los montañeros (ruta.js), para que se vean a la vez
 const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
-export function crearFauna({ scene, geo, centro, camera }) {
+export function crearFauna({ scene, geo, centro, camera, sol }) {
   const defs = [
     { env: 130, rx: 2100, rz: 1500, vel: 0.050, fase: 0.0, alt: 520, rot: 0.4, flap: 14 },
     { env: 118, rx: 3000, rz: 2100, vel: -0.038, fase: 2.4, alt: 760, rot: -0.8, flap: 31 },
@@ -46,12 +46,26 @@ export function crearFauna({ scene, geo, centro, camera }) {
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
       const cria = i === 3;
-      const r = { g, obj, mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
+      const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
       acc.Quieto.play(); acc.Quieto.time = Math.random() * 6;
       rebecos.push(r);
     }
     if (anclaje) colocaRebecos();
   }, undefined, () => { /* sin modelo de rebeco: no pasa nada */ });
+
+  // sombra de contacto: una mancha elíptica difuminada (textura de canvas compartida) que se apoya en la ladera
+  const texSombra = (() => {
+    const c = document.createElement('canvas'); c.width = c.height = 64;
+    const x = c.getContext('2d'), g = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    g.addColorStop(0, 'rgba(48,38,30,1)'); g.addColorStop(0.35, 'rgba(48,38,30,.62)'); g.addColorStop(0.7, 'rgba(48,38,30,.18)'); g.addColorStop(1, 'rgba(48,38,30,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 64, 64);
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+  })();
+  const matSombra = new THREE.MeshBasicMaterial({ map: texSombra, transparent: true, opacity: 0.3, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4, fog: true });
+  const geoSombra = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2);
+  function creaSombra() {
+    const m = new THREE.Mesh(geoSombra, matSombra); m.renderOrder = 2; m.frustumCulled = false; m.visible = false; scene.add(m); return m;
+  }
 
   const pendiente = (x, z) => {
     const e = 40, hx = geo.heightAt(x + e, z) - geo.heightAt(x - e, z), hz = geo.heightAt(x, z + e) - geo.heightAt(x, z - e);
@@ -67,7 +81,7 @@ export function crearFauna({ scene, geo, centro, camera }) {
       if (s > 0.28 && s < 0.85 && h < anclaje.y - 80 && h > anclaje.y - 900) base = { x, z };
     }
     for (const r of rebecos) {
-      if (!base) { r.ok = false; r.g.visible = false; continue; }
+      if (!base) { r.ok = false; r.g.visible = false; r.sombra.visible = false; continue; }
       const a = rnd() * 6.28, d = 30 + rnd() * 140;
       r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
       r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
@@ -84,7 +98,7 @@ export function crearFauna({ scene, geo, centro, camera }) {
     for (const r of rebecos) {
       if (!r.ok) continue;
       const dist = camera.position.distanceTo(r.g.position);
-      r.g.visible = dist < 14000; if (!r.g.visible) continue;
+      r.g.visible = dist < 14000; r.sombra.visible = r.g.visible; if (!r.g.visible) continue;
       const esc = KM_REBECO * Math.min(3, Math.max(0.8, dist / 4500)) * (r.cria ? 0.62 : 1);
       r.g.scale.setScalar(esc);
       r.resta -= dt;
@@ -117,6 +131,13 @@ export function crearFauna({ scene, geo, centro, camera }) {
       _q.setFromUnitVectors(_up, r.nrm.clone().lerp(_up, 0.6).normalize());
       r.g.quaternion.copy(_q).multiply(_qy);
       r.mixer.update(dt);
+      // sombra: bajo el animal, alineada con su cuerpo, apoyada en la pendiente y desplazada un poco al contrario del sol
+      const sm = r.sombra, k = esc * (r.cria ? 1 : 1);
+      const sx = sol ? -sol.x : 0, sz = sol ? -sol.z : 0, sl = Math.hypot(sx, sz) || 1;
+      const ox = r.x + (sx / sl) * 0.12 * esc, oz = r.z + (sz / sl) * 0.12 * esc;
+      sm.position.set(ox, geo.heightAt(ox, oz) + 2.5, oz);
+      sm.quaternion.setFromUnitVectors(_up, r.nrm).multiply(_qy);
+      sm.scale.set(0.62 * k, 1, 1.65 * k);
     }
   }
 
