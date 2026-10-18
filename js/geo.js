@@ -18,7 +18,10 @@ export function makeGeo(meta, store) {
   });
 
   // altura bilineal en coordenadas locales (m, ya exagerada), con el nivel de detalle que haya cargado en ese punto
-  const heightAt = (x, z) => store.sample((x + W / 2) / dx, (z + D / 2) / dz) * hs;
+  const heightBase = (x, z) => store.sample((x + W / 2) / dx, (z + D / 2) / dz) * hs;
+  // piezas locales de alta resolución (js/cumbres.js): si una cubre el punto, mandan; si no, el relieve general
+  let extra = null;
+  const heightAt = (x, z) => { if (extra) { const h = extra(x, z); if (h !== undefined) return h; } return heightBase(x, z); };
 
   // cima real = máximo en un entorno pequeño (la malla de 30 m puede desplazar la cima unas celdas)
   const summitNear = (x, z, radius = 90) => {
@@ -30,5 +33,5 @@ export function makeGeo(meta, store) {
     return { x: bx, y: best, z: bz };
   };
 
-  return { latC, mLat, mLon, dx, dz, W, D, hs, toXZ, heightAt, summitNear };
+  return { latC, mLat, mLon, dx, dz, W, D, hs, toXZ, heightAt, heightBase, setExtra: (f) => { extra = f; }, summitNear };
 }

@@ -83,11 +83,13 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
       m.instanceMatrix.array.set(arr); m.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(col), 3);
       m.matrixAutoUpdate = false; m.computeBoundingSphere(); scene.add(m); meshes.push(m); n += cnt;
     }
-    parcelas.set(k, { nivel, meshes, n }); total += n;
+    parcelas.set(k, { nivel, meshes, n, cx: ch.x0 + (pi + 0.5) * PS * geo.dx, cz: ch.z0 + (pj + 0.5) * PS * geo.dz }); total += n;
   }
 
   return {
     get arboles() { return total; },
+    // una pieza de alta resolución cambia la superficie: las parcelas que la tocan se regeneran
+    refrescar(rc) { for (const [k, pc] of [...parcelas]) if (pc.cx > rc.x0 - 1200 && pc.cx < rc.x1 + 1200 && pc.cz > rc.z0 - 1200 && pc.cz < rc.z1 + 1200) quita(k); },
     get parcelas() { return parcelas.size; },
     // cada pocos fotogramas: decide qué parcelas necesitan cada nivel; un máximo de una construcción por llamada
     update(cam) {
