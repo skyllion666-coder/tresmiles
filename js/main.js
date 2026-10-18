@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=15';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=16';
 import { crearFauna } from './fauna.js?v=3';
 import { cargarRuta, crearRuta } from './ruta.js?v=29';
 
@@ -768,6 +768,25 @@ async function boot() {
   pintaSonido();
   if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }   // suena desde el principio; el botón lo silencia y se recuerda
 
+  // — llamada del quebrantahuesos: al azar cada 40–90 s si hay alguno a la vista, y con más probabilidad cuando uno se acerca a la cámara —
+  let proxLlamada = performance.now() + 20000, ceBajo = new Set();
+  const _vAve = new THREE.Vector3();
+  function llamadasAve(now) {
+    if (!fauna?.aves.length || !sonido.on || document.hidden || S.mode !== 'explore' || now - sonido.msUltimaLlamada < 15000) return;
+    let mejor = null, dm = 1e9;
+    for (const a of fauna.aves) {
+      if (!a.g.visible) continue;
+      const d = camera.position.distanceTo(a.g.position);
+      if (d < dm) { dm = d; mejor = a; }
+      const cerca = d < 1300;   // se acaba de acercar: oportunidad de oírlo (la mitad de las veces)
+      if (cerca && !ceBajo.has(a)) { ceBajo.add(a); if (Math.random() < 0.5) proxLlamada = Math.min(proxLlamada, now); }
+      else if (!cerca && d > 1800) ceBajo.delete(a);
+    }
+    if (!mejor || now < proxLlamada || dm > 15000) return;
+    _vAve.copy(mejor.g.position).project(camera);
+    if (sonido.llamada(dm, _vAve.z < 1 ? _vAve.x : 0)) proxLlamada = now + 40000 + Math.random() * 50000;
+  }
+
   // — brújula —
   const needle = $('#needle');
   $('#compass').addEventListener('click', () => { if (S.mode !== 'explore') return; const s = camState(); flyTo({ ...s, theta: 0 }, { dur: 1.0, shift: S.shiftTo }); });
@@ -796,7 +815,7 @@ async function boot() {
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos y el rebeco 3D son modelos propios hechos con Blender. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
+      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos y el rebeco 3D son modelos propios hechos con Blender. Llamada del quebrantahuesos: grabación del canal «adalaves» en <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Recorrido y hitos</h3>
@@ -913,6 +932,7 @@ async function boot() {
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
     const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
+    llamadasAve(now);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;

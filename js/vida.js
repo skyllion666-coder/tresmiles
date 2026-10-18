@@ -127,6 +127,7 @@ export function crearAves({ scene, geo, centro }) {
 }
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
+const NIVEL_MUSICA = 0.75;   // la música de fondo suena al 75 % (un 25 % más baja que antes)
 export function crearSonido() {
   let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null, bufRuido = null, fxGain = null, ultimoFx = 0;
   const ruido = (c) => {
@@ -155,7 +156,7 @@ export function crearSonido() {
     fuente().connect(wf).connect(waterMod).connect(waterGain).connect(master);
     lfo(0.35, 0.32, waterMod.gain); lfo(0.13, 0.18, waterMod.gain);
     // música de fondo: bucle propio (instrumentos de VSCO-2 CE, CC0)
-    musicGain = ctx.createGain(); musicGain.gain.value = 1.0; musicGain.connect(master);
+    musicGain = ctx.createGain(); musicGain.gain.value = NIVEL_MUSICA; musicGain.connect(master);
     fetch('audio/ambiente.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => {
       const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.connect(musicGain); s.start();
     }).catch(() => {});
@@ -212,8 +213,26 @@ export function crearSonido() {
     if (!musicGain) return;
     const g = musicGain.gain, t = ctx.currentTime;
     g.cancelScheduledValues(t); g.setValueAtTime(g.value, t);
-    g.setTargetAtTime(0.6, t, 0.02);
-    g.setTargetAtTime(1.0, t + dur, 0.22);
+    g.setTargetAtTime(NIVEL_MUSICA * 0.6, t, 0.02);
+    g.setTargetAtTime(NIVEL_MUSICA, t + dur, 0.22);
+  }
+  // llamada del quebrantahuesos (grabación de adalaves, YouTube): se carga la primera vez que hace falta; sonido más bajo y apagado cuanto más lejos esté el ave
+  let llamadaBuf = null, llamadaCarga = false, ultimaLlamada = 0;
+  function llamada(dist, pan) {
+    try {
+      if (!on || !ctx || ctx.state !== 'running' || document.hidden) return false;
+      if (!llamadaBuf) {
+        if (!llamadaCarga) { llamadaCarga = true; fetch('audio/quebrantahuesos.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((b) => { llamadaBuf = b; }).catch(() => {}); }
+        return false;
+      }
+      const t = ctx.currentTime + 0.02, k = Math.max(0, 1 - dist / 16000);
+      const src = ctx.createBufferSource(), lp = ctx.createBiquadFilter(), g = ctx.createGain(), pn = ctx.createStereoPanner();
+      src.buffer = llamadaBuf; lp.type = 'lowpass'; lp.frequency.value = 2500 + 9000 * k * k; pn.pan.value = Math.max(-0.8, Math.min(0.8, pan));
+      g.gain.value = 0.12 + 0.75 * k * k;
+      src.connect(lp).connect(g).connect(pn).connect(master); src.start(t);
+      src.onended = () => { try { src.disconnect(); pn.disconnect(); } catch (e) { /* ya desconectado */ } };
+      ultimaLlamada = performance.now(); return true;
+    } catch (e) { return false; }
   }
   function fx(tipo) {
     try {
@@ -221,7 +240,7 @@ export function crearSonido() {
       const ahora = performance.now();
       if (ahora - ultimoFx < 110) return;   // una acción, un sonido: las llamadas casi simultáneas se descartan
       ultimoFx = ahora;
-      if (!fxGain) { fxGain = ctx.createGain(); fxGain.gain.value = 1.3; fxGain.connect(ctx.destination); }
+      if (!fxGain) { fxGain = ctx.createGain(); fxGain.gain.value = 1.9; fxGain.connect(ctx.destination); }
       FX[tipo](ctx.currentTime + 0.01);
       baja(tipo === 'ficha' ? 0.5 : 0.3);
     } catch (e) { /* sin audio: la web sigue igual */ }
@@ -229,7 +248,8 @@ export function crearSonido() {
   document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
   return {
     get on() { return on; },
-    fx,
+    fx, llamada,
+    get msUltimaLlamada() { return ultimaLlamada; },
     get nivel() { if (!analizador) return 0; const d = new Float32Array(analizador.fftSize); analizador.getFloatTimeDomainData(d); return Math.sqrt(d.reduce((a, x) => a + x * x, 0) / d.length); },
     get estado() { return ctx ? ctx.state : 'sin iniciar'; },
     async set(v) {
