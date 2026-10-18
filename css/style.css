@@ -298,15 +298,25 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
 }
 @media (max-width: 760px) {
   #ficha { transition: transform .55s cubic-bezier(.2,.7,.2,1), height .3s ease; }
-  .ficha-grip { display: block; flex: none; height: 18px; background: var(--spruce); border-radius: 14px 14px 0 0; touch-action: none; cursor: grab; }
-  .ficha-grip i { display: block; width: 44px; height: 4px; margin: 8px auto 0; border-radius: 2px; background: rgba(255,251,231,.5); }
-  .ficha-head { touch-action: none; height: 46px; }
-  #ficha.is-folded { height: 64px !important; }
+  .ficha-grip { display: block; flex: none; height: 14px; background: var(--spruce); border-radius: 14px 14px 0 0; touch-action: none; cursor: grab; }
+  .ficha-grip i { display: block; width: 40px; height: 4px; margin: 6px auto 0; border-radius: 2px; background: rgba(255,251,231,.5); }
+  .ficha-head { touch-action: none; height: 40px; padding-left: 20px; font-size: .7rem; letter-spacing: .24em; }
+  .ficha-body { padding-bottom: calc(34px + env(safe-area-inset-bottom)); }
+  #ficha.is-folded { height: calc(54px + env(safe-area-inset-bottom)) !important; }
   #ficha.is-folded .ficha-body { display: none; }
   #ficha.is-folded #ficha-fold .f-d { display: none; } #ficha.is-folded #ficha-fold .f-m { display: block; }
-  body.ficha-plegada #dock { opacity: 1; pointer-events: auto; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 70px); }
-  body.ficha-plegada #tools { opacity: 1; pointer-events: auto; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 136px); }
-  body.ficha-plegada #compass { opacity: .95; pointer-events: auto; bottom: calc(max(18px, env(safe-area-inset-bottom)) + 136px); }
+  body.ficha-plegada #dock { opacity: 1; pointer-events: auto; bottom: calc(env(safe-area-inset-bottom) + 66px); }
+  body.ficha-plegada #tools { opacity: 1; pointer-events: auto; bottom: calc(env(safe-area-inset-bottom) + 122px); }
+  body.ficha-plegada #compass { opacity: .95; pointer-events: auto; bottom: calc(env(safe-area-inset-bottom) + 122px); }
+  /* selector de cumbre más bajo: mismo crema y verde, 40 px de alto (el dedo alcanza 48 px) */
+  #dock { bottom: max(14px, env(safe-area-inset-bottom)); filter: drop-shadow(0 4px 12px rgba(0,0,0,.24)); }
+  .dock-home { width: 40px; position: relative; }
+  .dock-main { height: 40px; padding: 0 14px; gap: 10px; min-width: min(250px, 62vw); max-width: calc(100vw - 2 * var(--gutter) - 40px); font-size: .72rem; letter-spacing: .15em; position: relative; }
+  .dock-home::before, .dock-main::before { content: ""; position: absolute; inset: -4px 0; }
+  #dock-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: clamp(.62rem, 3.3vw, .72rem); }
+  .dock-main svg { flex: none; width: 15px; height: 15px; }
+  #picker { left: 40px; bottom: 44px; }
+  @media (max-width: 360px) { .ficha-head { font-size: .56rem; letter-spacing: .1em; padding-left: 16px; } }
   #vuelo-hud { top: 74px; }
 }
 
