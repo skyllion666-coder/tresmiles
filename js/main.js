@@ -8,7 +8,7 @@ import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=4';
-import { cargarRuta, crearRuta } from './ruta.js?v=34';
+import { cargarRuta, crearRuta } from './ruta.js?v=36';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

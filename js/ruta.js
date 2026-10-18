@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontanero } from './montanero.js?v=4';
+import { crearMontanero } from './montanero.js?v=6';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -46,9 +46,9 @@ export function crearRuta({ scene, geo, ruta }) {
   const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.scale.setScalar(ESC_M); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6, yaw: null, alt: 0.92 }; };
   const solo = mk({});
   const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1)
-    mk({ chaqueta: '#d8362b', mochila: '#e8892b', mochilaTipo: 'grande', palos: 2 }),
-    mk({ chaqueta: '#2f6fb5', mochila: '#3a8f5a', pantalon: '#3a3a44', mochilaTipo: 'pequena', palos: 0 }),
-    mk({ chaqueta: '#e8b923', mochila: '#6a4a8f', pantalon: '#2f3b30', mochilaTipo: 'media', palos: 1 }),
+    mk({ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }),
+    mk({ chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 }),
+    mk({ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }),
   ];
   const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
