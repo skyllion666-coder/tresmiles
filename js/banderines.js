@@ -47,7 +47,7 @@ export function crearBanderines({ scene, geo }) {
     if (lista.has(p.id)) return;
     const g = new THREE.Group(); g.add(new THREE.Mesh(gMastil, mMastil), new THREE.Mesh(gTela, mTela), new THREE.Mesh(gPomo, mPomo), new THREE.Mesh(gPiedras, mPiedras));
     // un poco apartado del punto exacto de la cima para no tapar la cruz, el pilar o el marcador
-    const x = p.w.x + 9, z = p.w.z - 7; g.position.set(x, geo.heightAt(x, z), z); g.rotation.y = 0.6;
+    const x = p.w.x + 24, z = p.w.z - 18; g.position.set(x, geo.heightAt(x, z), z); g.rotation.y = 0.6;
     g.userData.nace = cerca ? performance.now() : 0;
     scene.add(g); lista.set(p.id, { g, p, x, z });
   }
@@ -60,7 +60,7 @@ export function crearBanderines({ scene, geo }) {
         b.g.position.y = geo.heightAt(b.x, b.z) - 0.2;   // por si llega el relieve fino de la cima
         const d = cam.position.distanceTo(b.g.position);
         // tamaño: real ×11,5 de cerca (igual que montañeros y cruces); de lejos crece para seguir viéndose como un punto de color
-        let s = Math.max(11.5, d * 0.012);
+        let s = 3 * Math.max(11.5, d * 0.012);   // tres veces el tamaño anterior, a petición del usuario
         if (b.g.userData.nace) { const k = Math.min(1, (performance.now() - b.g.userData.nace) / 900); s *= 0.2 + 0.8 * (1 - Math.pow(1 - k, 3)); if (k >= 1) b.g.userData.nace = 0; }
         b.g.scale.setScalar(s);
       }
