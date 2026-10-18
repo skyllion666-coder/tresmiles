@@ -1193,7 +1193,9 @@
    "posets",
    "espadas",
    "llardaneta",
-   "paul"
+   "paul",
+   "diente-llardana",
+   "bardamina"
   ]
  },
  {
@@ -1205,7 +1207,12 @@
   "lon": 0.47665,
   "nota": "Cascada junto al camino de subida al refugio.",
   "foto": "pos-cascada",
-  "pie": "La cascada de la Espigantosa, en una fotografía antigua."
+  "pie": "La cascada de la Espigantosa, en una fotografía antigua.",
+  "picos": [
+   "posets",
+   "diente-llardana",
+   "bardamina"
+  ]
  },
  {
   "id": "pos-orus",
@@ -1222,7 +1229,9 @@
    "espadas",
    "llardaneta",
    "paul",
-   "pavots"
+   "pavots",
+   "diente-llardana",
+   "bardamina"
   ]
  },
  {
@@ -1234,7 +1243,11 @@
   "lon": 0.43576,
   "nota": "Collado en la subida a la cumbre. Altitud del GPS del track: 3.021 m.",
   "foto": "pos-diente",
-  "pie": "La subida por el nevero hacia el collado (junio de 2024)."
+  "pie": "La subida por el nevero hacia el collado (junio de 2024).",
+  "picos": [
+   "posets",
+   "diente-llardana"
+  ]
  },
  {
   "id": "pos-cima",
@@ -1658,7 +1671,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "diente-llardana"
   ],
   "nombre": "Collado del Diente",
   "tipo": "paso",
@@ -2983,7 +2997,8 @@
   "id": "pau-eriste",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Ibón de Eriste",
   "tipo": "ibon",
@@ -2997,7 +3012,8 @@
   "id": "pau-alforches",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Ibón de les Alforches",
   "tipo": "ibon",
@@ -3011,7 +3027,8 @@
   "id": "pau-bardamina",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Pico Bardamina",
   "tipo": "cima",
@@ -3023,7 +3040,8 @@
   "id": "pau-acrobatico",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Paso acrobático",
   "tipo": "paso",
@@ -3037,7 +3055,8 @@
   "id": "pau-cima",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Pico de la Paúl",
   "tipo": "cima",
@@ -3049,7 +3068,8 @@
   "id": "pau-gendarmes",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Gendarmes",
   "tipo": "paso",
@@ -3063,7 +3083,8 @@
   "id": "pau-inferior",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Pico Inferior de la Paúl",
   "tipo": "cima",
@@ -3075,7 +3096,8 @@
   "id": "pau-collado",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Collado de la Paúl",
   "tipo": "paso",
@@ -3089,7 +3111,8 @@
   "id": "pau-farradura",
   "pico": "paul",
   "picos": [
-   "paul"
+   "paul",
+   "bardamina"
   ],
   "nombre": "Ibón de Farradura",
   "tipo": "ibon",
@@ -3880,20 +3903,24 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "gran-eriste"
   ],
   "nombre": "Paso de la Gralla",
   "tipo": "paso",
   "lat": 42.624095,
   "lon": 0.408965,
-  "nota": "Collado de 2.997 m según OpenStreetMap, junto a las Bagüeñola. Altitud del GPS del track: 2.977 m."
+  "nota": "Collado de 2.997 m según OpenStreetMap, junto a las Bagüeñola. Altitud del GPS del track: 2.977 m.",
+  "foto": "eri-gralla",
+  "pie": "El paso de la Gralla entre el Gran Pico de Eriste y el Eriste Sur, con el recorrido dibujado por el autor."
  },
  {
   "id": "eri-sur",
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "gran-eriste"
   ],
   "nombre": "Eriste Sur",
   "tipo": "cima",
@@ -3906,20 +3933,24 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "gran-eriste"
   ],
   "nombre": "Gran Pico Eriste",
   "tipo": "cima",
   "lat": 42.625069,
   "lon": 0.409321,
-  "nota": "Cumbre de 3.056 m según OpenStreetMap («Punta Alta d’es Leners»), la más alta del grupo. Altitud del GPS del track: 3.051 m."
+  "nota": "Cumbre de 3.056 m según OpenStreetMap («Punta Alta d’es Leners»), la más alta del grupo. Altitud del GPS del track: 3.051 m.",
+  "foto": "eri-gran",
+  "pie": "Subiendo por las piedras a la cumbre del Gran Pico de Eriste."
  },
  {
   "id": "eri-norte",
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "gran-eriste"
   ],
   "nombre": "Pico Eriste Norte",
   "tipo": "cima",
@@ -4315,7 +4346,8 @@
   "id": "pav-cruce",
   "pico": "pavots",
   "picos": [
-   "pavots"
+   "pavots",
+   "diente-llardana"
   ],
   "nombre": "Cruce hacia Posets",
   "tipo": "paso",
@@ -4353,13 +4385,16 @@
   "id": "pav-canal",
   "pico": "pavots",
   "picos": [
-   "pavots"
+   "pavots",
+   "diente-llardana"
   ],
   "nombre": "Canal Fonda",
   "tipo": "paso",
   "lat": 42.640284,
   "lon": 0.439521,
-  "nota": "Canal por la que se baja hacia el valle de Estós. Altitud del GPS del track: 2.651 m."
+  "nota": "Canal por la que se baja hacia el valle de Estós. Altitud del GPS del track: 2.651 m.",
+  "foto": "pav-canal",
+  "pie": "La Canal Fonda, con las paredes del Diente de Llardana a un lado."
  },
  {
   "id": "pav-estallo",
@@ -4372,5 +4407,90 @@
   "lat": 42.613685,
   "lon": 0.478441,
   "nota": "Final del recorrido. Altitud del GPS del track: 1.473 m."
+ },
+ {
+  "id": "ld-clot",
+  "pico": "diente-llardana",
+  "picos": [
+   "diente-llardana"
+  ],
+  "nombre": "Senda al Clot de Chil",
+  "tipo": "paso",
+  "lat": 42.622624,
+  "lon": 0.47109,
+  "nota": "Desvío señalizado hacia el Clot de Chil. Altitud del GPS del track: 1.746 m.",
+  "foto": "ld-clot",
+  "pie": "Poste de señales amarillas en el bosque, en el desvío al Clot de Chil."
+ },
+ {
+  "id": "ld-trepadas",
+  "pico": "diente-llardana",
+  "picos": [
+   "diente-llardana"
+  ],
+  "nombre": "Trepadas",
+  "tipo": "paso",
+  "lat": 42.647849,
+  "lon": 0.435527,
+  "nota": "Tramo de trepadas junto a la cima. Altitud del GPS del track: 3.013 m.",
+  "foto": "ld-trepadas",
+  "pie": "Roca inclinada del tramo de trepadas, cerca de la cima."
+ },
+ {
+  "id": "ld-cima",
+  "pico": "diente-llardana",
+  "picos": [
+   "diente-llardana"
+  ],
+  "nombre": "Cima del Diente de Llardana",
+  "tipo": "cima",
+  "lat": 42.645297,
+  "lon": 0.435285,
+  "nota": "Diente de Llardana, 3.085 m según la lista de tresmiles. Altitud del GPS del track: 3.076 m.",
+  "foto": "ld-cima",
+  "pie": "La cima del Diente, con las cumbres de la cresta al fondo."
+ },
+ {
+  "id": "gran-sahun",
+  "pico": "gran-eriste",
+  "picos": [
+   "gran-eriste"
+  ],
+  "nombre": "Collado de Sahún",
+  "tipo": "lugar",
+  "lat": 42.571953,
+  "lon": 0.400119,
+  "nota": "Punto de partida, en la pista del collado. Altitud del GPS del track: 2.003 m.",
+  "inicio": true,
+  "foto": "gran-sahun",
+  "pie": "El panel del collado de Sahún, con el macizo al fondo."
+ },
+ {
+  "id": "gran-ibonessup",
+  "pico": "gran-eriste",
+  "picos": [
+   "gran-eriste"
+  ],
+  "nombre": "Ibones superiores",
+  "tipo": "ibon",
+  "lat": 42.615153,
+  "lon": 0.401933,
+  "nota": "Altitud del GPS del track: 2.366 m.",
+  "foto": "gran-ibonessup",
+  "pie": "Uno de los ibones superiores, bajo las paredes del Eriste."
+ },
+ {
+  "id": "gran-chelau",
+  "pico": "gran-eriste",
+  "picos": [
+   "gran-eriste"
+  ],
+  "nombre": "Ibón Chelau",
+  "tipo": "ibon",
+  "lat": 42.622139,
+  "lon": 0.40514,
+  "nota": "Altitud del GPS del track: 2.798 m.",
+  "foto": "gran-chelau",
+  "pie": "El ibón Chelau, al pie del paso de la Gralla."
  }
 ]

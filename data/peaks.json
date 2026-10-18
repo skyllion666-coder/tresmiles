@@ -52,7 +52,10 @@
   "culfreda",
   "mulleres",
   "sabre",
-  "pavots"
+  "pavots",
+  "diente-llardana",
+  "gran-eriste",
+  "bardamina"
  ],
  "macizos": [
   {
@@ -1766,6 +1769,98 @@
     "pie": "Roca de la cima con «Tucón Royo» escrito."
    },
    "curiosidad": "Pavots y Tucón Royo son el mismo tresmil: la lista de tresmiles lo llama con el nombre francés (Pavots) y la cartografía del IGN recogida en OpenStreetMap, «Tucón Royo o Pavots». Su altura varía con la fuente: 3.121 m en la lista de tresmiles, 3.122 m en el IGN y 3.125 m en el título de la ruta de Wikiloc. Es el punto desde el que arranca la cresta de Espadas hacia el Posets, según una guía de Rutas Pirineos. «Pavot» significa «amapola» en francés, pero no he encontrado una fuente que explique el origen del nombre."
+  },
+  {
+   "id": "diente-llardana",
+   "nombre": "Diente de Llardana",
+   "alias": "Tucón de la Canal Fonda · Dent de Llardana",
+   "altitud": 3085,
+   "otras": "3.094 m (Rutas Pirineos) · 3.076 m (GPS del track)",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.646217,
+   "lon": 0.435102,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús → Canal Fonda → collado del Diente → trepadas → cima; vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.550 m desde la Espigantosa (15,8 km ida y vuelta)",
+   "dificultad": "alta",
+   "grado": "Trepadas expuestas y tramos de mala roca (según el autor del track)",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Aguja rocosa junto a la salida de la Canal Fonda, en la ruta normal al Posets. Desde la Espigantosa se sube por el refugio Ángel Orús y la Canal Fonda hasta el collado del Diente, y de allí se trepa a la cima.",
+   "foto": "diente-llardana",
+   "pie": "El Diente de Llardana, una aguja de roca sobre la Canal Fonda.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
+    "texto": "Ver la ruta en Wikiloc: Diente de Llardana desde parking Espigantosa, de Carlos_cumbres"
+   },
+   "rutas": [
+    "llardana-espigantosa"
+   ],
+   "fotoCima": {
+    "foto": "ld-cima",
+    "pie": "La cima del Diente, con las cumbres de la cresta al fondo."
+   },
+   "curiosidad": "El Diente de Llardana es la aguja de roca que se levanta justo donde termina la Canal Fonda, en la ruta clásica al Posets, conocida como la «Ruta Real». La guía de Rutas Pirineos lo llama «vertiginoso» y le da 3.094 m, mientras que la lista de tresmiles y la cartografía del IGN le dan 3.085 m. La misma cartografía lo recoge también como «Tucón de la Canal Fonda». Las fuentes consultadas no recogen la historia de su primera ascensión."
+  },
+  {
+   "id": "gran-eriste",
+   "nombre": "Gran Pico de Eriste",
+   "alias": "Grand Eriste · Tuca de Bagüeñola Gran · Punta Alta d’es Leners",
+   "altitud": 3056,
+   "otras": "3.053 m (Travesía Pirenaica y SummitPost) · 3.046 m (GPS del track)",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.625069,
+   "lon": 0.409321,
+   "acceso": "Valle de Chistau · San Juan de Plan (collado de Sahún, sendero de Barbarisa)",
+   "ruta": "Collado de Sahún → ibón Chico → ibones superiores → ibón Chelau → paso de la Gralla → Gran Pico de Eriste → Eriste Norte → Eriste Sur → collado de la Ribereta → collado de Sahún (circular)",
+   "desnivel": "≈ 1.730 m desde el collado de Sahún (17,4 km, circular)",
+   "dificultad": "alta",
+   "grado": "Alpinismo · pedreras, brechas y pasos técnicos",
+   "epoca": "Julio – septiembre",
+   "descripcion": "La cumbre más alta del macizo de Eriste. Se sube por el sendero de Barbarisa, entre ibones y pedreras, hasta el paso de la Gralla, y desde el Gran Pico se enlazan el Eriste Norte y el Eriste Sur en un recorrido circular.",
+   "foto": "gran-eriste",
+   "pie": "Los picos de Eriste desde el valle.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+    "texto": "Ver la ruta en Wikiloc: Gran Pico de Eriste, Eriste Norte y Eriste Sur por Barbarisa, de Triptòfan"
+   },
+   "rutas": [
+    "eriste-barbarisa"
+   ],
+   "fotoCima": {
+    "foto": "eri-gran",
+    "pie": "Subiendo por las piedras a la cumbre del Gran Pico de Eriste."
+   },
+   "curiosidad": "El Gran Pico de Eriste es el punto más alto del macizo de Eriste, entre los valles de Chistau y Benasque, y se conoce también como Eriste Central, Bagüeñola Central o Tuca de Bagüeñola Gran. Su altura depende de la fuente: 3.056 m en la lista de tresmiles y en OpenStreetMap, y 3.053 m en Travesía Pirenaica y SummitPost. Las fuentes consultadas también discrepan en sus vecinos: el Eriste Sur aparece con 3.045 m o con 3.041 m, y el Eriste Norte con 3.025 m o 3.031 m."
+  },
+  {
+   "id": "bardamina",
+   "nombre": "Pico de Bardamina",
+   "alias": "Tuca de Bardamina · Tuca de Posets de Benás",
+   "altitud": 3079,
+   "otras": "3.068 m (IGN y OpenStreetMap) · 3.078 m (GPS del track de la ruta)",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.662431,
+   "lon": 0.450965,
+   "acceso": "Benasque · valle de Eriste (parking de la Espigantosa)",
+   "ruta": "Parking de la Espigantosa → refugio Ángel Orús → ibones de Eriste y de les Alforches → Bardamina → Pico de la Paúl → Paúl Inferior → collado de la Paúl → Balls des Ibóns",
+   "desnivel": "≈ 1.820 m desde la Espigantosa (19 km, circuito)",
+   "dificultad": "alta",
+   "grado": "F por las laderas del sur; la cresta hacia la Paúl es más expuesta",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre oriental de la cresta de Bardamina, al este del Posets. Se sube desde el refugio Ángel Orús por los ibones de Eriste y de les Alforches, y la ruta enlaza después la Paúl y la Paúl Inferior.",
+   "foto": "bardamina",
+   "pie": "La cresta pedregosa de Bardamina y la Paúl, desde el collado.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-bardamina-bardamina-3079-m-la-paul-3078-m-inferior-de-la-paul-3063-m-por-la-balls-des-ibo-187377168",
+    "texto": "Ver la ruta en Wikiloc: Cresta de Bardamina, de yivatosal"
+   },
+   "rutas": [
+    "paul-bardamina"
+   ],
+   "curiosidad": "Bardamina es la cumbre más alta de la cresta que lleva su nombre. De oeste a este la forman la Paúl Inferior (3.073 m), el Pico de la Paúl (3.078 m) y Bardamina (3.079 m), con apenas un metro entre las dos últimas, y por eso las fuentes difieren sobre cuál es la más alta; el IGN da 3.068 m para Bardamina. Según SummitPost, la vía normal sube por las laderas del sur con dificultad F, mientras que la cresta entre Bardamina y la Paúl es más expuesta. No he encontrado una fuente que explique el origen del nombre."
   }
  ]
 }

@@ -2414,5 +2414,104 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "ld-clot": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos_cumbres",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "ld-trepadas": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos_cumbres",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
+  "fuente": "su ficha de Wikiloc",
+  "w": 562,
+  "h": 1000,
+  "pos": "50% 40%"
+ },
+ "ld-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos_cumbres",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "pav-canal": {
+  "archivo": "foto del autor del track",
+  "autor": "Carlos_cumbres",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
+  "fuente": "su ficha de Wikiloc",
+  "w": 562,
+  "h": 1000,
+  "pos": "50% 50%"
+ },
+ "gran-sahun": {
+  "archivo": "foto del autor del track",
+  "autor": "Triptòfan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "gran-ibonessup": {
+  "archivo": "foto del autor del track",
+  "autor": "Triptòfan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "gran-chelau": {
+  "archivo": "foto del autor del track",
+  "autor": "Triptòfan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "eri-gralla": {
+  "archivo": "foto del autor del track",
+  "autor": "Triptòfan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
+ },
+ "eri-gran": {
+  "archivo": "foto del autor del track",
+  "autor": "Triptòfan",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-pico-de-eriste-eriste-norte-y-eriste-sur-por-barbarisa-113273680",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 561,
+  "pos": "50% 50%"
  }
 }
