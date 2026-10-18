@@ -843,11 +843,11 @@ async function boot() {
     });
     const suelta = () => {
       if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
-      if (!giro.sostenido) { giro.resta = Math.PI / 18; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 10° suaves
+      if (!giro.sostenido) { giro.resta = Math.PI / 36; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 5° suaves
       giro.sostenido = false;
     };
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
-    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 18; } });
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 36; } });
   }
   const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
   function aplicaGiro(dt) {
