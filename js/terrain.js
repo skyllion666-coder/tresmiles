@@ -119,7 +119,7 @@ export class Terrain {
 
   // material para una pieza local de cumbre: comparte textura y cobertura del bloque, pero no se recorta con los huecos
   crearMaterialPieza(c, roca = 'granito') {   // roca: tono de la roca desnuda (granito frío y oscuro, caliza clara y cálida, neutra)
-    const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], neutra: [0.40, [1, 1, 1]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
+    const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], neutra: [0.40, [1, 1, 1]], oscura: [0.22, [1.04, 0.97, 0.90]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
     const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uRocaL: { value: L }, uRocaT: { value: new THREE.Vector3(...T) } };
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide, map: c.mat.map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
     mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; this._shader(mat, u); return mat;

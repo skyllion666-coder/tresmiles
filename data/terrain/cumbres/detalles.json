@@ -58,8 +58,22 @@
   "n": 201,
   "paso": 1.0,
   "archivo": "posets-cima.bin.gz",
-  "roca": "granito",
-  "ref": "OSM peak 42.654629,0.435227; IGN v\u00e9rtice 17999 (pilar 1,2 m, 1982) a 3 m; el IGN lo da por destruido el 21-12-2023. Macizo gran\u00edtico Posets-Millares (DAMOCLES)."
+  "roca": "oscura",
+  "ref": "OSM peak 42.654629,0.435227; IGN v\u00e9rtice 17999 (pilar 1,2 m, 1982) a 3 m; el IGN lo da por destruido el 21-12-2023. Macizo gran\u00edtico Posets-Millares (DAMOCLES). Fotos de la cima aportadas por el usuario (pilar roto en pie; arista de bloques oscuros y angulosos).",
+  "modelo": "models/cima-posets.glb",
+  "escalaModelo": 11.5,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 26563.33,
+    "z": 13547.79,
+    "giro": 0.3,
+    "ancla": true,
+    "ref": "IGN v\u00e9rtice 17999 (ETRS89); pilar roto con funda pintada \u00abPOSETS 3369\u00bb, seg\u00fan foto de la cima",
+    "huella": 0.5
+   }
+  ],
+  "rocaMin": 0.85
  },
  "perdido": {
   "x0": -6292.12,
@@ -76,7 +90,8 @@
     "z": 11221.88,
     "giro": 0.4,
     "ref": "IGN v\u00e9rtice 14660 (ETRS89); pilar roto seg\u00fan foto de la cima",
-    "ancla": false
+    "ancla": false,
+    "huella": 0.6
    },
    {
     "nodo": "Mojon",
@@ -84,7 +99,8 @@
     "z": 11222.08,
     "giro": 0.9,
     "ref": "Moj\u00f3n con buz\u00f3n, seg\u00fan fotos de la cima; colocado en el punto m\u00e1s alto del MDT05 (aprox.)",
-    "ancla": true
+    "ancla": true,
+    "huella": 2.0
    }
   ],
   "modelo": "models/cima-perdido.glb",

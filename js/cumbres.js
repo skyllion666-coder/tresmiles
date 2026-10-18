@@ -115,6 +115,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   function bloques(x, z, estilo, hr) {   // metros reales de desplazamiento de la roca en (x, z)
     if (estilo === 'caliza') return caliza(x, z, hr);
     if (estilo === 'neutra') return 0.5 * granito(x, z) + 0.5 * caliza(x, z, hr);
+    if (estilo === 'oscura') return granito(x, z) * 1.25;   // bloques angulosos más marcados (arista del Posets en las fotos)
     return granito(x, z);
   }
   const distSeg = (x, z, ps) => { let m = 1e9; for (let k = 0; k < ps.length - 1; k++) { const a = ps[k], b = ps[k + 1], vx = b.x - a.x, vz = b.z - a.z, t = Math.max(0, Math.min(1, ((x - a.x) * vx + (z - a.z) * vz) / (vx * vx + vz * vz || 1))); m = Math.min(m, Math.hypot(x - a.x - vx * t, z - a.z - vz * t)); } return m; };
@@ -157,7 +158,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         nor.set([hx * il, il, hz * il], k * 3); uv.set([(x - ch.x0) / cw, 1 - (z - ch.z0) / cd], k * 2);
       }
       const roca = new Float32Array(n * n);
-      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const x = d.x0 + i * paso, z = d.z0 + j * paso; roca[j * n + i] = Math.max(d.cresta ? 1 - sstep(4, 12, distSeg(x, z, d.cresta)) : cvx[j * n + i], sstep(0.5, 0.95, sl[j * n + i])) * (1 - sstep(40, 108, Math.hypot(x - cxm, z - czm))); }
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const x = d.x0 + i * paso, z = d.z0 + j * paso; roca[j * n + i] = Math.max(d.cresta ? 1 - sstep(4, 12, distSeg(x, z, d.cresta)) : cvx[j * n + i], sstep(0.5, 0.95, sl[j * n + i]), d.rocaMin ?? 0) * (1 - sstep(40, 108, Math.hypot(x - cxm, z - czm))); }
       const idx = []; for (let j = 0; j < n - 1; j++) for (let i = 0; i < n - 1; i++) { const a = j * n + i, b = a + 1, c = a + n, e = c + 1; idx.push(a, c, b, b, c, e); }
       const g = new THREE.BufferGeometry();
       g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
@@ -168,16 +169,16 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
       // algunos bloques mayores medio enterrados (3 formas distintas, tamaños y giros variados) en las zonas de pendiente suave junto a la arista
       const col = new THREE.Color(), forma = [0, 1, 2].map((v) => {
-        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : 1;
+        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : d.roca === 'oscura' ? 0.62 : 1;
         for (let q = 0; q < pa.count; q++) { const k2 = hash2(Math.round(pa.getX(q) * 9), Math.round(pa.getY(q) * 9) + v * 7, Math.round(pa.getZ(q) * 9) + 50); const f = 0.78 + k2 * 0.4; pa.setXYZ(q, pa.getX(q) * f * (1 + v * 0.18) * (plano < 1 ? 1.3 : 1), pa.getY(q) * f * (0.7 - v * 0.08) * plano, pa.getZ(q) * f * (plano < 1 ? 1.2 : 1)); }
         g.computeVertexNormals(); return g;
       }), listas = [[], [], []];
-      const cb = { granito: [0.40, 0.375, 0.34], caliza: [0.60, 0.575, 0.53], neutra: [0.5, 0.48, 0.45] }[d.roca] ?? [0.4, 0.375, 0.34];
+      const cb = { granito: [0.40, 0.375, 0.34], caliza: [0.60, 0.575, 0.53], neutra: [0.5, 0.48, 0.45], oscura: [0.17, 0.16, 0.15] }[d.roca] ?? [0.4, 0.375, 0.34];
       const bm = new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true });
       for (let z = d.z0 + 8; z < d.z0 + (n - 1) * paso - 8; z += 4) for (let x = d.x0 + 8; x < d.x0 + (n - 1) * paso - 8; x += 4) {
         const ix = Math.round(x * 3), iz = Math.round(z * 3), dcr = d.cresta ? distSeg(x, z, d.cresta) : 99, dc = Math.hypot(x - cxm, z - czm);
         const i = Math.round((x - d.x0) / paso), j = Math.round((z - d.z0) / paso), s0 = sl[j * n + i];
-        const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
+        const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : d.roca === 'oscura' ? 2.6 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
         if (hash2(ix, iz, 21) > pr) continue;
         const sz = 0.9 + Math.pow(hash2(ix, iz, 24), 2.2) * 3.4;   // muchos pequeños, pocos grandes
         listas[Math.floor(hash2(ix, iz, 28) * 3)].push({ x: x + (hash2(ix, iz, 22) - 0.5) * 3, z: z + (hash2(ix, iz, 23) - 0.5) * 3, s: sz, a: hash2(ix, iz, 25), b: hash2(ix, iz, 26), c: hash2(ix, iz, 27) });
@@ -211,8 +212,10 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
             const o = src.clone(true); o.position.set(0, 0, 0); o.scale.setScalar(S); o.rotation.set(0, e.giro ?? 0, 0);
             let px = e.x, pz2 = e.z;
             if (e !== an) { const vx = e.x - an.x, vz = e.z - an.z, L = Math.hypot(vx, vz) || 1; px = an.x + (vx / L) * (d.separacion ?? L); pz2 = an.z + (vz / L) * (d.separacion ?? L); }
-            const R0 = (e.ancla ? 1.6 : 0.7) * S; let y = 1e9;   // se apoya en el punto más bajo de su huella (queda algo enterrado, nunca flotando)
-            for (const [ox, oz] of [[0, 0], [R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
+            // se apoya en el punto más bajo de su huella (radio real × escala), sin hundirse más de un cuarto de metro (a escala) bajo el centro
+            const R0 = (e.huella ?? 0.6) * S, hc = sample(detalles.get(id), px, pz2) ?? geo.heightAt(px, pz2); let y = hc;
+            for (const [ox, oz] of [[R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
+            y = Math.max(y, hc - 0.25 * S * EXAG);
             o.position.set(px, y - 0.04 * S, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
             scene.add(o); extras.push(o);
           }
