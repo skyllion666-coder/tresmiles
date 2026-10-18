@@ -21,7 +21,19 @@ export function crearRuta({ scene, geo, ruta }) {
   const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
   const tub = 1800, rad = 5;
   const geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
-  const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({ color: '#ffa930', fog: true }));
+  // la línea se adelgaza al acercarse: el radio (0,5–11 m) y la altura sobre el relieve (7–24 m) crecen con la distancia a la cámara, calculados por vértice en el shader.
+  // La geometría guarda el radio de 11 m; el centro del tubo es posición − normal × 11, así que no hace falta otra línea ni más vértices.
+  const mat = new THREE.MeshBasicMaterial({ color: '#ffa930', fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+  mat.onBeforeCompile = (sh) => {
+    sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      vec3 ctr = position - normal * 11.0;
+      float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
+      float Rn = clamp(dd * 0.0016, 0.5, 11.0);
+      float lift = clamp(dd * 0.0035, 7.0, 24.0);
+      transformed = ctr + normal * Rn; transformed.y += lift - 24.0;`);
+  };
+  mat.customProgramCacheKey = () => 'ruta-fina';
+  const mesh = new THREE.Mesh(geom, mat);
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
   scene.add(mesh);
 
@@ -98,7 +110,7 @@ export function crearRuta({ scene, geo, ruta }) {
       }
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
-    delgada(v) { mesh.material.transparent = v; mesh.material.opacity = v ? 0.22 : 1; mesh.material.depthWrite = !v; mesh.material.needsUpdate = true; },
+    delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
     escalar(cam) {
       for (const p of equipo) if (p.h.visible) p.h.scale.setScalar(KM * 1.275 * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500)));
       // el montañero solo mantiene siempre un tamaño parecido en pantalla (~3 % del alto), esté la cámara cerca o lejos

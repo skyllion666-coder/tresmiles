@@ -116,6 +116,14 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.is-active { z-index: 2; }
 .pin.is-active::after { --k: 1; --pin-d: calc(var(--pin-d-base, 26px) + 6px); width: var(--pin-d); height: var(--pin-d); margin: calc(var(--pin-d) / -2) 0 0 calc(var(--pin-d) / -2); background: rgba(30, 92, 74, .34); border: 2px solid rgba(126, 224, 178, .9); box-shadow: 0 0 0 1px rgba(8, 28, 22, .4), inset 0 0 0 1px rgba(8, 28, 22, .18); transform: none; }
 .pin.is-active::before { background: #f8f1de; box-shadow: 0 0 0 1px rgba(8, 28, 22, .6); transform: none; }
+/* hilo fino que une el círculo (elevado en pantalla) con el punto real de la cumbre */
+.pin { --lift: 34px; }
+@media (max-width: 760px) { .pin { --lift: 38px; } }
+.pin-stem { position: absolute; left: 50%; top: calc(50% + var(--pin-d) / 2 - 1px); height: calc(var(--lift) - var(--pin-d) / 2 + 1px); width: 1.5px; margin-left: -.75px; background: linear-gradient(rgba(255, 248, 235, .85), rgba(255, 248, 235, .55)); box-shadow: 0 0 0 .5px rgba(10, 22, 18, .35); pointer-events: none; }
+.pin-stem::after { content: ""; position: absolute; left: 50%; bottom: -2.5px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #f8f1de; box-shadow: 0 0 0 1px rgba(10, 22, 18, .5); }
+.pin.is-active .pin-stem { top: calc(50% + (var(--pin-d-base, 26px) + 6px) / 2 - 1px); height: calc(var(--lift) - (var(--pin-d-base, 26px) + 6px) / 2 + 1px); background: linear-gradient(rgba(126, 224, 178, .95), rgba(126, 224, 178, .6)); }
+.pin.is-active .pin-stem::after { background: #7ee0b2; }
+.pin.pin-prox .pin-stem { opacity: .55; }
 .pin-label { position: absolute; top: calc(var(--hit) / 2 + 21px); left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: rgba(10, 22, 18, .58); border: 1px solid rgba(255, 255, 255, .26); border-radius: 14px; color: #fff; padding: 4px 11px 5px; font: 600 .68rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .35s ease; pointer-events: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
 .pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: #f3e6c8; }
 .pin:hover .pin-label, .pin:focus-visible .pin-label, .pin.show-label .pin-label { opacity: 1; }

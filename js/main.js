@@ -8,7 +8,7 @@ import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=3';
-import { cargarRuta, crearRuta } from './ruta.js?v=30';
+import { cargarRuta, crearRuta } from './ruta.js?v=31';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -174,7 +174,7 @@ async function boot() {
     const b = document.createElement('button');
     b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}`; b.type = 'button'; b.dataset.id = p.id;
     b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
-    b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span>`;
+    b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
     pinsEl.appendChild(b); pinEls.set(p.id, b);
   }
@@ -241,12 +241,13 @@ async function boot() {
       const el = pinEls.get(p.id);
       tmp.set(p.w.x, p.w.y + 25, p.w.z);
       const dist = camera.position.distanceTo(tmp);
-      tmp.project(camera);
+      tmp.set(p.w.x, p.w.y + 3, p.w.z); tmp.project(camera);   // punto de la cumbre; el círculo se dibuja LIFT píxeles más arriba, unido por un hilo fino
       const show = S.mode === 'explore' && tmp.z < 1 && Math.abs(tmp.x) < 1.08 && Math.abs(tmp.y) < 1.08 && !occluded({ x: p.w.x, y: p.w.y + 25, z: p.w.z });
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
-      el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
-      { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H;
+      const LIFT = isMobile() ? 38 : 34;
+      el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
+      { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
         const lb = el.firstElementChild, act = S.active === p.id;
         if (act) pinAct = { el, lb, px, py, id: p.id };   // su marcador y su etiqueta se colocan después (colocaEtiquetaActiva)
         else {
