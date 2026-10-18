@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=16';
 import { crearVegetacion } from './vegetacion.js?v=5';
-import { crearCumbres } from './cumbres.js?v=24';
+import { crearCumbres } from './cumbres.js?v=25';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
@@ -230,8 +230,9 @@ async function boot() {
     }
     return false;
   }
+  let cimaCerca = null;   // cumbre con detalle propio a menos de 450 m de la cámara: su marcador se eleva y se aclara para dejar ver la cima
   function updatePins() {
-    const W = innerWidth, H = innerHeight;
+    const W = innerWidth, H = innerHeight; cimaCerca = null;
     obstaculos.length = 0; pinAct = null; candPicos.length = 0;
     if (picoSel) {   // pico que se ha tocado en el mapa
       tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
@@ -247,7 +248,10 @@ async function boot() {
       const show = S.mode === 'explore' && tmp.z < 1 && Math.abs(tmp.x) < 1.08 && Math.abs(tmp.y) < 1.08 && !occluded({ x: p.w.x, y: p.w.y + 25, z: p.w.z });
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
-      const LIFT = isMobile() ? 38 : 34;
+      const det = dist < 450 && cumbres.detalle.includes(p.id);
+      if (det) cimaCerca = p.w;
+      const LIFT = det ? (isMobile() ? 120 : 110) : isMobile() ? 38 : 34;
+      el.classList.toggle('pin-alto', det); if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
         const lb = el.firstElementChild, act = S.active === p.id;
@@ -383,6 +387,7 @@ async function boot() {
       const dist = camera.position.distanceTo(hitoTmp);
       // solo los hitos de la cumbre abierta (o compartidos con ella)
       let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 15000;
+      if (show && cimaCerca && Math.hypot(o.x - cimaCerca.x, o.z - cimaCerca.z) < 60) show = false;   // de cerca, el rombo de la cima no tapa los objetos de la cumbre
       if (show && o.last !== S.active) { o.last = S.active; o.kms[S.active] ??= kmTexto(o, S.active); o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : o.kms[S.active]); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
       o.el.classList.toggle('is-hidden', !show);

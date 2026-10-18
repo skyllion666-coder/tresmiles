@@ -16,8 +16,8 @@ def mat(nombre, col, rough=0.9, metal=0.0):
     b = next(n for n in m.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
     b.inputs['Base Color'].default_value = (*col, 1); b.inputs['Roughness'].default_value = rough; b.inputs['Metallic'].default_value = metal
     return m
-M_HORM = mat('hormigon', (0.38, 0.36, 0.32)); M_BASE = mat('base', (0.42, 0.39, 0.34)); M_FUNDA = mat('funda', (0.40, 0.42, 0.43))
-M_HIERRO = mat('hierro', (0.06, 0.05, 0.05), 0.6, 0.6); M_ROJO = mat('pintura_roja', (0.55, 0.03, 0.02), 0.7)
+M_HORM = mat('hormigon', (0.55, 0.52, 0.46)); M_BASE = mat('base', (0.50, 0.47, 0.41)); M_FUNDA = mat('funda', (0.62, 0.64, 0.66))
+M_HIERRO = mat('hierro', (0.06, 0.05, 0.05), 0.6, 0.6); M_ROJO = mat('pintura_roja', (0.85, 0.02, 0.01), 0.6)
 M_AMAR = mat('amarillo', (0.85, 0.62, 0.02), 0.7); M_PIEDRA = mat('piedra_pintada', (0.55, 0.20, 0.12), 0.8)
 M_LOSA = mat('losa_oscura', (0.10, 0.10, 0.10))
 def nuevo(nombre, bm, m, parent):
@@ -55,7 +55,7 @@ for k, (x, y, h) in enumerate([(-0.09, 0.03, 0.18), (-0.03, -0.06, 0.27), (0.09,
     bmesh.ops.translate(bm, vec=(x, y, 1.18 + (h - 0.2) / 2), verts=bm.verts); nuevo(f'hierro{k}', bm, M_HIERRO, V)
 # rótulo «POSETS 3369» pintado en rojo en la funda (texto convertido en malla, casi plano)
 for k, (txt, z) in enumerate((('POSETS', 0.46), ('3369', 0.37))):
-    cu = bpy.data.curves.new(f'txt{k}', 'FONT'); cu.body = txt; cu.size = 0.075; cu.align_x = 'CENTER'; cu.extrude = 0.002
+    cu = bpy.data.curves.new(f'txt{k}', 'FONT'); cu.body = txt; cu.size = 0.085; cu.align_x = 'CENTER'; cu.extrude = 0.002
     o = bpy.data.objects.new(f'rotulo{k}', cu); bpy.context.collection.objects.link(o)
     o.rotation_euler = (math.pi / 2, 0, 0); o.location = (0, -0.176, 0.2 + z - 0.2 + 0.2)
     bpy.context.view_layer.objects.active = o; o.select_set(True); bpy.ops.object.convert(target='MESH'); o.select_set(False)

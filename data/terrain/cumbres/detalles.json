@@ -70,7 +70,8 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "IGN v\u00e9rtice 17999 (ETRS89); pilar roto con funda pintada \u00abPOSETS 3369\u00bb, seg\u00fan foto de la cima",
-    "huella": 0.5
+    "huella": 0.5,
+    "escala": 19
    }
   ],
   "rocaMin": 0.85

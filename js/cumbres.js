@@ -169,7 +169,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
       // algunos bloques mayores medio enterrados (3 formas distintas, tamaños y giros variados) en las zonas de pendiente suave junto a la arista
       const col = new THREE.Color(), forma = [0, 1, 2].map((v) => {
-        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : d.roca === 'oscura' ? 0.62 : 1;
+        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : d.roca === 'oscura' ? 0.85 : 1;
         for (let q = 0; q < pa.count; q++) { const k2 = hash2(Math.round(pa.getX(q) * 9), Math.round(pa.getY(q) * 9) + v * 7, Math.round(pa.getZ(q) * 9) + 50); const f = 0.78 + k2 * 0.4; pa.setXYZ(q, pa.getX(q) * f * (1 + v * 0.18) * (plano < 1 ? 1.3 : 1), pa.getY(q) * f * (0.7 - v * 0.08) * plano, pa.getZ(q) * f * (plano < 1 ? 1.2 : 1)); }
         g.computeVertexNormals(); return g;
       }), listas = [[], [], []];
@@ -178,9 +178,9 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       for (let z = d.z0 + 8; z < d.z0 + (n - 1) * paso - 8; z += 4) for (let x = d.x0 + 8; x < d.x0 + (n - 1) * paso - 8; x += 4) {
         const ix = Math.round(x * 3), iz = Math.round(z * 3), dcr = d.cresta ? distSeg(x, z, d.cresta) : 99, dc = Math.hypot(x - cxm, z - czm);
         const i = Math.round((x - d.x0) / paso), j = Math.round((z - d.z0) / paso), s0 = sl[j * n + i];
-        const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : d.roca === 'oscura' ? 2.6 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
+        const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : d.roca === 'oscura' ? 0.9 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
         if (hash2(ix, iz, 21) > pr) continue;
-        const sz = 0.9 + Math.pow(hash2(ix, iz, 24), 2.2) * 3.4;   // muchos pequeños, pocos grandes
+        const sz = (0.9 + Math.pow(hash2(ix, iz, 24), 2.2) * 3.4) * (d.roca === 'oscura' ? 0.55 : 1);   // muchos pequeños, pocos grandes
         listas[Math.floor(hash2(ix, iz, 28) * 3)].push({ x: x + (hash2(ix, iz, 22) - 0.5) * 3, z: z + (hash2(ix, iz, 23) - 0.5) * 3, s: sz, a: hash2(ix, iz, 25), b: hash2(ix, iz, 26), c: hash2(ix, iz, 27) });
       }
       const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler(), pv = new THREE.Vector3(), sv = new THREE.Vector3(), insts = [];
@@ -189,7 +189,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const inst = new THREE.InstancedMesh(forma[f], bm, lista.length);
         lista.forEach((b, k) => {
           const h = sample(detalles.get(id), b.x, b.z) ?? 0;
-          pv.set(b.x, h + b.s * 0.1, b.z); e.set((b.b - 0.5) * 0.9, b.a * 6.28, (b.c - 0.5) * 0.9); q.setFromEuler(e); sv.set(b.s * (0.9 + b.a * 0.7), b.s * (0.5 + b.b * 0.4), b.s * (0.8 + b.c * 0.8));
+          pv.set(b.x, h + b.s * (d.roca === 'oscura' ? -0.15 : 0.1), b.z); e.set((b.b - 0.5) * 0.9, b.a * 6.28, (b.c - 0.5) * 0.9); q.setFromEuler(e); sv.set(b.s * (0.9 + b.a * 0.7), b.s * (0.5 + b.b * 0.4), b.s * (0.8 + b.c * 0.8));
           inst.setMatrixAt(k, m4.compose(pv, q, sv)); const t2 = 0.72 + b.a * 0.34; inst.setColorAt(k, col.setRGB(cb[0] * t2, cb[1] * t2, cb[2] * t2 * (0.92 + b.c * 0.14)));
         });
         inst.instanceMatrix.needsUpdate = true; if (inst.instanceColor) inst.instanceColor.needsUpdate = true; inst.computeBoundingSphere(); scene.add(inst); insts.push(inst);
@@ -209,14 +209,14 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
           const S = d.escalaModelo ?? 1, an = d.elementos.find((e) => e.ancla) ?? d.elementos[0];
           for (const e of d.elementos) {
             const src = gl.scene.getObjectByName(e.nodo); if (!src) continue;
-            const o = src.clone(true); o.position.set(0, 0, 0); o.scale.setScalar(S); o.rotation.set(0, e.giro ?? 0, 0);
+            const o = src.clone(true); o.position.set(0, 0, 0); const Se = e.escala ?? S; o.scale.setScalar(Se); o.rotation.set(0, e.giro ?? 0, 0);
             let px = e.x, pz2 = e.z;
             if (e !== an) { const vx = e.x - an.x, vz = e.z - an.z, L = Math.hypot(vx, vz) || 1; px = an.x + (vx / L) * (d.separacion ?? L); pz2 = an.z + (vz / L) * (d.separacion ?? L); }
             // se apoya en el punto más bajo de su huella (radio real × escala), sin hundirse más de un cuarto de metro (a escala) bajo el centro
-            const R0 = (e.huella ?? 0.6) * S, hc = sample(detalles.get(id), px, pz2) ?? geo.heightAt(px, pz2); let y = hc;
+            const R0 = (e.huella ?? 0.6) * Se, hc = sample(detalles.get(id), px, pz2) ?? geo.heightAt(px, pz2); let y = hc;
             for (const [ox, oz] of [[R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
-            y = Math.max(y, hc - 0.25 * S * EXAG);
-            o.position.set(px, y - 0.04 * S, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
+            y = Math.max(y, hc - 0.25 * Se * EXAG);
+            o.position.set(px, y - 0.04 * Se, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
             scene.add(o); extras.push(o);
           }
         }
