@@ -2,6 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
+  <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
+  window.WEB_V = 174;
+  fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
+    if (!(j.v > window.WEB_V)) return;
+    const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
+    u.searchParams.set('r', j.v); location.replace(u.href);
+  }).catch(() => {});</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Tresmiles del Pirineo aragonés</title>
   <meta name="description" content="Explorador 3D de los tresmiles del Pirineo aragonés: relieve real, vuelo de cámara hasta cada cumbre y ficha con ruta, desnivel y dificultad.">
@@ -111,7 +118,7 @@
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 134;</script>
-  <script type="module" src="js/main.js?v=173"></script>
+  <script type="module" src="js/main.js?v=174"></script>
   <script defer src="js/cine.js?v=6"></script>
 </body>
 </html>

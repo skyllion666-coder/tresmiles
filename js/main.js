@@ -833,7 +833,7 @@ async function boot() {
 
   // — flechas de giro: un toque gira la vista 30° alrededor del punto que se mira; mantenerla pulsada gira sin parar (36°/s) —
   const giro = { dir: 0, resta: 0, sostenido: false, t: null };
-  for (const [id, dir] of [['#giro-izq', -1], ['#giro-der', 1]]) {
+  for (const [id, dir] of [['#giro-izq', 1], ['#giro-der', -1]]) {
     const b = $(id);
     b.addEventListener('pointerdown', (e) => {
       if (S.mode !== 'explore' || S.flight || S.vuelo) return;
