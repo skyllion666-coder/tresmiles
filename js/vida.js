@@ -127,7 +127,7 @@ export function crearAves({ scene, geo, centro }) {
 }
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
-const NIVEL_MUSICA = 0.75;   // la música de fondo suena al 75 % (un 25 % más baja que antes)
+const NIVEL_MUSICA = 0.64;   // música de fondo al 64 % del nivel original (-25 % y luego -15 % más)
 export function crearSonido() {
   let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null, bufRuido = null, fxGain = null, ultimoFx = 0;
   const ruido = (c) => {

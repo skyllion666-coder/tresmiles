@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=16';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=3';
 import { cargarRuta, crearRuta } from './ruta.js?v=29';
 
