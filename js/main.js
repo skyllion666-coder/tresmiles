@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=13';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=14';
 import { crearFauna } from './fauna.js?v=3';
 import { cargarRuta, crearRuta } from './ruta.js?v=29';
 
@@ -498,7 +498,7 @@ async function boot() {
       document.querySelectorAll('#filters .chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); refreshLists();
     });
     $('#btn-filters').addEventListener('click', () => {
-      const open = $('#filters').hidden; $('#filters').hidden = !open; $('#btn-filters').setAttribute('aria-expanded', open);
+      const open = $('#filters').hidden; sonido.fx(open ? 'abrir' : 'cerrar'); $('#filters').hidden = !open; $('#btn-filters').setAttribute('aria-expanded', open);
     });
   }
 
@@ -518,7 +518,7 @@ async function boot() {
     $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? `Explorar el ${peaks.find((p) => p.activo).nombre}` : 'Explorar las cumbres';
   }
   const setList = (open) => { listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); if (open) { qEl.value = ''; refreshLists(); if (matchMedia('(hover: hover)').matches) qEl.focus(); } };
-  listBtn.addEventListener('click', () => setList(listEl.hidden));
+  listBtn.addEventListener('click', () => { sonido.fx(listEl.hidden ? 'abrir' : 'cerrar'); setList(listEl.hidden); });
   qEl.addEventListener('input', refreshLists);
   qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = listUl.querySelector('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } } e.stopPropagation(); if (e.key === 'Escape') setList(false); });
   listUl.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } });
@@ -598,8 +598,8 @@ async function boot() {
     if (fly) flyTo(peakState(p), { shift: viewShift() });
     else S.shiftTo = viewShift();
   }
-  foldBtn.addEventListener('click', () => plegar(!S.plegada));
-  tab.addEventListener('click', () => plegar(false));
+  foldBtn.addEventListener('click', () => { sonido.fx(S.plegada ? 'abrir' : 'cerrar'); plegar(!S.plegada); });
+  tab.addEventListener('click', () => { sonido.fx('abrir'); plegar(false); });
   // móvil: arrastrar el asa o la cabecera para subir/bajar la hoja; un toque en la barra plegada la abre
   let arr = null;
   const alturas = () => [54, innerHeight * 0.4, Math.min(innerHeight * 0.66, 620), innerHeight * 0.9];
@@ -685,8 +685,8 @@ async function boot() {
     R.cursor(V.d);
     $('#vuelo-txt').textContent = `${(V.d / 1000).toFixed(1).replace('.', ',')} km · ${fmt(Math.round(a.ele))} m`;
   }
-  btnVuelo.addEventListener('click', () => (S.vuelo ? pararVuelo(true) : iniciarVuelo()));
-  $('#vuelo-stop').addEventListener('click', () => pararVuelo(true));
+  btnVuelo.addEventListener('click', () => { sonido.fx(S.vuelo ? 'desactivar' : 'activar'); S.vuelo ? pararVuelo(true) : iniciarVuelo(); });
+  $('#vuelo-stop').addEventListener('click', () => { sonido.fx('desactivar'); pararVuelo(true); });
   canvas.addEventListener('pointerdown', () => { if (S.vuelo) pararVuelo(false); });
 
   // — carga por zonas: las alturas finas, la ruta y los hitos de un pico se preparan al abrirlo —
@@ -717,6 +717,7 @@ async function boot() {
     const tok = ++openTok, t = setTimeout(() => avisoCarga('Cargando la zona…'), 300);
     try { await cargarZona(p); } finally { clearTimeout(t); avisoCarga(null); }
     if (tok !== openTok) return;
+    if (S.active !== id) sonido.fx(S.active ? 'seleccion' : 'ficha');   // ficha cerrada: soplo + nota; cambio de cumbre: solo el clic
     S.active = id; fauna?.setCentro(p.w.x, p.w.z, p.w.y);
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
@@ -732,7 +733,7 @@ async function boot() {
   }
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
-    const was = S.active; callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
+    const was = S.active; sonido.fx('cerrar'); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
@@ -743,8 +744,8 @@ async function boot() {
   $('#ficha-close').addEventListener('click', () => closeFicha());
   addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
   const goHome = () => { pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
-  $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { closeFicha(); goHome(); } });
-  $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { closeFicha(); goHome(); } });
+  $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
+  $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
 
   // — luz —
   function setSun(i) {
@@ -755,14 +756,15 @@ async function boot() {
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', `Cambiar la luz: ${s.nombre.toLowerCase()}`);
   }
   $('#btn-light').addEventListener('click', (e) => {
+    sonido.fx('toque');
     setSun((S.sun + 1) % SUN.length); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
   });
   setSun(0);
 
   // — sonido (activo desde el inicio; si el navegador lo bloquea, arranca con el primer toque) —
   const btnSound = $('#btn-sound');
-  const pintaSonido = () => { btnSound.setAttribute('aria-pressed', sonido.on); btnSound.setAttribute('aria-label', sonido.on ? 'Silenciar el sonido ambiente' : 'Activar el sonido ambiente'); btnSound.classList.toggle('is-on', sonido.on); };
-  btnSound.addEventListener('click', async () => { await sonido.set(!sonido.on); store.set('sonido', sonido.on ? '1' : '0'); pintaSonido(); });
+  const pintaSonido = () => { btnSound.setAttribute('aria-pressed', sonido.on); btnSound.setAttribute('aria-label', sonido.on ? 'Silenciar el sonido y los efectos' : 'Activar el sonido y los efectos'); btnSound.classList.toggle('is-on', sonido.on); };
+  btnSound.addEventListener('click', async () => { if (sonido.on) sonido.fx('desactivar'); await sonido.set(!sonido.on); if (sonido.on) setTimeout(() => sonido.fx('activar'), 250); store.set('sonido', sonido.on ? '1' : '0'); pintaSonido(); });
   pintaSonido();
   if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }   // suena desde el principio; el botón lo silencia y se recuerda
 

@@ -128,7 +128,7 @@ export function crearAves({ scene, geo, centro }) {
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
 export function crearSonido() {
-  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null;
+  let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null, bufRuido = null, fxGain = null, ultimoFx = 0;
   const ruido = (c) => {
     const len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
     let b0 = 0, b1 = 0, b2 = 0;
@@ -139,7 +139,7 @@ export function crearSonido() {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
     master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
     analizador = ctx.createAnalyser(); analizador.fftSize = 2048; master.connect(analizador);
-    const buf = ruido(ctx);
+    const buf = ruido(ctx); bufRuido = buf;
     const fuente = () => { const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; s.start(0, Math.random() * 3); return s; };
     // viento: ruido rosa filtrado, con ráfagas lentas
     windF = ctx.createBiquadFilter(); windF.type = 'bandpass'; windF.frequency.value = 420; windF.Q.value = 0.6;
@@ -184,9 +184,43 @@ export function crearSonido() {
       programaAve();
     }, espera);
   }
+  // efectos de interfaz: tonos sinusoidales muy breves, con el mismo volumen bajo; solo suenan si el sonido está activado y el audio en marcha
+  function tono(t, f0, f1, dur, vol, tipo = 'sine') {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = tipo; o.frequency.setValueAtTime(f0, t); if (f1 !== f0) o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol, t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g).connect(fxGain); o.start(t); o.stop(t + dur + 0.03);
+  }
+  const FX = {
+    seleccion: (t) => { tono(t, 880, 880, 0.16, 0.10); tono(t, 1320, 1320, 0.11, 0.035); },
+    activar: (t) => { tono(t, 620, 620, 0.09, 0.09); tono(t + 0.07, 930, 930, 0.12, 0.09); },
+    desactivar: (t) => { tono(t, 840, 840, 0.09, 0.08); tono(t + 0.07, 560, 560, 0.12, 0.08); },
+    abrir: (t) => tono(t, 520, 780, 0.12, 0.09),
+    cerrar: (t) => tono(t, 740, 480, 0.12, 0.08),
+    toque: (t) => tono(t, 700, 760, 0.09, 0.08),
+    inicio: (t) => { tono(t, 520, 520, 0.14, 0.08); tono(t + 0.09, 780, 780, 0.17, 0.07); },
+    ficha: (t) => {   // un pequeño soplo de aire (ruido filtrado que sube) con una nota suave encima
+      const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+      s.buffer = bufRuido; f.type = 'bandpass'; f.Q.value = 0.9; f.frequency.setValueAtTime(380, t); f.frequency.exponentialRampToValueAtTime(1500, t + 0.34);
+      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.16, t + 0.12); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+      s.connect(f).connect(g).connect(fxGain); s.start(t, Math.random() * 3); s.stop(t + 0.42);
+      tono(t + 0.05, 740, 988, 0.2, 0.07);
+    },
+  };
+  function fx(tipo) {
+    try {
+      if (!on || !ctx || ctx.state !== 'running' || !FX[tipo] || document.hidden) return;
+      const ahora = performance.now();
+      if (ahora - ultimoFx < 110) return;   // una acción, un sonido: las llamadas casi simultáneas se descartan
+      ultimoFx = ahora;
+      if (!fxGain) { fxGain = ctx.createGain(); fxGain.gain.value = 0.9; fxGain.connect(ctx.destination); }
+      FX[tipo](ctx.currentTime + 0.01);
+    } catch (e) { /* sin audio: la web sigue igual */ }
+  }
   document.addEventListener('visibilitychange', () => { if (!ctx) return; if (document.hidden) ctx.suspend(); else if (on) ctx.resume(); });
   return {
     get on() { return on; },
+    fx,
     get nivel() { if (!analizador) return 0; const d = new Float32Array(analizador.fftSize); analizador.getFloatTimeDomainData(d); return Math.sqrt(d.reduce((a, x) => a + x * x, 0) / d.length); },
     get estado() { return ctx ? ctx.state : 'sin iniciar'; },
     async set(v) {
