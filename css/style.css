@@ -108,6 +108,10 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin-label { position: absolute; top: 36px; left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: var(--cream); color: var(--ink); padding: 5px 10px; font: 600 .72rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .25s; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
 .pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: var(--ink-2); }
 .pin:hover .pin-label, .pin:focus-visible .pin-label, .pin.show-label .pin-label { opacity: 1; }
+/* etiqueta de la cumbre seleccionada: cristal oscuro translúcido, borde fino y esquinas redondeadas (solo la cumbre abierta) */
+.pin.is-active .pin-label { top: 40px; width: max-content; max-width: min(230px, 62vw); white-space: normal; text-wrap: balance; overflow-wrap: anywhere; padding: 6px 14px 7px; border-radius: 18px; background: rgba(10, 22, 18, .6); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font: 600 .74rem/1.25 var(--cond); letter-spacing: .15em; box-shadow: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
+.pin.is-active .pin-label i { margin-top: 1px; font-size: .68rem; letter-spacing: .1em; color: #f3e6c8; text-shadow: inherit; }
+@media (max-width: 760px) { .pin.is-active .pin-label { max-width: min(190px, 58vw); padding: 5px 12px 6px; border-radius: 16px; font-size: .68rem; letter-spacing: .12em; } .pin.is-active .pin-label i { font-size: .64rem; } }
 .pin.is-other { background: rgba(255,255,255,.6); }
 .pin.is-other .pin-label, .pin.is-other.show-label .pin-label { opacity: 0; }   /* solo el punto: el nombre sale al pasar el ratón o al enfocar */
 .pin.is-other:hover .pin-label, .pin.is-other:focus-visible .pin-label { opacity: 1; }
