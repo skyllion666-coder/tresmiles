@@ -113,6 +113,7 @@ async function boot() {
   Object.assign(controls, { enableDamping: true, dampingFactor: 0.09, screenSpacePanning: false, zoomToCursor: true, minDistance: 500, maxDistance: 90000, maxPolarAngle: 1.4, rotateSpeed: 0.6, zoomSpeed: 0.9, enabled: false });
   controls.mouseButtons = { LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
   controls.touches = { ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_ROTATE };
+  controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
   const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
 
@@ -225,7 +226,7 @@ async function boot() {
   }
   function updatePins() {
     const W = innerWidth, H = innerHeight;
-    obstaculos.length = 0; pinAct = null;
+    obstaculos.length = 0; pinAct = null; candPicos.length = 0;
     if (picoSel) {   // pico que se ha tocado en el mapa
       tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
       const ok = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
@@ -245,23 +246,41 @@ async function boot() {
         const lb = el.firstElementChild, act = S.active === p.id;
         if (act) pinAct = { el, lb, px, py, id: p.id };   // su marcador y su etiqueta se colocan después (colocaEtiquetaActiva)
         else {
-          obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 });
+          const obs = { x: px - 22, y: py - 22, w: 44, h: 44 }; obstaculos.push(obs);
           if (el._cl) { lb.style.cssText = ''; el._cl = false; }   // deja de ser la cumbre abierta: etiqueta a su sitio de siempre
-          if (lb && el.classList.contains('show-label') && !el.classList.contains('is-other') && (S.active || dist < (p.activo ? 15000 : 30000))) {   // la etiqueta blanca del pico, cuando se ve
-            if (el._lk !== 'n') { el._lk = 'n'; el._lw = lb.offsetWidth; el._lh = lb.offsetHeight; }
-            obstaculos.push({ x: px - el._lw / 2, y: py + 21, w: el._lw, h: el._lh });
-          }
+          if (lb && p.activo) candPicos.push({ el, lb, px, py, dist, obs });   // su nombre solo sale si hay hueco (etiquetasPicos)
         } }
       el.classList.toggle('is-active', S.active === p.id);
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
-      el.classList.toggle('show-label', (!!S.active && p.activo) || dist < (p.activo ? 15000 : 30000));
+      el.classList.toggle('show-label', S.active === p.id || (!S.active && !!el._lv));   // los demás nombres los decide etiquetasPicos
       el.classList.toggle('is-dim', !passes(p));
       { const k = S.active === p.id ? 1 : Math.min(1, Math.max(0.72, 1.25 - dist / 36000)); if (Math.abs((el._k ?? 1) - k) > 0.02) { el._k = k; el.style.setProperty('--k', k.toFixed(2)); } }   // el círculo se hace algo más pequeño cuanto más lejos está la cámara
     }
   }
 
   // — etiqueta de la cumbre abierta: va al lado del marcador (derecha, izquierda, debajo o encima), en un hueco libre —
+  const candPicos = []; let callaHasta = 0;
   let pinAct = null; const labAct = { id: null, lado: null, cnt: 0, x: 0, y: 0 };
+  // — nombres de las demás cumbres: ocultos por defecto; solo salen unos pocos, cerca de la cámara y si caben sin pisar nada —
+  function etiquetasPicos() {
+    const W = innerWidth, H = innerHeight;
+    const hay = !S.active && S.mode === 'explore' && !S.vuelo && performance.now() > callaHasta;   // al cerrar la ficha, el terreno queda despejado hasta que el usuario lo mueva
+    const LIM = 7000, MAX = isMobile() ? 2 : 4;
+    let n = 0;
+    const lista = hay ? candPicos.filter((c) => c.dist < LIM).sort((a, b) => a.dist - b.dist) : [];
+    for (const c of candPicos) if (!lista.includes(c)) { c.el._lv = false; c.el._n = 0; c.el.classList.remove('show-label'); }
+    for (const c of lista) {
+      const el = c.el;
+      if (el._lk !== 'n' || el._lwW !== W) { el._lk = 'n'; el._lwW = W; el._lw = c.lb.offsetWidth; el._lh = c.lb.offsetHeight; }
+      const b = { x: c.px - el._lw / 2, y: c.py + 21, w: el._lw, h: el._lh };
+      let cabe = n < MAX && b.x > 6 && b.x + b.w < W - 6 && b.y > 6 && b.y + b.h < H - 6;
+      if (cabe) for (const u of uiRects) if (hayChoque(b, u, 6)) { cabe = false; break; }
+      if (cabe) for (const q of obstaculos) if (q !== c.obs && hayChoque(b, q, 3)) { cabe = false; break; }
+      if (!!el._lv !== cabe) { el._n = (el._n || 0) + 1; if (el._n > (cabe ? 10 : 3)) { el._lv = cabe; el._n = 0; } } else el._n = 0;   // sin parpadeos: salir pide 10 fotogramas seguidos con hueco; ocultarse, solo 3 (nunca se queda pisando a otra)
+      el.classList.toggle('show-label', !!el._lv);
+      if (el._lv) { n++; obstaculos.push(b); }
+    }
+  }
   const rutaPts = new WeakMap();
   const puntosRuta = (r) => { let a = rutaPts.get(r); if (!a) { a = []; const n = Math.min(160, Math.max(40, Math.round(r.ruta.distancia / 120))); for (let i = 0; i <= n; i++) a.push(r.en(r.ruta.distancia * i / n).pos); rutaPts.set(r, a); } return a; };
   const rtmp = new THREE.Vector3();
@@ -713,11 +732,11 @@ async function boot() {
   }
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
-    const was = S.active; pararVuelo(false); S.active = null; pintaRuta(null);
+    const was = S.active; callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
-    pinEls.get(was)?.focus({ preventScroll: true });
+    pinEls.get(was)?.focus({ preventScroll: true, focusVisible: false });   // el foco vuelve al marcador sin aro ni nombre para quien usa ratón o dedo
     if (fly) goHome();
   }
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
@@ -891,7 +910,7 @@ async function boot() {
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
-    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); distribuyeEtiquetas(dt);
+    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;

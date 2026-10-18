@@ -109,13 +109,15 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin::before { content: ""; position: relative; z-index: 1; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .55); transform: scale(var(--k, 1)); }
 .pin::after { content: ""; position: absolute; left: 50%; top: 50%; box-sizing: border-box; width: var(--pin-d); height: var(--pin-d); margin: calc(var(--pin-d) / -2) 0 0 calc(var(--pin-d) / -2); border-radius: 50%; background: rgba(255, 248, 235, .24); border: 1px solid rgba(255, 255, 255, .6); box-shadow: 0 0 0 1px rgba(20, 34, 30, .16); transform: scale(var(--k, 1)); transition: background .2s, border-color .2s; }
 .pin:hover::after { border-color: rgba(255, 255, 255, .85); }
+.pin:focus-visible { outline: none; }
+.pin:focus-visible::after { box-shadow: 0 0 0 2px var(--glacier); }   /* con teclado: aro ajustado al círculo visible */
 .pin.is-hidden { opacity: 0; pointer-events: none; }
 .pin.is-dim { opacity: .3; }
 .pin.is-active { z-index: 2; }
 .pin.is-active::after { --k: 1; --pin-d: calc(var(--pin-d-base, 26px) + 6px); width: var(--pin-d); height: var(--pin-d); margin: calc(var(--pin-d) / -2) 0 0 calc(var(--pin-d) / -2); background: rgba(30, 92, 74, .34); border: 2px solid rgba(126, 224, 178, .9); box-shadow: 0 0 0 1px rgba(8, 28, 22, .4), inset 0 0 0 1px rgba(8, 28, 22, .18); transform: none; }
 .pin.is-active::before { background: #f8f1de; box-shadow: 0 0 0 1px rgba(8, 28, 22, .6); transform: none; }
-.pin-label { position: absolute; top: calc(var(--hit) / 2 + 21px); left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: var(--cream); color: var(--ink); padding: 5px 10px; font: 600 .72rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .25s; pointer-events: none; box-shadow: 0 4px 14px rgba(0,0,0,.3); }
-.pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: var(--ink-2); }
+.pin-label { position: absolute; top: calc(var(--hit) / 2 + 21px); left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: rgba(10, 22, 18, .58); border: 1px solid rgba(255, 255, 255, .26); border-radius: 14px; color: #fff; padding: 4px 11px 5px; font: 600 .68rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .35s ease; pointer-events: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
+.pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: #f3e6c8; }
 .pin:hover .pin-label, .pin:focus-visible .pin-label, .pin.show-label .pin-label { opacity: 1; }
 /* etiqueta de la cumbre seleccionada: cristal oscuro translúcido, borde fino y esquinas redondeadas (solo la cumbre abierta) */
 .pin.is-active .pin-label { top: 40px; width: max-content; max-width: min(230px, 62vw); white-space: normal; text-wrap: balance; overflow-wrap: anywhere; padding: 6px 14px 7px; border-radius: 18px; background: rgba(10, 22, 18, .6); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font: 600 .74rem/1.25 var(--cond); letter-spacing: .15em; box-shadow: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
