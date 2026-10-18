@@ -4,10 +4,67 @@ import { EXAG } from './geo.js';
 const SKIRT = 160; // faldón bajo los bordes de cada bloque para ocultar grietas entre niveles de detalle
 const MAX_HI = 8;  // texturas de alta resolución simultáneas
 const MAX_DESCARGAS = 4;   // alturas que se piden a la vez
+const MAX_COBERTURA = 12;  // mapas de cobertura del suelo (ESA WorldCover) en memoria
+
+// Detalle de material (solo geometría y color procedurales; los datos reales son el relieve, la imagen de satélite y la cobertura del suelo):
+// roca con estratos y fracturas, canchal, pradera y bosque según la clase de ESA WorldCover y la pendiente, con granulado cercano y relieve fino en la roca.
+const GLSL_PARS = `
+uniform sampler2D uCover; uniform float uHasCover; uniform float uOct; uniform float uBump;
+varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
+float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
+float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
+  return mix(mix(mix(h31(i),h31(i+vec3(1,0,0)),f.x),mix(h31(i+vec3(0,1,0)),h31(i+vec3(1,1,0)),f.x),f.y),
+             mix(mix(h31(i+vec3(0,0,1)),h31(i+vec3(1,0,1)),f.x),mix(h31(i+vec3(0,1,1)),h31(i+vec3(1,1,1)),f.x),f.y),f.z); }
+float fbm(vec3 p){ float a=.5,s=0.; for(int i=0;i<4;i++){ if(float(i)>=uOct) break; s+=a*vn(p); p=p*2.03+vec3(11.,7.,3.); a*=.5; } return s; }
+`;
+const GLSL_COLOR = `
+if (distance(vWPos, cameraPosition) < 15000.) {
+  vec3 N = normalize(vWNrm); float sl = 1. - N.y;
+  float dist = distance(vWPos, cameraPosition);
+  float fa = 1. - smoothstep(2500., 15000., dist), fc = 1. - smoothstep(250., 3500., dist);
+  float cl = 0.;
+  if (uHasCover > .5) { vec2 w = (vec2(vn(vWPos * .017), vn(vWPos * .017 + 9.)) - .5) * .004; cl = floor(texture2D(uCover, vec2(vCUv.x, 1. - vCUv.y) + w).r * 255. + .5); }
+  float tree = step(abs(cl - 1.), .5), shrub = step(abs(cl - 2.), .5), grass = step(abs(cl - 3.), .5), bare = max(step(abs(cl - 4.), .5), step(abs(cl - 8.), .5));
+  float rock = max(bare, smoothstep(.30, .56, sl)); rock = max(rock, 0.) * (1. - tree * .6);
+  float n1 = fbm(vWPos * vec3(.011, .017, .011)), n2 = fbm(vWPos * .085), n3 = vn(vWPos * .65);
+  vec3 c = diffuseColor.rgb;
+  float nieve = smoothstep(.60, .80, dot(c, vec3(.30, .59, .11))); rock *= 1. - nieve * .85;
+  // roca: variación de tono, estratos en las paredes y fracturas
+  c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
+  float st = sin((vWPos.y + n1 * 46.) * .55) * .5 + .5;
+  c *= 1. + (st - .5) * .15 * smoothstep(.32, .6, sl) * fa * (.6 + .8 * n1);
+  if (uBump > .5) {   // fracturas solo en calidad alta
+    float rid = 1. - abs(2. * fbm(vWPos * vec3(.07, .022, .07) + 3.) - 1.);
+    c *= 1. - .20 * smoothstep(.90, .985, rid) * smoothstep(.30, .50, sl) * rock * fa;
+  }
+  // canchal: ladera de piedra suelta de pendiente media
+  float scree = bare * smoothstep(.10, .26, sl) * (1. - smoothstep(.42, .58, sl));
+  c = mix(c, c * (.78 + .55 * n3) * vec3(1.02, 1., .97), scree * fc);
+  // pradera y matorral: moteado suave; bosque: oscurece y rompe el tono
+  c *= 1. + (n2 - .5) * .22 * (grass + shrub) * fa;
+  c *= 1. + (vn(vWPos * .21) - .5) * .38 * tree * fa;
+  // granulado cercano
+  c *= 1. + (n3 - .5) * .07 * fc * (1. - nieve * .6);
+  diffuseColor.rgb = c;
+}
+`;
+const GLSL_BUMP = `
+if (uBump > .5) {
+  vec3 Nw = normalize(vWNrm); float sl2 = 1. - Nw.y; float dist2 = distance(vWPos, cameraPosition);
+  float k = smoothstep(.22, .5, sl2) * (1. - smoothstep(400., 4500., dist2)) * (1. - smoothstep(.55, .8, dot(diffuseColor.rgb, vec3(.30, .59, .11))) * .6);
+  if (k > .01) {
+    vec3 p = vWPos * .32; float e = .5, b0 = vn(p) + .5 * vn(p * 2.1);
+    vec3 g = vec3(vn(p + vec3(e, 0., 0.)) + .5 * vn((p + vec3(e, 0., 0.)) * 2.1) - b0, vn(p + vec3(0., e, 0.)) + .5 * vn((p + vec3(0., e, 0.)) * 2.1) - b0, vn(p + vec3(0., 0., e)) + .5 * vn((p + vec3(0., 0., e)) * 2.1) - b0) / e;
+    g -= Nw * dot(g, Nw);
+    normal = normalize(normal - (viewMatrix * vec4(g, 0.)).xyz * k * 1.1);
+  }
+}
+`;
 
 // Relieve por bloques de 512 celdas con nivel de detalle según la distancia a la cámara.
 export class Terrain {
-  constructor({ scene, meta, store, geo, renderer, base }) {
+  constructor({ scene, meta, store, geo, renderer, base, movil = false }) {
+    this.movil = movil; this.coberturas = new Map();
     this.meta = meta; this.store = store; this.geo = geo; this.base = base;
     this.group = new THREE.Group(); scene.add(this.group);
     this.loader = new THREE.TextureLoader();
@@ -29,10 +86,20 @@ export class Terrain {
     const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo;
     const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - D / 2;
     const mat = new THREE.MeshLambertMaterial({ color: 0x8a9488, side: THREE.DoubleSide });
+    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 } };
+    mat.onBeforeCompile = (sh) => {
+      Object.assign(sh.uniforms, u);
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.)).xyz; vWNrm = normal; vCUv = uv;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + GLSL_PARS)
+        .replace('#include <map_fragment>', '#include <map_fragment>\n' + GLSL_COLOR)
+        .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n' + GLSL_BUMP);
+    };
+    mat.customProgramCacheKey = () => 'terreno-detalle-' + (this.movil ? 'm' : 'd');
     const c = {
       id: `${t.i}_${t.j}`, t, mat, mesh: null, stride: 0, wantStride: 8,
       x0, z0, x1: x0 + CH * dx, z1: z0 + CH * dz,
-      lo: null, hi: null, hiLoading: false,
+      lo: null, hi: null, hiLoading: false, u, cobTex: null, cobCarga: false,
     };
     c.loPromise = this._tex(`lo/${t.f}`).then((tex) => { c.lo = tex; if (!c.hi) { mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true; } });
     return c;
@@ -87,6 +154,27 @@ export class Terrain {
     return g;
   }
 
+  // cobertura del suelo (ESA WorldCover 2021) de un bloque: 512×512 clases, gzip; se pide solo cerca y se descomprime con DecompressionStream
+  cobertura(c) {
+    const k = c.id; let p = this.coberturas.get(k);
+    if (p) { this.coberturas.delete(k); this.coberturas.set(k, p); return p; }
+    p = (typeof DecompressionStream === 'undefined' ? Promise.resolve(null)
+      : fetch(`${this.base}/cover/c_${k}.bin.gz`).then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null))
+        .then((b) => (b && b.byteLength === 512 * 512 ? new Uint8Array(b) : null))).catch(() => null);
+    this.coberturas.set(k, p);
+    for (const [kk] of this.coberturas) { if (this.coberturas.size <= MAX_COBERTURA) break; this.coberturas.delete(kk); }
+    return p;
+  }
+  _cargaCobertura(c) {
+    c.cobCarga = true;
+    this.cobertura(c).then((a) => {
+      c.cobCarga = false; if (!a) return;
+      const t = new THREE.DataTexture(a, 512, 512, THREE.RedFormat, THREE.UnsignedByteType);
+      t.minFilter = t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.flipY = false; t.needsUpdate = true;
+      c.cobTex = t; c.u.uCover.value = t; c.u.uHasCover.value = 1;
+    });
+  }
+
   _trim() {
     const inUse = new Set(this.chunks.filter((c) => c.mesh).map((c) => `${c.id}:${c.stride}`));
     for (const [k, g] of this.cache) {
@@ -115,6 +203,8 @@ export class Terrain {
       } else if (d > 40000 && c.hi) {
         c.mat.map = c.lo; c.mat.needsUpdate = true; c.hi.dispose(); c.hi = null;
       }
+      if (d < 15000 && !c.cobTex && !c.cobCarga) this._cargaCobertura(c);
+      else if (d > 30000 && c.cobTex) { c.cobTex.dispose(); c.cobTex = null; c.u.uCover.value = null; c.u.uHasCover.value = 0; }
     }
     // pide las alturas que faltan, las más cercanas primero
     faltan.sort((a, b) => a.dist - b.dist);
