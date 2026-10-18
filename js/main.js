@@ -7,7 +7,7 @@ import { crearCumbres } from './cumbres.js?v=27';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
-import { crearFauna } from './fauna.js?v=4';
+import { crearFauna } from './fauna.js?v=5';
 import { cargarRuta, crearRuta } from './ruta.js?v=36';
 
 const $ = (s) => document.querySelector(s);
@@ -819,7 +819,7 @@ async function boot() {
     if (!fauna?.aves.length || !sonido.on || document.hidden || S.mode !== 'explore' || now - sonido.msUltimaLlamada < 15000) return;
     let mejor = null, dm = 1e9;
     for (const a of fauna.aves) {
-      if (!a.g.visible) continue;
+      if (!a.g.visible || a.esp !== 'quebrantahuesos') continue;   // la llamada grabada es la del quebrantahuesos
       const d = camera.position.distanceTo(a.g.position);
       if (d < dm) { dm = d; mejor = a; }
       const cerca = d < 1300;   // se acaba de acercar: oportunidad de oírlo (la mitad de las veces)
@@ -893,7 +893,7 @@ async function boot() {
       <li>Detalle del relieve en las cumbres: MDT05 (5 m) del <a href="https://www.ign.es" target="_blank" rel="noopener">Instituto Geográfico Nacional</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, remuestreado a 6 m (12 m en móvil) en torno a cada cumbre con ficha.</li>
       <li>Cobertura del suelo (dónde hay bosque, pradera o roca): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Los árboles se colocan donde ese mapa marca arbolado; su posición exacta, tipo (conífera o frondosa, según altitud y orientación) y tamaño son una aproximación visual, no un inventario forestal. El detalle de la roca (estratos, fracturas, canchales) es una textura procedural, no un levantamiento geológico.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
-      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos y el rebeco 3D son modelos propios hechos con Blender. Llamada del quebrantahuesos: grabación del canal «adalaves» en <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
+      <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos, el buitre leonado, el buitre negro, el alimoche (de marzo a septiembre) y el rebeco 3D son modelos propios hechos con Blender. Llamada del quebrantahuesos: grabación del canal «adalaves» en <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías (Wikimedia Commons)</h3>
       <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
       <h3>Recorrido y hitos</h3>

@@ -10,16 +10,26 @@ const KM_REBECO = 42 * 1.275;   // misma exageración que los montañeros (ruta.
 const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
 export function crearFauna({ scene, geo, centro, camera, sol }) {
+  // rapaces carroñeras (tools/modelos/aves.py): envergadura real × 46 para que se vean desde lejos, igual que antes.
+  // Quebrantahuesos en pareja; un bando de buitres leonados girando en la misma térmica, más alto; un buitre negro solitario y,
+  // de marzo a septiembre (cuando está en el Pirineo), un alimoche.
+  const X = 46, mesA = new Date().getMonth(), alimocheAqui = mesA >= 2 && mesA <= 8;
   const defs = [
-    { env: 130, rx: 2100, rz: 1500, vel: 0.050, fase: 0.0, alt: 520, rot: 0.4, flap: 14 },
-    { env: 118, rx: 3000, rz: 2100, vel: -0.038, fase: 2.4, alt: 760, rot: -0.8, flap: 31 },
+    { esp: 'quebrantahuesos', env: 2.8 * X, rx: 2100, rz: 1500, vel: 0.050, fase: 0.0, alt: 520, rot: 0.4, flap: 14 },
+    { esp: 'quebrantahuesos', env: 2.65 * X, rx: 3000, rz: 2100, vel: -0.038, fase: 2.4, alt: 760, rot: -0.8, flap: 31 },
+    ...[0, 1, 2, 3].map((k) => ({ esp: 'leonado', env: (2.5 + 0.06 * k) * X, rx: 1500 + 260 * k, rz: 1300 + 200 * k, vel: 0.034 + 0.003 * k, fase: 1.1 * k, alt: 1150 + 140 * k, rot: 2.0, flap: 22 + 9 * k, cx: 2600, cz: -1800 })),
+    { esp: 'negro', env: 2.85 * X, rx: 3800, rz: 2600, vel: -0.026, fase: 4.0, alt: 1300, rot: 1.2, flap: 40 },
+    ...(alimocheAqui ? [{ esp: 'alimoche', env: 1.6 * X, rx: 1700, rz: 1200, vel: 0.06, fase: 5.2, alt: 420, rot: -0.3, flap: 18, cx: -1500, cz: 900 }] : []),
   ];
   const c = { x: centro.x, z: centro.z }, destino = { x: centro.x, z: centro.z };
   const aves = [];
   let listo = false;
 
-  new GLTFLoader().load('models/quebrantahuesos.glb?v=2', (gltf) => {
+  const glb = (u) => new Promise((res) => new GLTFLoader().load(u, res, undefined, () => res(null)));
+  const modelos = {};
+  Promise.all([...new Set(defs.map((d) => d.esp))].map((e) => glb(`models/${e}-v2.glb?v=1`).then((g) => { modelos[e] = g; }))).then(() => {
     for (const d of defs) {
+      const gltf = modelos[d.esp]; if (!gltf) continue;   // sin modelo: las aves sencillas de vida.js siguen volando
       const obj = clone(gltf.scene);
       obj.scale.setScalar(d.env / ENVERGADURA);
       obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = true; } });
@@ -28,10 +38,10 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
       acc.Planeo.play(); acc.Planeo.time = Math.random() * acc.Planeo.getClip().duration;
       acc.Aleteo.setEffectiveWeight(0).play();
-      aves.push({ g, d, mixer, acc, aleteando: false, proximo: d.flap });
+      aves.push({ g, d, esp: d.esp, mixer, acc, aleteando: false, proximo: d.flap });
     }
-    listo = true;
-  }, undefined, () => { /* sin modelo: las aves sencillas de vida.js siguen volando */ });
+    listo = aves.length > 0;
+  });
 
 
   // — rebecos —
@@ -157,7 +167,7 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
   const pos = (d, t) => {
     const ang = d.fase + t * d.vel;
     const lx = Math.cos(ang) * d.rx, lz = Math.sin(ang) * d.rz, cs = Math.cos(d.rot), sn = Math.sin(d.rot);
-    const x = c.x + lx * cs - lz * sn, z = c.z + lx * sn + lz * cs;
+    const x = c.x + (d.cx ?? 0) + lx * cs - lz * sn, z = c.z + (d.cz ?? 0) + lx * sn + lz * cs;
     return { x, z, y: geo.heightAt(x, z) + d.alt * (0.55 + 0.45 * Math.sin(t * 0.11 + d.fase * 1.7)) + 220 };
   };
   const mira = new THREE.Vector3();
