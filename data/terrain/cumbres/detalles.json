@@ -49,6 +49,43 @@
    ],
    "nota": "Eje: OSM way 451568261 (antecima\u2192cruz). Sector estrecho (central) seg\u00fan el ancho del MDT05 a -3 m de la cresta (11-12 m, ca\u00eddas de 10-20 m a 15 m del eje). corredor/aproximacion/salida en metros; central en fracci\u00f3n del eje."
   },
-  "nota": "Datos: MDT05 IGN (CC BY 4.0) y OpenStreetMap (ODbL). Los bloques son procedurales."
+  "nota": "Datos: MDT05 IGN (CC BY 4.0) y OpenStreetMap (ODbL). Los bloques son procedurales.",
+  "roca": "granito"
+ },
+ "posets": {
+  "x0": 26462.88,
+  "z0": 13446.85,
+  "n": 201,
+  "paso": 1.0,
+  "archivo": "posets-cima.bin.gz",
+  "roca": "granito",
+  "ref": "OSM peak 42.654629,0.435227; IGN v\u00e9rtice 17999 (pilar 1,2 m, 1982) a 3 m; el IGN lo da por destruido el 21-12-2023. Macizo gran\u00edtico Posets-Millares (DAMOCLES)."
+ },
+ "perdido": {
+  "x0": -6292.12,
+  "z0": 11122.08,
+  "n": 201,
+  "paso": 1.0,
+  "archivo": "perdido-cima.bin.gz",
+  "roca": "caliza",
+  "ref": "OSM peak 42.675548,0.034357; IGN v\u00e9rtice 14660 (pilar 1,2 m, 1982) a 2 m, destruido el 26-12-2023; \u00abEl monte es muy pedregoso\u00bb (IGN). Macizo calc\u00e1reo (Ordesa-Monte Perdido)."
+ },
+ "maladeta": {
+  "x0": 43217.39,
+  "z0": 14357.8,
+  "n": 201,
+  "paso": 1.0,
+  "archivo": "maladeta-cima.bin.gz",
+  "roca": "granito",
+  "ref": "OSM peak 42.646432,0.640276 (CNIG). Macizo gran\u00edtico de la Maladeta. Sin cruz ni v\u00e9rtice documentados."
+ },
+ "vignemale": {
+  "x0": -21138.87,
+  "z0": 187.25,
+  "n": 201,
+  "paso": 1.0,
+  "archivo": "vignemale-cima.bin.gz",
+  "roca": "neutra",
+  "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormig\u00f3n con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litolog\u00eda no verificada en esta sesi\u00f3n."
  }
 }

@@ -95,7 +95,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     }
     return [f1, f2, id, cx1, cz1];
   }
-  function bloques(x, z) {   // metros reales de desplazamiento de la roca en (x, z)
+  function granito(x, z) {
     let h = 0;
     for (const [S, amp, w, sd] of [[9, 2.0, 0.55, 0], [3.6, 1.0, 0.45, 5]]) {
       const [f1, f2, id, cx, cz] = voronoi(x, z, S), tx = (hash2(Math.round(id * 1e4), 3, 41 + sd) - 0.5) * 0.9, tz = (hash2(Math.round(id * 1e4), 5, 43 + sd) - 0.5) * 0.9;
@@ -103,6 +103,16 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       h += w * ((id - 0.5) * 2 * amp + tx * (x - cx) + tz * (z - cz) - 0.55 * junta * (S / 4));
     }
     return h;
+  }
+  function caliza(x, z, hr) {   // caliza: peldaños de estratificación (sierra en altura, algo ondulados) y diaclasas más separadas
+    const per = 2.4, f = ((hr + 7 * Math.sin(x * 0.05) + 5 * Math.sin(z * 0.04)) / per), fr = f - Math.floor(f);
+    const [f1, f2, id] = voronoi(x, z, 6.5), junta = 1 - sstep(0.012, 0.07, f2 - f1);
+    return (fr - 0.5) * 1.3 - 0.9 * junta + (id - 0.5) * 0.6;
+  }
+  function bloques(x, z, estilo, hr) {   // metros reales de desplazamiento de la roca en (x, z)
+    if (estilo === 'caliza') return caliza(x, z, hr);
+    if (estilo === 'neutra') return 0.5 * granito(x, z) + 0.5 * caliza(x, z, hr);
+    return granito(x, z);
   }
   const distSeg = (x, z, ps) => { let m = 1e9; for (let k = 0; k < ps.length - 1; k++) { const a = ps[k], b = ps[k + 1], vx = b.x - a.x, vz = b.z - a.z, t = Math.max(0, Math.min(1, ((x - a.x) * vx + (z - a.z) * vz) / (vx * vx + vz * vz || 1))); m = Math.min(m, Math.hypot(x - a.x - vx * t, z - a.z - vz * t)); } return m; };
 
@@ -120,11 +130,17 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const k = j * n + i, gx = (H[j * n + Math.min(n - 1, i + 1)] - H[j * n + Math.max(0, i - 1)]) / (2 * paso * EXAG), gz = (H[Math.min(n - 1, j + 1) * n + i] - H[Math.max(0, j - 1) * n + i]) / (2 * paso * EXAG);
         sl[k] = Math.hypot(gx, gz);   // pendiente física (altura real / distancia)
       }
+      // sin eje de arista (otras cimas): la cima y las crestas se detectan por convexidad del propio MDT05 (el punto está más alto que su entorno a 6 m)
+      const cvx = new Float32Array(n * n);
+      if (!d.cresta) for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+        const m6 = (H[j * n + Math.max(0, i - 6)] + H[j * n + Math.min(n - 1, i + 6)] + H[Math.max(0, j - 6) * n + i] + H[Math.min(n - 1, j + 6) * n + i]) / 4;
+        cvx[j * n + i] = sstep(0.8, 4, (H[j * n + i] - m6) / EXAG);
+      }
       const cxm = d.x0 + (n - 1) * paso / 2, czm = d.z0 + (n - 1) * paso / 2, F = new Float32Array(n * n);
       for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
         const k = j * n + i, x = d.x0 + i * paso, z = d.z0 + j * paso, dc = Math.hypot(x - cxm, z - czm);
-        const cr = 1 - sstep(5, 15, distSeg(x, z, d.cresta)), mask = Math.max(sstep(0.35, 0.85, sl[k]) * 0.8, cr) * (1 - sstep(80, 112, dc));
-        const base = H[k] + bloques(x, z) * EXAG * mask * (1 + 2.2 * cr);   // más relieve de bloques sobre la propia arista   // metros reales × exageración vertical
+        const cr = d.cresta ? 1 - sstep(5, 15, distSeg(x, z, d.cresta)) : cvx[k], mask = Math.max(sstep(0.35, 0.85, sl[k]) * 0.8, cr) * (1 - sstep(50, 112, dc));
+        const base = H[k] + bloques(x, z, d.roca, H[k] / EXAG) * EXAG * mask * (1 + 2.2 * cr);   // más relieve de bloques sobre la propia arista   // metros reales × exageración vertical
         const hb = sample(pz, x, z) ?? base, bd = Math.min(i, j, n - 1 - i, n - 1 - j) * paso;
         F[k] = hb + (base - hb) * sstep(0, 14, bd);
       }
@@ -138,26 +154,27 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         nor.set([hx * il, il, hz * il], k * 3); uv.set([(x - ch.x0) / cw, 1 - (z - ch.z0) / cd], k * 2);
       }
       const roca = new Float32Array(n * n);
-      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const x = d.x0 + i * paso, z = d.z0 + j * paso; roca[j * n + i] = Math.max(1 - sstep(4, 12, distSeg(x, z, d.cresta)), sstep(0.5, 0.95, sl[j * n + i])) * (1 - sstep(85, 115, Math.hypot(x - cxm, z - czm))); }
+      for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const x = d.x0 + i * paso, z = d.z0 + j * paso; roca[j * n + i] = Math.max(d.cresta ? 1 - sstep(4, 12, distSeg(x, z, d.cresta)) : cvx[j * n + i], sstep(0.5, 0.95, sl[j * n + i])) * (1 - sstep(40, 108, Math.hypot(x - cxm, z - czm))); }
       const idx = []; for (let j = 0; j < n - 1; j++) for (let i = 0; i < n - 1; i++) { const a = j * n + i, b = a + 1, c = a + n, e = c + 1; idx.push(a, c, b, b, c, e); }
       const g = new THREE.BufferGeometry();
       g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
       g.setAttribute('aRoca', new THREE.BufferAttribute(roca, 1)); g.setIndex(idx); g.computeBoundingSphere();
-      const mat = terrain.crearMaterialPieza(ch), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
+      const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       scene.add(mesh);
       // la pieza de 6 m se recorta debajo de esta (menos 14 m del borde, donde ambas coinciden)
       pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
       // algunos bloques mayores medio enterrados (3 formas distintas, tamaños y giros variados) en las zonas de pendiente suave junto a la arista
       const col = new THREE.Color(), forma = [0, 1, 2].map((v) => {
-        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position;
-        for (let q = 0; q < pa.count; q++) { const k2 = hash2(Math.round(pa.getX(q) * 9), Math.round(pa.getY(q) * 9) + v * 7, Math.round(pa.getZ(q) * 9) + 50); const f = 0.78 + k2 * 0.4; pa.setXYZ(q, pa.getX(q) * f * (1 + v * 0.18), pa.getY(q) * f * (0.7 - v * 0.08), pa.getZ(q) * f); }
+        const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : 1;
+        for (let q = 0; q < pa.count; q++) { const k2 = hash2(Math.round(pa.getX(q) * 9), Math.round(pa.getY(q) * 9) + v * 7, Math.round(pa.getZ(q) * 9) + 50); const f = 0.78 + k2 * 0.4; pa.setXYZ(q, pa.getX(q) * f * (1 + v * 0.18) * (plano < 1 ? 1.3 : 1), pa.getY(q) * f * (0.7 - v * 0.08) * plano, pa.getZ(q) * f * (plano < 1 ? 1.2 : 1)); }
         g.computeVertexNormals(); return g;
       }), listas = [[], [], []];
+      const cb = { granito: [0.40, 0.375, 0.34], caliza: [0.60, 0.575, 0.53], neutra: [0.5, 0.48, 0.45] }[d.roca] ?? [0.4, 0.375, 0.34];
       const bm = new THREE.MeshLambertMaterial({ color: 0xffffff, flatShading: true });
       for (let z = d.z0 + 8; z < d.z0 + (n - 1) * paso - 8; z += 4) for (let x = d.x0 + 8; x < d.x0 + (n - 1) * paso - 8; x += 4) {
-        const ix = Math.round(x * 3), iz = Math.round(z * 3), dcr = distSeg(x, z, d.cresta), dc = Math.hypot(x - cxm, z - czm);
+        const ix = Math.round(x * 3), iz = Math.round(z * 3), dcr = d.cresta ? distSeg(x, z, d.cresta) : 99, dc = Math.hypot(x - cxm, z - czm);
         const i = Math.round((x - d.x0) / paso), j = Math.round((z - d.z0) / paso), s0 = sl[j * n + i];
-        const pr = (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
+        const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
         if (hash2(ix, iz, 21) > pr) continue;
         const sz = 0.9 + Math.pow(hash2(ix, iz, 24), 2.2) * 3.4;   // muchos pequeños, pocos grandes
         listas[Math.floor(hash2(ix, iz, 28) * 3)].push({ x: x + (hash2(ix, iz, 22) - 0.5) * 3, z: z + (hash2(ix, iz, 23) - 0.5) * 3, s: sz, a: hash2(ix, iz, 25), b: hash2(ix, iz, 26), c: hash2(ix, iz, 27) });
@@ -169,14 +186,17 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         lista.forEach((b, k) => {
           const h = sample(detalles.get(id), b.x, b.z) ?? 0;
           pv.set(b.x, h + b.s * 0.1, b.z); e.set((b.b - 0.5) * 0.9, b.a * 6.28, (b.c - 0.5) * 0.9); q.setFromEuler(e); sv.set(b.s * (0.9 + b.a * 0.7), b.s * (0.5 + b.b * 0.4), b.s * (0.8 + b.c * 0.8));
-          inst.setMatrixAt(k, m4.compose(pv, q, sv)); const t2 = 0.72 + b.a * 0.34; inst.setColorAt(k, col.setRGB(0.40 * t2, 0.375 * t2, 0.34 * t2 * (0.92 + b.c * 0.14)));
+          inst.setMatrixAt(k, m4.compose(pv, q, sv)); const t2 = 0.72 + b.a * 0.34; inst.setColorAt(k, col.setRGB(cb[0] * t2, cb[1] * t2, cb[2] * t2 * (0.92 + b.c * 0.14)));
         });
         inst.instanceMatrix.needsUpdate = true; if (inst.instanceColor) inst.instanceColor.needsUpdate = true; inst.computeBoundingSphere(); scene.add(inst); insts.push(inst);
       });
+      let cruz = null;
+      if (d.cruz) {
       // cruz de cumbre (OSM summit:cross=yes en la cima): ~32 m de alto en el modelo (escala 14), 1,5 veces un montañero (21 m) y cuatro veces el tamaño anterior
-      const cruz = new THREE.Group(), fe = new THREE.MeshLambertMaterial({ color: 0xc9cdd1, emissive: 0x2a2d30 })   // metal claro: se ve contra el cielo y la roca oscura;
+      cruz = new THREE.Group(); const fe = new THREE.MeshLambertMaterial({ color: 0xc9cdd1, emissive: 0x2a2d30 })   // metal claro: se ve contra el cielo y la roca oscura;
       const v = new THREE.Mesh(new THREE.BoxGeometry(0.1, 2.3, 0.1), fe); v.position.y = 1.15; const hbx = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.1, 0.1), fe); hbx.position.y = 1.75; cruz.add(v, hbx);
       cruz.scale.setScalar(14); cruz.position.set(d.cruz.x, (sample(detalles.get(id), d.cruz.x, d.cruz.z) ?? 0) - 0.5, d.cruz.z); scene.add(cruz);
+      }
       Object.assign(detalles.get(id), { mesh, mat, insts, cruz, pieza: pz });
     } catch (e) { console.warn('detalle', id, e); detalles.delete(id); } finally { detCarga.delete(id); }
   }

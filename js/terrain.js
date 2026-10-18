@@ -10,7 +10,7 @@ const MAX_COBERTURA = 12;  // mapas de cobertura del suelo (ESA WorldCover) en m
 // roca con estratos y fracturas, canchal, pradera y bosque según la clase de ESA WorldCover y la pendiente, con granulado cercano y relieve fino en la roca.
 const GLSL_PARS = `
 uniform vec4 uHoles[4];
-uniform sampler2D uCover; uniform float uHasCover; uniform float uOct; uniform float uBump;
+uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
 varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
 float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
@@ -47,8 +47,8 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float n1 = fbm(vWPos * vec3(.011, .017, .011)), n2 = fbm(vWPos * .085), n3 = vn(vWPos * .65);
   // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
   float lm2 = dot(c, LW);
-  vec3 rc = vec3(mix(min(lm2, .34), .27, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
-  c = mix(c, mix(rc, vec3(dot(rc, LW)) * vec3(.96, .98, 1.02), vRoca * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vRoca * .96));
+  vec3 rc = vec3(mix(min(lm2, uRocaL), uRocaL * .8, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
+  c = mix(c, mix(rc, vec3(dot(rc, LW)) * uRocaT, vRoca * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vRoca * .96));
   // la roca desnuda pierde el verde de la imagen y gana grises y ocres
   c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
@@ -118,8 +118,9 @@ export class Terrain {
   }
 
   // material para una pieza local de cumbre: comparte textura y cobertura del bloque, pero no se recorta con los huecos
-  crearMaterialPieza(c) {
-    const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) } };
+  crearMaterialPieza(c, roca = 'granito') {   // roca: tono de la roca desnuda (granito frío y oscuro, caliza clara y cálida, neutra)
+    const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], neutra: [0.40, [1, 1, 1]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
+    const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uRocaL: { value: L }, uRocaT: { value: new THREE.Vector3(...T) } };
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide, map: c.mat.map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
     mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; this._shader(mat, u); return mat;
   }
@@ -142,7 +143,7 @@ export class Terrain {
     const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo;
     const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - D / 2;
     const mat = new THREE.MeshLambertMaterial({ color: 0x8a9488, side: THREE.DoubleSide });
-    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes };
+    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) } };
     this._shader(mat, u);
     const c = {
       id: `${t.i}_${t.j}`, t, mat, mesh: null, stride: 0, wantStride: 8,
