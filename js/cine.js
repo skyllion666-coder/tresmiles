@@ -1,5 +1,5 @@
 // Introducción cinematográfica (vídeo + título + música opcional). Capa independiente: no usa el motor 3D ni
-// cambia nada del mapa; al acabar (o al saltarla) se retira del todo y la web aparece tal cual estaba.
+// cambia nada del mapa; al acabar se retira del todo y la web aparece tal cual estaba.
 (() => {
   'use strict';
   const DUR = 13.5, KEY = 'tresmiles-intro-vista';
@@ -17,7 +17,7 @@
   }
   if (!cine || document.documentElement.classList.contains('sin-cine')) { cine?.remove(); return; }
 
-  const video = $('#cine-video'), btnSaltar = $('#cine-saltar');
+  const video = $('#cine-video');
   let quiere = false, cuenta = 0, audio = null, acabado = false, raf = 0, vigilante = 0, parado = 0;
 
   function fin() {
@@ -28,13 +28,10 @@
     // libera el vídeo y el audio: la capa se elimina por completo
     if (audio) { try { audio.pause(); } catch { /* ya parado */ } audio.removeAttribute('src'); audio.load(); audio = null; }
     video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load();
-    let hecho = false; const quita = () => { if (hecho) return; hecho = true; cine.remove(); document.removeEventListener('keydown', tecla); };
+    let hecho = false; const quita = () => { if (hecho) return; hecho = true; cine.remove(); };
     cine.addEventListener('transitionend', (e) => { if (e.target === cine) quita(); });
     setTimeout(quita, 1300);
   }
-  const tecla = (e) => { if (e.key === 'Escape') fin(); };
-  document.addEventListener('keydown', tecla);
-  btnSaltar.addEventListener('click', (e) => { e.stopPropagation(); fin(); });
 
   const sincroniza = () => { if (audio && !audio.paused && Math.abs(audio.currentTime - video.currentTime) > 0.35) audio.currentTime = Math.min(video.currentTime, DUR); };
 
@@ -77,7 +74,7 @@
   // solo un bloqueo real (NotAllowedError) muestra el aviso; cualquier otro fallo se reintenta una vez
   pideAudio().catch((e) => { if (e && e.name === 'NotAllowedError') bloqueado(); else setTimeout(() => { audio = audio || null; pideAudio().catch(bloqueado); }, 400); });
   cine.addEventListener('click', (e) => {
-    if (e.target.closest('#cine-saltar') || !cine.classList.contains('sin-sonido')) return;
+    if (!cine.classList.contains('sin-sonido')) return;
     pideAudio().catch(() => { /* sigue sin sonido: la animación continúa */ });
   });
 })();
