@@ -843,18 +843,18 @@ async function boot() {
     });
     const suelta = () => {
       if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
-      if (!giro.sostenido) { giro.resta = Math.PI / 9; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 20° suaves
+      if (!giro.sostenido) { giro.resta = Math.PI / 18; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 10° suaves
       giro.sostenido = false;
     };
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
-    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 9; } });
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 18; } });
   }
   const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
   function aplicaGiro(dt) {
     if (!giro.dir) return;
     if (S.flight || S.vuelo || S.mode !== 'explore') { giro.dir = 0; giro.resta = 0; return; }
     let a;
-    if (giro.sostenido) { giro.vt = Math.min(1, (giro.vt ?? 0) + dt * 1.5); a = (0.22 + 0.13 * kVel) * giro.vt * dt; }   // 12–20°/s según la altura, arrancando poco a poco
+    if (giro.sostenido) { giro.vt = Math.min(1, (giro.vt ?? 0) + dt * 1.5); a = (0.11 + 0.065 * kVel) * giro.vt * dt; }   // 6–10°/s según la altura, arrancando poco a poco
     else if (giro.resta > 0) { a = Math.min(giro.resta, Math.max(0.1 * dt, giro.resta * Math.min(1, dt * 4))); giro.resta -= a; if (giro.resta <= 1e-4) { giro.resta = 0; giro.dir = 0; } }
     else return;
     _off.subVectors(camera.position, controls.target).applyAxisAngle(_ejeY, giro.dir * a);
