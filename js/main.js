@@ -10,6 +10,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=5';
 import { cargarRuta, crearRuta } from './ruta.js?v=36';
+import { crearSelector } from './selector.js?v=1';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -506,7 +507,6 @@ async function boot() {
   const hechos = leerHechos();
   const passes = (p) => (!S.filters.hecho || (S.filters.hecho === 'si') === hechos.has(p.id)) && (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
   const visiblePeaks = () => peaks.filter((p) => p.activo && passes(p));   // solo las activas (navegación anterior/siguiente)
-  const norm = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
   function buildFilters() {
     if (activas.size < 2) return;
     $('#btn-filters').hidden = false;
@@ -530,26 +530,29 @@ async function boot() {
   }
 
   // — selector inferior —
-  const listEl = $('#picker'), listUl = $('#list'), qEl = $('#q'), listBtn = $('#btn-list');
+  const listEl = $('#picker'), listBtn = $('#btn-list');
+  const hayFiltros = () => !!(S.filters.hecho || S.filters.macizo.size || S.filters.dif.size || S.filters.alt > 3000);
+  const selMapa = crearSelector(listEl, {
+    picos: peaks, macizos: data.macizos, activa: () => S.active, hecho: (id) => hechos.has(id), pasa: passes, filtrado: hayFiltros,
+    quitarFiltros: () => $('#f-reset').click(), elegir: (id) => { setList(false); openPeak(id); },
+  });
   function refreshLists() {
-    const q = norm(qEl.value.trim());
-    const hit = data.picos.filter((p) => passes(p) && (!q || norm(`${p.nombre} ${p.alias} ${macizoName[p.macizo]}`).includes(q)));
-    const grupos = data.macizos.map((m) => ({ m, ps: hit.filter((p) => p.macizo === m.id).sort((a, b) => b.altitud - a.altitud) }))
-      .filter((g) => g.ps.length).sort((a, b) => b.ps.filter((p) => activas.has(p.id)).length - a.ps.filter((p) => activas.has(p.id)).length);
-    listUl.innerHTML = grupos.length
-      ? grupos.map((g) => `<li class="grupo" role="presentation">${esc(g.m.nombre)}</li>` + g.ps.map((p) => activas.has(p.id)
-          ? `<li role="presentation"><button type="button" role="option" aria-selected="${S.active === p.id}" data-id="${p.id}"${hechos.has(p.id) ? ' class="hecho"' : ''}><span>${esc(p.nombre)}</span><span>${fmt(p.altitud)} m</span></button></li>`
-          : `<li class="prox" role="presentation"><span>${esc(p.nombre)}</span><span>Próximamente</span></li>`).join('')).join('')
-      : '<li class="empty">Ninguna cumbre coincide.</li>';
-    const fc = $('#f-count'); if (fc) fc.textContent = `${hit.length} de ${data.picos.length} cumbres`;
+    if (!listEl.hidden) selMapa.pinta();
+    const fc = $('#f-count'); if (fc) fc.textContent = `${peaks.filter(passes).length} de ${peaks.length} cumbres`;
     $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? `Explorar el ${peaks.find((p) => p.activo).nombre}` : 'Explorar las cumbres';
   }
-  const setList = (open) => { listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); if (open) { qEl.value = ''; refreshLists(); if (matchMedia('(hover: hover)').matches) qEl.focus(); } };
+  const setList = (open) => {
+    listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); document.body.classList.toggle('selector-abierto', open);
+    if (open) {
+      // en el escritorio el desplegable sale centrado sobre la barra (que se desplaza cuando la ficha está abierta)
+      if (!isMobile()) { const r = $('#dock').getBoundingClientRect(), w = listEl.offsetWidth / 2 + 20; listEl.style.left = `${clamp(r.left + r.width / 2, w, innerWidth - w)}px`; } else listEl.style.left = '';
+      selMapa.alAbrir(); if (matchMedia('(hover: hover)').matches) selMapa.input.focus();
+    }
+  };
   listBtn.addEventListener('click', () => { sonido.fx(listEl.hidden ? 'abrir' : 'cerrar'); setList(listEl.hidden); });
-  qEl.addEventListener('input', refreshLists);
-  qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = listUl.querySelector('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } } e.stopPropagation(); if (e.key === 'Escape') setList(false); });
-  listUl.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { setList(false); openPeak(b.dataset.id); } });
-  document.addEventListener('pointerdown', (e) => { if (!e.target.closest('#dock')) setList(false); });
+  selMapa.cerrar.addEventListener('click', () => { sonido.fx('cerrar'); setList(false); });
+  selMapa.input.addEventListener('keydown', (e) => { if (e.key === 'Escape') setList(false); });
+  document.addEventListener('pointerdown', (e) => { if (!listEl.hidden && !e.target.closest('#dock, #picker')) setList(false); });
   // el panel de filtros se cierra al tocar fuera, al abrir una cumbre o el selector
   const cierraFiltros = () => { $('#filters').hidden = true; $('#btn-filters').setAttribute('aria-expanded', 'false'); };
   document.addEventListener('pointerdown', (e) => { if (!$('#filters').hidden && !e.target.closest('#filters, #btn-filters')) cierraFiltros(); });
@@ -954,36 +957,21 @@ async function boot() {
   }
   (function buildIntro() {
     const lista = $('#intro-picos'), btn = $('#btn-elegir');
-    const norm2 = (t) => String(t ?? '').normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
-    lista.innerHTML = '<input id="intro-q" type="search" placeholder="Buscar cumbre…" autocomplete="off" spellcheck="false" aria-label="Buscar cumbre"><div id="intro-zonas"></div>';
-    const q = $('#intro-q'), cont = $('#intro-zonas');
-    function pinta() {
-      const f = norm2(q.value.trim());
-      const zonas = data.macizos.map((m) => ({ m, ps: peaks.filter((p) => p.macizo === m.id && (!f || norm2(`${p.nombre} ${p.alias} ${m.nombre}`).includes(f))).sort((a, b) => b.altitud - a.altitud) })).filter((z) => z.ps.length)
-        .sort((a, b) => b.ps.filter((p) => p.activo).length - a.ps.filter((p) => p.activo).length);
-      cont.innerHTML = zonas.length ? zonas.map((z, k) => {
-        const act = z.ps.filter((p) => p.activo).length;
-        return `<details${(k === 0 && act && !matchMedia('(max-width: 700px)').matches) || f ? ' open' : ''}><summary>${esc(z.m.nombre)}<small>${act ? `${act} disponible${act > 1 ? 's' : ''}` : 'Próximamente'}</small></summary>${z.ps.map((p) => p.activo
-          ? `<button type="button" role="option" data-ir="${p.id}"><span>${esc(p.nombre)}</span><i>${fmt(p.altitud)} m</i></button>`
-          : `<span class="prox"><span>${esc(p.nombre)}</span><i>Próximamente</i></span>`).join('')}</details>`;
-      }).join('') : '<p class="empty">Ninguna cumbre coincide.</p>';
-    }
-    pinta();
-    // el desplegable se ajusta al espacio real: se abre hacia el lado con más sitio y se desplaza por dentro (en el móvil el botón está a mitad de pantalla)
+    const sel = crearSelector(lista, { picos: peaks, macizos: data.macizos, hecho: (id) => hechos.has(id), elegir: (id) => { abre(false); irDesdeInicio(id); } });
+    // en el escritorio el desplegable se ajusta al espacio real: se abre hacia el lado con más sitio y se desplaza por dentro (en el móvil es una hoja a pantalla casi completa)
     const ajusta = () => {
-      if (lista.hidden) return;
+      if (lista.hidden || isMobile()) { lista.style.maxHeight = ''; return; }
       const r = btn.getBoundingClientRect(), vh = window.innerHeight, abajo = vh - r.bottom - 20, arriba = r.top - 96;   // 96 px: deja libre la cabecera con el logo
       const sube = abajo < 300 && arriba > abajo;
       lista.classList.toggle('arriba', sube);
       lista.style.maxHeight = Math.max(180, Math.min(sube ? arriba : abajo, vh * 0.7)) + 'px';
     };
-    const abre = (v) => { lista.hidden = !v; btn.setAttribute('aria-expanded', v); if (v) { q.value = ''; pinta(); ajusta(); if (matchMedia('(hover: hover)').matches) q.focus(); } };
+    const abre = (v) => { lista.hidden = !v; btn.setAttribute('aria-expanded', v); document.body.classList.toggle('selector-abierto', v); if (v) { sel.alAbrir(); ajusta(); if (matchMedia('(hover: hover)').matches) sel.input.focus(); } };
     window.addEventListener('resize', ajusta);
-    cont.addEventListener('toggle', (e) => { if (e.target.open) e.target.scrollIntoView({ block: 'nearest' }); }, true);
     btn.addEventListener('click', () => abre(lista.hidden));
-    q.addEventListener('input', pinta);
-    q.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const b = cont.querySelector('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); } if (e.key === 'Escape') abre(false); e.stopPropagation(); });
-    lista.addEventListener('click', (e) => { const b = e.target.closest('[data-ir]'); if (b) irDesdeInicio(b.dataset.ir); });
+    sel.cerrar.addEventListener('click', () => abre(false));
+    sel.input.addEventListener('keydown', (e) => { if (e.key === 'Escape') abre(false); });
+    lista.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); abre(false); btn.focus(); } });
     document.addEventListener('pointerdown', (e) => { if (!lista.hidden && !e.target.closest('#intro-elegir')) abre(false); });
   })();
   $('#btn-about').addEventListener('click', () => about.showModal());

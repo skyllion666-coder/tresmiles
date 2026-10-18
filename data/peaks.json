@@ -131,7 +131,9 @@
     "foto": "aneto-cima",
     "pie": "La piedra de la cima, con «Aneto 3404» pintado, y la placa del vértice."
    },
-   "curiosidad": "El Aneto recibe también el nombre de Tuca de Aneto; su nombre antiguo, Pic de Néthou, viene de «Nethon» (en aranés, «maldito»). Según la tradición su primera ascensión fue en 1842, del ruso Platon de Tchihatcheff con los guías Pierre Sanio y Jean Sors, aunque las fuentes difieren en los detalles."
+   "curiosidad": "El Aneto recibe también el nombre de Tuca de Aneto; su nombre antiguo, Pic de Néthou, viene de «Nethon» (en aranés, «maldito»). Según la tradición su primera ascensión fue en 1842, del ruso Platon de Tchihatcheff con los guías Pierre Sanio y Jean Sors, aunque las fuentes difieren en los detalles.",
+   "clase": "principal",
+   "nombres": "Tuca d'Aneto · Maladeta de Corones · Tuca d'Aneto / Maladeta de Corones"
   },
   {
    "id": "posets",
@@ -163,7 +165,9 @@
     "foto": "pos-cima",
     "pie": "Vista desde el tramo final, poco antes de la cumbre del Posets."
    },
-   "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket)."
+   "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket).",
+   "clase": "principal",
+   "nombres": "Tuca de Posets · Punta de Lardana · Pico de Posets · Llardana/Posets · Tuca de Posets / Punta de Lardana"
   },
   {
    "id": "perdido",
@@ -195,7 +199,9 @@
     "foto": "perdido-cima",
     "pie": "El vértice de la cima, cubierto de banderas y pañuelos."
    },
-   "curiosidad": "Monte Perdido es el macizo calcáreo más alto de Europa. Su primera ascensión documentada fue en 1802, de los guías Laurens y Rondo, pagados por el naturalista Louis Ramond de Carbonnières, que había fracasado en varios intentos (la fecha del primer éxito no está del todo clara)."
+   "curiosidad": "Monte Perdido es el macizo calcáreo más alto de Europa. Su primera ascensión documentada fue en 1802, de los guías Laurens y Rondo, pagados por el naturalista Louis Ramond de Carbonnières, que había fracasado en varios intentos (la fecha del primer éxito no está del todo clara).",
+   "clase": "principal",
+   "nombres": "Punta de Treserols / Monte Perdido"
   },
   {
    "id": "cilindro",
@@ -227,7 +233,9 @@
     "foto": "cil-cima",
     "pie": "La cima del Cilindro de Marboré, con el nombre escrito a mano en la piedra."
    },
-   "curiosidad": "El Cilindro de Marboré y el Monte Perdido forman, junto al Soum de Ramond, las «Tres Sorores» (o Treserols), tres hermanas calcáreas que dominan el Parque Nacional de Ordesa y Monte Perdido. La forma de torre del Cilindro, cortada en seco, es una de las imágenes más reconocibles del Pirineo."
+   "curiosidad": "El Cilindro de Marboré y el Monte Perdido forman, junto al Soum de Ramond, las «Tres Sorores» (o Treserols), tres hermanas calcáreas que dominan el Parque Nacional de Ordesa y Monte Perdido. La forma de torre del Cilindro, cortada en seco, es una de las imágenes más reconocibles del Pirineo.",
+   "clase": "principal",
+   "nombres": "Cilindro del Marboré · Mallo de Marmorés / Cilindro de Marboré"
   },
   {
    "id": "perdiguero",
@@ -259,7 +267,9 @@
     "foto": "prd-cima-aurora",
     "pie": "La cima del Perdiguero, con el cartel «Pic Perdiguère 3222» y el ibón al fondo."
    },
-   "curiosidad": "Es una cumbre fronteriza: su cima marca el límite entre España y Francia, y su altitud se cita como 3.219 o 3.222 m según la fuente. La bajada por el Portal de Remuñé cruza una planicie con pequeños ibones a unos 2.800 m. Las fuentes difieren en las cifras."
+   "curiosidad": "Es una cumbre fronteriza: su cima marca el límite entre España y Francia, y su altitud se cita como 3.219 o 3.222 m según la fuente. La bajada por el Portal de Remuñé cruza una planicie con pequeños ibones a unos 2.800 m. Las fuentes difieren en las cifras.",
+   "clase": "principal",
+   "nombres": "Pico Perdiguero · Tuca d'el Perdiguèro · Pico de Perdiguero"
   },
   {
    "id": "bachimala",
@@ -291,7 +301,9 @@
     "foto": "bac-cima",
     "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
    },
-   "curiosidad": "También se le llama Pico Schrader, en honor al cartógrafo y pirineísta francés Franz Schrader. Su altitud se da como 3.176 o 3.177 m según la fuente, y el nombre aparece escrito de varias formas (Bachimala, Batchimale). Las fuentes difieren."
+   "curiosidad": "También se le llama Pico Schrader, en honor al cartógrafo y pirineísta francés Franz Schrader. Su altitud se da como 3.176 o 3.177 m según la fuente, y el nombre aparece escrito de varias formas (Bachimala, Batchimale). Las fuentes difieren.",
+   "clase": "principal",
+   "nombres": "Pico Schrader · Gran Bachimala o Pico Schrader"
   },
   {
    "id": "vignemale",
@@ -323,7 +335,9 @@
    "rutas": [
     "vignemale-ossoue"
    ],
-   "curiosidad": "El gran enamorado del Vignemale fue el conde Henry Russell, un excéntrico pirineísta irlandés-francés que subió decenas de veces a la cima y mandó excavar grutas en su ladera para dormir y recibir visitas; según algunas fuentes llegó a arrendar la montaña por 99 años a un precio simbólico. Antes que él, los guías Henri Cazaux y Bernard Guillembet abrieron el camino hacia 1837, y la inglesa Anne Lister fue la primera persona documentada en la cima, en 1838 (las fuentes difieren en fechas y detalles)."
+   "curiosidad": "El gran enamorado del Vignemale fue el conde Henry Russell, un excéntrico pirineísta irlandés-francés que subió decenas de veces a la cima y mandó excavar grutas en su ladera para dormir y recibir visitas; según algunas fuentes llegó a arrendar la montaña por 99 años a un precio simbólico. Antes que él, los guías Henri Cazaux y Bernard Guillembet abrieron el camino hacia 1837, y la inglesa Anne Lister fue la primera persona documentada en la cima, en 1838 (las fuentes difieren en fechas y detalles).",
+   "clase": "principal",
+   "nombres": "Punda de Camachibosa · Viñamala · Grand Vignemale · Pico de Comachibosa/Vignemale/Pique Longue · Punda de Camachibosa / Viñamala"
   },
   {
    "id": "maladeta",
@@ -355,7 +369,9 @@
     "foto": "maladeta-cima",
     "pie": "La cumbre de la Maladeta en invierno, con el Pirineo de fondo."
    },
-   "curiosidad": "Según varias fuentes, la primera ascensión a la Maladeta fue en 1817, del naturalista alemán Friedrich Parrot con el guía Pierre Barrau, casi veinticinco años antes de la del Aneto (1842). Las fuentes difieren en algunos detalles. El nombre, «montes malditos», acabó dando nombre a todo el macizo."
+   "curiosidad": "Según varias fuentes, la primera ascensión a la Maladeta fue en 1817, del naturalista alemán Friedrich Parrot con el guía Pierre Barrau, casi veinticinco años antes de la del Aneto (1842). Las fuentes difieren en algunos detalles. El nombre, «montes malditos», acabó dando nombre a todo el macizo.",
+   "clase": "principal",
+   "nombres": ""
   },
   {
    "id": "tempestades",
@@ -387,7 +403,9 @@
     "foto": "tem-cima",
     "pie": "Vista desde la cumbre de Tempestades."
    },
-   "curiosidad": "Es una cumbre con varios nombres y varias alturas: Tuca de Tempestats o Tuca Gran de Llosás (según OpenStreetMap), y 3.289 o 3.290 m según la fuente. Las fuentes difieren."
+   "curiosidad": "Es una cumbre con varios nombres y varias alturas: Tuca de Tempestats o Tuca Gran de Llosás (según OpenStreetMap), y 3.289 o 3.290 m según la fuente. Las fuentes difieren.",
+   "clase": "principal",
+   "nombres": "Tuca Gran de Llosàs · Tuca de Tempestats / Tuca Gran de Llosàs"
   },
   {
    "id": "balaitus",
@@ -419,7 +437,9 @@
    },
    "rutas": [
     "respomuso-gran-diagonal-balaitus-la-sarra"
-   ]
+   ],
+   "clase": "principal",
+   "nombres": "Pico de Balaïtous · Balaitous o Pico Moros · Pico Moros /Balaitús"
   },
   {
    "id": "garmo",
@@ -451,7 +471,9 @@
     "foto": "garmo-cima",
     "pie": "La piedra de la cima, con «Garmo Negro 3065» pintado a mano."
    },
-   "curiosidad": "Su altitud cambia según la fuente, entre 3.051 y 3.066 m, y la piedra de la cima lleva pintado «3065». Desde arriba se abren las vistas hacia Ordesa y Monte Perdido, y el camino empieza junto a los manantiales termales del balneario de Panticosa."
+   "curiosidad": "Su altitud cambia según la fuente, entre 3.051 y 3.066 m, y la piedra de la cima lleva pintado «3065». Desde arriba se abren las vistas hacia Ordesa y Monte Perdido, y el camino empieza junto a los manantiales termales del balneario de Panticosa.",
+   "clase": "principal",
+   "nombres": ""
   },
   {
    "id": "infiernos",
@@ -479,7 +501,9 @@
    "rutas": [
     "infiernos-panticosa"
    ],
-   "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente)."
+   "curiosidad": "La cresta que une el Occidental con el Central, la Marmolera, debe su nombre al mármol blanco-grisáceo en que el metamorfismo transformó las calizas de la zona. Según algunas fuentes, el conde Henry Russell hizo la primera ascensión en 1867, y las cumbres se conocían antes como «Quijada de Pondiellos» (los datos históricos varían según la fuente).",
+   "clase": "principal",
+   "nombres": "Pico Central del Infierno · Pico Central de Infierno"
   },
   {
    "macizo": "ane",
@@ -511,7 +535,9 @@
     "foto": "med-astorg",
     "pie": "Vista desde la Punta de Astorg sobre el valle de Coronas."
    },
-   "curiosidad": "Lleva el nombre del conde René d'Astorg, que la subió el 9 de julio de 1901 con Henri Brulle y los guías Célestin Passet y François Bernat-Salles (Beraldi sitúa la salida el día 8). Es el punto más alto de la Cresta del Medio y, según Wikipedia, se escaló unos 60 años después del Aneto."
+   "curiosidad": "Lleva el nombre del conde René d'Astorg, que la subió el 9 de julio de 1901 con Henri Brulle y los guías Célestin Passet y François Bernat-Salles (Beraldi sitúa la salida el día 8). Es el punto más alto de la Cresta del Medio y, según Wikipedia, se escaló unos 60 años después del Aneto.",
+   "clase": "principal",
+   "nombres": "Punta d'Astorg"
   },
   {
    "macizo": "ane",
@@ -543,7 +569,9 @@
     "foto": "med-maldito",
     "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
    },
-   "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio."
+   "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio.",
+   "clase": "discutida",
+   "nombres": ""
   },
   {
    "macizo": "ane",
@@ -571,7 +599,9 @@
    "descripcion": "Cumbre intermedia de la cresta, entre la Punta de Astorg y el Pico Coronas. Se llega con el flanqueo de un terreno muy roto.",
    "foto": "medio",
    "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-   "curiosidad": "Su nombre describe su posición: es la cumbre central de la cresta que une el Aneto y la Maladeta, por eso toda la travesía se llama Cresta del Medio. No he encontrado una fuente fiable sobre su primera ascensión."
+   "curiosidad": "Su nombre describe su posición: es la cumbre central de la cresta que une el Aneto y la Maladeta, por eso toda la travesía se llama Cresta del Medio. No he encontrado una fuente fiable sobre su primera ascensión.",
+   "clase": "principal",
+   "nombres": "Tuca d'el Mich"
   },
   {
    "macizo": "ane",
@@ -599,7 +629,9 @@
    "descripcion": "Última cumbre importante de la cresta antes del Collado de Coronas, que lo separa del Aneto. Desde aquí se baja por el glaciar de Coronas.",
    "foto": "coronas",
    "pie": "De cerca a lejos: Pico de Corones, Pico del Medio, Pico Maldito y Tuca de la Maladeta.",
-   "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto."
+   "curiosidad": "Es una cumbre poco individualizada, de unos 30 m de prominencia, y está junto al Collado de Coronas, por donde según las fuentes pasó en 1842 la expedición de Platon de Tchihatcheff y Albert de Franqueville hacia la primera ascensión del Aneto.",
+   "clase": "principal",
+   "nombres": "Pico de Coronas"
   },
   {
    "macizo": "pos",
@@ -631,7 +663,9 @@
     "foto": "esp-espadas",
     "pie": "La cresta de Las Espadas, con su roca estratificada."
    },
-   "curiosidad": "Su cresta hasta el Posets se recorre en una jornada larga y su tramo más característico es el Paso del Funambulista, entre las Espadas y la Tuca de Llardaneta. No hemos hallado el origen del nombre «Espadas»; las fuentes también lo citan como Llardaneta o Punta Llardaneta."
+   "curiosidad": "Su cresta hasta el Posets se recorre en una jornada larga y su tramo más característico es el Paso del Funambulista, entre las Espadas y la Tuca de Llardaneta. No hemos hallado el origen del nombre «Espadas»; las fuentes también lo citan como Llardaneta o Punta Llardaneta.",
+   "clase": "principal",
+   "nombres": "Tuca de les Espades · Punta de Lardaneta · Punta Llardaneta o Pico de Espadas · Tuca de les Espades /Punta de Lardaneta"
   },
   {
    "macizo": "pos",
@@ -659,7 +693,9 @@
    "descripcion": "Cumbre intermedia de la cresta de las Espadas, entre el Paso del Funambulista y la Tuqueta Roya, ya a la vista del Posets.",
    "foto": "llardaneta",
    "pie": "La Tuca de Llardaneta, la Tuqueta Roya y el Posets.",
-   "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál."
+   "curiosidad": "OpenStreetMap la registra como «Mallo de la Lit / El Tuconet», a 3.311 m. Los nombres de este sector del Posets (Llardana, Llardaneta, Espadas) se solapan, y las fuentes difieren sobre cuál es cuál.",
+   "clase": "principal",
+   "nombres": "Mallo de la Lit / El Tuconet"
   },
   {
    "id": "soum",
@@ -691,7 +727,9 @@
     "foto": "soum-cima",
     "pie": "La subida final a Soum de Ramond."
    },
-   "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m."
+   "curiosidad": "Lleva el nombre de Louis Ramond de Carbonnières, político, geólogo y botánico francés que exploró este macizo; antes se conocía por el valle de Añisclo (Pico Añisclo). Forma con Monte Perdido y el Cilindro de Marboré las Tres Sorores. Su altura varía según la fuente: 3.254, 3.259 o 3.263 m.",
+   "clase": "principal",
+   "nombres": "Pico d'Añisclo"
   },
   {
    "id": "marbore",
@@ -723,7 +761,9 @@
     "foto": "mar-cima",
     "pie": "La cumbre del Marboré, con su refugio de piedra."
    },
-   "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente."
+   "curiosidad": "Según Wikipedia, la primera ascensión oficial fue el 24 de septiembre de 1865, de Henry Russell con Hippolyte Passet; hay indicios de que Philippe de Nemours pudo subir en 1846, pero sin precisión suficiente para atribuírselo. El nombre varía (Pico Marboré, Pic de Marboré) y su prominencia se da como 60 o 78 m según la fuente.",
+   "clase": "principal",
+   "nombres": "Pico del Marboré · Pico Plan de Marmorés · Pico Marboré · Pico Plan de Marmorés / Marboré"
   },
   {
    "id": "tallon",
@@ -751,7 +791,9 @@
    "rutas": [
     "tallon-goriz"
    ],
-   "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente."
+   "curiosidad": "Según varias fuentes, fue uno de los primeros tresmiles ascendidos: en 1792, por el capitán Vicente de Heredia y su equipo, cuando determinaban la línea de frontera. En el lado español se le llama Punda Negra o Tallón. En 1895 Henri Brulle y el guía Célestin Passet hicieron la primera por la cara norte. Su altura se da como 3.144 o 3.147 m según la fuente.",
+   "clase": "principal",
+   "nombres": "Pico del Taillón · Pico Taillón · Punda Negra / Tallón"
   },
   {
    "id": "lliterola",
@@ -779,7 +821,9 @@
    "rutas": [
     "lliterola-cresta"
    ],
-   "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola»."
+   "curiosidad": "La cresta de Lliterola se encadena con el Perdiguero para sumar cuatro tresmiles más. El Pico Royo debe su nombre, según las fuentes, a su roca rojiza. Las alturas varían de un blog a otro (por ejemplo, la Aguja se da en 3.028 y 3.038 m) y hay quien confunde la Punta con la Aguja. No hemos encontrado el origen del nombre «Lliterola».",
+   "clase": "principal",
+   "nombres": "Tuca de Lliteròla"
   },
   {
    "id": "russell",
@@ -811,7 +855,9 @@
     "foto": "rus-cima",
     "pie": "Vista desde la cima del Pico Russell."
    },
-   "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente."
+   "curiosidad": "Su nombre actual viene de la primera ascensión documentada, hecha en 1865 por el conde irlandés-francés Henry Russell-Killough con el cartógrafo inglés Charles Packe, que salieron de la zona de Riueno: entonces no existía el embalse de Llauset, terminado en 1983. También se llama Tuca del Cap de la Vall. Su altura se da como 3.207, 3.205 o 3.199 m según la fuente.",
+   "clase": "principal",
+   "nombres": "Tuca d'el Cap de la Vall · Pico de Russell"
   },
   {
    "macizo": "bal",
@@ -843,7 +889,9 @@
     "foto": "alg-pico",
     "pie": "La cima del Pico Algas, con los bastones sobre el mojón."
    },
-   "curiosidad": "La toponimia de este grupo es confusa: según una fuente, al Argualas se le ha llamado también Algas, Arollas o Arualas, y al Garmo Negro, Arnales o Pundillos. Otra propone que «Argualas» deriva de «aruela», un lugar pedregoso. El Algas Norte ha perdido la consideración de tresmil oficial por no tener 10 m de prominencia."
+   "curiosidad": "La toponimia de este grupo es confusa: según una fuente, al Argualas se le ha llamado también Algas, Arollas o Arualas, y al Garmo Negro, Arnales o Pundillos. Otra propone que «Argualas» deriva de «aruela», un lugar pedregoso. El Algas Norte ha perdido la consideración de tresmil oficial por no tener 10 m de prominencia.",
+   "clase": "principal",
+   "nombres": "Punda dera Liana"
   },
   {
    "macizo": "bal",
@@ -875,7 +923,9 @@
     "foto": "alg-argualas",
     "pie": "La cima del Argualas."
    },
-   "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m."
+   "curiosidad": "Se le llama Pico de la Bandera porque se sube el 16 de julio, día de la Virgen del Carmen, para colocar una bandera; la bandera blanca ondea en verano y se ve desde el balneario. Según las fuentes mide 3.044 o 3.046 m.",
+   "clase": "principal",
+   "nombres": "Pico de las Argualas · Pico deras Argualas · Pico de Argualas"
   },
   {
    "id": "frondiellas",
@@ -907,7 +957,9 @@
     "foto": "fro-cima",
     "pie": "La cima de la Frondiella, con nieve en las laderas."
    },
-   "curiosidad": "SummitPost la describe como un conjunto de cuatro cumbres unidas por una cresta, por eso se usa el plural. Según un blog, el topónimo lo puso el montañero francés Henri Le Breton y aparece por primera vez en los diarios de Jean Arlaud, en 1932. Según Mendikat, la Frondella Oeste se subió por primera vez en 1906, por Louis Robach. Las alturas varían mucho de una fuente a otra."
+   "curiosidad": "SummitPost la describe como un conjunto de cuatro cumbres unidas por una cresta, por eso se usa el plural. Según un blog, el topónimo lo puso el montañero francés Henri Le Breton y aparece por primera vez en los diarios de Jean Arlaud, en 1932. Según Mendikat, la Frondella Oeste se subió por primera vez en 1906, por Louis Robach. Las alturas varían mucho de una fuente a otra.",
+   "clase": "principal",
+   "nombres": "Pico de la Frondella · Punda Alta deras Frondiellas · Picos de la Frondella"
   },
   {
    "id": "abadias",
@@ -939,7 +991,9 @@
     "foto": "aba-collado",
     "pie": "El glaciar al pie del Collado Maldito."
    },
-   "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente."
+   "curiosidad": "Se llamaba tradicionalmente Cima Sur de la Maladeta; Buyse le dio el nombre de Abadías en memoria de Antonio Abadías, vecino de Benasque apodado «el león del Aneto», que fue responsable del refugio de La Renclusa y se dice que subió la cima más de 250 veces. Las alturas varían: 3.279 o 3.271 m según la fuente.",
+   "clase": "secundaria",
+   "nombres": "Tuca d'Abadías/Roca de Cregüeña"
   },
   {
    "id": "munia",
@@ -971,7 +1025,9 @@
     "foto": "mun-cima",
     "pie": "El cartel de la cima de la Munia."
    },
-   "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid."
+   "curiosidad": "Es el punto más alto de tres circos: Troumouse, Barroude y Barrosa. Según las fuentes, la primera ascensión fue de Charles Packe con su guía Victor Paget, en 1864 o en 1869 (las fuentes difieren). Su nombre es incierto: podría venir de «monja» o del latín «moenia» (murallas). La cresta que parte de aquí enlaza cinco tresmiles: la Munia, la Pequeña Munia, Sierra Morena, Troumouse y el Pico Heid.",
+   "clase": "principal",
+   "nombres": "Pico de la Munia · Pico de l'Almunia Gran"
   },
   {
    "id": "vallibierna",
@@ -1003,7 +1059,9 @@
     "foto": "val-cima",
     "pie": "Cumbre del Pico Vallibierna."
    },
-   "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura."
+   "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura.",
+   "clase": "discutida",
+   "nombres": "Tuca de las Culebras"
   },
   {
    "id": "paul",
@@ -1035,7 +1093,9 @@
     "foto": "pau-gendarmes",
     "pie": "Los gendarmes de la cresta, entre la Paúl y su cumbre Inferior."
    },
-   "curiosidad": "La cresta tiene tres cumbres casi iguales: Pico de la Paúl Inferior (3.073 m), Pico de la Paúl (3.078 m) y Bardamina (3.079 m). Según SummitPost, la cifra de 3.079 m corresponde a Bardamina y no a la Paúl, aunque las fuentes difieren; y las rutas normales de ambas no siguen la cresta completa."
+   "curiosidad": "La cresta tiene tres cumbres casi iguales: Pico de la Paúl Inferior (3.073 m), Pico de la Paúl (3.078 m) y Bardamina (3.079 m). Según SummitPost, la cifra de 3.079 m corresponde a Bardamina y no a la Paúl, aunque las fuentes difieren; y las rutas normales de ambas no siguen la cresta completa.",
+   "clase": "principal",
+   "nombres": "Tuca de la Paúl · Pico Inferior de la Paúl"
   },
   {
    "id": "gorgs",
@@ -1067,7 +1127,9 @@
     "foto": "gor-cima",
     "pie": "Roquedo de la cresta, en la zona de cumbres del recorrido."
    },
-   "curiosidad": "Es una cumbre fronteriza: por el lado español se sube desde el refugio de Estós (1.890 m), con unos 1.250 m de desnivel hasta la cima, según SummitPost. OpenStreetMap la registra como «Tuca de Gorgs Bllancs», a 3.129 m, y el track de esta ruta marca solo 3.027 m en la cima: las altitudes de GPS y las cifras publicadas difieren."
+   "curiosidad": "Es una cumbre fronteriza: por el lado español se sube desde el refugio de Estós (1.890 m), con unos 1.250 m de desnivel hasta la cima, según SummitPost. OpenStreetMap la registra como «Tuca de Gorgs Bllancs», a 3.129 m, y el track de esta ruta marca solo 3.027 m en la cima: las altitudes de GPS y las cifras publicadas difieren.",
+   "clase": "principal",
+   "nombres": "Pico de Gourgs Blancs · Tuca de Gorgs Bllancs · Pico de los Gourgs-Blancs"
   },
   {
    "macizo": "bal",
@@ -1099,7 +1161,9 @@
     "foto": "inf-oriental",
     "pie": "El Infierno Occidental, visto desde la cresta."
    },
-   "curiosidad": "Las guías dan 3.073 m para el Occidental, aunque Komoot y OpenStreetMap lo sitúan en 3.075 m: las fuentes difieren. Junto a él, la Marmolera debe su nombre a una veta de mármol dolomítico incrustada en la montaña, que contrasta con los esquistos y granitos más oscuros del macizo."
+   "curiosidad": "Las guías dan 3.073 m para el Occidental, aunque Komoot y OpenStreetMap lo sitúan en 3.075 m: las fuentes difieren. Junto a él, la Marmolera debe su nombre a una veta de mármol dolomítico incrustada en la montaña, que contrasta con los esquistos y granitos más oscuros del macizo.",
+   "clase": "principal",
+   "nombres": "Punda Garmo Blanco · Pico Occidental de Infierno · Garmo Blanco"
   },
   {
    "macizo": "bal",
@@ -1131,7 +1195,9 @@
     "foto": "w-inf-ori",
     "pie": "Vista desde el Infierno Oriental sobre un ibón."
    },
-   "curiosidad": "Bajo estas cumbres está el glaciar del Infierno, que según un estudio publicado en 2017 en la revista Lucas Mallada ha pasado de ser un glaciar «blanco» a uno cubierto de derrubios, y quizá acabe como glaciar rocoso."
+   "curiosidad": "Bajo estas cumbres está el glaciar del Infierno, que según un estudio publicado en 2017 en la revista Lucas Mallada ha pasado de ser un glaciar «blanco» a uno cubierto de derrubios, y quizá acabe como glaciar rocoso.",
+   "clase": "principal",
+   "nombres": "Punda dera Nevera · Pico Oriental de Infierno"
   },
   {
    "id": "arnales",
@@ -1163,7 +1229,9 @@
     "foto": "arn-cima",
     "pie": "La cresta de la cima del Arnales, con nieve."
    },
-   "curiosidad": "La UIAA lo incluyó en 1995 entre los tresmiles del Pirineo con 3.006 m, pero la cartografía no está de acuerdo: el mapa 1:25.000 del IGN le da 2.996 m y la cartografía aragonesa 2.999,9 m, redondeados a 3.000,0 m en una orden de 2020. Según la fuente, es o no es un tresmil."
+   "curiosidad": "La UIAA lo incluyó en 1995 entre los tresmiles del Pirineo con 3.006 m, pero la cartografía no está de acuerdo: el mapa 1:25.000 del IGN le da 2.996 m y la cartografía aragonesa 2.999,9 m, redondeados a 3.000,0 m en una orden de 2020. Según la fuente, es o no es un tresmil.",
+   "clase": "principal",
+   "nombres": "Pico deros Arnals · Pico de Arnales"
   },
   {
    "id": "gran-facha",
@@ -1195,7 +1263,9 @@
     "foto": "gf-cima",
     "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
    },
-   "curiosidad": "En español su nombre original es Pico de Bachimaña (o Cúspide de Bachimaña), y Gran Facha es la traducción del francés Grande Fache. Según una fuente, la primera ascensión la hicieron en 1874 Henry Russell y Latour, de Cauterets; el dato procede de una sola fuente en inglés."
+   "curiosidad": "En español su nombre original es Pico de Bachimaña (o Cúspide de Bachimaña), y Gran Facha es la traducción del francés Grande Fache. Según una fuente, la primera ascensión la hicieron en 1874 Henry Russell y Latour, de Cauterets; el dato procede de una sola fuente en inglés.",
+   "clase": "principal",
+   "nombres": "Punda dera Faxa · Pico de la Gran Facha o Cúspide Bachimaña"
   },
   {
    "id": "olas",
@@ -1227,7 +1297,9 @@
     "foto": "ola-cima",
     "pie": "Vistas al sur desde la cima, con el cañón de Añisclo al fondo."
    },
-   "curiosidad": "Según SummitPost, ocupa el puesto 208 de 212 entre los tresmiles del Pirineo por altura, junto a la Punta Passet y el Pico Simó, y le da 3.002 m, frente a los 3.022 m que figuran en Wikiloc: las fuentes difieren."
+   "curiosidad": "Según SummitPost, ocupa el puesto 208 de 212 entre los tresmiles del Pirineo por altura, junto a la Punta Passet y el Pico Simó, y le da 3.002 m, frente a los 3.022 m que figuran en Wikiloc: las fuentes difieren.",
+   "clase": "principal",
+   "nombres": ""
   },
   {
    "id": "margalida",
@@ -1259,7 +1331,9 @@
     "foto": "mar-cima",
     "pie": "Vista desde la cima de la Margalida, con el Russell y el Vallibierna al fondo."
    },
-   "curiosidad": "Una página de SummitPost dice que el nombre se debe a Margalide, primera mujer de Henri Le Bondidier, que se lo habría dado a la cumbre; es un dato de una sola fuente, no contrastado. Un artículo catalán de 1921 la daba con 3.258 m y la describía como un gran gendarme de la cresta; hoy se da 3.241 m."
+   "curiosidad": "Una página de SummitPost dice que el nombre se debe a Margalide, primera mujer de Henri Le Bondidier, que se lo habría dado a la cumbre; es un dato de una sola fuente, no contrastado. Un artículo catalán de 1921 la daba con 3.258 m y la describía como un gran gendarme de la cresta; hoy se da 3.241 m.",
+   "clase": "principal",
+   "nombres": "Tuca d'el Cabo de Barrancs · Pico Margalide · Pico de Margalide"
   },
   {
    "id": "alba",
@@ -1291,7 +1365,9 @@
     "foto": "alb-cima",
     "pie": "El hito de la cima, entre nubes."
    },
-   "curiosidad": "La UIAA lo incluye en su lista de los tresmiles del Pirineo, en la zona de Maladeta-Aneto, con 3.118 m. Alrededor hay varios puntos con el mismo nombre, como el Gendarme de Alba (3.054 m) y el Collado inferior de Alba (3.020 m), y algunos, como la Muela de Alba (3.118 m), no figuran en la lista oficial; en OpenStreetMap la cumbre aparece como «Tuca d'Alba», con 3.112 m."
+   "curiosidad": "La UIAA lo incluye en su lista de los tresmiles del Pirineo, en la zona de Maladeta-Aneto, con 3.118 m. Alrededor hay varios puntos con el mismo nombre, como el Gendarme de Alba (3.054 m) y el Collado inferior de Alba (3.020 m), y algunos, como la Muela de Alba (3.118 m), no figuran en la lista oficial; en OpenStreetMap la cumbre aparece como «Tuca d'Alba», con 3.112 m.",
+   "clase": "principal",
+   "nombres": ""
   },
   {
    "id": "diente-alba",
@@ -1323,7 +1399,9 @@
     "foto": "die-cima",
     "pie": "Excursionista sobre un bloque en la cumbre."
    },
-   "curiosidad": "La UIAA lista el Diente de Alba con 3.136 m, pero las fuentes no se ponen de acuerdo sobre qué cumbre es cuál: el autor del track llama «Diente» a la de 3.118 m y «Muela» a la de 3.136 m, mientras OpenStreetMap registra un «Dien d’Alba» de 3.121 m. La Muela de Alba (3.118 m en otras fuentes) tampoco figura en la lista oficial."
+   "curiosidad": "La UIAA lista el Diente de Alba con 3.136 m, pero las fuentes no se ponen de acuerdo sobre qué cumbre es cuál: el autor del track llama «Diente» a la de 3.118 m y «Muela» a la de 3.136 m, mientras OpenStreetMap registra un «Dien d’Alba» de 3.121 m. La Muela de Alba (3.118 m en otras fuentes) tampoco figura en la lista oficial.",
+   "clase": "secundaria",
+   "nombres": "Quixal d'Alba"
   },
   {
    "id": "araguells",
@@ -1355,7 +1433,9 @@
     "foto": "ara-cima",
     "pie": "La pirámide de la cima del Aragüells, entre bloques."
    },
-   "curiosidad": "Según SummitPost, Henry Russell y el guía Firmin Barrau lo ascendieron por primera vez el 7 de julio de 1880, desde los Baños de Benasque por el ibón y el collado de Cregüeña; la primera ascensión invernal, con esquís, fue el 28 de diciembre de 1932. La cifra de 3.037 m es la de la lista más extendida de tresmiles, pero los mapas dan entre 3.030 y 3.048 m."
+   "curiosidad": "Según SummitPost, Henry Russell y el guía Firmin Barrau lo ascendieron por primera vez el 7 de julio de 1880, desde los Baños de Benasque por el ibón y el collado de Cregüeña; la primera ascensión invernal, con esquís, fue el 28 de diciembre de 1932. La cifra de 3.037 m es la de la lista más extendida de tresmiles, pero los mapas dan entre 3.030 y 3.048 m.",
+   "clase": "principal",
+   "nombres": "Tuca de la Collada de Cregüeña · Pico Aragüells"
   },
   {
    "id": "espalda-aneto",
@@ -1387,7 +1467,9 @@
     "foto": "esp-cima",
     "pie": "La cima de la Espalda de Aneto, entre bloques de granito."
    },
-   "curiosidad": "La enciclopedia catalana describe la cresta principal que baja al sureste desde el Aneto como una línea que se hunde un poco hacia la Espatlla d’Aneto (3.350 m) antes de caer en picado hacia la brecha de Tempestades. La Aguja Daviú, vecina, figura con 3.350 m en SummitPost, pero algunas fichas de Wikiloc le dan 3.363–3.364 m: las fuentes difieren."
+   "curiosidad": "La enciclopedia catalana describe la cresta principal que baja al sureste desde el Aneto como una línea que se hunde un poco hacia la Espatlla d’Aneto (3.350 m) antes de caer en picado hacia la brecha de Tempestades. La Aguja Daviú, vecina, figura con 3.350 m en SummitPost, pero algunas fichas de Wikiloc le dan 3.363–3.364 m: las fuentes difieren.",
+   "clase": "principal",
+   "nombres": "Cap de los 5 Hermanos Cadier · Espalda del Aneto"
   },
   {
    "id": "cerbillona",
@@ -1419,7 +1501,9 @@
     "foto": "cer-central",
     "pie": "El Pic Central, con nieve en su cumbre."
    },
-   "curiosidad": "Según SummitPost, el collado que separa la Cerbillona del Pic Central se llama Col Lady Lister porque una mujer con ese nombre fue la primera en escalar el macizo por este punto, a la salida del famoso corredor de la Moskowa. Cerca del collado de Cerbillona están las Grutas Russell, donde el pirineísta Henry Russell se instalaba por temporadas."
+   "curiosidad": "Según SummitPost, el collado que separa la Cerbillona del Pic Central se llama Col Lady Lister porque una mujer con ese nombre fue la primera en escalar el macizo por este punto, a la salida del famoso corredor de la Moskowa. Cerca del collado de Cerbillona están las Grutas Russell, donde el pirineísta Henry Russell se instalaba por temporadas.",
+   "clase": "principal",
+   "nombres": "Pico de Cerbillona · Punda dero Zerbillonar"
   },
   {
    "id": "montferrat",
@@ -1447,7 +1531,9 @@
    "rutas": [
     "montferrat-ossoue"
    ],
-   "curiosidad": "Una ruta clásica enlaza las cinco cumbres de la «corona» del Vignemale, todas por encima de 3.200 m: Pique Longue (3.298 m), Clot de la Hount (3.289 m), Cerbillona (3.247 m), Pic Central (3.235 m) y Montferrat (3.219 m). Según las guías, el paso por el Pic Central incluye pasajes de trepada de II y III grado."
+   "curiosidad": "Una ruta clásica enlaza las cinco cumbres de la «corona» del Vignemale, todas por encima de 3.200 m: Pique Longue (3.298 m), Clot de la Hount (3.289 m), Cerbillona (3.247 m), Pic Central (3.235 m) y Montferrat (3.219 m). Según las guías, el paso por el Pic Central incluye pasajes de trepada de II y III grado.",
+   "clase": "principal",
+   "nombres": "Monferrat · Pico de Monferrato · Pico Monferrat"
   },
   {
    "id": "veteranos",
@@ -1479,7 +1565,9 @@
     "foto": "vet-cima",
     "pie": "La cumbre del Pico de los Veteranos, con restos de nieve."
    },
-   "curiosidad": "Según SummitPost, tanto el Veteranos como los Gemelos Ravier se escalaban desde hacía tiempo pero no tenían nombre hasta que entraron en la lista de tresmiles del Pirineo. Se pensó en dedicar este pico a Juan Buyse, pero él prefirió un nombre que honrara a todos los montañeros veteranos del Pirineo; el dato procede de una sola fuente."
+   "curiosidad": "Según SummitPost, tanto el Veteranos como los Gemelos Ravier se escalaban desde hacía tiempo pero no tenían nombre hasta que entraron en la lista de tresmiles del Pirineo. Se pensó en dedicar este pico a Juan Buyse, pero él prefirió un nombre que honrara a todos los montañeros veteranos del Pirineo; el dato procede de una sola fuente.",
+   "clase": "principal",
+   "nombres": "Tuca d'els Chiminucs N · Pico de la Montañeta o de Los Veteranos · Pico de la Montañeta /Tuca d'els Chiminucs N"
   },
   {
    "macizo": "pos",
@@ -1511,7 +1599,9 @@
     "foto": "eri-norte",
     "pie": "Los picos de Eriste, vistos entre pinos."
    },
-   "curiosidad": "El grupo se llama Picos de Eriste en el lado del valle de Eriste y Picos de Bagüeñola en el lado de Plan, según SummitPost. Las alturas varían: unas fuentes dan 3.025 m al Eriste Norte o Beraldi y otras 3.031 m; el Gran Pico, entre 3.053 y 3.056 m."
+   "curiosidad": "El grupo se llama Picos de Eriste en el lado del valle de Eriste y Picos de Bagüeñola en el lado de Plan, según SummitPost. Las alturas varían: unas fuentes dan 3.025 m al Eriste Norte o Beraldi y otras 3.031 m; el Gran Pico, entre 3.053 y 3.056 m.",
+   "clase": "principal",
+   "nombres": "Tuca de Bagüeñola N · Pico Eriste N · Pico Eriste Norte o Beraldi"
   },
   {
    "macizo": "pos",
@@ -1543,7 +1633,9 @@
     "foto": "eri-forqueta",
     "pie": "Las Forquetas, con un ibón a sus pies."
    },
-   "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta."
+   "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta.",
+   "clase": "secundaria",
+   "nombres": "Pico SE de la Forqueta · Tuca de la Forqueta S · Punta SE de la Forqueta"
   },
   {
    "id": "casco",
@@ -1575,7 +1667,9 @@
     "foto": "casco-cima",
     "pie": "El gran hito de la cumbre del Casco, entre la niebla."
    },
-   "curiosidad": "«Casque» significa casco en francés: el nombre viene de la forma de la montaña. Marboré, según Wikipedia, procede de una palabra que alude al mármol, roca metamórfica de la zona. A sus pies se abre la Brecha de Rolando, que la leyenda atribuye a un tajo de la espada de Roldán, aunque geológicamente la abrió la erosión glaciar."
+   "curiosidad": "«Casque» significa casco en francés: el nombre viene de la forma de la montaña. Marboré, según Wikipedia, procede de una palabra que alude al mármol, roca metamórfica de la zona. A sus pies se abre la Brecha de Rolando, que la leyenda atribuye a un tajo de la espada de Roldán, aunque geológicamente la abrió la erosión glaciar.",
+   "clase": "principal",
+   "nombres": "Casco del Marboré · Punda dero Corral Ziego · El Casco · El Casco/le Casque · Punda dero Corral Ziego / El Casco"
   },
   {
    "id": "robinera",
@@ -1607,7 +1701,9 @@
     "foto": "rob-cima",
     "pie": "La piedra de la cima, con «ROBIÑERA 3003» grabado."
    },
-   "curiosidad": "La Robiñera forma parte de la sierra de Liena, que separa los valles de Chisagüés y de Barrosa, y su cima apenas pasa los 3.000 m: OpenStreetMap la registra como «Pico de Rubiñera», con 3.001 m. Suele combinarse con La Munia en un circuito largo y exigente por el circo de Barrosa."
+   "curiosidad": "La Robiñera forma parte de la sierra de Liena, que separa los valles de Chisagüés y de Barrosa, y su cima apenas pasa los 3.000 m: OpenStreetMap la registra como «Pico de Rubiñera», con 3.001 m. Suele combinarse con La Munia en un circuito largo y exigente por el circo de Barrosa.",
+   "clase": "principal",
+   "nombres": "Pico de Robiñera · Pico de Rubiñera · Pico de la Robiñera"
   },
   {
    "id": "culfreda",
@@ -1639,7 +1735,9 @@
     "foto": "cul-cima",
     "pie": "La cresta rocosa de Culfreda, con los picos de la frontera."
    },
-   "curiosidad": "Culfreda es, en realidad, una cresta fronteriza orientada de suroeste a noreste con tres cumbres, y a los franceses les suena como «Batoua». La cumbre principal es oficialmente la del suroeste: la guía alpina española le da 3.034 m, las guías francesas 3.031 m y PeakVisor 3.035 m, y para la cumbre del nordeste todas coinciden en unos 3.032 m."
+   "curiosidad": "Culfreda es, en realidad, una cresta fronteriza orientada de suroeste a noreste con tres cumbres, y a los franceses les suena como «Batoua». La cumbre principal es oficialmente la del suroeste: la guía alpina española le da 3.034 m, las guías francesas 3.031 m y PeakVisor 3.035 m, y para la cumbre del nordeste todas coinciden en unos 3.032 m.",
+   "clase": "principal",
+   "nombres": "Punta Culfreda Sur · Culfreda Sur · Punta Culfreda"
   },
   {
    "id": "mulleres",
@@ -1671,7 +1769,9 @@
     "foto": "mul-cima",
     "pie": "El hito de piedras de la cima, con los ibones de Mulleres al fondo."
    },
-   "curiosidad": "Mulleres tiene dos nombres según el lado desde el que se mire: Mulleres en castellano y aragonés, y Molières en catalán y aranés, porque la cumbre cae justo en el límite entre Aragón y Cataluña. Según una guía, es el tresmil más oriental de la Maladeta. Su altura, además, depende de la fuente: 3.010 m en la mayoría de guías, 3.010,1 m en OpenStreetMap con datos del ICGC y 3.011 m en Wikipedia. Un sitio de montaña lo traduce como «pico de las mujeres», pero no explica el origen del nombre; las fuentes consultadas no aclaran la primera ascensión."
+   "curiosidad": "Mulleres tiene dos nombres según el lado desde el que se mire: Mulleres en castellano y aragonés, y Molières en catalán y aranés, porque la cumbre cae justo en el límite entre Aragón y Cataluña. Según una guía, es el tresmil más oriental de la Maladeta. Su altura, además, depende de la fuente: 3.010 m en la mayoría de guías, 3.010,1 m en OpenStreetMap con datos del ICGC y 3.011 m en Wikipedia. Un sitio de montaña lo traduce como «pico de las mujeres», pero no explica el origen del nombre; las fuentes consultadas no aclaran la primera ascensión.",
+   "clase": "principal",
+   "nombres": "Tuca de Mulleres · Cap de Mulleres · Tuca de Mulleres o de Molières · Tuca de Mulleres / Cap de Mulleres"
   },
   {
    "id": "sabre",
@@ -1703,7 +1803,9 @@
     "foto": "bac-sabre",
     "pie": "La cresta que continúa hacia la Punta del Sabre."
    },
-   "curiosidad": "La Punta del Sabre tiene varios nombres: Punta del Sable en castellano, Pointe du Sabre en francés y, en la cartografía del IGN recogida en OpenStreetMap, Punta de la Gatera. Su altura también cambia según la fuente: 3.136 m en la lista de tresmiles de Wikipedia y 3.134 m en el IGN y en otras guías. En esa lista aparece con solo 12 m de prominencia, es decir, es una cima de la cresta del Gran Bachimala que apenas sobresale de ella. Sable y sabre designan el arma, pero no he encontrado una fuente que explique el origen del nombre."
+   "curiosidad": "La Punta del Sabre tiene varios nombres: Punta del Sable en castellano, Pointe du Sabre en francés y, en la cartografía del IGN recogida en OpenStreetMap, Punta de la Gatera. Su altura también cambia según la fuente: 3.136 m en la lista de tresmiles de Wikipedia y 3.134 m en el IGN y en otras guías. En esa lista aparece con solo 12 m de prominencia, es decir, es una cima de la cresta del Gran Bachimala que apenas sobresale de ella. Sable y sabre designan el arma, pero no he encontrado una fuente que explique el origen del nombre.",
+   "clase": "principal",
+   "nombres": ""
   },
   {
    "id": "pavots",
@@ -1735,7 +1837,9 @@
     "foto": "pav-cima",
     "pie": "Roca de la cima con «Tucón Royo» escrito."
    },
-   "curiosidad": "Pavots y Tucón Royo son el mismo tresmil: la lista de tresmiles lo llama con el nombre francés (Pavots) y la cartografía del IGN recogida en OpenStreetMap, «Tucón Royo o Pavots». Su altura varía con la fuente: 3.121 m en la lista de tresmiles, 3.122 m en el IGN y 3.125 m en el título de la ruta de Wikiloc. Es el punto desde el que arranca la cresta de Espadas hacia el Posets, según una guía de Rutas Pirineos. «Pavot» significa «amapola» en francés, pero no he encontrado una fuente que explique el origen del nombre."
+   "curiosidad": "Pavots y Tucón Royo son el mismo tresmil: la lista de tresmiles lo llama con el nombre francés (Pavots) y la cartografía del IGN recogida en OpenStreetMap, «Tucón Royo o Pavots». Su altura varía con la fuente: 3.121 m en la lista de tresmiles, 3.122 m en el IGN y 3.125 m en el título de la ruta de Wikiloc. Es el punto desde el que arranca la cresta de Espadas hacia el Posets, según una guía de Rutas Pirineos. «Pavot» significa «amapola» en francés, pero no he encontrado una fuente que explique el origen del nombre.",
+   "clase": "principal",
+   "nombres": "Tucón Ròyo · Tucón Royo o Pavots"
   },
   {
    "id": "diente-llardana",
@@ -1767,7 +1871,9 @@
     "foto": "ld-cima",
     "pie": "La cima del Diente, con las cumbres de la cresta al fondo."
    },
-   "curiosidad": "El Diente de Llardana es la aguja de roca que se levanta justo donde termina la Canal Fonda, en la ruta clásica al Posets, conocida como la «Ruta Real». La guía de Rutas Pirineos lo llama «vertiginoso» y le da 3.094 m, mientras que la lista de tresmiles y la cartografía del IGN le dan 3.085 m. La misma cartografía lo recoge también como «Tucón de la Canal Fonda». Las fuentes consultadas no recogen la historia de su primera ascensión."
+   "curiosidad": "El Diente de Llardana es la aguja de roca que se levanta justo donde termina la Canal Fonda, en la ruta clásica al Posets, conocida como la «Ruta Real». La guía de Rutas Pirineos lo llama «vertiginoso» y le da 3.094 m, mientras que la lista de tresmiles y la cartografía del IGN le dan 3.085 m. La misma cartografía lo recoge también como «Tucón de la Canal Fonda». Las fuentes consultadas no recogen la historia de su primera ascensión.",
+   "clase": "principal",
+   "nombres": "Dien de Llardana · Tucón de la Canal o Diente de Llardana · Dien de Llardana / Tucón de la Canal Fonda"
   },
   {
    "id": "gran-eriste",
@@ -1799,7 +1905,9 @@
     "foto": "eri-gran",
     "pie": "Subiendo por las piedras a la cumbre del Gran Pico de Eriste."
    },
-   "curiosidad": "El Gran Pico de Eriste es el punto más alto del macizo de Eriste, entre los valles de Chistau y Benasque, y se conoce también como Eriste Central, Bagüeñola Central o Tuca de Bagüeñola Gran. Su altura depende de la fuente: 3.056 m en la lista de tresmiles y en OpenStreetMap, y 3.053 m en Travesía Pirenaica y SummitPost. Las fuentes consultadas también discrepan en sus vecinos: el Eriste Sur aparece con 3.045 m o con 3.041 m, y el Eriste Norte con 3.025 m o 3.031 m."
+   "curiosidad": "El Gran Pico de Eriste es el punto más alto del macizo de Eriste, entre los valles de Chistau y Benasque, y se conoce también como Eriste Central, Bagüeñola Central o Tuca de Bagüeñola Gran. Su altura depende de la fuente: 3.056 m en la lista de tresmiles y en OpenStreetMap, y 3.053 m en Travesía Pirenaica y SummitPost. Las fuentes consultadas también discrepan en sus vecinos: el Eriste Sur aparece con 3.045 m o con 3.041 m, y el Eriste Norte con 3.025 m o 3.031 m.",
+   "clase": "principal",
+   "nombres": "Punta Alta d'es Lenérs"
   },
   {
    "id": "bardamina",
@@ -1827,7 +1935,9 @@
    "rutas": [
     "paul-bardamina"
    ],
-   "curiosidad": "Bardamina es la cumbre más alta de la cresta que lleva su nombre. De oeste a este la forman la Paúl Inferior (3.073 m), el Pico de la Paúl (3.078 m) y Bardamina (3.079 m), con apenas un metro entre las dos últimas, y por eso las fuentes difieren sobre cuál es la más alta; el IGN da 3.068 m para Bardamina. Según SummitPost, la vía normal sube por las laderas del sur con dificultad F, mientras que la cresta entre Bardamina y la Paúl es más expuesta. No he encontrado una fuente que explique el origen del nombre."
+   "curiosidad": "Bardamina es la cumbre más alta de la cresta que lleva su nombre. De oeste a este la forman la Paúl Inferior (3.073 m), el Pico de la Paúl (3.078 m) y Bardamina (3.079 m), con apenas un metro entre las dos últimas, y por eso las fuentes difieren sobre cuál es la más alta; el IGN da 3.068 m para Bardamina. Según SummitPost, la vía normal sube por las laderas del sur con dificultad F, mientras que la cresta entre Bardamina y la Paúl es más expuesta. No he encontrado una fuente que explique el origen del nombre.",
+   "clase": "principal",
+   "nombres": "Tuca de Posets de Benàs · Tuca de Bardamina / Tuca de Posets de Benàs"
   }
  ]
 }
