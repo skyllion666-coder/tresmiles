@@ -3,12 +3,12 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=14';
 import { crearVegetacion } from './vegetacion.js?v=5';
-import { crearCumbres } from './cumbres.js?v=12';
+import { crearCumbres } from './cumbres.js?v=17';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=3';
-import { cargarRuta, crearRuta } from './ruta.js?v=31';
+import { cargarRuta, crearRuta } from './ruta.js?v=33';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -708,6 +708,7 @@ async function boot() {
       p.w = geo.summitNear(p.q.x, p.q.z);   // la cumbre se fija con el relieve general; las rutas ya se apoyan en la pieza de alta resolución
       await cumbres.carga(p.id);
       for (const r of datos) (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: r }));
+      { const fi = await cumbres.fichaListo; const cfg = fi?.aneto?.tramo; if (cfg) for (const r of rutas[p.id] ?? []) r.setPaso({ ...cfg, cresta: fi.aneto.cresta }); }   // tramo especial (Paso de Mahoma): se detecta si el recorrido pasa por la arista
       crearHitosDe(p.id);
     })());
     return preparados.get(p.id);
@@ -839,7 +840,7 @@ async function boot() {
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
-      <li>Paso de Mahoma (Aneto): la arista y la cruz de cumbre se sitúan con el eje del paso y la cruz de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL) y el MDT05 del IGN interpolado a 1,5 m. Los bloques de granito son una aproximación visual (procedural), no una medición; la cruz está exagerada de tamaño para verse.</li>
+      <li>Paso de Mahoma (Aneto): la arista y la cruz de cumbre se sitúan con el eje del paso y la cruz de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL) y el MDT05 del IGN interpolado a 1,5 m. Las fracturas y bloques de granito son una aproximación visual (procedural), no una medición. La cruz (unos 32 m en el modelo) y los montañeros (unos 21 m) están muy exagerados de tamaño, aunque guardan la proporción cruz ≈ 1,5 veces un montañero. Las posturas en la arista (agachados, manos en la roca, a cuatro apoyos) y la cuerda son una animación gráfica, no una simulación.</li>
       <li>Detalle del relieve en las cumbres: MDT05 (5 m) del <a href="https://www.ign.es" target="_blank" rel="noopener">Instituto Geográfico Nacional</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, remuestreado a 6 m (12 m en móvil) en torno a cada cumbre con ficha.</li>
       <li>Cobertura del suelo (dónde hay bosque, pradera o roca): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Los árboles se colocan donde ese mapa marca arbolado; su posición exacta, tipo (conífera o frondosa, según altitud y orientación) y tamaño son una aproximación visual, no un inventario forestal. El detalle de la roca (estratos, fracturas, canchales) es una textura procedural, no un levantamiento geológico.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>

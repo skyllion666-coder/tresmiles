@@ -1,9 +1,9 @@
 {
  "aneto": {
-  "x0": 44527.14,
-  "z0": 16008.34,
-  "n": 161,
-  "paso": 1.5,
+  "x0": 44547.14,
+  "z0": 16028.34,
+  "n": 201,
+  "paso": 1.0,
   "archivo": "aneto-mahoma.bin.gz",
   "cresta": [
    {
@@ -38,6 +38,16 @@
   "antecima": {
    "x": 44636.68,
    "z": 16100.56
+  },
+  "tramo": {
+   "corredor": 32,
+   "aproximacion": 150,
+   "salida": 60,
+   "central": [
+    0.12,
+    0.56
+   ],
+   "nota": "Eje: OSM way 451568261 (antecima\u2192cruz). Sector estrecho (central) seg\u00fan el ancho del MDT05 a -3 m de la cresta (11-12 m, ca\u00eddas de 10-20 m a 15 m del eje). corredor/aproximacion/salida en metros; central en fracci\u00f3n del eje."
   },
   "nota": "Datos: MDT05 IGN (CC BY 4.0) y OpenStreetMap (ODbL). Los bloques son procedurales."
  }

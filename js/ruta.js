@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontanero } from './montanero.js?v=3';
+import { crearMontanero } from './montanero.js?v=4';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -28,8 +28,8 @@ export function crearRuta({ scene, geo, ruta }) {
     sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0;
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
-      float Rn = clamp(dd * 0.0016, 0.5, 11.0);
-      float lift = clamp(dd * 0.0035, 7.0, 24.0);
+      float Rn = clamp(dd * 0.0013, 0.22, 11.0);
+      float lift = clamp(dd * 0.0035, 5.0, 24.0);
       transformed = ctr + normal * Rn; transformed.y += lift - 24.0;`);
   };
   mat.customProgramCacheKey = () => 'ruta-fina';
@@ -37,25 +37,90 @@ export function crearRuta({ scene, geo, ruta }) {
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
   scene.add(mesh);
 
-  // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta
-  const KM = 42;   // metros por unidad del muñeco (mide ~1,8): se escala además con la distancia de la cámara
+  // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta.
+  // Escala fija del muñeco (mide ~1,8 → ~21 m en el modelo, igual a lo largo de todo el recorrido y a cualquier distancia de la cámara).
+  const ESC_M = 11.5, V0 = 170, GAP_MIN = 26;
   const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6 }; };
+  const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.scale.setScalar(ESC_M); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6, yaw: null, alt: 0.92 }; };
   const solo = mk({});
   const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1)
     mk({ chaqueta: '#d8362b', mochila: '#e8892b', mochilaTipo: 'grande', palos: 2 }),
     mk({ chaqueta: '#2f6fb5', mochila: '#3a8f5a', pantalon: '#3a3a44', mochilaTipo: 'pequena', palos: 0 }),
     mk({ chaqueta: '#e8b923', mochila: '#6a4a8f', pantalon: '#2f3b30', mochilaTipo: 'media', palos: 1 }),
   ];
+  const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
-  function colocar(p, d, lat, andando) {
-    const a = en(d), b = en(d + 40), c = en(d - 40);
-    let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
-    const x = a.pos.x + dz * lat, z = a.pos.z - dx * lat;
-    p.h.position.set(x, Math.max(geo.heightAt(x, z) + 30, a.pos.y + 13), z);   // los pies por encima del tubo de la ruta (radio 11 m) y del relieve dibujado   // por encima del relieve dibujado (el nivel de detalle puede quedar más alto que la altura real) p.h.rotation.y = Math.atan2(dx, dz);
-    p.m.pose(p.fase, andando ? 1 : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / L)) * 0.4);
+  const est = equipo.map(() => ({ d: 0, cd: 2, pausa: 0 }));   // distancia recorrida por cada uno, cuenta atrás hasta su próxima pausa y pausa en curso
+  const resetEquipo = () => { est.forEach((q, i) => { q.d = -i * 110; q.cd = 1.5 + i * 0.9; q.pausa = 0; }); dEquipo = 0; };
+  resetEquipo();
+
+  // tramo especial (Paso de Mahoma): se define con la geografía (eje de la arista) y se mide sobre el recorrido, no con la cámara
+  let paso = null;
+  function proy(x, z) {   // distancia (m) al eje de la arista y posición a lo largo de él (0 = antecima, 1 = cruz)
+    const cr = paso.cresta; let best = 1e9, bs = 0, acc = 0;
+    for (let i = 0; i < cr.length - 1; i++) {
+      const a = cr[i], b = cr[i + 1], vx = b.x - a.x, vz = b.z - a.z, l2 = vx * vx + vz * vz || 1, t = Math.max(0, Math.min(1, ((x - a.x) * vx + (z - a.z) * vz) / l2)), d = Math.hypot(x - a.x - vx * t, z - a.z - vz * t);
+      if (d < best) { best = d; bs = (acc + t * Math.sqrt(l2)) / paso.T; }
+      acc += Math.sqrt(l2);
+    }
+    return { d: best, s: bs };
   }
-  const ver = () => { solo.h.visible = activo && cursorOn; for (const p of equipo) p.h.visible = activo && !cursorOn && !reducido; };
+  function setPaso(cfg) {
+    paso = null; if (!cfg || !cfg.cresta?.length) return;
+    let T = 0; for (let i = 0; i < cfg.cresta.length - 1; i++) T += Math.hypot(cfg.cresta[i + 1].x - cfg.cresta[i].x, cfg.cresta[i + 1].z - cfg.cresta[i].z);
+    paso = { ...cfg, T, zonas: [] };
+    let cur = null;
+    for (let i = 0; i < pts.length; i++) {
+      const inside = proy(pts[i].x, pts[i].z).d < cfg.corredor;
+      if (inside) { if (!cur) cur = { d0: dist[i], d1: dist[i] }; else cur.d1 = dist[i]; } else if (cur) { paso.zonas.push(cur); cur = null; }
+    }
+    if (cur) paso.zonas.push(cur);
+    if (!paso.zonas.length) paso = null;
+  }
+  // intensidad del tramo especial (0 = marcha normal, 1 = en la arista) según la posición sobre el recorrido: sube durante la aproximación y baja tras la salida
+  function nivelEn(d) {
+    if (!paso) return 0; let n = 0;
+    for (const z of paso.zonas) { const fuera = d < z.d0 ? z.d0 - d : d > z.d1 ? d - z.d1 : 0, R = d < z.d0 ? paso.aproximacion : paso.salida; n = Math.max(n, 1 - sstep(0, R, fuera)); }
+    return n;
+  }
+  function postura(d, i, tt) {
+    const n = nivelEn(d); if (n < 0.01) return { n: 0, c: null };
+    const pos = en(d).pos, pr = proy(pos.x, pos.z), w = 0.08, [a, b] = paso.central;
+    let cu = 0; if (n > 0.8 && pr.d < paso.corredor * 1.3) cu = sstep(a - w, a + w, pr.s) * (1 - sstep(b - w, b + w, pr.s)) * (0.55 + 0.45 * (0.5 + 0.5 * Math.sin(tt * 0.55 + i * 2.3)));
+    return { n, c: { agach: sstep(0.08, 0.7, n) * 0.8, manos: sstep(0.4, 0.95, n), cuatro: cu * sstep(0.8, 1, n), giro: 0.12 * Math.sin(tt * 0.7 + i * 1.7) * n } };
+  }
+  function colocar(p, d, lat, andando, pos = null, vrel = 1) {
+    const w = pos ? 8 + (40 - 8) * (1 - pos.n) : 40;
+    const a = en(d), b = en(d + w), c = en(d - w);
+    let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
+    const l = lat * (pos ? 1 - pos.n : 1), x = a.pos.x + dz * l, z = a.pos.z - dx * l;
+    p.h.position.set(x, geo.heightAt(x, z) + 1.2, z);   // los pies sobre el relieve (la línea de la ruta queda aparte, por encima)
+    const yaw = Math.atan2(dx, dz); p.yaw = p.yaw == null ? yaw : p.yaw + Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)) * 0.2; p.h.rotation.y = p.yaw;   // mira hacia donde avanza el recorrido
+    p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c);
+  }
+  // cuerda entre montañeros consecutivos: tubo fino de 4 caras que se rehace cada fotograma a partir de sus cinturas (curva con holgura, sin física)
+  const NS = 12, cuerdaMat = new THREE.MeshBasicMaterial({ color: '#c0392b', fog: true, transparent: true, opacity: 0 });
+  const cuerdas = [0, 1].map(() => {
+    const g = new THREE.BufferGeometry(), v = new Float32Array((NS + 1) * 4 * 3), id = [];
+    for (let j = 0; j < NS; j++) for (let k2 = 0; k2 < 4; k2++) { const a = j * 4 + k2, b = j * 4 + (k2 + 1) % 4, c = a + 4, d = b + 4; id.push(a, c, b, b, c, d); }
+    g.setAttribute('position', new THREE.BufferAttribute(v, 3)); g.setIndex(id);
+    const m = new THREE.Mesh(g, cuerdaMat.clone()); m.frustumCulled = false; m.visible = false; m.renderOrder = 3; scene.add(m); return m;
+  });
+  const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _p = new THREE.Vector3(), _t = new THREE.Vector3(), _h = new THREE.Vector3(), _v = new THREE.Vector3();
+  function cuerda(m, p1, p2, op, tt, i) {
+    if (op < 0.03) { m.visible = false; return; }
+    _a.copy(p1.h.position); _a.y += p1.alt * ESC_M * 0.98; _b.copy(p2.h.position); _b.y += p2.alt * ESC_M * 0.98;
+    const dd = _a.distanceTo(_b), Lr = Math.max(dd + 4, 30) * (1 + 0.04 * Math.sin(tt * 0.9 + i * 1.9)), sag = Math.min(10, Math.sqrt(0.375 * Lr * Math.max(0, Lr - dd))), r = 0.28 * Math.max(0.35, op);
+    const pos = m.geometry.attributes.position.array;
+    for (let j = 0; j <= NS; j++) {
+      const u = j / NS; _p.lerpVectors(_a, _b, u); _p.y -= sag * 4 * u * (1 - u);
+      const g = geo.heightAt(_p.x, _p.z) + 0.8; if (_p.y < g) _p.y = g;   // no atraviesa el terreno
+      _t.subVectors(_b, _a).normalize(); _h.crossVectors(_t, new THREE.Vector3(0, 1, 0)).normalize(); _v.crossVectors(_h, _t).normalize();
+      pos.set([_p.x + _h.x * r, _p.y + _h.y * r, _p.z + _h.z * r, _p.x + _v.x * r, _p.y + _v.y * r, _p.z + _v.z * r, _p.x - _h.x * r, _p.y - _h.y * r, _p.z - _h.z * r, _p.x - _v.x * r, _p.y - _v.y * r, _p.z - _v.z * r], j * 12);
+    }
+    m.geometry.attributes.position.needsUpdate = true; m.geometry.computeBoundingSphere(); m.material.opacity = sstep(0.1, 0.8, op); m.visible = true;
+  }
+  const ver = () => { solo.h.visible = activo && cursorOn; for (const p of equipo) p.h.visible = activo && !cursorOn && !reducido; if (!(activo && !cursorOn && !reducido)) for (const c of cuerdas) c.visible = false; };
 
   let k = 1, activo = false, t0 = 0;
   const set = () => geom.setDrawRange(0, Math.floor(k * tub) * rad * 6);
@@ -97,25 +162,37 @@ export function crearRuta({ scene, geo, ruta }) {
     ruta, centro, extension, en, cercano, pasos,
     mostrar(v, { animar = true } = {}) {
       activo = v; mesh.visible = v; ver();
-      if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); dEquipo = 0; }
+      if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); resetEquipo(); }
     },
     get visible() { return activo; },
     update(dt = 0.016) {
       if (activo && k < 1) { k = Math.min(1, (performance.now() - t0) / 4500); set(); }
       if (!activo) return;
-      if (cursorOn) { const anda = performance.now() - ultimoCursor < 250; if (anda) solo.fase += dt * 11; colocar(solo, dCursor, 0, anda); }
-      else if (!reducido) {
-        dEquipo += dt * 170; if (dEquipo > ruta.distancia + 500) dEquipo = 0;
-        equipo.forEach((p, i) => { const d = dEquipo - i * 110; p.fase += dt * 10; colocar(p, Math.max(0, Math.min(ruta.distancia, d)), [0, 34, -34][i], d > 0 && d < ruta.distancia); });
+      const tt = performance.now() / 1000;
+      if (cursorOn) {
+        const anda = performance.now() - ultimoCursor < 250; const pp = postura(dCursor, 0, tt);
+        if (anda) solo.fase += dt * 11 * (1 - 0.7 * pp.n); colocar(solo, dCursor, 0, anda, pp, 1 - 0.7 * pp.n);
+      } else if (!reducido) {
+        // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
+        est.forEach((q, i) => {
+          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n);
+          if (n > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
+          q.d += v * dt; q.v = v;
+          if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
+        });
+        if (est[0].d > ruta.distancia + 500) resetEquipo();
+        const pp = [];
+        equipo.forEach((p, i) => {
+          const d = est[i].d, dc = Math.max(0, Math.min(ruta.distancia, d)), po = postura(dc, i, tt), vr = (est[i].v ?? V0) / V0; pp.push({ po, dc });
+          p.fase += dt * (2 + 8 * vr); colocar(p, dc, [0, 34, -34][i], d > 0 && d < ruta.distancia && vr > 0.01, po, vr);
+        });
+        for (let i = 0; i < 2; i++) { const o = Math.min(pp[i].po.n, pp[i + 1].po.n); cuerda(cuerdas[i], equipo[i], equipo[i + 1], est[i].d > 0 && est[i + 1].d > 0 && est[i].d < ruta.distancia && est[i + 1].d < ruta.distancia ? o : 0, tt, i); }
       }
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
-    escalar(cam) {
-      for (const p of equipo) if (p.h.visible) p.h.scale.setScalar(KM * 1.275 * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500)));
-      // el montañero solo mantiene siempre un tamaño parecido en pantalla (~3 % del alto), esté la cámara cerca o lejos
-      if (solo.h.visible) solo.h.scale.setScalar(Math.max(KM * 0.64, 0.015 * cam.distanceTo(solo.h.position)));
-    },
+    escalar() { /* el tamaño de los muñecos es fijo (ESC_M): ya no crece con la distancia a la cámara */ },
+    setPaso, _est: est,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }
