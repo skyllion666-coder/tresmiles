@@ -17,8 +17,8 @@
   }
   if (!cine || document.documentElement.classList.contains('sin-cine')) { cine?.remove(); return; }
 
-  const video = $('#cine-video'), btnSonido = $('#cine-sonido'), btnSaltar = $('#cine-saltar');
-  let audio = null, acabado = false, raf = 0, vigilante = 0, parado = 0;
+  const video = $('#cine-video'), btnSaltar = $('#cine-saltar');
+  let cuenta = 0, audio = null, acabado = false, raf = 0, vigilante = 0, parado = 0;
 
   function fin() {
     if (acabado) return; acabado = true;
@@ -36,20 +36,12 @@
   document.addEventListener('keydown', tecla);
   btnSaltar.addEventListener('click', fin);
 
-  // sonido opcional: el archivo no se descarga hasta que se pulsa el botón
-  btnSonido.addEventListener('click', () => {
-    if (acabado) return;
-    if (!audio) {
-      audio = new Audio('audio/intro.mp3'); audio.preload = 'auto';
-      audio.currentTime = Math.min(video.currentTime || 0, DUR);
-      audio.play().then(() => { btnSonido.setAttribute('aria-pressed', 'true'); btnSonido.textContent = 'Silenciar'; }).catch(() => { audio = null; });
-    } else if (!audio.paused) { audio.pause(); btnSonido.setAttribute('aria-pressed', 'false'); btnSonido.textContent = 'Sonido'; }
-    else { audio.currentTime = Math.min(video.currentTime || 0, DUR); audio.play().then(() => { btnSonido.setAttribute('aria-pressed', 'true'); btnSonido.textContent = 'Silenciar'; }).catch(() => {}); }
-  });
+  // música: se pide al empezar (no antes). Si el navegador no deja sonar sin un toque previo, se muestra el botón ▷
+  const sincroniza = () => { if (audio && !audio.paused && Math.abs(audio.currentTime - video.currentTime) > 0.35) audio.currentTime = Math.min(video.currentTime, DUR); };
 
   // título y luz final según el instante del vídeo
   function tick() {
-    const t = video.currentTime;
+    const t = video.currentTime; if (!(++cuenta % 30)) sincroniza();
     if (t > 5.0) cine.classList.add('t-in');
     if (t > DUR - 1.6) cine.classList.add('t-out');
     if (t > DUR - 0.9) cine.classList.add('luz');
@@ -58,12 +50,22 @@
   }
 
   video.muted = true; video.playsInline = true;
-  video.addEventListener('playing', () => { clearTimeout(vigilante); clearTimeout(parado); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); if (audio && audio.paused && !acabado) audio.play().catch(() => {}); });
+  video.addEventListener('playing', () => { clearTimeout(vigilante); clearTimeout(parado); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); sincroniza(); if (audio && audio.paused && !acabado) audio.play().catch(() => {}); });
   video.addEventListener('waiting', () => { if (audio) audio.pause(); clearTimeout(parado); parado = setTimeout(fin, 6000); });   // se atasca: se abre la web
   video.addEventListener('ended', fin);
   video.addEventListener('error', fin);
-  // si no arranca en 7 s (red lenta, vídeo bloqueado…) se deja pasar a la web
-  vigilante = setTimeout(fin, 7000);
   video.src = matchMedia('(max-width: 760px)').matches ? 'video/intro-movil.mp4' : 'video/intro.mp4';
-  const p = video.play(); if (p && p.catch) p.catch(fin);
+  const btnPlay = $('#cine-play');
+  const reproduce = () => {
+    btnPlay.hidden = true; clearTimeout(vigilante); vigilante = setTimeout(fin, 7000);   // si no arranca en 7 s se deja pasar a la web
+    const p = video.play(); if (p && p.catch) p.catch(fin);
+  };
+  btnPlay.addEventListener('click', () => {
+    audio = audio || new Audio('audio/intro.mp3');
+    btnPlay.hidden = true;   // el vídeo arranca cuando la música ya suena (o a los 1,5 s, pase lo que pase)
+    Promise.race([audio.play().catch(() => {}), new Promise((r) => setTimeout(r, 1500))]).then(() => { if (!acabado) reproduce(); });
+  });
+  // intento automático con sonido; si el navegador lo bloquea, el visitante pulsa ▷ y arrancan juntos
+  audio = new Audio('audio/intro.mp3');
+  audio.play().then(() => { if (!acabado) reproduce(); }).catch(() => { audio = null; if (!acabado) { btnPlay.hidden = false; btnPlay.focus({ preventScroll: true }); } });
 })();

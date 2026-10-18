@@ -10,7 +10,7 @@
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/style.css?v=30">
-  <link rel="stylesheet" href="css/cine.css?v=1">
+  <link rel="stylesheet" href="css/cine.css?v=2">
   <script>
     // introducción: solo la primera vez (o con ?intro); nunca con ?directo, con movimiento reducido ni con ahorro de datos
     (function () {
@@ -99,12 +99,13 @@
     <div class="cine-vel"></div>
     <div class="cine-titulo"><h2><span>Los tresmiles</span><span>del Pirineo aragonés</span></h2><i class="linea"></i></div>
     <div class="cine-luz"></div>
-    <div class="cine-ctl"><button type="button" id="cine-sonido" aria-pressed="false">Sonido</button><button type="button" id="cine-saltar">Saltar introducción</button></div>
+    <button type="button" id="cine-play" aria-label="Reproducir la introducción" hidden><svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
+    <button type="button" id="cine-saltar" class="solo-lectores">Saltar introducción</button>
   </div>
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 130;</script>
   <script type="module" src="js/main.js?v=130"></script>
-  <script defer src="js/cine.js?v=1"></script>
+  <script defer src="js/cine.js?v=2"></script>
 </body>
 </html>
