@@ -8,8 +8,8 @@ import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3'
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
-import { crearFauna } from './fauna.js?v=5';
-import { cargarRuta, crearRuta } from './ruta.js?v=36';
+import { crearFauna } from './fauna.js?v=6';
+import { cargarRuta, crearRuta } from './ruta.js?v=37';
 import { crearSelector } from './selector.js?v=1';
 
 const $ = (s) => document.querySelector(s);
@@ -188,7 +188,7 @@ async function boot() {
   const pinEls = new Map();
   for (const p of peaks) {
     const b = document.createElement('button');
-    b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}`; b.type = 'button'; b.dataset.id = p.id;
+    b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}${p.clase && p.clase !== 'principal' ? ' pin-sec' : ''}`; b.type = 'button'; b.dataset.id = p.id;
     b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
     b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
@@ -571,19 +571,20 @@ async function boot() {
       : '<figure class="sin-foto" aria-hidden="true"></figure>';   // sin imagen: marco con la silueta de una montaña
     return `
       ${foto}
-      <h2>${esc(p.nombre)}</h2><p class="alias">${esc(p.alias)}</p>
+      <h2>${esc(p.nombre)}</h2>${p.alias ? `<p class="alias">${esc(p.alias)}</p>` : ''}
       <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras">${/^otras/i.test(p.otras) ? '' : '<b>Otras cifras</b> '}${esc(p.otras)}</p>` : ''}
       ${p.activo ? `<div class="hecho-box"><button type="button" class="btn-hecho" data-act="hecho" aria-pressed="${hechos.has(p.id)}">${hechos.has(p.id) ? '<i aria-hidden="true"></i>Subido · banderín puesto' : '<i aria-hidden="true"></i>He subido este tresmil'}</button><span class="hecho-cuenta">${resumenHechos()}</span></div>` : ''}
       <p class="lede">${esc(p.descripcion)}</p>
       <dl class="stats">
         <div><dt>Macizo</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
-        <div><dt>Situación</dt><dd>${p.frontera ? 'Frontera Aragón–Francia' : 'Aragón'}</dd></div>
-        <div class="wide"><dt>Valle o pueblo de acceso</dt><dd>${esc(p.acceso)}</dd></div>
-        <div><dt>Desnivel</dt><dd>${esc(p.desnivel)}</dd></div>
-        <div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>
-        <div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>
+        <div><dt>Situación</dt><dd>${p.situacion ? esc(p.situacion) : p.frontera ? 'Frontera Aragón–Francia' : 'Aragón'}</dd></div>
+        ${p.clase && p.clase !== 'principal' ? `<div><dt>Clase</dt><dd>${p.clase === 'discutida' ? 'Cima discutida' : 'Cima secundaria'}</dd></div>` : ''}
+        ${p.acceso ? `<div class="wide"><dt>Valle o pueblo de acceso</dt><dd>${esc(p.acceso)}</dd></div>` : ''}
+        ${p.desnivel ? `<div><dt>Desnivel</dt><dd>${esc(p.desnivel)}</dd></div>` : ''}
+        ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
+        ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
-      <h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>
+      ${p.ruta ? `<h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
@@ -918,10 +919,10 @@ async function boot() {
   // — acerca de —
   const about = $('#about');
   function buildAbout() {
-    const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] }));
+    const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f);
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
-      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya doce cumbres, cada una con su ruta de ejemplo, sus hitos y sus fotografías.</p>
+      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${activas.size} cumbres: unas ${peaks.filter((p) => p.activo && !p.basica).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación).</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>

@@ -122,6 +122,8 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.is-active .pin-stem { top: calc(50% + (var(--pin-d-base, 26px) + 6px) / 2 - 1px); height: calc(var(--lift) - (var(--pin-d-base, 26px) + 6px) / 2 + 1px); background: linear-gradient(rgba(126, 224, 178, .95), rgba(126, 224, 178, .6)); }
 .pin.is-active .pin-stem::after { background: #7ee0b2; }
 .pin.pin-prox .pin-stem { opacity: .55; }
+.pin.pin-sec { --pin-d: 19px; --pin-d-base: 19px; }   /* cimas secundarias y discutidas: marcador más pequeño */
+.pin.pin-sec::before { width: 5px; height: 5px; }
 /* muy cerca de una cumbre con objetos (pilar, cruz, buzón): el círculo sube y se aclara, el hilo queda fino y discreto */
 .pin.pin-alto::after { opacity: .62; }
 .pin.pin-muycerca { opacity: .38; } .pin.pin-muycerca .pin-label { opacity: .75; }

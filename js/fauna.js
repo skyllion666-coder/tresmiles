@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 
 const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
-const KM_REBECO = 42 * 1.275;   // misma exageración que los montañeros (ruta.js), para que se vean a la vez
+const KM_REBECO = 42 * 1.275 * 0.75;   // un 25 % más pequeños que antes (18-10-2026); los montañeros (ruta.js) van al doble
 const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
 export function crearFauna({ scene, geo, centro, camera, sol }) {
