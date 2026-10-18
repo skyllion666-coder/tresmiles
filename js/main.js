@@ -256,6 +256,7 @@ async function boot() {
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
       el.classList.toggle('show-label', (!!S.active && p.activo) || dist < (p.activo ? 15000 : 30000));
       el.classList.toggle('is-dim', !passes(p));
+      { const k = S.active === p.id ? 1 : Math.min(1, Math.max(0.72, 1.25 - dist / 36000)); if (Math.abs((el._k ?? 1) - k) > 0.02) { el._k = k; el.style.setProperty('--k', k.toFixed(2)); } }   // el círculo se hace algo más pequeño cuanto más lejos está la cámara
     }
   }
 
@@ -301,12 +302,13 @@ async function boot() {
     else if (pun[labAct.lado] > 0 && mejor !== labAct.lado && pun[mejor] < pun[labAct.lado]) { if (++labAct.cnt > 12) { labAct.lado = mejor; labAct.cnt = 0; } }   // solo cambia de lado si el actual lleva un rato molestando
     else labAct.cnt = 0;
     const b = cajas[labAct.lado];
-    const tx = b.x - (px - 15), ty = b.y - (py - 15);
+    const mitad = el.offsetWidth / 2;   // la caja del marcador mide 30 o 44 px según el puntero
+    const tx = b.x - (px - mitad), ty = b.y - (py - mitad);
     if (labAct.x == null) { labAct.x = tx; labAct.y = ty; }
     else { const k = 1 - Math.exp(-Math.min(dt, 0.05) * 10); labAct.x += (tx - labAct.x) * k; labAct.y += (ty - labAct.y) * k; }
     lb.style.left = '0'; lb.style.top = '0'; lb.style.transform = `translate3d(${labAct.x.toFixed(1)}px, ${labAct.y.toFixed(1)}px, 0)`;
     el._cl = true;
-    obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 }, { x: px - 15 + labAct.x, y: py - 15 + labAct.y, w, h });   // marcador y etiqueta: ocupados para los nombres geográficos
+    obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 }, { x: px - mitad + labAct.x, y: py - mitad + labAct.y, w, h });   // marcador y etiqueta: ocupados para los nombres geográficos
   }
 
   // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
@@ -521,7 +523,7 @@ async function boot() {
     return `
       ${foto}
       <h2>${esc(p.nombre)}</h2><p class="alias">${esc(p.alias)}</p>
-      <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras"><b>Otras cifras</b> ${esc(p.otras)}</p>` : ''}
+      <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras">${/^otras/i.test(p.otras) ? '' : '<b>Otras cifras</b> '}${esc(p.otras)}</p>` : ''}
       <p class="lede">${esc(p.descripcion)}</p>
       <dl class="stats">
         <div><dt>Macizo</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
