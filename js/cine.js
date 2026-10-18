@@ -18,7 +18,7 @@
   if (!cine || document.documentElement.classList.contains('sin-cine')) { cine?.remove(); return; }
 
   const video = $('#cine-video'), btnSaltar = $('#cine-saltar');
-  let cuenta = 0, audio = null, acabado = false, raf = 0, vigilante = 0, parado = 0;
+  let quiere = false, cuenta = 0, audio = null, acabado = false, raf = 0, vigilante = 0, parado = 0;
 
   function fin() {
     if (acabado) return; acabado = true;
@@ -34,9 +34,8 @@
   }
   const tecla = (e) => { if (e.key === 'Escape') fin(); };
   document.addEventListener('keydown', tecla);
-  btnSaltar.addEventListener('click', fin);
+  btnSaltar.addEventListener('click', (e) => { e.stopPropagation(); fin(); });
 
-  // música: se pide al empezar (no antes). Si el navegador no deja sonar sin un toque previo, se muestra el botón ▷
   const sincroniza = () => { if (audio && !audio.paused && Math.abs(audio.currentTime - video.currentTime) > 0.35) audio.currentTime = Math.min(video.currentTime, DUR); };
 
   // título y luz final según el instante del vídeo
@@ -50,22 +49,35 @@
   }
 
   video.muted = true; video.playsInline = true;
-  video.addEventListener('playing', () => { clearTimeout(vigilante); clearTimeout(parado); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); sincroniza(); if (audio && audio.paused && !acabado) audio.play().catch(() => {}); });
-  video.addEventListener('waiting', () => { if (audio) audio.pause(); clearTimeout(parado); parado = setTimeout(fin, 6000); });   // se atasca: se abre la web
+  video.addEventListener('playing', () => { clearTimeout(vigilante); clearTimeout(parado); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); sincroniza(); if (quiere && audio && audio.paused && !acabado) audio.play().catch(() => {}); });
+  video.addEventListener('waiting', () => { if (quiere && audio) audio.pause(); clearTimeout(parado); parado = setTimeout(fin, 6000); });   // se atasca: se abre la web
   video.addEventListener('ended', fin);
   video.addEventListener('error', fin);
   video.src = matchMedia('(max-width: 760px)').matches ? 'video/intro-movil.mp4' : 'video/intro.mp4';
-  const btnPlay = $('#cine-play');
-  const reproduce = () => {
-    btnPlay.hidden = true; clearTimeout(vigilante); vigilante = setTimeout(fin, 7000);   // si no arranca en 7 s se deja pasar a la web
-    const p = video.play(); if (p && p.catch) p.catch(fin);
-  };
-  btnPlay.addEventListener('click', () => {
+  const hint = $('#cine-hint');
+  // el vídeo arranca ya (en silencio); si no arranca en 7 s se deja pasar a la web
+  vigilante = setTimeout(fin, 7000);
+  { const p = video.play(); if (p && p.catch) p.catch(fin); }
+
+  // música: se intenta a la vez. Si el navegador la deja sonar, entra sincronizada con el vídeo; si no, se avisa con un
+  // texto casi invisible y cualquier toque en la introducción la activa sin reiniciar nada.
+  const sonando = () => { quiere = true; sincroniza(); if (hint) { hint.classList.remove('ver', 'tenue'); hint.classList.add('quita'); } cine.classList.remove('sin-sonido'); };
+  const pideAudio = () => {
+    if (acabado) return Promise.resolve();
     audio = audio || new Audio('audio/intro.mp3');
-    btnPlay.hidden = true;   // el vídeo arranca cuando la música ya suena (o a los 1,5 s, pase lo que pase)
-    Promise.race([audio.play().catch(() => {}), new Promise((r) => setTimeout(r, 1500))]).then(() => { if (!acabado) reproduce(); });
+    if (!audio.paused) return Promise.resolve();
+    try { audio.currentTime = Math.min(video.currentTime || 0, DUR); } catch { /* aún sin metadatos */ }
+    return audio.play().then(() => { if (!acabado) sonando(); });
+  };
+  const bloqueado = () => {
+    if (acabado || !hint) return;
+    cine.classList.add('sin-sonido'); hint.classList.add('ver');
+    setTimeout(() => hint.classList.add('tenue'), 7000);   // pasados unos segundos queda solo la notita ♪
+  };
+  // solo un bloqueo real (NotAllowedError) muestra el aviso; cualquier otro fallo se reintenta una vez
+  pideAudio().catch((e) => { if (e && e.name === 'NotAllowedError') bloqueado(); else setTimeout(() => { audio = audio || null; pideAudio().catch(bloqueado); }, 400); });
+  cine.addEventListener('click', (e) => {
+    if (e.target.closest('#cine-saltar') || !cine.classList.contains('sin-sonido')) return;
+    pideAudio().catch(() => { /* sigue sin sonido: la animación continúa */ });
   });
-  // intento automático con sonido; si el navegador lo bloquea, el visitante pulsa ▷ y arrancan juntos
-  audio = new Audio('audio/intro.mp3');
-  audio.play().then(() => { if (!acabado) reproduce(); }).catch(() => { audio = null; if (!acabado) { btnPlay.hidden = false; btnPlay.focus({ preventScroll: true }); } });
 })();

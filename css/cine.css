@@ -15,11 +15,19 @@
 #cine.t-in .cine-titulo h2 span { opacity: 1; filter: blur(0); letter-spacing: .26em; transform: none; }
 #cine.t-in .cine-titulo .linea { width: min(46vw, 360px); }
 #cine.t-out .cine-titulo { opacity: 0; transition: opacity 1s ease; }
-#cine #cine-play { position: absolute; left: 50%; top: 58%; width: 84px; height: 84px; margin: -42px 0 0 -42px; display: grid; place-items: center; border-radius: 50%; color: #fbf3e2; background: rgba(14, 20, 38, .32); border: 1px solid rgba(251, 243, 226, .55); box-shadow: 0 0 0 8px rgba(251, 243, 226, .1), 0 0 40px rgba(255, 190, 120, .3); cursor: pointer; padding-left: 4px; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: transform .25s, background .25s; }
-#cine #cine-play:hover { transform: scale(1.06); background: rgba(14, 20, 38, .55); }
-#cine #cine-play[hidden] { display: none; }
-.solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.solo-lectores:focus { width: auto; height: auto; clip: auto; left: 12px; bottom: 12px; padding: 10px 14px; background: #fbf3e2; color: #24302c; }
+/* «Saltar introducción»: arriba a la derecha, discreto y semitransparente */
+#cine #cine-saltar { position: absolute; top: max(14px, env(safe-area-inset-top)); right: var(--gutter, 20px); padding: 8px 4px; font: 400 .7rem "Barlow Semi Condensed", system-ui, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(251, 243, 226, .6); background: none; border: 0; border-bottom: 1px solid transparent; cursor: pointer; transition: color .25s, border-color .25s; }
+#cine #cine-saltar:hover, #cine #cine-saltar:focus-visible { color: rgba(251, 243, 226, .95); border-color: rgba(251, 243, 226, .6); }
+/* indicador de sonido (solo si el navegador bloquea la música): casi imperceptible, abajo y centrado */
+#cine #cine-hint { position: absolute; left: 0; right: 0; bottom: max(26px, calc(env(safe-area-inset-bottom) + 18px)); margin: 0; display: flex; justify-content: center; align-items: center; gap: 7px; pointer-events: none; font: 300 .76rem "Barlow", system-ui, sans-serif; letter-spacing: .14em; color: rgba(255, 255, 255, .55); opacity: 0; transition: opacity 1.6s ease; }
+#cine #cine-hint svg { flex: none; animation: cine-latido 3.2s ease-in-out infinite; }
+#cine #cine-hint span { transition: opacity 1.6s ease, max-width 1.6s ease; max-width: 22em; white-space: nowrap; overflow: hidden; }
+#cine #cine-hint.ver { opacity: 1; }
+#cine #cine-hint.tenue { opacity: .6; }
+#cine #cine-hint.tenue span { opacity: 0; max-width: 0; }
+#cine #cine-hint.quita { opacity: 0; }
+#cine.sin-sonido { cursor: pointer; }
+@keyframes cine-latido { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
 /* botón para volver a ver la introducción (en la cabecera de la web) */
 #btn-reintro { padding: 6px 8px; margin-right: 14px; color: var(--cream, #f7f2e4); opacity: .85; text-shadow: 0 1px 10px rgba(0,0,0,.5); }
 #btn-reintro:hover { opacity: 1; }
