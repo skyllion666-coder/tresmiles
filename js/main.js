@@ -225,7 +225,7 @@ async function boot() {
   }
   function updatePins() {
     const W = innerWidth, H = innerHeight;
-    obstaculos.length = 0;
+    obstaculos.length = 0; pinAct = null;
     if (picoSel) {   // pico que se ha tocado en el mapa
       tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
       const ok = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
@@ -241,17 +241,72 @@ async function boot() {
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
-      { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H; obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 });
-        const lb = el.firstElementChild, act = S.active === p.id;   // la etiqueta blanca del pico, cuando se ve
-        if (lb && (act || (el.classList.contains('show-label') && !el.classList.contains('is-other') && (S.active || dist < (p.activo ? 15000 : 30000))))) {
-          const kk = act ? 'a' : 'n'; if (el._lk !== kk) { el._lk = kk; el._lw = lb.offsetWidth; el._lh = lb.offsetHeight; }
-          obstaculos.push({ x: px - el._lw / 2, y: py + (act ? 25 : 21), w: el._lw, h: el._lh });
+      { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H;
+        const lb = el.firstElementChild, act = S.active === p.id;
+        if (act) pinAct = { el, lb, px, py, id: p.id };   // su marcador y su etiqueta se colocan después (colocaEtiquetaActiva)
+        else {
+          obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 });
+          if (el._cl) { lb.style.cssText = ''; el._cl = false; }   // deja de ser la cumbre abierta: etiqueta a su sitio de siempre
+          if (lb && el.classList.contains('show-label') && !el.classList.contains('is-other') && (S.active || dist < (p.activo ? 15000 : 30000))) {   // la etiqueta blanca del pico, cuando se ve
+            if (el._lk !== 'n') { el._lk = 'n'; el._lw = lb.offsetWidth; el._lh = lb.offsetHeight; }
+            obstaculos.push({ x: px - el._lw / 2, y: py + 21, w: el._lw, h: el._lh });
+          }
         } }
       el.classList.toggle('is-active', S.active === p.id);
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
       el.classList.toggle('show-label', (!!S.active && p.activo) || dist < (p.activo ? 15000 : 30000));
       el.classList.toggle('is-dim', !passes(p));
     }
+  }
+
+  // — etiqueta de la cumbre abierta: va al lado del marcador (derecha, izquierda, debajo o encima), en un hueco libre —
+  let pinAct = null; const labAct = { id: null, lado: null, cnt: 0, x: 0, y: 0 };
+  const rutaPts = new WeakMap();
+  const puntosRuta = (r) => { let a = rutaPts.get(r); if (!a) { a = []; const n = Math.min(160, Math.max(40, Math.round(r.ruta.distancia / 120))); for (let i = 0; i <= n; i++) a.push(r.en(r.ruta.distancia * i / n).pos); rutaPts.set(r, a); } return a; };
+  const rtmp = new THREE.Vector3();
+  function colocaEtiquetaActiva(dt) {
+    const P = pinAct; if (!P || !P.lb) return;
+    const W = innerWidth, H = innerHeight, { el, lb, px, py } = P;
+    const clave = P.id + '|' + W;
+    if (el._lc !== clave) { el._lc = clave; lb.style.cssText = ''; el._lw = lb.offsetWidth; el._lh = lb.offsetHeight; }   // medida con su estilo de cumbre abierta
+    const w = el._lw, h = el._lh, gap = 26;
+    // recorrido dibujado, en pantalla (segmentos sueltos)
+    const seg = [];
+    for (const r of rutasDe(P.id)) if (r.visible) {
+      let prev = null;
+      for (const q of puntosRuta(r)) { rtmp.copy(q).project(camera); const cur = rtmp.z < 1 ? { x: (rtmp.x * 0.5 + 0.5) * W, y: (-rtmp.y * 0.5 + 0.5) * H } : null; if (prev && cur) seg.push([prev, cur]); prev = cur; }
+    }
+    const cajas = {
+      derecha: { x: px + gap, y: py - h / 2 }, izquierda: { x: px - gap - w, y: py - h / 2 },
+      debajo: { x: px - w / 2, y: py + gap }, encima: { x: px - w / 2, y: py - gap - h },
+      encimaDer: { x: px + 16, y: py - gap - h }, encimaIzq: { x: px - 16 - w, y: py - gap - h },
+      debajoDer: { x: px + 16, y: py + gap }, debajoIzq: { x: px - 16 - w, y: py + gap },
+    };
+    const orden = (px < W / 2 ? ['derecha', 'izquierda'] : ['izquierda', 'derecha']).concat(['encima', 'debajo'], px < W / 2 ? ['encimaDer', 'debajoDer', 'encimaIzq', 'debajoIzq'] : ['encimaIzq', 'debajoIzq', 'encimaDer', 'debajoDer']);
+    const roce = (b) => {   // 0 = hueco libre
+      let n = 0;
+      if (b.x < 6 || b.x + w > W - 6 || b.y < 6 || b.y + h > H - 6) n += 12;   // el texto entero siempre dentro de la pantalla
+      const bb = { x: b.x, y: b.y, w, h };
+      for (const u of uiRects) if (hayChoque(bb, u, 6)) n += 6;
+      for (const q of obstaculos) if (hayChoque(bb, q, 3)) n += 2;
+      for (const [a, c] of seg) {   // ¿cruza la ruta naranja?
+        const L = Math.hypot(c.x - a.x, c.y - a.y), k = Math.max(1, Math.ceil(L / 10));
+        for (let i = 0; i <= k; i++) { const x = a.x + (c.x - a.x) * i / k, y = a.y + (c.y - a.y) * i / k; if (x > b.x - 4 && x < b.x + w + 4 && y > b.y - 4 && y < b.y + h + 4) { n += 1; break; } }
+      }
+      return n;
+    };
+    let mejor = null, mn = 1e9;
+    const pun = {}; for (const lado of orden) { pun[lado] = roce(cajas[lado]); if (pun[lado] < mn) { mn = pun[lado]; mejor = lado; } }
+    if (labAct.id !== P.id) { labAct.id = P.id; labAct.lado = mejor; labAct.cnt = 0; labAct.x = null; }
+    else if (pun[labAct.lado] > 0 && mejor !== labAct.lado && pun[mejor] < pun[labAct.lado]) { if (++labAct.cnt > 12) { labAct.lado = mejor; labAct.cnt = 0; } }   // solo cambia de lado si el actual lleva un rato molestando
+    else labAct.cnt = 0;
+    const b = cajas[labAct.lado];
+    const tx = b.x - (px - 15), ty = b.y - (py - 15);
+    if (labAct.x == null) { labAct.x = tx; labAct.y = ty; }
+    else { const k = 1 - Math.exp(-Math.min(dt, 0.05) * 10); labAct.x += (tx - labAct.x) * k; labAct.y += (ty - labAct.y) * k; }
+    lb.style.left = '0'; lb.style.top = '0'; lb.style.transform = `translate3d(${labAct.x.toFixed(1)}px, ${labAct.y.toFixed(1)}px, 0)`;
+    el._cl = true;
+    obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 }, { x: px - 15 + labAct.x, y: py - 15 + labAct.y, w, h });   // marcador y etiqueta: ocupados para los nombres geográficos
   }
 
   // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
@@ -831,7 +886,7 @@ async function boot() {
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
-    const cerca = updateLagos(); updateHitos(); updatePueblos(); distribuyeEtiquetas(dt);
+    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); distribuyeEtiquetas(dt);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;

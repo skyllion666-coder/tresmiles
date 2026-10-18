@@ -186,6 +186,14 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
   :root { --gutter: 14px; }
   .top { padding: max(14px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 62px max(20px, env(safe-area-inset-left)); }
   .top #btn-reintro { left: max(20px, env(safe-area-inset-left)); }
+  /* botones flotantes de la derecha: cristal verde oscuro translúcido, iconos crema, área táctil amplia */
+  #tools { gap: 8px; right: max(14px, env(safe-area-inset-right)); }
+  .tool { width: 40px; height: 40px; border-radius: 12px; background: rgba(15, 38, 33, .68); border: 1px solid rgba(247, 242, 228, .22); color: #f6efdc; filter: none; box-shadow: 0 1px 6px rgba(0, 0, 0, .18); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); -webkit-tap-highlight-color: transparent; }
+  .tool::before { content: ""; position: absolute; inset: -4px; }   /* el dedo alcanza 48 px aunque el botón mida 40 */
+  .tool:hover { background: rgba(15, 38, 33, .68); }
+  .tool:active { background: rgba(15, 38, 33, .86); }
+  .tool svg { width: 21px; height: 21px; }
+  .tool-tip { right: 48px; }
   .top .brand { top: max(12px, env(safe-area-inset-top)); }
   @media (max-width: 360px) { .brand .b1 { font-size: 1.12rem; } .brand .b2 { font-size: .5rem; letter-spacing: .2em; } .top .textbtn { font-size: .7rem; letter-spacing: .12em; } }
   .brand svg { width: 30px; height: 20px; }
