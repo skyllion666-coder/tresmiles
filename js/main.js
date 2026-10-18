@@ -118,7 +118,18 @@ async function boot() {
   controls.mouseButtons = { LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
   controls.touches = { ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_ROTATE };
   // con el dedo (móvil/tableta) el mapa se movía demasiado deprisa: arrastre, giro y zoom algo más lentos para poder afinar
-  if (matchMedia('(pointer: coarse)').matches) Object.assign(controls, { panSpeed: 0.65, rotateSpeed: 0.42, zoomSpeed: 0.65 });
+  const TACTIL = matchMedia('(pointer: coarse)').matches;
+  const VEL = TACTIL ? { pan: 0.65, rot: 0.42, zoom: 0.65 } : { pan: 1, rot: 0.6, zoom: 0.9 };
+  if (TACTIL) Object.assign(controls, { panSpeed: VEL.pan, rotateSpeed: VEL.rot, zoomSpeed: VEL.zoom, dampingFactor: 0.14 });   // algo menos de inercia con el dedo: el mapa se para antes al soltar
+  // cerca del suelo todo va más despacio: la velocidad de arrastre, giro y zoom baja con la altura de la cámara sobre el relieve
+  // (a 3 km o más, la de siempre; a 300 m, alrededor de un tercio), con un cambio suave para que no dé saltos
+  let kVel = 1;
+  function ajustaVelocidad(dt) {
+    const h = camera.position.y - geo.heightAt(camera.position.x, camera.position.z), dT = camera.position.distanceTo(controls.target);
+    const obj = clamp(Math.min(h, dT) / 3000, 0.3, 1);
+    kVel += (obj - kVel) * Math.min(1, dt * 4);
+    controls.panSpeed = VEL.pan * kVel; controls.rotateSpeed = VEL.rot * (0.45 + 0.55 * kVel); controls.zoomSpeed = VEL.zoom * (0.6 + 0.4 * kVel);
+  }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
   const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000 } };
@@ -827,24 +838,24 @@ async function boot() {
     b.addEventListener('pointerdown', (e) => {
       if (S.mode !== 'explore' || S.flight || S.vuelo) return;
       e.preventDefault(); b.setPointerCapture?.(e.pointerId); b.classList.add('is-on'); callaHasta = 0;
-      giro.dir = dir; giro.resta = 0; giro.sostenido = false;
+      giro.dir = dir; giro.resta = 0; giro.sostenido = false; giro.vt = 0;
       clearTimeout(giro.t); giro.t = setTimeout(() => { giro.sostenido = true; }, 280);
     });
     const suelta = () => {
       if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
-      if (!giro.sostenido) { giro.resta = Math.PI / 6; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 30° suaves
+      if (!giro.sostenido) { giro.resta = Math.PI / 9; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 20° suaves
       giro.sostenido = false;
     };
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
-    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 6; } });
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 9; } });
   }
   const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
   function aplicaGiro(dt) {
     if (!giro.dir) return;
     if (S.flight || S.vuelo || S.mode !== 'explore') { giro.dir = 0; giro.resta = 0; return; }
     let a;
-    if (giro.sostenido) a = 0.63 * dt;   // ~36°/s
-    else if (giro.resta > 0) { a = Math.min(giro.resta, Math.max(0.15 * dt, giro.resta * Math.min(1, dt * 7))); giro.resta -= a; if (giro.resta <= 1e-4) { giro.resta = 0; giro.dir = 0; } }
+    if (giro.sostenido) { giro.vt = Math.min(1, (giro.vt ?? 0) + dt * 1.5); a = (0.22 + 0.13 * kVel) * giro.vt * dt; }   // 12–20°/s según la altura, arrancando poco a poco
+    else if (giro.resta > 0) { a = Math.min(giro.resta, Math.max(0.1 * dt, giro.resta * Math.min(1, dt * 4))); giro.resta -= a; if (giro.resta <= 1e-4) { giro.resta = 0; giro.dir = 0; } }
     else return;
     _off.subVectors(camera.position, controls.target).applyAxisAngle(_ejeY, giro.dir * a);
     camera.position.copy(controls.target).add(_off); camera.lookAt(controls.target); controls.update();
@@ -1001,7 +1012,7 @@ async function boot() {
     const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
     if (!!S.detalle !== detPrev) { detPrev = !!S.detalle; for (const l of Object.values(rutas)) for (const r of l) r.delgada?.(detPrev); }
-    aplicaGiro(dt);
+    ajustaVelocidad(dt); aplicaGiro(dt);
     llamadasAve(now);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
