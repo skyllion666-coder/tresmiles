@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=11';
+import { Terrain } from './terrain.js?v=14';
 import { crearVegetacion } from './vegetacion.js?v=5';
-import { crearCumbres } from './cumbres.js?v=7';
+import { crearCumbres } from './cumbres.js?v=12';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
 import { crearFauna } from './fauna.js?v=3';
-import { cargarRuta, crearRuta } from './ruta.js?v=29';
+import { cargarRuta, crearRuta } from './ruta.js?v=30';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -131,7 +131,7 @@ async function boot() {
   const applyState = (s) => {
     const sp = Math.sin(s.phi);
     camera.position.set(s.t.x + s.r * sp * Math.sin(s.theta), s.t.y + s.r * Math.cos(s.phi), s.t.z + s.r * sp * Math.cos(s.theta));
-    const g = geo.heightAt(camera.position.x, camera.position.z) + 140;
+    const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle ? 22 : 140);
     if (camera.position.y < g) camera.position.y = g;
     controls.target.copy(s.t); camera.lookAt(s.t);
   };
@@ -574,6 +574,7 @@ async function boot() {
         <button type="button" class="btn-ruta" data-act="vuelo">Volar por la ruta</button>
         <button type="button" class="btn-ruta btn-suave" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
       </div>
+      ${p.id === 'aneto' ? `<h3>Paso de Mahoma</h3><p class="ruta-credito">Vista opcional de detalle de la arista entre la antecima y la cumbre. Relieve: MDT05 del IGN; los bloques de granito son una aproximación visual.</p><div class="ruta-acciones"><button type="button" class="btn-ruta" data-act="vista" data-vista="antecima">Ver desde la antecima</button><button type="button" class="btn-ruta" data-act="vista" data-vista="lateral">Ver desde un lateral</button></div>` : ''}
       <p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
       <p class="ruta-credito">Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`;
   }
@@ -584,6 +585,7 @@ async function boot() {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
+    if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
     const b = e.target.closest('#btn-ruta'); if (!b) return;
     rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
     pintaRuta(S.active);
@@ -718,7 +720,7 @@ async function boot() {
   }
   async function openPeak(id, { instant = false, hash = true } = {}) {
     const p = byId[id]; if (!p || !p.activo) return;
-    pararVuelo(false); setList(false);
+    pararVuelo(false); setList(false); if (S.detalle) { S.detalle = false; controls.minDistance = 500; }
     const tok = ++openTok, t = setTimeout(() => avisoCarga('Cargando la zona…'), 300);
     try { await cargarZona(p); } finally { clearTimeout(t); avisoCarga(null); }
     if (tok !== openTok) return;
@@ -736,8 +738,25 @@ async function boot() {
     if (S.active === id) pintaRuta(id, { animar: !instant });
     terrain.update(camera, 8);
   }
+  // vista opcional de detalle del Paso de Mahoma: la cámara se acerca con el vuelo de siempre y el usuario conserva el control
+  async function vistaMahoma(cual) {
+    if (S.active !== 'aneto') return;
+    await cumbres.carga('aneto'); const d = cumbres.ficha()?.aneto; if (!d) return;
+    pararVuelo(false); if (!S.plegada) plegar(true, { fly: false });
+    S.detalle = true; controls.minDistance = 20;
+    const A = d.antecima, B = d.cruz, L = Math.hypot(B.x - A.x, B.z - A.z), u = { x: (B.x - A.x) / L, z: (B.z - A.z) / L };
+    let v = { x: u.z, z: -u.x }; if (v.x < 0) v = { x: -v.x, z: -v.z };   // perpendicular, hacia el este
+    const gy = (x, z) => geo.heightAt(x, z), mid = { x: (A.x + B.x) / 2, z: (A.z + B.z) / 2 };
+    let t, c;
+    if (cual === 'antecima') { t = new THREE.Vector3(A.x + u.x * 24, 0, A.z + u.z * 24); t.y = gy(t.x, t.z) + 3; c = new THREE.Vector3(A.x - u.x * 30, 0, A.z - u.z * 30); c.y = gy(c.x, c.z) + 20; }
+    else { t = new THREE.Vector3(mid.x, 0, mid.z); t.y = gy(t.x, t.z); c = new THREE.Vector3(mid.x + v.x * 80, 0, mid.z + v.z * 80); c.y = Math.max(gy(c.x, c.z) + 22, t.y + 28); }
+    const o = c.clone().sub(t), r = o.length();
+    flyTo({ t, r, phi: Math.min(1.35, Math.acos(clamp(o.y / r, -1, 1))), theta: Math.atan2(o.x, o.z) }, { dur: 3.2, shift: { x: 0, y: 0 } });
+  }
+  const sueltaDetalle = () => { if (S.detalle) { S.detalle = false; if (!S.flight) controls.minDistance = 500; } };
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
+    S.detalle = false; controls.minDistance = 500;
     const was = S.active; sonido.fx('cerrar'); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
@@ -748,7 +767,7 @@ async function boot() {
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
   addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
-  const goHome = () => { pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  const goHome = () => { S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
 
@@ -774,7 +793,7 @@ async function boot() {
   if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }   // suena desde el principio; el botón lo silencia y se recuerda
 
   // — llamada del quebrantahuesos: al azar cada 40–90 s si hay alguno a la vista, y con más probabilidad cuando uno se acerca a la cámara —
-  let proxLlamada = performance.now() + 20000, ceBajo = new Set();
+  let detPrev = false, proxLlamada = performance.now() + 20000, ceBajo = new Set();
   const _vAve = new THREE.Vector3();
   function llamadasAve(now) {
     if (!fauna?.aves.length || !sonido.on || document.hidden || S.mode !== 'explore' || now - sonido.msUltimaLlamada < 15000) return;
@@ -819,6 +838,7 @@ async function boot() {
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>
       <h3>Relieve e imagen</h3>
       <ul><li>Relieve: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 y © Airbus Defence and Space GmbH 2014-2018, proporcionado por la Unión Europea y la ESA. Se muestra con una exageración vertical de ×1,3.</li>
+      <li>Paso de Mahoma (Aneto): la arista y la cruz de cumbre se sitúan con el eje del paso y la cruz de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL) y el MDT05 del IGN interpolado a 1,5 m. Los bloques de granito son una aproximación visual (procedural), no una medición; la cruz está exagerada de tamaño para verse.</li>
       <li>Detalle del relieve en las cumbres: MDT05 (5 m) del <a href="https://www.ign.es" target="_blank" rel="noopener">Instituto Geográfico Nacional</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, remuestreado a 6 m (12 m en móvil) en torno a cada cumbre con ficha.</li>
       <li>Cobertura del suelo (dónde hay bosque, pradera o roca): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Los árboles se colocan donde ese mapa marca arbolado; su posición exacta, tipo (conífera o frondosa, según altitud y orientación) y tamaño son una aproximación visual, no un inventario forestal. El detalle de la roca (estratos, fracturas, canchales) es una textura procedural, no un levantamiento geológico.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
@@ -921,7 +941,7 @@ async function boot() {
       const t = controls.target, mx = geo.W / 2 - 3000, mz = geo.D / 2 - 3000;
       t.x = clamp(t.x, -mx, mx); t.z = clamp(t.z, -mz, mz);
       t.y += (geo.heightAt(t.x, t.z) - t.y) * 0.08;
-      const g = geo.heightAt(camera.position.x, camera.position.z) + 120;
+      const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle ? 18 : 120);
       if (camera.position.y < g) camera.position.y = g;
     }
     // desplazamiento del encuadre para que la cumbre quede a la vista junto a la ficha
@@ -939,6 +959,8 @@ async function boot() {
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
     const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
+    if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
+    if (!!S.detalle !== detPrev) { detPrev = !!S.detalle; for (const l of Object.values(rutas)) for (const r of l) r.delgada?.(detPrev); }
     llamadasAve(now);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);

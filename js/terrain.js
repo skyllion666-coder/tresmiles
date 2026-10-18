@@ -11,7 +11,7 @@ const MAX_COBERTURA = 12;  // mapas de cobertura del suelo (ESA WorldCover) en m
 const GLSL_PARS = `
 uniform vec4 uHoles[4];
 uniform sampler2D uCover; uniform float uHasCover; uniform float uOct; uniform float uBump;
-varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
+varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
 float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
   return mix(mix(mix(h31(i),h31(i+vec3(1,0,0)),f.x),mix(h31(i+vec3(0,1,0)),h31(i+vec3(1,1,0)),f.x),f.y),
@@ -36,7 +36,8 @@ if (distance(vWPos, cameraPosition) < 15000.) {
 #endif
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
-  float nieve = smoothstep(.60, .80, lm) * (1. - smoothstep(.42, .68, sl));   // la nieve no se sostiene en paredes muy verticales
+  steep0 = max(steep0, vRoca * .95);
+  float nieve = smoothstep(.60, .80, lm) * (1. - smoothstep(.42, .68, sl)) * (1. - vRoca);   // la nieve no se sostiene en paredes muy verticales
   c *= 1. + .38 * (1. - smoothstep(.012, .085, lm)) * (1. - nieve);   // levanta las sombras muy oscuras que trae la imagen de satélite
   float cl = 0.;
   if (uHasCover > .5) { vec2 w = (vec2(vn(vWPos * .017), vn(vWPos * .017 + 9.)) - .5) * .004; cl = floor(texture2D(uCover, vec2(vCUv.x, 1. - vCUv.y) + w).r * 255. + .5); }
@@ -47,7 +48,7 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
   float lm2 = dot(c, LW);
   vec3 rc = vec3(mix(min(lm2, .34), .27, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
-  c = mix(c, rc, steep * (1. - nieve * .5) * (1. - tree * .5) * .78);
+  c = mix(c, mix(rc, vec3(dot(rc, LW)) * vec3(.96, .98, 1.02), vRoca * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vRoca * .96));
   // la roca desnuda pierde el verde de la imagen y gana grises y ocres
   c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
@@ -62,7 +63,7 @@ if (distance(vWPos, cameraPosition) < 15000.) {
     vec2 pq = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
     float rid = 1. - abs(2. * fbm(vWPos * vec3(.07, .022, .07) + 3.) - 1.);
     c *= 1. - .20 * smoothstep(.90, .985, rid) * smoothstep(.30, .50, sl) * rock * fa;
-    if (rock > .05 && fc > .02) { float wk = worley(pq * .62); c *= 1. + (wk - .55) * .20 * rock * fc; }
+    if (rock > .05 && fc > .02) { float wk = worley(pq * .62); c *= 1. + (wk - .55) * .15 * rock * fc; }
     if (tree > .5 && fc > .02) { float wk = worley(vWPos.xz / 15.); c *= .78 + .5 * smoothstep(.05, .75, wk) * (1. - .2 * fc) + (n3 - .5) * .12; c = mix(c, vec3(dot(c, LW)) * vec3(.88, 1., .78), .15); }
   }
   // canchal: ladera de piedra suelta de pendiente media
@@ -107,8 +108,8 @@ export class Terrain {
   _shader(mat, u) {
     mat.onBeforeCompile = (sh) => {
       Object.assign(sh.uniforms, u);
-      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;')
-        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.)).xyz; vWNrm = normal; vCUv = uv;');
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aRoca; varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.)).xyz; vWNrm = normal; vCUv = uv; vRoca = aRoca;');
       sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\n' + GLSL_PARS)
         .replace('#include <map_fragment>', GLSL_HOLES + '#include <map_fragment>\n' + GLSL_COLOR)
         .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n' + GLSL_BUMP);
@@ -120,7 +121,7 @@ export class Terrain {
   crearMaterialPieza(c) {
     const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) } };
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide, map: c.mat.map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
-    mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); this._shader(mat, u); return mat;
+    mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; this._shader(mat, u); return mat;
   }
   hueco(slot, x0, z0, x1, z1) { this.holes.value[slot].set(x0, z0, x1, z1); }
   chunkEn(x, z) {

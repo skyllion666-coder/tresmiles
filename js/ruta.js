@@ -97,6 +97,8 @@ export function crearRuta({ scene, geo, ruta }) {
         equipo.forEach((p, i) => { const d = dEquipo - i * 110; p.fase += dt * 10; colocar(p, Math.max(0, Math.min(ruta.distancia, d)), [0, 34, -34][i], d > 0 && d < ruta.distancia); });
       }
     },
+    // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
+    delgada(v) { mesh.material.transparent = v; mesh.material.opacity = v ? 0.22 : 1; mesh.material.depthWrite = !v; mesh.material.needsUpdate = true; },
     escalar(cam) {
       for (const p of equipo) if (p.h.visible) p.h.scale.setScalar(KM * 1.275 * Math.min(5, Math.max(0.8, cam.distanceTo(p.h.position) / 4500)));
       // el montañero solo mantiene siempre un tamaño parecido en pantalla (~3 % del alto), esté la cámara cerca o lejos
