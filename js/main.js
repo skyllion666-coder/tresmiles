@@ -225,6 +225,7 @@ async function boot() {
   }
   function updatePins() {
     const W = innerWidth, H = innerHeight;
+    obstaculos.length = 0;
     if (picoSel) {   // pico que se ha tocado en el mapa
       tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
       const ok = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
@@ -240,6 +241,12 @@ async function boot() {
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+      { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H; obstaculos.push({ x: px - 22, y: py - 22, w: 44, h: 44 });
+        const lb = el.firstElementChild, act = S.active === p.id;   // la etiqueta blanca del pico, cuando se ve
+        if (lb && (act || (el.classList.contains('show-label') && !el.classList.contains('is-other') && (S.active || dist < (p.activo ? 15000 : 30000))))) {
+          const kk = act ? 'a' : 'n'; if (el._lk !== kk) { el._lk = kk; el._lw = lb.offsetWidth; el._lh = lb.offsetHeight; }
+          obstaculos.push({ x: px - el._lw / 2, y: py + (act ? 25 : 21), w: el._lw, h: el._lh });
+        } }
       el.classList.toggle('is-active', S.active === p.id);
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
       el.classList.toggle('show-label', (!!S.active && p.activo) || dist < (p.activo ? 15000 : 30000));
@@ -299,7 +306,61 @@ async function boot() {
       if (!show) o.el.classList.remove('is-open');
       if (show) o.el.classList.toggle('abajo', (-hitoTmp.y * 0.5 + 0.5) * H < (o.el.classList.contains('con-foto') ? 340 : 90));
       if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+      if (show) obstaculos.push({ x: (hitoTmp.x * 0.5 + 0.5) * W - 14, y: (-hitoTmp.y * 0.5 + 0.5) * H - 14, w: 28, h: 28 });
     }
+  }
+
+  // — nombres geográficos (ibones y pueblos): se reparten para que no se pisen entre ellos ni con marcadores, brújula o controles —
+  const etiquetas = [], obstaculos = [];
+  let uiRects = [], uiT = 0;
+  const hayChoque = (a, b, m) => a.x < b.x + b.w + m && a.x + a.w + m > b.x && a.y < b.y + b.h + m && a.y + a.h + m > b.y;
+  function distribuyeEtiquetas(dt) {
+    const W = innerWidth, H = innerHeight;
+    if (!etiquetas.length) return;
+    if (--uiT <= 0) {   // rectángulos de la interfaz fija (se refrescan de vez en cuando)
+      uiT = 30; uiRects = [];
+      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro')) { const r = el.getBoundingClientRect(); if (r.width && r.height && r.right > 0 && r.left < W) uiRects.push({ x: r.left, y: r.top, w: r.width, h: r.height }); }
+    }
+    const cajas = [];   // ocupado: etiquetas ya colocadas, etiqueta de la cumbre abierta y obstáculos
+    etiquetas.sort((a, b) => b.prio - a.prio);
+    const k = 1 - Math.exp(-Math.min(dt, 0.05) * 9);
+    for (const e of etiquetas) {
+      const o = e.o, el = e.el;
+      if (o.w == null || o.mw !== W) { o.w = el.offsetWidth; o.h = el.offsetHeight; o.mw = W; }   // medida (se rehace si cambia el ancho)
+      const w = o.w, h = o.h, gap = 2;
+      if (!o.cand || o.cw !== w + ':' + h) {   // posiciones posibles, de menor a mayor desplazamiento
+        const c = [[0, 0]];
+        for (const ring of [1, 2, 3]) {
+          const dy = ring * (h + gap);
+          c.push([0, dy], [0, -dy], [w * 0.5 + 6, 0], [-(w * 0.5 + 6), 0], [w * 0.3, dy], [-w * 0.3, dy], [w * 0.3, -dy], [-w * 0.3, -dy]);
+        }
+        c.sort((a, b) => (Math.abs(a[0]) * 0.7 + Math.abs(a[1]) * 1.4) - (Math.abs(b[0]) * 0.7 + Math.abs(b[1]) * 1.4));
+        o.cand = c; o.cw = w + ':' + h;
+      }
+      const libre = ([dx, dy]) => {
+        const b = { x: e.sx + dx - w / 2, y: e.sy + e.top + dy, w, h };
+        if (dx || dy) { if (b.x < 2 || b.x + w > W - 2 || b.y < 2 || b.y + h > H - 2) return null; }   // la posición propia puede quedar cortada por el borde, como antes
+        for (const u of uiRects) if (hayChoque(b, u, 4)) return null;
+        for (const q of obstaculos) if (hayChoque(b, q, 1)) return null;
+        for (const q of cajas) if (hayChoque(b, q, 3)) return null;
+        return b;
+      };
+      // se prefiere la posición que ya tenía (evita saltos); si no sirve, la más cercana que quede libre
+      let pos = null, box = null;
+      if (o.slot != null && (box = libre(o.cand[o.slot]))) pos = o.slot;
+      else for (let i = 0; i < o.cand.length; i++) if ((box = libre(o.cand[i]))) { pos = i; break; }
+      const quiere = pos != null;
+      if (quiere) { cajas.push(box); o.slot = pos; }
+      // histéresis: un cambio de visible/oculto necesita varios fotogramas seguidos
+      if (o.vis == null) o.vis = quiere;
+      if (quiere !== o.vis) { o.cnt = (o.cnt || 0) + 1; if (o.cnt > 10) { o.vis = quiere; o.cnt = 0; } } else o.cnt = 0;
+      const objetivo = quiere ? o.cand[pos] : o.cand[o.slot ?? 0] || [0, 0];
+      if (o.ox == null) { o.ox = objetivo[0]; o.oy = objetivo[1]; }
+      o.ox += (objetivo[0] - o.ox) * k; o.oy += (objetivo[1] - o.oy) * k;
+      el.classList.toggle('is-hidden', !o.vis);
+      el.style.transform = `translate3d(${(e.sx + o.ox).toFixed(1)}px, ${(e.sy + o.oy).toFixed(1)}px, 0)`;
+    }
+    etiquetas.length = 0;
   }
 
   const puebloTmp = new THREE.Vector3();
@@ -310,8 +371,8 @@ async function boot() {
       let show = S.mode === 'explore' && Math.hypot(camera.position.x - o.x, camera.position.z - o.z) < o.lim;
       if (show) { puebloTmp.y = geo.heightAt(o.x, o.z) + 6; show = camera.position.distanceTo(puebloTmp) < o.lim; }
       if (show) { puebloTmp.project(camera); show = puebloTmp.z < 1 && Math.abs(puebloTmp.x) < 1.05 && Math.abs(puebloTmp.y) < 1.05 && !occluded({ x: o.x, y: geo.heightAt(o.x, o.z) + 10, z: o.z }); }
-      o.el.classList.toggle('is-hidden', !show);
-      if (show) o.el.style.transform = `translate3d(${((puebloTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-puebloTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+      if (show) etiquetas.push({ o, el: o.el, sx: (puebloTmp.x * 0.5 + 0.5) * W, sy: (-puebloTmp.y * 0.5 + 0.5) * H, prio: o.lim, top: -4 });
+      else { o.el.classList.add('is-hidden'); o.vis = null; o.ox = null; }
     }
   }
 
@@ -326,8 +387,8 @@ async function boot() {
       const lim = 4000 + Math.sqrt(l.area) * 28;
       let show = S.mode === 'explore' && dist < lim;
       if (show) { lagoTmp.project(camera); show = lagoTmp.z < 1 && Math.abs(lagoTmp.x) < 1.05 && Math.abs(lagoTmp.y) < 1.05 && !occluded({ x: l.x, y: l.y + 8, z: l.z }); }
-      el.classList.toggle('is-hidden', !show);
-      if (show) el.style.transform = `translate3d(${((lagoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-lagoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
+      if (show) etiquetas.push({ o: l, el, sx: (lagoTmp.x * 0.5 + 0.5) * W, sy: (-lagoTmp.y * 0.5 + 0.5) * H, prio: 1e5 + l.area, top: -8 });
+      else { el.classList.add('is-hidden'); l.vis = null; l.ox = null; }
     }
     return cerca;
   }
@@ -761,7 +822,8 @@ async function boot() {
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
-    const cerca = updateLagos(); updateHitos(); updatePueblos();
+    etiquetas.length = 0;
+    const cerca = updateLagos(); updateHitos(); updatePueblos(); distribuyeEtiquetas(dt);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
     needle.style.transform = `rotate(${az}rad)`;

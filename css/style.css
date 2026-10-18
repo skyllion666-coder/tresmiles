@@ -212,6 +212,7 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .pueblo-aldea { font-size: .54rem; letter-spacing: .12em; opacity: .9; }
 .pueblo-aldea::before { width: 4px; height: 4px; }
 .pueblo.is-hidden { opacity: 0; }
+@media (max-width: 760px) { .lago { font-size: .78rem; text-shadow: 0 0 3px rgba(12,38,48,.95), 0 1px 5px rgba(12,38,48,.85), 0 0 9px rgba(12,38,48,.6); } .pueblo { font-size: .56rem; letter-spacing: .13em; } .pueblo-grande { font-size: .66rem; } .pueblo-aldea { font-size: .5rem; } }
 #btn-sound .snd-off { display: block; } #btn-sound .snd-on { display: none; }
 #btn-sound.is-on .snd-off { display: none; } #btn-sound.is-on .snd-on { display: block; }
 .hito { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% -100%; display: flex; flex-direction: column; align-items: center; pointer-events: none; transition: opacity .3s; will-change: transform; }
