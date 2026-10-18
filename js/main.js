@@ -839,15 +839,15 @@ async function boot() {
       if (S.mode !== 'explore' || S.flight || S.vuelo) return;
       e.preventDefault(); b.setPointerCapture?.(e.pointerId); b.classList.add('is-on'); callaHasta = 0;
       giro.dir = dir; giro.resta = 0; giro.sostenido = false; giro.vt = 0;
-      clearTimeout(giro.t); giro.t = setTimeout(() => { giro.sostenido = true; }, 280);
+      clearTimeout(giro.t); giro.t = setTimeout(() => { giro.sostenido = true; }, 450);
     });
     const suelta = () => {
       if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
-      if (!giro.sostenido) { giro.resta = Math.PI / 36; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 5° suaves
+      if (!giro.sostenido) { giro.resta = Math.PI / 180; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 1°
       giro.sostenido = false;
     };
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
-    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 36; } });
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 180; } });
   }
   const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
   function aplicaGiro(dt) {
