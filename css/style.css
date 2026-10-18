@@ -85,6 +85,15 @@ body.is-ready #tools { opacity: 1; pointer-events: auto; }
 .tool:hover { background: #fff; }
 .tool-tip { position: absolute; right: 52px; white-space: nowrap; background: var(--spruce); color: var(--cream); font: 500 .7rem var(--cond); letter-spacing: .16em; text-transform: uppercase; padding: 6px 10px; opacity: 0; transform: translateX(6px); transition: .25s; pointer-events: none; }
 .tool:hover .tool-tip, .tool.show-tip .tool-tip { opacity: 1; transform: none; }
+/* flechas de giro: cristal translúcido a media altura en los bordes; toque = giro de 30°, mantener = giro continuo */
+.giro { position: fixed; z-index: 6; top: 44%; width: 44px; height: 44px; margin-top: -22px; display: grid; place-items: center; border-radius: 50%; background: rgba(10, 22, 18, .26); border: 1px solid rgba(255, 255, 255, .34); color: #f6efdc; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); opacity: 0; pointer-events: none; transition: opacity .5s ease .3s, right .55s cubic-bezier(.2,.7,.2,1), background .15s; -webkit-tap-highlight-color: transparent; touch-action: none; user-select: none; }
+.giro::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; }
+#giro-izq { left: var(--gutter); } #giro-der { right: var(--gutter); }
+body.is-ready .giro { opacity: .78; pointer-events: auto; }
+.giro:hover, .giro.is-on { background: rgba(10, 22, 18, .5); opacity: 1; }
+body.vuelo-on .giro { opacity: 0; pointer-events: none; }
+@media (min-width: 761px) { body.ficha-open #giro-der { right: calc(var(--panel-w) + var(--gutter)); } }
+@media (max-width: 760px) { body.ficha-open:not(.ficha-plegada) .giro { opacity: 0; pointer-events: none; } .giro { top: 46%; } }
 #compass { position: fixed; z-index: 6; left: var(--gutter); bottom: max(18px, env(safe-area-inset-bottom)); color: var(--cream); opacity: 0; pointer-events: none; transition: opacity .6s ease .3s; }
 body.is-ready #compass { opacity: .95; pointer-events: auto; }
 #needle { transform-origin: 32px 32px; }

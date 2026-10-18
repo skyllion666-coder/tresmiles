@@ -402,7 +402,7 @@ async function boot() {
     if (!etiquetas.length) return;
     if (--uiT <= 0) {   // rectángulos de la interfaz fija (se refrescan de vez en cuando)
       uiT = 30; uiRects = [];
-      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro')) {
+      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro, #giro-izq, #giro-der')) {
         const r = el.getBoundingClientRect(); if (!(r.width && r.height && r.right > 0 && r.left < W)) continue;
         const m = el.id === 'brand' ? [14, 6, 14, 14] : el.id === 'btn-about' || el.id === 'btn-reintro' ? [6, 4, 6, 6] : [0, 0, 0, 0];   // el encabezado deja un margen: nada de nombres encima ni justo debajo
         uiRects.push({ x: r.left - m[0], y: r.top - m[1], w: r.width + m[0] + m[2], h: r.height + m[1] + m[3], cab: el.id === 'brand' || el.id === 'btn-about' || el.id === 'btn-reintro' });
@@ -815,6 +815,36 @@ async function boot() {
     if (sonido.llamada(dm, _vAve.z < 1 ? _vAve.x : 0)) proxLlamada = now + 40000 + Math.random() * 50000;
   }
 
+  // — flechas de giro: un toque gira la vista 30° alrededor del punto que se mira; mantenerla pulsada gira sin parar (36°/s) —
+  const giro = { dir: 0, resta: 0, sostenido: false, t: null };
+  for (const [id, dir] of [['#giro-izq', -1], ['#giro-der', 1]]) {
+    const b = $(id);
+    b.addEventListener('pointerdown', (e) => {
+      if (S.mode !== 'explore' || S.flight || S.vuelo) return;
+      e.preventDefault(); b.setPointerCapture?.(e.pointerId); b.classList.add('is-on'); callaHasta = 0;
+      giro.dir = dir; giro.resta = 0; giro.sostenido = false;
+      clearTimeout(giro.t); giro.t = setTimeout(() => { giro.sostenido = true; }, 280);
+    });
+    const suelta = () => {
+      if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
+      if (!giro.sostenido) { giro.resta = Math.PI / 6; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 30° suaves
+      giro.sostenido = false;
+    };
+    b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
+    b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 6; } });
+  }
+  const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
+  function aplicaGiro(dt) {
+    if (!giro.dir) return;
+    if (S.flight || S.vuelo || S.mode !== 'explore') { giro.dir = 0; giro.resta = 0; return; }
+    let a;
+    if (giro.sostenido) a = 0.63 * dt;   // ~36°/s
+    else if (giro.resta > 0) { a = Math.min(giro.resta, Math.max(0.15 * dt, giro.resta * Math.min(1, dt * 7))); giro.resta -= a; if (giro.resta <= 1e-4) { giro.resta = 0; giro.dir = 0; } }
+    else return;
+    _off.subVectors(camera.position, controls.target).applyAxisAngle(_ejeY, giro.dir * a);
+    camera.position.copy(controls.target).add(_off); camera.lookAt(controls.target); controls.update();
+  }
+
   // — brújula —
   const needle = $('#needle');
   $('#compass').addEventListener('click', () => { if (S.mode !== 'explore') return; const s = camState(); flyTo({ ...s, theta: 0 }, { dur: 1.0, shift: S.shiftTo }); });
@@ -966,6 +996,7 @@ async function boot() {
     const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
     if (!!S.detalle !== detPrev) { detPrev = !!S.detalle; for (const l of Object.values(rutas)) for (const r of l) r.delgada?.(detPrev); }
+    aplicaGiro(dt);
     llamadasAve(now);
     sonido.update(camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca);
     const az = Math.atan2(camera.position.x - controls.target.x, camera.position.z - controls.target.z);

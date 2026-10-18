@@ -9,7 +9,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=40">
+  <link rel="stylesheet" href="css/style.css?v=41">
   <link rel="stylesheet" href="css/cine.css?v=5">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
@@ -72,6 +72,8 @@
     <button type="button" class="tool" id="btn-sound" aria-label="Activar el sonido ambiente" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path class="snd-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="snd-off" d="m16 9.5 5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   </div>
 
+  <button type="button" class="giro" id="giro-izq" aria-label="Girar la vista a la izquierda (mantén pulsado para girar sin parar)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8.5 6.2A8 8 0 1 1 4.6 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3.6 4.4l5 1.6-1.6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button type="button" class="giro" id="giro-der" aria-label="Girar la vista a la derecha (mantén pulsado para girar sin parar)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15.5 6.2A8 8 0 1 0 19.4 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20.4 4.4l-5 1.6 1.6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <button type="button" id="compass" aria-label="Brújula: pulsa para orientar al norte"><svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="rgba(20,32,28,.28)" stroke="currentColor" stroke-width="1" stroke-dasharray="1.2 3.6"/><g id="needle"><path d="M32 8 38 32H26z" fill="currentColor"/><path d="M32 56 26 32h12z" fill="currentColor" opacity=".35"/></g><text x="32" y="6.5" text-anchor="middle" font-size="7" fill="currentColor" font-family="Barlow Semi Condensed, sans-serif">N</text></svg></button>
 
   <section id="filters" class="panel" aria-label="Filtros" hidden>
@@ -109,7 +111,7 @@
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 134;</script>
-  <script type="module" src="js/main.js?v=166"></script>
+  <script type="module" src="js/main.js?v=167"></script>
   <script defer src="js/cine.js?v=6"></script>
 </body>
 </html>
