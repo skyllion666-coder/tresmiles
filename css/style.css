@@ -27,6 +27,9 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .top > * { pointer-events: auto; }
 .brand { position: absolute; left: 50%; top: max(14px, env(safe-area-inset-top)); transform: translateX(-50%); display: grid; justify-items: center; color: var(--cream); text-decoration: none; text-shadow: 0 1px 12px rgba(0,0,0,.45); }
 .brand svg { margin-bottom: 2px; }
+/* cabecera: degradado suave más alto para que el logotipo se lea sobre cualquier terreno (sin panel) */
+.top { background: linear-gradient(rgba(14, 24, 21, .6), rgba(14, 24, 21, .28) 58%, rgba(14, 24, 21, 0)); }
+.brand { text-shadow: 0 1px 12px rgba(0,0,0,.5), 0 0 3px rgba(0,0,0,.4); }
 .brand .b1 { font: 600 1.55rem/1 var(--serif); letter-spacing: .02em; }
 .brand .b2 { font: 500 .62rem/1.6 var(--cond); letter-spacing: .3em; text-transform: uppercase; opacity: .9; }
 .textbtn { font: 500 .78rem var(--cond); letter-spacing: .16em; text-transform: uppercase; color: var(--cream); padding: 6px 2px; text-shadow: 0 1px 10px rgba(0,0,0,.5); border-bottom: 1px solid transparent; }
@@ -181,7 +184,13 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 /* — móvil — */
 @media (max-width: 760px) {
   :root { --gutter: 14px; }
+  .top { padding: max(14px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 62px max(20px, env(safe-area-inset-left)); }
+  .top #btn-reintro { left: max(20px, env(safe-area-inset-left)); }
+  .top .brand { top: max(12px, env(safe-area-inset-top)); }
+  @media (max-width: 360px) { .brand .b1 { font-size: 1.12rem; } .brand .b2 { font-size: .5rem; letter-spacing: .2em; } .top .textbtn { font-size: .7rem; letter-spacing: .12em; } }
+  .brand svg { width: 30px; height: 20px; }
   .brand .b1 { font-size: 1.3rem; }
+  .brand .b2 { font-size: .58rem; letter-spacing: .28em; }
   #ficha { top: auto; width: 100%; height: min(66vh, 620px); transform: translateY(104%); box-shadow: 0 -14px 40px rgba(0,0,0,.35); border-radius: 14px 14px 0 0; overflow: hidden; }
   #ficha.is-open { transform: none; }
   .ficha-head { height: 54px; padding-left: 22px; }
@@ -206,12 +215,13 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .lago.is-hidden { opacity: 0; }
 /* pueblos y aldeas: punto + nombre en versalitas */
 .pueblo { position: absolute; left: 0; top: 0; transform: translate3d(-100px,-100px,0); translate: -50% 0; margin: -4px 0 0; white-space: nowrap; pointer-events: none; text-align: center; font: 600 .6rem/1 var(--cond, 'Barlow Condensed', sans-serif); letter-spacing: .16em; text-transform: uppercase; color: #fff8e6; text-shadow: 0 0 3px rgba(22,28,24,.95), 0 1px 5px rgba(22,28,24,.85); transition: opacity .3s; will-change: transform; }
-.pueblo::before { content: ""; display: block; width: 5px; height: 5px; margin: 0 auto 3px; border-radius: 50%; background: #fff8e6; box-shadow: 0 0 0 1px rgba(22,28,24,.7); }
+.pueblo::before { transform: translate(calc(var(--ox, 0) * -1px), calc(var(--oy, 0) * -1px)); content: ""; display: block; width: 5px; height: 5px; margin: 0 auto 3px; border-radius: 50%; background: #fff8e6; box-shadow: 0 0 0 1px rgba(22,28,24,.7); }
 .pueblo-grande { font-size: .72rem; letter-spacing: .2em; }
 .pueblo-grande::before { width: 7px; height: 7px; }
 .pueblo-aldea { font-size: .54rem; letter-spacing: .12em; opacity: .9; }
 .pueblo-aldea::before { width: 4px; height: 4px; }
 .pueblo.is-hidden { opacity: 0; }
+.pueblo.sin-nombre { color: transparent; text-shadow: none; }
 @media (max-width: 760px) { .lago { font-size: .78rem; text-shadow: 0 0 3px rgba(12,38,48,.95), 0 1px 5px rgba(12,38,48,.85), 0 0 9px rgba(12,38,48,.6); } .pueblo { font-size: .56rem; letter-spacing: .13em; } .pueblo-grande { font-size: .66rem; } .pueblo-aldea { font-size: .5rem; } }
 #btn-sound .snd-off { display: block; } #btn-sound .snd-on { display: none; }
 #btn-sound.is-on .snd-off { display: none; } #btn-sound.is-on .snd-on { display: block; }

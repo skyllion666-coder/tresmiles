@@ -319,7 +319,11 @@ async function boot() {
     if (!etiquetas.length) return;
     if (--uiT <= 0) {   // rectángulos de la interfaz fija (se refrescan de vez en cuando)
       uiT = 30; uiRects = [];
-      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro')) { const r = el.getBoundingClientRect(); if (r.width && r.height && r.right > 0 && r.left < W) uiRects.push({ x: r.left, y: r.top, w: r.width, h: r.height }); }
+      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro')) {
+        const r = el.getBoundingClientRect(); if (!(r.width && r.height && r.right > 0 && r.left < W)) continue;
+        const m = el.id === 'brand' ? [14, 6, 14, 14] : el.id === 'btn-about' || el.id === 'btn-reintro' ? [6, 4, 6, 6] : [0, 0, 0, 0];   // el encabezado deja un margen: nada de nombres encima ni justo debajo
+        uiRects.push({ x: r.left - m[0], y: r.top - m[1], w: r.width + m[0] + m[2], h: r.height + m[1] + m[3], cab: el.id === 'brand' || el.id === 'btn-about' || el.id === 'btn-reintro' });
+      }
     }
     const cajas = [];   // ocupado: etiquetas ya colocadas, etiqueta de la cumbre abierta y obstáculos
     etiquetas.sort((a, b) => b.prio - a.prio);
@@ -357,8 +361,12 @@ async function boot() {
       const objetivo = quiere ? o.cand[pos] : o.cand[o.slot ?? 0] || [0, 0];
       if (o.ox == null) { o.ox = objetivo[0]; o.oy = objetivo[1]; }
       o.ox += (objetivo[0] - o.ox) * k; o.oy += (objetivo[1] - o.oy) * k;
-      el.classList.toggle('is-hidden', !o.vis);
+      if (e.top === -4) {   // pueblo: si su nombre no cabe, queda solo el punto; si el punto cae bajo el logotipo, se oculta entero
+        const bajoCab = uiRects.some((u) => u.cab && e.sx > u.x && e.sx < u.x + u.w && e.sy > u.y && e.sy < u.y + u.h);
+        el.classList.toggle('is-hidden', bajoCab); el.classList.toggle('sin-nombre', !o.vis);
+      } else el.classList.toggle('is-hidden', !o.vis);
       el.style.transform = `translate3d(${(e.sx + o.ox).toFixed(1)}px, ${(e.sy + o.oy).toFixed(1)}px, 0)`;
+      if (e.top === -4) { el.style.setProperty('--ox', o.ox.toFixed(1)); el.style.setProperty('--oy', o.oy.toFixed(1)); }   // el punto del pueblo no se mueve con su nombre
     }
     etiquetas.length = 0;
   }
