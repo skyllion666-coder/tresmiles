@@ -448,5 +448,34 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Cauar%C3%A8re-Batoua_11.06.2008.jpg",
   "w": 1280,
   "h": 853
+ },
+ "mulleres": {
+  "archivo": "TUC DE MOLIÈRES - VAL D'ARAN - IB-826.jpg",
+  "autor": "Isidre blanc",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:TUC_DE_MOLI%C3%88RES_-_VAL_D%27ARAN_-_IB-826.jpg",
+  "w": 1280,
+  "h": 960
+ },
+ "sabre": {
+  "archivo": "foto del autor del track",
+  "autor": "Peplo007",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/cima-del-gran-bachimala-3-177-m-por-la-version-clasica-con-collado-senal-de-viados-desde-refugio-de-285826179",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750
+ },
+ "pavots": {
+  "archivo": "foto del autor del track",
+  "autor": "El porquet de Sant Antoni",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/cresta-de-espadas-posets-espigantosa-angel-orus-diente-royo-pavots-espadas-llardaneta-tuqueta-roya-5145979",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 356
  }
 }

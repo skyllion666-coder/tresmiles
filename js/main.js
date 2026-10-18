@@ -392,7 +392,7 @@ async function boot() {
       ? `<div class="nav2"><button type="button" data-go="${vis[(i - 1 + vis.length) % vis.length].id}">← Anterior</button><button type="button" data-go="${vis[(i + 1) % vis.length].id}">Siguiente →</button></div>` : '';
     return `
       <figure><img src="img/peaks/${p.foto}.jpg" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}">
-        <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">Wikimedia Commons</a>.</figcaption></figure>
+        <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>.</figcaption></figure>
       <h2>${esc(p.nombre)}</h2><p class="alias">${esc(p.alias)}</p>
       <div class="alt"><strong>${fmt(p.altitud)}</strong><span>metros</span></div>${p.otras ? `<p class="otras">${esc(p.otras)}</p>` : ''}
       <dl class="stats">

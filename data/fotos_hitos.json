@@ -2348,5 +2348,71 @@
   "w": 1000,
   "h": 563,
   "pos": "50% 50%"
+ },
+ "mul-interseccion": {
+  "archivo": "foto del autor del track",
+  "autor": "Sr.Txatarras",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mul-escaleta": {
+  "archivo": "foto del autor del track",
+  "autor": "Sr.Txatarras",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mul-circular": {
+  "archivo": "foto del autor del track",
+  "autor": "Sr.Txatarras",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 50%"
+ },
+ "mul-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Sr.Txatarras",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 750,
+  "pos": "50% 40%"
+ },
+ "pav-forau": {
+  "archivo": "foto del autor del track",
+  "autor": "Manu a la marcheta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-pavots-tucon-royo-3-125-m-y-tuca-forau-de-la-neu-3-080-m-desde-refugio-angel-orus-179493932",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
+ },
+ "pav-cima": {
+  "archivo": "foto del autor del track",
+  "autor": "Manu a la marcheta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://es.wikiloc.com/rutas-alpinismo/pico-pavots-tucon-royo-3-125-m-y-tuca-forau-de-la-neu-3-080-m-desde-refugio-angel-orus-179493932",
+  "fuente": "su ficha de Wikiloc",
+  "w": 1000,
+  "h": 563,
+  "pos": "50% 50%"
  }
 }

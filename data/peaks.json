@@ -49,7 +49,10 @@
   "forqueta",
   "casco",
   "robinera",
-  "culfreda"
+  "culfreda",
+  "mulleres",
+  "sabre",
+  "pavots"
  ],
  "macizos": [
   {
@@ -1667,6 +1670,102 @@
     "pie": "La cresta rocosa de Culfreda, con los picos de la frontera."
    },
    "curiosidad": "Culfreda es, en realidad, una cresta fronteriza orientada de suroeste a noreste con tres cumbres, y a los franceses les suena como «Batoua». La cumbre principal es oficialmente la del suroeste: la guía alpina española le da 3.034 m, las guías francesas 3.031 m y PeakVisor 3.035 m, y para la cumbre del nordeste todas coinciden en unos 3.032 m."
+  },
+  {
+   "id": "mulleres",
+   "nombre": "Tuc de Mulleres",
+   "alias": "Pico Mulleres · Tuc de Molières · Pic de Molières",
+   "altitud": 3010,
+   "otras": "3.010,1 m (ICGC/OpenStreetMap) · 3.011 m (Wikipedia) · 2.991 m (GPS del track)",
+   "macizo": "ane",
+   "frontera": false,
+   "lat": 42.62947,
+   "lon": 0.69857,
+   "acceso": "Valle de Benás · La Besurta",
+   "ruta": "La Besurta → plan de Aigualluts → cruce hacia Mulleres → ibón de la Escaleta → ibón Circular → cima; vuelta por el mismo itinerario",
+   "desnivel": "≈ 1.110 m desde La Besurta (17,7 km ida y vuelta)",
+   "dificultad": "moderada",
+   "grado": "F+ · senda, bloques y lanchas de granito",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Un tresmil del extremo oriental de la Maladeta, en el límite entre Aragón y Cataluña. Desde La Besurta se sigue el valle de Aigualluts hasta el cruce de Mulleres y se sube por ibones y lanchas de granito hasta la cima.",
+   "foto": "mulleres",
+   "pie": "El Tuc de Mulleres (Molières), visto desde el valle de Arán.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
+    "texto": "Ver la ruta en Wikiloc: La Besurta - Pico Mulleres - La Besurta, de Sr.Txatarras"
+   },
+   "rutas": [
+    "mulleres-besurta"
+   ],
+   "fotoCima": {
+    "foto": "mul-cima",
+    "pie": "El hito de piedras de la cima, con los ibones de Mulleres al fondo."
+   },
+   "curiosidad": "Mulleres tiene dos nombres según el lado desde el que se mire: Mulleres en castellano y aragonés, y Molières en catalán y aranés, porque la cumbre cae justo en el límite entre Aragón y Cataluña. Según una guía, es el tresmil más oriental de la Maladeta. Su altura, además, depende de la fuente: 3.010 m en la mayoría de guías, 3.010,1 m en OpenStreetMap con datos del ICGC y 3.011 m en Wikipedia. Un sitio de montaña lo traduce como «pico de las mujeres», pero no explica el origen del nombre; las fuentes consultadas no aclaran la primera ascensión."
+  },
+  {
+   "id": "sabre",
+   "nombre": "Punta del Sabre",
+   "alias": "Punta del Sable · Pointe du Sabre · Punta de la Gatera",
+   "altitud": 3136,
+   "otras": "3.134 m (IGN y OpenStreetMap) · 3.128 m (GPS del track)",
+   "macizo": "bac",
+   "frontera": true,
+   "lat": 42.694437,
+   "lon": 0.396437,
+   "acceso": "Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós)",
+   "ruta": "Viadós → paso de la Gatera → Punta del Sabre → cresta hasta el Gran Bachimala → cabaña de Añes Cruces → Viadós (circular)",
+   "desnivel": "≈ 1.460 m desde Viadós (14,5 km, circular)",
+   "dificultad": "alta",
+   "grado": "Alpinismo · cresta y pedreras (terreno técnico)",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Cumbre de la cresta fronteriza del Bachimala, junto al Gran Bachimala. La ruta circular sale de Viadós, sube por el paso de la Gatera a la Punta del Sabre, recorre la cresta hasta el Gran Bachimala y baja por Añes Cruces.",
+   "foto": "sabre",
+   "pie": "La cresta que continúa hacia la Punta del Sabre, desde el Gran Bachimala.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/viados-paso-dela-gatera-punta-del-sable-bachimala-cabana-de-anes-cruces-viados-08-ago-16-14489762",
+    "texto": "Ver la ruta en Wikiloc: Viadós - Paso dela Gatera - Punta del Sable - Bachimala - Cabaña de Añes Cruces - Viadós, de xistras"
+   },
+   "rutas": [
+    "sabre-viados"
+   ],
+   "fotoCima": {
+    "foto": "bac-sabre",
+    "pie": "La cresta que continúa hacia la Punta del Sabre."
+   },
+   "curiosidad": "La Punta del Sabre tiene varios nombres: Punta del Sable en castellano, Pointe du Sabre en francés y, en la cartografía del IGN recogida en OpenStreetMap, Punta de la Gatera. Su altura también cambia según la fuente: 3.136 m en la lista de tresmiles de Wikipedia y 3.134 m en el IGN y en otras guías. En esa lista aparece con solo 12 m de prominencia, es decir, es una cima de la cresta del Gran Bachimala que apenas sobresale de ella. Sable y sabre designan el arma, pero no he encontrado una fuente que explique el origen del nombre."
+  },
+  {
+   "id": "pavots",
+   "nombre": "Pico de Pavots",
+   "alias": "Tucón Royo · Pic des Pavots",
+   "altitud": 3121,
+   "otras": "3.122 m (IGN y OpenStreetMap) · 3.125 m (título de la ruta en Wikiloc) · 3.080 m (GPS del track)",
+   "macizo": "pos",
+   "frontera": false,
+   "lat": 42.640812,
+   "lon": 0.423926,
+   "acceso": "Benasque · valle de Eriste (refugio Ángel Orús)",
+   "ruta": "Refugio Ángel Orús → cruce hacia Posets → collado de Pavots → Pavots → Tuca Forau de la Neu; descenso por la Canal Fonda hasta la Pleta Estallo",
+   "desnivel": "≈ 1.110 m de subida desde el refugio Ángel Orús (12,4 km, solo ida)",
+   "dificultad": "moderada",
+   "grado": "F · senda, pedreras y neveros",
+   "epoca": "Julio – septiembre",
+   "descripcion": "Tresmil del sector del Posets, junto al valle de Eriste. Desde el refugio Ángel Orús se sube por senda y pedreras hasta el collado de Pavots, se pisa la cumbre y se continúa a la Tuca Forau de la Neu, para bajar por la Canal Fonda.",
+   "foto": "pavots",
+   "pie": "Vista de la cresta de Espadas y el valle desde Pavots.",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/pico-pavots-tucon-royo-3-125-m-y-tuca-forau-de-la-neu-3-080-m-desde-refugio-angel-orus-179493932",
+    "texto": "Ver la ruta en Wikiloc: Pico Pavots/Tucón Royo y Tuca Forau de la Neu, desde refugio Ángel Orús, de Manu a la marcheta"
+   },
+   "rutas": [
+    "pavots-orus"
+   ],
+   "fotoCima": {
+    "foto": "pav-cima",
+    "pie": "Roca de la cima con «Tucón Royo» escrito."
+   },
+   "curiosidad": "Pavots y Tucón Royo son el mismo tresmil: la lista de tresmiles lo llama con el nombre francés (Pavots) y la cartografía del IGN recogida en OpenStreetMap, «Tucón Royo o Pavots». Su altura varía con la fuente: 3.121 m en la lista de tresmiles, 3.122 m en el IGN y 3.125 m en el título de la ruta de Wikiloc. Es el punto desde el que arranca la cresta de Espadas hacia el Posets, según una guía de Rutas Pirineos. «Pavot» significa «amapola» en francés, pero no he encontrado una fuente que explique el origen del nombre."
   }
  ]
 }

@@ -1221,7 +1221,8 @@
    "posets",
    "espadas",
    "llardaneta",
-   "paul"
+   "paul",
+   "pavots"
   ]
  },
  {
@@ -1361,7 +1362,11 @@
   "nota": "Refugio de Biadós (Viadós), punto de partida y de llegada del recorrido. Altitud del GPS del track: 1.730 m.",
   "foto": "bac-refugio",
   "pie": "El mapa de la zona colgado en el refugio.",
-  "inicio": true
+  "inicio": true,
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-cabana",
@@ -1372,7 +1377,11 @@
   "lon": 0.3737,
   "nota": "Cabaña de pastores junto al camino de subida. Altitud del GPS del track: 2.035 m.",
   "foto": "bac-cabana",
-  "pie": "La cabaña de pastores de Sarrao (septiembre de 2026)."
+  "pie": "La cabaña de pastores de Sarrao (septiembre de 2026).",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-ordesa",
@@ -1383,7 +1392,11 @@
   "lon": 0.373878,
   "nota": "Collado de respiro con vistas al Parque Nacional de Ordesa. Altitud del GPS del track: 2.186 m.",
   "foto": "bac-ordesa",
-  "pie": "Vista desde el collado, con las cumbres al fondo."
+  "pie": "Vista desde el collado, con las cumbres al fondo.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-senal",
@@ -1394,7 +1407,11 @@
   "lon": 0.390357,
   "nota": "Collado de la variante clásica, con un mojón. Altitud del GPS del track: 2.530 m.",
   "foto": "bac-senal",
-  "pie": "El mojón del Collado Señal de Viadós."
+  "pie": "El mojón del Collado Señal de Viadós.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-paso",
@@ -1405,7 +1422,11 @@
   "lon": 0.384514,
   "nota": "Paso señalizado que evita un tramo expuesto, desviándose un poco a la izquierda. Altitud del GPS del track: 2.692 m.",
   "foto": "bac-paso",
-  "pie": "El paso señalizado, sobre laderas de pizarra."
+  "pie": "El paso señalizado, sobre laderas de pizarra.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-cresta",
@@ -1416,7 +1437,11 @@
   "lon": 0.392413,
   "nota": "Aquí empieza la cresta final, con tramos sencillos de trepada. Altitud del GPS del track: 3.131 m.",
   "foto": "bac-cresta",
-  "pie": "El arranque de la cresta final."
+  "pie": "El arranque de la cresta final.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-sabre",
@@ -1427,7 +1452,11 @@
   "lon": 0.394541,
   "nota": "Panorámica de la cresta hacia la Punta de Sabre (nombre según el autor del track). Altitud del GPS del track: 3.172 m.",
   "foto": "bac-sabre",
-  "pie": "La cresta que continúa hacia la Punta de Sabre."
+  "pie": "La cresta que continúa hacia la Punta de Sabre.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "bac-cima",
@@ -1438,7 +1467,11 @@
   "lon": 0.394331,
   "nota": "Cumbre del Gran Bachimala, en la frontera con Francia. Altitud del GPS del track: 3.179 m.",
   "foto": "bac-cima",
-  "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito."
+  "pie": "La piedra de la cima, con «Gran Bachimala 3.177 m» escrito.",
+  "picos": [
+   "bachimala",
+   "sabre"
+  ]
  },
  {
   "id": "med-ibon",
@@ -1655,7 +1688,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "pavots"
   ],
   "nombre": "Ibón de Llardaneta",
   "tipo": "ibon",
@@ -1670,7 +1704,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "pavots"
   ],
   "nombre": "Pavots",
   "tipo": "cima",
@@ -2641,7 +2676,8 @@
   "pico": "abadias",
   "picos": [
    "abadias",
-   "espalda-aneto"
+   "espalda-aneto",
+   "mulleres"
   ],
   "nombre": "La Besurta",
   "tipo": "lugar",
@@ -2657,7 +2693,8 @@
   "pico": "abadias",
   "picos": [
    "abadias",
-   "espalda-aneto"
+   "espalda-aneto",
+   "mulleres"
   ],
   "nombre": "Forau d'Aigualluts",
   "tipo": "lugar",
@@ -2672,7 +2709,8 @@
   "pico": "abadias",
   "picos": [
    "abadias",
-   "espalda-aneto"
+   "espalda-aneto",
+   "mulleres"
   ],
   "nombre": "Plan d'Aigualluts",
   "tipo": "lugar",
@@ -3812,7 +3850,8 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "sabre"
   ],
   "nombre": "Bordas de Viadós",
   "tipo": "lugar",
@@ -4203,5 +4242,135 @@
   "lat": 42.710503,
   "lon": 0.339503,
   "nota": "Cumbre de 3.033 m según OpenStreetMap; el track la llama «Culfreda NE 3032 m»."
+ },
+ {
+  "id": "mul-interseccion",
+  "pico": "mulleres",
+  "picos": [
+   "mulleres"
+  ],
+  "nombre": "Cruce hacia Mulleres",
+  "tipo": "paso",
+  "lat": 42.657421,
+  "lon": 0.685001,
+  "nota": "Cruce de caminos con señal «Coll de Toro» y «Mulleres». Altitud del GPS del track: 2.210 m.",
+  "foto": "mul-interseccion",
+  "pie": "Señal amarilla del cruce: Coll de Toro a la izquierda, Mulleres a la derecha."
+ },
+ {
+  "id": "mul-escaleta",
+  "pico": "mulleres",
+  "picos": [
+   "mulleres"
+  ],
+  "nombre": "Ibón de la Escaleta",
+  "tipo": "ibon",
+  "lat": 42.648583,
+  "lon": 0.693498,
+  "nota": "Altitud del GPS del track: 2.355 m.",
+  "foto": "mul-escaleta",
+  "pie": "El ibón de la Escaleta, bajo las paredes de granito."
+ },
+ {
+  "id": "mul-circular",
+  "pico": "mulleres",
+  "picos": [
+   "mulleres"
+  ],
+  "nombre": "Ibón Circular",
+  "tipo": "ibon",
+  "lat": 42.64511,
+  "lon": 0.697045,
+  "nota": "Altitud del GPS del track: 2.471 m.",
+  "foto": "mul-circular",
+  "pie": "El ibón Circular, de aguas verdosas, en la subida a la cima."
+ },
+ {
+  "id": "mul-cima",
+  "pico": "mulleres",
+  "picos": [
+   "mulleres"
+  ],
+  "nombre": "Cima de Mulleres",
+  "tipo": "cima",
+  "lat": 42.62947,
+  "lon": 0.69857,
+  "nota": "Tuc de Mulleres (Molières), 3.010 m según las guías. Altitud del GPS del track: 2.991 m.",
+  "foto": "mul-cima",
+  "pie": "El hito de piedras de la cima, con los ibones de Mulleres al fondo."
+ },
+ {
+  "id": "sab-cima",
+  "pico": "sabre",
+  "picos": [
+   "sabre"
+  ],
+  "nombre": "Punta del Sabre",
+  "tipo": "cima",
+  "lat": 42.694437,
+  "lon": 0.396437,
+  "nota": "Punta del Sabre (Pointe du Sabre, Punta del Sable), 3.134 m según el IGN. Altitud del GPS del track: 3.128 m."
+ },
+ {
+  "id": "pav-cruce",
+  "pico": "pavots",
+  "picos": [
+   "pavots"
+  ],
+  "nombre": "Cruce hacia Posets",
+  "tipo": "paso",
+  "lat": 42.637509,
+  "lon": 0.442725,
+  "nota": "Cruce de caminos con el sendero que sigue hacia el Posets. Altitud del GPS del track: 2.525 m."
+ },
+ {
+  "id": "pav-collado",
+  "pico": "pavots",
+  "picos": [
+   "pavots"
+  ],
+  "nombre": "Collado de Pavots",
+  "tipo": "paso",
+  "lat": 42.641546,
+  "lon": 0.424073,
+  "nota": "Collado al pie de la cumbre. Altitud del GPS del track: 3.058 m."
+ },
+ {
+  "id": "pav-forau",
+  "pico": "pavots",
+  "picos": [
+   "pavots"
+  ],
+  "nombre": "Tuca Forau de la Neu",
+  "tipo": "cima",
+  "lat": 42.644042,
+  "lon": 0.427958,
+  "nota": "Tuca Forau de la Neu, 3.080 m según el título de la ruta. Altitud del GPS del track: 3.039 m.",
+  "foto": "pav-forau",
+  "pie": "Piedras de la cima de la Tuca Forau de la Neu, con su nombre pintado."
+ },
+ {
+  "id": "pav-canal",
+  "pico": "pavots",
+  "picos": [
+   "pavots"
+  ],
+  "nombre": "Canal Fonda",
+  "tipo": "paso",
+  "lat": 42.640284,
+  "lon": 0.439521,
+  "nota": "Canal por la que se baja hacia el valle de Estós. Altitud del GPS del track: 2.651 m."
+ },
+ {
+  "id": "pav-estallo",
+  "pico": "pavots",
+  "picos": [
+   "pavots"
+  ],
+  "nombre": "Pleta Estallo",
+  "tipo": "lugar",
+  "lat": 42.613685,
+  "lon": 0.478441,
+  "nota": "Final del recorrido. Altitud del GPS del track: 1.473 m."
  }
 ]
