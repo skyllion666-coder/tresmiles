@@ -627,5 +627,35 @@
   "fuente": "Wikiloc",
   "w": 675,
   "h": 900
+ },
+ "algas-se": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Spelowash",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/cresta-panticosa-6x-3-000-3-064m-aguja-pondiellos-garmo-negro-algas-n-central-y-sw-argualas-desde-b-221794422",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "aguja-de-pondiellos": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Spelowash",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/cresta-panticosa-6x-3-000-3-064m-aguja-pondiellos-garmo-negro-algas-n-central-y-sw-argualas-desde-b-221794422",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "aguja-de-arnales": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "albertrek",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pico-arnales-3-000-m-aguja-arnales-3-034-m-aguja-pondiellos-3-011-m-82495335",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 467
  }
 }

@@ -2197,7 +2197,9 @@
    "clase": "discutida",
    "nombres": "",
    "basica": true,
-   "inv": "INF-08"
+   "inv": "INF-08",
+   "foto": "algas-se",
+   "pie": "Las Algas SE, vistas desde la cresta de Panticosa."
   },
   {
    "id": "aguja-de-arnales",
@@ -2214,7 +2216,9 @@
    "clase": "secundaria",
    "nombres": "Garmo de Pondiellos",
    "basica": true,
-   "inv": "INF-09"
+   "inv": "INF-09",
+   "foto": "aguja-de-arnales",
+   "pie": "Vista desde la Aguja de Arnales (foto de su ruta)."
   },
   {
    "id": "aguja-de-pondiellos",
@@ -2231,7 +2235,9 @@
    "clase": "secundaria",
    "nombres": "Garmo Negro deras Argualas",
    "basica": true,
-   "inv": "INF-10"
+   "inv": "INF-10",
+   "foto": "aguja-de-pondiellos",
+   "pie": "La arista hacia la Aguja de Pondiellos."
   },
   {
    "id": "algas-so",
