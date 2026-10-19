@@ -1,4 +1,28 @@
 {
+ "pico-de-creguena": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Pelopin (Pirineodeluis)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "Pirineodeluis",
+  "w": 640,
+  "h": 482,
+  "ruta": "img/menores/pico-de-creguena.webp",
+  "propia": true
+ },
+ "tuca-d-el-quillon": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Pelopin (Pirineodeluis)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "Pirineodeluis",
+  "w": 640,
+  "h": 482,
+  "ruta": "img/menores/tuca-d-el-quillon.webp",
+  "propia": true
+ },
  "pointe-bazillac": {
   "archivo": "De Brèche de Roland en de 'Dedo'.jpg",
   "autor": "Frederik Vandaele",
@@ -494,28 +518,26 @@
   "h": 427,
   "ruta": "img/menores/punta-suelsa.webp"
  },
- "pico-de-creguena": {
-  "archivo": "foto enviada por el usuario",
-  "autor": "Pelopin (Pirineodeluis)",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "",
-  "fuente": "Pirineodeluis",
-  "w": 640,
-  "h": 482,
-  "ruta": "img/menores/pico-de-creguena.webp",
-  "propia": true
+ "tozal-del-mallo": {
+  "archivo": "J20 952 Tozal del Mallo.jpg",
+  "autor": "Falk2",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:J20_952_Tozal_del_Mallo.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 427,
+  "h": 640,
+  "ruta": "img/menores/tozal-del-mallo.webp"
  },
- "tuca-d-el-quillon": {
-  "archivo": "foto enviada por el usuario",
-  "autor": "Pelopin (Pirineodeluis)",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "",
-  "fuente": "Pirineodeluis",
+ "pena-foratata": {
+  "archivo": "Sallent de Gállego Peña Foratata 899.jpg",
+  "autor": "GFreihalter",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Sallent_de_G%C3%A1llego_Pe%C3%B1a_Foratata_899.jpg",
+  "fuente": "Wikimedia Commons",
   "w": 640,
-  "h": 482,
-  "ruta": "img/menores/tuca-d-el-quillon.webp",
-  "propia": true
+  "h": 427,
+  "ruta": "img/menores/pena-foratata.webp"
  }
 }
