@@ -12,7 +12,9 @@ UA = {'User-Agent': 'tresmiles/1.0 (proyecto educativo; https://skyllion666-code
 LIBRES = re.compile(r'^(CC BY(-SA)? \d\.\d|CC0|Public domain|No restrictions)', re.I)
 sel = json.load(open(D('tools', 'datos', 'fotos_menores_sel.json')))
 os.makedirs(D('img', 'menores'), exist_ok=True)
-meta, ids = {}, list(sel)
+# las fotos que no son de Commons (enviadas por sus autores, `propia`) se conservan tal cual
+previas = json.load(open(D('tools', 'datos', 'fotos_menores.json'))) if os.path.exists(D('tools', 'datos', 'fotos_menores.json')) else {}
+meta, ids = {k: v for k, v in previas.items() if v.get('propia')}, list(sel)
 for i in range(0, len(ids), 40):
     tt = '|'.join('File:' + sel[k] for k in ids[i:i + 40])
     u = 'https://commons.wikimedia.org/w/api.php?' + urllib.parse.urlencode({'action': 'query', 'titles': tt, 'prop': 'imageinfo', 'iiprop': 'url|extmetadata|user', 'iiurlwidth': 640, 'format': 'json'})

@@ -493,5 +493,17 @@
   "w": 640,
   "h": 427,
   "ruta": "img/menores/punta-suelsa.webp"
+ },
+ "pico-de-creguena": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Pelopin (Pirineodeluis)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "Pirineodeluis",
+  "w": 640,
+  "h": 482,
+  "ruta": "img/menores/pico-de-creguena.webp",
+  "propia": true
  }
 }
