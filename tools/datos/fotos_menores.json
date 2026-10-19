@@ -23,6 +23,18 @@
   "ruta": "img/menores/tuca-d-el-quillon.webp",
   "propia": true
  },
+ "pic-de-gabiedou": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Javier Urrutia",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/pic-de-gabiedou.webp",
+  "propia": true
+ },
  "pointe-bazillac": {
   "archivo": "De Brèche de Roland en de 'Dedo'.jpg",
   "autor": "Frederik Vandaele",
@@ -132,18 +144,6 @@
   "w": 640,
   "h": 480,
   "ruta": "img/menores/susana-mondarruego.webp"
- },
- "pic-de-gabiedou": {
-  "archivo": "foto enviada por el usuario",
-  "autor": "Javier Urrutia",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "",
-  "fuente": "",
-  "w": 640,
-  "h": 480,
-  "ruta": "img/menores/pic-de-gabiedou.webp",
-  "propia": true
  },
  "tuc-del-mig-de-la-tallada": {
   "archivo": "Vista de izquierda a derecha, Pico o Tuc de la Tallada, Pico de la Tallada del Medio o Tuc del Mig de la Tallada, Fontana de Senet y Fontana de Vielha.jpg",
