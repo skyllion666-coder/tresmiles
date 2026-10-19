@@ -598,7 +598,7 @@ async function boot() {
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
-      ${p.ruta ? `<h3>Ruta normal</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
+      ${p.ruta ? `<h3>${/^Esta (cima|cumbre) aparece en la ruta/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${p.info.traducido ? 'Texto traducido al castellano' : 'Texto'} de Wikipedia en ${{ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]}, artículo «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.</p>` : ''}
       ${figCima(p)}

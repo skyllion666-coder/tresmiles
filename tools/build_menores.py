@@ -66,11 +66,16 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
 wp = json.load(open(D('tools', 'datos', 'wikipedia_menores.json'))) if os.path.exists(D('tools', 'datos', 'wikipedia_menores.json')) else {}
 for p in out:
     if p['id'] in wp: p['info'] = wp[p['id']]
+# notas de ruta (tools/datos/notas_menores.json): desnivel, ruta y enlace a la ruta de Wikiloc de la que sale la foto
+nr = D('tools', 'datos', 'notas_menores.json')
+notas = json.load(open(nr)) if os.path.exists(nr) else {}
+for p in out:
+    if p['id'] in notas: p.update(notas[p['id']])
 # fotos pequeñas (tools/fotos_menores.py): la clave en `fotos` es «m-<id>» para no chocar con las de los tresmiles
 ruta_fotos = D('tools', 'datos', 'fotos_menores.json')
 fotos = json.load(open(ruta_fotos)) if os.path.exists(ruta_fotos) else {}
 for p in out:
-    if p['id'] in fotos: p['foto'] = 'm-' + p['id']; p['pie'] = f"{p['nombre']}."
+    if p['id'] in fotos: p['foto'] = 'm-' + p['id']; p['pie'] = fotos[p['id']].get('pie') or f"{p['nombre']}."
 # otros nombres comprobados (se buscan en el selector y salen bajo el nombre en la ficha)
 OTROS = {'tuca-dels-tatats': 'Pico de Estatás (ruta de Pelopin en Wikiloc, cumbre a 5 m del nodo de OSM)'}
 for p in out:
