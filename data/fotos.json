@@ -1097,5 +1097,225 @@
   "fuente": "Wikiloc",
   "w": 700,
   "h": 525
+ },
+ "pico-de-ballibierna": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Desde la cima del Rock",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/refugio-cap-de-llauset-pico-vallibierna-ibon-vallibierna-collado-vallibierna-40172730",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 467
+ },
+ "pico-oriental-de-la-cascada": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-central-de-la-cascada": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-occidental-de-la-cascada": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Santialpino",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-baudrimont-no": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "gruta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-de-las-olas-baudrimont-nw-espalda-esparets-16816310",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "espalda-esparets": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "gruta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-de-las-olas-baudrimont-nw-espalda-esparets-16816310",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "tuqueta-roya-de-creguena": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "David S C 5",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/refugio-de-la-renclusa-pico-de-la-maladeta-pico-abadias-tuqueta-roya-de-creguena-y-portillon-superi-282782993",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
+ },
+ "pico-de-la-forqueta": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Paco Rodriguez Garcia",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/231003-110-tresmil-collado-de-eriste-pico-de-la-forqueta-n-y-se-tuca-forau-de-la-neu-desde-refugio-149098808",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
+ },
+ "tuca-forau-de-la-neu": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Paco Rodriguez Garcia",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/231003-110-tresmil-collado-de-eriste-pico-de-la-forqueta-n-y-se-tuca-forau-de-la-neu-desde-refugio-149098808",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "punta-ledormeur": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 506,
+  "h": 900
+ },
+ "punta-del-ibon": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 506,
+  "h": 900
+ },
+ "pequeno-bachimala-s": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 394
+ },
+ "pequeno-bachimala": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 394
+ },
+ "pico-marcos-feliu": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 394
+ },
+ "pico-le-bondidier": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "gruta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "pico-mir": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "emili.d996",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pico-mir-punta-delmas-pico-le-bondidier-pico-cordier-pico-sayo-5485220",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-sayo": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "emili.d996",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pico-mir-punta-delmas-pico-le-bondidier-pico-cordier-pico-sayo-5485220",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "diente-de-alba": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "gruta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "pico-de-troumouse": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "aneto.0713",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/cresta-de-troumouse-pic-heid-pic-de-troumouse-pic-de-serre-mourene-pequena-munia-la-munia-271515995",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
+ },
+ "aguja-argarot": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "JPSalas65",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/agujas-argarot-sur-3031m-argarot-3035m-tchihatcheff-3052m-y-franqueville-3065m-110064888",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "aguja-tchihatcheff": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "JPSalas65",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/agujas-argarot-sur-3031m-argarot-3035m-tchihatcheff-3052m-y-franqueville-3065m-110064888",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "pic-de-l-abeille": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Unaiki32",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-lerdormeur-punta-del-ibon-pequeno-bachimala-ramon-feliu-y-abeille-desde-refugio-tabernes-226998218",
+  "fuente": "Wikiloc",
+  "w": 506,
+  "h": 900
  }
 }
