@@ -567,5 +567,65 @@
   "fuente": "Wikiloc",
   "w": 675,
   "h": 900
+ },
+ "frondella": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "aguja-cadier": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "torre-de-costerillou": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Ricardo 747",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/cresta-de-costerillou-3x3000-aguja-de-ussel-3022-torre-costerillou-3049-balaitus-3144-270599666",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
+ },
+ "gran-tapou": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pic-du-milieu-3130m-gran-tapuo-2150m-punta-inferior-del-tapou-3124m-y-punta-superior-del-tapou-3132-185195659",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 467
+ },
+ "punta-inferior-del-tapou": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pic-du-milieu-3130m-gran-tapuo-2150m-punta-inferior-del-tapou-3124m-y-punta-superior-del-tapou-3132-185195659",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-del-clot-de-la-hount": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "TrotaríosySendas",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/vignemale-4-tresmiles-desde-refugio-de-bayssellance-vignemale-clot-de-la-hount-cerbillona-y-pico-ce-219577337",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
  }
 }

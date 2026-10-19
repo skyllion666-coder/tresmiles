@@ -2102,7 +2102,9 @@
    "clase": "secundaria",
    "nombres": "Frondella Central",
    "basica": true,
-   "inv": "BAL-04"
+   "inv": "BAL-04",
+   "foto": "frondella",
+   "pie": "La cresta de la Frondella, vista durante la subida desde Respomuso."
   },
   {
    "id": "torre-de-costerillou",
@@ -2119,7 +2121,9 @@
    "clase": "secundaria",
    "nombres": "O Casterillet · Torre de Cadier · Torre George Cadier · Tour de Cadier · O Casterillet / Torre de Cadier",
    "basica": true,
-   "inv": "BAL-05"
+   "inv": "BAL-05",
+   "foto": "torre-de-costerillou",
+   "pie": "La cresta de Costerillou, con la Torre al fondo."
   },
   {
    "id": "aguja-cadier",
@@ -2136,7 +2140,9 @@
    "clase": "secundaria",
    "nombres": "Punda dera Breca · Pico Anónimo",
    "basica": true,
-   "inv": "BAL-06"
+   "inv": "BAL-06",
+   "foto": "aguja-cadier",
+   "pie": "Las agujas de la cresta de la Frondella y la Aguja Cadier."
   },
   {
    "id": "aguja-ussel",
@@ -2259,7 +2265,9 @@
    "clase": "principal",
    "nombres": "Punda dero Clot dera Fuen · Pic du Clot de la Hount",
    "basica": true,
-   "inv": "VIG-02"
+   "inv": "VIG-02",
+   "foto": "pico-del-clot-de-la-hount",
+   "pie": "La cresta del Vignemale hacia el Clot de la Hount."
   },
   {
    "id": "pico-central",
@@ -2295,7 +2303,9 @@
    "clase": "principal",
    "nombres": "Punda de Tapón Gran · Grand Tapou · Grand Pic de Tapou",
    "basica": true,
-   "inv": "VIG-06"
+   "inv": "VIG-06",
+   "foto": "gran-tapou",
+   "pie": "La cresta del Tapou, con el Gran Tapou al fondo."
   },
   {
    "id": "punta-superior-del-tapou",
@@ -2348,7 +2358,9 @@
    "clase": "secundaria",
    "nombres": "Tetons dera Labaza",
    "basica": true,
-   "inv": "VIG-09"
+   "inv": "VIG-09",
+   "foto": "punta-inferior-del-tapou",
+   "pie": "La brecha entre las agujas del Tapou."
   },
   {
    "id": "aguja-superior-del-clot-de-la-hount",
