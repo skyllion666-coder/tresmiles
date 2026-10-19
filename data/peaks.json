@@ -2153,7 +2153,9 @@
    "clase": "secundaria",
    "nombres": "Agulla d'Ussel · Aguja d'Ussel · Aguja de Ussel",
    "basica": true,
-   "inv": "BAL-07"
+   "inv": "BAL-07",
+   "foto": "aguja-ussel",
+   "pie": "Vista del recorrido por la cresta de Costerillou hacia la Aguja Ussel."
   },
   {
    "id": "algas-norte",
@@ -2170,7 +2172,9 @@
    "clase": "discutida",
    "nombres": "Antecima N de Algas",
    "basica": true,
-   "inv": "INF-07"
+   "inv": "INF-07",
+   "foto": "algas-norte",
+   "pie": "Las Algas Norte, desde la subida desde Casa de Piedra."
   },
   {
    "id": "algas-se",
@@ -2272,7 +2276,9 @@
    "clase": "principal",
    "nombres": "Punda dera Blanquera · Pic Central",
    "basica": true,
-   "inv": "VIG-04"
+   "inv": "VIG-04",
+   "foto": "pico-central",
+   "pie": "La cima del Pico Central, en la cresta del Vignemale."
   },
   {
    "id": "gran-tapou",
@@ -2306,7 +2312,9 @@
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "VIG-07"
+   "inv": "VIG-07",
+   "foto": "punta-superior-del-tapou",
+   "pie": "La Punta Superior del Tapou, en la cresta."
   },
   {
    "id": "pico-del-medio",
