@@ -3307,11 +3307,23 @@
    "situacion": "Aragón",
    "lat": 42.661389,
    "lon": 0.435167,
-   "descripcion": "Cumbre de 3.167 m del macizo Posets–Eriste, en territorio aragonés. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de los Gemelos Ravier (3.167 m) es una cima de la cresta entre Estós y Chistau, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punta de las Mardaneras · Tuca d'els Chiminucs S · Pico de los Gemelos · S",
    "basica": true,
-   "inv": "POS-08"
+   "inv": "POS-08",
+   "foto": "pico-de-los-gemelos-ravier",
+   "pie": "La arista de los Gemelos Ravier, a unos 2.800 m.",
+   "acceso": "Aparcamiento de Estós / refugio de Estós (Benasque)",
+   "desnivel": "+2.310 m · 33,2 km",
+   "dificultad": "alta",
+   "grado": "Arista de roca, sin dificultad técnica indicada",
+   "ruta": "Se sale del aparcamiento de Estós por el valle y el refugio de Estós hasta el cuello de Chistau, y se sube por la arista de los Gemelos pasando por el pico del Cabo (2.900 m), el Pico de los Veteranos y los Gemelos Ravier; la ruta sigue por el collado Negro (2.875 m) a la Forqueta y al Royo de la Paúl.",
+   "curiosidad": "Los Veteranos y los Gemelos Ravier se hacen en una misma ruta, por la arista que sale del cuello de Chistau.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/aparcamiento-estos-refugio-estos-pico-el-cabo-veteranos-gemelos-ravier-la-forqueta-y-royo-de-la-pau-146437865",
+    "texto": "Ruta de drubio1981 en Wikiloc"
+   }
   },
   {
    "id": "tuca-forau-de-la-neu",
@@ -3426,11 +3438,23 @@
    "situacion": "Aragón",
    "lat": 42.690278,
    "lon": 0.524833,
-   "descripcion": "Cima secundaria de 3.172 m del macizo Perdiguero, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Hito Oriental del Perdiguero (3.172 m) es la cima oriental del macizo del Perdiguero, sobre el valle de Literola. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Fita d'el Perdiguèro · Hito E de Perdiguero",
    "basica": true,
-   "inv": "PRD-03"
+   "inv": "PRD-03",
+   "foto": "hito-oriental-de-perdiguero",
+   "pie": "El Hito Oriental del Perdiguero, con su piedra grabada.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "En su cima hay una piedra grabada con el nombre y la altura.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "pico-royo",
@@ -3443,11 +3467,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.697639,
    "lon": 0.520889,
-   "descripcion": "Cumbre de 3.122 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Royo (3.122 m) es una cima de la cresta de Literola, junto al collado superior de Literola, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca Ròya de Lliteròla",
    "basica": true,
-   "inv": "PRD-06"
+   "inv": "PRD-06",
+   "foto": "pico-royo",
+   "pie": "El Pico Royo, con su piedra grabada.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "En su cima hay una piedra grabada con su nombre y su altitud.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "torre-armengaud",
@@ -3460,11 +3496,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700025,
    "lon": 0.476414,
-   "descripcion": "Cima secundaria de 3.114 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Torre Armengaud (3.114 m) es una cima de la cresta de Gourgs Blancs, tras la falsa Torre Armengaud, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "PRD-07"
+   "inv": "PRD-07",
+   "foto": "torre-armengaud",
+   "pie": "La Torre Armengaud, en la cresta de Gourgs Blancs.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Cresta de bloques, aérea y expuesta, con variante por la vertiente española",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Antes de llegar hay una «falsa» Torre Armengaud, y la cresta se hace más fácil después de ella.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "pico-de-maupas",
@@ -3528,11 +3576,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700556,
    "lon": 0.474278,
-   "descripcion": "Cima secundaria de 3.105 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Punta Lourde Rocheblave (3.105 m) es el último tresmil de la cresta de Gourgs Blancs, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de Puixebres · Punta Lourde-Rocheblave · Pic de Gourgs Blancs",
    "basica": true,
-   "inv": "PRD-11"
+   "inv": "PRD-11",
+   "foto": "punta-lourde-rocheblave",
+   "pie": "La Punta Lourde Rocheblave, en la cresta de Gourgs Blancs.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Cresta de bloques, sin grandes dificultades en el último tramo",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Es el último tresmil de la cresta de Gourgs Blancs; después se baja a los picos franceses Camboué y Saint Saud.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "cap-dera-baquo-oriental",
@@ -3613,11 +3673,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.695389,
    "lon": 0.521194,
-   "descripcion": "Cima secundaria de 3.097 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Tuca de Lliterola (3.097 m) es una cima de la cresta de Literola, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Paso d'Alto de Lliteròla",
    "basica": true,
-   "inv": "PRD-16"
+   "inv": "PRD-16",
+   "foto": "tuca-de-lliterola",
+   "pie": "La cima de la Tuca de Lliterola, con su piedra grabada.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "En su cima hay una piedra grabada con su nombre.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "pico-jean-arlaud",
@@ -3630,11 +3702,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.699639,
    "lon": 0.481139,
-   "descripcion": "Cumbre de 3.064 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Jean Arlaud (3.064 m) es una cima de la cresta de Gourgs Blancs, sobre el ibón de Gías. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca d'el Puerto d'O · Pico del Puerto de Oô · Tuca de O",
    "basica": true,
-   "inv": "PRD-17"
+   "inv": "PRD-17",
+   "foto": "pico-jean-arlaud",
+   "pie": "El pico Jean Arlaud, en la cresta de Gourgs Blancs.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Chimenea de II con seguro para rapelar y trepadas cortas de II",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "En la cima del vecino Gourgs Blancs hay una placa en memoria de Jean Arlaud.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "pico-audoubert",
@@ -3698,11 +3782,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.699806,
    "lon": 0.535722,
-   "descripcion": "Cima secundaria de 3.038 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Tusse de Remuñe (3.038 m) es una cima del extremo de la cresta de Literola, sobre el valle de Remuñe, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Cabo d'els Arenals",
    "basica": true,
-   "inv": "PRD-21"
+   "inv": "PRD-21",
+   "foto": "tusse-de-remune",
+   "pie": "El Tusse de Remuñe, con su piedra grabada.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "En su cima, una piedra grabada indica su nombre y su altura.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "pico-rabada",
@@ -3715,11 +3811,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700278,
    "lon": 0.53675,
-   "descripcion": "Cima secundaria de 3.036 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Rabadá (3.036 m) es una cima del extremo de la cresta de Literola, junto a la Forca de Remuñe, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de Rabadá",
    "basica": true,
-   "inv": "PRD-22"
+   "inv": "PRD-22",
+   "foto": "pico-rabada",
+   "pie": "El Pico Rabadá, con su nombre en una roca.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "Su nombre aparece escrito en una roca de la cima.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "aguja-de-lliterola",
@@ -3732,11 +3840,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700487,
    "lon": 0.526188,
-   "descripcion": "Cima discutida de 3.028 m del macizo Perdiguero, en la frontera entre Aragón y Francia. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Aguja de Lliterola (3.028 m) es una aguja de roca en la cresta de Literola, entre la Punta de Literola y el Tusse de Remuñe. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Aguja de Literola",
    "basica": true,
-   "inv": "PRD-23"
+   "inv": "PRD-23",
+   "foto": "aguja-de-lliterola",
+   "pie": "La Aguja de Lliterola, vista desde la cresta.",
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero. Desde el collado superior de Literola se encadena la cresta: Tuca de Literola, Pico Royo, Punta de Literola, Aguja de Literola, Tusse de Remuñe, Pico Rabadá y Forca de Remuñe. Se baja por el portal de Remuñe hasta el ibón Blanco de Literola.",
+   "curiosidad": "La cresta de Literola enlaza diez cimas del Perdiguero en una sola ruta, desde el Perdiguero Oriental hasta la Forca de Remuñe.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   }
   },
   {
    "id": "pico-de-clarabide",
@@ -3749,11 +3869,23 @@
    "situacion": "Aragón",
    "lat": 42.694806,
    "lon": 0.4675,
-   "descripcion": "Cumbre de 3.019 m del macizo Perdiguero, en territorio aragonés. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Clarabide Central (3.019 m) es la cima central de los tres Clarabide, sobre el ibón de Gías. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca de Cllarabida · Pouchergues",
    "basica": true,
-   "inv": "PRD-24"
+   "inv": "PRD-24",
+   "foto": "pico-de-clarabide",
+   "pie": "La cima del Clarabide Central, con su hito.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Lomo con hitos, sin dificultades técnicas",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Los tres Clarabide (Oriental, Central y Occidental) se encadenan por un lomo con hitos desde el puerto de Gías.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "pico-de-clarabide-oriental",
@@ -3766,11 +3898,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.696444,
    "lon": 0.468639,
-   "descripcion": "Cima secundaria de 3.017 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Clarabide Oriental (3.017 m) es la primera cima de los tres Clarabide desde el puerto de Gías. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Puerto de Puixebres · Pico Oriental de Clarabide",
    "basica": true,
-   "inv": "PRD-25"
+   "inv": "PRD-25",
+   "foto": "pico-de-clarabide-oriental",
+   "pie": "El Clarabide Oriental, con su hito.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Lomo con hitos, sin dificultades técnicas",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Los tres Clarabide se encadenan por un lomo con hitos desde el puerto de Gías.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "aguja-jean-garnier",
@@ -3800,11 +3944,23 @@
    "situacion": "Aragón",
    "lat": 42.693389,
    "lon": 0.47025,
-   "descripcion": "Cumbre de 3.013 m del macizo Perdiguero, en territorio aragonés. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Gías (3.013 m) es una cima rocosa sobre el ibón de Gías, al final de la cresta de Clarabide. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca d'O · Tuca de Chíes · Pico de Gías o de O · Tuca d'O / Tuca de Chíes",
    "basica": true,
-   "inv": "PRD-27"
+   "inv": "PRD-27",
+   "foto": "pico-de-gias",
+   "pie": "El Pico de Gías, visto desde la cresta de Clarabide.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Trepada de I+ por la cara norte",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Es el último tresmil de la ruta de Santiago González.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "pico-de-clarabide-occidental",
@@ -3817,11 +3973,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.694462,
    "lon": 0.466152,
-   "descripcion": "Cima discutida de 3.007,4 m del macizo Perdiguero, en la frontera entre Aragón y Francia. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Clarabide Occidental (3.007 m) es la última cima de los tres Clarabide, sobre el ibón de Gías. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Pico Occidental de Clarabide",
    "basica": true,
-   "inv": "PRD-28"
+   "inv": "PRD-28",
+   "foto": "pico-de-clarabide-occidental",
+   "pie": "El Clarabide Occidental, con su cresta.",
+   "acceso": "Aparcamiento del valle de Estós (Benasque); noche en el refugio de Estós",
+   "desnivel": "+2.030 m · 30 km en dos días",
+   "dificultad": "alta",
+   "grado": "Lomo con hitos, sin dificultades técnicas",
+   "ruta": "Se sale del aparcamiento del valle de Estós y se llega al refugio de Estós (primer día), pasando por el embalse, la palanca del Aiguacari, la fuente de Coronas y la cabaña del Turmo. El segundo día se remonta el barranco de Gías hasta el ibón de Gías y se sube a la brecha entre el pico Jean Arlaud y Gourgs Blancs por un canalón de trepada fácil (II). Desde allí se sigue por la cresta de Gourgs Blancs, caótica de bloques de granito, hasta la Torre Armengaud y la Punta Lourde Rocheblave; después se pasa al puerto de Gías, a los tres Clarabide por un lomo con hitos y al pico de Gías, con una trepada de I+. Se vuelve por el valle de Estós y el GR 11.",
+   "curiosidad": "Los tres Clarabide se encadenan por un lomo con hitos desde el puerto de Gías.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
+    "texto": "Ruta de Santiago González en Wikiloc"
+   }
   },
   {
    "id": "pico-de-boum",
