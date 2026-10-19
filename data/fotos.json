@@ -506,5 +506,15 @@
   "fuente": "mirador.cat",
   "w": 1120,
   "h": 630
+ },
+ "argarot-sur": {
+  "archivo": "foto enviada por el usuario",
+  "autor": "Rafael Bartolomé Resano",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "",
+  "w": 640,
+  "h": 480
  }
 }

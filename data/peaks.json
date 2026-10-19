@@ -4228,7 +4228,9 @@
    "clase": "secundaria",
    "nombres": "Tuqueta de la Crencha",
    "basica": true,
-   "inv": "ANE-53"
+   "inv": "ANE-53",
+   "foto": "argarot-sur",
+   "pie": "Cima de la Tuqueta de la Crencha, con vistas al valle."
   },
   {
    "id": "aguja-juncadella",
