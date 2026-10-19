@@ -2079,13 +2079,23 @@
    "situacion": "Aragón",
    "lat": 42.83347,
    "lon": -0.29016,
-   "descripcion": "Cima secundaria de 3.062 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Frondella Norte (3.062 m) cierra por el norte la cresta de las Frondellas, sobre el refugio de Respomuso, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Frondella N",
    "basica": true,
    "inv": "BAL-02",
    "foto": "frondella-norte",
-   "pie": "Cresta entre las cumbres de la Frondella (punto «Entre picos» de la ruta)."
+   "pie": "Cresta entre las cumbres de la Frondella (punto «Entre picos» de la ruta).",
+   "acceso": "Refugio de Respomuso (Sallent de Gállego)",
+   "desnivel": "+905 m · 7,8 km desde Respomuso",
+   "dificultad": "alta",
+   "grado": "Cresta aérea y expuesta, con destrepes y trepadas",
+   "ruta": "Desde el refugio de Respomuso (al que se llega el día antes desde el embalse de la Sarra, unas 2 h 45 min) se sigue el camino de la brecha Latour, remontando el barranco de Respomuso. Hacia los 2.300 m se gira a la izquierda para rodear la arista de Bondidier y se sube por su izquierda hasta el contrafuerte Ledormeur, donde una chimenea da acceso a la muralla. Una trepada fácil lleva a la Frondella Central; el Pico de la Frondella y la Frondella Norte siguen por una cresta más aérea y expuesta.",
+   "curiosidad": "Está a unos diez minutos de cresta del Pico de la Frondella (3.071 m), el más alto del grupo.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   }
   },
   {
    "id": "frondella",
@@ -2098,13 +2108,23 @@
    "situacion": "Aragón",
    "lat": 42.83216,
    "lon": -0.29288,
-   "descripcion": "Cima secundaria de 3.055 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Frondella Central (3.055 m) es la primera cumbre de las Frondellas, la cresta que se alza sobre el refugio de Respomuso, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Frondella Central",
    "basica": true,
    "inv": "BAL-04",
    "foto": "frondella",
-   "pie": "La cresta de la Frondella, vista durante la subida desde Respomuso."
+   "pie": "La cresta de la Frondella, vista durante la subida desde Respomuso.",
+   "acceso": "Refugio de Respomuso (Sallent de Gállego)",
+   "desnivel": "+905 m · 7,8 km desde Respomuso",
+   "dificultad": "alta",
+   "grado": "Trepada fácil por la chimenea de acceso (PD, según el autor)",
+   "ruta": "Desde el refugio de Respomuso (al que se llega el día antes desde el embalse de la Sarra, unas 2 h 45 min) se sigue el camino de la brecha Latour, remontando el barranco de Respomuso. Hacia los 2.300 m se gira a la izquierda para rodear la arista de Bondidier y se sube por su izquierda hasta el contrafuerte Ledormeur, donde una chimenea da acceso a la muralla. Una trepada fácil lleva a la Frondella Central; el Pico de la Frondella y la Frondella Norte siguen por una cresta más aérea y expuesta.",
+   "curiosidad": "Desde su cima se ven el Balaitús, el pico de Arriel con el Midi d'Ossau detrás, el Palas, los Picos de los Infiernos y el Garmo Negro.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   }
   },
   {
    "id": "torre-de-costerillou",
@@ -2117,13 +2137,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.837694,
    "lon": -0.285667,
-   "descripcion": "Cima secundaria de 3.048 m del macizo Valle de Tena · Balaitús–Infiernos, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Torre de Costerillou (3.048 m) es una torre de roca en la cresta de Costerillou, entre la Aguja Ussel y el Balaitús. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "O Casterillet · Torre de Cadier · Torre George Cadier · Tour de Cadier · O Casterillet / Torre de Cadier",
    "basica": true,
    "inv": "BAL-05",
    "foto": "torre-de-costerillou",
-   "pie": "La cresta de Costerillou, con la Torre al fondo."
+   "pie": "La cresta de Costerillou, con la Torre al fondo.",
+   "acceso": "Refugio de Respomuso (Sallent de Gállego); la aproximación desde el embalse de la Sarra son unas 3 h",
+   "desnivel": "+1.000 m · 6,9 km desde Respomuso",
+   "dificultad": "muy-alta",
+   "grado": "Escalada: pasos de IV y largo de V con rápel (según el autor)",
+   "ruta": "Desde el refugio de Respomuso se va a la base de la Aguja Ussel, junto a su veta marrón, donde hay que equiparse con arnés y cuerda. Se sube por gradas de hasta II grado con un resalte de III+ y se sigue por la cresta de Costerillou, pasando por dos agujeros de roca, hasta la horquilla y la Torre de Costerillou. El autor encontró pasos de IV y de V, rápeles y terreno de escalada, y recomienda cuerda de 60 m y material de aseguramiento.",
+   "curiosidad": "La ruta de Ricardo 747 enlaza tres tresmiles por la cresta: la Aguja Ussel, la Torre de Costerillou y el Balaitús (3.144 m).",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-de-costerillou-3x3000-aguja-de-ussel-3022-torre-costerillou-3049-balaitus-3144-270599666",
+    "texto": "Ruta de Ricardo 747 en Wikiloc"
+   }
   },
   {
    "id": "aguja-cadier",
@@ -2136,13 +2166,23 @@
    "situacion": "Aragón",
    "lat": 42.834361,
    "lon": -0.289889,
-   "descripcion": "Cima secundaria de 3.022 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja Cadier (3.022 m) es una aguja de roca al final de la cresta de las Frondellas, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Punda dera Breca · Pico Anónimo",
    "basica": true,
    "inv": "BAL-06",
    "foto": "aguja-cadier",
-   "pie": "Las agujas de la cresta de la Frondella y la Aguja Cadier."
+   "pie": "Las agujas de la cresta de la Frondella y la Aguja Cadier.",
+   "acceso": "Refugio de Respomuso (Sallent de Gállego)",
+   "desnivel": "+905 m · 7,8 km desde Respomuso",
+   "dificultad": "alta",
+   "grado": "Trepada por la arista, con tramos aéreos",
+   "ruta": "Desde el refugio de Respomuso (al que se llega el día antes desde el embalse de la Sarra, unas 2 h 45 min) se sigue el camino de la brecha Latour, remontando el barranco de Respomuso. Hacia los 2.300 m se gira a la izquierda para rodear la arista de Bondidier y se sube por su izquierda hasta el contrafuerte Ledormeur, donde una chimenea da acceso a la muralla. Una trepada fácil lleva a la Frondella Central; el Pico de la Frondella y la Frondella Norte siguen por una cresta más aérea y expuesta. Desde la Frondella Norte se baja por la derecha de la arista, siguiendo hitos, hasta la base de la aguja y se trepa en busca de su cima.",
+   "curiosidad": "Se sube a continuación de la Frondella Norte (3.062 m) en la misma jornada.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   }
   },
   {
    "id": "aguja-ussel",
@@ -2155,13 +2195,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.837556,
    "lon": -0.284167,
-   "descripcion": "Cima secundaria de 3.020 m del macizo Valle de Tena · Balaitús–Infiernos, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja Ussel (3.020 m) es el primer tresmil de la cresta de Costerillou, sobre el refugio de Respomuso, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla d'Ussel · Aguja d'Ussel · Aguja de Ussel",
    "basica": true,
    "inv": "BAL-07",
    "foto": "aguja-ussel",
-   "pie": "Vista del recorrido por la cresta de Costerillou hacia la Aguja Ussel."
+   "pie": "Vista del recorrido por la cresta de Costerillou hacia la Aguja Ussel.",
+   "acceso": "Refugio de Respomuso (Sallent de Gállego); la aproximación desde el embalse de la Sarra son unas 3 h",
+   "desnivel": "+1.000 m · 6,9 km desde Respomuso",
+   "dificultad": "muy-alta",
+   "grado": "Escalada: gradas de II, resalte de III+, pasos de IV y V (según el autor)",
+   "ruta": "Desde el refugio de Respomuso se va a la base de la Aguja Ussel, junto a su veta marrón, donde hay que equiparse con arnés y cuerda. Se sube por gradas de hasta II grado con un resalte de III+ y se sigue por la cresta de Costerillou, pasando por dos agujeros de roca, hasta la horquilla y la Torre de Costerillou. El autor encontró pasos de IV y de V, rápeles y terreno de escalada, y recomienda cuerda de 60 m y material de aseguramiento.",
+   "curiosidad": "Su base es famosa por una veta marrón de roca que sirve de referencia para empezar a trepar.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-de-costerillou-3x3000-aguja-de-ussel-3022-torre-costerillou-3049-balaitus-3144-270599666",
+    "texto": "Ruta de Ricardo 747 en Wikiloc"
+   }
   },
   {
    "id": "algas-norte",
@@ -2174,13 +2224,24 @@
    "situacion": "Aragón",
    "lat": 42.76958,
    "lon": -0.27095,
-   "descripcion": "Cima discutida de 3.032 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "Las Algas Norte (3.032 m) son una de las cumbres de la cresta Garmo Negro–Algas–Argualas, sobre el Balneario de Panticosa, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Antecima N de Algas",
    "basica": true,
    "inv": "INF-07",
    "foto": "algas-norte",
-   "pie": "Las Algas Norte, desde la subida desde Casa de Piedra."
+   "pie": "Las Algas Norte, desde la subida desde Casa de Piedra.",
+   "acceso": "Balneario de Panticosa; aparcamiento junto al refugio de Casa de Piedra",
+   "desnivel": "+1.510 m · 11,1 km, circular",
+   "dificultad": "alta",
+   "grado": "Senda y trepadas fáciles por la cresta (evitables)",
+   "ruta": "Se sale de la Casa de Piedra, en Baños de Panticosa, por una senda cómoda que sube en lazadas hacia la Mallata baja y la Mallata alta. Desde allí se sube por un canal a un collado y al Garmo Negro, y se sigue por la cresta, pasando por el collado de Argualas, hasta las Algas Norte, con alguna trepada que se puede evitar bajando al valle colgado que une los picos.",
+   "curiosidad": "Se puede hacer con perro, atado, según la señalización; hay que cuidar sus almohadillas en las zonas de roca. Hay agua en el refugio de Casa de Piedra y en la Fuente de la Laguna.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/garmo-negro-y-algas-norte-circular-desde-casa-de-piedra-29188961",
+    "texto": "Ruta de Alfredo Barberan en Wikiloc"
+   },
+   "epoca": "Final del verano (la ruta se hizo el 29 de septiembre de 2018)"
   },
   {
    "id": "algas-se",
@@ -2193,13 +2254,23 @@
    "situacion": "Aragón",
    "lat": 42.76755,
    "lon": -0.26988,
-   "descripcion": "Cima discutida de 3.023 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "Las Algas SE (3.023 m) son una de las cumbres de la cresta de las Algas, entre el Garmo Negro y Argualas, sobre el Balneario de Panticosa. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "",
    "basica": true,
    "inv": "INF-08",
    "foto": "algas-se",
-   "pie": "Las Algas SE, vistas desde la cresta de Panticosa."
+   "pie": "Las Algas SE, vistas desde la cresta de Panticosa.",
+   "acceso": "Balneario de Panticosa",
+   "desnivel": "+1.580 m · 11,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Trepadas sencillas y algo expuestas, sin seguros fijos",
+   "ruta": "Se sale de madrugada del Balneario de Panticosa hacia el collado de Pondiellos, donde amanece sobre los ibones, y se sube a la Aguja de Pondiellos por un canal a mano izquierda y una trepada hasta la cresta. Después se enlazan el Garmo Negro (el punto más alto de la ruta, 3.064 m) y la cresta de las Algas hasta Argualas. Los pasos de la cresta de las Algas son fáciles pero algo expuestos, casi siempre evitables por la izquierda, hacia el Balneario. No hay seguros fijos.",
+   "curiosidad": "La ruta de Spelowash enlaza seis tresmiles de Panticosa en una sola jornada: Aguja de Pondiellos, Garmo Negro, tres cimas de las Algas y Argualas.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/cresta-panticosa-6x-3-000-3-064m-aguja-pondiellos-garmo-negro-algas-n-central-y-sw-argualas-desde-b-221794422",
+    "texto": "Ruta de Spelowash en Wikiloc"
+   }
   },
   {
    "id": "aguja-de-arnales",
@@ -2212,13 +2283,23 @@
    "situacion": "Aragón",
    "lat": 42.780917,
    "lon": -0.257444,
-   "descripcion": "Cima secundaria de 3.020 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja de Arnales (3.020 m) es una cima rocosa junto al Pico Arnales, sobre el collado de Saretas, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Garmo de Pondiellos",
    "basica": true,
    "inv": "INF-09",
    "foto": "aguja-de-arnales",
-   "pie": "Vista desde la Aguja de Arnales (foto de su ruta)."
+   "pie": "Vista desde la Aguja de Arnales (foto de su ruta).",
+   "acceso": "Balneario de Panticosa",
+   "desnivel": "+1.600 m · 10,8 km, ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Trepadas con algún paso aéreo, sin gran dificultad",
+   "ruta": "Desde el Balneario de Panticosa se sube al collado de Pondiellos y de allí al collado de Saretas. Primero se sube al Pico Arnales y después a la Aguja Arnales, con algunas trepadas y algún paso aéreo pequeño. De vuelta, en el collado de Pondiellos se sube a la Aguja de Pondiellos, también con trepadas sencillas, y se baja por el mismo camino.",
+   "curiosidad": "En una misma jornada se encadenan tres tresmiles: el Pico Arnales, la Aguja Arnales y la Aguja de Pondiellos.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/pico-arnales-3-000-m-aguja-arnales-3-034-m-aguja-pondiellos-3-011-m-82495335",
+    "texto": "Ruta de albertrek en Wikiloc"
+   }
   },
   {
    "id": "aguja-de-pondiellos",
@@ -2231,13 +2312,23 @@
    "situacion": "Aragón",
    "lat": 42.771806,
    "lon": -0.262139,
-   "descripcion": "Cima secundaria de 3.015 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja de Pondiellos (3.015 m) es una cima de trepada sencilla sobre el collado de Pondiellos, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Garmo Negro deras Argualas",
    "basica": true,
    "inv": "INF-10",
    "foto": "aguja-de-pondiellos",
-   "pie": "La arista hacia la Aguja de Pondiellos."
+   "pie": "La arista hacia la Aguja de Pondiellos.",
+   "acceso": "Balneario de Panticosa",
+   "desnivel": "+1.580 m · 11,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Trepada sencilla desde el collado",
+   "ruta": "Se sale de madrugada del Balneario de Panticosa hacia el collado de Pondiellos, donde amanece sobre los ibones, y se sube a la Aguja de Pondiellos por un canal a mano izquierda y una trepada hasta la cresta. Después se enlazan el Garmo Negro (el punto más alto de la ruta, 3.064 m) y la cresta de las Algas hasta Argualas. Los pasos de la cresta de las Algas son fáciles pero algo expuestos, casi siempre evitables por la izquierda, hacia el Balneario. No hay seguros fijos.",
+   "curiosidad": "Se sube por un canal a mano izquierda hasta la cresta, y ese tramo se puede evitar por la izquierda.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/cresta-panticosa-6x-3-000-3-064m-aguja-pondiellos-garmo-negro-algas-n-central-y-sw-argualas-desde-b-221794422",
+    "texto": "Ruta de Spelowash en Wikiloc"
+   }
   },
   {
    "id": "algas-so",
@@ -2267,13 +2358,24 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.773139,
    "lon": -0.14975,
-   "descripcion": "Cumbre de 3.291 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "El Pico del Clot de la Hount (3.291 m) es la segunda cumbre de la cresta del Vignemale, sobre el glaciar de Ossoue, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punda dero Clot dera Fuen · Pic du Clot de la Hount",
    "basica": true,
    "inv": "VIG-02",
    "foto": "pico-del-clot-de-la-hount",
-   "pie": "La cresta del Vignemale hacia el Clot de la Hount."
+   "pie": "La cresta del Vignemale hacia el Clot de la Hount.",
+   "acceso": "Refugio de Baysellance (Gavarnie, Francia)",
+   "desnivel": "+1.030 m · 8 km (Vignemale, Clot, Cerbillona y Pico Central)",
+   "dificultad": "alta",
+   "grado": "Nieve con crampones y piolet, cresta con trepada expuesta y casco obligado",
+   "ruta": "Se sale del refugio de Baysellance hacia el glaciar de Ossoue, con nieve continua casi hasta el collado de Cerbillona y crampones puestos. Desde el collado se sigue por la cresta, fácil con algún paso aéreo, hasta el Clot de la Hount; el tramo entre el Vignemale y el Clot es el más técnico y delicado, con una trepada expuesta.",
+   "curiosidad": "El glaciar de Ossoue, a sus pies, es uno de los últimos glaciares permanentes de los Pirineos y está en retroceso.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/vignemale-4-tresmiles-desde-refugio-de-bayssellance-vignemale-clot-de-la-hount-cerbillona-y-pico-ce-219577337",
+    "texto": "Ruta de TrotaríosySendas en Wikiloc"
+   },
+   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)"
   },
   {
    "id": "pico-central",
@@ -2286,13 +2388,24 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.768361,
    "lon": -0.146583,
-   "descripcion": "Cumbre de 3.227 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "El Pico Central (3.227 m) es la cima que cierra la cresta de cuatro tresmiles sobre el glaciar de Ossoue, junto al Vignemale, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punda dera Blanquera · Pic Central",
    "basica": true,
    "inv": "VIG-04",
    "foto": "pico-central",
-   "pie": "La cima del Pico Central, en la cresta del Vignemale."
+   "pie": "La cima del Pico Central, en la cresta del Vignemale.",
+   "acceso": "Refugio de Baysellance (Gavarnie, Francia)",
+   "desnivel": "+1.030 m · 8 km (Vignemale, Clot, Cerbillona y Pico Central)",
+   "dificultad": "alta",
+   "grado": "Nieve con crampones y piolet, cresta con trepada expuesta y casco obligado",
+   "ruta": "Se sale del refugio de Baysellance hacia el glaciar de Ossoue, con nieve continua casi hasta el collado de Cerbillona y crampones puestos. Desde el collado se sigue por la cresta, fácil con algún paso aéreo, hasta el Clot de la Hount; el tramo entre el Vignemale y el Clot es el más técnico y delicado, con una trepada expuesta.",
+   "curiosidad": "Es el cuarto de los tresmiles que se encadenan por la cresta del Vignemale: Vignemale, Clot de la Hount, Cerbillona y Pico Central.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/vignemale-4-tresmiles-desde-refugio-de-bayssellance-vignemale-clot-de-la-hount-cerbillona-y-pico-ce-219577337",
+    "texto": "Ruta de TrotaríosySendas en Wikiloc"
+   },
+   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)"
   },
   {
    "id": "gran-tapou",
@@ -2305,13 +2418,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.762806,
    "lon": -0.135833,
-   "descripcion": "Cumbre de 3.151 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "El Gran Tapou (3.151 m) es la cima más alta de la prolongación sur del macizo del Vignemale, sobre el valle de Ossoue, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punda de Tapón Gran · Grand Tapou · Grand Pic de Tapou",
    "basica": true,
    "inv": "VIG-06",
    "foto": "gran-tapou",
-   "pie": "La cima del Gran Tapou, con su hito."
+   "pie": "La cima del Gran Tapou, con su hito.",
+   "acceso": "Presa de Ossoue (Gavarnie, Francia), por una pista de unos 8 km desde la carretera del Col de Tentes",
+   "desnivel": "+1.340 m · 15 km ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Senda con hitos y un paso algo aéreo con ayuda de las manos",
+   "ruta": "Se sale de la presa de Ossoue, siguiendo el GR 10 hacia la cabaña de Lourdes, y se abandona por una senda con hito hacia el Pic Rond. Se rodean el Pic Rond y el Pic Pointu hasta los lagos de Montferrat y se sigue por hitos hasta el Pico del Medio y el Gran Tapou. Hasta ahí solo hay que apoyar las manos en un paso algo aéreo. Las dos puntas del Tapou son otra cosa: destrepes, trepadas aéreas y expuestas, una canal nevada de gran pendiente y un pequeño rápel de vuelta.",
+   "curiosidad": "Desde su cima se ven las paredes de más de 1.000 m que caen del Montferrat y del Pico Central hacia el valle de Ara.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/grand-tapou-i-pic-du-milieu-des-de-la-presa-dossoue-massis-de-vignemale-10458478",
+    "texto": "Ruta de Germinal V. en Wikiloc"
+   }
   },
   {
    "id": "punta-superior-del-tapou",
@@ -2324,13 +2447,24 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.764091,
    "lon": -0.136524,
-   "descripcion": "Cima secundaria de 3.132 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Punta Superior del Tapou (3.132 m) es una de las dos puntas de roca del Tapou, junto al Gran Tapou, sobre el valle de Ossoue. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
    "inv": "VIG-07",
    "foto": "punta-superior-del-tapou",
-   "pie": "La Punta Superior del Tapou, en la cresta."
+   "pie": "La Punta Superior del Tapou, en la cresta.",
+   "acceso": "Presa de Ossoue (Gavarnie, Francia), por una pista de unos 8 km desde la carretera del Col de Tentes",
+   "desnivel": "+1.440 m · 15,5 km ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Destrepes y trepadas aéreas y expuestas, canal nevada y rápel pequeño",
+   "ruta": "Se sale de la presa de Ossoue, siguiendo el GR 10 hacia la cabaña de Lourdes, y se abandona por una senda con hito hacia el Pic Rond. Se rodean el Pic Rond y el Pic Pointu hasta los lagos de Montferrat y se sigue por hitos hasta el Pico del Medio y el Gran Tapou. Hasta ahí solo hay que apoyar las manos en un paso algo aéreo. Las dos puntas del Tapou son otra cosa: destrepes, trepadas aéreas y expuestas, una canal nevada de gran pendiente y un pequeño rápel de vuelta.",
+   "curiosidad": "Entre la Punta Inferior (3.124 m) y la Superior (3.132 m) hay solo 8 m de diferencia.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/pic-du-milieu-3130m-gran-tapuo-2150m-punta-inferior-del-tapou-3124m-y-punta-superior-del-tapou-3132-185195659",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   },
+   "epoca": "Verano (la ruta se hizo el 28 de julio de 2024)"
   },
   {
    "id": "pico-del-medio",
@@ -2343,13 +2477,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.761583,
    "lon": -0.136417,
-   "descripcion": "Cumbre de 3.128 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "El Pico del Medio (3.128 m), el Pic du Milieu, es una cima de la prolongación sur del macizo del Vignemale, sobre el valle de Ossoue. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Cabieto dera Labaza · Pic du Milieu · Pic du Milieu o Pico del Medio",
    "basica": true,
    "inv": "VIG-08",
    "foto": "pico-del-medio",
-   "pie": "La cresta de la cima del Pico del Medio (Pic du Milieu)."
+   "pie": "La cresta de la cima del Pico del Medio (Pic du Milieu).",
+   "acceso": "Presa de Ossoue (Gavarnie, Francia), por una pista de unos 8 km desde la carretera del Col de Tentes",
+   "desnivel": "+1.340 m · 15 km ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Senda con hitos, sin dificultades técnicas destacables",
+   "ruta": "Se sale de la presa de Ossoue, siguiendo el GR 10 hacia la cabaña de Lourdes, y se abandona por una senda con hito hacia el Pic Rond. Se rodean el Pic Rond y el Pic Pointu hasta los lagos de Montferrat y se sigue por hitos hasta el Pico del Medio y el Gran Tapou. Hasta ahí solo hay que apoyar las manos en un paso algo aéreo. Las dos puntas del Tapou son otra cosa: destrepes, trepadas aéreas y expuestas, una canal nevada de gran pendiente y un pequeño rápel de vuelta.",
+   "curiosidad": "Se enlaza con el Gran Tapou (3.151 m) por la cresta en la misma jornada.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/grand-tapou-i-pic-du-milieu-des-de-la-presa-dossoue-massis-de-vignemale-10458478",
+    "texto": "Ruta de Germinal V. en Wikiloc"
+   }
   },
   {
    "id": "punta-inferior-del-tapou",
@@ -2362,13 +2506,24 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.763519,
    "lon": -0.135858,
-   "descripcion": "Cima secundaria de 3.124 m del macizo Vignemale · Gavarnie, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Punta Inferior del Tapou (3.124 m) es la más baja de las dos puntas de roca del Tapou, junto al Gran Tapou, sobre el valle de Ossoue. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tetons dera Labaza",
    "basica": true,
    "inv": "VIG-09",
    "foto": "punta-inferior-del-tapou",
-   "pie": "La brecha entre las agujas del Tapou."
+   "pie": "La brecha entre las agujas del Tapou.",
+   "acceso": "Presa de Ossoue (Gavarnie, Francia), por una pista de unos 8 km desde la carretera del Col de Tentes",
+   "desnivel": "+1.440 m · 15,5 km ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Destrepes y trepadas aéreas y expuestas, canal nevada y rápel pequeño",
+   "ruta": "Se sale de la presa de Ossoue, siguiendo el GR 10 hacia la cabaña de Lourdes, y se abandona por una senda con hito hacia el Pic Rond. Se rodean el Pic Rond y el Pic Pointu hasta los lagos de Montferrat y se sigue por hitos hasta el Pico del Medio y el Gran Tapou. Hasta ahí solo hay que apoyar las manos en un paso algo aéreo. Las dos puntas del Tapou son otra cosa: destrepes, trepadas aéreas y expuestas, una canal nevada de gran pendiente y un pequeño rápel de vuelta.",
+   "curiosidad": "Entre la Punta Inferior (3.124 m) y la Superior (3.132 m) hay solo 8 m de diferencia.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/pic-du-milieu-3130m-gran-tapuo-2150m-punta-inferior-del-tapou-3124m-y-punta-superior-del-tapou-3132-185195659",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   },
+   "epoca": "Verano (la ruta se hizo el 28 de julio de 2024)"
   },
   {
    "id": "aguja-superior-del-clot-de-la-hount",
@@ -2381,13 +2536,24 @@
    "situacion": "Aragón",
    "lat": 42.773722,
    "lon": -0.152722,
-   "descripcion": "Cima secundaria de 3.117 m del macizo Vignemale · Gavarnie, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja Superior del Clot de la Hount (3.117 m) es una aguja de roca al pie del Clot de la Hount, sobre el glaciar de Ossoue. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Peña Fiera E · Peña Fiera E.",
    "basica": true,
    "inv": "VIG-10",
    "foto": "aguja-superior-del-clot-de-la-hount",
-   "pie": "La cima de la Aguja Superior del Clot de la Hount, con su hito."
+   "pie": "La cima de la Aguja Superior del Clot de la Hount, con su hito.",
+   "acceso": "Refugio de Baysellance (Gavarnie, Francia)",
+   "desnivel": "+1.370 m · 10,7 km ida y vuelta",
+   "dificultad": "muy-alta",
+   "grado": "Nieve con crampones, destrepes, trepadas y rápel",
+   "ruta": "Desde el refugio de Baysellance se toma a la derecha un sendero no GR, casi en horizontal, hasta el sendero de las Grottes de Bellevue. Pronto empieza la nieve y se ponen los crampones; se rodea el Petit Vignemale y se sube hasta el collado de Cerbillona. Por la cresta se llega al Clot de la Hount y desde allí se destrepa por buena roca hasta las agujas, con una trepada y un rápel para subir a la Superior y la Inferior.",
+   "curiosidad": "Las dos agujas se hacen en la misma jornada que el Clot de la Hount (3.291 m), el primer tresmil del día.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/clot-de-la-hount-aguja-superior-del-clot-de-la-hount-y-aguja-inferior-del-clot-de-la-hount-desde-ba-185050644",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   },
+   "epoca": "Verano (la ruta se hizo el 23 de julio de 2024)"
   },
   {
    "id": "aguja-inferior-del-clot-de-la-hount",
@@ -2400,13 +2566,24 @@
    "situacion": "Aragón",
    "lat": 42.774278,
    "lon": -0.153194,
-   "descripcion": "Cima secundaria de 3.047 m del macizo Vignemale · Gavarnie, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "La Aguja Inferior del Clot de la Hount (3.047 m) es la más baja de las dos agujas al pie del Clot de la Hount, sobre el glaciar de Ossoue. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Peña Fiera O · Peña Fiera O.",
    "basica": true,
    "inv": "VIG-11",
    "foto": "aguja-inferior-del-clot-de-la-hount",
-   "pie": "La Aguja Inferior del Clot de la Hount, vista desde el collado."
+   "pie": "La Aguja Inferior del Clot de la Hount, vista desde el collado.",
+   "acceso": "Refugio de Baysellance (Gavarnie, Francia)",
+   "desnivel": "+1.370 m · 10,7 km ida y vuelta",
+   "dificultad": "muy-alta",
+   "grado": "Nieve con crampones, destrepes, trepadas y rápel",
+   "ruta": "Desde el refugio de Baysellance se toma a la derecha un sendero no GR, casi en horizontal, hasta el sendero de las Grottes de Bellevue. Pronto empieza la nieve y se ponen los crampones; se rodea el Petit Vignemale y se sube hasta el collado de Cerbillona. Por la cresta se llega al Clot de la Hount y desde allí se destrepa por buena roca hasta las agujas, con una trepada y un rápel para subir a la Superior y la Inferior.",
+   "curiosidad": "Las dos agujas se hacen en la misma jornada que el Clot de la Hount (3.291 m), el primer tresmil del día.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/clot-de-la-hount-aguja-superior-del-clot-de-la-hount-y-aguja-inferior-del-clot-de-la-hount-desde-ba-185050644",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   },
+   "epoca": "Verano (la ruta se hizo el 23 de julio de 2024)"
   },
   {
    "id": "aguja-so-de-cerbillona",
@@ -2845,13 +3022,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.720722,
    "lon": 0.135278,
-   "descripcion": "Cumbre de 3.088 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
+   "descripcion": "El Pico de Sierra Morena (3.088 m) es una cima de la cresta de la Munia, en el macizo de Monte Perdido–Taillón, junto a la frontera con Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punta de las Loseras · Sierra Morena · Pic de Serre Mourène",
    "basica": true,
    "inv": "MUN-03",
    "foto": "pico-de-sierra-morena",
-   "pie": "El Pico de Sierra Morena, visto desde la cresta de la Munia."
+   "pie": "El Pico de Sierra Morena, visto desde la cresta de la Munia.",
+   "acceso": "Parking de Petramula (valle de Barrosa)",
+   "desnivel": "+1.850 m · 25 km ida y vuelta",
+   "dificultad": "alta",
+   "grado": "Senda y losas con cadenas (Paso del Gato); un rápel desde Sierra Morena",
+   "ruta": "Desde el parking de Petramula se pasa por el collado de las Puertas y los lagos de la Munia hasta el collado de la Munia. De allí se sube por el Paso del Gato, unas losas con cadenas, al Pico de la Munia. La cresta enlaza la Pequeña Munia, Sierra Morena, el Pic de Troumouse, Punta Aires y el Pic Heid, y se vuelve por el mismo camino.",
+   "curiosidad": "La ruta de yivatosal encadena seis cimas de más de 3.000 m en la misma cresta: la Munia, la Pequeña Munia, Sierra Morena, Troumouse, Punta Aires y el Heid.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/pico-de-la-munia-pequena-munia-sierra-morena-pic-troumouse-pico-heid-desde-petramula-186572720",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   }
   },
   {
    "id": "pico-de-troumouse",
