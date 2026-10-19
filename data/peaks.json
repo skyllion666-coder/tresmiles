@@ -2630,11 +2630,23 @@
    "situacion": "Aragón",
    "lat": 42.681028,
    "lon": 0.020889,
-   "descripcion": "Cima secundaria de 3.194 m del macizo Monte Perdido–Taillón, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pitón SO del Cilindro (3.194 m) es una cima rocosa del macizo del Cilindro de Marboré, junto al Monte Perdido. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Pundeta de Peña Roya · Peña Roya · Pitón SW del Cilindro",
    "basica": true,
-   "inv": "PER-06"
+   "inv": "PER-06",
+   "foto": "piton-so-del-cilindro",
+   "pie": "La cima del Pitón SO del Cilindro, con su hito de piedras.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/punta-de-las-escaleras-3027-m-m-perdido-3355-m-piton-sw-3194-m-cilindro-de-marbore-3325-m-por-refug-29045249",
+    "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
+   },
+   "acceso": "Refugio de Goriz (Ordesa)",
+   "desnivel": "+1.350 m · 9,8 km",
+   "dificultad": "alta",
+   "grado": "Alta montaña con trepadas, en un itinerario largo",
+   "ruta": "Desde el refugio de Goriz se enlazan la Punta de las Escaleras (3.027 m), el Monte Perdido (3.355 m), el Pitón SO (3.194 m) y el Cilindro de Marboré (3.325 m), en una ruta de 9,8 km.",
+   "curiosidad": "La ruta lo enlaza con el Monte Perdido y el Cilindro de Marboré en la misma jornada."
   },
   {
    "id": "punta-dera-canal-fonda",
@@ -2907,11 +2919,22 @@
    "situacion": "Aragón",
    "lat": 42.669639,
    "lon": 0.052111,
-   "descripcion": "Cumbre de 3.023 m del macizo Monte Perdido–Taillón, en territorio aragonés. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Baudrimont SE (3.023 m) es una cima del macizo de Monte Perdido–Taillón, junto a la Punta de las Olas y el Soum de Ramond. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punta de Tormosa · Pico SE Baudrimont",
    "basica": true,
-   "inv": "PER-21"
+   "inv": "PER-21",
+   "foto": "pico-baudrimont-se",
+   "pie": "El Pico Baudrimont SE, con su nevero.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/ascension-a-soum-de-ramon-braudimon-punta-de-las-olas-y-punta-dera-cuniestra-218763479",
+    "texto": "Ruta de Carlos_cumbres en Wikiloc"
+   },
+   "desnivel": "+1.410 m · 24 km",
+   "dificultad": "muy-alta",
+   "grado": "Itinerario largo de alta montaña con nevero",
+   "ruta": "La ruta de Carlos_cumbres enlaza en una sola jornada el Soum de Ramond (pico Añisclo), el Baudrimont, la Punta de las Olas y la Punta dera Cuniestra, con una vista de la cima sobre un nevero.",
+   "curiosidad": "Se enlaza con el Soum de Ramond, la Punta de las Olas y la Punta dera Cuniestra en una sola ruta."
   },
   {
    "id": "punta-de-las-escaleras",
@@ -2924,11 +2947,23 @@
    "situacion": "Aragón",
    "lat": 42.66975,
    "lon": 0.029889,
-   "descripcion": "Cima secundaria de 3.021 m del macizo Monte Perdido–Taillón, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Punta de las Escaleras (3.021 m) es una cima del macizo de Monte Perdido, sobre el refugio de Goriz. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Peña dero Baste",
    "basica": true,
-   "inv": "PER-23"
+   "inv": "PER-23",
+   "foto": "punta-de-las-escaleras",
+   "pie": "La cima de la Punta de las Escaleras, con su hito.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/punta-de-las-escaleras-3027-m-m-perdido-3355-m-piton-sw-3194-m-cilindro-de-marbore-3325-m-por-refug-29045249",
+    "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
+   },
+   "acceso": "Refugio de Goriz (Ordesa)",
+   "desnivel": "+1.350 m · 9,8 km",
+   "dificultad": "alta",
+   "grado": "Alta montaña con trepadas, en un itinerario largo",
+   "ruta": "Desde el refugio de Goriz se enlazan la Punta de las Escaleras (3.027 m), el Monte Perdido (3.355 m), el Pitón SO (3.194 m) y el Cilindro de Marboré (3.325 m), en una ruta de 9,8 km.",
+   "curiosidad": "En la cima hay un hito de piedras con una vista abierta sobre el circo de Marboré."
   },
   {
    "id": "cabieto-dero-baziero",
@@ -3238,11 +3273,23 @@
    "situacion": "Aragón",
    "lat": 42.649472,
    "lon": 0.425444,
-   "descripcion": "Cima discutida de 3.322 m del macizo Posets–Eriste, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Las Espadas SO (3.322 m) son la cima más alta de la cresta de las Espadas, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Lardaneta SO · Sin nombre clásico · Punta Llardaneta o Pico de Espadas · Espades SO / Lardaneta SO",
    "basica": true,
-   "inv": "POS-03"
+   "inv": "POS-03",
+   "foto": "espades-so",
+   "pie": "Vista desde la cima de las Espadas SO.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
+    "texto": "Ruta de Evarp en Wikiloc"
+   },
+   "acceso": "Valle de Posets–Eriste (Espigantosa / Ángel Orús)",
+   "desnivel": "+1.480 m · 17,7 km",
+   "dificultad": "alta",
+   "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
+   "curiosidad": "Desde su cima se ve el circo y se domina la cresta de las Espadas hacia el Posets."
   },
   {
    "id": "tuca-llardaneta-suroeste",
@@ -3255,11 +3302,23 @@
    "situacion": "Aragón",
    "lat": 42.651556,
    "lon": 0.429,
-   "descripcion": "Cima discutida de 3.292 m del macizo Posets–Eriste, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Tuca Llardaneta Suroeste (3.292 m) es una cima de la cresta de las Espadas, entre las Espadas y la Tuqueta Roya, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Punta de la Lit",
    "basica": true,
-   "inv": "POS-05"
+   "inv": "POS-05",
+   "foto": "tuca-llardaneta-suroeste",
+   "pie": "La arista de la Tuca Llardaneta Suroeste.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
+    "texto": "Ruta de Evarp en Wikiloc"
+   },
+   "acceso": "Valle de Posets–Eriste (Espigantosa / Ángel Orús)",
+   "desnivel": "+1.480 m · 17,7 km",
+   "dificultad": "alta",
+   "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
+   "curiosidad": "Cerca de ella está el paso del funambulista, una arista de roca muy fina."
   },
   {
    "id": "tuqueta-roya",
@@ -3306,7 +3365,18 @@
    "nombres": "Cima 234 · cima_234 · Espades S · Lardaneta S",
    "basica": true,
    "inv": "POS-07",
-   "curiosidad": "Tresmiles.es apunta, solo como hipótesis, que su nombre podría ser «Espades S» o «Lardaneta S», siguiendo la toponimia del IGEAR. Sus coordenadas se publicaron como provisionales: en el relieve del IGN (MDT05) hay un máximo de unos 3.246 m a menos de 25 m de ellas. Fuente: Lugares de Aventura, 24-11-2025."
+   "curiosidad": "Tresmiles.es apunta, solo como hipótesis, que su nombre podría ser «Espades S» o «Lardaneta S», siguiendo la toponimia del IGEAR. Sus coordenadas se publicaron como provisionales: en el relieve del IGN (MDT05) hay un máximo de unos 3.246 m a menos de 25 m de ellas. Fuente: Lugares de Aventura, 24-11-2025.",
+   "foto": "cima-234-sin-nombre",
+   "pie": "Vista desde la cresta de las Espadas, a unos 80 m de la Cima 234.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
+    "texto": "Ruta de Evarp en Wikiloc"
+   },
+   "acceso": "Valle de Posets–Eriste (Espigantosa / Ángel Orús)",
+   "desnivel": "+1.480 m · 17,7 km",
+   "dificultad": "alta",
+   "grado": "Cresta de roca de las Espadas, con el paso del funambulista",
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista."
   },
   {
    "id": "pico-de-los-gemelos-ravier",
@@ -3445,11 +3515,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.691278,
    "lon": 0.515167,
-   "descripcion": "Cima secundaria de 3.176 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Hito Occidental del Perdiguero (3.176 m) es la cima occidental del macizo del Perdiguero, junto al Perdiguero (3.222 m), sobre el valle de Literola. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Molsèro · Hito W de Perdiguero",
    "basica": true,
-   "inv": "PRD-02"
+   "inv": "PRD-02",
+   "foto": "hito-occidental-del-perdiguero",
+   "pie": "La cima del Hito Occidental del Perdiguero, con su cresta.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
+    "texto": "Ruta de ric__mountains en Wikiloc"
+   },
+   "acceso": "Parking de Literola (Benasque)",
+   "desnivel": "+2.040 m · 19,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero; desde el collado superior de Literola se encadena la cresta de Literola hasta la Forca de Remuñe, y se baja por el portal de Remuñe al ibón Blanco de Lliterola.",
+   "curiosidad": "La ruta de ric__mountains lo ve desde el Perdiguero Oriental y sigue por la cresta de Literola."
   },
   {
    "id": "hito-oriental-de-perdiguero",
@@ -3856,11 +3938,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.692667,
    "lon": 0.507528,
-   "descripcion": "Cumbre de 3.044 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico del Portillón de Oô (3.044 m) es una cima de la cresta del Portillón de Oô, en la frontera entre Aragón y Francia, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca d'el Portillón d'O · Tuca d'el Portillón d'el Molsèro · Robert Ollivier · Pico Ollivier · Pico del Portillón de O · Molsèro",
    "basica": true,
-   "inv": "PRD-19"
+   "inv": "PRD-19",
+   "foto": "pico-del-portillon-de-oo",
+   "pie": "El Pico del Portillón de Oô, con sus agujas.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-seil-dera-baquo-gourgs-blancs-16x3000-142837533",
+    "texto": "Ruta de Iñigo Etxegoien en Wikiloc"
+   },
+   "acceso": "Refugio de Estós (Benasque)",
+   "desnivel": "+2.040 m · 17 km",
+   "dificultad": "muy-alta",
+   "grado": "Cresta larga de roca, con trepadas y rápeles",
+   "ruta": "Desde el refugio de Estós, pasando por la cabaña del Turmo, se sube al Portillón de Oô y se recorre la cresta con el Pequeño Pico del Portillón, el Seil dera Baquo, los dos Cap dera Baquo y el Pico Audoubert hasta el puerto de Oô.",
+   "curiosidad": "Junto a él hay un pico más pequeño, el Pequeño Pico del Portillón (2.999 m)."
   },
   {
    "id": "pico-navarro",
@@ -4134,11 +4228,24 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.699389,
    "lon": 0.557528,
-   "descripcion": "Cumbre de 3.005 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Boum (3.005 m) es una cima del macizo del Perdiguero, entre el Pico de Maupas y Remuñe, sobre el refugio de Maupas. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca d'el Bom · Bom · Pic de Boum",
    "basica": true,
-   "inv": "PRD-29"
+   "inv": "PRD-29",
+   "foto": "pico-de-boum",
+   "pie": "Vista desde la cima del Pico de Boum.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/refugio-maupas-por-port-biello-maupas-boum-remune-27-28-08-2021-95385975",
+    "texto": "Ruta de yivatosal en Wikiloc"
+   },
+   "acceso": "Refugio de Maupas (por Port Biello)",
+   "desnivel": "+2.180 m · 25,5 km",
+   "dificultad": "alta",
+   "grado": "Cresta con trepadas, en una ruta de dos días",
+   "ruta": "Desde Port Biello se llega al refugio de Maupas, pasando por los lagos Célinda, Charles y Bleu y por encima del lago d'Enfer. Se sube al Pico de Maupas, se gira hacia el Boum y se sigue por la cresta hasta el valle de Remuñe.",
+   "curiosidad": "La ruta de yivatosal enlaza Maupas, Boum y Remuñe en dos días (27 y 28 de agosto de 2021).",
+   "epoca": "Finales de verano (la ruta se hizo el 27 y 28 de agosto de 2021)"
   },
   {
    "id": "gias-inferior",
