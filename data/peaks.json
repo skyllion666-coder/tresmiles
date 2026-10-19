@@ -2627,7 +2627,9 @@
    "clase": "principal",
    "nombres": "Marmorés d´el Cul Gran · Astazu E. · Pico Oriental de Astazou · Astazu Gran · Marmorés d´el Cul Gran / Astazu E.",
    "basica": true,
-   "inv": "PER-17"
+   "inv": "PER-17",
+   "foto": "gran-astazu",
+   "pie": "La cima del Gran Astazu, con su hito."
   },
   {
    "id": "pico-baudrimont-no",
@@ -2661,7 +2663,9 @@
    "clase": "principal",
    "nombres": "Punda dero Cabieto · Gabieto Sur · Pico Occidental de los Gabietou",
    "basica": true,
-   "inv": "PER-19"
+   "inv": "PER-19",
+   "foto": "gabieto-occidental",
+   "pie": "La cima del Gabieto Occidental."
   },
   {
    "id": "gabieto-oriental",
@@ -2678,7 +2682,9 @@
    "clase": "principal",
    "nombres": "Cabieto dera Buega · Gabieto Norte · Pico Oriental de los Gabietou",
    "basica": true,
-   "inv": "PER-20"
+   "inv": "PER-20",
+   "foto": "gabieto-oriental",
+   "pie": "La cima del Gabieto Oriental."
   },
   {
    "id": "pico-baudrimont-se",
@@ -2746,7 +2752,9 @@
    "clase": "principal",
    "nombres": "Marmorés d´el Cul Chicot · Astazu O. · Pico Occidental de Astazou · Astazu Chicot · Marmorés d´el Cul Chicot / Astazu O.",
    "basica": true,
-   "inv": "PER-25"
+   "inv": "PER-25",
+   "foto": "pequeno-astazu",
+   "pie": "La cima del Pequeño Astazu, con su hito."
   },
   {
    "id": "torre-del-marbore",
@@ -2797,7 +2805,9 @@
    "clase": "principal",
    "nombres": "Punta de las Loseras · Sierra Morena · Pic de Serre Mourène",
    "basica": true,
-   "inv": "MUN-03"
+   "inv": "MUN-03",
+   "foto": "pico-de-sierra-morena",
+   "pie": "El Pico de Sierra Morena, visto desde la cresta de la Munia."
   },
   {
    "id": "pico-de-troumouse",

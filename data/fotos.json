@@ -687,5 +687,55 @@
   "fuente": "Wikiloc",
   "w": 675,
   "h": 900
+ },
+ "pequeno-astazu": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/los-astazus-pequeno-astazu3-015m-y-gran-astazu3-071m-desde-pineta-26696707",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "gran-astazu": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/los-astazus-pequeno-astazu3-015m-y-gran-astazu3-071m-desde-pineta-26696707",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 525
+ },
+ "gabieto-occidental": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/gabieto-occidental3-035m-y-gabieto-oriental3-031m-los-gabietos-por-carriata-desde-pradera-de-ordesa-18390813",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 527
+ },
+ "gabieto-oriental": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Furgoxo",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/gabieto-occidental3-035m-y-gabieto-oriental3-031m-los-gabietos-por-carriata-desde-pradera-de-ordesa-18390813",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 527
+ },
+ "pico-de-sierra-morena": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/pico-de-la-munia-pequena-munia-sierra-morena-pic-troumouse-pico-heid-desde-petramula-186572720",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 394
  }
 }
