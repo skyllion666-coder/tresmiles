@@ -3005,20 +3005,21 @@
   },
   {
    "id": "cima-234-sin-nombre",
-   "nombre": "Cima «234» (sin nombre)",
-   "alias": "Sin nombre clásico (\"cima_234\" provisional)",
+   "nombre": "Cima 234",
+   "alias": "Sin nombre · «cima_234» provisional",
    "altitud": 3248,
-   "otras": "medida de 3.247,8 m",
+   "otras": "medida de 3.247,8 m (Sostremetries, 2025)",
    "macizo": "pos",
    "frontera": false,
    "situacion": "Aragón",
    "lat": 42.64752,
    "lon": 0.42475,
-   "descripcion": "Cima discutida de 3.247,8 m del macizo Posets–Eriste, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima inédita y aún sin nombre, descubierta en 2025 por el grupo Sostremetries: 3.247,8 m y 10,8 m de prominencia, cerca de Las Espadas y del Posets. No figura en ningún catálogo oficial; «Cima 234» es solo su nombre provisional. El Instituto Geográfico de Aragón será el encargado de asignarle un topónimo definitivo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
    "clase": "discutida",
-   "nombres": "Sin nombre clásico (\"cima_234\" provisional)",
+   "nombres": "Cima 234 · cima_234 · Espades S · Lardaneta S",
    "basica": true,
-   "inv": "POS-07"
+   "inv": "POS-07",
+   "curiosidad": "Tresmiles.es apunta, solo como hipótesis, que su nombre podría ser «Espades S» o «Lardaneta S», siguiendo la toponimia del IGEAR. Sus coordenadas se publicaron como provisionales: en el relieve del IGN (MDT05) hay un máximo de unos 3.246 m a menos de 25 m de ellas. Fuente: Lugares de Aventura, 24-11-2025."
   },
   {
    "id": "pico-de-los-gemelos-ravier",
