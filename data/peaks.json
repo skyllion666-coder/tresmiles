@@ -2311,7 +2311,7 @@
    "basica": true,
    "inv": "VIG-06",
    "foto": "gran-tapou",
-   "pie": "La cresta del Tapou, con el Gran Tapou al fondo."
+   "pie": "La cima del Gran Tapou, con su hito."
   },
   {
    "id": "punta-superior-del-tapou",
@@ -2347,7 +2347,9 @@
    "clase": "principal",
    "nombres": "Cabieto dera Labaza · Pic du Milieu · Pic du Milieu o Pico del Medio",
    "basica": true,
-   "inv": "VIG-08"
+   "inv": "VIG-08",
+   "foto": "pico-del-medio",
+   "pie": "La cresta de la cima del Pico del Medio (Pic du Milieu)."
   },
   {
    "id": "punta-inferior-del-tapou",
@@ -2383,7 +2385,9 @@
    "clase": "secundaria",
    "nombres": "Peña Fiera E · Peña Fiera E.",
    "basica": true,
-   "inv": "VIG-10"
+   "inv": "VIG-10",
+   "foto": "aguja-superior-del-clot-de-la-hount",
+   "pie": "La cima de la Aguja Superior del Clot de la Hount, con su hito."
   },
   {
    "id": "aguja-inferior-del-clot-de-la-hount",
@@ -2400,7 +2404,9 @@
    "clase": "secundaria",
    "nombres": "Peña Fiera O · Peña Fiera O.",
    "basica": true,
-   "inv": "VIG-11"
+   "inv": "VIG-11",
+   "foto": "aguja-inferior-del-clot-de-la-hount",
+   "pie": "La Aguja Inferior del Clot de la Hount, vista desde el collado."
   },
   {
    "id": "aguja-so-de-cerbillona",

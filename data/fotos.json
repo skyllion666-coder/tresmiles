@@ -600,13 +600,13 @@
  },
  "gran-tapou": {
   "archivo": "foto de la ruta de Wikiloc",
-  "autor": "yivatosal",
+  "autor": "Germinal V.",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://www.wikiloc.com/mountaineering-trails/pic-du-milieu-3130m-gran-tapuo-2150m-punta-inferior-del-tapou-3124m-y-punta-superior-del-tapou-3132-185195659",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/grand-tapou-i-pic-du-milieu-des-de-la-presa-dossoue-massis-de-vignemale-10458478",
   "fuente": "Wikiloc",
   "w": 700,
-  "h": 467
+  "h": 525
  },
  "punta-inferior-del-tapou": {
   "archivo": "foto de la ruta de Wikiloc",
@@ -657,5 +657,35 @@
   "fuente": "Wikiloc",
   "w": 700,
   "h": 467
+ },
+ "aguja-superior-del-clot-de-la-hount": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/clot-de-la-hount-aguja-superior-del-clot-de-la-hount-y-aguja-inferior-del-clot-de-la-hount-desde-ba-185050644",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "aguja-inferior-del-clot-de-la-hount": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/clot-de-la-hount-aguja-superior-del-clot-de-la-hount-y-aguja-inferior-del-clot-de-la-hount-desde-ba-185050644",
+  "fuente": "Wikiloc",
+  "w": 700,
+  "h": 393
+ },
+ "pico-del-medio": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Germinal V.",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/grand-tapou-i-pic-du-milieu-des-de-la-presa-dossoue-massis-de-vignemale-10458478",
+  "fuente": "Wikiloc",
+  "w": 675,
+  "h": 900
  }
 }
