@@ -3272,11 +3272,23 @@
    "situacion": "Aragón",
    "lat": 42.653028,
    "lon": 0.43275,
-   "descripcion": "Cima secundaria de 3.266 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Tuqueta Roya (3.266 m) es una cima de la cresta de las Espadas, antes del Posets, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "POS-06"
+   "inv": "POS-06",
+   "foto": "tuqueta-roya",
+   "pie": "La cima de la Tuqueta Roya, con su altura grabada en una piedra.",
+   "acceso": "Valle de Posets–Eriste (Espigantosa / Ángel Orús)",
+   "desnivel": "+1.480 m · 17,7 km",
+   "dificultad": "alta",
+   "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y los Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
+   "curiosidad": "En su cima hay una piedra con la altura escrita a mano.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
+    "texto": "Ruta de Evarp en Wikiloc"
+   }
   },
   {
    "id": "cima-234-sin-nombre",
@@ -3387,11 +3399,23 @@
    "situacion": "Aragón",
    "lat": 42.636151,
    "lon": 0.428074,
-   "descripcion": "Cima discutida de 3.010 m del macizo Posets–Eriste, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Diente Royo (3.010 m) es la primera cima de la cresta de las Espadas, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "",
    "basica": true,
-   "inv": "POS-19"
+   "inv": "POS-19",
+   "foto": "diente-royo",
+   "pie": "El Diente Royo, con su hito de piedras.",
+   "acceso": "Valle de Posets–Eriste (Espigantosa / Ángel Orús)",
+   "desnivel": "+1.480 m · 17,7 km",
+   "dificultad": "alta",
+   "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y los Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
+   "curiosidad": "Es la primera cima de la cresta de las Espadas, que lleva hasta el Posets.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
+    "texto": "Ruta de Evarp en Wikiloc"
+   }
   },
   {
    "id": "pico-de-la-forqueta",
@@ -3525,11 +3549,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.701361,
    "lon": 0.5455,
-   "descripcion": "Cumbre de 3.111 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico de Maupas (3.111 m) es una cima del macizo del Perdiguero, en la frontera entre Aragón y Francia, sobre el valle de Remuñe. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca de Malpás · Malpas",
    "basica": true,
-   "inv": "PRD-08"
+   "inv": "PRD-08",
+   "foto": "pico-de-maupas",
+   "pie": "El Pico de Maupas, visto desde la cresta.",
+   "acceso": "Parking de Remuñe (Benasque)",
+   "desnivel": "+1.210 m · 16,3 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Remuñe se sube por el valle y el río de Remuñe hasta el portal de Remuñe y la Forca de Remuñe. Por la cresta se enlazan el Tusse de Remuñe, el Pico Rabadá, el Pico Navarro y la Aguja Jean Garnier; en el camino se ven también los Crabioules y el Pico de Maupas. Se baja por el ibón Blanco de Lliterola.",
+   "curiosidad": "Desde el refugio de Maupas se puede enlazar con el Pico de Boum y con Remuñe.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aguja-jean-garnier-3-025m-tusse-remune-3-041m-rabada-3-045m-navarro-3-043m-14133186",
+    "texto": "Ruta de Marc Us en Wikiloc"
+   }
   },
   {
    "id": "pico-seil-dera-baquo",
@@ -3542,11 +3578,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.692361,
    "lon": 0.496222,
-   "descripcion": "Cumbre de 3.108 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Seil dera Baquo (3.108 m) es una cima de la cresta que va del Portillón de Oô al puerto de Oô, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "El Sellàn de la Vaca · Gran Pico del Seil dera Baquo · Pico Sellam de la Baca Oriental",
    "basica": true,
-   "inv": "PRD-09"
+   "inv": "PRD-09",
+   "foto": "pico-seil-dera-baquo",
+   "pie": "El Seil dera Baquo, con su hito.",
+   "acceso": "Refugio de Estós (Benasque)",
+   "desnivel": "+2.040 m · 17 km",
+   "dificultad": "muy-alta",
+   "grado": "Cresta larga de roca, con trepadas y rápeles",
+   "ruta": "Desde el refugio de Estós, pasando por la cabaña del Turmo, se sube al Portillón de Oô y se recorre la cresta con el Pequeño Pico del Portillón, el Seil dera Baquo, los dos Cap dera Baquo y el Pico Audoubert hasta el puerto de Oô. Después la ruta sigue por Jean Arlaud, Gourgs Blancs, la Torre Armengaud y la Punta Lourde Rocheblave.",
+   "curiosidad": "Es una de las dieciséis cimas de más de 3.000 m que enlaza esta ruta.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-seil-dera-baquo-gourgs-blancs-16x3000-142837533",
+    "texto": "Ruta de Iñigo Etxegoien en Wikiloc"
+   }
   },
   {
    "id": "pico-oriental-de-los-crabioules",
@@ -3559,11 +3607,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.702639,
    "lon": 0.529722,
-   "descripcion": "Cumbre de 3.107 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Oriental de los Crabioules (3.107 m) es una cima de la cresta de los Crabioules, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca de Crabiòles · Pico Oriental de Crabioules · Pic des Crabioules",
    "basica": true,
-   "inv": "PRD-10"
+   "inv": "PRD-10",
+   "foto": "pico-oriental-de-los-crabioules",
+   "pie": "El Pico Oriental de los Crabioules, visto desde la cresta.",
+   "acceso": "Parking de Remuñe (Benasque)",
+   "desnivel": "+1.210 m · 16,3 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Remuñe se sube por el valle y el río de Remuñe hasta el portal de Remuñe y la Forca de Remuñe. Por la cresta se enlazan el Tusse de Remuñe, el Pico Rabadá, el Pico Navarro y la Aguja Jean Garnier; en el camino se ven también los Crabioules y el Pico de Maupas. Se baja por el ibón Blanco de Lliterola.",
+   "curiosidad": "Los Crabioules (Oriental y Occidental) se recorren desde Remuñe por la cresta de Lliterola.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aguja-jean-garnier-3-025m-tusse-remune-3-041m-rabada-3-045m-navarro-3-043m-14133186",
+    "texto": "Ruta de Marc Us en Wikiloc"
+   }
   },
   {
    "id": "punta-lourde-rocheblave",
@@ -3605,11 +3665,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.692972,
    "lon": 0.493,
-   "descripcion": "Cima secundaria de 3.104 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Cap dera Baquo Oriental (3.104 m) es una cima de la cresta de la Baquo, en el macizo del Perdiguero, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Sellàn de la Vaca · Pico Sellam de la Baca Occidental",
    "basica": true,
-   "inv": "PRD-12"
+   "inv": "PRD-12",
+   "foto": "cap-dera-baquo-oriental",
+   "pie": "El Cap dera Baquo Oriental, con su hito.",
+   "acceso": "Refugio de Estós (Benasque)",
+   "desnivel": "+2.040 m · 17 km",
+   "dificultad": "muy-alta",
+   "grado": "Cresta larga de roca, con trepadas y rápeles",
+   "ruta": "Desde el refugio de Estós, pasando por la cabaña del Turmo, se sube al Portillón de Oô y se recorre la cresta con el Pequeño Pico del Portillón, el Seil dera Baquo, los dos Cap dera Baquo y el Pico Audoubert hasta el puerto de Oô. Después la ruta sigue por Jean Arlaud, Gourgs Blancs, la Torre Armengaud y la Punta Lourde Rocheblave.",
+   "curiosidad": "Es una de las dieciséis cimas de más de 3.000 m que enlaza esta ruta.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-seil-dera-baquo-gourgs-blancs-16x3000-142837533",
+    "texto": "Ruta de Iñigo Etxegoien en Wikiloc"
+   }
   },
   {
    "id": "pico-occidental-de-los-crabioules",
@@ -3622,11 +3694,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.702611,
    "lon": 0.526639,
-   "descripcion": "Cumbre de 3.102 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Occidental de los Crabioules (3.102 m) es una cima de la cresta de los Crabioules, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Tuca de l'Estraperlo · Pico Occidental de Crabioules · Pic des Crabioules",
    "basica": true,
-   "inv": "PRD-13"
+   "inv": "PRD-13",
+   "foto": "pico-occidental-de-los-crabioules",
+   "pie": "El Pico Occidental de los Crabioules, con su cima y el ibón.",
+   "acceso": "Parking de Remuñe (Benasque)",
+   "desnivel": "+1.430 m · 16,7 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Remuñe se sube al portal de Remuñe y a la Forca de Remuñe, y se sigue por la cresta de Lliterola hasta la Aguja Jean Garnier y los Crabioules (Occidental y Oriental). Se pasa por el collado inferior de Lliterola.",
+   "curiosidad": "La ruta de Pelopin enlaza la Tusse de Remuñe, la Aguja Jean Garnier y los dos Crabioules en una sola jornada.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-crabioules-desde-remune-18923414",
+    "texto": "Ruta de Pelopin en Wikiloc"
+   }
   },
   {
    "id": "pico-sellam-de-la-baca-occidental",
@@ -3656,11 +3740,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.695222,
    "lon": 0.491528,
-   "descripcion": "Cima secundaria de 3.097 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Cap dera Baquo Occidental (3.097 m) es una cima de la cresta de la Baquo, en el macizo del Perdiguero, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Cabo de la Vaca O.",
    "basica": true,
-   "inv": "PRD-15"
+   "inv": "PRD-15",
+   "foto": "cap-dera-baquo-occidental",
+   "pie": "El Cap dera Baquo Occidental, en la cresta.",
+   "acceso": "Refugio de Estós (Benasque)",
+   "desnivel": "+2.040 m · 17 km",
+   "dificultad": "muy-alta",
+   "grado": "Cresta larga de roca, con trepadas y rápeles",
+   "ruta": "Desde el refugio de Estós, pasando por la cabaña del Turmo, se sube al Portillón de Oô y se recorre la cresta con el Pequeño Pico del Portillón, el Seil dera Baquo, los dos Cap dera Baquo y el Pico Audoubert hasta el puerto de Oô. Después la ruta sigue por Jean Arlaud, Gourgs Blancs, la Torre Armengaud y la Punta Lourde Rocheblave.",
+   "curiosidad": "Es una de las dieciséis cimas de más de 3.000 m que enlaza esta ruta.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-seil-dera-baquo-gourgs-blancs-16x3000-142837533",
+    "texto": "Ruta de Iñigo Etxegoien en Wikiloc"
+   }
   },
   {
    "id": "tuca-de-lliterola",
@@ -3731,11 +3827,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.6962,
    "lon": 0.4893,
-   "descripcion": "Cima discutida de 3.045 m del macizo Perdiguero, en la frontera entre Aragón y Francia. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Audoubert (3.045 m) es una cima de la cresta de la Baquo, cerca del puerto de Oô, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "",
    "basica": true,
-   "inv": "PRD-18"
+   "inv": "PRD-18",
+   "foto": "pico-audoubert",
+   "pie": "El Pico Audoubert, con su hito.",
+   "acceso": "Refugio de Estós (Benasque)",
+   "desnivel": "+2.040 m · 17 km",
+   "dificultad": "muy-alta",
+   "grado": "Cresta larga de roca, con trepadas y rápeles",
+   "ruta": "Desde el refugio de Estós, pasando por la cabaña del Turmo, se sube al Portillón de Oô y se recorre la cresta con el Pequeño Pico del Portillón, el Seil dera Baquo, los dos Cap dera Baquo y el Pico Audoubert hasta el puerto de Oô. Después la ruta sigue por Jean Arlaud, Gourgs Blancs, la Torre Armengaud y la Punta Lourde Rocheblave.",
+   "curiosidad": "Es una de las dieciséis cimas de más de 3.000 m que enlaza esta ruta.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-seil-dera-baquo-gourgs-blancs-16x3000-142837533",
+    "texto": "Ruta de Iñigo Etxegoien en Wikiloc"
+   }
   },
   {
    "id": "pico-del-portillon-de-oo",
@@ -3765,11 +3873,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700233,
    "lon": 0.539627,
-   "descripcion": "Cima secundaria de 3.039 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "El Pico Navarro (3.039 m) es una cima de la cresta de Remuñe, en el macizo del Perdiguero, sobre el valle de Remuñe. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de Navarro",
    "basica": true,
-   "inv": "PRD-20"
+   "inv": "PRD-20",
+   "foto": "pico-navarro",
+   "pie": "El Pico Navarro, visto desde la cresta.",
+   "acceso": "Parking de Remuñe (Benasque)",
+   "desnivel": "+1.210 m · 16,3 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Remuñe se sube por el valle y el río de Remuñe hasta el portal de Remuñe y la Forca de Remuñe. Por la cresta se enlazan el Tusse de Remuñe, el Pico Rabadá, el Pico Navarro y la Aguja Jean Garnier; en el camino se ven también los Crabioules y el Pico de Maupas. Se baja por el ibón Blanco de Lliterola.",
+   "curiosidad": "Se hace en la misma ruta que el Tusse de Remuñe, el Pico Rabadá y la Aguja Jean Garnier.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aguja-jean-garnier-3-025m-tusse-remune-3-041m-rabada-3-045m-navarro-3-043m-14133186",
+    "texto": "Ruta de Marc Us en Wikiloc"
+   }
   },
   {
    "id": "tusse-de-remune",
@@ -3927,11 +4047,23 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.701944,
    "lon": 0.531778,
-   "descripcion": "Cima secundaria de 3.016 m del macizo Perdiguero, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Aguja Jean Garnier (3.016 m) es una aguja de roca de la cresta de Remuñe, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla de Crabiòles",
    "basica": true,
-   "inv": "PRD-26"
+   "inv": "PRD-26",
+   "foto": "aguja-jean-garnier",
+   "pie": "La Aguja Jean Garnier, vista de cerca.",
+   "acceso": "Parking de Remuñe (Benasque)",
+   "desnivel": "+1.210 m · 16,3 km, circular",
+   "dificultad": "alta",
+   "grado": "Cresta de roca con trepadas",
+   "ruta": "Desde el parking de Remuñe se sube por el valle y el río de Remuñe hasta el portal de Remuñe y la Forca de Remuñe. Por la cresta se enlazan el Tusse de Remuñe, el Pico Rabadá, el Pico Navarro y la Aguja Jean Garnier; en el camino se ven también los Crabioules y el Pico de Maupas. Se baja por el ibón Blanco de Lliterola.",
+   "curiosidad": "Es la aguja más alta de la cresta de Remuñe que recorre esta ruta, junto al Pico Navarro y el Pico Rabadá.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aguja-jean-garnier-3-025m-tusse-remune-3-041m-rabada-3-045m-navarro-3-043m-14133186",
+    "texto": "Ruta de Marc Us en Wikiloc"
+   }
   },
   {
    "id": "pico-de-gias",
@@ -4257,11 +4389,23 @@
    "situacion": "Aragón",
    "lat": 42.617405,
    "lon": 0.671915,
-   "descripcion": "Cima secundaria de 3.206 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Antecima Sureste del Russell (3.206 m) es una cima rocosa justo antes del Pico Russell, en el macizo Aneto–Maladeta. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Antecima SE de Russell",
    "basica": true,
-   "inv": "ANE-24"
+   "inv": "ANE-24",
+   "foto": "antecima-sureste-russell",
+   "pie": "La antecima del Russell, vista desde la cresta.",
+   "acceso": "Refugio de Cap de Llauset; regreso a La Renclusa",
+   "desnivel": "+1.520 m · 17 km",
+   "dificultad": "alta",
+   "grado": "Brecha y cresta de bloques sueltos",
+   "ruta": "Desde el refugio de Cap de Llauset se sube por el collado de Vallibierna y el collado de los Bucardos, junto a unos ibones bajo la Punta Oriental de Russell, a una brecha que da acceso a la antecima. De allí se sigue al Pico Russell y se baja por el collado de Salenques y el Plan de Aigualluts hasta el refugio de La Renclusa.",
+   "curiosidad": "La cresta entre la antecima y el Pico Russell es de bloques y pide cuidado.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/pico-russell-desde-el-refugio-de-cap-de-llauset-y-regreso-al-refugio-de-la-renclusa-por-el-collado-40906294",
+    "texto": "Ruta de Igor Gonzalez en Wikiloc"
+   }
   },
   {
    "id": "punta-brecha-russell",
@@ -4582,11 +4726,23 @@
    "situacion": "Aragón",
    "lat": 42.616556,
    "lon": 0.677028,
-   "descripcion": "Cima secundaria de 3.051 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "La Punta Oriental del Russell (3.051 m) es una cima del cresterío del Russell, sobre el valle de Salenques, en el macizo Aneto–Maladeta. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Cap de la Tartereta · Punta Oriental de Russell · Punta Russell oriental",
    "basica": true,
-   "inv": "ANE-47"
+   "inv": "ANE-47",
+   "foto": "punta-oriental-russell",
+   "pie": "La Punta Oriental del Russell, con montañeros en la cresta.",
+   "acceso": "Valle de Rigüeno (Aneto–Maladeta); bajada por el barranco de Salenques",
+   "desnivel": "+1.960 m · 23,2 km",
+   "dificultad": "alta",
+   "grado": "Cresta de bloques sueltos",
+   "ruta": "Se sube por el barranco de Rigüeno, pasando por los ibones de Cap de Rigüeno y Mich de Rigüeno y el collado de Rigüeno, hasta los ibones bajo la Punta Oriental del Russell. De allí se sigue por la cresta a la Punta Oriental, al Russell SE y al Pico Russell (3.207 m), y se baja por el barranco de Salenques.",
+   "curiosidad": "En la cima del Pico Russell hay una piedra con su nombre y la altura escritos a mano.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/hiking-trails/2023-09-19-y-20-russell-y-subiendo-por-y-bajando-por-xxxxx-152484618",
+    "texto": "Ruta de Alfredo Barberan en Wikiloc"
+   }
   },
   {
    "id": "aguja-tchihatcheff",
