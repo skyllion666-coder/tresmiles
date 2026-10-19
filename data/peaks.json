@@ -3864,11 +3864,13 @@
    "situacion": "Aragón",
    "lat": 42.653902,
    "lon": 0.628458,
-   "descripcion": "Cima secundaria de 3.170 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.170 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "ANE-28"
+   "inv": "ANE-28",
+   "foto": "punta-delmas",
+   "pie": "La Punta Delmás."
   },
   {
    "id": "pico-le-bondidier",

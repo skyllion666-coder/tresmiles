@@ -496,5 +496,15 @@
   "fuente": "su ficha de Wikiloc",
   "w": 700,
   "h": 467
+ },
+ "punta-delmas": {
+  "archivo": "foto de mirador.cat",
+  "autor": "Marc Montclar",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://mirador.cat",
+  "fuente": "mirador.cat",
+  "w": 1120,
+  "h": 630
  }
 }
