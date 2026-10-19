@@ -6,39 +6,105 @@ import * as THREE from 'three';
 const median = (a) => { const s = [...a].sort((x, y) => x - y); return s[s.length >> 1]; };
 
 // — agua —
+// Cada ibón es una malla en rejilla con la distancia a la orilla en cada vértice (aD.x, en m; negativa fuera) y la mayor
+// distancia del ibón (aD.y). Con ella el shader recorta el contorno suave, aclara el agua somera junto a la orilla
+// (turquesa sobre el fondo de piedra) y la oscurece hacia el centro; encima, ondas de viento, reflejo del cielo y del sol.
 const waterMat = () => new THREE.ShaderMaterial({
-  fog: true, transparent: false, side: THREE.DoubleSide,
+  fog: true, transparent: true, depthWrite: false, side: THREE.DoubleSide,
   uniforms: THREE.UniformsUtils.merge([THREE.UniformsLib.fog, {
     uT: { value: 0 }, uSunDir: { value: new THREE.Vector3(0, 1, 0) }, uSunCol: { value: new THREE.Color('#fff3dc') },
+    uSky: { value: new THREE.Color('#a9c8dc') },
   }]),
-  vertexShader: `varying vec3 vW;
+  vertexShader: `attribute vec2 aD; varying vec3 vW; varying vec2 vD;
     #include <fog_pars_vertex>
-    void main(){ vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
+    void main(){ vD = aD; vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; vec4 mvPosition = viewMatrix * w; gl_Position = projectionMatrix * mvPosition;
       #include <fog_vertex>
     }`,
-  fragmentShader: `varying vec3 vW; uniform float uT; uniform vec3 uSunDir, uSunCol;
+  fragmentShader: `varying vec3 vW; varying vec2 vD; uniform float uT; uniform vec3 uSunDir, uSunCol, uSky;
     #include <fog_pars_fragment>
     float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+    float noise(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(hash(i), hash(i + vec2(1,0)), f.x), mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y); }
+    // altura de las ondas: dos trenes que se cruzan con el viento y un rizado fino
+    float olas(vec2 q){
+      return noise(q * 0.045 + vec2(uT * 0.10, uT * 0.04)) * 0.6 + noise(q * 0.11 - vec2(uT * 0.05, uT * 0.13)) * 0.3
+           + noise(q * 0.31 + vec2(uT * 0.21, -uT * 0.17)) * 0.1;
+    }
     void main(){
+      float d = vD.x, dm = max(vD.y, 0.5);
+      if (d <= 0.0) discard;
       vec2 q = vW.xz;
-      float a = sin(dot(q, vec2(0.11, 0.07)) + uT * 0.9) + sin(dot(q, vec2(-0.09, 0.13)) - uT * 1.2) + sin(dot(q, vec2(0.05, -0.17)) + uT * 0.7);
-      float b = cos(dot(q, vec2(0.11, 0.07)) + uT * 0.9) * 0.11 + cos(dot(q, vec2(-0.05, 0.17)) - uT * 0.7) * 0.07;
-      vec3 N = normalize(vec3(b * 0.9 + a * 0.012, 1.0, a * 0.014 - b * 0.5));
       vec3 V = normalize(cameraPosition - vW);
-      float f = pow(1.0 - max(dot(N, V), 0.0), 3.0);
-      vec3 deep = vec3(0.10, 0.31, 0.38), sky = vec3(0.62, 0.78, 0.88);
-      vec3 col = mix(deep, sky, clamp(0.2 + f * 1.1, 0.0, 1.0));
+      float lejos = length(cameraPosition - vW);
+      // de lejos se apagan las ondas finas (sin parpadeo)
+      float amp = 2.2 * (1.0 - smoothstep(2500.0, 14000.0, lejos));
+      float e = 1.5, h0 = olas(q);
+      vec3 N = normalize(vec3((h0 - olas(q + vec2(e, 0.0))) * amp, 1.0, (h0 - olas(q + vec2(0.0, e))) * amp));
+      float f = 0.02 + 0.98 * pow(1.0 - max(dot(N, V), 0.0), 5.0);
+      // profundidad aparente: somera junto a la orilla, honda en el centro
+      float hondo = smoothstep(0.0, min(dm, 9.0 + dm * 0.35), d);
+      vec3 somera = vec3(0.36, 0.60, 0.55), media = vec3(0.07, 0.36, 0.42), honda = vec3(0.03, 0.15, 0.24);
+      vec3 agua = mix(somera, media, smoothstep(0.0, 0.45, hondo));
+      agua = mix(agua, honda, smoothstep(0.45, 1.0, hondo));
+      agua *= 0.75 + 0.35 * clamp(uSunDir.y * 1.6, 0.0, 1.0);
+      vec3 cielo = mix(uSky, vec3(1.0), 0.15 * (1.0 - V.y));
+      vec3 col = mix(agua, cielo, clamp(f * 1.15, 0.0, 0.85));
+      // brillo del sol sobre las ondas y destellos sueltos
       vec3 R = reflect(-uSunDir, N);
-      float g = pow(max(dot(R, V), 0.0), 90.0);
-      vec2 cell = floor(q * 0.35);
-      float tw = step(0.93, hash(cell)) * pow(0.5 + 0.5 * sin(uT * 2.3 + hash(cell + 3.0) * 40.0), 6.0);
-      col += uSunCol * (g * 1.4 + tw * 0.55 * smoothstep(0.0, 0.6, uSunDir.y + 0.35));
-      gl_FragColor = vec4(col, 1.0);
+      float g = pow(max(dot(R, V), 0.0), 220.0) * 3.0 + pow(max(dot(R, V), 0.0), 30.0) * 0.18;
+      float tw = step(0.96, hash(floor(q * 0.4))) * pow(0.5 + 0.5 * sin(uT * 2.3 + hash(floor(q * 0.4) + 3.0) * 40.0), 8.0);
+      col += uSunCol * (g + tw * 0.45 * (1.0 - smoothstep(1500.0, 6000.0, lejos))) * smoothstep(-0.1, 0.3, uSunDir.y);
+      // orilla: una raya clara de espuma muy fina que respira, y el borde se funde con la piedra
+      float espuma = (1.0 - smoothstep(0.4, 2.2, d)) * (0.55 + 0.45 * noise(q * 0.25 + uT * 0.3));
+      col = mix(col, vec3(0.86, 0.90, 0.88), espuma * 0.35 * (1.0 - smoothstep(800.0, 4000.0, lejos)));
+      float alfa = smoothstep(0.0, clamp(dm * 0.25, 0.6, 3.0), d) * mix(0.82, 1.0, hondo);
+      gl_FragColor = vec4(col, alfa);
       #include <fog_fragment>
     }`,
 });
 
+// distancia con signo de (x, z) al polígono (positiva dentro)
+function distOrilla(pts, x, z) {
+  let dmin = Infinity, dentro = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const a = pts[j], b = pts[i];
+    if ((b.z > z) !== (a.z > z) && x < ((a.x - b.x) * (z - b.z)) / (a.z - b.z) + b.x) dentro = !dentro;
+    const ex = b.x - a.x, ez = b.z - a.z, l2 = ex * ex + ez * ez || 1;
+    const t = Math.max(0, Math.min(1, ((x - a.x) * ex + (z - a.z) * ez) / l2));
+    const dx = a.x + t * ex - x, dz = a.z + t * ez - z, d2 = dx * dx + dz * dz;
+    if (d2 < dmin) dmin = d2;
+  }
+  return dentro ? Math.sqrt(dmin) : -Math.sqrt(dmin);
+}
+
+// rejilla del ibón: solo las celdas con alguna esquina dentro; el contorno exacto lo recorta el shader
+function mallaIbon(pts, y, out) {
+  let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity;
+  for (const p of pts) { x0 = Math.min(x0, p.x); x1 = Math.max(x1, p.x); z0 = Math.min(z0, p.z); z1 = Math.max(z1, p.z); }
+  const lado = Math.min(x1 - x0, z1 - z0);
+  let c = Math.max(2, Math.min(40, lado / 8));
+  c = Math.max(c, (x1 - x0) / 140, (z1 - z0) / 140);
+  x0 -= c; z0 -= c;
+  const nx = Math.ceil((x1 + c - x0) / c) + 1, nz = Math.ceil((z1 + c - z0) / c) + 1;
+  const sd = new Float32Array(nx * nz);
+  let dm = 0;
+  for (let k = 0; k < nz; k++) for (let i = 0; i < nx; i++) { const v = distOrilla(pts, x0 + i * c, z0 + k * c); sd[k * nx + i] = v; if (v > dm) dm = v; }
+  const idx = new Int32Array(nx * nz).fill(-1);
+  const vert = (i, k) => {
+    const n = k * nx + i;
+    if (idx[n] < 0) { idx[n] = out.pos.length / 3; out.pos.push(x0 + i * c, y, z0 + k * c); out.d.push(sd[n], dm); }
+    return idx[n];
+  };
+  for (let k = 0; k < nz - 1; k++) for (let i = 0; i < nx - 1; i++) {
+    const n = k * nx + i;
+    if (Math.max(sd[n], sd[n + 1], sd[n + nx], sd[n + nx + 1]) <= 0) continue;
+    const a = vert(i, k), b = vert(i + 1, k), cc = vert(i + 1, k + 1), d = vert(i, k + 1);
+    out.ind.push(a, d, b, b, d, cc);
+  }
+}
+
 // Los ibones se dibujan por bloques, cuando ya hay alturas suficientes (nivel 2 o mejor) en el bloque: `construirBloque(i, j)`.
+// Todos los ibones de un bloque van en una sola malla.
 export async function crearLagos({ scene, geo, url, meta }) {
   const data = await fetch(`${url}?dv=${window.DATOS_V || 0}`, { cache: 'no-cache' }).then((r) => r.json());
   const mat = waterMat(), CH = meta.chunk;
@@ -54,24 +120,35 @@ export async function crearLagos({ scene, geo, url, meta }) {
   }
   function construirBloque(i, j) {
     const b = porBloque.get(`${i}_${j}`); if (!b || b.hecho) return [];
-    b.hecho = true; const nuevos = [];
+    b.hecho = true; const nuevos = [], out = { pos: [], d: [], ind: [] };
     for (const { l, pts, cx, cz } of b.lista) {
       const y = median(pts.map((p) => geo.heightAt(p.x, p.z))) + 4;
-      const g = new THREE.ShapeGeometry(new THREE.Shape(pts.map((p) => new THREE.Vector2(p.x, p.z))));
-      g.rotateX(Math.PI / 2);
-      const m = new THREE.Mesh(g, mat);
-      m.position.y = y; m.renderOrder = 1; m.frustumCulled = false;
-      scene.add(m); n++;
+      mallaIbon(pts, y, out); n++;
       if (l.nombre && (l.area >= 2500 || l.etiqueta) && !etiquetados.has(l.nombre)) {
         etiquetados.add(l.nombre);
         const e = { nombre: l.nombre, x: cx, y: y + 6, z: cz, area: l.area }; nombrados.push(e); nuevos.push(e);
       }
     }
+    if (out.ind.length) {
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.Float32BufferAttribute(out.pos, 3));
+      g.setAttribute('aD', new THREE.Float32BufferAttribute(out.d, 2));
+      g.setIndex(out.ind);
+      const m = new THREE.Mesh(g, mat);
+      m.renderOrder = 1; m.frustumCulled = false;
+      scene.add(m);
+    }
     return nuevos;
   }
+  const _c = new THREE.Color(), AZUL = new THREE.Color('#a9c8dc');
   return {
     get count() { return n; }, nombrados, construirBloque,
-    setSol(dir, col) { mat.uniforms.uSunDir.value.copy(dir).normalize(); mat.uniforms.uSunCol.value.set(col); },
+    // el cielo reflejado se tiñe con el color del sol cuando está bajo (mañana y tarde)
+    setSol(dir, col) {
+      const u = mat.uniforms; u.uSunDir.value.copy(dir).normalize(); u.uSunCol.value.set(col);
+      const bajo = 1 - Math.min(1, Math.max(0, (u.uSunDir.value.y - 0.2) / 0.5));
+      u.uSky.value.copy(AZUL).lerp(_c.set(col), 0.35 * bajo);
+    },
     update(t) { mat.uniforms.uT.value = t; },
   };
 }
