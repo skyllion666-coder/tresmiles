@@ -124,6 +124,11 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.pin-prox .pin-stem { opacity: .55; }
 .pin.pin-sec { --pin-d: 19px; --pin-d-base: 19px; }   /* cimas secundarias y discutidas: marcador más pequeño */
 .pin.pin-sec::before { width: 5px; height: 5px; }
+/* cumbres de 2.500 a 3.000 m: punto pequeño y claro, sin hilo (no compiten con los tresmiles) */
+.pin.pin-menor { --pin-d: 13px; --pin-d-base: 13px; --lift: 0px; }
+.pin.pin-menor::before { width: 5px; height: 5px; background: #f8f1de; box-shadow: 0 0 0 1px rgba(20, 34, 30, .65); }
+.pin.pin-menor::after { background: rgba(36, 48, 44, .22); border-color: rgba(255, 255, 255, .45); }
+.pin.pin-menor .pin-stem { display: none; }
 /* muy cerca de una cumbre con objetos (pilar, cruz, buzón): el círculo sube y se aclara, el hilo queda fino y discreto */
 .pin.pin-alto::after { opacity: .62; }
 .pin.pin-muycerca { opacity: .38; } .pin.pin-muycerca .pin-label { opacity: .75; }
@@ -418,6 +423,12 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
 .sel-busca input::-webkit-search-cancel-button { display: none; }
 .sel-busca:focus-within { background: #fff8e6; box-shadow: inset 0 -2px 0 var(--spruce); }
 .sel-borra { position: absolute; right: 4px; width: 40px; height: 40px; font-size: 1.4rem; line-height: 1; color: var(--ink-2); }
+.sel-capa { flex: none; display: flex; gap: 4px; padding: 8px 10px; background: var(--cream-2); border-bottom: 1px solid var(--line); }
+.sel-capa button { flex: 1 1 0; min-height: 36px; padding: 6px 4px; border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); background: transparent; border: 1px solid transparent; white-space: nowrap; }
+.sel-capa button:hover { border-color: var(--line); }
+.sel-capa button[aria-checked="true"] { background: var(--spruce); color: #f7f2e4; }
+.sel-capa button:focus-visible { outline: 2px solid var(--spruce); outline-offset: 1px; }
+@media (pointer: coarse) { .sel-capa button { min-height: 40px; } }
 .sel-filtro { flex: none; margin: 0; padding: 8px 18px; font: 500 .74rem var(--cond); letter-spacing: .06em; color: var(--ink-2); background: #f1e2bf; border-bottom: 1px solid var(--line); }
 .sel-quita { color: var(--spruce); text-decoration: underline; font: inherit; }
 .sel-lista { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; touch-action: pan-y; padding-bottom: 6px; }

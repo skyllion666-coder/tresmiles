@@ -9,7 +9,7 @@ const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
 const KM_REBECO = 42 * 1.275 * 0.75;   // un 25 % más pequeños que antes (18-10-2026); los montañeros (ruta.js) van al doble
 const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
-export function crearFauna({ scene, geo, centro, camera, sol }) {
+export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
   // rapaces carroñeras (tools/modelos/aves.py): envergadura real × 46 para que se vean desde lejos, igual que antes.
   // Quebrantahuesos en pareja; un bando de buitres leonados girando en la misma térmica, más alto; un buitre negro solitario y,
   // de marzo a septiembre (cuando está en el Pirineo), un alimoche.
@@ -69,7 +69,7 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
       const cria = tipo === 'cria';
-      const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, gi, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
+      const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', clip: 'Quieto', agua: null, yendo: false, resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, gi, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
       acc.Quieto.play(); acc.Quieto.time = Math.random() * 6;
       rebecos.push(r);
     }
@@ -113,16 +113,55 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       const a = rnd() * 6.28, d = 20 + rnd() * rad;
       r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
       r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
-      r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.resta = 2 + rnd() * 8;
+      r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.clip = 'Quieto'; r.resta = 2 + rnd() * 8; r.agua = null; r.yendo = false;
       for (const n of Object.keys(r.acc)) r.acc[n].setEffectiveWeight(n === 'Quieto' ? 1 : 0);
     }
+    colocaBebederos();
   }
+  // Uno de los grupos de cuatro (y el rebaño grande, si hay otro ibón a mano) se instala junto a un ibón cercano a la cumbre
+  // y de vez en cuando baja a la orilla a beber: cada animal tiene su sitio en la orilla, separados entre sí.
+  const LARGO = 1.4;   // m de cuerpo del modelo adulto (para dejar la cabeza justo sobre el agua)
+  function colocaBebederos() {
+    if (!lagos?.orillaCerca) return;
+    const usados = [];
+    for (const gi of [1, 0]) {
+      const lago = lagos.orillaCerca(anclaje.x, anclaje.z, 3500, 8000);
+      const o = lago && (gi === 1 ? lago : lagos.orillaCerca(anclaje.x + (rnd() - 0.5) * 3000, anclaje.z + (rnd() - 0.5) * 3000, 3500, 8000));
+      if (!o || usados.some((u) => u.pts === o.pts)) continue;
+      usados.push(o);
+      // sitios en la orilla a ~45 m unos de otros, alternando a un lado y a otro del vértice más cercano
+      const n = o.pts.length, sitios = [];
+      const sitio = (k) => {
+        const p = o.pts[((k % n) + n) % n], ox = p.x - o.cx, oz = p.z - o.cz, l = Math.hypot(ox, oz) || 1;
+        return { x: p.x, z: p.z, ux: ox / l, uz: oz / l };   // punto de la orilla y dirección hacia fuera del agua
+      };
+      let a = o.i, b = o.i, ultA = sitio(o.i), ultB = ultA; sitios.push(ultA);
+      for (let paso = 0; paso < n && sitios.length < 20; paso++) {
+        const sa = sitio(--a); if (Math.hypot(sa.x - ultA.x, sa.z - ultA.z) > 45) { sitios.push(sa); ultA = sa; }
+        const sb = sitio(++b); if (Math.hypot(sb.x - ultB.x, sb.z - ultB.z) > 45) { sitios.push(sb); ultB = sb; }
+      }
+      const s0 = sitios[0], base = { x: s0.x + s0.ux * 160, z: s0.z + s0.uz * 160 };
+      let k = 0;
+      for (const r of rebecos) {
+        if (r.gi !== gi) continue;
+        const ang = rnd() * 6.28, d = 20 + rnd() * GRUPOS[gi].rad * 0.6;
+        r.base = base; r.x = base.x + Math.cos(ang) * d; r.z = base.z + Math.sin(ang) * d; r.ok = true;
+        r.agua = sitios[k++ % sitios.length]; r.resta = 3 + rnd() * 20;
+        r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
+      }
+    }
+  }
+  // estado del animal; «Beber» usa la animación de pastar (cabeza abajo) mirando al agua
   function cambia(r, nuevo, resta) {
-    if (!r.acc[nuevo]) nuevo = 'Quieto';
-    if (nuevo === 'Brinco') { r.acc.Brinco.setLoop(THREE.LoopOnce, 1); r.acc.Brinco.clampWhenFinished = true; }
-    if (r.estado !== nuevo) { const f = nuevo === 'Brinco' || r.estado === 'Brinco' ? 0.15 : 0.45; r.acc[nuevo].reset().setEffectiveWeight(1).fadeIn(f).play(); r.acc[r.estado].fadeOut(f); }
-    r.estado = nuevo; r.resta = resta;
+    if (nuevo !== 'Beber' && !r.acc[nuevo]) nuevo = 'Quieto';
+    const clip = nuevo === 'Beber' ? (r.acc.Pastar ? 'Pastar' : 'Quieto') : nuevo;
+    if (clip === 'Brinco') { r.acc.Brinco.setLoop(THREE.LoopOnce, 1); r.acc.Brinco.clampWhenFinished = true; }
+    if (r.clip !== clip) { const f = clip === 'Brinco' || r.clip === 'Brinco' ? 0.15 : 0.45; r.acc[clip].reset().setEffectiveWeight(1).fadeIn(f).play(); r.acc[r.clip].fadeOut(f); }
+    r.estado = nuevo; r.clip = clip; r.resta = resta;
+    if (nuevo !== 'Andar') r.yendo = false;
   }
+  // sitio donde se para a beber: la cabeza (media longitud por delante) queda sobre la orilla
+  const puntoBeber = (r, esc) => { const a = r.agua, k = LARGO * 0.55 * esc; return { x: a.x + a.ux * k, z: a.z + a.uz * k }; };
   const _q = new THREE.Quaternion(), _qy = new THREE.Quaternion(), _up = new THREE.Vector3(0, 1, 0);
   function actualizaRebecos(dt) {
     for (const r of rebecos) {
@@ -133,10 +172,12 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
       r.g.scale.setScalar(esc);
       r.resta -= dt;
       const cerca = dist < 450;
-      if (cerca && (r.estado === 'Quieto' || r.estado === 'Pastar' || r.estado === 'Mirar')) cambia(r, 'Alerta', 2 + Math.random() * 2);
+      if (cerca && (r.estado === 'Quieto' || r.estado === 'Pastar' || r.estado === 'Mirar' || r.estado === 'Beber' || r.yendo)) cambia(r, 'Alerta', 2 + Math.random() * 2);
       if (r.resta <= 0) {
         const z = Math.random();
-        if (r.estado === 'Quieto') cambia(r, z < 0.25 ? 'Alerta' : z < 0.55 ? 'Pastar' : z < 0.68 ? 'Mirar' : 'Andar', 4 + Math.random() * 6);
+        if (r.agua && !cerca && (r.estado === 'Quieto' || r.estado === 'Pastar') && z < 0.4) { cambia(r, 'Andar', 90); r.yendo = true; }   // baja a beber
+        else if (r.estado === 'Beber') { r.rumbo += Math.PI * (0.7 + Math.random() * 0.6); cambia(r, Math.random() < 0.5 ? 'Mirar' : 'Andar', 3 + Math.random() * 5); }
+        else if (r.estado === 'Quieto') cambia(r, z < 0.25 ? 'Alerta' : z < 0.55 ? 'Pastar' : z < 0.68 ? 'Mirar' : 'Andar', 4 + Math.random() * 6);
         else if (r.estado === 'Pastar') cambia(r, z < 0.5 ? 'Quieto' : z < 0.7 ? 'Mirar' : 'Andar', 4 + Math.random() * 6);
         else if (r.estado === 'Mirar') cambia(r, 'Quieto', 3 + Math.random() * 6);
         else if (r.estado === 'Alerta') {
@@ -146,11 +187,18 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
         } else if (r.estado === 'Brinco') cambia(r, 'Andar', 4 + Math.random() * 4);
         else { if (Math.random() < 0.3) r.rumbo += (Math.random() - 0.5) * 1.5; cambia(r, z < 0.5 ? 'Quieto' : 'Pastar', 6 + Math.random() * 10); }
       }
+      if (r.yendo) {   // camino de la orilla: rumbo a su sitio; al llegar, se para mirando al agua y bebe
+        const t = puntoBeber(r, esc), dx = t.x - r.x, dz = t.z - r.z;
+        r.rumbo = Math.atan2(dz, dx);
+        if (Math.hypot(dx, dz) < Math.max(4, 1.2 * esc * dt)) { r.x = t.x; r.z = t.z; cambia(r, 'Beber', 12 + Math.random() * 18); r.rumbo = Math.atan2(-r.agua.uz, -r.agua.ux); }
+      }
+      if (r.estado === 'Beber') r.rumbo = Math.atan2(-r.agua.uz, -r.agua.ux);
       if (r.estado === 'Andar' || r.estado === 'Brinco') {
         const v = (r.estado === 'Brinco' ? 2.6 : 0.9) * esc * dt;
         const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
         const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600;
-        if (s > 1.1 || lejos) { r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
+        if (r.yendo && s <= 1.4) { r.x = nx; r.z = nz; }   // hacia el agua no se desvía (la orilla está a un paso de su sitio)
+        else if (s > 1.1 || lejos) { if (r.yendo) { r.yendo = false; r.resta = Math.min(r.resta, 4); } r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
         else { r.x = nx; r.z = nz; }
       }
       // gira suavemente hacia su rumbo y se apoya en la ladera

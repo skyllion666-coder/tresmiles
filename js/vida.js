@@ -109,6 +109,7 @@ export async function crearLagos({ scene, geo, url, meta }) {
   const data = await fetch(`${url}?dv=${window.DATOS_V || 0}`, { cache: 'no-cache' }).then((r) => r.json());
   const mat = waterMat(), CH = meta.chunk;
   const porBloque = new Map(), etiquetados = new Set(), nombrados = [];
+  const todos = [];   // contorno de cada ibón (para que los rebecos encuentren una orilla donde beber)
   let n = 0;
   for (const l of data) {
     const pts = l.poly.map(([lon, lat]) => geo.toXZ(lon, lat));
@@ -117,6 +118,7 @@ export async function crearLagos({ scene, geo, url, meta }) {
     const i = Math.min(meta.nci - 1, Math.max(0, Math.floor((cx + geo.W / 2) / geo.dx / CH))), j = Math.min(meta.ncj - 1, Math.max(0, Math.floor((cz + geo.D / 2) / geo.dz / CH)));
     const k = `${i}_${j}`; if (!porBloque.has(k)) porBloque.set(k, { lista: [], hecho: false });
     porBloque.get(k).lista.push({ l, pts, cx, cz });
+    todos.push({ pts, cx, cz, area: l.area });
   }
   function construirBloque(i, j) {
     const b = porBloque.get(`${i}_${j}`); if (!b || b.hecho) return [];
@@ -143,6 +145,15 @@ export async function crearLagos({ scene, geo, url, meta }) {
   const _c = new THREE.Color(), AZUL = new THREE.Color('#a9c8dc');
   return {
     get count() { return n; }, nombrados, construirBloque,
+    // ibón más cercano a (x, z) dentro de `radio` m y de al menos `areaMin` m²: su contorno y el vértice de la orilla más próximo
+    orillaCerca(x, z, radio, areaMin = 0) {
+      let mejor = null, md = radio * radio;
+      for (const L of todos) {
+        if (L.area < areaMin || Math.abs(L.cx - x) > radio + 2000 || Math.abs(L.cz - z) > radio + 2000) continue;
+        L.pts.forEach((p, i) => { const d = (p.x - x) ** 2 + (p.z - z) ** 2; if (d < md) { md = d; mejor = { pts: L.pts, cx: L.cx, cz: L.cz, i }; } });
+      }
+      return mejor;
+    },
     // el cielo reflejado se tiñe con el color del sol cuando está bajo (mañana y tarde)
     setSol(dir, col) {
       const u = mat.uniforms; u.uSunDir.value.copy(dir).normalize(); u.uSunCol.value.set(col);

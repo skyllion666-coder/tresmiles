@@ -7,10 +7,10 @@ import { crearCumbres } from './cumbres.js?v=27';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=18';
-import { crearFauna } from './fauna.js?v=7';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=19';
+import { crearFauna } from './fauna.js?v=8';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
-import { crearSelector } from './selector.js?v=1';
+import { crearSelector } from './selector.js?v=2';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -33,7 +33,9 @@ const SUN = [
 ];
 
 async function boot() {
-  const [data, fotos, meta] = await Promise.all([json('data/peaks.json'), json('data/fotos.json'), json('data/terrain/meta.json')]);
+  const [data, fotos, meta, menores] = await Promise.all([json('data/peaks.json'), json('data/fotos.json'), json('data/terrain/meta.json'), json('data/menores.json').catch(() => ({ zonas: [], picos: [] }))]);
+  // picos de 2.500 a 3.000 m (ficha sencilla, sin ruta): se suman a la lista con su zona; el filtro «capa» decide cuáles se ven
+  data.picos.push(...menores.picos); data.macizos.push(...menores.zonas);
   const relieve = new HeightStore(meta, 'data/terrain'); await relieve.init();   // vista general ligera; el detalle se pide por zonas
   $('#load-text').textContent = 'Preparando el mapa…';
 
@@ -62,7 +64,7 @@ async function boot() {
 
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
-  const activos = params.has('todos') ? data.picos.map((p) => p.id) : data.activos;
+  const activos = params.has('todos') ? data.picos.map((p) => p.id) : [...data.activos, ...menores.picos.map((p) => p.id)];
   const macizoName = Object.fromEntries(data.macizos.map((m) => [m.id, m.nombre]));
   const difName = Object.fromEntries(data.dificultades.map((d) => [d.id, d.nombre]));
   const difN = { moderada: 1, alta: 2, 'muy-alta': 3 };
@@ -76,7 +78,7 @@ async function boot() {
   const bal = peaks.find((p) => p.id === 'balaitus');
   const aves = bal && !reduced ? crearAves({ scene, geo, centro: { x: bal.w.x, z: bal.w.z } }) : null;
   const pDef = byId.perdido || bal;
-  const fauna = pDef && !reduced ? crearFauna({ scene, geo, centro: { x: pDef.w.x, z: pDef.w.z }, camera, sol: sun.position }) : null;
+  const fauna = pDef && !reduced ? crearFauna({ scene, geo, centro: { x: pDef.w.x, z: pDef.w.z }, camera, sol: sun.position, lagos }) : null;
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
@@ -135,7 +137,9 @@ async function boot() {
   }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null } };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
+  // capa: qué cumbres se ven en el mapa y en los selectores (tresmiles, las de menos de 3.000 o todas)
+  const enCapa = (p) => S.capa === 'todos' || (S.capa === 'menos') === !!p.menor;
 
   // — estados de cámara —
   const hq = geo.toXZ(-0.05, 42.79);
@@ -188,7 +192,7 @@ async function boot() {
   const pinEls = new Map();
   for (const p of peaks) {
     const b = document.createElement('button');
-    b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}${p.clase && p.clase !== 'principal' ? ' pin-sec' : ''}`; b.type = 'button'; b.dataset.id = p.id;
+    b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}${p.clase && p.clase !== 'principal' ? ' pin-sec' : ''}${p.menor ? ' pin-menor' : ''}`; b.type = 'button'; b.dataset.id = p.id;
     b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
     b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
@@ -258,13 +262,16 @@ async function boot() {
       const el = pinEls.get(p.id);
       tmp.set(p.w.x, p.w.y + 25, p.w.z);
       const dist = camera.position.distanceTo(tmp);
+      // fuera de la capa elegida no se ven; las de menos de 3.000 solo de cerca (para no llenar el mapa de puntos)
+      if (S.active !== p.id && (!enCapa(p) || (p.menor && dist > 22000))) { if (!el._fuera) { el._fuera = true; el.classList.add('is-hidden'); el.classList.remove('show-label'); el._lv = false; } continue; }
+      el._fuera = false;
       tmp.set(p.w.x, p.w.y + 3, p.w.z); tmp.project(camera);   // punto de la cumbre; el círculo se dibuja LIFT píxeles más arriba, unido por un hilo fino
       const show = S.mode === 'explore' && tmp.z < 1 && Math.abs(tmp.x) < 1.08 && Math.abs(tmp.y) < 1.08 && !occluded({ x: p.w.x, y: p.w.y + 25, z: p.w.z });
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
       const det = dist < 450 && cumbres.detalle.includes(p.id);
       if (det) cimaCerca = p.w;
-      const LIFT = det ? (isMobile() ? 160 : 140) : isMobile() ? 38 : 34;
+      const LIFT = det ? (isMobile() ? 160 : 140) : p.menor ? 0 : isMobile() ? 38 : 34;
       el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
@@ -273,7 +280,7 @@ async function boot() {
         else {
           const obs = { x: px - 22, y: py - 22, w: 44, h: 44 }; obstaculos.push(obs);
           if (el._cl) { lb.style.cssText = ''; el._cl = false; }   // deja de ser la cumbre abierta: etiqueta a su sitio de siempre
-          if (lb && p.activo) candPicos.push({ el, lb, px, py, dist, obs });   // su nombre solo sale si hay hueco (etiquetasPicos)
+          if (lb && p.activo && (!p.menor || dist < 5000)) candPicos.push({ el, lb, px, py, dist, obs, menor: p.menor });   // su nombre solo sale si hay hueco (etiquetasPicos)
         } }
       el.classList.toggle('is-active', S.active === p.id);
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
@@ -292,7 +299,7 @@ async function boot() {
     const hay = !S.active && S.mode === 'explore' && !S.vuelo && performance.now() > callaHasta;   // al cerrar la ficha, el terreno queda despejado hasta que el usuario lo mueva
     const LIM = 7000, MAX = isMobile() ? 2 : 4;
     let n = 0;
-    const lista = hay ? candPicos.filter((c) => c.dist < LIM).sort((a, b) => a.dist - b.dist) : [];
+    const lista = hay ? candPicos.filter((c) => c.dist < LIM).sort((a, b) => (a.menor ? 1 : 0) - (b.menor ? 1 : 0) || a.dist - b.dist) : [];
     for (const c of candPicos) if (!lista.includes(c)) { c.el._lv = false; c.el._n = 0; c.el.classList.remove('show-label'); }
     for (const c of lista) {
       const el = c.el;
@@ -505,7 +512,7 @@ async function boot() {
 
   // — filtros —
   const hechos = leerHechos();
-  const passes = (p) => (!S.filters.hecho || (S.filters.hecho === 'si') === hechos.has(p.id)) && (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && p.altitud >= S.filters.alt;
+  const passes = (p) => enCapa(p) && (!S.filters.hecho || (S.filters.hecho === 'si') === hechos.has(p.id)) && (!S.filters.macizo.size || S.filters.macizo.has(p.macizo)) && (!S.filters.dif.size || S.filters.dif.has(p.dificultad)) && (p.menor || p.altitud >= S.filters.alt);
   const visiblePeaks = () => peaks.filter((p) => p.activo && passes(p));   // solo las activas (navegación anterior/siguiente)
   function buildFilters() {
     if (activas.size < 2) return;
@@ -529,15 +536,20 @@ async function boot() {
     });
   }
 
+  // — capa (tresmiles / menos de 3.000 / todas): la comparten los dos selectores y el mapa; se recuerda en el dispositivo —
+  let introSel = null;   // selector de la pantalla de inicio (se crea más abajo)
+  const capaSel = { get: () => S.capa, set: (v) => { S.capa = v; store.set('capa', v); sonido.fx('toque'); refreshLists(); } };
+
   // — selector inferior —
   const listEl = $('#picker'), listBtn = $('#btn-list');
   const hayFiltros = () => !!(S.filters.hecho || S.filters.macizo.size || S.filters.dif.size || S.filters.alt > 3000);
   const selMapa = crearSelector(listEl, {
-    picos: peaks, macizos: data.macizos, activa: () => S.active, hecho: (id) => hechos.has(id), pasa: passes, filtrado: hayFiltros,
+    picos: peaks, macizos: data.macizos, activa: () => S.active, hecho: (id) => hechos.has(id), pasa: passes, filtrado: hayFiltros, capa: capaSel,
     quitarFiltros: () => $('#f-reset').click(), elegir: (id) => { setList(false); openPeak(id); },
   });
   function refreshLists() {
     if (!listEl.hidden) selMapa.pinta();
+    if (!$('#intro-picos').hidden) introSel?.pinta();
     const fc = $('#f-count'); if (fc) fc.textContent = `${peaks.filter(passes).length} de ${peaks.length} cumbres`;
     $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? `Explorar el ${peaks.find((p) => p.activo).nombre}` : 'Explorar las cumbres';
   }
@@ -568,17 +580,18 @@ async function boot() {
     const foto = f
       ? `<figure><img src="img/peaks/${p.foto}.jpg" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}" decoding="async" onerror="this.parentNode.classList.add('sin-foto')">
         <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>.</figcaption></figure>`
-      : '<figure class="sin-foto" aria-hidden="true"></figure>';   // sin imagen: marco con la silueta de una montaña
+      : p.menor ? '' : '<figure class="sin-foto" aria-hidden="true"></figure>';   // ficha sencilla sin foto: sin marco   // sin imagen: marco con la silueta de una montaña
     return `
       ${foto}
       <h2>${esc(p.nombre)}</h2>${p.alias ? `<p class="alias">${esc(p.alias)}</p>` : ''}
       <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras">${/^otras/i.test(p.otras) ? '' : '<b>Otras cifras</b> '}${esc(p.otras)}</p>` : ''}
-      ${p.activo ? `<div class="hecho-box"><button type="button" class="btn-hecho" data-act="hecho" aria-pressed="${hechos.has(p.id)}">${hechos.has(p.id) ? '<i aria-hidden="true"></i>Subido · banderín puesto' : '<i aria-hidden="true"></i>He subido este tresmil'}</button><span class="hecho-cuenta">${resumenHechos()}</span></div>` : ''}
+      ${p.activo ? `<div class="hecho-box"><button type="button" class="btn-hecho" data-act="hecho" aria-pressed="${hechos.has(p.id)}">${hechos.has(p.id) ? '<i aria-hidden="true"></i>Subido · banderín puesto' : `<i aria-hidden="true"></i>${textoSubir(p)}`}</button><span class="hecho-cuenta">${resumenHechos(p)}</span></div>` : ''}
       <p class="lede">${esc(p.descripcion)}</p>
       <dl class="stats">
-        <div><dt>Macizo</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
+        <div><dt>${p.menor ? 'Zona' : 'Macizo'}</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
         <div><dt>Situación</dt><dd>${p.situacion ? esc(p.situacion) : p.frontera ? 'Frontera Aragón–Francia' : 'Aragón'}</dd></div>
         ${p.clase && p.clase !== 'principal' ? `<div><dt>Clase</dt><dd>${p.clase === 'discutida' ? 'Cima discutida' : 'Cima secundaria'}</dd></div>` : ''}
+        ${p.cerca ? `<div class="wide"><dt>Pueblo más cercano</dt><dd>${esc(p.cerca)}</dd></div>` : ''}
         ${p.acceso ? `<div class="wide"><dt>Valle o pueblo de acceso</dt><dd>${esc(p.acceso)}</dd></div>` : ''}
         ${p.desnivel ? `<div><dt>Desnivel</dt><dd>${esc(p.desnivel)}</dd></div>` : ''}
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
@@ -589,7 +602,7 @@ async function boot() {
       ${figCima(p)}
       ${rutaHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
-      <div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>${nav}`;
+      ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   function rutaHTML(p) {
     const r = rutasDe(p.id)[0]?.ruta; if (!r) return '';
@@ -769,8 +782,12 @@ async function boot() {
     terrain.update(camera, 8);
   }
   // — tresmiles subidos: banderín de Aragón en la cima, aro dorado en el marcador y contador —
-  const totalActivas = () => peaks.filter((p) => p.activo).length;
-  function resumenHechos() { const n = [...hechos].filter((id) => byId[id]?.activo).length; return `${n} de ${totalActivas()} tresmiles subidos`; }
+  const totalActivas = (menor = false) => peaks.filter((p) => p.activo && !!p.menor === menor).length;
+  const textoSubir = (p) => (p?.menor ? 'He subido esta cumbre' : 'He subido este tresmil');
+  function resumenHechos(p = null) {
+    const menor = !!p?.menor, n = [...hechos].filter((id) => byId[id]?.activo && !!byId[id].menor === menor).length;
+    return `${n} de ${totalActivas(menor)} ${menor ? 'cumbres de 2.500 a 3.000 m subidas' : 'tresmiles subidos'}`;
+  }
   function pintaHechos() {
     for (const p of peaks) pinEls.get(p.id)?.classList.toggle('is-hecho', hechos.has(p.id));
     const c = $('#hechos-cuenta'); if (c) c.textContent = resumenHechos();
@@ -781,7 +798,7 @@ async function boot() {
     else { hechos.add(id); banderines.pone(p, true); sonido.fx('activar'); }
     guardarHechos(hechos); pintaHechos();
     const b = fichaBody.querySelector('.btn-hecho');
-    if (b) { const on = hechos.has(id); b.setAttribute('aria-pressed', on); b.innerHTML = `<i aria-hidden="true"></i>${on ? 'Subido · banderín puesto' : 'He subido este tresmil'}`; fichaBody.querySelector('.hecho-cuenta').textContent = resumenHechos(); }
+    if (b) { const on = hechos.has(id); b.setAttribute('aria-pressed', on); b.innerHTML = `<i aria-hidden="true"></i>${on ? 'Subido · banderín puesto' : textoSubir(p)}`; fichaBody.querySelector('.hecho-cuenta').textContent = resumenHechos(p); }
     refreshLists();
   }
   // copia de seguridad: exportar e importar la lista en un archivo
@@ -922,7 +939,7 @@ async function boot() {
     const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f);
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
-      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${activas.size} cumbres: unas ${peaks.filter((p) => p.activo && !p.basica).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación).</p>
+      <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.500 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>
       <li>Rutas, desniveles y dificultades: resumen propio a partir de guías y fichas públicas (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). Son cifras orientativas: varían según la fuente.</li></ul>
@@ -958,7 +975,7 @@ async function boot() {
   }
   (function buildIntro() {
     const lista = $('#intro-picos'), btn = $('#btn-elegir');
-    const sel = crearSelector(lista, { picos: peaks, macizos: data.macizos, hecho: (id) => hechos.has(id), elegir: (id) => { abre(false); irDesdeInicio(id); } });
+    const sel = introSel = crearSelector(lista, { picos: peaks, macizos: data.macizos, hecho: (id) => hechos.has(id), pasa: enCapa, capa: capaSel, elegir: (id) => { abre(false); irDesdeInicio(id); } });
     // en el escritorio el desplegable se ajusta al espacio real: se abre hacia el lado con más sitio y se desplaza por dentro (en el móvil es una hoja a pantalla casi completa)
     const ajusta = () => {
       if (lista.hidden || isMobile()) { lista.style.maxHeight = ''; return; }

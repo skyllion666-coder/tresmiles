@@ -22,7 +22,10 @@ function marca(nombre, q) {
   return `${esc(nombre.slice(0, a))}<mark>${esc(nombre.slice(a, b))}</mark>${esc(nombre.slice(b))}`;
 }
 
-export function crearSelector(root, { picos, macizos, activa = () => null, hecho = () => false, pasa = () => true, filtrado = () => false, quitarFiltros = null, elegir }) {
+// capas: qué cumbres se ven (en el mapa y en la lista)
+const CAPAS = [['tres', 'Tresmiles'], ['menos', 'Menos de 3.000'], ['todos', 'Todas']];
+
+export function crearSelector(root, { picos, macizos, activa = () => null, hecho = () => false, pasa = () => true, filtrado = () => false, quitarFiltros = null, capa = null, elegir }) {
   const nombreMacizo = Object.fromEntries(macizos.map((m) => [m.id, m.nombre]));
   // índice de búsqueda por cumbre: nombre, otros nombres y macizo
   const idx = new Map(picos.map((p) => {
@@ -37,7 +40,8 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
 
   root.classList.add('sel');
   root.innerHTML = `<div class="sel-cab"><span class="sel-tit">Cumbres</span><button type="button" class="sel-x" aria-label="Cerrar el selector"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
-    <div class="sel-busca"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar entre las ${picos.length} cumbres" autocomplete="off" spellcheck="false" enterkeyhint="go" aria-label="Buscar cumbre por nombre"><button type="button" class="sel-borra" aria-label="Borrar la búsqueda" hidden>×</button></div>
+    <div class="sel-busca"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar cumbre" autocomplete="off" spellcheck="false" enterkeyhint="go" aria-label="Buscar cumbre por nombre"><button type="button" class="sel-borra" aria-label="Borrar la búsqueda" hidden>×</button></div>
+    ${capa ? `<div class="sel-capa" role="radiogroup" aria-label="Qué cumbres ver">${CAPAS.map(([v, t]) => `<button type="button" role="radio" data-capa="${v}">${t}</button>`).join('')}</div>` : ''}
     <p class="sel-filtro" hidden></p>
     <div class="sel-lista" role="listbox" aria-label="Cumbres"></div>`;
   const q = root.querySelector('input'), lista = root.querySelector('.sel-lista'), borra = root.querySelector('.sel-borra'), filtroEl = root.querySelector('.sel-filtro');
@@ -93,6 +97,10 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     borra.hidden = !q.value;
     root.classList.toggle('buscando', !!f);
     const n = picos.filter(pasa).length;
+    if (capa) {
+      for (const b of root.querySelectorAll('[data-capa]')) b.setAttribute('aria-checked', b.dataset.capa === capa.get());
+      q.placeholder = `Buscar entre ${n === 1 ? '1 cumbre' : `las ${n} cumbres`}`;
+    }
     filtroEl.hidden = !filtrado();
     if (filtrado()) filtroEl.innerHTML = `Con filtros: ${n} de ${picos.length} cumbres${quitarFiltros ? ' · <button type="button" class="sel-quita">Quitar filtros</button>' : ''}`;
     lista.innerHTML = f ? porBusqueda(f) : (porMacizos() || '<p class="sel-vacio">Ninguna cumbre con estos filtros.</p>');
@@ -118,6 +126,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     if (j < 0) q.focus(); else items[Math.min(j, items.length - 1)]?.focus();
   });
   lista.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) elegir(b.dataset.id); });
+  root.querySelector('.sel-capa')?.addEventListener('click', (e) => { const b = e.target.closest('[data-capa]'); if (b && b.dataset.capa !== capa.get()) { capa.set(b.dataset.capa); pinta(); } });
   filtroEl.addEventListener('click', (e) => { if (e.target.closest('.sel-quita')) { quitarFiltros(); pinta(); } });
   // recordar qué macizos se despliegan o se pliegan
   lista.addEventListener('toggle', (e) => {
