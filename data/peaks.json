@@ -3063,11 +3063,19 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.68575,
    "lon": -0.017083,
-   "descripcion": "Cumbre de 3.012 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.012 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "principal",
    "nombres": "Punda dero Faixón · Torre de Marboré · La Torre · Punda dero Faixón / Torre de Marboré",
    "basica": true,
-   "inv": "PER-26"
+   "inv": "PER-26",
+   "foto": "torre-del-marbore",
+   "pie": "La cima de la Torre del Marboré, con una piedra escrita.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/ruta-3000-ordesa-torre-de-marbore-espalda-de-marbore-pico-oriental-central-y-oriental-de-la-cascada-105704373",
+    "texto": "Ruta de Ricardo 747 en Wikiloc"
+   },
+   "desnivel": "+1.665 m · 30,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «RUTA 3000 ORDESA - TORRE DE MARBORÉ - ESPALDA DE MARBORÉ - PICO ORIENTAL , CENTRAL Y ORIENTAL DE LA CASCADA - PICO DE MARBORÉ», de Ricardo 747 en Wikiloc, de 30,3 km y 1.665 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "pequena-munia",
@@ -3539,11 +3547,19 @@
    "situacion": "Aragón",
    "lat": 42.658528,
    "lon": 0.443444,
-   "descripcion": "Cima secundaria de 3.075 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.075 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de la Collada de la Paúl",
    "basica": true,
-   "inv": "POS-14"
+   "inv": "POS-14",
+   "foto": "pico-inferior-de-la-paul",
+   "pie": "La cresta del Pico Inferior de la Paúl.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/cresta-bardamina-la-paul-desde-espigantosa-valle-de-eriste-5082507",
+    "texto": "Ruta de Pelopin en Wikiloc"
+   },
+   "desnivel": "+1.783 m · 19,9 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Cresta Bardamina - La Paúl desde Espigantosa (valle de Eriste)», de Pelopin en Wikiloc, de 19,9 km y 1.783 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "pico-de-eriste-sur",
@@ -4387,11 +4403,19 @@
    "situacion": "Aragón",
    "lat": 42.630411,
    "lon": 0.655618,
-   "descripcion": "Cima secundaria de 3.350 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.350 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "ANE-04"
+   "inv": "ANE-04",
+   "foto": "aguja-daviu",
+   "pie": "La cima de la Aguja Daviu, con su hito.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aneto-espalda-del-aneto-aguja-daviu-aguja-escudier-punta-oliveras-aguja-de-la-collarada-de-coronas-177373208",
+    "texto": "Ruta de Samuel Aded en Wikiloc"
+   },
+   "desnivel": "+2.466 m · 35,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "aguja-escudier",
@@ -4404,11 +4428,19 @@
    "situacion": "Aragón",
    "lat": 42.630222,
    "lon": 0.654694,
-   "descripcion": "Cima secundaria de 3.343 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.343 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla Baixa d'Aneto",
    "basica": true,
-   "inv": "ANE-07"
+   "inv": "ANE-07",
+   "foto": "aguja-escudier",
+   "pie": "La cima de la Aguja Escudier, con su hito.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aneto-espalda-del-aneto-aguja-daviu-aguja-escudier-punta-oliveras-aguja-de-la-collarada-de-coronas-177373208",
+    "texto": "Ruta de Samuel Aded en Wikiloc"
+   },
+   "desnivel": "+2.466 m · 35,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "aguja-schmidt-endell",
@@ -4438,11 +4470,19 @@
    "situacion": "Aragón",
    "lat": 42.633694,
    "lon": 0.6545,
-   "descripcion": "Cima secundaria de 3.302 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.302 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuqueta de la Crus · Punta Oliveras-Arenas",
    "basica": true,
-   "inv": "ANE-10"
+   "inv": "ANE-10",
+   "foto": "punta-oliveras-arenas",
+   "pie": "La cima de la Punta Oliveras–Arenas, con su hito.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aneto-espalda-del-aneto-aguja-daviu-aguja-escudier-punta-oliveras-aguja-de-la-collarada-de-coronas-177373208",
+    "texto": "Ruta de Samuel Aded en Wikiloc"
+   },
+   "desnivel": "+2.466 m · 35,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "tuca-de-collado-de-coronas",
@@ -4455,11 +4495,19 @@
    "situacion": "Aragón",
    "lat": 42.635889,
    "lon": 0.651028,
-   "descripcion": "Cima secundaria de 3.281 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.281 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de la Collada de Corones · Tuca del Collado de Coronas",
    "basica": true,
-   "inv": "ANE-13"
+   "inv": "ANE-13",
+   "foto": "tuca-de-collado-de-coronas",
+   "pie": "La cima de la Tuca del Collado de Coronas, con su hito.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aneto-espalda-del-aneto-aguja-daviu-aguja-escudier-punta-oliveras-aguja-de-la-collarada-de-coronas-177373208",
+    "texto": "Ruta de Samuel Aded en Wikiloc"
+   },
+   "desnivel": "+2.466 m · 35,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "punta-brecha-de-tempestades",
@@ -4582,11 +4630,19 @@
    "situacion": "Aragón",
    "lat": 42.634306,
    "lon": 0.6525,
-   "descripcion": "Cima secundaria de 3.226 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.226 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla de la Collada de Corones",
    "basica": true,
-   "inv": "ANE-22"
+   "inv": "ANE-22",
+   "foto": "aguja-del-collado-de-coronas",
+   "pie": "La punta de la Aguja del Collado de Coronas.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/aneto-espalda-del-aneto-aguja-daviu-aguja-escudier-punta-oliveras-aguja-de-la-collarada-de-coronas-177373208",
+    "texto": "Ruta de Samuel Aded en Wikiloc"
+   },
+   "desnivel": "+2.466 m · 35,3 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "pico-sayo",
@@ -4653,11 +4709,19 @@
    "situacion": "Aragón",
    "lat": 42.621917,
    "lon": 0.667444,
-   "descripcion": "Cima secundaria de 3.199 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.199 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Cap de la Vall · Punta de la Brecha Russell",
    "basica": true,
-   "inv": "ANE-26"
+   "inv": "ANE-26",
+   "foto": "punta-brecha-russell",
+   "pie": "La cima de la Punta Brecha Russell, con su nombre y su altura escritos en una piedra.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/picos-russell-6-cimas-pico-margalida-3241-m-y-pico-tempestades-3290-m-por-ibon-de-llosas-148815658",
+    "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
+   },
+   "desnivel": "+2.049 m · 19,6 km, circular",
+   "ruta": "Esta cima aparece en la ruta «Picos Russell (6 cimas), Pico Margalida (3241 m) y Pico Tempestades (3290 m) por Ibón de Llosás», de ᗩᒪTEᑕᗩ en Wikiloc, de 19,6 km y 2.049 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
    "id": "pico-mir",
