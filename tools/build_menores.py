@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Picos de 2.500 a 3.000 m con nombre (OpenStreetMap, data/picos_osm.json) dentro del relieve cargado y de Aragón o en su límite,
+"""Picos de 2.000 a 3.000 m con nombre (OpenStreetMap, data/picos_osm.json) dentro del relieve cargado y de Aragón o en su límite,
 con una ficha sencilla (sin ruta). Escribe data/menores.json. La zona de cada pico es la del macizo o comarca más cercana (aproximada).
 Límite de Aragón: OpenStreetMap vía Nominatim (tools/datos/aragon.geojson). Datos © colaboradores de OpenStreetMap (ODbL).
 Uso: python3 tools/build_menores.py"""
@@ -39,7 +39,7 @@ slug = lambda s: re.sub(r'[^a-z0-9]+', '-', unicodedata.normalize('NFD', s.lower
 ids = {p['id'] for p in data['picos']}
 out, vistos = [], []
 for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
-    if not (2500 <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
+    if not (2000 <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
     pt = Point(lon, lat)
     limite = ARAGON.boundary.distance(pt) * KX * 1000   # m
     if not ARAGON.contains(pt) and limite > 300: continue
@@ -74,4 +74,4 @@ for p in out:
 out.sort(key=lambda p: -p['altitud'])
 json.dump({'fotos': {'m-' + k: v for k, v in fotos.items() if any(p['id'] == k for p in out)}, 'zonas': [{'id': z['id'], 'nombre': z['nombre']} for z in ZONAS_NUEVAS if any(p['macizo'] == z['id'] for p in out)], 'picos': out},
           open(D('data', 'menores.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print(len(out), 'picos de 2.500 a 3.000 m;', sum('foto' in p for p in out), 'con foto;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')
+print(len(out), 'picos de 2.000 a 3.000 m;', sum('foto' in p for p in out), 'con foto;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')
