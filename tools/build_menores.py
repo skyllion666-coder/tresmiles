@@ -67,6 +67,10 @@ ruta_fotos = D('tools', 'datos', 'fotos_menores.json')
 fotos = json.load(open(ruta_fotos)) if os.path.exists(ruta_fotos) else {}
 for p in out:
     if p['id'] in fotos: p['foto'] = 'm-' + p['id']; p['pie'] = f"{p['nombre']}."
+# otros nombres comprobados (se buscan en el selector y salen bajo el nombre en la ficha)
+OTROS = {'tuca-dels-tatats': 'Pico de Estatás (ruta de Pelopin en Wikiloc, cumbre a 5 m del nodo de OSM)'}
+for p in out:
+    if p['id'] in OTROS: p['alias'] = 'También «' + OTROS[p['id']].split(' (')[0] + '»'; p['nombres'] = OTROS[p['id']].split(' (')[0] + ' · Pico Estatás'
 out.sort(key=lambda p: -p['altitud'])
 json.dump({'fotos': {'m-' + k: v for k, v in fotos.items() if any(p['id'] == k for p in out)}, 'zonas': [{'id': z['id'], 'nombre': z['nombre']} for z in ZONAS_NUEVAS if any(p['macizo'] == z['id'] for p in out)], 'picos': out},
           open(D('data', 'menores.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
