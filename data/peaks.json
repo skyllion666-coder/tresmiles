@@ -2083,7 +2083,9 @@
    "clase": "secundaria",
    "nombres": "Frondella N",
    "basica": true,
-   "inv": "BAL-02"
+   "inv": "BAL-02",
+   "foto": "frondella-norte",
+   "pie": "Cresta entre las cumbres de la Frondella (punto «Entre picos» de la ruta)."
   },
   {
    "id": "frondella",
