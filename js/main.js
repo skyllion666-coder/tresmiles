@@ -8,7 +8,7 @@ import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3'
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=17';
-import { crearFauna } from './fauna.js?v=6';
+import { crearFauna } from './fauna.js?v=7';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
 import { crearSelector } from './selector.js?v=1';
 

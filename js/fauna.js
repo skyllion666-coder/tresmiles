@@ -1,6 +1,6 @@
 // Fauna 3D hecha en Blender (tools/modelos/): quebrantahuesos y rebeco. Es una ilustración, no seguimiento real.
 // Los quebrantahuesos planean en círculos sobre la cumbre abierta y de vez en cuando dan unos aleteos lentos;
-// los rebecos (un grupito) se quedan quietos, se ponen alerta y pasean por las laderas pedregosas de esa cumbre.
+// los rebecos (un rebaño, dos grupitos y machos sueltos) se quedan quietos, se ponen alerta y pasean por las laderas pedregosas de esa cumbre.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
@@ -47,23 +47,29 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
   // — rebecos —
   const rebecos = [];
   let anclaje = null;       // { x, z, y } de la cumbre abierta
-  const R_CANTIDAD = 4;
-  // pelaje según la época (fecha del dispositivo): invierno de noviembre a abril; grupo de un macho, dos hembras y una cría
+  // pelaje según la época (fecha del dispositivo): invierno de noviembre a abril.
+  // Un rebaño grande (19: hembras con crías y dos machos jóvenes), dos grupitos de cuatro y cinco machos viejos sueltos por ahí.
+  const GRUPOS = [
+    { tipos: ['macho', 'macho', ...Array(10).fill('hembra'), ...Array(7).fill('cria')], rad: 190 },
+    { tipos: ['macho', 'hembra', 'hembra', 'cria'], rad: 90 },
+    { tipos: ['hembra', 'hembra', 'hembra', 'cria'], rad: 90 },
+    ...Array(5).fill({ tipos: ['macho'], rad: 0 }),
+  ];
   const mes = new Date().getMonth(), pel = mes >= 10 || mes <= 3 ? 'invierno' : 'verano';
-  const TIPOS = ['macho', 'hembra', 'hembra', 'cria'];
   const cargaGLB = (u) => new Promise((res) => new GLTFLoader().load(u, res, undefined, () => res(null)));
   Promise.all(['macho', 'hembra', 'cria'].map((t) => cargaGLB(`models/rebeco-${t}-${pel}.glb?v=2`))).then(([gm, gh, gc]) => {
     const por = { macho: gm, hembra: gh, cria: gc };
     if (!gm && !gh) return;   // sin modelos: no pasa nada
-    for (let i = 0; i < R_CANTIDAD; i++) {
-      const gltf = por[TIPOS[i]] ?? gh ?? gm;
+    const lista = GRUPOS.flatMap((gr, gi) => gr.tipos.map((tipo) => ({ tipo, gi })));
+    for (const { tipo, gi } of lista) {
+      const gltf = por[tipo] ?? gh ?? gm;
       const obj = clone(gltf.scene);
       obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = true; } });
       const g = new THREE.Group(); g.add(obj); g.visible = false; scene.add(g);
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
-      const cria = TIPOS[i] === 'cria';
-      const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
+      const cria = tipo === 'cria';
+      const r = { g, obj, sombra: creaSombra(), mixer, acc, estado: 'Quieto', resta: 2 + Math.random() * 8, rumbo: Math.random() * 6.28, cria, gi, ok: false, yaw: 0, nrm: new THREE.Vector3(0, 1, 0) };
       acc.Quieto.play(); acc.Quieto.time = Math.random() * 6;
       rebecos.push(r);
     }
@@ -88,18 +94,23 @@ export function crearFauna({ scene, geo, centro, camera, sol }) {
     const e = 40, hx = geo.heightAt(x + e, z) - geo.heightAt(x - e, z), hz = geo.heightAt(x, z + e) - geo.heightAt(x, z - e);
     return { s: Math.hypot(hx, hz) / (2 * e), n: new THREE.Vector3(-hx / (2 * e), 1, -hz / (2 * e)).normalize() };
   };
-  // busca laderas con pendiente moderada algo por debajo de la cumbre y reparte el grupo
+  // busca laderas con pendiente moderada algo por debajo de la cumbre y reparte cada grupo en la suya (separadas entre sí)
   function colocaRebecos() {
     if (!anclaje || !rebecos.length) return;
-    let base = null;
-    for (let i = 0; i < 90 && !base; i++) {
-      const a = rnd() * 6.28, d = 250 + rnd() * 1250, x = anclaje.x + Math.cos(a) * d, z = anclaje.z + Math.sin(a) * d;
-      const h = geo.heightAt(x, z), { s } = pendiente(x, z);
-      if (s > 0.28 && s < 0.85 && h < anclaje.y - 80 && h > anclaje.y - 900) base = { x, z };
-    }
+    const bases = [];
+    GRUPOS.forEach((gr, gi) => {
+      let base = null;
+      for (let i = 0; i < 160 && !base; i++) {
+        const a = rnd() * 6.28, d = 250 + rnd() * 1650, x = anclaje.x + Math.cos(a) * d, z = anclaje.z + Math.sin(a) * d;
+        const h = geo.heightAt(x, z), { s } = pendiente(x, z);
+        if (s > 0.28 && s < 0.85 && h < anclaje.y - 80 && h > anclaje.y - 900 && bases.every((b) => !b || Math.hypot(b.x - x, b.z - z) > 450)) base = { x, z };
+      }
+      bases[gi] = base;
+    });
     for (const r of rebecos) {
+      const base = bases[r.gi], rad = GRUPOS[r.gi].rad;
       if (!base) { r.ok = false; r.g.visible = false; r.sombra.visible = false; continue; }
-      const a = rnd() * 6.28, d = 30 + rnd() * 140;
+      const a = rnd() * 6.28, d = 20 + rnd() * rad;
       r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
       r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
       r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.resta = 2 + rnd() * 8;
