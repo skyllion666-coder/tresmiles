@@ -36,6 +36,7 @@ async function boot() {
   const [data, fotos, meta, menores] = await Promise.all([json('data/peaks.json'), json('data/fotos.json'), json('data/terrain/meta.json'), json('data/menores.json').catch(() => ({ zonas: [], picos: [] }))]);
   // picos de 2.500 a 3.000 m (ficha sencilla, sin ruta): se suman a la lista con su zona; el filtro «capa» decide cuáles se ven
   data.picos.push(...menores.picos); data.macizos.push(...menores.zonas);
+  Object.assign(fotos, menores.fotos ?? {});   // sus fotos (pequeñas, WebP) vienen en el mismo archivo
   const relieve = new HeightStore(meta, 'data/terrain'); await relieve.init();   // vista general ligera; el detalle se pide por zonas
   $('#load-text').textContent = 'Preparando el mapa…';
 
@@ -578,7 +579,7 @@ async function boot() {
     const nav = vis.length > 1 && i >= 0
       ? `<div class="nav2"><button type="button" data-go="${vis[(i - 1 + vis.length) % vis.length].id}">← Anterior</button><button type="button" data-go="${vis[(i + 1) % vis.length].id}">Siguiente →</button></div>` : '';
     const foto = f
-      ? `<figure><img src="img/peaks/${p.foto}.jpg" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}" decoding="async" onerror="this.parentNode.classList.add('sin-foto')">
+      ? `<figure><img src="${f.ruta ?? `img/peaks/${p.foto}.jpg`}" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}" decoding="async" onerror="this.parentNode.classList.add('sin-foto')">
         <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>.</figcaption></figure>`
       : p.menor ? '' : '<figure class="sin-foto" aria-hidden="true"></figure>';   // ficha sencilla sin foto: sin marco   // sin imagen: marco con la silueta de una montaña
     return `

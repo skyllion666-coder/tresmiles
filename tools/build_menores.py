@@ -62,7 +62,12 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
         'descripcion': f'Cumbre de {fmt(alt)} m de la zona {nombreZona[zona]}, {lugar}. Es una ficha sencilla: sin ruta ni recorrido en el mapa. Nombre, altitud y posición de OpenStreetMap.',
         'menor': True,
     })
+# fotos pequeñas (tools/fotos_menores.py): la clave en `fotos` es «m-<id>» para no chocar con las de los tresmiles
+ruta_fotos = D('tools', 'datos', 'fotos_menores.json')
+fotos = json.load(open(ruta_fotos)) if os.path.exists(ruta_fotos) else {}
+for p in out:
+    if p['id'] in fotos: p['foto'] = 'm-' + p['id']; p['pie'] = f"{p['nombre']}."
 out.sort(key=lambda p: -p['altitud'])
-json.dump({'zonas': [{'id': z['id'], 'nombre': z['nombre']} for z in ZONAS_NUEVAS if any(p['macizo'] == z['id'] for p in out)], 'picos': out},
+json.dump({'fotos': {'m-' + k: v for k, v in fotos.items() if any(p['id'] == k for p in out)}, 'zonas': [{'id': z['id'], 'nombre': z['nombre']} for z in ZONAS_NUEVAS if any(p['macizo'] == z['id'] for p in out)], 'picos': out},
           open(D('data', 'menores.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print(len(out), 'picos de 2.500 a 3.000 m;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')
+print(len(out), 'picos de 2.500 a 3.000 m;', sum('foto' in p for p in out), 'con foto;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')
