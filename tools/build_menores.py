@@ -62,6 +62,10 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
         'descripcion': f'Cumbre de {fmt(alt)} m de la zona {nombreZona[zona]}, {lugar}. Es una ficha sencilla: sin ruta ni recorrido en el mapa. Nombre, altitud y posición de OpenStreetMap.',
         'menor': True,
     })
+# texto de Wikipedia (tools/datos/wikipedia_menores.json): solo las cumbres cuya altitud en el artículo coincide con la nuestra
+wp = json.load(open(D('tools', 'datos', 'wikipedia_menores.json'))) if os.path.exists(D('tools', 'datos', 'wikipedia_menores.json')) else {}
+for p in out:
+    if p['id'] in wp: p['info'] = wp[p['id']]
 # fotos pequeñas (tools/fotos_menores.py): la clave en `fotos` es «m-<id>» para no chocar con las de los tresmiles
 ruta_fotos = D('tools', 'datos', 'fotos_menores.json')
 fotos = json.load(open(ruta_fotos)) if os.path.exists(ruta_fotos) else {}
