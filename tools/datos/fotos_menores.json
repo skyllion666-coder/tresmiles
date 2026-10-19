@@ -482,5 +482,16 @@
   "w": 640,
   "h": 459,
   "ruta": "img/menores/pico-d-arriel-punta-dero-saldiecho.webp"
+ },
+ "punta-suelsa": {
+  "archivo": "Punta Suelza.jpg",
+  "autor": "Francisco Lera",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Punta_Suelza.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 427,
+  "ruta": "img/menores/punta-suelsa.webp"
  }
 }
