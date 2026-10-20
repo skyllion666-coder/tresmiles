@@ -6,7 +6,8 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
 
 const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
-const KM_REBECO = 42 * 1.275 * 0.75;   // un 25 % más pequeños que antes (18-10-2026); los montañeros (ruta.js) van al doble
+const KM_REBECO = 42 * 1.275 * 0.75 * 0.75;   // un 25 % más pequeños que antes (18-10-2026) y otro 25 % (20-10-2026); los montañeros (ruta.js) van al doble
+const pisa = (dist = 0) => 2.5 + Math.min(11.5, dist * 0.0015);   // margen sobre el relieve: pequeño de cerca (que las patas toquen el suelo) y algo mayor de lejos (el relieve lejano es más tosco)
 const rnd = (() => { let a = 12345; return () => { a = (a * 1664525 + 1013904223) >>> 0; return a / 4294967296; }; })();
 
 export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
@@ -112,7 +113,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       if (!base) { r.ok = false; r.g.visible = false; r.sombra.visible = false; continue; }
       const a = rnd() * 6.28, d = 20 + rnd() * rad;
       r.x = base.x + Math.cos(a) * d; r.z = base.z + Math.sin(a) * d; r.ok = true; r.base = base;
-      r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
+      r.g.position.set(r.x, geo.heightAt(r.x, r.z) + pisa(4000), r.z);
       r.rumbo = rnd() * 6.28; r.yaw = r.rumbo; r.estado = 'Quieto'; r.clip = 'Quieto'; r.resta = 2 + rnd() * 8; r.agua = null; r.yendo = false;
       for (const n of Object.keys(r.acc)) r.acc[n].setEffectiveWeight(n === 'Quieto' ? 1 : 0);
     }
@@ -147,7 +148,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         const ang = rnd() * 6.28, d = 20 + rnd() * GRUPOS[gi].rad * 0.6;
         r.base = base; r.x = base.x + Math.cos(ang) * d; r.z = base.z + Math.sin(ang) * d; r.ok = true;
         r.agua = sitios[k++ % sitios.length]; r.resta = 3 + rnd() * 20;
-        r.g.position.set(r.x, geo.heightAt(r.x, r.z) + 14, r.z);
+        r.g.position.set(r.x, geo.heightAt(r.x, r.z) + pisa(4000), r.z);
       }
     }
   }
@@ -196,7 +197,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       if (r.estado === 'Andar' || r.estado === 'Brinco') {
         const v = (r.estado === 'Brinco' ? 2.6 : 0.9) * esc * dt;
         const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
-        const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600;
+        const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600 || (anclaje && geo.heightAt(nx, nz) > anclaje.y - 70);   // ni demasiado lejos de su sitio ni hasta la arista de la cumbre
         if (r.yendo && s <= 1.4) { r.x = nx; r.z = nz; }   // hacia el agua no se desvía (la orilla está a un paso de su sitio)
         else if (s > 1.1 || lejos) { if (r.yendo) { r.yendo = false; r.resta = Math.min(r.resta, 4); } r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
         else { r.x = nx; r.z = nz; }
@@ -205,7 +206,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       const objetivo = Math.atan2(Math.cos(r.rumbo), Math.sin(r.rumbo));   // el modelo mira a +Z: yaw = atan2(dx, dz)
       let d = objetivo - r.yaw; d = Math.atan2(Math.sin(d), Math.cos(d));
       r.yaw += d * Math.min(1, dt * (r.estado === 'Andar' || r.estado === 'Brinco' ? 2.5 : 0.8));
-      const y = geo.heightAt(r.x, r.z) + 14;
+      const y = geo.heightAt(r.x, r.z) + pisa(dist) + (r.estado === 'Brinco' ? 10 : 0);   // el brinco sí se despega del suelo
       r.g.position.set(r.x, y, r.z);
       const { n } = pendiente(r.x, r.z);
       _qy.setFromAxisAngle(_up, r.yaw);
