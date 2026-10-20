@@ -7,7 +7,7 @@ import { crearCumbres } from './cumbres.js?v=27';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
-import { instalaNiebla } from './niebla.js?v=3';
+import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=19';
 import { crearFauna } from './fauna.js?v=8';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
@@ -27,6 +27,7 @@ const wrapPi = (a) => ((a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } } };
 const isMobile = () => innerWidth <= 760;
 
+const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
   { id: 'mediodia', nombre: 'Mediodía', az: 180, el: 52, col: '#fff3dc', k: 0.95 },
@@ -140,7 +141,7 @@ async function boot() {
   }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, bruma: { k: 0.8, t: 0.55, to: BRUMA[0] }, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
   // capa: qué cumbres se ven en el mapa y en los selectores (tresmiles, las de menos de 3.000 o todas)
   const enCapa = (p) => S.capa === 'todos' || (S.capa === 'menos') === !!p.menor;
 
@@ -860,6 +861,7 @@ async function boot() {
     S.sun = i; const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
     sun.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).multiplyScalar(1000);
     lagos?.setSol(sun.position, s.col);
+    S.bruma.to = BRUMA[i];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
     sun.color.set(s.col); sun.intensity = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1);
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', `Cambiar la luz: ${s.nombre.toLowerCase()}`);
   }
@@ -1032,6 +1034,7 @@ async function boot() {
   let last = performance.now(), orbit = 0;
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    { const b = S.bruma, kk = 1 - Math.exp(-dt * 0.9); b.k += (b.to.k - b.k) * kk; b.t += (b.to.t - b.t) * kk; scene.fog.near = 24000 + Math.min(0.995, b.k); scene.fog.far = 100000 + Math.min(0.995, b.t); }   // la bruma cambia suavemente al cambiar la luz
     if (S.vuelo) tickVuelo(dt);
     else if (S.flight) tickFlight(dt);
     else if (S.mode === 'intro') {
