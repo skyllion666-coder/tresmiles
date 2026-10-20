@@ -30,13 +30,13 @@ const isMobile = () => innerWidth <= 760;
 // colores del cielo, la niebla y la luz ambiente según la luz elegida: amanecer, mediodía y atardecer (cambian con suavidad)
 const LOOK = [
   { top: '#3a5a8c', mid: '#bfb2c0', hor: '#f3cfae', fog: '#e4cdbb', hemiC: '#ffe6d2', hemiG: '#6c6a70', hemiK: 0.76, glow: '#ffbb80', glowK: 0.36, nube: '#ffe3d6' },
-  { top: '#3a6a9e', mid: '#97b8d2', hor: '#cfdbe0', fog: '#cfdbe0', hemiC: '#e6eef6', hemiG: '#6d7466', hemiK: 0.78, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
+  { top: '#3a6a9e', mid: '#97b8d2', hor: '#d6dde0', fog: '#d6dde0', hemiC: '#f1eee6', hemiG: '#767060', hemiK: 0.70, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
   { top: '#434a82', mid: '#c49aa0', hor: '#f2b88e', fog: '#e0bba6', hemiC: '#ffd8bf', hemiG: '#6a5f5e', hemiK: 0.74, glow: '#ff9a5c', glowK: 0.42, nube: '#ffd3bc' },
 ].map((l) => Object.fromEntries(Object.entries(l).map(([k, v]) => [k, typeof v === 'string' ? new THREE.Color(v) : v])));
 const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
-  { id: 'mediodia', nombre: 'Mediodía', az: 180, el: 52, col: '#fff3dc', k: 0.95 },
+  { id: 'mediodia', nombre: 'Mediodía', az: 180, el: 52, col: '#ffe9c8', k: 1.08 },
   { id: 'tarde', nombre: 'Tarde', az: 252, el: 18, col: '#ffbf86', k: 1.0 },
 ];
 
@@ -286,7 +286,8 @@ async function boot() {
       if (det) { cimaCerca = p.w; if (!p._wDet) p._wDet = geo.summitNear(p.w.x, p.w.z, 70); } else if (p._wDet && dist > 600) p._wDet = null;
       // el círculo se eleva poco a poco al acercarse (de 34/38 px a 2.250 u hasta el máximo a 450 u): con la cámara cerca deja ver la cima, y de lejos no se pega al relieve
       const base = isMobile() ? 38 : 34, tope = cumbres.ficha()?.[p.id] ? (isMobile() ? 160 : 140) : (isMobile() ? 76 : 66);
-      let LIFT = p.menor ? 0 : det ? tope : base + (tope - base) * Math.pow(1 - Math.min(1, Math.max(0, (dist - 450) / 1800)), 2);
+      const otra = !!S.active && S.active !== p.id;   // con una cumbre abierta, solo ella sube del todo: las demás se quedan a ras para no llenar el cielo de globos
+      let LIFT = p.menor ? 0 : otra ? base : det ? tope : base + (tope - base) * Math.pow(1 - Math.min(1, Math.max(0, (dist - 450) / 1800)), 2);
       if (!p.menor) {   // y sin meterse bajo el título: si el círculo cae sobre la cabecera, sube solo hasta donde cabe
         const cab = uiRects.find((u) => u.cab && u.w > 120), pyPunto = (-tmp.y * 0.5 + 0.5) * H, pxPunto = (tmp.x * 0.5 + 0.5) * W;
         if (cab && pxPunto > cab.x - 24 && pxPunto < cab.x + cab.w + 24) LIFT = Math.max(base, Math.min(LIFT, pyPunto - (cab.y + cab.h + 26)));
@@ -433,6 +434,7 @@ async function boot() {
       if (show && cimaCerca && Math.hypot(o.x - cimaCerca.x, o.z - cimaCerca.z) < 60) show = false;   // de cerca, el rombo de la cima no tapa los objetos de la cumbre
       if (show && o.last !== S.active) { o.last = S.active; o.kms[S.active] ??= kmTexto(o, S.active); o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : o.kms[S.active]); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
+      if (show && pinAct && Math.hypot((hitoTmp.x * 0.5 + 0.5) * W - pinAct.px, (-hitoTmp.y * 0.5 + 0.5) * H - pinAct.py) < 44) show = false;   // no se pega al círculo de la cumbre abierta
       o.el.classList.toggle('is-hidden', !show);
       if (!show) o.el.classList.remove('is-open');
       if (show) o.el.classList.toggle('abajo', (-hitoTmp.y * 0.5 + 0.5) * H < (o.el.classList.contains('con-foto') ? 340 : 90));

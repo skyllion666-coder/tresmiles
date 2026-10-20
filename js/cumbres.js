@@ -26,10 +26,11 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     const i = Math.min(p.n - 2, Math.floor(fx)), j = Math.min(p.n - 2, Math.floor(fz)), tx = fx - i, tz = fz - j, H = p.H, n = p.n;
     return (H[j * n + i] * (1 - tx) + H[j * n + i + 1] * tx) * (1 - tz) + (H[(j + 1) * n + i] * (1 - tx) + H[(j + 1) * n + i + 1] * tx) * tz;
   };
-  function aplicaOrto(mat, tex, ch, pb) {
+  function aplicaOrto(mat, tex, ch, pb, og) {
     mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true;
     const u = mat.userData; u.orto.value = 1; u.sat.value = ch.mat.map;
     if (pb) u.pb.value.set(pb[0], pb[1], pb[2], pb[3]);
+    if (og) og.forEach((v, i) => u.og[i].value.set(v[0], v[1], v[2]));   // ajuste de color al satélite (tools/igualar_orto.py)
   }
   const detalles = new Map(), detCarga = new Set();   // id -> detalle local (Paso de Mahoma)
   geo.setExtra((x, z) => {
@@ -93,8 +94,8 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const pw = (nm - 1) * m * paso;   // lado de la pieza (m)
         tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.repeat.set(cw / pw, cd / pw); tex.offset.set((ch.x0 - x0) / pw, (pw - (ch.z0 - z0) - cd) / pw);   // de las coordenadas del bloque a las de la ortofoto
-        aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado]); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
-        const dt = detalles.get(id); if (dt?.mat) aplicaOrto(dt.mat, tex, ch, null);   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
+        aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado], d.og); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
+        const dt = detalles.get(id); if (dt?.mat) aplicaOrto(dt.mat, tex, ch, null, d.og);   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
       }, undefined, () => {});
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
@@ -180,7 +181,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
       g.setAttribute('aRoca', new THREE.BufferAttribute(roca, 1)); g.setIndex(idx); g.computeBoundingSphere();
       const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
-      if (pz.orto) aplicaOrto(mat, pz.orto, ch, null);
+      if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[id]?.og);
       scene.add(mesh);
       // la pieza de 6 m se recorta debajo de esta (menos 14 m del borde, donde ambas coinciden)
       pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
