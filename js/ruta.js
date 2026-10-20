@@ -212,7 +212,7 @@ export function crearRuta({ scene, geo, ruta }) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
           const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n);
-          const na = n < 0.01 ? nivelAuto(q.d).n : 0; v *= 1 - 0.85 * na;   // aristas (≈50 % del ritmo) y pasos difíciles (≈15 %): muy despacio y con pausas
+          const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
           q.d += v * dt; q.v = v;
           if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
