@@ -21,10 +21,13 @@ CIMAS = {
   'posets':    (42.654629, 0.435227, 'granito', 'OSM peak 42.654629,0.435227; IGN vértice 17999 (pilar 1,2 m, 1982) a 3 m; el IGN lo da por destruido el 21-12-2023. Macizo granítico Posets-Millares (DAMOCLES).'),
   'perdido':   (42.675548, 0.034357, 'caliza',  'OSM peak 42.675548,0.034357; IGN vértice 14660 (pilar 1,2 m, 1982) a 2 m, destruido el 26-12-2023; «El monte es muy pedregoso» (IGN). Macizo calcáreo (Ordesa-Monte Perdido).'),
   'maladeta':  (42.646432, 0.640276, 'granito', 'OSM peak 42.646432,0.640276 (CNIG). Macizo granítico de la Maladeta. Sin cruz ni vértice documentados.'),
+  'balaitus':  (42.838917, -0.29025, 'neutra',  'Coordenada de la ficha (OSM/IGN). Pilar de hormigón en dos tramos sobre losa con placa de vértice geodésico, medallón y cartel «BALAITUS 3.145» según foto de la cima aportada por el usuario. Macizo de Balaitous (granodiorita); losas grises claras en la cima.'),
   'vignemale': (42.773943, -0.147344, 'neutra', 'OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión.'),
 }
 idx_path = os.path.join(OUT, 'detalles.json'); idx = json.load(open(idx_path))
+SOLO = sys.argv[1:]   # opcional: ids a (re)generar; sin argumentos, todos
 for pid, (lat0, lon0, roca, ref) in CIMAS.items():
+    if SOLO and pid not in SOLO: continue
     web = peaks[pid]; dx = (web['lon'] - lon0) * mLon; dz = (web['lat'] - lat0) * mLat
     cx, cz = toXZ(lon0, lat0); x0 = round(cx - PASO * (N - 1) / 2, 2); z0 = round(cz - PASO * (N - 1) / 2, 2)
     xs = x0 + np.arange(N) * PASO; zs = z0 + np.arange(N) * PASO

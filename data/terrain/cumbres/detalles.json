@@ -148,5 +148,28 @@
   "archivo": "vignemale-cima.bin.gz",
   "roca": "neutra",
   "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormig\u00f3n con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litolog\u00eda no verificada en esta sesi\u00f3n."
+ },
+ "balaitus": {
+  "x0": -32815.69,
+  "z0": -7033.44,
+  "n": 201,
+  "paso": 1.0,
+  "archivo": "balaitus-cima.bin.gz",
+  "roca": "neutra",
+  "ref": "Coordenada de la ficha (OSM/IGN). Pilar de hormig\u00f3n en dos tramos sobre losa con placa de v\u00e9rtice geod\u00e9sico, medall\u00f3n y cartel \u00abBALAITUS 3.145\u00bb seg\u00fan foto de la cima aportada por el usuario. Macizo de Balaitous (granodiorita); losas grises claras en la cima.",
+  "modelo": "models/cima-balaitus.glb",
+  "escalaModelo": 11.5,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -32721.69,
+    "z": -6936.44,
+    "giro": 0.3,
+    "ancla": true,
+    "ref": "M\u00e1ximo del MDT05 (3.145,3 m) a 6 m del nodo OSM; pilar con placa de v\u00e9rtice geod\u00e9sico, medall\u00f3n y cartel \u00abBALAITUS 3.145\u00bb, seg\u00fan foto de la cima del usuario",
+    "huella": 0.6,
+    "escala": 19
+   }
+  ]
  }
 }
