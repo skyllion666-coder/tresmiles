@@ -9,7 +9,7 @@ import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
-import { crearFauna } from './fauna.js?v=9';
+import { crearFauna } from './fauna.js?v=10';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
 import { crearSelector } from './selector.js?v=2';
 

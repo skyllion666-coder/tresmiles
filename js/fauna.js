@@ -104,7 +104,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       for (let i = 0; i < 160 && !base; i++) {
         const a = rnd() * 6.28, d = 250 + rnd() * 1650, x = anclaje.x + Math.cos(a) * d, z = anclaje.z + Math.sin(a) * d;
         const h = geo.heightAt(x, z), { s } = pendiente(x, z);
-        if (s > 0.28 && s < 0.85 && h < anclaje.y - 80 && h > anclaje.y - 900 && bases.every((b) => !b || Math.hypot(b.x - x, b.z - z) > 450)) base = { x, z };
+        if (s > 0.28 && s < 0.85 && h < anclaje.y - 200 && h > anclaje.y - 1000 && bases.every((b) => !b || Math.hypot(b.x - x, b.z - z) > 450)) base = { x, z };
       }
       bases[gi] = base;
     });
@@ -163,6 +163,19 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
   }
   // sitio donde se para a beber: la cabeza (media longitud por delante) queda sobre la orilla
   const puntoBeber = (r, esc) => { const a = r.agua, k = LARGO * 0.55 * esc; return { x: a.x + a.ux * k, z: a.z + a.uz * k }; };
+  // paso bloqueado (pared, arista o demasiado lejos): prueba ocho direcciones y elige la más suave que baje; si está lejos de su sitio, prefiere volver hacia él
+  function rumboLibre(r, volver) {
+    const v = 0.9 * KM_REBECO * 1.5, lim = anclaje ? anclaje.y - 120 : 1e9;
+    let mejor = r.rumbo + Math.PI, mp = 1e9;
+    for (let k = 1; k <= 8; k++) {
+      const a = r.rumbo + (k % 2 ? 1 : -1) * Math.ceil(k / 2) * Math.PI / 4, nx = r.x + Math.cos(a) * v, nz = r.z + Math.sin(a) * v;
+      const { s } = pendiente(nx, nz), h = geo.heightAt(nx, nz);
+      if (s > 1.5 || h > lim) continue;
+      const pen = s + (volver ? Math.hypot(nx - r.base.x, nz - r.base.z) / 600 : 0) + h / 20000;
+      if (pen < mp) { mp = pen; mejor = a; }
+    }
+    return mejor;
+  }
   const _q = new THREE.Quaternion(), _qy = new THREE.Quaternion(), _up = new THREE.Vector3(0, 1, 0);
   function actualizaRebecos(dt) {
     for (const r of rebecos) {
@@ -172,6 +185,11 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       const esc = KM_REBECO * Math.min(3, Math.max(0.8, dist / 4500)) * (r.cria ? 0.62 : 1);
       r.g.scale.setScalar(esc);
       r.resta -= dt;
+      r.chk ??= { x: r.x, z: r.z, t: 0 };
+      if ((r.chk.t += dt) > 10) {   // si anda pero lleva 10 s sin avanzar (atascado en una pared), se para a pastar y luego elige otro rumbo
+        if (r.estado === 'Andar' && !r.yendo && Math.hypot(r.x - r.chk.x, r.z - r.chk.z) < 40) { r.rumbo = rumboLibre(r, true); cambia(r, 'Pastar', 6 + Math.random() * 6); }
+        r.chk.x = r.x; r.chk.z = r.z; r.chk.t = 0;
+      }
       const cerca = dist < 450;
       if (cerca && (r.estado === 'Quieto' || r.estado === 'Pastar' || r.estado === 'Mirar' || r.estado === 'Beber' || r.yendo)) cambia(r, 'Alerta', 2 + Math.random() * 2);
       if (r.resta <= 0) {
@@ -197,9 +215,9 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       if (r.estado === 'Andar' || r.estado === 'Brinco') {
         const v = (r.estado === 'Brinco' ? 2.6 : 0.9) * esc * dt;
         const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
-        const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600 || (anclaje && geo.heightAt(nx, nz) > anclaje.y - 70);   // ni demasiado lejos de su sitio ni hasta la arista de la cumbre
+        const { s } = pendiente(nx, nz), lejos = Math.hypot(nx - r.base.x, nz - r.base.z) > 600, alto = anclaje && geo.heightAt(nx, nz) > anclaje.y - 120;   // ni demasiado lejos de su sitio ni hasta la arista de la cumbre
         if (r.yendo && s <= 1.4) { r.x = nx; r.z = nz; }   // hacia el agua no se desvía (la orilla está a un paso de su sitio)
-        else if (s > 1.1 || lejos) { if (r.yendo) { r.yendo = false; r.resta = Math.min(r.resta, 4); } r.rumbo = lejos ? Math.atan2(r.base.z - r.z, r.base.x - r.x) : r.rumbo + 2.2; }
+        else if (s > 1.5 || lejos || alto) { if (r.yendo) { r.yendo = false; r.resta = Math.min(r.resta, 4); } r.rumbo = rumboLibre(r, lejos); }
         else { r.x = nx; r.z = nz; }
       }
       // gira suavemente hacia su rumbo y se apoya en la ladera
