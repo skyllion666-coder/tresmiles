@@ -23,7 +23,8 @@ for pid in sys.argv[1:]:
     orto = orto.crop(ob).resize(sat.size, Image.LANCZOS)
     A = lin(np.asarray(sat, float).reshape(-1, 3) / 255); B = lin(np.asarray(orto, float).reshape(-1, 3) / 255)
     mS, sS, mO, sO = A.mean(0), A.std(0), B.mean(0), B.std(0)
-    k = np.clip(sS / sO, .75, 1.25)
-    d['og'] = [[round(float(v), 4) for v in mO], [round(float(v), 4) for v in k], [round(float(v), 4) for v in mS]]
+    k = np.clip(sS / sO, .8, 1.12)   # sin pasarse con el contraste (la ortofoto ya trae mucho detalle)
+    mT = mO + np.clip(mS - mO, -.10, .10)   # y con el desplazamiento de brillo acotado: si no, zonas oscuras se aclaran hasta parecer nieve y se aplanan
+    d['og'] = [[round(float(v), 4) for v in mO], [round(float(v), 4) for v in k], [round(float(v), 4) for v in mT]]
     print(pid, 'bloque', ci, rj, 'sat media', mS.round(3), 'orto media', mO.round(3), 'ganancia', k.round(2))
 json.dump(idx, open(idx_path, 'w'), separators=(',', ':'))
