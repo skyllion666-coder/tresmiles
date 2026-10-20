@@ -1,6 +1,6 @@
 // Arbolado del relieve: los árboles salen donde ESA WorldCover 2021 (10 m, CC BY 4.0) marca «arbolado», sobre el relieve real.
 // Dato real: la clase de cobertura de cada celda y la altura/pendiente del relieve. Aproximación visual: el tipo de árbol (frondosa o conifera) según
-// la altitud y la orientación, su posición exacta dentro de la celda y el tamaño (exagerado ×2,4–3,6 para que se vea a distancia); no son árboles medidos.
+// la altitud y la orientación, su posición exacta dentro de la celda y el tamaño (exagerado ×5–9 para que se vea a distancia); no son árboles medidos.
 // Se genera por parcelas solo cerca de la cámara (dos anillos de detalle), con InstancedMesh y geometrías compartidas.
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
@@ -22,14 +22,15 @@ function pintaVertices(g, bajo, alto) {
   for (let i = 0; i < p.count; i++) { c.copy(lo).lerp(hi, (p.getY(i) - ymin) / (ymax - ymin || 1)); col.set([c.r, c.g, c.b], i * 3); }
   g.setAttribute('color', new THREE.BufferAttribute(col, 3)); g.deleteAttribute('uv'); return g;
 }
-function geoConifera() {   // abeto / pino: tres conos apilados, base en y = 0, altura 1
-  const cono = (r, h, y) => new THREE.ConeGeometry(r, h, 6, 1, true).translate(0, y + h / 2, 0);
-  return pintaVertices(mergeGeometries([cono(0.5, 0.5, 0.05), cono(0.38, 0.45, 0.32), cono(0.25, 0.4, 0.6)].map((g) => g.toNonIndexed())), 0x1c3326, 0x3d5d3e);
+function geoConifera() {   // abeto / pino: cuatro conos apilados (copa más esbelta y con escalones), base en y = 0, altura 1
+  const cono = (r, h, y) => new THREE.ConeGeometry(r, h, 7, 1, true).translate(0, y + h / 2, 0);
+  return pintaVertices(mergeGeometries([cono(0.5, 0.4, 0.05), cono(0.41, 0.38, 0.27), cono(0.31, 0.34, 0.5), cono(0.2, 0.3, 0.72)].map((g) => g.toNonIndexed())), 0x15281d, 0x3a5c3c);
 }
-function geoFrondosa() {   // haya / roble: copa irregular sobre un tronco corto
-  const copa = new THREE.IcosahedronGeometry(0.5, 0).scale(1, 0.85, 1).translate(0, 0.6, 0);
-  const tronco = new THREE.CylinderGeometry(0.05, 0.07, 0.3, 5).translate(0, 0.15, 0);
-  return mergeGeometries([pintaVertices(tronco, 0x4a3b2c, 0x4a3b2c), pintaVertices(copa, 0x34502a, 0x56713a)]);
+function geoFrondosa() {   // haya / roble: copa de tres lóbulos irregulares sobre un tronco corto
+  const lobulo = (r, x, y, z, sy = 0.85) => new THREE.IcosahedronGeometry(r, 0).scale(1, sy, 1).translate(x, y, z);
+  const copa = mergeGeometries([lobulo(0.42, 0, 0.62, 0), lobulo(0.3, 0.22, 0.5, 0.12, 0.8), lobulo(0.28, -0.2, 0.55, -0.14, 0.8)].map((g) => g.toNonIndexed()));
+  const tronco = new THREE.CylinderGeometry(0.05, 0.07, 0.34, 5).translate(0, 0.17, 0);
+  return mergeGeometries([pintaVertices(tronco, 0x4a3b2c, 0x4a3b2c), pintaVertices(copa, 0x2c4525, 0x587339)]);
 }
 
 export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
@@ -49,8 +50,8 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
   async function construye(ch, pi, pj, nivel, k) {
     const cob = await terrain.cobertura(ch);
     if (!cob || ch.stride !== 1 || parcelas.get(k)?.nivel === nivel) return;
-    const { dx, dz } = geo, g = nivel === 0 ? (movil ? 2 : 1) : (movil ? 3 : 3), prob = nivel === 0 ? (movil ? 1 : 0.95) : 0.9;
-    const mult = nivel === 0 ? (movil ? 3 : 2.5) : 4.4;
+    const { dx, dz } = geo, g = nivel === 0 ? (movil ? 2 : 1) : (movil ? 3 : 3), prob = nivel === 0 ? (movil ? 0.8 : 0.78) : 0.7;   // con árboles el doble de grandes, algo menos densos
+    const mult = (nivel === 0 ? (movil ? 3 : 2.5) : 4.4) * 2;   // árboles al doble de tamaño (20-10-2026)
     const cC = [], cF = [], colC = [], colF = [];
     const gi0 = ch.t.i * 512 + pi * PS, gj0 = ch.t.j * 512 + pj * PS;
     for (let lz = 0; lz < PS; lz += g) for (let lx = 0; lx < PS; lx += g) {
@@ -72,7 +73,7 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
       const h = (9 + hash(ai, aj, 6) * 9) * mult * (0.55 + 0.45 * lim) * (fr ? 0.85 : 1), w = h * (fr ? 0.72 : 0.5);
       _p.set(x, y - 1.5 * mult, zz); _q.setFromAxisAngle(_up, hash(ai, aj, 7) * 6.283); _s.set(w, h, w);
       _m.compose(_p, _q, _s);
-      const t = 0.85 + hash(ai, aj, 8) * 0.3; _c.setRGB(t, t * (0.96 + hash(ai, aj, 9) * 0.08), t * 0.95);
+      const t = 0.78 + hash(ai, aj, 8) * 0.4, v = hash(ai, aj, 9); _c.setRGB(t * (0.94 + v * 0.14), t * (0.96 + (1 - v) * 0.1), t * 0.93);   // cada árbol con su tono
       (fr ? cF : cC).push(..._m.elements); (fr ? colF : colC).push(_c.r, _c.g, _c.b);
     }
     quita(k);

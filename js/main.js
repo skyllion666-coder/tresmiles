@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=16';
-import { crearVegetacion } from './vegetacion.js?v=5';
+import { crearVegetacion } from './vegetacion.js?v=7';
 import { crearCumbres } from './cumbres.js?v=27';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
@@ -1066,7 +1066,7 @@ async function boot() {
   }
   requestAnimationFrame(frame);
   document.body.classList.remove('is-loading');
-  window.tresmiles = { veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
+  window.tresmiles = { geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {
