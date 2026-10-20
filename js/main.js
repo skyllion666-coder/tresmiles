@@ -6,7 +6,7 @@ import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=27';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
-import { makeSky, Clouds, HORIZON } from './sky.js';
+import { makeSky, Clouds, HORIZON } from './sky.js?v=2';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=19';
 import { crearFauna } from './fauna.js?v=8';
@@ -27,6 +27,12 @@ const wrapPi = (a) => ((a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } } };
 const isMobile = () => innerWidth <= 760;
 
+// colores del cielo, la niebla y la luz ambiente según la luz elegida: amanecer, mediodía y atardecer (cambian con suavidad)
+const LOOK = [
+  { top: '#3a5a8c', mid: '#bfb2c0', hor: '#f3cfae', fog: '#e4cdbb', hemiC: '#ffe6d2', hemiG: '#6c6a70', hemiK: 0.76, glow: '#ffbb80', glowK: 0.36, nube: '#ffe3d6' },
+  { top: '#3a6a9e', mid: '#97b8d2', hor: '#cfdbe0', fog: '#cfdbe0', hemiC: '#e6eef6', hemiG: '#6d7466', hemiK: 0.78, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
+  { top: '#434a82', mid: '#c49aa0', hor: '#f2b88e', fog: '#e0bba6', hemiC: '#ffd8bf', hemiG: '#6a5f5e', hemiK: 0.74, glow: '#ff9a5c', glowK: 0.42, nube: '#ffd3bc' },
+].map((l) => Object.fromEntries(Object.entries(l).map(([k, v]) => [k, typeof v === 'string' ? new THREE.Color(v) : v])));
 const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
@@ -141,7 +147,7 @@ async function boot() {
   }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, bruma: { k: 0.8, t: 0.55, to: BRUMA[0] }, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, look: { to: LOOK[0], hemiK: 0.74, glowK: 1, ini: false }, bruma: { k: 0.8, t: 0.55, to: BRUMA[0] }, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
   // capa: qué cumbres se ven en el mapa y en los selectores (tresmiles, las de menos de 3.000 o todas)
   const enCapa = (p) => S.capa === 'todos' || (S.capa === 'menos') === !!p.menor;
 
@@ -861,6 +867,7 @@ async function boot() {
     S.sun = i; const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
     sun.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).multiplyScalar(1000);
     lagos?.setSol(sun.position, s.col);
+    S.look.to = LOOK[i]; sky.material.uniforms.uSunDir.value.copy(sun.position).normalize();
     S.bruma.to = BRUMA[i];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
     sun.color.set(s.col); sun.intensity = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1);
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', `Cambiar la luz: ${s.nombre.toLowerCase()}`);
@@ -1034,6 +1041,14 @@ async function boot() {
   let last = performance.now(), orbit = 0;
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    { // colores del cielo, la niebla y la luz ambiente hacia los de la luz elegida (el primer fotograma, de golpe)
+      const L = S.look, T = L.to, kc = L.ini ? 1 - Math.exp(-dt * 1.1) : 1, u = sky.material.uniforms; L.ini = true;
+      u.uTop.value.lerp(T.top, kc); u.uMid.value.lerp(T.mid, kc); u.uHor.value.lerp(T.hor, kc); u.uGlow.value.lerp(T.glow, kc);
+      L.glowK += (T.glowK - L.glowK) * kc; u.uGlowK.value = L.glowK;
+      scene.fog.color.lerp(T.fog, kc); renderer.setClearColor(scene.fog.color);
+      hemi.color.lerp(T.hemiC, kc); hemi.groundColor.lerp(T.hemiG, kc); L.hemiK += (T.hemiK - L.hemiK) * kc; hemi.intensity = L.hemiK * Math.PI;
+      clouds?.setTinte(T.nube, kc);
+    }
     { const b = S.bruma, kk = 1 - Math.exp(-dt * 0.9); b.k += (b.to.k - b.k) * kk; b.t += (b.to.t - b.t) * kk; scene.fog.near = 24000 + Math.min(0.995, b.k); scene.fog.far = 100000 + Math.min(0.995, b.t); }   // la bruma cambia suavemente al cambiar la luz
     if (S.vuelo) tickVuelo(dt);
     else if (S.flight) tickFlight(dt);

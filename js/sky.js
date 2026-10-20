@@ -6,11 +6,14 @@ export const HORIZON = new THREE.Color('#cfdbe0');
 export function makeSky() {
   const mat = new THREE.ShaderMaterial({
     side: THREE.BackSide, depthWrite: false, fog: false,
-    uniforms: { uTop: { value: new THREE.Color('#3a6a9e') }, uMid: { value: new THREE.Color('#97b8d2') }, uHor: { value: HORIZON.clone() } },
+    uniforms: { uTop: { value: new THREE.Color('#3a6a9e') }, uMid: { value: new THREE.Color('#97b8d2') }, uHor: { value: HORIZON.clone() }, uSunDir: { value: new THREE.Vector3(0, 1, 0) }, uGlow: { value: new THREE.Color('#ffffff') }, uGlowK: { value: 0.1 } },
     vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
-    fragmentShader: `varying vec3 vP; uniform vec3 uTop, uMid, uHor;
+    fragmentShader: `varying vec3 vP; uniform vec3 uTop, uMid, uHor, uSunDir, uGlow; uniform float uGlowK;
       void main(){ float h = clamp(vP.y, 0.0, 1.0);
         vec3 c = mix(uHor, uMid, smoothstep(0.0, 0.18, h)); c = mix(c, uTop, smoothstep(0.12, 0.75, h));
+        // resplandor del sol: halo ancho y núcleo, más fuertes cerca del horizonte
+        float sd = max(dot(normalize(vP), normalize(uSunDir)), 0.0);
+        c += uGlow * (pow(sd, 5.0) * 0.32 + pow(sd, 48.0) * 0.85) * uGlowK * (1.0 - 0.7 * smoothstep(0.25, 0.9, h));
         gl_FragColor = vec4(c, 1.0); }`,
   });
   const m = new THREE.Mesh(new THREE.SphereGeometry(200000, 32, 16), mat);
@@ -45,6 +48,7 @@ export class Clouds {
       scene.add(s); this.sprites.push(s);
     }
   }
+  setTinte(color, k) { this._tinte = this._tinte ?? new THREE.Color(1, 1, 1); this._tinte.lerp(color, k); for (const s of this.sprites) s.material.color.copy(this._tinte); }
   update(dt, cam, visible = true) {
     const lim = this.geo.W * 0.6;
     for (const s of this.sprites) {
