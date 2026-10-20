@@ -284,11 +284,17 @@ async function boot() {
       if (!show) continue;
       const det = dist < 450 && cumbres.detalle.includes(p.id);
       if (det) { cimaCerca = p.w; if (!p._wDet) p._wDet = geo.summitNear(p.w.x, p.w.z, 70); } else if (p._wDet && dist > 600) p._wDet = null;
-      const LIFT = det ? (isMobile() ? 160 : 140) : p.menor ? 0 : isMobile() ? 38 : 34;
+      // el círculo se eleva poco a poco al acercarse (de 34/38 px a 2.250 u hasta el máximo a 450 u): con la cámara cerca deja ver la cima, y de lejos no se pega al relieve
+      const base = isMobile() ? 38 : 34, tope = cumbres.ficha()?.[p.id] ? (isMobile() ? 160 : 140) : (isMobile() ? 76 : 66);
+      let LIFT = p.menor ? 0 : det ? tope : base + (tope - base) * Math.pow(1 - Math.min(1, Math.max(0, (dist - 450) / 1800)), 2);
+      if (!p.menor) {   // y sin meterse bajo el título: si el círculo cae sobre la cabecera, sube solo hasta donde cabe
+        const cab = uiRects.find((u) => u.cab && u.w > 120), pyPunto = (-tmp.y * 0.5 + 0.5) * H, pxPunto = (tmp.x * 0.5 + 0.5) * W;
+        if (cab && pxPunto > cab.x - 24 && pxPunto < cab.x + cab.w + 24) LIFT = Math.max(base, Math.min(LIFT, pyPunto - (cab.y + cab.h + 26)));
+      }
       // ruta absoluta: la variable CSS se resuelve desde css/
       if (el.dataset.mini && dist < 38000) { el.style.setProperty('--foto', `url("${new URL(el.dataset.mini, location.href).href}")`); el.classList.add('con-foto'); delete el.dataset.mini; }
       el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar
-      if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
+      if (!p.menor && Math.abs((el._lift || 0) - LIFT) > 1) { el._lift = LIFT; el.style.setProperty('--lift', LIFT.toFixed(1) + 'px'); }   // el hilo mide lo mismo que la elevación
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
         const lb = el.firstElementChild, act = S.active === p.id;

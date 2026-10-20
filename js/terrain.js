@@ -10,6 +10,7 @@ const MAX_COBERTURA = 12;  // mapas de cobertura del suelo (ESA WorldCover) en m
 // roca con estratos y fracturas, canchal, pradera y bosque según la clase de ESA WorldCover y la pendiente, con granulado cercano y relieve fino en la roca.
 const GLSL_PARS = `
 uniform vec4 uHoles[4];
+uniform float uOrto; uniform sampler2D uSat; uniform vec4 uPb;   // ortofoto del PNOA en una pieza de cumbre: ajuste de color y fundido con el satélite en su borde
 uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
 varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
@@ -29,10 +30,17 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float fa = 1. - smoothstep(2500., 15000., dist), fc = 1. - smoothstep(250., 3500., dist);
   const vec3 LW = vec3(.30, .59, .11);
   vec3 c = diffuseColor.rgb;
+  float oq = 1.;   // 1 sin ortofoto; menos con ella (ya trae su propio detalle: menos nitidez y menos grano procedural)
+  if (uOrto > .5) {
+    vec3 og = c * .80; og = mix(vec3(dot(og, LW)), og, .88); og = max((og - .12) * 1.14 + .12, 0.);   // la ortofoto sale más clara y plana que el satélite
+    float edge = min(min(vWPos.x - uPb.x, uPb.z - vWPos.x), min(vWPos.z - uPb.y, uPb.w - vWPos.z));
+    float ofk = smoothstep(0., (uPb.z - uPb.x) * .12, edge);
+    c = mix(texture2D(uSat, vCUv).rgb, og, ofk); oq = 1. - .6 * ofk;
+  }
 #ifdef USE_MAP
   // nitidez: máscara de enfoque sobre la imagen de satélite (la fuente tiene 10 m por píxel; esto recupera contraste de borde sin inventar datos)
   { vec2 ts = 1. / vec2(textureSize(map, 0)); vec3 bl = (texture2D(map, vMapUv + vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv - vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv + vec2(0., ts.y)).rgb + texture2D(map, vMapUv - vec2(0., ts.y)).rgb) * .25;
-    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5), 0.); }
+    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5) * (.2 + .8 * (oq - .4) / .6), 0.); }
 #endif
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
@@ -57,13 +65,13 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   if (uBump < .5 && rock > .05 && fc > .02) {   // calidad móvil: textura de roca nítida y barata (dos escalas de ruido de valor)
     vec2 pq2 = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
     float g1 = vn(vec3(pq2 * .9, 1.7)), g2 = vn(vec3(pq2 * 3.1, 4.3));
-    c *= 1. + ((g1 - .5) * .45 + (g2 - .5) * .35) * rock * fc;
+    c *= 1. + ((g1 - .5) * .45 + (g2 - .5) * .35) * rock * fc * oq;
   }
   if (uBump > .5) {   // calidad alta: fracturas y astillas angulosas de roca, y copas de árboles agrupadas
     vec2 pq = mix(vWPos.xz, vec2(vWPos.x + vWPos.z, vWPos.y), steep);
     float rid = 1. - abs(2. * fbm(vWPos * vec3(.07, .022, .07) + 3.) - 1.);
     c *= 1. - .20 * smoothstep(.90, .985, rid) * smoothstep(.30, .50, sl) * rock * fa;
-    if (rock > .05 && fc > .02) { float wk = worley(pq * .62); c *= 1. + (wk - .55) * .15 * rock * fc; }
+    if (rock > .05 && fc > .02) { float wk = worley(pq * .62); c *= 1. + (wk - .55) * .15 * rock * fc * oq; }
     if (tree > .5 && fc > .02) { float wk = worley(vWPos.xz / 15.); c *= .78 + .5 * smoothstep(.05, .75, wk) * (1. - .2 * fc) + (n3 - .5) * .12; c = mix(c, vec3(dot(c, LW)) * vec3(.88, 1., .78), .15); }
   }
   // canchal: ladera de piedra suelta de pendiente media
@@ -73,14 +81,14 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   c *= 1. + (n2 - .5) * .26 * (grass + shrub) * fa;
   c = mix(c, c * vec3(1.10, 1.02, .80), (grass + shrub) * smoothstep(.45, .8, n1) * .35 * fa);
   c *= 1. + (vn(vWPos * .21) - .5) * .38 * tree * fa;
-  c *= 1. + (n3 - .5) * .10 * fc * (1. - nieve * .6);   // granulado cercano
+  c *= 1. + (n3 - .5) * .10 * fc * (1. - nieve * .6) * oq;   // granulado cercano
   // nieve: sombras azuladas, ondulaciones de viento y grano brillante de cerca (solo donde el satélite ya marca nieve)
   if (nieve > .02) {
     float lmN = dot(c, LW);
     c = mix(c, c * vec3(.86, .94, 1.05), nieve * .38 * (1. - smoothstep(.55, .95, lmN)));
     float wn = fbm(vec3(vWPos.x * .045 + vWPos.z * .02, vWPos.y * .02, vWPos.z * .05 - vWPos.x * .02));
     c *= 1. + (wn - .5) * .22 * nieve * fa;
-    c += (vn(vWPos * 1.7) - .5) * .06 * nieve * fc;
+    c += (vn(vWPos * 1.7) - .5) * .06 * nieve * fc * oq;
     c = mix(c, vec3(dot(c, LW)), .06 * nieve) * (1. + .05 * nieve);
   }
   diffuseColor.rgb = c;
@@ -129,9 +137,9 @@ export class Terrain {
   // material para una pieza local de cumbre: comparte textura y cobertura del bloque, pero no se recorta con los huecos
   crearMaterialPieza(c, roca = 'granito') {   // roca: tono de la roca desnuda (granito frío y oscuro, caliza clara y cálida, neutra)
     const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], neutra: [0.40, [1, 1, 1]], oscura: [0.22, [1.04, 0.97, 0.90]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
-    const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uRocaL: { value: L }, uRocaT: { value: new THREE.Vector3(...T) } };
+    const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uRocaL: { value: L }, uRocaT: { value: new THREE.Vector3(...T) }, uOrto: { value: 0 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) } };
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide, map: c.mat.map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
-    mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; this._shader(mat, u); return mat;
+    mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; mat.userData.orto = u.uOrto; mat.userData.sat = u.uSat; mat.userData.pb = u.uPb; this._shader(mat, u); return mat;
   }
   hueco(slot, x0, z0, x1, z1) { this.holes.value[slot].set(x0, z0, x1, z1); }
   chunkEn(x, z) {
@@ -152,7 +160,7 @@ export class Terrain {
     const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo;
     const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - D / 2;
     const mat = new THREE.MeshLambertMaterial({ color: 0x8a9488, side: THREE.DoubleSide });
-    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) } };
+    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) }, uOrto: { value: 0 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) } };
     this._shader(mat, u);
     const c = {
       id: `${t.i}_${t.j}`, t, mat, mesh: null, stride: 0, wantStride: 8,
