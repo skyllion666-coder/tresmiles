@@ -4,7 +4,7 @@ import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=17';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=30';
-import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
+import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=2';
 import { instalaNiebla } from './niebla.js?v=4';
@@ -261,7 +261,7 @@ async function boot() {
   }
   let cimaCerca = null;   // cumbre con detalle propio a menos de 450 m de la cámara: su marcador se eleva y se aclara para dejar ver la cima
   function updatePins() {
-    const W = innerWidth, H = innerHeight; cimaCerca = null;
+    const W = innerWidth, H = innerHeight; const cimaPrev = cimaCerca; cimaCerca = null;
     obstaculos.length = 0; pinAct = null; candPicos.length = 0;
     if (picoSel) {   // pico que se ha tocado en el mapa
       tmp.set(picoSel.x, picoSel.y + 10, picoSel.z); tmp.project(camera);
@@ -276,16 +276,19 @@ async function boot() {
       // fuera de la capa elegida no se ven; las de menos de 3.000 solo de cerca (para no llenar el mapa de puntos)
       if (S.active !== p.id && (!enCapa(p) || (p.menor && dist > 22000))) { if (!el._fuera) { el._fuera = true; el.classList.add('is-hidden'); el.classList.remove('show-label'); el._lv = false; } continue; }
       el._fuera = false;
-      tmp.set(p.w.x, p.w.y + 3, p.w.z); tmp.project(camera);   // punto de la cumbre; el círculo se dibuja LIFT píxeles más arriba, unido por un hilo fino
-      const show = S.mode === 'explore' && tmp.z < 1 && Math.abs(tmp.x) < 1.08 && Math.abs(tmp.y) < 1.08 && !occluded({ x: p.w.x, y: p.w.y + 25, z: p.w.z });
+      const wp = p._wDet || p.w;   // con detalle de cima cerca, el punto es el máximo real de la pieza fina (el del relieve general queda en la ladera)
+      tmp.set(wp.x, wp.y + 3, wp.z); tmp.project(camera);   // punto de la cumbre; el círculo se dibuja LIFT píxeles más arriba, unido por un hilo fino
+      // con la cámara pegada a una cima con detalle, los marcadores de las demás cumbres (flotan sobre el relieve) se ocultan: parecían delante de la cima
+      const show = !(cimaPrev && p.w !== cimaPrev) && S.mode === 'explore' && tmp.z < 1 && Math.abs(tmp.x) < 1.08 && Math.abs(tmp.y) < 1.08 && !occluded({ x: p.w.x, y: p.w.y + 25, z: p.w.z });
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
       const det = dist < 450 && cumbres.detalle.includes(p.id);
-      if (det) cimaCerca = p.w;
+      if (det) { cimaCerca = p.w; if (!p._wDet) p._wDet = geo.summitNear(p.w.x, p.w.z, 70); } else if (p._wDet && dist > 600) p._wDet = null;
       const LIFT = det ? (isMobile() ? 160 : 140) : p.menor ? 0 : isMobile() ? 38 : 34;
       // ruta absoluta: la variable CSS se resuelve desde css/
       if (el.dataset.mini && dist < 38000) { el.style.setProperty('--foto', `url("${new URL(el.dataset.mini, location.href).href}")`); el.classList.add('con-foto'); delete el.dataset.mini; }
-      el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
+      el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar
+      if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
         const lb = el.firstElementChild, act = S.active === p.id;

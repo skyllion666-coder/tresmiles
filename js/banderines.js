@@ -60,7 +60,7 @@ export function crearBanderines({ scene, geo }) {
         b.g.position.y = geo.heightAt(b.x, b.z) - 0.2;   // por si llega el relieve fino de la cima
         const d = cam.position.distanceTo(b.g.position);
         // tamaño: real ×11,5 de cerca (igual que montañeros y cruces); de lejos crece para seguir viéndose como un punto de color
-        let s = 3 * Math.max(11.5, d * 0.012);   // tres veces el tamaño anterior, a petición del usuario
+        let s = 1.5 * Math.max(11.5, d * 0.012);   // la mitad del anterior (era ×3: demasiado grande, 20-10-2026)
         if (b.g.userData.nace) { const k = Math.min(1, (performance.now() - b.g.userData.nace) / 900); s *= 0.2 + 0.8 * (1 - Math.pow(1 - k, 3)); if (k >= 1) b.g.userData.nace = 0; }
         b.g.scale.setScalar(s);
       }

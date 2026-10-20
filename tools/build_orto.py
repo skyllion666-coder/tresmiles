@@ -20,8 +20,8 @@ for pid in sys.argv[1:]:
     r = subprocess.run(['curl', '-s', '-m', '300', '-o', tmp, '-w', '%{http_code}', url], capture_output=True, text=True)
     if r.stdout != '200' or os.path.getsize(tmp) < 100000: print(pid, 'sin imagen', r.stdout); continue
     im = Image.open(tmp).convert('RGB')
-    im.save(D('data', 'terrain', 'cumbres', f'{pid}-orto.jpg'), quality=80, optimize=True, progressive=True)
-    im.resize((2048, 2048), Image.LANCZOS).save(D('data', 'terrain', 'cumbres', f'{pid}-orto-m.jpg'), quality=82, optimize=True, progressive=True)
-    d['orto'] = f'{pid}-orto.jpg'; d['ortoM'] = f'{pid}-orto-m.jpg'
-    print(pid, os.path.getsize(D('data', 'terrain', 'cumbres', f'{pid}-orto.jpg')) // 1024, 'KB y', os.path.getsize(D('data', 'terrain', 'cumbres', f'{pid}-orto-m.jpg')) // 1024, 'KB')
+    im.save(D('data', 'terrain', 'cumbres', f'{pid}-orto.webp'), quality=60, method=6)
+    im.resize((2048, 2048), Image.LANCZOS).save(D('data', 'terrain', 'cumbres', f'{pid}-orto-m.webp'), quality=55, method=6)
+    d['orto'] = f'{pid}-orto.webp'; d['ortoM'] = f'{pid}-orto-m.webp'
+    print(pid, os.path.getsize(D('data', 'terrain', 'cumbres', f'{pid}-orto.webp')) // 1024, 'KB y', os.path.getsize(D('data', 'terrain', 'cumbres', f'{pid}-orto-m.webp')) // 1024, 'KB')
 json.dump(idx, open(idx_path, 'w'), separators=(',', ':'))
