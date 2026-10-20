@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=17';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=27';
+import { crearCumbres } from './cumbres.js?v=30';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=2';

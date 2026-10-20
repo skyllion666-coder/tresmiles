@@ -80,6 +80,15 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       if (hueco > 3) { g.dispose(); mat.dispose(); return null; }
       scene.add(mesh); terrain.hueco(hueco, x0 + INSET, z0 + INSET, x0 + (nm - 1) * m * paso - INSET, z0 + (nm - 1) * m * paso - INSET);
       const p = { id, H, x0, z0, n, paso, mesh, mat, ch, hueco }; piezas.set(id, p);
+      // ortofoto del PNOA (IGN, 25–50 cm, CC BY 4.0) sobre la pieza: sustituye al satélite de 10 m dentro de ella (tools/build_orto.py)
+      const archivoOrto = /[?&]sinorto/.test(location.search) ? null : movil ? d.ortoM : d.orto;
+      if (archivoOrto) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoOrto}?v=${window.WEB_V || 0}`, (tex) => {
+        if (piezas.get(id) !== p) { tex.dispose(); return; }
+        const pw = (nm - 1) * m * paso;   // lado de la pieza (m)
+        tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
+        tex.repeat.set(cw / pw, cd / pw); tex.offset.set((ch.x0 - x0) / pw, (pw - (ch.z0 - z0) - cd) / pw);   // de las coordenadas del bloque a las de la ortofoto
+        mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true; p.orto = tex;
+      }, undefined, () => {});
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
     })().catch((e) => { console.warn("cumbres", id, e); return null; }).finally(() => cargando.delete(id));
@@ -233,7 +242,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   function quita(id) {
     quitaDetalle(id);
     const p = piezas.get(id); if (!p) return;
-    scene.remove(p.mesh); p.mesh.geometry.dispose(); p.mat.dispose(); terrain.hueco(p.hueco, 1e9, 1e9, 1e9, 1e9); piezas.delete(id);
+    scene.remove(p.mesh); p.mesh.geometry.dispose(); p.mat.dispose(); p.orto?.dispose(); terrain.hueco(p.hueco, 1e9, 1e9, 1e9, 1e9); piezas.delete(id);
   }
 
   return {
@@ -243,7 +252,8 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     ficha: () => ficha, fichaListo,
     carga,
     update(cam) {
-      for (const p of piezas.values()) if (p.mat.map !== p.ch.mat.map) { p.mat.map = p.ch.mat.map; p.mat.color.set(p.ch.mat.map ? 0xffffff : 0x8a9488); p.mat.needsUpdate = true; }
+      // (con ortofoto la pieza lleva su propia textura: no se le devuelve la del bloque)
+      for (const p of piezas.values()) if (!p.orto && p.mat.map !== p.ch.mat.map) { p.mat.map = p.ch.mat.map; p.mat.color.set(p.ch.mat.map ? 0xffffff : 0x8a9488); p.mat.needsUpdate = true; }
       if (ficha) for (const [id, d] of Object.entries(ficha)) {
         const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
         if (!detalles.has(id) && !detCarga.has(id) && dist < 2200 && piezas.has(id)) cargaDetalle(id);
