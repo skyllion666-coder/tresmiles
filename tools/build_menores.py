@@ -62,6 +62,33 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
         'descripcion': f'Cumbre de {fmt(alt)} m de la zona {nombreZona[zona]}, {lugar}. Es una ficha sencilla: sin ruta ni recorrido en el mapa. Nombre, altitud y posición de OpenStreetMap.',
         'menor': True,
     })
+# datos calculados (sin inventar nada): puesto en su zona, vecina más alta (con distancia y rumbo) y desnivel sobre el pueblo más cercano (Copernicus GLO-30)
+import rasterio
+DEMS = [rasterio.open(os.path.expanduser('~/Tresmiles/data/dem/' + f)) for f in ('Copernicus_DSM_COG_10_N42_00_E000_00_DEM.tif', 'Copernicus_DSM_COG_10_N42_00_W001_00_DEM.tif')]
+def cota(lon, lat):
+    for r in DEMS:
+        b = r.bounds
+        if b.left <= lon < b.right and b.bottom <= lat < b.top:
+            row, col = r.index(lon, lat); w = r.read(1, window=((row - 1, row + 2), (col - 1, col + 2))); return float(w.mean())
+RUMBOS = ['norte', 'noreste', 'este', 'sureste', 'sur', 'suroeste', 'oeste', 'noroeste']
+todos = [(q['nombre'], q['lon'], q['lat'], q['altitud']) for q in data['picos']] + [(q['nombre'], q['lon'], q['lat'], q['altitud']) for q in out]
+for p in out:
+    pares = []
+    mates = sorted([q for q in out if q['macizo'] == p['macizo']], key=lambda q: -q['altitud'])
+    puesto = next(i for i, q in enumerate(mates) if q['id'] == p['id']) + 1
+    if len(mates) >= 8 and puesto <= 10: pares.append(f"Es la {puesto}.ª más alta de las {len(mates)} cumbres de esta lista en la zona {nombreZona[p['macizo']]}.")
+    vec = [(km(p['lon'], p['lat'], lo, la), n, a) for n, lo, la, a in todos if a > p['altitud'] and n != p['nombre']]
+    if vec:
+        d, n, a = min(vec)
+        lo, la = next((lo, la) for nn, lo, la, aa in todos if nn == n and aa == a)
+        ang = math.degrees(math.atan2((lo - p['lon']) * KX, (la - p['lat']) * KY)) % 360
+        if d <= 6: pares.append(f"Su vecina más alta es {n} ({fmt(a)} m), a {str(round(d, 1)).replace('.', ',')} km al {RUMBOS[int((ang + 22.5) // 45) % 8]}.")
+    pn = p['cerca'].split(' (')[0]
+    pu = next((q for q in pueblos if q[0] == pn), None)
+    if pu and km(p['lon'], p['lat'], pu[1], pu[2]) <= 8:
+        cp = cota(pu[1], pu[2])
+        if cp and p['altitud'] - cp >= 300: pares.append(f"Se alza unos {fmt(round((p['altitud'] - cp) / 50) * 50)} m sobre {pn}.")
+    p['descripcion'] = p['descripcion'].replace('Es una ficha sencilla: sin ruta ni recorrido en el mapa. Nombre, altitud y posición de OpenStreetMap.', ' '.join(pares) + (' ' if pares else '') + 'Ficha sencilla: sin ruta ni recorrido en el mapa. Nombre, altitud y posición de OpenStreetMap.')
 # texto de Wikipedia (tools/datos/wikipedia_menores.json): solo las cumbres cuya altitud en el artículo coincide con la nuestra
 wp = json.load(open(D('tools', 'datos', 'wikipedia_menores.json'))) if os.path.exists(D('tools', 'datos', 'wikipedia_menores.json')) else {}
 for p in out:
