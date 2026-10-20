@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=16';
-import { crearVegetacion } from './vegetacion.js?v=7';
+import { Terrain } from './terrain.js?v=17';
+import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=27';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=3';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js';
+import { instalaNiebla } from './niebla.js?v=3';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=19';
 import { crearFauna } from './fauna.js?v=8';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
@@ -45,6 +46,7 @@ async function boot() {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight, false);
+  instalaNiebla();   // niebla de valle (antes de crear ningún material)
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(HORIZON, 24000, 100000);
   const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 60, 260000);
@@ -197,6 +199,7 @@ async function boot() {
     b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
     b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
+    if (p.foto && !p.menor) b.dataset.mini = `img/mini/${p.id}.webp`;   // miniatura de la ficha dentro del círculo (se carga al acercarse)
     pinsEl.appendChild(b); pinEls.set(p.id, b);
   }
   const tmp = new THREE.Vector3();
@@ -273,6 +276,8 @@ async function boot() {
       const det = dist < 450 && cumbres.detalle.includes(p.id);
       if (det) cimaCerca = p.w;
       const LIFT = det ? (isMobile() ? 160 : 140) : p.menor ? 0 : isMobile() ? 38 : 34;
+      // ruta absoluta: la variable CSS se resuelve desde css/
+      if (el.dataset.mini && dist < 38000) { el.style.setProperty('--foto', `url("${new URL(el.dataset.mini, location.href).href}")`); el.classList.add('con-foto'); delete el.dataset.mini; }
       el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar if (det && el._lift !== LIFT) { el._lift = LIFT; el.style.setProperty('--lift', LIFT + 'px'); } else if (!det && el._lift) { el._lift = 0; el.style.removeProperty('--lift'); }
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;

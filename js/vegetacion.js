@@ -28,7 +28,7 @@ function geoConifera() {   // abeto / pino: cuatro conos apilados (copa más esb
 }
 function geoFrondosa() {   // haya / roble: copa de tres lóbulos irregulares sobre un tronco corto
   const lobulo = (r, x, y, z, sy = 0.85) => new THREE.IcosahedronGeometry(r, 0).scale(1, sy, 1).translate(x, y, z);
-  const copa = mergeGeometries([lobulo(0.42, 0, 0.62, 0), lobulo(0.3, 0.22, 0.5, 0.12, 0.8), lobulo(0.28, -0.2, 0.55, -0.14, 0.8)].map((g) => g.toNonIndexed()));
+  const copa = mergeGeometries([lobulo(0.42, 0, 0.62, 0), lobulo(0.3, 0.22, 0.5, 0.12, 0.8), lobulo(0.28, -0.2, 0.55, -0.14, 0.8)]);
   const tronco = new THREE.CylinderGeometry(0.05, 0.07, 0.34, 5).translate(0, 0.17, 0);
   return mergeGeometries([pintaVertices(tronco, 0x4a3b2c, 0x4a3b2c), pintaVertices(copa, 0x2c4525, 0x587339)]);
 }

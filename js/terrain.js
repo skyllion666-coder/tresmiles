@@ -74,6 +74,15 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   c = mix(c, c * vec3(1.10, 1.02, .80), (grass + shrub) * smoothstep(.45, .8, n1) * .35 * fa);
   c *= 1. + (vn(vWPos * .21) - .5) * .38 * tree * fa;
   c *= 1. + (n3 - .5) * .10 * fc * (1. - nieve * .6);   // granulado cercano
+  // nieve: sombras azuladas, ondulaciones de viento y grano brillante de cerca (solo donde el satélite ya marca nieve)
+  if (nieve > .02) {
+    float lmN = dot(c, LW);
+    c = mix(c, c * vec3(.86, .94, 1.05), nieve * .38 * (1. - smoothstep(.55, .95, lmN)));
+    float wn = fbm(vec3(vWPos.x * .045 + vWPos.z * .02, vWPos.y * .02, vWPos.z * .05 - vWPos.x * .02));
+    c *= 1. + (wn - .5) * .22 * nieve * fa;
+    c += (vn(vWPos * 1.7) - .5) * .06 * nieve * fc;
+    c = mix(c, vec3(dot(c, LW)), .06 * nieve) * (1. + .05 * nieve);
+  }
   diffuseColor.rgb = c;
 }
 `;
