@@ -9,7 +9,7 @@ import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
-import { crearFauna } from './fauna.js?v=10';
+import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=40';
 import { crearSelector } from './selector.js?v=2';
 
@@ -100,6 +100,7 @@ async function boot() {
     } catch { /* sin ruta en esta copia */ }
   }
   const rutasDe = (id) => rutas[id] ?? [];
+  fauna?.setAmenazas(() => { const out = []; if (S.active) for (const r of rutasDe(S.active)) if (r.visible) { const ps = r.posiciones(); for (const q of ps.equipo) out.push(q); out.push(ps.solo); } return out; });   // los rebecos se alejan de los montañeros
   let rutaOn = true;
 
   // etiquetas de ibones (solo con la cámara cerca)

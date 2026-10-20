@@ -177,7 +177,8 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
     return mejor;
   }
   const _q = new THREE.Quaternion(), _qy = new THREE.Quaternion(), _up = new THREE.Vector3(0, 1, 0);
-  function actualizaRebecos(dt) {
+  let amenazas = () => [];   // posiciones (x, z) de los montañeros del recorrido abierto: los rebecos se alejan de ellos igual que de la cámara
+  function actualizaRebecos(dt, ams = []) {
     for (const r of rebecos) {
       if (!r.ok) continue;
       const dist = camera.position.distanceTo(r.g.position);
@@ -190,7 +191,9 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         if (r.estado === 'Andar' && !r.yendo && Math.hypot(r.x - r.chk.x, r.z - r.chk.z) < 40) { r.rumbo = rumboLibre(r, true); cambia(r, 'Pastar', 6 + Math.random() * 6); }
         r.chk.x = r.x; r.chk.z = r.z; r.chk.t = 0;
       }
-      const cerca = dist < 450;
+      let am = null, dm = 1e9;   // montañero más cercano a menos de 520 unidades
+      for (const q of ams) { const dd = Math.hypot(q.x - r.x, q.z - r.z); if (dd < 520 && dd < dm) { dm = dd; am = q; } }
+      const cerca = dist < 450 || !!am;
       if (cerca && (r.estado === 'Quieto' || r.estado === 'Pastar' || r.estado === 'Mirar' || r.estado === 'Beber' || r.yendo)) cambia(r, 'Alerta', 2 + Math.random() * 2);
       if (r.resta <= 0) {
         const z = Math.random();
@@ -201,7 +204,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         else if (r.estado === 'Mirar') cambia(r, 'Quieto', 3 + Math.random() * 6);
         else if (r.estado === 'Alerta') {
           // si la cámara está cerca, da un brinco y se aleja de ella (no todos: el grupo reacciona a destiempo)
-          if (cerca) { r.rumbo = Math.atan2(r.g.position.z - camera.position.z, r.g.position.x - camera.position.x); cambia(r, Math.random() < 0.6 ? 'Brinco' : 'Andar', 1.0); }
+          if (cerca) { const o = am ?? camera.position; r.rumbo = Math.atan2(r.g.position.z - o.z, r.g.position.x - o.x); cambia(r, Math.random() < 0.6 ? 'Brinco' : 'Andar', 1.0); }
           else cambia(r, z < 0.3 ? 'Mirar' : 'Andar', 3 + Math.random() * 5);
         } else if (r.estado === 'Brinco') cambia(r, 'Andar', 4 + Math.random() * 4);
         else { if (Math.random() < 0.3) r.rumbo += (Math.random() - 0.5) * 1.5; cambia(r, z < 0.5 ? 'Quieto' : 'Pastar', 6 + Math.random() * 10); }
@@ -212,6 +215,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         if (Math.hypot(dx, dz) < Math.max(4, 1.2 * esc * dt)) { r.x = t.x; r.z = t.z; cambia(r, 'Beber', 12 + Math.random() * 18); r.rumbo = Math.atan2(-r.agua.uz, -r.agua.ux); }
       }
       if (r.estado === 'Beber') r.rumbo = Math.atan2(-r.agua.uz, -r.agua.ux);
+      if (am && !r.yendo && (r.estado === 'Andar' || r.estado === 'Brinco')) r.rumbo = Math.atan2(r.z - am.z, r.x - am.x);   // huye de los montañeros mientras se acercan
       if (r.estado === 'Andar' || r.estado === 'Brinco') {
         const v = (r.estado === 'Brinco' ? 2.6 : 0.9) * esc * dt;
         const nx = r.x + Math.cos(r.rumbo) * v, nz = r.z + Math.sin(r.rumbo) * v;
@@ -256,8 +260,9 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
     rebecos,
     // x, z: cumbre; y (opcional): su altura, para repartir los rebecos por sus laderas
     setCentro(x, z, y) { destino.x = x; destino.z = z; if (y != null) { anclaje = { x, z, y }; colocaRebecos(); } },
+    setAmenazas(fn) { amenazas = fn; },
     update(t, dt) {
-      actualizaRebecos(dt);
+      actualizaRebecos(dt, amenazas());
       if (!listo) return;
       const k = 1 - Math.exp(-dt * 0.35);
       c.x += (destino.x - c.x) * k; c.z += (destino.z - c.z) * k;
