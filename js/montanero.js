@@ -119,13 +119,13 @@ export function crearMontanero({ chaqueta = '#b8392e', pantalon = '#2c333b', moc
   root.traverse((o) => { if (o.isMesh) o.castShadow = false; });
 
   // paso: fase en radianes, k = amplitud (0 parado … 1 andando); inc = inclinación extra del tronco por la pendiente.
-  // c (opcional) = postura de arista: { agach, manos, cuatro } de 0 a 1. Las piernas se resuelven con una cinemática de dos huesos para que los pies sigan en el suelo al agacharse.
+  // c (opcional) = postura de arista: { agach, manos, cuatro, brazos (funambulista), giro } de 0 a 1. Las piernas se resuelven con una cinemática de dos huesos para que los pies sigan en el suelo al agacharse.
   const L1 = 0.43, L2 = 0.44;
   function pose(fase, k, inc = 0, c = null) {
-    const ag = c?.agach ?? 0, mn = c?.manos ?? 0, cu = c?.cuatro ?? 0, a = Math.max(ag, cu);
+    const ag = c?.agach ?? 0, mn = c?.manos ?? 0, cu = c?.cuatro ?? 0, br = c?.brazos ?? 0, a = Math.max(ag, cu);
     const s = Math.sin(fase), co = Math.cos(fase), s2 = Math.sin(fase + Math.PI), c2 = Math.cos(fase + Math.PI);
     const alt = 0.92 - 0.26 * ag - 0.2 * cu, D = Math.max(0.3, alt - 0.06 - 0.09);
-    const phi = Math.acos(Math.max(-1, Math.min(1, (L1 * L1 + L2 * L2 - D * D) / (2 * L1 * L2)))), bf = a > 0 ? Math.PI - phi : 0, af = bf * 0.5, kk = k * (1 - a * 0.55);
+    const phi = Math.acos(Math.max(-1, Math.min(1, (L1 * L1 + L2 * L2 - D * D) / (2 * L1 * L2)))), bf = a > 0 ? Math.PI - phi : 0, af = bf * 0.5, kk = k * (1 - a * 0.55 - 0.3 * br);
     pI.hip.rotation.x = -s * 0.52 * kk - af * a; pD.hip.rotation.x = -s2 * 0.52 * kk - af * a;
     pI.rod.rotation.x = kk * (0.12 + 0.85 * Math.max(0, co)) + bf * a; pD.rod.rotation.x = kk * (0.12 + 0.85 * Math.max(0, c2)) + bf * a;
     const p = 0.1 + inc * 0.5 + 0.55 * ag + 0.6 * cu;   // inclinación del tronco hacia delante
@@ -145,7 +145,10 @@ export function crearMontanero({ chaqueta = '#b8392e', pantalon = '#2c333b', moc
     if (bastonD) { bD.sh.rotation.x = -s * 0.28 * k - 0.35; bD.el.rotation.x = -0.65; bastonD.rotation.x = -0.42 + s * 0.14 * k - (bD.sh.rotation.x + bD.el.rotation.x); }
     else { bD.sh.rotation.x = -s * 0.5 * k; bD.el.rotation.x = -0.35 - 0.25 * k; }
     arm(bI, bastonI, 1, 1); arm(bD, bastonD, -1, -1);
-    if (bastonI) bastonI.visible = mn < 0.3; if (bastonD) bastonD.visible = mn < 0.3;   // en la arista se guardan los bastones: las manos van libres
+    if (br > 0.02) {   // funambulista: brazos abiertos a los lados (algo adelantados y con el codo flexionado) para guardar el equilibrio en la arista
+      for (const [b, sg] of [[bI, 1], [bD, -1]]) { b.sh.rotation.z = -sg * (0.12 + 1.15 * br) + b.sh.rotation.z * (1 - br); b.sh.rotation.x = b.sh.rotation.x * (1 - br) - 0.12 * br; b.el.rotation.x = b.el.rotation.x * (1 - br) - 0.18 * br; }
+    }
+    if (bastonI) bastonI.visible = mn < 0.3 && br < 0.3; if (bastonD) bastonD.visible = mn < 0.3 && br < 0.3;   // en la arista se guardan los bastones: las manos van libres
     hips.position.y = alt + Math.abs(co) * 0.026 * kk;
     torso.rotation.x = p; torso.rotation.y = s * 0.07 * kk + (c?.giro ?? 0);
     cab.rotation.x = -Math.max(0, p - 0.15) * 0.75;   // al inclinarse, levanta la cabeza para mirar adelante

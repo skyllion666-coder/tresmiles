@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontanero } from './montanero.js?v=6';
+import { crearMontanero } from './montanero.js?v=7';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -79,6 +79,34 @@ export function crearRuta({ scene, geo, ruta }) {
     if (cur) paso.zonas.push(cur);
     if (!paso.zonas.length) paso = null;
   }
+  // aristas y pasos de cualquier ruta: tramos donde se camina más despacio y con otra postura. Las aristas se detectan con el relieve (el terreno cae a ambos lados del track);
+  // los pasos difíciles con nombre (setPasosHito) llevan además postura de funambulista y, a ratos, agachados con las manos en la roca.
+  let auto = [];   // { d0, d1, n (0-1), fun }
+  function calculaAristas() {
+    const T = 9, L = 16, flag = new Array(pts.length).fill(0);
+    for (let i = 1; i < pts.length - 1; i++) {
+      let dx = pts[i + 1].x - pts[i - 1].x, dz = pts[i + 1].z - pts[i - 1].z; const l = Math.hypot(dx, dz) || 1; dx /= l; dz /= l;
+      const x = pts[i].x, z = pts[i].z, h0 = Math.max(geo.heightAt(x, z), geo.heightAt(x + dz * 6, z - dx * 6), geo.heightAt(x - dz * 6, z + dx * 6));   // el GPS puede ir algo desviado de la arista
+      flag[i] = h0 - geo.heightAt(x + dz * L, z - dx * L) > T && h0 - geo.heightAt(x - dz * L, z + dx * L) > T ? 1 : 0;
+    }
+    auto = auto.filter((z) => z.fun); let cur = null;
+    const cierra = () => { if (cur && cur.d1 - cur.d0 >= 30) auto.push({ ...cur, n: 0.6, fun: false }); cur = null; };
+    for (let i = 0; i < pts.length; i++) {
+      let s = 0; for (let k2 = -4; k2 <= 4; k2++) s += flag[Math.min(pts.length - 1, Math.max(0, i + k2))];
+      if (s >= 5) { if (!cur) cur = { d0: dist[i], d1: dist[i] }; else cur.d1 = dist[i]; } else if (cur && dist[i] - cur.d1 > 70) cierra();
+    }
+    cierra();
+  }
+  function nivelAuto(d) {
+    let n = 0, fun = false;
+    for (const z of auto) { const fuera = d < z.d0 ? z.d0 - d : d > z.d1 ? d - z.d1 : 0, k2 = (1 - sstep(0, d < z.d0 ? 40 : 60, fuera)) * z.n; if (k2 > n) { n = k2; fun = z.fun; } }
+    return { n, fun };
+  }
+  // pasos difíciles con nombre (hitos «paso»): lista de { x, z } en coordenadas del mundo; los que caen a menos de 120 m del recorrido marcan ±45 m de paso de funambulista
+  function setPasosHito(lista) {
+    auto = auto.filter((z) => !z.fun);
+    for (const q of lista) { const c = cercano(q.x, q.z); if (c.metros < 120) auto.push({ d0: c.dist - 45, d1: c.dist + 45, n: 1, fun: true }); }
+  }
   // intensidad del tramo especial (0 = marcha normal, 1 = en la arista) según la posición sobre el recorrido: sube durante la aproximación y baja tras la salida
   function nivelEn(d) {
     if (!paso) return 0; let n = 0;
@@ -86,7 +114,12 @@ export function crearRuta({ scene, geo, ruta }) {
     return n;
   }
   function postura(d, i, tt) {
-    const n = nivelEn(d); if (n < 0.01) return { n: 0, c: null };
+    const n = nivelEn(d);
+    if (n < 0.01) {   // fuera del Paso de Mahoma: aristas y pasos detectados
+      const a = nivelAuto(d); if (a.n < 0.01) return { n: 0, c: null };
+      const g = a.fun ? sstep(0.2, 0.8, 0.5 + 0.5 * Math.sin(tt * 0.35 + i * 2.3 + d * 0.02)) : 0;   // en los pasos marcados, a ratos agachados con las manos en la roca
+      return { n: a.n, r: a.fun ? a.n : 0, c: { brazos: sstep(0.2, 0.9, a.n) * (1 - g), agach: (a.fun ? 0.15 + 0.6 * g : 0.12) * sstep(0.1, 0.8, a.n), manos: g * sstep(0.3, 0.9, a.n) * 0.9, giro: 0.1 * Math.sin(tt * 0.8 + i * 1.7) * a.n } };
+    }
     const pos = en(d).pos, pr = proy(pos.x, pos.z), w = 0.08, [a, b] = paso.central;
     let cu = 0; if (n > 0.8 && pr.d < paso.corredor * 1.3) cu = sstep(a - w, a + w, pr.s) * (1 - sstep(b - w, b + w, pr.s)) * (0.55 + 0.45 * (0.5 + 0.5 * Math.sin(tt * 0.55 + i * 2.3)));
     return { n, c: { agach: sstep(0.08, 0.7, n) * 0.8, manos: sstep(0.4, 0.95, n), cuatro: cu * sstep(0.8, 1, n), giro: 0.12 * Math.sin(tt * 0.7 + i * 1.7) * n } };
@@ -156,6 +189,7 @@ export function crearRuta({ scene, geo, ruta }) {
     return out.reduce((a, c) => { const u = a[a.length - 1]; if (u && c.dist - u.dist < 1500) { if (c.metros < u.metros) { u.metros = c.metros; u.dist = c.dist; } } else a.push({ ...c }); return a; }, []);
   }
 
+  calculaAristas();
   const lo = Math.floor(ruta.min / 100) * 100, hi = Math.ceil(ruta.max / 100) * 100;
   const X = (m) => PL + (m / ruta.distancia) * (PW - PL - PR), Y = (e) => PT + (1 - (e - lo) / (hi - lo)) * (PH - PT - PB);
   const fmtKm = (m) => (m / 1000).toFixed(1).replace('.', ',');
@@ -178,6 +212,7 @@ export function crearRuta({ scene, geo, ruta }) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
           const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n);
+          if (n < 0.01) v *= 1 - 0.5 * nivelAuto(q.d).n;   // aristas y pasos detectados: a la mitad de ritmo en lo más estrecho
           if (n > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
           q.d += v * dt; q.v = v;
           if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
@@ -188,14 +223,14 @@ export function crearRuta({ scene, geo, ruta }) {
           const d = est[i].d, dc = Math.max(0, Math.min(ruta.distancia, d)), po = postura(dc, i, tt), vr = (est[i].v ?? V0) / V0; pp.push({ po, dc });
           p.fase += dt * (2 + 8 * vr); colocar(p, dc, [0, 34, -34][i], d > 0 && d < ruta.distancia && vr > 0.01, po, vr);
         });
-        for (let i = 0; i < 2; i++) { const o = Math.min(pp[i].po.n, pp[i + 1].po.n); cuerda(cuerdas[i], equipo[i], equipo[i + 1], est[i].d > 0 && est[i + 1].d > 0 && est[i].d < ruta.distancia && est[i + 1].d < ruta.distancia ? o : 0, tt, i); }
+        for (let i = 0; i < 2; i++) { const o = Math.min(pp[i].po.r ?? pp[i].po.n, pp[i + 1].po.r ?? pp[i + 1].po.n); cuerda(cuerdas[i], equipo[i], equipo[i + 1], est[i].d > 0 && est[i + 1].d > 0 && est[i].d < ruta.distancia && est[i + 1].d < ruta.distancia ? o : 0, tt, i); }
       }
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
     // tamaño fijo (ESC_M) a lo largo de todo el recorrido; solo con la cámara muy cerca (< 350 m) encogen hasta un 55 % para no verse gigantes junto a la cima
     escalar(cam) { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M * Math.min(1, Math.max(0.55, cam.distanceTo(p.h.position) / 350))); },
-    setPaso, _est: est,
+    setPaso, setPasosHito, _est: est, _auto: () => auto,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }

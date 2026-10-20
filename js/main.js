@@ -10,7 +10,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=10';
-import { cargarRuta, crearRuta } from './ruta.js?v=37';
+import { cargarRuta, crearRuta } from './ruta.js?v=38';
 import { crearSelector } from './selector.js?v=2';
 
 const $ = (s) => document.querySelector(s);
@@ -322,6 +322,9 @@ async function boot() {
       if (choca !== !!c.el._agr) { c.el._agr = choca; c.el.classList.toggle('pin-agr', choca); }
       if (!choca) keep.push(c);
     }
+    // con una cumbre abierta solo las 6 más cercanas se ven con normalidad; el resto, tenues
+    const otras = candPicos.filter((q) => !q.menor && !q.el._agr).sort((a, b) => a.dist - b.dist);
+    otras.forEach((c, k) => { const t = !!S.active && k >= 6; if (t !== !!c.el._ten) { c.el._ten = t; c.el.classList.toggle('pin-tenue', t); } });
   }
 
   // — etiqueta de la cumbre abierta: va al lado del marcador (derecha, izquierda, debajo o encima), en un hueco libre —
@@ -422,9 +425,9 @@ async function boot() {
         closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
       });
       // el hito «Cima» que lleva el nombre de la cumbre se coloca en el punto de la cumbre (si no, el relieve fino los separa y salen dos marcadores y dos nombres)
-      let hx = q.x, hz = q.z, hy = geo.heightAt(q.x, q.z) + 12;
-      if (h.tipo === 'cima') { const nh = normNombre(h.nombre), pc = peaks.find((p) => picos.includes(p.id) && p.w && normNombre(p.nombre) === nh && Math.hypot(p.q.x - q.x, p.q.z - q.z) < 250); if (pc) { hx = pc.w.x; hz = pc.w.z; hy = pc.w.y + 12; } }
-      hitos.push({ h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: hx, y: hy, z: hz });
+      let hx = q.x, hz = q.z, hy = geo.heightAt(q.x, q.z) + 12, fusion = null;
+      if (h.tipo === 'cima') { const nh = normNombre(h.nombre), pc = peaks.find((p) => picos.includes(p.id) && p.w && normNombre(p.nombre) === nh && Math.hypot(p.q.x - q.x, p.q.z - q.z) < 250); if (pc) { hx = pc.w.x; hz = pc.w.z; hy = pc.w.y + 12; fusion = pc; } }
+      hitos.push({ fusion: fusion ? fusion.id : null, h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: hx, y: hy, z: hz });
     }
   }
   function figCima(p) {
@@ -446,6 +449,7 @@ async function boot() {
       const dist = camera.position.distanceTo(hitoTmp);
       // solo los hitos de la cumbre abierta (o compartidos con ella)
       let show = S.mode === 'explore' && !!S.active && o.picos.includes(S.active) && dist < 15000;
+      if (show && o.fusion && o.fusion === S.active) show = false;   // el hito «Cima» de la cumbre abierta ya lo representa su círculo
       if (show && cimaCerca && Math.hypot(o.x - cimaCerca.x, o.z - cimaCerca.z) < 60) show = false;   // de cerca, el rombo de la cima no tapa los objetos de la cumbre
       if (show && o.last !== S.active) { o.last = S.active; o.kms[S.active] ??= kmTexto(o, S.active); o.el.querySelector('em').textContent = o.tipoTxt + (o.h.inicio ? '' : o.kms[S.active]); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: o.y + 10, z: o.z }); }
@@ -789,6 +793,7 @@ async function boot() {
       p.w = geo.summitNear(p.q.x, p.q.z);   // la cumbre se fija con el relieve general; las rutas ya se apoyan en la pieza de alta resolución
       await cumbres.carga(p.id);
       for (const r of datos) (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: r }));
+      { const dif = hitosDatos.filter((h) => h.tipo === 'paso' && (h.picos ?? [h.pico]).includes(p.id) && /funambul|regleta|gato|onso|acrob|clave|cadenas/i.test(h.nombre)).map((h) => geo.toXZ(h.lon, h.lat)); if (dif.length) for (const r of rutas[p.id] ?? []) r.setPasosHito(dif); }   // pasos difíciles con nombre: postura de funambulista
       { const fi = await cumbres.fichaListo; const cfg = fi?.aneto?.tramo; if (cfg) for (const r of rutas[p.id] ?? []) r.setPaso({ ...cfg, cresta: fi.aneto.cresta }); }   // tramo especial (Paso de Mahoma): se detecta si el recorrido pasa por la arista
       crearHitosDe(p.id);
     })());
