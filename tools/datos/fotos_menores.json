@@ -802,6 +802,32 @@
   "propia": true,
   "pie": "Tuca del Forau de Ixeia, en una foto de su ruta."
  },
+ "tucon-redono": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Coronando Picos",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/ref-coronas-vallibierna-culebres-tuca-y-tuqueta-arnau-roques-trencades-estibafreda-redono-tuqueta-b-41922468",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/tucon-redono.webp",
+  "propia": true,
+  "pie": "Tucón Redono, en una foto de su ruta."
+ },
+ "punta-custodia": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Luis Hernández",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/goriz-ii-refugio-de-goriz-ascension-a-punta-custodia-punta-arrablo-cola-de-caballo-pradera-de-ordes-113347386",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/punta-custodia.webp",
+  "propia": true,
+  "pie": "Punta Custodia, en una foto de su ruta."
+ },
  "pointe-bazillac": {
   "archivo": "De Brèche de Roland en de 'Dedo'.jpg",
   "autor": "Frederik Vandaele",
