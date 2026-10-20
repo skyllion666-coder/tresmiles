@@ -30,12 +30,12 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float fa = 1. - smoothstep(2500., 15000., dist), fc = 1. - smoothstep(250., 3500., dist);
   const vec3 LW = vec3(.30, .59, .11);
   vec3 c = diffuseColor.rgb;
-  float oq = 1.;   // 1 sin ortofoto; menos con ella (ya trae su propio detalle: menos nitidez y menos grano procedural)
+  float oq = 1.; float vR = vRoca * (1. - .7 * step(.5, uOrto));   // con ortofoto la roca procedural de la cima pesa menos (si no, su borde dibuja un arco)   // 1 sin ortofoto; menos con ella (ya trae su propio detalle: menos nitidez y menos grano procedural)
   if (uOrto > .5) {
     vec3 og = max((c - uOA) * uOB + uOC, 0.);   // color de la ortofoto llevado al del satélite de alrededor (media y desviación por canal, tools/igualar_orto.py)
     float edge = min(min(vWPos.x - uPb.x, uPb.z - vWPos.x), min(vWPos.z - uPb.y, uPb.w - vWPos.z));
     float ofk = smoothstep(0., (uPb.z - uPb.x) * .12, edge);
-    c = mix(texture2D(uSat, vCUv).rgb, og, ofk); oq = 1. - .6 * ofk;
+    c = mix(texture2D(uSat, vCUv).rgb, og, ofk); oq = 1. - .75 * ofk;
   }
 #ifdef USE_MAP
   // nitidez: máscara de enfoque sobre la imagen de satélite (la fuente tiene 10 m por píxel; esto recupera contraste de borde sin inventar datos)
@@ -44,7 +44,7 @@ if (distance(vWPos, cameraPosition) < 15000.) {
 #endif
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
-  steep0 = max(steep0, vRoca * .95);
+  steep0 = max(steep0, vR * .95);
   float nieve = smoothstep(.60, .80, lm) * (1. - smoothstep(.42, .68, sl)) * (1. - vRoca);   // la nieve no se sostiene en paredes muy verticales
   c *= 1. + .38 * (1. - smoothstep(.012, .085, lm)) * (1. - nieve);   // levanta las sombras muy oscuras que trae la imagen de satélite
   float cl = 0.;
@@ -56,7 +56,7 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
   float lm2 = dot(c, LW);
   vec3 rc = vec3(mix(min(lm2, uRocaL), uRocaL * .8, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
-  c = mix(c, mix(rc, vec3(dot(rc, LW)) * uRocaT, vRoca * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vRoca * .96));
+  c = mix(c, mix(rc, vec3(dot(rc, LW)) * uRocaT, vR * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vR * .96));
   // la roca desnuda pierde el verde de la imagen y gana grises y ocres
   c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);

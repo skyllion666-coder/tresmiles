@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=17';
+import { Terrain } from './terrain.js?v=18';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=30';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
-import { makeSky, Clouds, HORIZON } from './sky.js?v=2';
+import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=19';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=8';
 import { cargarRuta, crearRuta } from './ruta.js?v=37';
 import { crearSelector } from './selector.js?v=2';
@@ -294,7 +294,7 @@ async function boot() {
       }
       // ruta absoluta: la variable CSS se resuelve desde css/
       if (el.dataset.mini && dist < 38000) { el.style.setProperty('--foto', `url("${new URL(el.dataset.mini, location.href).href}")`); el.classList.add('con-foto'); delete el.dataset.mini; }
-      el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar
+      el.classList.toggle('pin-alto', det); el.classList.toggle('pin-muycerca', det && dist < 230); el.classList.toggle('pin-pegado', det && dist < 150);   // pegado a la cima: el marcador casi desaparece para no tapar la cruz o el pilar
       if (!p.menor && Math.abs((el._lift || 0) - LIFT) > 1) { el._lift = LIFT; el.style.setProperty('--lift', LIFT.toFixed(1) + 'px'); }   // el hilo mide lo mismo que la elevación
       el.style.transform = `translate3d(${((tmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-tmp.y * 0.5 + 0.5) * H - LIFT).toFixed(1)}px, 0)`;
       { const px = (tmp.x * 0.5 + 0.5) * W, py = (-tmp.y * 0.5 + 0.5) * H - LIFT;
@@ -305,11 +305,22 @@ async function boot() {
           if (el._cl) { lb.style.cssText = ''; el._cl = false; }   // deja de ser la cumbre abierta: etiqueta a su sitio de siempre
           if (lb && p.activo && (!p.menor || dist < 5000)) candPicos.push({ el, lb, px, py, dist, obs, menor: p.menor });   // su nombre solo sale si hay hueco (etiquetasPicos)
         } }
+      if (S.active === p.id) { el.classList.remove('pin-agr'); el._agr = false; }
       el.classList.toggle('is-active', S.active === p.id);
       el.classList.toggle('is-other', !!S.active && S.active !== p.id && p.activo);
       el.classList.toggle('show-label', S.active === p.id || (!S.active && !!el._lv));   // los demás nombres los decide etiquetasPicos
       el.classList.toggle('is-dim', !passes(p));
       { const k = S.active === p.id ? 1 : Math.min(1, Math.max(0.72, 1.25 - dist / 36000)); if (Math.abs((el._k ?? 1) - k) > 0.02) { el._k = k; el.style.setProperty('--k', k.toFixed(2)); } }   // el círculo se hace algo más pequeño cuanto más lejos está la cámara
+    }
+  }
+
+  // círculos amontonados: de cada grupo a menos de ~22 px (30 para volver a mostrarlo, sin parpadeos) solo se queda el más cercano a la cámara; la cumbre abierta siempre se queda
+  function agrupaPines() {
+    const keep = pinAct ? [{ px: pinAct.px, py: pinAct.py }] : [];
+    for (const c of candPicos.filter((q) => !q.menor).sort((a, b) => a.dist - b.dist)) {
+      const r = c.el._agr ? 30 : 22, choca = keep.some((k) => Math.hypot(k.px - c.px, k.py - c.py) < r);
+      if (choca !== !!c.el._agr) { c.el._agr = choca; c.el.classList.toggle('pin-agr', choca); }
+      if (!choca) keep.push(c);
     }
   }
 
@@ -362,7 +373,7 @@ async function boot() {
       let n = 0;
       if (b.x < 6 || b.x + w > W - 6 || b.y < 6 || b.y + h > H - 6) n += 12;   // el texto entero siempre dentro de la pantalla
       const bb = { x: b.x, y: b.y, w, h };
-      for (const u of uiRects) if (hayChoque(bb, u, 6)) n += 6;
+      for (const u of uiRects) if (hayChoque(bb, u, 6)) n += u.cab ? 30 : 6;   // el título pesa mucho más: la etiqueta no se pone encima de «Tresmiles»
       for (const q of obstaculos) if (hayChoque(bb, q, 3)) n += 2;
       for (const [a, c] of seg) {   // ¿cruza la ruta naranja?
         const L = Math.hypot(c.x - a.x, c.y - a.y), k = Math.max(1, Math.ceil(L / 10));
@@ -1087,7 +1098,7 @@ async function boot() {
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
-    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); etiquetasPicos(); distribuyeEtiquetas(dt);
+    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
     if (!!S.detalle !== detPrev) { detPrev = !!S.detalle; for (const l of Object.values(rutas)) for (const r of l) r.delgada?.(detPrev); }
     ajustaVelocidad(dt); aplicaGiro(dt);

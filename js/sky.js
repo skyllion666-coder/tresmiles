@@ -9,14 +9,14 @@ export function makeSky() {
     uniforms: { uTop: { value: new THREE.Color('#3a6a9e') }, uMid: { value: new THREE.Color('#97b8d2') }, uHor: { value: HORIZON.clone() }, uSunDir: { value: new THREE.Vector3(0, 1, 0) }, uGlow: { value: new THREE.Color('#ffffff') }, uGlowK: { value: 0.1 } },
     vertexShader: 'varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }',
     fragmentShader: `varying vec3 vP; uniform vec3 uTop, uMid, uHor, uSunDir, uGlow; uniform float uGlowK;
-      void main(){ float h = clamp(vP.y, 0.0, 1.0);
+      void main(){ vec3 vN = normalize(vP); float h = clamp(vN.y, 0.0, 1.0);   // la dirección se normaliza por fragmento (interpolada entre vértices dejaba facetas rectas en el resplandor)
         vec3 c = mix(uHor, uMid, smoothstep(0.0, 0.18, h)); c = mix(c, uTop, smoothstep(0.12, 0.75, h));
         // resplandor del sol: halo ancho y núcleo, más fuertes cerca del horizonte
-        float sd = max(dot(normalize(vP), normalize(uSunDir)), 0.0);
+        float sd = max(dot(vN, normalize(uSunDir)), 0.0);
         c += uGlow * (pow(sd, 5.0) * 0.32 + pow(sd, 48.0) * 0.85) * uGlowK * (1.0 - 0.7 * smoothstep(0.25, 0.9, h));
         gl_FragColor = vec4(c, 1.0); }`,
   });
-  const m = new THREE.Mesh(new THREE.SphereGeometry(200000, 32, 16), mat);
+  const m = new THREE.Mesh(new THREE.SphereGeometry(200000, 48, 24), mat);
   m.renderOrder = -10; m.frustumCulled = false;
   return m;
 }

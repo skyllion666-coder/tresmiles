@@ -137,7 +137,9 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.pin-menor .pin-stem { display: none; }
 /* muy cerca de una cumbre con objetos (pilar, cruz, buzón): el círculo sube y se aclara, el hilo queda fino y discreto */
 .pin.pin-alto::after { opacity: .62; }
-.pin.pin-muycerca { opacity: .38; } .pin.pin-muycerca .pin-label { opacity: .75; }
+.pin.pin-muycerca::before, .pin.pin-muycerca::after { opacity: .38; } .pin.pin-muycerca .pin-stem { opacity: .3; } .pin.pin-muycerca .pin-label { opacity: 1; }   /* de cerca el círculo se aclara pero el nombre sigue legible */
+.pin.pin-pegado .pin-stem { opacity: 0; }   /* pegado a la cima el hilo cruzaría la pantalla como una raya */
+.pin.pin-agr { opacity: 0; pointer-events: none; }   /* círculos amontonados: solo se ve el más cercano */
 .pin.pin-alto .pin-stem { width: 1px; margin-left: -.5px; opacity: .75; }
 .pin-label { position: absolute; top: calc(var(--hit) / 2 + 21px); left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: rgba(10, 22, 18, .58); border: 1px solid rgba(255, 255, 255, .26); border-radius: 14px; color: #fff; padding: 4px 11px 5px; font: 600 .68rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .35s ease; pointer-events: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
 .pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: #f3e6c8; }

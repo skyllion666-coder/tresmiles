@@ -58,6 +58,8 @@ const waterMat = () => new THREE.ShaderMaterial({
       float espuma = (1.0 - smoothstep(0.4, 2.2, d)) * (0.55 + 0.45 * noise(q * 0.25 + uT * 0.3));
       col = mix(col, vec3(0.86, 0.90, 0.88), espuma * 0.35 * (1.0 - smoothstep(800.0, 4000.0, lejos)));
       float alfa = smoothstep(0.0, clamp(dm * 0.25, 0.6, 3.0), d) * mix(0.82, 1.0, hondo);
+      alfa *= 1.0 - smoothstep(9000.0, 20000.0, lejos);   // los ibones muy lejanos se apagan: con la profundidad tan repartida a esa distancia se colaban tras las crestas
+      if (alfa < 0.01) discard;
       gl_FragColor = vec4(col, alfa);
       #include <fog_fragment>
     }`,
