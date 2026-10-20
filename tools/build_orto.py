@@ -11,6 +11,15 @@ m = json.load(open(D('data', 'terrain', 'meta.json'))); idx_path = D('data', 'te
 latC = m['lat0'] - ((m['nrows'] - 1) * m['step']) / 2; mLat = 111132; mLon = 111320 * math.cos(math.radians(latC))
 W = (m['ncols'] - 1) * m['step'] * mLon; Dd = (m['nrows'] - 1) * m['step'] * mLat
 fx = lambda x: m['lon0'] + (x + W / 2) / mLon; fz = lambda z: m['lat0'] - (z + Dd / 2) / mLat
+def aplana_sombras(im, fuerza=0.5, sigma=80):
+    """Las sombras de la ortofoto (propias de la hora del vuelo) chocan con la luz de la web: se divide parcialmente por el brillo de baja frecuencia."""
+    import numpy as np
+    from PIL import ImageFilter
+    a = np.asarray(im, np.float32) / 255; L = a.mean(2)
+    pq = Image.fromarray((L * 255).astype(np.uint8)).resize((1024, 1024), Image.BILINEAR).filter(ImageFilter.GaussianBlur(sigma / 4))
+    low = np.asarray(pq.resize(im.size, Image.BICUBIC), np.float32) / 255
+    f = np.clip((low.mean() / np.maximum(low, 0.02)) ** fuerza, 0.7, 1.6)
+    return Image.fromarray((np.clip(a * f[..., None], 0, 1) * 255).astype(np.uint8))
 for pid in sys.argv[1:]:
     d = idx[pid]; x0, z0 = d['x0'], d['z0']; x1 = x0 + (d['n'] - 1) * d['paso']; z1 = z0 + (d['n'] - 1) * d['paso']
     bb = (fx(x0), fz(z1), fx(x1), fz(z0))
@@ -30,6 +39,7 @@ for pid in sys.argv[1:]:
             im.paste(Image.open(tmp).convert('RGB'), (a * 2048, c * 2048))
         if not ok: break
     if not ok: print(pid, 'sin imagen'); continue
+    im = aplana_sombras(im)
     im.save(D('data', 'terrain', 'cumbres', f'{pid}-orto.webp'), quality=60, method=6)
     im.resize((2048, 2048), Image.LANCZOS).save(D('data', 'terrain', 'cumbres', f'{pid}-orto-m.webp'), quality=55, method=6)
     d['orto'] = f'{pid}-orto.webp'; d['ortoM'] = f'{pid}-orto-m.webp'

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=18';
+import { Terrain } from './terrain.js?v=19';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=30';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
@@ -404,6 +404,7 @@ async function boot() {
   const hitos = [];
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido` : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
+  const normNombre = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').replace(/\b(cima|del|de|la|las|los|el|pico|pic|punta|tuca|gran|pequeno)\b/g, '').replace(/[^a-z0-9]/g, '');
   function crearHitosDe(picoId) {
     for (const h of hitosDatos) {
       const picos = h.picos ?? [h.pico ?? 'balaitus'];
@@ -420,7 +421,10 @@ async function boot() {
         const abrir = !el.classList.contains('is-open');
         closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); if (el.classList.contains('con-foto')) hitoTimer = setTimeout(closeHitos, 15000); }
       });
-      hitos.push({ h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: q.x, y: geo.heightAt(q.x, q.z) + 12, z: q.z });
+      // el hito «Cima» que lleva el nombre de la cumbre se coloca en el punto de la cumbre (si no, el relieve fino los separa y salen dos marcadores y dos nombres)
+      let hx = q.x, hz = q.z, hy = geo.heightAt(q.x, q.z) + 12;
+      if (h.tipo === 'cima') { const nh = normNombre(h.nombre), pc = peaks.find((p) => picos.includes(p.id) && p.w && normNombre(p.nombre) === nh && Math.hypot(p.q.x - q.x, p.q.z - q.z) < 250); if (pc) { hx = pc.w.x; hz = pc.w.z; hy = pc.w.y + 12; } }
+      hitos.push({ h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: hx, y: hy, z: hz });
     }
   }
   function figCima(p) {

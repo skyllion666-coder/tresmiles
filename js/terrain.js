@@ -30,17 +30,17 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float fa = 1. - smoothstep(2500., 15000., dist), fc = 1. - smoothstep(250., 3500., dist);
   const vec3 LW = vec3(.30, .59, .11);
   vec3 c = diffuseColor.rgb;
-  float oq = 1.; float vR = vRoca * (1. - .7 * step(.5, uOrto));   // con ortofoto la roca procedural de la cima pesa menos (si no, su borde dibuja un arco)   // 1 sin ortofoto; menos con ella (ya trae su propio detalle: menos nitidez y menos grano procedural)
+  float oq = 1., ofk = 0.; float vR = vRoca * (1. - .7 * step(.5, uOrto));   // con ortofoto la roca procedural de la cima pesa menos (si no, su borde dibuja un arco)   // 1 sin ortofoto; menos con ella (ya trae su propio detalle: menos nitidez y menos grano procedural)
   if (uOrto > .5) {
     vec3 og = max((c - uOA) * uOB + uOC, 0.);   // color de la ortofoto llevado al del satélite de alrededor (media y desviación por canal, tools/igualar_orto.py)
     float edge = min(min(vWPos.x - uPb.x, uPb.z - vWPos.x), min(vWPos.z - uPb.y, uPb.w - vWPos.z));
-    float ofk = smoothstep(0., (uPb.z - uPb.x) * .12, edge);
+    ofk = smoothstep(0., (uPb.z - uPb.x) * .12, edge);
     c = mix(texture2D(uSat, vCUv).rgb, og, ofk); oq = 1. - .75 * ofk;
   }
 #ifdef USE_MAP
   // nitidez: máscara de enfoque sobre la imagen de satélite (la fuente tiene 10 m por píxel; esto recupera contraste de borde sin inventar datos)
   { vec2 ts = 1. / vec2(textureSize(map, 0)); vec3 bl = (texture2D(map, vMapUv + vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv - vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv + vec2(0., ts.y)).rgb + texture2D(map, vMapUv - vec2(0., ts.y)).rgb) * .25;
-    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5) * (.2 + .8 * (oq - .4) / .6), 0.); }
+    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5) * (1. - .4 * ofk), 0.); }
 #endif
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
@@ -82,6 +82,10 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   c = mix(c, c * vec3(1.10, 1.02, .80), (grass + shrub) * smoothstep(.45, .8, n1) * .35 * fa);
   c *= 1. + (vn(vWPos * .21) - .5) * .38 * tree * fa;
   c *= 1. + (n3 - .5) * .10 * fc * (1. - nieve * .6) * oq;   // granulado cercano
+  if (uOrto > .5) {   // la ortofoto es cenital y en las laderas se estira: grano de roca triplanar (sin estiramiento) donde la pendiente es media o alta
+    float stp = smoothstep(.28, .62, sl) * ofk * fc * (1. - nieve * .7);
+    c *= 1. + ((vn(vWPos * 1.1) - .5) * .50 + (vn(vWPos * 3.7 + 5.) - .5) * .38 + (fbm(vWPos * .26) - .5) * .30) * stp;
+  }
   // nieve: sombras azuladas, ondulaciones de viento y grano brillante de cerca (solo donde el satélite ya marca nieve)
   if (nieve > .02) {
     float lmN = dot(c, LW);
