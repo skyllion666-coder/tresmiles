@@ -502,3 +502,5 @@ button.sel-pico:hover, button.sel-pico:focus-visible { background: var(--cream-2
 }
 @keyframes sel-sube { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
 body.selector-abierto #intro { z-index: 31; }
+.creditos-menores { margin: .4rem 0 .8rem; }
+.creditos-menores summary { cursor: pointer; font-weight: 600; padding: .3rem 0; }

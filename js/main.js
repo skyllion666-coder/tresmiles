@@ -10,7 +10,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=42';
+import { cargarRuta, crearRuta } from './ruta.js?v=43';
 import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -985,7 +985,12 @@ async function boot() {
   // — acerca de —
   const about = $('#about');
   function buildAbout() {
-    const usadas = peaks.filter((p) => p.activo).map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f);
+    const todas = peaks.map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f), usadas = todas.filter((u) => !u.p.menor), menoresUsadas = todas.filter((u) => u.p.menor);
+    const credFoto = (nombre, f) => {
+      const fuente = f.fuente && f.fuente !== 'Wikimedia Commons' ? f.fuente : (f.archivo || 'Wikimedia Commons');
+      const lic = f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : '';
+      return `${esc(nombre)}: ${esc(f.autor)}${lic}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(fuente)}</a>` : `, vía ${esc(fuente)}`}.`;
+    };
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
@@ -1000,15 +1005,20 @@ async function boot() {
       <li>Cobertura del suelo (dónde hay bosque, pradera o roca): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Los árboles se colocan donde ese mapa marca arbolado; su posición exacta, tipo (conífera o frondosa, según altitud y orientación) y tamaño son una aproximación visual, no un inventario forestal. El detalle de la roca (estratos, fracturas, canchales) es una textura procedural, no un levantamiento geológico.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
       <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos, el buitre leonado, el buitre negro, el alimoche (de marzo a septiembre) y el rebeco 3D son modelos propios hechos con Blender. Llamada del quebrantahuesos: grabación del canal «adalaves» en <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
-      <h3>Fotografías (Wikimedia Commons)</h3>
-      <ul>${usadas.map(({ p, f }) => `<li>${esc(p.nombre)}: <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.archivo)}</a>, ${esc(f.autor)}, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>.</li>`).join('')}</ul>
+      <h3>Fotografías de las cumbres</h3>
+      <p>Cada foto se muestra con el nombre de su autor y un enlace a la página de origen (Wikimedia Commons, Wikiloc, Mendikat u otras). Las fotos de Wikiloc y Mendikat se usan con el nombre de su autor y el enlace a su ficha; si eres su autor y prefieres que se quite, dínoslo y se retirará.</p>
+      <ul>${usadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul>
+      ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Cumbres de 2.000 a 3.000 m (${menoresUsadas.length} fotos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
       <h3>Recorrido y hitos</h3>
       <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de sus autores (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
       <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
+      <h3>Modelos 3D y animaciones</h3>
+      <ul><li>Animaciones de los montañeros (andar, trotar, correr, agacharse, tropezar y rodar): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> de Quaternius, CC0 (dominio público). El maniquí se ha vestido y equipado en Blender (ropa, mochila, casco y bastones propios).</li>
+      <li>Resto de modelos (cimas, fauna, aves, refugios y objetos): modelados en Blender para esta web a partir de fotografías de referencia.</li></ul>
       <h3>Tipografías y software</h3>
-      <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT.</li></ul>
+      <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT. Blender (GPL) para los modelos.</li></ul>
       <h3>Visitas</h3>
       <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página.</p>
       <h3>Seguridad</h3>

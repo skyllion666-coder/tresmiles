@@ -26,5 +26,6 @@ const t = +(new URLSearchParams(location.search).get('t') ?? 1);
 const evq = new URLSearchParams(location.search).get('ev'); if (evq) for (const x of ms) x.m.evento(evq);   // ?ev=tropiezo|voltereta: todos caen en t=0
 for (let i = 0; i < Math.round(t * 30); i++) { T += 1 / 30; for (const { m, v, c } of ms) m.pose(0, v > 0 ? 1 : 0, 0, c, v);
   if (location.search.includes('dbg') && i % 5 === 0) { const b = ms[2].m.group.getObjectByName('DEF-foot.L'); console.log('dbg', i, b && b.getWorldPosition(new THREE.Vector3()).toArray().map((x) => x.toFixed(3)).join(' ')); } }
+const foco = new URLSearchParams(location.search).get('foco'); if (foco !== null) { const x = foco * 1.5 - 0.5; cam.position.set(x + 3.2, 1.0, 3.2); cam.lookAt(x, 0.8, 0); }   // ?foco=n: acerca la cámara al montañero n
 r.render(sc, cam); document.title = 'ok';
 </script></body></html>

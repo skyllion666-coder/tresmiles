@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=2';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=3';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -53,7 +53,12 @@ export function crearRuta({ scene, geo, ruta }) {
   // un montañero se cae (tipo: 'tropiezo' | 'voltereta'): sale su animación y todo el grupo se detiene lo que dure
   function caer(i, tipo) {
     const dur = equipo[i].m.evento?.(tipo) ?? 0; if (dur <= 0) return 0;
-    est.forEach((q) => { q.pausa = Math.max(q.pausa, dur + 0.6); }); est[i].cdc = 45 + Math.random() * 60; return dur;
+    est.forEach((q) => { q.pausa = Math.max(q.pausa, dur + 0.6); }); est[i].cdc = 30 + Math.random() * 40; return dur;
+  }
+  // probabilidad de que la caída sea una voltereta: crece con la pendiente del terreno en ese punto (≈15 % en llano, hasta ≈85 % por encima de 45°)
+  function pVoltereta(d) {
+    const a = en(d - 8).pos, b = en(d + 8).pos, L = Math.hypot(b.x - a.x, b.z - a.z) || 1, g = Math.abs(geo.heightAt(b.x, b.z) - geo.heightAt(a.x, a.z)) / L;
+    return Math.min(0.85, 0.15 + 0.7 * Math.min(1, Math.max(0, (g - 0.2) / 0.8)));
   }
   const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
@@ -221,8 +226,8 @@ export function crearRuta({ scene, geo, ruta }) {
           if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
           // caídas: solo en aristas y pasos difíciles, de vez en cuando; el que cae y los demás (la cuerda) se paran mientras dura
-          q.cdc = (q.cdc ?? 20 + Math.random() * 40) - dt;
-          if (q.cdc <= 0 && q.pausa <= 0 && Math.max(n, na) > 0.4 && Math.random() < dt * 0.05 * Math.max(n, na)) caer(i, Math.random() < 0.6 ? 'tropiezo' : 'voltereta');
+          q.cdc = (q.cdc ?? 6 + Math.random() * 14) - dt;
+          if (q.cdc <= 0 && q.pausa <= 0 && Math.max(n, na) > 0.4 && Math.random() < dt * 0.09 * Math.max(n, na)) caer(i, Math.random() < pVoltereta(q.d) ? 'voltereta' : 'tropiezo');   // en pendiente fuerte, más volteretas; en suave, tropiezos
           q.d += v * dt; q.v = v;
           if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
         });

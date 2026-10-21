@@ -10,6 +10,7 @@ import { crearMontanero } from './montanero.js?v=7';
 const URL_GLB = new URL('../models/montanero-anim.glb', import.meta.url).href;
 let carga = null;
 const cargaGLB = () => (carga ??= new Promise((res) => new GLTFLoader().load(`${URL_GLB}?v=${window.WEB_V || 0}`, res, undefined, () => res(null))));
+const UP = new THREE.Vector3(0, 1, 0);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const CLIPS = ['idle', 'walk', 'jog', 'sprint', 'agachado', 'agachado_quieto', 'tropiezo', 'voltereta'];
 const NOMBRE_CLIP = { Idle_Loop: 'idle', Walk_Loop: 'walk', Jog_Fwd_Loop: 'jog', Sprint_Loop: 'sprint', Crouch_Fwd_Loop: 'agachado', Crouch_Idle_Loop: 'agachado_quieto', Hit_Chest: 'tropiezo', Roll: 'voltereta' };   // nombres de los clips en el GLB
@@ -26,9 +27,20 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
   const nodo = (n) => root.getObjectByName(n);
   for (const n of ['Mochila_grande', 'Mochila_media', 'Mochila_pequena']) { const o = nodo(n); if (o) o.visible = n === tapa; }
   const t = nodo('Mochila_tapa'); if (t) t.visible = tapa === 'Mochila_grande';
-  const bastones = { R: [], L: [] };
-  for (const l of ['R', 'L']) for (const s of ['', '_mango', '_punta']) { const o = nodo(`Baston_${l}${s}`); if (o) bastones[l].push(o); }
-  const ver = (l, v) => bastones[l].forEach((o) => { o.visible = v; });
+  for (const l of ['R', 'L']) for (const s of ['', '_mango', '_punta']) { const o = nodo(`Baston_${l}${s}`); if (o) o.visible = false; }   // los bastones del GLB van rígidos a la mano: se dibujan aparte para clavarlos en el suelo
+  const matPalo = new THREE.MeshStandardMaterial({ color: col.palo, roughness: 0.35, metalness: 0.4 }), matNegro = new THREE.MeshStandardMaterial({ color: col.negro, roughness: 0.8 });
+  const LB = 1.12;   // largo del bastón (m)
+  const bastones = {};
+  for (const l of ['R', 'L']) {
+    const g = new THREE.Group(), y0 = -LB + 0.09;   // el agarre en y = 0.09 y la punta en y = -LB + 0.09 (y local del grupo = a lo largo del bastón)
+    const palo = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, LB, 8), matPalo); palo.position.y = y0 + LB / 2;
+    const mango = new THREE.Mesh(new THREE.CylinderGeometry(0.019, 0.019, 0.13, 8), matNegro); mango.position.y = 0.09 - 0.0;
+    const punta = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.03, 0.05, 8), matNegro); punta.position.y = y0 + 0.03;
+    g.add(palo, mango, punta); g.visible = false; g.frustumCulled = false; root.add(g); bastones[l] = g;
+  }
+  const mano = { R: root.getObjectByName('DEF-handR'), L: root.getObjectByName('DEF-handL') };
+  const cadena = { R: ['DEF-upper_armR', 'DEF-forearmR', 'DEF-handR'].map((n) => root.getObjectByName(n)), L: ['DEF-upper_armL', 'DEF-forearmL', 'DEF-handL'].map((n) => root.getObjectByName(n)) };
+  const caderas = root.getObjectByName('DEF-hips'); let faseM = 0;
   const mixer = new THREE.AnimationMixer(root), acc = {};
   for (const c of gltf.animations) { const n = NOMBRE_CLIP[c.name]; if (!n) continue; const a = mixer.clipAction(c); a.play(); a.setEffectiveWeight(0); a.time = Math.random() * c.duration; acc[n] = a; }
   acc.idle?.setEffectiveWeight(1);
@@ -43,6 +55,25 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     if (ev || !FASES[tipo] || !acc[FASES[tipo][0][0]]) return 0;
     ev = { fases: FASES[tipo], i: 0, t: 0 }; const a = acc[ev.fases[0][0]]; a.reset(); a.play(); return ev.fases.reduce((x, f) => x + f[1], 0);
   }
+  // apoyo de las manos (cuerpo a tierra en los pasos de trepada): cada mano busca un punto de la roca por delante con una cadena de dos huesos (hombro-codo-mano)
+  const V = { a: new THREE.Vector3(), b: new THREE.Vector3(), c: new THREE.Vector3(), t: new THREE.Vector3(), e: new THREE.Vector3(), d1: new THREE.Vector3(), d2: new THREE.Vector3(), pol: new THREE.Vector3() };
+  const Q = { w: new THREE.Quaternion(), p: new THREE.Quaternion(), r: new THREE.Quaternion() };
+  function giraHacia(hueso, desde, hacia, peso) {   // gira el hueso (en el mundo) para que la dirección `desde` pase a `hacia`; peso 0-1 mezcla con la pose actual
+    Q.r.setFromUnitVectors(desde, hacia); hueso.getWorldQuaternion(Q.w); hueso.parent.getWorldQuaternion(Q.p).invert();
+    const orig = hueso.quaternion.clone(); hueso.quaternion.copy(Q.p.multiply(Q.r.multiply(Q.w))); hueso.quaternion.slerpQuaternions(orig, hueso.quaternion, peso); hueso.updateMatrixWorld(true);
+  }
+  function alcanza([hombro, codo, muneca], objetivo, polo, peso) {
+    hombro.getWorldPosition(V.a); codo.getWorldPosition(V.b); muneca.getWorldPosition(V.c);
+    const l1 = V.a.distanceTo(V.b), l2 = V.b.distanceTo(V.c); V.t.copy(objetivo).sub(V.a);
+    const dist = clamp(V.t.length(), Math.abs(l1 - l2) + 0.02, (l1 + l2) * 0.995); V.t.normalize();
+    const a = (l1 * l1 - l2 * l2 + dist * dist) / (2 * dist), h = Math.sqrt(Math.max(l1 * l1 - a * a, 0));
+    V.pol.copy(polo).addScaledVector(V.t, -polo.dot(V.t)).normalize();
+    V.e.copy(V.a).addScaledVector(V.t, a).addScaledVector(V.pol, h);   // codo deseado
+    V.d1.copy(V.b).sub(V.a).normalize(); V.d2.copy(V.e).sub(V.a).normalize(); giraHacia(hombro, V.d1, V.d2, peso);
+    codo.getWorldPosition(V.b); muneca.getWorldPosition(V.c); V.d1.copy(V.c).sub(V.b).normalize();
+    V.d2.copy(V.a).addScaledVector(V.t, dist).sub(V.b).normalize(); giraHacia(codo, V.d1, V.d2, peso);
+  }
+  const OBJ = new THREE.Vector3(), POLO = new THREE.Vector3(), PH = new THREE.Vector3(), PH2 = new THREE.Vector3(), prevMano = { R: new THREE.Vector3(), L: new THREE.Vector3() };
   function pose(fase, k, inc = 0, c = null, vel = null) {
     const ahora = performance.now(), dt = clamp((ahora - ultimo) / 1000, 0.001, 0.1); ultimo = ahora;
     let s = vel ?? (k > 0.01 ? 1 + 5 * k : 0);   // sin velocidad explícita (cursor): a ojo desde la amplitud del paso
@@ -62,9 +93,31 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     for (const n of CLIPS) { w[n] += (T[n] - w[n]) * f; const ac = acc[n]; if (ac) { ac.setEffectiveWeight(w[n]); ac.setEffectiveTimeScale(ts[n]); } }
     mixer.update(dt);
     if (br > 0.02) for (const q of brazos) q.b.quaternion.slerp(q.rest, br * q.k);   // funambulista: brazos abiertos, como en la pose de reposo (T)
-    root.rotation.x = clamp(inc * 0.5, -0.3, 0.4); root.rotation.y = c?.giro ?? 0;
-    const libres = (c?.manos ?? 0) > 0.3 || br > 0.3; ver('R', palos >= 1 && !libres); ver('L', palos >= 2 && !libres);
-    return 0.9 - 0.3 * a;
+    const mn = clamp(((c?.manos ?? 0) - 0.3) / 0.5, 0, 1) * (1 - clamp(br * 2, 0, 1)) * (ev ? 0 : 1);   // 0-1: las manos buscan agarres en la roca
+    const lean = clamp(inc * 0.5, -0.3, 0.4) + 0.38 * mn;
+    root.rotation.x = lean; root.rotation.y = c?.giro ?? 0;
+    root.updateMatrixWorld(true);
+    if (mn > 0.01) {   // agarres: cada mano alterna alcanzar un saliente delante y algo más alto; el codo se abre hacia fuera
+      faseM += dt * (s > 0.12 ? 2.4 : 0.5);
+      caderas.getWorldPosition(PH); root.worldToLocal(PH);
+      for (const l of ['R', 'L']) {
+        const sg = l === 'R' ? -1 : 1, alt = 0.5 + 0.5 * Math.sin(faseM + (l === 'R' ? 0 : Math.PI));
+        OBJ.set(sg * 0.26, 0.22 + 0.2 * alt, PH.z + 0.52 + 0.08 * alt); root.localToWorld(OBJ); POLO.set(sg * 1, -0.2, -0.3).transformDirection(root.matrixWorld);
+        alcanza(cadena[l], OBJ, POLO, mn);
+      }
+    }
+    // bastones: el agarre en la mano y la punta clavada en el suelo por detrás; al adelantar la mano, la punta se despega
+    const libres = (c?.manos ?? 0) > 0.3 || br > 0.3;
+    for (const l of ['R', 'L']) {
+      const g = bastones[l], ok = (l === 'R' ? palos >= 1 : palos >= 2) && !libres; g.visible = ok; if (!ok || !mano[l]) { prevMano[l].set(0, 0, 0); continue; }
+      mano[l].getWorldPosition(PH2); root.worldToLocal(PH2);
+      const vz = prevMano[l].lengthSq() ? (PH2.z - prevMano[l].z) / dt : 0; prevMano[l].copy(PH2);   // velocidad de la mano hacia delante (m/s, en el sistema del montañero)
+      const alto = Math.max(PH2.y + 0.04, 0.5), d = Math.sqrt(Math.max(LB * LB - alto * alto, 0.05)), lift = clamp(vz / (0.9 + s * 0.5), 0, 1) * 0.16;
+      OBJ.set(PH2.x + (l === 'R' ? -0.06 : 0.06), lift, PH2.z - d);   // punta (en el sistema del montañero)
+      POLO.set(PH2.x, PH2.y + 0.04, PH2.z).sub(OBJ).normalize();
+      g.position.set(PH2.x, PH2.y + 0.04 - 0.09 * POLO.y, PH2.z - 0.09 * POLO.z); g.quaternion.setFromUnitVectors(UP, POLO);
+    }
+    return 0.9 - 0.3 * a - 0.1 * mn;
   }
   return { root, pose, evento };
 }
