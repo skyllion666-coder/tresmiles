@@ -2877,7 +2877,9 @@
    "clase": "principal",
    "nombres": "Punda dero Espaldador · Pico de la Espalda",
    "basica": true,
-   "inv": "PER-16"
+   "inv": "PER-16",
+   "foto": "espalda-del-marbore",
+   "pie": "La Espalda del Marboré y su gran pared sobre la cascada."
   },
   {
    "id": "gran-astazu",
