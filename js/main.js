@@ -11,7 +11,7 @@ import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=43';
-import { crearPanorama } from './panorama.js?v=1';
+import { crearPanorama } from './panorama.js?v=3';
 import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
