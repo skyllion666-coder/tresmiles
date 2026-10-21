@@ -210,6 +210,10 @@ dialog::backdrop { background: rgba(14, 24, 21, .62); backdrop-filter: blur(2px)
 #loading p { margin: 0; font: 500 .74rem var(--cond); letter-spacing: .26em; text-transform: uppercase; }
 .load-mark { width: 54px; height: 36px; border: 2px solid var(--cream); border-top: 0; border-left-color: transparent; border-right-color: transparent; clip-path: polygon(0 100%, 30% 12%, 48% 52%, 64% 28%, 100% 100%); background: linear-gradient(var(--cream) 0 0) bottom/100% 0 no-repeat; animation: fill 1.8s ease-in-out infinite; }
 @keyframes fill { 0% { background-size: 100% 0; } 70%, 100% { background-size: 100% 100%; } }
+#load-maqueta { width: min(84vw, 380px); height: min(56vw, 240px); }
+#loading #load-pct { font: 500 1.7rem var(--cond); letter-spacing: .12em; margin-top: -4px; }
+#loading #load-aviso { max-width: 30ch; text-align: center; text-transform: none; letter-spacing: .04em; font-size: .78rem; opacity: .75; }
+#load-maqueta ~ .load-mark { display: none; }   /* sin canvas (o sin JS) queda el icono de siempre */
 body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .noscript { position: fixed; inset: 40% 10% auto; z-index: 30; text-align: center; background: var(--cream); color: var(--ink); padding: 18px; }
 

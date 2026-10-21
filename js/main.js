@@ -43,10 +43,10 @@ const SUN = [
 async function boot() {
   const [data, fotos, meta, menores] = await Promise.all([json('data/peaks.json'), json('data/fotos.json'), json('data/terrain/meta.json'), json('data/menores.json').catch(() => ({ zonas: [], picos: [] }))]);
   // picos de 2.000 a 3.000 m (ficha sencilla, sin ruta): se suman a la lista con su zona; el filtro «capa» decide cuáles se ven
-  data.picos.push(...menores.picos); data.macizos.push(...menores.zonas);
+  data.picos.push(...menores.picos); data.macizos.push(...menores.zonas); window.Carga?.paso(1);
   Object.assign(fotos, menores.fotos ?? {});   // sus fotos (pequeñas, WebP) vienen en el mismo archivo
   const relieve = new HeightStore(meta, 'data/terrain'); await relieve.init();   // vista general ligera; el detalle se pide por zonas
-  $('#load-text').textContent = 'Preparando el mapa…';
+  $('#load-text').textContent = 'Preparando el mapa…'; window.Carga?.paso(2);
 
   // — motor —
   const canvas = $('#gl');
@@ -70,6 +70,7 @@ async function boot() {
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
+  window.Carga?.paso(3);
   const sonido = crearSonido();
 
   // — cumbres activas (dentro del terreno cargado) —
@@ -405,6 +406,7 @@ async function boot() {
   const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
   let hitoTimer = 0;
   const hitosDatos = await json('data/hitos.json').catch(() => []);
+  window.Carga?.paso(4);
   const hitos = [];
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido` : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
@@ -1060,6 +1062,7 @@ async function boot() {
   const focusPeak = peaks.find((p) => p.id === 'balaitus') ?? peaks[0];
   applyState(introState(focusPeak));
   await terrain.ready;
+  window.Carga?.paso(5);
   terrain.settle(camera);
 
   function startExplore() {
@@ -1131,6 +1134,7 @@ async function boot() {
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+  await window.Carga?.fin();   // el 100 % se ve un instante antes de abrir el mapa
   document.body.classList.remove('is-loading');
   window.tresmiles = { geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
 }
