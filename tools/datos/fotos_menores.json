@@ -2893,5 +2893,31 @@
   "w": 640,
   "h": 427,
   "ruta": "img/menores/pena-foratata.webp"
+ },
+ "frondella-sw": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/ibones-de-arriel-y-pico-de-la-frondella-sw-2992m-8-9-09-2023-163136703",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 359,
+  "ruta": "img/menores/frondella-sw.webp",
+  "propia": true,
+  "pie": "Vista tomada a unos 13 m de la cima, de una ruta de Wikiloc"
+ },
+ "tuc-de-la-feixa-de-la-vall": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Banzaifer",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/reto-11ptc-tuc-de-mulleres-tuca-feixa-de-la-vall-desde-tunel-sur-de-viella-216757237",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/tuc-de-la-feixa-de-la-vall.webp",
+  "propia": true,
+  "pie": "Foto de la ruta tomada a unos 12 m de esta cima"
  }
 }
