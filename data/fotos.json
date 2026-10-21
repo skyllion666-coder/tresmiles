@@ -1727,5 +1727,15 @@
   "fuente": "Mendikat",
   "w": 640,
   "h": 480
+ },
+ "maladeta-noreste": {
+  "archivo": "foto aportada por el usuario",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "Wikiloc",
+  "w": 1100,
+  "h": 617
  }
 }

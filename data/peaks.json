@@ -4762,7 +4762,9 @@
    "clase": "discutida",
    "nombres": "",
    "basica": true,
-   "inv": "ANE-21"
+   "inv": "ANE-21",
+   "foto": "maladeta-noreste",
+   "pie": "La Maladeta Noreste y su cresta sobre el glaciar."
   },
   {
    "id": "aguja-del-collado-de-coronas",
