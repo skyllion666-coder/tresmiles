@@ -15,8 +15,8 @@ def mat(nombre, col, rough=0.95, metal=0.0):
     b = next(n for n in m.node_tree.nodes if n.type == 'BSDF_PRINCIPLED')
     b.inputs['Base Color'].default_value = (*col, 1); b.inputs['Roughness'].default_value = rough; b.inputs['Metallic'].default_value = metal
     return m
-M_ROCAS = [mat('roca_a', (0.34, 0.21, 0.15)), mat('roca_b', (0.40, 0.26, 0.19)), mat('roca_c', (0.28, 0.18, 0.14)), mat('roca_d', (0.45, 0.43, 0.40))]
-M_HORM = mat('hormigon', (0.62, 0.61, 0.58)); M_PILAR = mat('pilar', (0.66, 0.65, 0.62)); M_BLOQUE = mat('bloque', (0.36, 0.28, 0.24))
+M_ROCAS = [mat('roca_a', (0.21, 0.12, 0.08)), mat('roca_b', (0.27, 0.16, 0.11)), mat('roca_c', (0.17, 0.11, 0.08)), mat('roca_d', (0.30, 0.28, 0.26))]
+M_HORM = mat('hormigon', (0.62, 0.61, 0.58)); M_PILAR = mat('pilar', (0.66, 0.65, 0.62)); M_BLOQUE = mat('bloque', (0.25, 0.19, 0.16))
 M_AZUL = mat('tela_azul', (0.06, 0.12, 0.62), 0.8); M_ROJA = mat('tela_roja', (0.80, 0.06, 0.07), 0.8); M_BLANCA = mat('tela_blanca', (0.88, 0.86, 0.80), 0.8)
 def nuevo(nombre, bm, m, parent):
     me = bpy.data.meshes.new(nombre); bm.to_mesh(me); bm.free()
