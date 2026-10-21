@@ -23,6 +23,7 @@ const g = new THREE.Mesh(new THREE.PlaneGeometry(30, 10), new THREE.MeshStandard
 await new Promise((r) => setTimeout(r, 4000));   // espera a que el GLB esté cargado
 const real0 = performance.now(); let T = real0 / 1000 + 1; performance.now = () => T * 1000;
 const t = +(new URLSearchParams(location.search).get('t') ?? 1);
+const evq = new URLSearchParams(location.search).get('ev'); if (evq) for (const x of ms) x.m.evento(evq);   // ?ev=tropiezo|voltereta: todos caen en t=0
 for (let i = 0; i < Math.round(t * 30); i++) { T += 1 / 30; for (const { m, v, c } of ms) m.pose(0, v > 0 ? 1 : 0, 0, c, v);
   if (location.search.includes('dbg') && i % 5 === 0) { const b = ms[2].m.group.getObjectByName('DEF-foot.L'); console.log('dbg', i, b && b.getWorldPosition(new THREE.Vector3()).toArray().map((x) => x.toFixed(3)).join(' ')); } }
 r.render(sc, cam); document.title = 'ok';

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=1';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=2';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -50,6 +50,11 @@ export function crearRuta({ scene, geo, ruta }) {
     mk({ chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 }),
     mk({ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }),
   ];
+  // un montañero se cae (tipo: 'tropiezo' | 'voltereta'): sale su animación y todo el grupo se detiene lo que dure
+  function caer(i, tipo) {
+    const dur = equipo[i].m.evento?.(tipo) ?? 0; if (dur <= 0) return 0;
+    est.forEach((q) => { q.pausa = Math.max(q.pausa, dur + 0.6); }); est[i].cdc = 45 + Math.random() * 60; return dur;
+  }
   const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
   const est = equipo.map(() => ({ d: 0, cd: 2, pausa: 0 }));   // distancia recorrida por cada uno, cuenta atrás hasta su próxima pausa y pausa en curso
@@ -213,7 +218,11 @@ export function crearRuta({ scene, geo, ruta }) {
         est.forEach((q, i) => {
           const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n);
           const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
+          if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
+          // caídas: solo en aristas y pasos difíciles, de vez en cuando; el que cae y los demás (la cuerda) se paran mientras dura
+          q.cdc = (q.cdc ?? 20 + Math.random() * 40) - dt;
+          if (q.cdc <= 0 && q.pausa <= 0 && Math.max(n, na) > 0.4 && Math.random() < dt * 0.05 * Math.max(n, na)) caer(i, Math.random() < 0.6 ? 'tropiezo' : 'voltereta');
           q.d += v * dt; q.v = v;
           if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
         });
@@ -230,7 +239,7 @@ export function crearRuta({ scene, geo, ruta }) {
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
     // tamaño fijo (ESC_M) a lo largo de todo el recorrido; solo con la cámara muy cerca (< 350 m) encogen hasta un 55 % para no verse gigantes junto a la cima
     escalar(cam) { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M * Math.min(1, Math.max(0.55, cam.distanceTo(p.h.position) / 350))); },
-    setPaso, setPasosHito, _est: est, _auto: () => auto,
+    setPaso, setPasosHito, caer, _est: est, _auto: () => auto,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }
