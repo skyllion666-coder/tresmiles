@@ -195,7 +195,7 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha (OSM/IGN). Montón de bloques de roca pardo-rojiza con una laja grande pintada «PICO GARMO NEGRO 3051», según foto de la cima aportada por el usuario. Litología no verificada en esta sesión.",
   "modelo": "models/cima-garmo.glb",
-  "escalaModelo": 19,
+  "escalaModelo": 5,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -204,8 +204,8 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "Máximo del MDT05 (3.064,4 m); montón de bloques con laja pintada «PICO GARMO NEGRO 3051», según foto de la cima del usuario",
-    "huella": 1.3,
-    "escala": 19
+    "huella": 1.2,
+    "escala": 5
    }
   ]
  }
