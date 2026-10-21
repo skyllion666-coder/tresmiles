@@ -147,7 +147,21 @@
   "paso": 1.0,
   "archivo": "vignemale-cima.bin.gz",
   "roca": "neutra",
-  "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión."
+  "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión.",
+  "modelo": "models/cima-vignemale.glb",
+  "escalaModelo": 19,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -21036.87,
+    "z": 278.25,
+    "giro": 0.0,
+    "ancla": true,
+    "ref": "Máximo del MDT05; pilar de hormigón con pañuelos y banderas sobre losa, bloque plano y montón de bloques, según la foto de la cima de la ficha (Eva Gl)",
+    "huella": 1.3,
+    "escala": 19
+   }
+  ]
  },
  "balaitus": {
   "x0": -32815.69,
@@ -190,7 +204,7 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "Máximo del MDT05 (3.064,4 m); montón de bloques con laja pintada «PICO GARMO NEGRO 3051», según foto de la cima del usuario",
-    "huella": 0.9,
+    "huella": 1.3,
     "escala": 19
    }
   ]
