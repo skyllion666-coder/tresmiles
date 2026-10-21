@@ -4589,7 +4589,14 @@
    "clase": "discutida",
    "nombres": "Gendarme Schmidt-Endell",
    "basica": true,
-   "inv": "ANE-08"
+   "inv": "ANE-08",
+   "foto": "aguja-schmidt-endell",
+   "pie": "Largo de III+ de la escalada a la Aguja Schmidt-Endell (hito «Llarg III+» de la ruta, a unos 150 m de la cima).",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/punta-dastorg-pico-maldito-i-punta-schmidt-endell-273845575",
+    "texto": "Ruta de Raulbalaguer en Wikiloc"
+   },
+   "ruta": "Esta cima aparece en la ruta «Punta d'Astorg, pico Maldito i punta Schmidt-Endell» de Raulbalaguer en Wikiloc."
   },
   {
    "id": "punta-oliveras-arenas",
@@ -4742,7 +4749,14 @@
    "clase": "secundaria",
    "nombres": "Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
    "basica": true,
-   "inv": "ANE-19"
+   "inv": "ANE-19",
+   "foto": "pico-collado-de-la-rimaya",
+   "pie": "Foto de la ruta tomada a unos 180 m de esta cima, a 3.247 m, entre rocas y nieve.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/maladeta-oriental-3312-m-por-el-corredor-de-la-rimaya-pd-80m-34426514",
+    "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
+   },
+   "ruta": "Esta cima aparece en la ruta «Maladeta Oriental (3312 m) por el corredor de la Rimaya (PD/80m)» de ᗩᒪTEᑕᗩ en Wikiloc."
   },
   {
    "id": "maladeta-noreste",
@@ -4954,7 +4968,14 @@
    "clase": "secundaria",
    "nombres": "Tuca d'el Morro de Cregüeña N",
    "basica": true,
-   "inv": "ANE-30"
+   "inv": "ANE-30",
+   "foto": "pico-le-bondidier-norte",
+   "pie": "Punta rocosa del hito «Le Bondidier» de la ruta, a unos 80 m de esta cima.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
+    "texto": "Ruta de gruta en Wikiloc"
+   },
+   "ruta": "Esta cima aparece en la ruta «28/08/2011 - LE BONDIDIER - CORDIER - SAYO - PICO MIR - PUNTA DELMAS - MUELA DE ALBA - DIENTE DE ALBA» de gruta en Wikiloc."
   },
   {
    "id": "segundo-resalte-de-salenques",

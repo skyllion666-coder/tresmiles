@@ -1607,5 +1607,35 @@
   "fuente": "Wikiloc",
   "w": 675,
   "h": 900
+ },
+ "aguja-schmidt-endell": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Raulbalaguer",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/punta-dastorg-pico-maldito-i-punta-schmidt-endell-273845575",
+  "fuente": "Wikiloc",
+  "w": 900,
+  "h": 1200
+ },
+ "pico-le-bondidier-norte": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "gruta",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
+  "fuente": "Wikiloc",
+  "w": 1100,
+  "h": 825
+ },
+ "pico-collado-de-la-rimaya": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "ᗩᒪTEᑕᗩ",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/maladeta-oriental-3312-m-por-el-corredor-de-la-rimaya-pd-80m-34426514",
+  "fuente": "Wikiloc",
+  "w": 900,
+  "h": 1200
  }
 }
