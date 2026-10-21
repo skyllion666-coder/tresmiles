@@ -1629,14 +1629,14 @@
   "h": 825
  },
  "pico-collado-de-la-rimaya": {
-  "archivo": "foto de la ruta de Wikiloc",
-  "autor": "ᗩᒪTEᑕᗩ",
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://www.wikiloc.com/mountaineering-trails/maladeta-oriental-3312-m-por-el-corredor-de-la-rimaya-pd-80m-34426514",
-  "fuente": "Wikiloc",
-  "w": 900,
-  "h": 1200
+  "pagina": "https://www.mendikat.net/mount/collado-de-la-rimaya-pico-huesca-espana/9288",
+  "fuente": "Mendikat",
+  "w": 1066,
+  "h": 800
  },
  "punta-brecha-de-tempestades": {
   "archivo": "foto de la página de Mendikat",
@@ -1727,15 +1727,5 @@
   "fuente": "Mendikat",
   "w": 640,
   "h": 480
- },
- "pico-de-la-rimaya": {
-  "archivo": "foto de la página de Mendikat",
-  "autor": "Luis Alejos Escarpe",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "https://www.mendikat.net/mount/collado-de-la-rimaya-pico-huesca-espana/9288",
-  "fuente": "Mendikat",
-  "w": 1066,
-  "h": 800
  }
 }

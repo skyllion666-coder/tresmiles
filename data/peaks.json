@@ -4724,32 +4724,9 @@
    "ruta": "Esta cima aparece en la ruta «Punta Delmas (3.158m), Pico Mir (3.185m), Pico Sayó (3.211m) y Pico Cordier (3.266m) desde La Besurta», de manexlete en Wikiloc, de 13,9 km y 1.455 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
   },
   {
-   "id": "pico-de-la-rimaya",
-   "nombre": "Pico de la Rimaya",
-   "alias": "Tuca de la Rimalla",
-   "altitud": 3261,
-   "otras": "",
-   "macizo": "ane",
-   "frontera": false,
-   "situacion": "Aragón",
-   "lat": 42.648639,
-   "lon": 0.635306,
-   "descripcion": "Cima discutida de 3.261 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
-   "clase": "discutida",
-   "nombres": "Tuca de la Rimalla",
-   "basica": true,
-   "inv": "ANE-18",
-   "foto": "pico-de-la-rimaya",
-   "pie": "El Pico del Collado de la Rimaya desde el glaciar de la Maladeta, con su ruta marcada.",
-   "enlace": {
-    "url": "https://www.mendikat.net/mount/collado-de-la-rimaya-pico-huesca-espana/9288",
-    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
-  },
-  {
    "id": "pico-collado-de-la-rimaya",
    "nombre": "Pico Collado de la Rimaya",
-   "alias": "Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
+   "alias": "Pico de la Rimaya · Tuca de la Rimalla · Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
    "altitud": 3261,
    "otras": "3.265 m (Buyse 1993 (3ª ed.))",
    "macizo": "ane",
@@ -4759,11 +4736,11 @@
    "lon": 0.637,
    "descripcion": "Cima secundaria de 3.261 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
    "clase": "secundaria",
-   "nombres": "Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
+   "nombres": "Pico de la Rimaya · Tuca de la Rimalla · Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
    "basica": true,
    "inv": "ANE-19",
    "foto": "pico-collado-de-la-rimaya",
-   "pie": "Foto de la ruta tomada a unos 180 m de esta cima, a 3.247 m, entre rocas y nieve.",
+   "pie": "El Pico del Collado de la Rimaya desde el glaciar de la Maladeta, con su ruta marcada.",
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/maladeta-oriental-3312-m-por-el-corredor-de-la-rimaya-pd-80m-34426514",
     "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
