@@ -11,6 +11,7 @@ import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=43';
+import { crearPanorama } from './panorama.js?v=1';
 import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -644,6 +645,7 @@ async function boot() {
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
+      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button></p>
       ${p.ruta ? `<h3>${/^Esta (cima|cumbre) aparece en la ruta/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${p.info.traducido ? 'Texto traducido al castellano' : 'Texto'} de Wikipedia en ${{ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]}, artículo «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.</p>` : ''}
@@ -674,6 +676,7 @@ async function boot() {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
+    if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
     if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
     if (act?.dataset.act === 'hecho') { marcaHecho(S.active); return; }
     const b = e.target.closest('#btn-ruta'); if (!b) return;
@@ -727,6 +730,7 @@ async function boot() {
   }
 
   fichaBody.addEventListener('toggle', (e) => { if (e.target.classList?.contains('perfil-det')) store.set('perfil-oculto', e.target.open ? '0' : '1'); }, true);   // el perfil se puede ocultar y se recuerda
+  const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc });
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
   let perfilT = 0;
   const sobrePerfil = (e) => {

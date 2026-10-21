@@ -516,3 +516,15 @@ body.selector-abierto #intro { z-index: 31; }
 .perfil-det summary::after { content: 'Ocultar'; font-weight: 500; letter-spacing: .06em; text-transform: none; color: var(--spruce); text-decoration: underline; }
 .perfil-det:not([open]) summary::after { content: 'Ver'; }
 .perfil-det[open] .perfil { margin-top: 2px; }
+
+/* panorama de 360° desde la cima */
+.panorama-acc { margin: 14px 0 4px; }
+#panorama { position: fixed; inset: 0; z-index: 70; display: flex; flex-direction: column; background: var(--cream, #f8f1e2); color: var(--ink, #24302c); }
+#panorama[hidden] { display: none; }
+#panorama header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px 16px 8px; padding-top: max(12px, env(safe-area-inset-top)); background: var(--spruce-d, #2d4a43); color: var(--cream, #f8f1e2); }
+#panorama h2 { margin: 0; font: 600 1.15rem var(--serif, 'Cormorant Garamond', serif); }
+#panorama header p { margin: 2px 0 0; font: 500 .74rem var(--cond, 'Barlow', sans-serif); letter-spacing: .05em; opacity: .85; }
+#pan-cerrar { font-size: 2rem; line-height: 1; color: inherit; padding: 0 4px; }
+#pan-scroll { flex: 1; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; -webkit-overflow-scrolling: touch; scrollbar-width: thin; touch-action: pan-x; background: #2f4c45; }
+#pan-canvas { display: block; flex: none; }
+#pan-nota { margin: 0; padding: 8px 16px max(10px, env(safe-area-inset-bottom)); font: 500 .72rem/1.35 var(--cond, 'Barlow', sans-serif); color: var(--ink-2, #5b6760); }
