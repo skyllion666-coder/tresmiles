@@ -149,7 +149,7 @@
   "roca": "neutra",
   "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión.",
   "modelo": "models/cima-vignemale.glb",
-  "escalaModelo": 10,
+  "escalaModelo": 6,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -158,8 +158,8 @@
     "giro": 0.0,
     "ancla": true,
     "ref": "Máximo del MDT05; pilar de hormigón con pañuelos y banderas sobre losa, bloque plano y montón de bloques, según la foto de la cima de la ficha (Eva Gl)",
-    "huella": 1.5,
-    "escala": 10
+    "huella": 1.6,
+    "escala": 6
    }
   ]
  },
