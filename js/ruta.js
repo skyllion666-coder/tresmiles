@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontanero } from './montanero.js?v=7';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=1';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -41,7 +41,7 @@ export function crearRuta({ scene, geo, ruta }) {
 
   // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta.
   // Escala fija del muñeco (mide ~1,8 → ~21 m en el modelo, igual a lo largo de todo el recorrido y a cualquier distancia de la cámara).
-  const ESC_M = 23, V0 = 170, GAP_MIN = 26;
+  const ESC_M = 23, V0 = 105, GAP_MIN = 26;
   const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.scale.setScalar(ESC_M); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6, yaw: null, alt: 0.92 }; };
   const solo = mk({});
@@ -124,14 +124,14 @@ export function crearRuta({ scene, geo, ruta }) {
     let cu = 0; if (n > 0.8 && pr.d < paso.corredor * 1.3) cu = sstep(a - w, a + w, pr.s) * (1 - sstep(b - w, b + w, pr.s)) * (0.55 + 0.45 * (0.5 + 0.5 * Math.sin(tt * 0.55 + i * 2.3)));
     return { n, c: { agach: sstep(0.08, 0.7, n) * 0.8, manos: sstep(0.4, 0.95, n), cuatro: cu * sstep(0.8, 1, n), giro: 0.12 * Math.sin(tt * 0.7 + i * 1.7) * n } };
   }
-  function colocar(p, d, lat, andando, pos = null, vrel = 1) {
+  function colocar(p, d, lat, andando, pos = null, vrel = 1, vel = null) {
     const w = pos ? 8 + (40 - 8) * (1 - pos.n) : 40;
     const a = en(d), b = en(d + w), c = en(d - w);
     let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
     const l = lat * (pos ? 1 - pos.n : 1), x = a.pos.x + dz * l, z = a.pos.z - dx * l;
     p.h.position.set(x, geo.heightAt(x, z) + 1.2, z);   // los pies sobre el relieve (la línea de la ruta queda aparte, por encima)
     const yaw = Math.atan2(dx, dz); p.yaw = p.yaw == null ? yaw : p.yaw + Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)) * 0.2; p.h.rotation.y = p.yaw;   // mira hacia donde avanza el recorrido
-    p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c);
+    p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c, andando ? vel : 0);
   }
   // cuerda entre montañeros consecutivos: tubo fino de 4 caras que se rehace cada fotograma a partir de sus cinturas (curva con holgura, sin física)
   const NS = 12, cuerdaMat = new THREE.MeshBasicMaterial({ color: '#c0392b', fog: true, transparent: true, opacity: 0 });
@@ -207,7 +207,7 @@ export function crearRuta({ scene, geo, ruta }) {
       const tt = performance.now() / 1000;
       if (cursorOn) {
         const anda = performance.now() - ultimoCursor < 250; const pp = postura(dCursor, 0, tt);
-        if (anda) solo.fase += dt * 11 * (1 - 0.7 * pp.n); colocar(solo, dCursor, 0, anda, pp, 1 - 0.7 * pp.n);
+        if (anda) solo.fase += dt * 11 * (1 - 0.7 * pp.n); colocar(solo, dCursor, 0, anda, pp, 1 - 0.7 * pp.n, 3.4 * (1 - 0.7 * pp.n));
       } else if (!reducido) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
@@ -221,7 +221,7 @@ export function crearRuta({ scene, geo, ruta }) {
         const pp = [];
         equipo.forEach((p, i) => {
           const d = est[i].d, dc = Math.max(0, Math.min(ruta.distancia, d)), po = postura(dc, i, tt), vr = (est[i].v ?? V0) / V0; pp.push({ po, dc });
-          p.fase += dt * (2 + 8 * vr); colocar(p, dc, [0, 34, -34][i], d > 0 && d < ruta.distancia && vr > 0.01, po, vr);
+          p.fase += dt * (2 + 8 * vr); colocar(p, dc, [0, 34, -34][i], d > 0 && d < ruta.distancia && vr > 0.01, po, vr, (est[i].v ?? V0) / ESC_M);
         });
         for (let i = 0; i < 2; i++) { const o = Math.min(pp[i].po.r ?? pp[i].po.n, pp[i + 1].po.r ?? pp[i + 1].po.n); cuerda(cuerdas[i], equipo[i], equipo[i + 1], est[i].d > 0 && est[i + 1].d > 0 && est[i].d < ruta.distancia && est[i + 1].d < ruta.distancia ? o : 0, tt, i); }
       }

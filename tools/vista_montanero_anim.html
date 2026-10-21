@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Vista montañero animado</title>
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.js", "three/addons/": "../vendor/three/" } }</script>
+<style>body{margin:0;background:#9fb3c4}</style></head><body>
+<script type="module">
+// Herramienta de desarrollo: montañeros animados a distintas velocidades (parado, andar, trotar, correr) y en agachado / funambulista
+import * as THREE from 'three';
+import { crearMontaneroAnim } from '../js/montanero_anim.js';
+const r = new THREE.WebGLRenderer({ antialias: true }); r.setSize(1200, 560); document.body.appendChild(r.domElement);
+const sc = new THREE.Scene(); sc.background = new THREE.Color('#9fb3c4');
+sc.add(new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 2.4)); const s = new THREE.DirectionalLight(0xffffff, 2.0); s.position.set(3, 5, 4); sc.add(s);
+const cam = new THREE.PerspectiveCamera(30, 1200 / 560, 0.1, 100); cam.position.set(3.2, 1.5, 9.5); cam.lookAt(3.2, 0.9, 0);
+const defs = [
+  [{ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }, 0, null],
+  [{ chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 }, 1.0, null],
+  [{ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }, 4.5, null],
+  [{ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }, 7.5, null],
+  [{ chaqueta: '#2d5f8f', mochila: '#3b7a55', mochilaTipo: 'media', palos: 0 }, 0.7, { agach: 0.8, manos: 1, brazos: 0 }],
+  [{ chaqueta: '#c9962a', mochila: '#5a4a7a', mochilaTipo: 'pequena', palos: 0 }, 0.35, { brazos: 1 }],
+];
+const ms = defs.map(([o, v, c], i) => { const m = crearMontaneroAnim(o); m.group.position.x = i * 1.5 - 0.5; m.group.rotation.y = 0.6; sc.add(m.group); return { m, v, c }; });
+const g = new THREE.Mesh(new THREE.PlaneGeometry(30, 10), new THREE.MeshStandardMaterial({ color: '#8a8478' })); g.rotation.x = -Math.PI / 2; sc.add(g);
+// reloj simulado (30 pasos/s) para que la imagen sea reproducible: ?t=segundos
+await new Promise((r) => setTimeout(r, 4000));   // espera a que el GLB esté cargado
+const real0 = performance.now(); let T = real0 / 1000 + 1; performance.now = () => T * 1000;
+const t = +(new URLSearchParams(location.search).get('t') ?? 1);
+for (let i = 0; i < Math.round(t * 30); i++) { T += 1 / 30; for (const { m, v, c } of ms) m.pose(0, v > 0 ? 1 : 0, 0, c, v);
+  if (location.search.includes('dbg') && i % 5 === 0) { const b = ms[2].m.group.getObjectByName('DEF-foot.L'); console.log('dbg', i, b && b.getWorldPosition(new THREE.Vector3()).toArray().map((x) => x.toFixed(3)).join(' ')); } }
+r.render(sc, cam); document.title = 'ok';
+</script></body></html>
