@@ -5268,7 +5268,13 @@
    "clase": "secundaria",
    "nombres": "Gendarme de Alba",
    "basica": true,
-   "inv": "ANE-44"
+   "inv": "ANE-44",
+   "foto": "aguja-de-alba",
+   "pie": "La Aguja de Alba (gendarme 2) y su ruta por Cregüeña.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/aguja-de-alba-huesca-espana/9364",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "torre-cordier",
