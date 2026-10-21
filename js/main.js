@@ -657,7 +657,7 @@ async function boot() {
     return `<h3>Recorrido en el mapa</h3>
       <p class="ruta-nombre">${esc(r.nombre)}</p>
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
-      ${rutasDe(p.id)[0].perfil()}
+      <details class="perfil-det" ${store.get('perfil-oculto') === '1' ? '' : 'open'}><summary>Perfil de altura</summary>${rutasDe(p.id)[0].perfil()}</details>
       <div class="ruta-acciones">
         <button type="button" class="btn-ruta" data-act="plegar">Ver el recorrido a pantalla completa</button>
         <button type="button" class="btn-ruta" data-act="vuelo">Volar por la ruta</button>
@@ -726,6 +726,7 @@ async function boot() {
     el.addEventListener('pointerup', fin); el.addEventListener('pointercancel', fin);
   }
 
+  fichaBody.addEventListener('toggle', (e) => { if (e.target.classList?.contains('perfil-det')) store.set('perfil-oculto', e.target.open ? '0' : '1'); }, true);   // el perfil se puede ocultar y se recuerda
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
   let perfilT = 0;
   const sobrePerfil = (e) => {

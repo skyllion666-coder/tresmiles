@@ -508,3 +508,11 @@ button.sel-pico:hover, button.sel-pico:focus-visible { background: var(--cream-2
 body.selector-abierto #intro { z-index: 31; }
 .creditos-menores { margin: .4rem 0 .8rem; }
 .creditos-menores summary { cursor: pointer; font-weight: 600; padding: .3rem 0; }
+
+/* perfil de altura plegable */
+.perfil-det { margin: 0 0 12px; }
+.perfil-det summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 6px 0; font: 600 .72rem var(--cond); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); }
+.perfil-det summary::-webkit-details-marker { display: none; }
+.perfil-det summary::after { content: 'Ocultar'; font-weight: 500; letter-spacing: .06em; text-transform: none; color: var(--spruce); text-decoration: underline; }
+.perfil-det:not([open]) summary::after { content: 'Ver'; }
+.perfil-det[open] .perfil { margin-top: 2px; }
