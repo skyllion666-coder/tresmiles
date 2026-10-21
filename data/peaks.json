@@ -4738,7 +4738,13 @@
    "clase": "discutida",
    "nombres": "Tuca de la Rimalla",
    "basica": true,
-   "inv": "ANE-18"
+   "inv": "ANE-18",
+   "foto": "pico-de-la-rimaya",
+   "pie": "El Pico del Collado de la Rimaya desde el glaciar de la Maladeta, con su ruta marcada.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/collado-de-la-rimaya-pico-huesca-espana/9288",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "pico-collado-de-la-rimaya",
