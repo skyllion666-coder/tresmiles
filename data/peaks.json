@@ -4665,7 +4665,13 @@
    "clase": "secundaria",
    "nombres": "Tuca de la Brecha de Tempestats · Punta de la Brecha de Tempestades",
    "basica": true,
-   "inv": "ANE-15"
+   "inv": "ANE-15",
+   "foto": "punta-brecha-de-tempestades",
+   "pie": "La Brecha y la Punta de la Brecha de Tempestades, con Margalida, Tempestades y Russell detrás.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/tempestades-punta-de-la-brecha-de-huesca-espana/9355",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "tuqueta-roya-de-creguena",
@@ -4992,7 +4998,13 @@
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
-   "inv": "ANE-31"
+   "inv": "ANE-31",
+   "foto": "segundo-resalte-de-salenques",
+   "pie": "Localización de la Torre, el Primer Resalte y el Segundo Resalte de Salenques en la cresta.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/segundo-resalte-de-salenques-huesca-espana/9361",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "aguja-sur-russell",
@@ -5035,7 +5047,13 @@
    "clase": "secundaria",
    "nombres": "Agulla d'Ixalenques",
    "basica": true,
-   "inv": "ANE-33"
+   "inv": "ANE-33",
+   "foto": "primer-resalte-de-salenques",
+   "pie": "La cresta de Salenques con la Torre, el Primer y el Segundo Resalte y, a la derecha, la Margalida.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/primer-resalte-de-salenques-huesca-espana/9362",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "diente-de-alba",
@@ -5078,7 +5096,13 @@
    "clase": "secundaria",
    "nombres": "Torre d'Ixalenques · Gendarme-Torre de Salenques",
    "basica": true,
-   "inv": "ANE-35"
+   "inv": "ANE-35",
+   "foto": "torre-de-salenques",
+   "pie": "La Torre de Salenques y el Primer Resalte (el más voluminoso).",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/torre-de-salenques-huesca-espana/9360",
+    "texto": "Ficha en Mendikat (fotos de Javier Urrutia)"
+   }
   },
   {
    "id": "punta-de-la-brecha-superior-de-llosas",
@@ -5146,7 +5170,13 @@
    "clase": "secundaria",
    "nombres": "Agulla de la Roca de Cregüeña",
    "basica": true,
-   "inv": "ANE-40"
+   "inv": "ANE-40",
+   "foto": "aguja-suroeste-del-pico-abadias",
+   "pie": "La Aguja Suroeste desde el collado con el Abadías.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/abadias-aguja-sw-de-huesca-espana/12961",
+    "texto": "Ficha en Mendikat (fotos de Jesus Mª Linaza Mardaras)"
+   }
   },
   {
    "id": "aguja-haurillon",
@@ -5189,7 +5219,13 @@
    "clase": "secundaria",
    "nombres": "Agulla de Franqueville",
    "basica": true,
-   "inv": "ANE-42"
+   "inv": "ANE-42",
+   "foto": "aguja-franqueville",
+   "pie": "La Aguja Franqueville y la cresta hacia el Aneto.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/aguja-franqueville-huesca-espana/9352",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   },
   {
    "id": "pico-de-ballibierna",
@@ -5426,7 +5462,13 @@
    "clase": "secundaria",
    "nombres": "Tucón de la Crencha de Cregüeña",
    "basica": true,
-   "inv": "ANE-54"
+   "inv": "ANE-54",
+   "foto": "aguja-juncadella",
+   "pie": "La Aguja Juncadella, vista desde el sur.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/aguja-juncadella-huesca-espana/9343",
+    "texto": "Ficha en Mendikat (fotos de Rafael Bartolomé Resano)"
+   }
   },
   {
    "id": "forca-estasen",
@@ -5443,7 +5485,13 @@
    "clase": "secundaria",
    "nombres": "Cap d'Ixalenques",
    "basica": true,
-   "inv": "ANE-55"
+   "inv": "ANE-55",
+   "foto": "forca-estasen",
+   "pie": "Ruta a la Forca Estasen por la cresta de Salenques.",
+   "enlace": {
+    "url": "https://www.mendikat.net/mount/forca-estasen-huesca-espana/9363",
+    "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
+   }
   }
  ]
 }

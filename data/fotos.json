@@ -1637,5 +1637,85 @@
   "fuente": "Wikiloc",
   "w": 900,
   "h": 1200
+ },
+ "punta-brecha-de-tempestades": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/tempestades-punta-de-la-brecha-de-huesca-espana/9355",
+  "fuente": "Mendikat",
+  "w": 900,
+  "h": 675
+ },
+ "segundo-resalte-de-salenques": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/segundo-resalte-de-salenques-huesca-espana/9361",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
+ },
+ "primer-resalte-de-salenques": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/primer-resalte-de-salenques-huesca-espana/9362",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
+ },
+ "torre-de-salenques": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Javier Urrutia",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/torre-de-salenques-huesca-espana/9360",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
+ },
+ "forca-estasen": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/forca-estasen-huesca-espana/9363",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
+ },
+ "aguja-franqueville": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Luis Alejos Escarpe",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/aguja-franqueville-huesca-espana/9352",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
+ },
+ "aguja-suroeste-del-pico-abadias": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Jesus Mª Linaza Mardaras",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/abadias-aguja-sw-de-huesca-espana/12961",
+  "fuente": "Mendikat",
+  "w": 480,
+  "h": 640
+ },
+ "aguja-juncadella": {
+  "archivo": "foto de la página de Mendikat",
+  "autor": "Rafael Bartolomé Resano",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.mendikat.net/mount/aguja-juncadella-huesca-espana/9343",
+  "fuente": "Mendikat",
+  "w": 640,
+  "h": 480
  }
 }
