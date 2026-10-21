@@ -1,0 +1,23 @@
+# Cloudflare Pages: caché. Los JSON, el HTML y los JS se revalidan siempre (la web les pone ?v= / ?dv=); lo pesado (imágenes, modelos, relieve, audio, vídeo) se guarda un mes.
+/index.html
+  Cache-Control: no-cache
+/version.json
+  Cache-Control: no-cache
+/js/*
+  Cache-Control: public, max-age=3600
+/css/*
+  Cache-Control: public, max-age=3600
+/data/*.json
+  Cache-Control: no-cache
+/img/*
+  Cache-Control: public, max-age=2592000
+/models/*
+  Cache-Control: public, max-age=2592000
+/data/terrain/*
+  Cache-Control: public, max-age=2592000
+/audio/*
+  Cache-Control: public, max-age=2592000
+/video/*
+  Cache-Control: public, max-age=2592000
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
