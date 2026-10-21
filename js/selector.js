@@ -25,7 +25,9 @@ function marca(nombre, q) {
 // capas: qué cumbres se ven (en el mapa y en la lista)
 const CAPAS = [['tres', 'Tresmiles'], ['menos', 'Menos de 3.000'], ['todos', 'Todas']];
 
-export function crearSelector(root, { picos, macizos, activa = () => null, hecho = () => false, pasa = () => true, filtrado = () => false, quitarFiltros = null, capa = null, elegir }) {
+const ATAJOS = [['subidos', 'Mis subidos'], ['pend', 'Pendientes'], ['cerca', 'Cercanas'], ['altas', 'Más altas']];
+
+export function crearSelector(root, { picos, macizos, activa = () => null, hecho = () => false, pasa = () => true, filtrado = () => false, quitarFiltros = null, capa = null, cercania = null, elegir }) {
   const nombreMacizo = Object.fromEntries(macizos.map((m) => [m.id, m.nombre]));
   // índice de búsqueda por cumbre: nombre, otros nombres y macizo
   const idx = new Map(picos.map((p) => {
@@ -42,6 +44,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
   root.innerHTML = `<div class="sel-cab"><span class="sel-tit">Cumbres</span><button type="button" class="sel-x" aria-label="Cerrar el selector"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button></div>
     <div class="sel-busca"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><input type="search" placeholder="Buscar cumbre" autocomplete="off" spellcheck="false" enterkeyhint="go" aria-label="Buscar cumbre por nombre"><button type="button" class="sel-borra" aria-label="Borrar la búsqueda" hidden>×</button></div>
     ${capa ? `<div class="sel-capa" role="radiogroup" aria-label="Qué cumbres ver">${CAPAS.map(([v, t]) => `<button type="button" role="radio" data-capa="${v}">${t}</button>`).join('')}</div>` : ''}
+    <div class="sel-atajos" role="group" aria-label="Atajos">${ATAJOS.filter(([v]) => v !== 'cerca' || cercania).map(([v, t]) => `<button type="button" data-atajo="${v}" aria-pressed="false">${t}</button>`).join('')}</div>
     <p class="sel-filtro" hidden></p>
     <div class="sel-lista" role="listbox" aria-label="Cumbres"></div>`;
   const q = root.querySelector('input'), lista = root.querySelector('.sel-lista'), borra = root.querySelector('.sel-borra'), filtroEl = root.querySelector('.sel-filtro');
@@ -91,9 +94,24 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     }).join('');
   }
 
+  // atajos: lista plana ordenada (mis subidas, las que faltan, las más cercanas al centro del mapa, las más altas)
+  let atajo = null;
+  function porAtajo() {
+    let ps = picos.filter((p) => pasa(p) && p.activo !== false);
+    let nota = () => '';
+    if (atajo === 'subidos') { ps = ps.filter((p) => hecho(p.id)).sort((a, b) => b.altitud - a.altitud); }
+    else if (atajo === 'pend') { ps = ps.filter((p) => !hecho(p.id) && esPrincipal(p)).sort((a, b) => b.altitud - a.altitud); }
+    else if (atajo === 'cerca') { const d = new Map(ps.map((p) => [p.id, cercania(p)])); ps = ps.filter((p) => esPrincipal(p) || (d.get(p.id) ?? 1e9) < 6).sort((a, b) => d.get(a.id) - d.get(b.id)).slice(0, 25); nota = (p) => ` · a ${new Intl.NumberFormat('es-ES', { maximumFractionDigits: 1 }).format(d.get(p.id))} km`; }
+    else if (atajo === 'altas') { ps = ps.filter((p) => esPrincipal(p)).sort((a, b) => b.altitud - a.altitud).slice(0, 25); }
+    const titulo = { subidos: 'Mis subidos', pend: 'Pendientes', cerca: 'Las más cercanas al centro del mapa', altas: 'Las más altas' }[atajo];
+    if (!ps.length) return `<p class="sel-vacio">${atajo === 'subidos' ? 'Todavía no has marcado ninguna cumbre como subida.' : 'No hay cumbres que mostrar con la capa y los filtros actuales.'}</p>`;
+    return `<p class="sel-cuenta">${titulo}: ${ps.length}</p>` + ps.map((p) => fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}${nota(p)}</small>`)).join('');
+  }
+
   let tPinta = 0;
   function pinta() {
     const f = norm(q.value); tPinta = performance.now();
+    for (const b of root.querySelectorAll('[data-atajo]')) b.setAttribute('aria-pressed', String(b.dataset.atajo === atajo));
     borra.hidden = !q.value;
     root.classList.toggle('buscando', !!f);
     const n = picos.filter(pasa).length;
@@ -103,7 +121,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     }
     filtroEl.hidden = !filtrado();
     if (filtrado()) filtroEl.innerHTML = `Con filtros: ${n} de ${picos.length} cumbres${quitarFiltros ? ' · <button type="button" class="sel-quita">Quitar filtros</button>' : ''}`;
-    lista.innerHTML = f ? porBusqueda(f) : (porMacizos() || '<p class="sel-vacio">Ninguna cumbre con estos filtros.</p>');
+    lista.innerHTML = f ? porBusqueda(f) : atajo ? porAtajo() : (porMacizos() || '<p class="sel-vacio">Ninguna cumbre con estos filtros.</p>');
   }
   function alAbrir() {
     q.value = ''; pinta(); lista.scrollTop = 0;
@@ -127,6 +145,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
   });
   lista.addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) elegir(b.dataset.id); });
   root.querySelector('.sel-capa')?.addEventListener('click', (e) => { const b = e.target.closest('[data-capa]'); if (b && b.dataset.capa !== capa.get()) { capa.set(b.dataset.capa); pinta(); } });
+  root.querySelector('.sel-atajos')?.addEventListener('click', (e) => { const b = e.target.closest('[data-atajo]'); if (!b) return; atajo = atajo === b.dataset.atajo ? null : b.dataset.atajo; pinta(); lista.scrollTop = 0; });
   filtroEl.addEventListener('click', (e) => { if (e.target.closest('.sel-quita')) { quitarFiltros(); pinta(); } });
   // recordar qué macizos se despliegan o se pliegan
   lista.addEventListener('toggle', (e) => {

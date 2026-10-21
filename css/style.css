@@ -435,6 +435,12 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
 .sel-capa { flex: none; display: flex; gap: 4px; padding: 8px 10px; background: var(--cream-2); border-bottom: 1px solid var(--line); }
 .sel-capa button { flex: 1 1 0; min-height: 36px; padding: 6px 4px; border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); background: transparent; border: 1px solid transparent; white-space: nowrap; }
 .sel-capa button:hover { border-color: var(--line); }
+.sel-atajos { flex: none; display: flex; gap: 6px; padding: 6px 10px 8px; background: var(--cream-2); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.sel-atajos::-webkit-scrollbar { display: none; }
+.sel-atajos button { flex: none; min-height: 32px; padding: 4px 12px; border-radius: 999px; font: 600 .72rem var(--cond); letter-spacing: .05em; text-transform: uppercase; color: var(--ink-2); background: transparent; border: 1px solid var(--line); white-space: nowrap; }
+.sel-atajos button[aria-pressed="true"] { background: var(--spruce); border-color: var(--spruce); color: #f7f2e4; }
+.sel-atajos button:focus-visible { outline: 2px solid var(--spruce); outline-offset: 1px; }
+@media (pointer: coarse) { .sel-atajos button { min-height: 38px; } }
 .sel-capa button[aria-checked="true"] { background: var(--spruce); color: #f7f2e4; }
 .sel-capa button:focus-visible { outline: 2px solid var(--spruce); outline-offset: 1px; }
 @media (pointer: coarse) { .sel-capa button { min-height: 40px; } }

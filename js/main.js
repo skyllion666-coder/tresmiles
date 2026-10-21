@@ -11,7 +11,7 @@ import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=40';
-import { crearSelector } from './selector.js?v=2';
+import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -586,9 +586,10 @@ async function boot() {
 
   // — selector inferior —
   const listEl = $('#picker'), listBtn = $('#btn-list');
+  const kmAlCentro = (p) => Math.hypot(p.q.x - controls.target.x, p.q.z - controls.target.z) / 1000;   // distancia (km) de la cumbre al punto del mapa que se está mirando
   const hayFiltros = () => !!(S.filters.hecho || S.filters.macizo.size || S.filters.dif.size || S.filters.alt > 3000);
   const selMapa = crearSelector(listEl, {
-    picos: peaks, macizos: data.macizos, activa: () => S.active, hecho: (id) => hechos.has(id), pasa: passes, filtrado: hayFiltros, capa: capaSel,
+    picos: peaks, macizos: data.macizos, activa: () => S.active, hecho: (id) => hechos.has(id), pasa: passes, filtrado: hayFiltros, capa: capaSel, cercania: kmAlCentro,
     quitarFiltros: () => $('#f-reset').click(), elegir: (id) => { setList(false); openPeak(id); },
   });
   function refreshLists() {
@@ -1023,7 +1024,7 @@ async function boot() {
   }
   (function buildIntro() {
     const lista = $('#intro-picos'), btn = $('#btn-elegir');
-    const sel = introSel = crearSelector(lista, { picos: peaks, macizos: data.macizos, hecho: (id) => hechos.has(id), pasa: enCapa, capa: capaSel, elegir: (id) => { abre(false); irDesdeInicio(id); } });
+    const sel = introSel = crearSelector(lista, { picos: peaks, macizos: data.macizos, hecho: (id) => hechos.has(id), pasa: enCapa, capa: capaSel, cercania: kmAlCentro, elegir: (id) => { abre(false); irDesdeInicio(id); } });
     // en el escritorio el desplegable se ajusta al espacio real: se abre hacia el lado con más sitio y se desplaza por dentro (en el móvil es una hoja a pantalla casi completa)
     const ajusta = () => {
       if (lista.hidden || isMobile()) { lista.style.maxHeight = ''; return; }
