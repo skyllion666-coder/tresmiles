@@ -52,7 +52,7 @@
   "nota": "Datos: MDT05 IGN (CC BY 4.0) y OpenStreetMap (ODbL). Los bloques son procedurales.",
   "roca": "granito",
   "modelo": "models/cima-aneto.glb",
-  "escalaModelo": 11.5,
+  "escalaModelo": 16,
   "separacion": 26,
   "elementos": [
    {
@@ -83,7 +83,7 @@
   "roca": "oscura",
   "ref": "OSM peak 42.654629,0.435227; IGN vértice 17999 (pilar 1,2 m, 1982) a 3 m; el IGN lo da por destruido el 21-12-2023. Macizo granítico Posets-Millares (DAMOCLES). Fotos de la cima aportadas por el usuario (pilar roto en pie; arista de bloques oscuros y angulosos).",
   "modelo": "models/cima-posets.glb",
-  "escalaModelo": 11.5,
+  "escalaModelo": 16,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -92,8 +92,7 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "IGN vértice 17999 (ETRS89); pilar roto con funda pintada «POSETS 3369», según foto de la cima",
-    "huella": 0.5,
-    "escala": 19
+    "huella": 0.5
    }
   ],
   "rocaMin": 0.85
@@ -127,7 +126,7 @@
    }
   ],
   "modelo": "models/cima-perdido.glb",
-  "escalaModelo": 11.5,
+  "escalaModelo": 16,
   "separacion": 32,
   "notaModelo": "Escala ×11,5, la misma que los montañeros (proporción coherente con ellos); por eso el pilar se separa ~32 m del mojón en lugar de los ~4,5 m reales, para que no se solapen."
  },
@@ -140,7 +139,7 @@
   "roca": "granito",
   "ref": "OSM peak 42.646432,0.640276 (CNIG). Macizo granítico de la Maladeta. Foto de la cima del usuario: bloques de granito, nieve y un poste con buzón; sin cruz ni vértice a la vista.",
   "modelo": "models/cima-maladeta.glb",
-  "escalaModelo": 4,
+  "escalaModelo": 16,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -149,8 +148,7 @@
     "giro": 0.0,
     "ancla": true,
     "ref": "Máximo del MDT05 (3310.2 m); cresta de bloques de granito con una torre, un canto encajado, nieve a la derecha y un poste con buzón, según la foto de la cima del usuario (22-10-2026)",
-    "huella": 1.8,
-    "escala": 4
+    "huella": 1.8
    }
   ]
  },
@@ -163,7 +161,7 @@
   "roca": "neutra",
   "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con la inscripción «GRAND VIGNEMALE (3298 m)» y placa verde de vértice (foto de la cima del usuario). Litología no verificada en esta sesión.",
   "modelo": "models/cima-vignemale.glb",
-  "escalaModelo": 3,
+  "escalaModelo": 16,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -172,8 +170,7 @@
     "giro": 0.0,
     "ancla": true,
     "ref": "Máximo del MDT05; bloque de hormigón con «GRAND VIGNEMALE (3298 m)», placa verde de vértice, piedras pintadas y lajas sobre un majano de bloques pardo-rojizos, según la foto de la cima aportada por el usuario (22-10-2026)",
-    "huella": 1.4,
-    "escala": 3
+    "huella": 1.4
    }
   ]
  },
@@ -186,7 +183,7 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha (OSM/IGN). Pilar de hormigón en dos tramos sobre losa con placa de vértice geodésico, medallón y cartel «BALAITUS 3.145» según foto de la cima aportada por el usuario. Macizo de Balaitous (granodiorita); losas grises claras en la cima.",
   "modelo": "models/cima-balaitus.glb",
-  "escalaModelo": 11.5,
+  "escalaModelo": 16,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -195,8 +192,7 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "Máximo del MDT05 (3.145,3 m) a 6 m del nodo OSM; pilar con placa de vértice geodésico, medallón y cartel «BALAITUS 3.145», según foto de la cima del usuario",
-    "huella": 0.6,
-    "escala": 19
+    "huella": 0.6
    }
   ]
  },
@@ -209,7 +205,7 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha (OSM/IGN). Montón de bloques de roca pardo-rojiza con una laja grande pintada «PICO GARMO NEGRO 3051», según foto de la cima aportada por el usuario. Litología no verificada en esta sesión.",
   "modelo": "models/cima-garmo.glb",
-  "escalaModelo": 5,
+  "escalaModelo": 16,
   "elementos": [
    {
     "nodo": "Vertice",
@@ -218,8 +214,7 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "Máximo del MDT05 (3.064,4 m); montón de bloques con laja pintada «PICO GARMO NEGRO 3051», según foto de la cima del usuario",
-    "huella": 1.2,
-    "escala": 5
+    "huella": 1.2
    }
   ]
  }

@@ -41,7 +41,7 @@ export function crearRuta({ scene, geo, ruta }) {
 
   // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta.
   // Escala fija del muñeco (mide ~1,8 → ~21 m en el modelo, igual a lo largo de todo el recorrido y a cualquier distancia de la cámara).
-  const ESC_M = 23, V0 = 105, GAP_MIN = 26;
+  const ESC_M = 16, V0 = 105, GAP_MIN = 26;   // ×16, la misma escala que las cimas hechas en Blender (escalaModelo 16 en detalles.json): todo proporcionado
   const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.scale.setScalar(ESC_M); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6, yaw: null, alt: 0.92 }; };
   const solo = mk({});
@@ -247,8 +247,8 @@ export function crearRuta({ scene, geo, ruta }) {
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
-    // tamaño fijo (ESC_M) a lo largo de todo el recorrido; solo con la cámara muy cerca (< 350 m) encogen hasta un 55 % para no verse gigantes junto a la cima
-    escalar(cam) { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M * Math.min(1, Math.max(0.55, cam.distanceTo(p.h.position) / 350))); },
+    // tamaño fijo (ESC_M) a cualquier distancia, igual que los modelos de las cimas, para que guarden la proporción
+    escalar() { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M); },
     setPaso, setPasosHito, caer, _est: est, _auto: () => auto,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
