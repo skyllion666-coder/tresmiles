@@ -140,7 +140,8 @@ def relieve(o, id_tex, fuerza=0.04, nivel=3, angulo=40):
     """Relieve real de la superficie: subdivide (sin redondear) y desplaza con el mapa de altura escaneado por las coordenadas de textura; sombreado suave con aristas vivas."""
     t = bpy.data.textures.get('alt_' + id_tex)
     if not t:
-        t = bpy.data.textures.new('alt_' + id_tex, 'IMAGE'); t.image = bpy.data.images.load(f'{TEX}/{id_tex}_disp.png'); t.image.colorspace_settings.name = 'Non-Color'
+        ruta = next(f'{TEX}/{id_tex}_disp.{e}' for e in ('png', 'jpg', 'exr') if os.path.exists(f'{TEX}/{id_tex}_disp.{e}'))
+        t = bpy.data.textures.new('alt_' + id_tex, 'IMAGE'); t.image = bpy.data.images.load(ruta); t.image.colorspace_settings.name = 'Non-Color'
     s = o.modifiers.new('sub', 'SUBSURF'); s.subdivision_type = 'SIMPLE'; s.levels = s.render_levels = nivel
     d = o.modifiers.new('alt', 'DISPLACE'); d.texture = t; d.texture_coords = 'UV'; d.strength = fuerza; d.mid_level = 0.5
     for p in o.data.polygons: p.use_smooth = True

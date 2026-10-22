@@ -6,7 +6,8 @@
 import * as THREE from 'three';
 import { EXAG } from './geo.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';   // los modelos de cima con texturas escaneadas van comprimidos con meshopt (gltf-transform)
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+import { crearRocas } from './rocas.js?v=3';   // los modelos de cima con texturas escaneadas van comprimidos con meshopt (gltf-transform)
 const modelos = new Map();   // url -> Promise<gltf>
 // Las cimas de Blender están modeladas sobre suelo plano; en una arista el relieve cae a los lados y las piedras de fuera quedarían en el aire.
 // Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
@@ -60,11 +61,12 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     if (pb) u.pb.value.set(pb[0], pb[1], pb[2], pb[3]);
     if (og) og.forEach((v, i) => u.og[i].value.set(v[0], v[1], v[2]));   // ajuste de color al satélite (tools/igualar_orto.py)
   }
-  // textura de granito escaneado para el suelo de roca de las cimas de granito (Poly Haven rock_boulder_dry, CC0; luminancia lineal media 0,348)
-  let texGranitoP = null;
-  const texGranito = () => (texGranitoP ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/${movil ? 'granito-suelo-m' : 'granito-suelo'}.jpg?v=${window.WEB_V || 0}`, (t) => {
+  // texturas escaneadas para el suelo de roca de las cimas (Poly Haven, CC0), por tipo de roca, con su luminancia lineal media (para conservar el brillo del terreno)
+  const LUM_ROCA = { granito: 0.348, caliza: 0.309, oscura: 0.053, neutra: 0.127 }, texRocaP = {};
+  const texRoca = (tipo) => (texRocaP[tipo] ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/roca-${tipo}${movil ? '-m' : ''}.jpg?v=${window.WEB_V || 0}`, (t) => {
     t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, terrain.aniso ?? 4); res(t);
   }, undefined, () => res(null))));
+  const ROCAS_VIEJAS = /[?&]rocasviejas/.test(location.search), rocasCima = crearRocas({ movil });
   const detalles = new Map(), detCarga = new Set();   // id -> detalle local (Paso de Mahoma)
   geo.setExtra((x, z) => {
     for (const d of detalles.values()) { const h = sample(d, x, z); if (h !== undefined) return h; }
@@ -128,7 +130,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.repeat.set(cw / pw, cd / pw); tex.offset.set((ch.x0 - x0) / pw, (pw - (ch.z0 - z0) - cd) / pw);   // de las coordenadas del bloque a las de la ortofoto
         aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado], d.og); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
-        const dt = detalles.get(id); if (dt?.mat && !dt.ortoCima) aplicaOrto(dt.mat, tex, ch, null, d.og);   // (si la cima ya tiene su parche de máxima resolución, se queda con él)   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
+        for (const dt of detalles.values()) if (dt.pieza === p && dt.mat && !dt.ortoCima) aplicaOrto(dt.mat, tex, ch, null, d.og);   // (si la cima ya tiene su parche de máxima resolución, se queda con él)   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
       }, undefined, () => {});
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
@@ -171,8 +173,9 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   const distSeg = (x, z, ps) => { let m = 1e9; for (let k = 0; k < ps.length - 1; k++) { const a = ps[k], b = ps[k + 1], vx = b.x - a.x, vz = b.z - a.z, t = Math.max(0, Math.min(1, ((x - a.x) * vx + (z - a.z) * vz) / (vx * vx + vz * vz || 1))); m = Math.min(m, Math.hypot(x - a.x - vx * t, z - a.z - vz * t)); } return m; };
 
   async function cargaDetalle(id) {
-    if (detalles.has(id) || detCarga.has(id) || !ficha?.[id] || !piezas.has(id)) return;
-    const d = ficha[id], pz = piezas.get(id); detCarga.add(id);
+    const pid = ficha?.[id]?.pieza ?? id;   // la pieza de 6 m que contiene esta cima (varias cimas pueden compartir una)
+    if (detalles.has(id) || detCarga.has(id) || !ficha?.[id] || !piezas.has(pid)) return;
+    const d = ficha[id], pz = piezas.get(pid); detCarga.add(id);
     try {
       const r = await fetch(`data/terrain/cumbres/${d.archivo}?v=${window.WEB_V || 0}`);
       if (!r.ok || typeof DecompressionStream === 'undefined') throw new Error('sin datos');
@@ -198,7 +201,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const hb = sample(pz, x, z) ?? base, bd = Math.min(i, j, n - 1 - i, n - 1 - j) * paso;
         F[k] = hb + (base - hb) * sstep(0, 14, bd);
       }
-      detalles.set(id, { ...d, H: F });   // a partir de aquí heightAt la usa
+      const registro = { ...d, H: F }; detalles.set(id, registro);   // a partir de aquí heightAt la usa
       const ch = pz.ch, cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
       const pos = new Float32Array(n * n * 3), nor = new Float32Array(n * n * 3), uv = new Float32Array(n * n * 2);
       for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
@@ -214,19 +217,25 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
       g.setAttribute('aRoca', new THREE.BufferAttribute(roca, 1)); g.setIndex(idx); g.computeBoundingSphere();
       const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
-      if (d.roca === 'granito') texGranito().then((t) => { if (!t) return; const [tg, k, gm] = mat.userData.gran; tg.value = t; k.value = 1; gm.value = 0.348; });   // roca de la cima con granito escaneado (terrain.js)
-      if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[id]?.og);
+      { const tr = ['granito', 'caliza', 'oscura'].includes(d.roca) ? d.roca : 'neutra'; texRoca(tr).then((t) => { if (!t) return; const [tg, k, gm] = mat.userData.gran; tg.value = t; k.value = 1; gm.value = LUM_ROCA[tr]; }); }   // roca de la cima con textura escaneada (terrain.js)
+      if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[pid]?.og);
       // parche de ortofoto a máxima resolución solo en estos 200 m (tools/build_orto_cima.py), encima de la de la pieza; el color ya viene igualado a ella
       const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : movil ? d.ortoM : d.orto;
       if (archivoCima) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoCima}?v=${window.WEB_V || 0}`, (tex) => {
-        const dt = detalles.get(id); if (!dt || dt.mat !== mat) { tex.dispose(); return; }
+        const dt = detalles.get(id); if (dt !== registro) { tex.dispose(); return; }
         const L = (n - 1) * paso; tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4);
         tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - d.x0) / L, (L - (ch.z0 - d.z0) - cd) / L);   // de las coordenadas del bloque a las del parche
-        aplicaOrto(mat, tex, ch, null, indice?.[id]?.og); dt.ortoCima = tex;
+        aplicaOrto(mat, tex, ch, null, indice?.[pid]?.og); dt.ortoCima = tex;
       }, undefined, () => {});
       scene.add(mesh);
+      { // rocas con textura escaneada colocadas sobre el relieve (js/rocas.js); en las cimas con modelo de Blender, sin mojón y sin rocas encima del modelo
+        const tipo = ['granito', 'caliza', 'oscura'].includes(d.roca) ? d.roca : 'neutra', an = d.modelo ? (d.elementos?.find((e) => e.ancla) ?? d.elementos?.[0]) : null;
+        rocasCima.poner(id, { H: F, sl, n, paso, x0: d.x0, z0: d.z0 }, tipo, { mojon: !d.modelo, evita: an ? { x: an.x, z: an.z, r: 6 + 2.2 * (an.escala ?? d.escalaModelo ?? 1) } : null })
+          .then((gr) => { if (!gr) return; const dt = detalles.get(id); if (dt !== registro) { rocasCima.quitar(gr); return; } scene.add(gr); dt.rocas = gr; });   // (si la cima se descargó mientras tanto, fuera)
+      }
       // la pieza de 6 m se recorta debajo de esta (menos 14 m del borde, donde ambas coinciden)
-      pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
+      const hv = pz.mat.userData.holes.value, slot = hv.findIndex((v) => v.x > 1e8);   // hasta 4 huecos por pieza (uno por cima fina cargada)
+      if (slot >= 0) hv[slot].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
       // algunos bloques mayores medio enterrados (3 formas distintas, tamaños y giros variados) en las zonas de pendiente suave junto a la arista
       const col = new THREE.Color(), forma = [0, 1, 2].map((v) => {
         const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : d.roca === 'oscura' ? 0.85 : 1;
@@ -239,7 +248,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const ix = Math.round(x * 3), iz = Math.round(z * 3), dcr = d.cresta ? distSeg(x, z, d.cresta) : 99, dc = Math.hypot(x - cxm, z - czm);
         const i = Math.round((x - d.x0) / paso), j = Math.round((z - d.z0) / paso), s0 = sl[j * n + i];
         const pr = (d.cresta ? (dcr < 10 ? 0.22 : dcr < 24 ? 0.07 : 0.015) : 0.02 + 0.2 * cvx[j * n + i]) * (d.roca === 'caliza' ? 2.2 : d.roca === 'oscura' ? 0.9 : 1) * (s0 < 0.9 ? 1 : 0.1) * (1 - sstep(70, 95, dc));
-        if (hash2(ix, iz, 21) > pr) continue;
+        if (!ROCAS_VIEJAS || hash2(ix, iz, 21) > pr) continue;   // las rocas de la cumbre las pone ahora js/rocas.js (biblioteca con texturas escaneadas); ?rocasviejas las de antes
         const sz = (0.9 + Math.pow(hash2(ix, iz, 24), 2.2) * 3.4) * (d.roca === 'oscura' ? 0.55 : 1);   // muchos pequeños, pocos grandes
         listas[Math.floor(hash2(ix, iz, 28) * 3)].push({ x: x + (hash2(ix, iz, 22) - 0.5) * 3, z: z + (hash2(ix, iz, 23) - 0.5) * 3, s: sz, a: hash2(ix, iz, 25), b: hash2(ix, iz, 26), c: hash2(ix, iz, 27) });
       }
@@ -282,17 +291,17 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
           }
         }
       }
-      Object.assign(detalles.get(id), { mesh, mat, insts, cruz, extras, pieza: pz });
+      Object.assign(detalles.get(id), { mesh, mat, insts, cruz, extras, pieza: pz, slot });
     } catch (e) { console.warn('detalle', id, e); detalles.delete(id); } finally { detCarga.delete(id); }
   }
   function quitaDetalle(id) {
     const d = detalles.get(id); if (!d) { detalles.delete(id); return; }
     for (const o of [d.mesh, ...(d.insts ?? []), d.cruz, ...(d.extras ?? [])]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
-    d.mat?.dispose(); d.pieza?.mat.userData.holes.value[0].set(1e9, 1e9, 1e9, 1e9); detalles.delete(id);
+    d.mat?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); rocasCima.quitar(d.rocas); detalles.delete(id);
   }
 
   function quita(id) {
-    quitaDetalle(id);
+    for (const [k, dd] of [...detalles]) if ((dd.pieza === piezas.get(id)) || k === id) quitaDetalle(k);
     const p = piezas.get(id); if (!p) return;
     scene.remove(p.mesh); p.mesh.geometry.dispose(); p.mat.dispose(); p.orto?.dispose(); terrain.hueco(p.hueco, 1e9, 1e9, 1e9, 1e9); piezas.delete(id);
   }
@@ -307,10 +316,18 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       // (con ortofoto la pieza lleva su propia textura: no se le devuelve la del bloque)
       for (const p of piezas.values()) if (p.orto) p.mat.userData.sat.value = p.ch.mat.map;   // el satélite del bloque cambia de resolución al acercarse
       for (const p of piezas.values()) if (!p.orto && p.mat.map !== p.ch.mat.map) { p.mat.map = p.ch.mat.map; p.mat.color.set(p.ch.mat.map ? 0xffffff : 0x8a9488); p.mat.needsUpdate = true; }
-      if (ficha) for (const [id, d] of Object.entries(ficha)) {
-        const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
-        if (!detalles.has(id) && !detCarga.has(id) && dist < 2200 && piezas.has(id)) cargaDetalle(id);
-        else if (detalles.has(id) && dist > 4200 && id !== fijo?.()) quitaDetalle(id);
+      if (ficha) {   // cimas finas (1 m): las más cercanas primero; hasta 4 por pieza (huecos) y 6 en total (3 en el móvil)
+        const piezaDe = (k) => ficha[k]?.pieza ?? k, cand = [];
+        for (const [id, d] of Object.entries(ficha)) {
+          const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
+          if (detalles.has(id)) { if ((dist > 3000 || (fijo?.() && !detalles.has(fijo()) && detalles.size >= (movil ? 3 : 6))) && id !== fijo?.()) quitaDetalle(id); }   // deja sitio a la cima abierta
+          else if (!detCarga.has(id) && (dist < 2200 || id === fijo?.()) && piezas.has(piezaDe(id))) cand.push([id === fijo?.() ? -1 : dist, id]);   // la cima abierta, la primera
+        }
+        cand.sort((x, y) => x[0] - y[0]);
+        for (const [, id] of cand) {
+          const pid = piezaDe(id), enPieza = [...detalles.keys(), ...detCarga].filter((k) => piezaDe(k) === pid).length;
+          if (enPieza < 4 && detalles.size + detCarga.size < (movil ? 3 : 6)) cargaDetalle(id);
+        }
       }
       if (!indice || ++cuenta % 15) return;
       const cerca = [];

@@ -26,7 +26,7 @@ for pid in sys.argv[1:]:
     else: print(pid, 'sin imagen'); continue
     im = np.asarray(Image.open(tmp).convert('RGB'), np.float32)
     # la misma zona en la ortofoto de la pieza: referencia de color
-    p = idx[pid]; px0, pz0 = p['x0'], p['z0']; plado = (p['n'] - 1) * p['paso']
+    p = idx[d.get('pieza') or pid]; px0, pz0 = p['x0'], p['z0']; plado = (p['n'] - 1) * p['paso']   # la pieza de 6 m que contiene la cima
     ref = Image.open(D('cumbres', p['orto'])).convert('RGB'); S = ref.size[0]
     caja = tuple(round(v) for v in ((x0 - px0) / plado * S, (z0 - pz0) / plado * S, (x1 - px0) / plado * S, (z1 - pz0) / plado * S))
     rf = np.asarray(ref.crop(caja).resize((N, N), Image.BICUBIC), np.float32)
