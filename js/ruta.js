@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=5';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=6';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -225,7 +225,7 @@ export function crearRuta({ scene, geo, ruta }) {
       } else if (!reducido) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
-          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.4 * nivelHielo(q.d));   // sobre el hielo, con crampones, más despacio
+          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.62 * nivelHielo(q.d));   // sobre el hielo, con crampones y piolet, bastante más despacio
          
           const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
           if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }

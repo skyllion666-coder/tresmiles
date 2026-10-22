@@ -4,7 +4,7 @@ import { clone } from 'three/addons/utils/SkeletonUtils.js';
 import { crearMontanero } from './montanero.js?v=7';
 
 // Montañero con esqueleto y animaciones (models/montanero-anim.glb, hecho en Blender con el maniquí y los clips CC0 de Quaternius: ver tools/modelos/montanero_anim.py).
-// Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel, hielo), altura } (hielo > 0,5: lleva los crampones puestos; si no, en la mochila). Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
+// Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel, hielo), altura } (hielo > 0,5: crampones puestos, piolet en la mano y bastones guardados; si no, crampones en la mochila). Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
 // La velocidad `vel` (m/s del montañero) elige el clip: idle → andar (≈1,2 m/s) → trotar (≈5 m/s) → correr (≈7,5 m/s), mezclados y con el ritmo del paso ajustado a la velocidad
 // para que los pies no resbalen. c = { agach, manos, cuatro, brazos, giro }: agachado (clip «agachado») y brazos abiertos del funambulista (los brazos vuelven hacia la pose de reposo en T).
 const URL_GLB = { chico: new URL('../models/montanero-anim.glb', import.meta.url).href, chica: new URL('../models/montanera-anim.glb', import.meta.url).href };   // la montañera: mismo esqueleto y clips, otro cuerpo, pelo y coleta (tools/modelos/montanero_anim.py --chica)
@@ -31,8 +31,9 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
   const enMochila = ['', '_correas'].map((x) => nodo(`Crampones_${mochilaTipo}${x}`)).filter(Boolean);
   for (const n of ['grande', 'media', 'pequena']) if (n !== mochilaTipo) for (const x of ['', '_correas']) { const o = nodo(`Crampones_${n}${x}`); if (o) o.visible = false; }
   const enBotas = ['L', 'R'].flatMap((l) => ['punta', 'talon', 'correas'].map((x) => nodo(`Crampon_${l}_${x}`))).filter(Boolean);
+  const piolet = ['Piolet', 'Piolet_cabeza', 'Piolet_punta'].map(nodo).filter(Boolean);   // en el hielo: crampones puestos, bastones guardados y piolet en la mano
   let conHielo = null;
-  const ponCrampones = (si) => { if (si === conHielo) return; conHielo = si; for (const o of enMochila) o.visible = !si; for (const o of enBotas) o.visible = si; };
+  const ponCrampones = (si) => { if (si === conHielo) return; conHielo = si; for (const o of piolet) o.visible = si; for (const o of enMochila) o.visible = !si; for (const o of enBotas) o.visible = si; };
   ponCrampones(false);
   for (const l of ['R', 'L']) for (const s of ['', '_mango', '_punta']) { const o = nodo(`Baston_${l}${s}`); if (o) o.visible = false; }   // los bastones del GLB van rígidos a la mano: se dibujan aparte para clavarlos en el suelo
   const matPalo = new THREE.MeshStandardMaterial({ color: col.palo, roughness: 0.35, metalness: 0.4 }), matNegro = new THREE.MeshStandardMaterial({ color: col.negro, roughness: 0.8 });
@@ -128,7 +129,7 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     // bastones: el agarre en la mano y la punta clavada en el suelo por detrás; al adelantar la mano, la punta se despega
     const libres = (c?.manos ?? 0) > 0.3 || br > 0.3;
     for (const l of ['R', 'L']) {
-      const g = bastones[l], ok = (l === 'R' ? palos >= 1 : palos >= 2) && !libres; g.visible = ok; if (!ok || !mano[l]) { prevMano[l].set(0, 0, 0); continue; }
+      const g = bastones[l], ok = (l === 'R' ? palos >= 1 : palos >= 2) && !libres && !conHielo; g.visible = ok; if (!ok || !mano[l]) { prevMano[l].set(0, 0, 0); continue; }
       mano[l].getWorldPosition(PH2); root.worldToLocal(PH2);
       const vz = prevMano[l].lengthSq() ? (PH2.z - prevMano[l].z) / dt : 0; prevMano[l].copy(PH2);   // velocidad de la mano hacia delante (m/s, en el sistema del montañero)
       const alto = Math.max(PH2.y + 0.04, 0.5), d = Math.sqrt(Math.max(LB * LB - alto * alto, 0.05)), lift = clamp(vz / (0.9 + s * 0.5), 0, 1) * 0.16;

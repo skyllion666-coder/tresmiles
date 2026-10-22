@@ -195,6 +195,15 @@ for lado, hueso in (('L', 'DEF-hand.L'), ('R', 'DEF-hand.R')):
     bm = bmesh.new(); bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.011, radius2=0.011, depth=L); pieza(f'Baston_{lado}', bm, M_PALO, hueso, mundo, True)
     bm = bmesh.new(); bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.019, radius2=0.019, depth=0.13); pieza(f'Baston_{lado}_mango', bm, M_NEGRO, hueso, mundo @ T(0, 0, L / 2 - 0.05), True)
     bm = bmesh.new(); bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.03, radius2=0.012, depth=0.05); pieza(f'Baston_{lado}_punta', bm, M_NEGRO, hueso, mundo @ T(0, 0, -L / 2 + 0.03), True)
+# piolet: en la mano derecha, en posición de bastón (cabeza en la palma, pica hacia atrás y punta al suelo); el código lo enciende en el hielo y apaga los bastones
+pb = arm.pose.bones['DEF-hand.R']; H = arm.matrix_world @ pb.head
+arriba = H + Vector((0, 0, 0.1)); dirp = (Vector((0, 0.3, -0.95)) - Vector((0, 0, 0.12))).normalized(); LP = 0.68; punta = arriba + dirp * LP; c = (arriba + punta) / 2
+mundo = Matrix.Translation(c) @ dirp.to_track_quat('-Z', 'Y').to_matrix().to_4x4()   # eje Z local hacia arriba (cabeza)
+bm = bmesh.new(); bmesh.ops.create_cone(bm, cap_ends=True, segments=8, radius1=0.012, radius2=0.012, depth=LP); pieza('Piolet', bm, M_PALO, 'DEF-hand.R', mundo, True)
+bm = bmesh.new(); suma(bm, caja(0.026, 0.2, 0.024, 0), T(0, 0.0, 0)); suma(bm, caja(0.02, 0.11, 0.012, 0), T(0, 0.14, 0.0) @ Matrix.Rotation(0.0, 4, 'X'))
+pico = bmesh.new(); bmesh.ops.create_cone(pico, cap_ends=True, segments=6, radius1=0.002, radius2=0.012, depth=0.16); suma(bm, pico, T(0, -0.16, -0.035) @ Matrix.Rotation(-math.pi / 2 - 0.5, 4, 'X'))   # pica curvada hacia abajo
+pieza('Piolet_cabeza', bm, M_METAL, 'DEF-hand.R', mundo @ T(0, 0, LP / 2 + 0.012), True)
+bm = bmesh.new(); bmesh.ops.create_cone(bm, cap_ends=True, segments=6, radius1=0.002, radius2=0.012, depth=0.07); pieza('Piolet_punta', bm, M_METAL, 'DEF-hand.R', mundo @ T(0, 0, -LP / 2 - 0.03), True)
 # exportación
 arm.animation_data.action = None
 for a in bpy.data.actions: a.use_fake_user = True

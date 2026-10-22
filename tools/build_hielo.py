@@ -7,6 +7,7 @@ from PIL import Image
 R = os.path.join(os.path.dirname(__file__), '..', 'data')
 M = json.load(open(f'{R}/terrain/meta.json')); CH = M['chunk']; ST = M['step']; PX = 3   # píxeles de satélite por celda del relieve
 cache = {}
+MANUAL = json.load(open(f'{R}/hielo_manual.json')) if os.path.exists(f'{R}/hielo_manual.json') else {}
 def tile(i, j):
     if (i, j) not in cache: cache[(i, j)] = Image.open(f'{R}/terrain/hi/c_{i}_{j}.jpg').convert('RGB')
     return cache[(i, j)]
@@ -43,7 +44,7 @@ def tramos(ruta):
 if __name__ == '__main__':
     ids = sys.argv[1:] or sorted(f[:-5] for f in os.listdir(f'{R}/rutas') if f.endswith('.json'))
     for id in ids:
-        fn = f'{R}/rutas/{id}.json'; r = json.load(open(fn)); t = tramos(r)
+        fn = f'{R}/rutas/{id}.json'; r = json.load(open(fn)); t = MANUAL.get(id) or tramos(r)   # data/hielo_manual.json: tramos fijados a mano (de la entrada al glaciar a la salida)
         if t: r['hielo'] = [[round(a), round(b)] for a, b in t]
         else: r.pop('hielo', None)
         json.dump(r, open(fn, 'w'), ensure_ascii=False, separators=(',', ':'))   # mismo formato compacto que el resto de rutas
