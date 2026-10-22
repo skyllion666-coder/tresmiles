@@ -166,14 +166,12 @@
   "segundo-resalte-de-salenques",
   "aguja-sur-russell",
   "primer-resalte-de-salenques",
-  "diente-de-alba",
   "torre-de-salenques",
   "punta-de-la-brecha-superior-de-llosas",
   "colmillo-de-alba-oriental",
   "aguja-suroeste-del-pico-abadias",
   "aguja-haurillon",
   "aguja-franqueville",
-  "pico-de-ballibierna",
   "aguja-de-alba",
   "torre-cordier",
   "punta-oriental-russell",
@@ -1190,7 +1188,7 @@
    },
    "curiosidad": "Según la Cooperativa de Guías del Pirineo, la primera ascensión se hizo en 1864 por Barrau, Packe y Bornes (otra fuente da «Barnes»). La Tuca de Culebres no debe su nombre a las serpientes, sino a los estratos retorcidos de su roca. El nombre de Vallibierna viene del valle, donde el ganado pasaba los meses fríos. Las fuentes difieren en los apellidos y en la altura.",
    "clase": "discutida",
-   "nombres": "Tuca de las Culebras"
+   "nombres": "Tuca de las Culebras · Tuca de Vallibierna · Roca Bllanca · Pico de Vallibierna · Tuca de Vallibierna / Roca Bllanca"
   },
   {
    "id": "paul",
@@ -1530,7 +1528,7 @@
    },
    "curiosidad": "La UIAA lista el Diente de Alba con 3.136 m, pero las fuentes no se ponen de acuerdo sobre qué cumbre es cuál: el autor del track llama «Diente» a la de 3.118 m y «Muela» a la de 3.136 m, mientras OpenStreetMap registra un «Dien d’Alba» de 3.121 m. La Muela de Alba (3.118 m en otras fuentes) tampoco figura en la lista oficial.",
    "clase": "secundaria",
-   "nombres": "Quixal d'Alba"
+   "nombres": "Quixal d'Alba · Dien d'Alba · Diente del Alba"
   },
   {
    "id": "araguells",
@@ -5043,32 +5041,6 @@
    }
   },
   {
-   "id": "diente-de-alba",
-   "nombre": "Diente de Alba",
-   "alias": "Dien d'Alba · Diente del Alba",
-   "altitud": 3121,
-   "otras": "3.136 m (Buyse 1993 (3ª ed.) / UIAA 1995); 3.136 m (Guía Alejos / Buyse / UIAA)",
-   "macizo": "ane",
-   "frontera": false,
-   "situacion": "Aragón",
-   "lat": 42.653944,
-   "lon": 0.624444,
-   "descripcion": "Cumbre de 3.121 m del macizo Aneto–Maladeta, en territorio aragonés. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
-   "clase": "principal",
-   "nombres": "Dien d'Alba · Diente del Alba",
-   "basica": true,
-   "inv": "ANE-34",
-   "foto": "diente-de-alba",
-   "pie": "Trepada en el Diente de Alba.",
-   "enlace": {
-    "url": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
-    "texto": "Ruta de gruta en Wikiloc"
-   },
-   "desnivel": "+1.237 m · 14,3 km",
-   "ruta": "Esta cima aparece en la ruta «28/08/2011 - LE BONDIDIER - CORDIER - SAYO - PICO MIR - PUNTA DELMAS - MUELA DE ALBA - DIENTE DE ALBA», de gruta en Wikiloc, de 14,3 km y 1.237 m de desnivel acumulado. Está situada en es Bòrdes (Cataluña). El autor tardó 12 h 27 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en es Bòrdes"
-  },
-  {
    "id": "torre-de-salenques",
    "nombre": "Torre de Salenques",
    "alias": "Torre d'Ixalenques · Gendarme-Torre de Salenques",
@@ -5213,32 +5185,6 @@
     "url": "https://www.mendikat.net/mount/aguja-franqueville-huesca-espana/9352",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
    }
-  },
-  {
-   "id": "pico-de-ballibierna",
-   "nombre": "Pico de Ballibierna",
-   "alias": "Tuca de Vallibierna · Roca Bllanca · Pico de Vallibierna",
-   "altitud": 3059,
-   "otras": "3.067 m (Buyse 1993 (3ª ed.) / UIAA 1995)",
-   "macizo": "ane",
-   "frontera": false,
-   "situacion": "Aragón",
-   "lat": 42.593944,
-   "lon": 0.653278,
-   "descripcion": "Cumbre de 3.059 m del macizo Aneto–Maladeta, en territorio aragonés. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
-   "clase": "principal",
-   "nombres": "Tuca de Vallibierna · Roca Bllanca · Pico de Vallibierna · Tuca de Vallibierna / Roca Bllanca",
-   "basica": true,
-   "inv": "ANE-43",
-   "foto": "pico-de-ballibierna",
-   "pie": "Vista desde la cima del Pico de Ballibierna.",
-   "enlace": {
-    "url": "https://www.wikiloc.com/hiking-trails/refugio-cap-de-llauset-pico-vallibierna-ibon-vallibierna-collado-vallibierna-40172730",
-    "texto": "Ruta de Desde la cima del Rock en Wikiloc"
-   },
-   "desnivel": "+937 m · 8,9 km, circular",
-   "ruta": "Esta cima aparece en la ruta «Refugio Cap de Llauset - Pico Vallibierna - Ibón Vallibierna - Collado Vallibierna», de Desde la cima del Rock en Wikiloc, de 8,9 km y 937 m de desnivel acumulado. Está situada en Aneto (Aragón). El autor tardó 8 h 10 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Aneto"
   },
   {
    "id": "aguja-de-alba",
