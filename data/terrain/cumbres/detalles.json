@@ -230,7 +230,7 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha. Cresta granítica Maldito–Astorg–Medio. Cima: torre de dos lajas apiladas (la alta encima de una plana) sobre un montón de bloques, con una piedrita encima, según fotos de referencia del usuario (una con una persona de pie encima, para la escala).",
   "modelo": "models/cima-astorg.glb",
-  "escalaModelo": 16,
+  "escalaModelo": 12,
   "elementos": [
    {
     "nodo": "Vertice",

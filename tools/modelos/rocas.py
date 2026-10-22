@@ -5,7 +5,7 @@
   mediante ruido 3D, para que pese poco (sin texturas). El material es blanco y three.js multiplica por el color del vértice.
 - `asentar(objs, suelo, pasos)`: deja caer los bloques con la física de Blender (cuerpos rígidos) para que se apoyen unos en otros de forma creíble y fija su posición final.
 - `apoyo(x, y, objs)`: altura de lo más alto bajo un punto (rayo hacia abajo), para colocar piezas encima del montón."""
-import bpy, bmesh, math
+import bpy, bmesh, math, os
 from mathutils import Vector, Matrix, noise
 
 def material(nombre='granito', rough=0.92):
@@ -125,3 +125,24 @@ def uv_caja(o, R, tam=1.2):
         ax = max(range(3), key=lambda i: abs(p.normal[i])); a, b = [(1, 2), (0, 2), (0, 1)][ax]
         for li in p.loop_indices:
             co = me.vertices[me.loops[li].vertex_index].co; uv.data[li].uv = (co[a] / tam + du, co[b] / tam + dv)
+
+# — texturas escaneadas (Poly Haven, CC0; ~/tresmiles-fuentes/texturas, ver LEEME.txt): color + mapa de normales, y la altura para deformar la malla —
+TEX = os.path.expanduser('~/tresmiles-fuentes/texturas')
+def material_escaneado(nombre, id_tex, rough=0.88, tam='1k'):
+    m = bpy.data.materials.new(nombre); m.use_nodes = True; nt = m.node_tree
+    b = next(x for x in nt.nodes if x.type == 'BSDF_PRINCIPLED'); b.inputs['Roughness'].default_value = rough
+    c = nt.nodes.new('ShaderNodeTexImage'); c.image = bpy.data.images.load(f'{TEX}/web/{id_tex}_diff_{tam}.jpg'); nt.links.new(c.outputs['Color'], b.inputs['Base Color'])
+    n = nt.nodes.new('ShaderNodeTexImage'); n.image = bpy.data.images.load(f'{TEX}/web/{id_tex}_nor_{tam}.jpg'); n.image.colorspace_settings.name = 'Non-Color'
+    nm = nt.nodes.new('ShaderNodeNormalMap'); nt.links.new(n.outputs['Color'], nm.inputs['Color']); nt.links.new(nm.outputs['Normal'], b.inputs['Normal'])
+    return m
+
+def relieve(o, id_tex, fuerza=0.04, nivel=3, angulo=40):
+    """Relieve real de la superficie: subdivide (sin redondear) y desplaza con el mapa de altura escaneado por las coordenadas de textura; sombreado suave con aristas vivas."""
+    t = bpy.data.textures.get('alt_' + id_tex)
+    if not t:
+        t = bpy.data.textures.new('alt_' + id_tex, 'IMAGE'); t.image = bpy.data.images.load(f'{TEX}/{id_tex}_disp.png'); t.image.colorspace_settings.name = 'Non-Color'
+    s = o.modifiers.new('sub', 'SUBSURF'); s.subdivision_type = 'SIMPLE'; s.levels = s.render_levels = nivel
+    d = o.modifiers.new('alt', 'DISPLACE'); d.texture = t; d.texture_coords = 'UV'; d.strength = fuerza; d.mid_level = 0.5
+    for p in o.data.polygons: p.use_smooth = True
+    try: o.data.use_auto_smooth = True; o.data.auto_smooth_angle = math.radians(angulo)   # Blender 4.0
+    except AttributeError: pass

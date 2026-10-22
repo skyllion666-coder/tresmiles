@@ -6,6 +6,7 @@
 import * as THREE from 'three';
 import { EXAG } from './geo.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';   // los modelos de cima con texturas escaneadas van comprimidos con meshopt (gltf-transform)
 const modelos = new Map();   // url -> Promise<gltf>
 // Las cimas de Blender están modeladas sobre suelo plano; en una arista el relieve cae a los lados y las piedras de fuera quedarían en el aire.
 // Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
@@ -25,7 +26,7 @@ function asientaPiedras(o, sueltas, alto, Se) {
   if (fijas.length) desplaza(fijas, 'fija');
   o.updateMatrixWorld(true);
 }
-const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().load(url, res, undefined, () => res(null)))); return modelos.get(url); };
+const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(url, res, undefined, () => res(null)))); return modelos.get(url); };
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
