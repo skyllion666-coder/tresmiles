@@ -51,15 +51,15 @@ for capa in range(2):
             monton.append(rocas.bloque(R, f'bloque{k}', (s * R.uniform(1.0, 1.4), s * R.uniform(0.75, 1.05), s * R.uniform(0.55, 0.85)), (x + R.uniform(-.06, .06), y + R.uniform(-.06, .06), 0.6 + capa * 0.95),
                                        (R.uniform(-.5, .5), R.uniform(-.5, .5), R.uniform(0, 3)), cortes=4, mat=M_GRIS, pintar=False, uv=1.8)); k += 1
 rocas.asentar(monton, [suelo], pasos=150)
-z0 = max(rocas.apoyo(x, y, monton) for x in (-0.4, 0.0, 0.4) for y in (-0.25, 0.0, 0.25)) - 0.08   # la torre se encaja un poco en lo más alto del montón
+z0 = max(rocas.apoyo(x, y, monton) for x in (-0.4, 0.0, 0.4) for y in (-0.25, 0.0, 0.25, 0.5)) - 0.08   # la torre se encaja un poco en lo más alto del montón
 # — torre —
 LADEO = Matrix.Rotation(0.06, 4, 'Y')   # algo inclinada a la izquierda
 perfil = [(-0.48, 0.0), (0.45, 0.0), (0.42, 0.9), (0.47, 1.3), (0.48, 1.42), (0.36, 1.46), (0.33, 1.55), (0.08, 1.76), (-0.12, 1.86), (-0.36, 1.88), (-0.5, 1.8), (-0.53, 1.2), (-0.5, 0.5)]
-alto = prisma('torre_bloque', perfil, 0.6, M_OCRE, T(0, 0.05, z0) @ LADEO)
-laja = rocas.bloque(R, 'torre_laja', (1.25, 0.7, 0.38), (0.33, -0.52, z0 + 0.6), (0.04, -0.42, 0.06), cortes=3, mat=M_OCRE, pintar=False, uv=1.5)
+alto = prisma('torre_bloque', perfil, 0.6, M_OCRE, T(0, 0.3, z0) @ LADEO)   # torre y laja centradas sobre el eje de la cresta (Y = 0): la arista es estrecha
+laja = rocas.bloque(R, 'torre_laja', (1.25, 0.7, 0.38), (0.33, -0.27, z0 + 0.6), (0.04, -0.42, 0.06), cortes=3, mat=M_OCRE, pintar=False, uv=1.5)
 bpy.context.view_layer.update()
-zt = rocas.apoyo(-0.3, 0.05, [alto])
-prisma('torre_piedra', [(-0.13, 0.0), (0.14, 0.0), (0.08, 0.14), (0.0, 0.3), (-0.09, 0.16)], 0.2, M_GRIS, T(-0.28, 0.05, zt - 0.03) @ Matrix.Rotation(0.12, 4, 'Y'), bisel=0.01)   # piedrita puntiaguda
+zt = rocas.apoyo(-0.3, 0.3, [alto])
+prisma('torre_piedra', [(-0.13, 0.0), (0.14, 0.0), (0.08, 0.14), (0.0, 0.3), (-0.09, 0.16)], 0.2, M_GRIS, T(-0.28, 0.3, zt - 0.03) @ Matrix.Rotation(0.12, 4, 'Y'), bisel=0.01)   # piedrita puntiaguda
 # — bloques de apoyo alrededor del pie de la torre (caen sobre el montón con la torre fija) —
 apoyos = []
 for x, y in ((-0.75, -0.75), (0.0, -0.95), (0.75, -0.95), (-0.95, 0.1), (0.95, 0.15), (0.0, 0.85)):
@@ -72,6 +72,10 @@ monton += apoyos
 for o in monton[:]:
     if o.location.z < -0.5 or abs(o.location.x) > 2.2 or abs(o.location.y) > 2.2: bpy.data.objects.remove(o); monton.remove(o)
 bpy.data.objects.remove(suelo)
+# los bloques que sostienen la torre y la laja van con ella («torre_base*»: la web los mueve juntos y no los oculta); el resto son sueltos («bloqueN»)
+nb = 0
+for o in monton:
+    if abs(o.location.x - 0.1) < 1.05 and -0.6 < o.location.y < 0.9: o.name = f'torre_base{nb}'; nb += 1
 # relieve real de la superficie (después de la física y de colocar la torre): más fino en la torre, que es lo que se ve de cerca
 for o in bpy.data.objects:
     if o.type != 'MESH': continue
@@ -84,4 +88,4 @@ alto_total = max((o.matrix_world @ v.co).z for o in bpy.data.objects if o.type =
 kw = dict(filepath=OUT, export_format='GLB', export_apply=True, export_yup=True, export_colors=False, export_attributes=False, export_image_format='AUTO')
 opts = {p.identifier for p in bpy.ops.export_scene.gltf.get_rna_type().properties}
 bpy.ops.export_scene.gltf(**{k: v for k, v in kw.items() if k in opts})
-print('OK', OUT, round(os.path.getsize(OUT) / 1024), 'KB', 'bloques', len(monton), 'alto', round(alto_total, 2), 'pie de la torre', round(z0, 2))
+print('OK', OUT, round(os.path.getsize(OUT) / 1024), 'KB', 'bloques', len(monton), 'de apoyo', nb, 'alto', round(alto_total, 2), 'pie de la torre', round(z0, 2))

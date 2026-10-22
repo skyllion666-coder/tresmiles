@@ -10,7 +10,7 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';   
 const modelos = new Map();   // url -> Promise<gltf>
 // Las cimas de Blender están modeladas sobre suelo plano; en una arista el relieve cae a los lados y las piedras de fuera quedarían en el aire.
 // Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
-// por el lado alto; si queda fuera de la cima, más de 0,6 m por debajo, no se dibuja) y el resto (torre, pilar, placas…) se mueve junto, a medio camino entre el relieve bajo su centro y el punto más bajo de su huella, para no romperse ni quedar volado.
+// por el lado alto; si queda fuera de la cima, más de 2,5 m del mapa por debajo, no se dibuja) y el resto (torre, pilar, placas…) se mueve junto, a medio camino entre el relieve bajo su centro y el punto más bajo de su huella, para no romperse ni quedar volado.
 const _caja = new THREE.Box3();
 function asientaPiedras(o, sueltas, alto, Se) {
   o.updateMatrixWorld(true); const suelo = o.position.y, fijas = [];
@@ -19,7 +19,7 @@ function asientaPiedras(o, sueltas, alto, Se) {
     const { min, max } = _caja, cx = (min.x + max.x) / 2, cz = (min.z + max.z) / 2, rx = (max.x - min.x) * 0.35, rz = (max.z - min.z) * 0.35;
     const hs = [[cx, cz], [cx - rx, cz - rz], [cx + rx, cz - rz], [cx - rx, cz + rz], [cx + rx, cz + rz]].map(([x, z]) => alto(x, z));
     const h = modo === 'fija' ? (Math.min(...hs) + hs[0]) / 2 : Math.min(...hs), dy = (h - suelo) / Se;
-    if (modo === 'min' && dy < -0.6) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 0,6 m reales por debajo): resbalaría ladera abajo, mejor no dibujarla
+    if (modo === 'min' && h - suelo < -2.5) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 2,5 m del mapa por debajo): quedaría colgando de la ladera, mejor no dibujarla
     for (const c of objs) c.position.y += dy;
   };
   for (const c of [...o.children]) { if (!c.isMesh) continue; if (sueltas.test(c.name)) desplaza([c], 'min'); else fijas.push(c); }

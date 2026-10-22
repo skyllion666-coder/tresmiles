@@ -13,7 +13,10 @@ OUT = '/tmp/captura'; os.makedirs(OUT, exist_ok=True)
 def req(metodo, ruta, cuerpo=None):
     r = urllib.request.Request('http://127.0.0.1:4444' + ruta, method=metodo, data=None if cuerpo is None else json.dumps(cuerpo).encode(), headers={'Content-Type': 'application/json'})
     return json.loads(urllib.request.urlopen(r, timeout=60).read())['value']
-gd = subprocess.Popen(['geckodriver', '--port', '4444'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(2)
+gd = subprocess.Popen(['geckodriver', '--port', '4444'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+for _ in range(60):   # espera a que geckodriver responda (a veces tarda más de 2 s en arrancar)
+    try: urllib.request.urlopen('http://127.0.0.1:4444/status', timeout=2); break
+    except Exception: time.sleep(0.5)
 try:
     # pageLoadStrategy «none»: los módulos con await en el nivel superior retrasan el evento load
     s = req('POST', '/session', {'capabilities': {'alwaysMatch': {'pageLoadStrategy': 'none', 'moz:firefoxOptions': {'args': [f'-width={ANCHO}', f'-height={ALTO}'], 'prefs': {'webgl.force-enabled': True}}}}})['sessionId']
