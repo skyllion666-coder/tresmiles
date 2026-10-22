@@ -1758,7 +1758,7 @@
    "pie": "Las Forquetas, vistas desde el Diente Royo.",
    "fotoCima": {
     "foto": "eri-forqueta",
-    "pie": "Las Forquetas, con un ibón a sus pies."
+    "pie": "Las dos Forquetas (la Norte y la Sureste), con un ibón a sus pies."
    },
    "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta.",
    "clase": "secundaria",
@@ -3742,7 +3742,11 @@
    },
    "desnivel": "+1.154 m · 10,1 km, circular",
    "ruta": "Esta cima aparece en la ruta «231003 ( *111 tresmil*) Collado de Eriste, Picos de la Forqueta N y SE , Tuca Forau de la Neu desde Refugio Ángel Orús», de Paco Rodriguez Garcia en Wikiloc, de 10,1 km y 1.154 m de desnivel acumulado. Está situada en Eriste (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Eriste"
+   "acceso": "Ruta en Eriste",
+   "fotoCima": {
+    "foto": "eri-forqueta",
+    "pie": "Las dos Forquetas (la Norte y la Sureste), con un ibón a sus pies."
+   }
   },
   {
    "id": "hito-occidental-del-perdiguero",
