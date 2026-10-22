@@ -7,6 +7,24 @@ import * as THREE from 'three';
 import { EXAG } from './geo.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const modelos = new Map();   // url -> Promise<gltf>
+// Las cimas de Blender están modeladas sobre suelo plano; en una arista el relieve cae a los lados y las piedras de fuera quedarían en el aire.
+// Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
+// por el lado alto; si queda fuera de la cima, más de 0,6 m por debajo, no se dibuja) y el resto (torre, pilar, placas…) se mueve junto, a medio camino entre el relieve bajo su centro y el punto más bajo de su huella, para no romperse ni quedar volado.
+const _caja = new THREE.Box3();
+function asientaPiedras(o, sueltas, alto, Se) {
+  o.updateMatrixWorld(true); const suelo = o.position.y, fijas = [];
+  const desplaza = (objs, modo) => {
+    _caja.makeEmpty(); for (const c of objs) _caja.expandByObject(c);
+    const { min, max } = _caja, cx = (min.x + max.x) / 2, cz = (min.z + max.z) / 2, rx = (max.x - min.x) * 0.35, rz = (max.z - min.z) * 0.35;
+    const hs = [[cx, cz], [cx - rx, cz - rz], [cx + rx, cz - rz], [cx - rx, cz + rz], [cx + rx, cz + rz]].map(([x, z]) => alto(x, z));
+    const h = modo === 'fija' ? (Math.min(...hs) + hs[0]) / 2 : Math.min(...hs), dy = (h - suelo) / Se;
+    if (modo === 'min' && dy < -0.6) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 0,6 m reales por debajo): resbalaría ladera abajo, mejor no dibujarla
+    for (const c of objs) c.position.y += dy;
+  };
+  for (const c of [...o.children]) { if (!c.isMesh) continue; if (sueltas.test(c.name)) desplaza([c], 'min'); else fijas.push(c); }
+  if (fijas.length) desplaza(fijas, 'fija');
+  o.updateMatrixWorld(true);
+}
 const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().load(url, res, undefined, () => res(null)))); return modelos.get(url); };
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -235,6 +253,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
             for (const [ox, oz] of [[R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
             y = Math.max(y, hc - 0.25 * Se * EXAG);
             o.position.set(px, y - 0.04 * Se, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
+            if (e.sueltas) asientaPiedras(o, new RegExp(e.sueltas), (x, z) => sample(detalles.get(id), x, z) ?? geo.heightAt(x, z), Se);
             scene.add(o); extras.push(o);
           }
         }

@@ -141,6 +141,7 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.pin-pegado .pin-stem { opacity: 0; }   /* pegado a la cima el hilo cruzaría la pantalla como una raya */
 .pin.pin-agr { opacity: 0; pointer-events: none; }
 .pin.pin-tenue { opacity: .3; }   /* círculos amontonados: solo se ve el más cercano */
+.pin.pin-tenue.is-hidden { opacity: 0; }   /* oculto manda sobre tenue (si no, quedaban círculos fantasma en su última posición) */
 .pin.pin-alto .pin-stem { width: 1px; margin-left: -.5px; opacity: .75; }
 .pin-label { position: absolute; top: calc(var(--hit) / 2 + 21px); left: 50%; transform: translateX(-50%); white-space: nowrap; text-align: center; background: rgba(10, 22, 18, .58); border: 1px solid rgba(255, 255, 255, .26); border-radius: 14px; color: #fff; padding: 4px 11px 5px; font: 600 .68rem/1.25 var(--cond); letter-spacing: .14em; text-transform: uppercase; opacity: 0; transition: opacity .35s ease; pointer-events: none; text-shadow: 0 1px 5px rgba(0, 0, 0, .35); }
 .pin-label i { display: block; text-transform: none; font-style: normal; font-weight: 500; letter-spacing: .08em; color: #f3e6c8; }

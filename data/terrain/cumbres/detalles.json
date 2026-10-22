@@ -148,7 +148,8 @@
     "giro": 0.0,
     "ancla": true,
     "ref": "Máximo del MDT05 (3310.2 m); cresta de bloques de granito con una torre, un canto encajado, nieve a la derecha y un poste con buzón, según la foto de la cima del usuario (22-10-2026)",
-    "huella": 1.8
+    "huella": 1.8,
+    "sueltas": "^(bloque|nieve)\\d"
    }
   ]
  },
@@ -170,7 +171,8 @@
     "giro": 0.0,
     "ancla": true,
     "ref": "Máximo del MDT05; bloque de hormigón con «GRAND VIGNEMALE (3298 m)», placa verde de vértice, piedras pintadas y lajas sobre un majano de bloques pardo-rojizos, según la foto de la cima aportada por el usuario (22-10-2026)",
-    "huella": 1.4
+    "huella": 1.4,
+    "sueltas": "^roca\\d"
    }
   ]
  },
@@ -214,7 +216,8 @@
     "giro": 0.3,
     "ancla": true,
     "ref": "Máximo del MDT05 (3.064,4 m); montón de bloques con laja pintada «PICO GARMO NEGRO 3051», según foto de la cima del usuario",
-    "huella": 1.2
+    "huella": 1.2,
+    "sueltas": "^(bloque|base)\\d"
    }
   ]
  },
@@ -236,7 +239,8 @@
     "giro": -0.19,
     "ancla": true,
     "huella": 2.0,
-    "ref": "Máximo local del MDT05 en la Astorg (3.347 m; el MDT suaviza la aguja); la cresta va de oeste (Maldito) a este (Medio). Torre de dos lajas sobre un montón de bloques, según fotos de referencia del usuario con una persona encima para la escala."
+    "ref": "Máximo local del MDT05 en la Astorg (3.347 m; el MDT suaviza la aguja); la cresta va de oeste (Maldito) a este (Medio). Torre de dos lajas sobre un montón de bloques, según fotos de referencia del usuario con una persona encima para la escala.",
+    "sueltas": "^(bloque|cresta)\\d"
    }
   ]
  }
