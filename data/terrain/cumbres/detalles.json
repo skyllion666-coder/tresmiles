@@ -244,6 +244,7 @@
    }
   ],
   "orto": "astorg-cima-orto.webp",
-  "ortoM": "astorg-cima-orto-m.webp"
+  "ortoM": "astorg-cima-orto-m.webp",
+  "modeloHD": "models/cima-astorg-hd.glb"
  }
 }

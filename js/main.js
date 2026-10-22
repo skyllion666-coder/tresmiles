@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=19';
+import { Terrain } from './terrain.js?v=20';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=34';
+import { crearCumbres } from './cumbres.js?v=35';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
@@ -645,7 +645,7 @@ async function boot() {
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
-      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button></p>
+      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${cumbres.ficha()?.[p.id]?.modelo ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
       ${p.ruta ? `<h3>${/^Esta (cima|cumbre) aparece en la ruta/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${p.info.traducido ? 'Texto traducido al castellano' : 'Texto'} de Wikipedia en ${{ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]}, artículo «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.</p>` : ''}
@@ -678,6 +678,7 @@ async function boot() {
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
     if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
+    if (act?.dataset.act === 'cerca') { vistaCima(S.active); return; }
     if (act?.dataset.act === 'hecho') { marcaHecho(S.active); return; }
     const b = e.target.closest('#btn-ruta'); if (!b) return;
     rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
@@ -870,6 +871,16 @@ async function boot() {
   pintaHechos();
 
   // vista opcional de detalle del Paso de Mahoma: la cámara se acerca con el vuelo de siempre y el usuario conserva el control
+  // vista de cerca de una cima con modelo de Blender (vértice, torre de piedras…): la cámara baja a unas decenas de metros, de frente al modelo, y el usuario conserva el control
+  async function vistaCima(id) {
+    if (!id) return;
+    await cumbres.carga(id); const d = cumbres.ficha()?.[id], e = d?.elementos?.find((x) => x.ancla) ?? d?.elementos?.[0]; if (!e) return;
+    pararVuelo(false); if (!S.plegada) plegar(true, { fly: false });
+    S.detalle = true; controls.minDistance = 20;
+    if (S.sun !== 1) setSun(1);   // luz de mediodía: neutra y alta, deja ver el color de la roca (la de mañana y tarde la tiñe de naranja)
+    const Se = e.escala ?? d.escalaModelo ?? 1, t = new THREE.Vector3(e.x, geo.heightAt(e.x, e.z) + 1.3 * Se, e.z);
+    flyTo({ t, r: Math.max(45, 7.5 * Se), phi: 1.2, theta: e.giro ?? 0 }, { dur: 3.2, shift: { x: 0, y: 0 } });   // el frente del modelo (−Y en Blender) mira hacia +Z, girado `giro`
+  }
   async function vistaMahoma(cual) {
     if (S.active !== 'aneto') return;
     await cumbres.carga('aneto'); const d = cumbres.ficha()?.aneto; if (!d) return;
@@ -1118,6 +1129,7 @@ async function boot() {
     S.shift.x += (S.shiftTo.x - S.shift.x) * k; S.shift.y += (S.shiftTo.y - S.shift.y) * k;
     if (Math.abs(S.shift.x) + Math.abs(S.shift.y) > 0.5) camera.setViewOffset(innerWidth, innerHeight, S.shift.x, S.shift.y, innerWidth, innerHeight);
     else if (camera.view?.enabled) camera.clearViewOffset();
+    { const cerca = S.detalle ? 8 : 60; if (camera.near !== cerca) { camera.near = cerca; camera.updateProjectionMatrix(); } }   // en las vistas de cerca (cima, Paso de Mahoma) el recorte cercano de 60 m cortaba los modelos
     camera.updateMatrixWorld();
     sky.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     terrain.update(camera); cumbres.update(camera); veg.update(camera); banderines.update(camera, now / 1000);

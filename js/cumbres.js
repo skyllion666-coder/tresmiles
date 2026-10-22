@@ -26,7 +26,16 @@ function asientaPiedras(o, sueltas, alto, Se) {
   if (fijas.length) desplaza(fijas, 'fija');
   o.updateMatrixWorld(true);
 }
-const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(url, res, undefined, () => res(null)))); return modelos.get(url); };
+// Luz de los modelos de cima: la web usa luz cálida y algo de bruma que tiñen la roca de pardo y aplastan el relieve; los que llevan textura
+// (roca escaneada) se enfrían un poco y reciben algo de luz propia desde su textura, para que se vea el gris del granito y su grano también a la sombra.
+function luzModelo(gl) {
+  gl?.scene.traverse((o) => {
+    if (!o.isMesh || !o.material?.map || o.material.userData.luz) return;
+    const m = o.material; m.userData.luz = true; m.color.setRGB(0.93, 0.97, 1.05); m.emissive.setRGB(0.16, 0.16, 0.17); m.emissiveMap = m.map; m.needsUpdate = true;
+  });
+  return gl;
+}
+const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promise((res) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(url, (g) => res(luzModelo(g)), undefined, () => res(null)))); return modelos.get(url); };
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
@@ -51,6 +60,11 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
     if (pb) u.pb.value.set(pb[0], pb[1], pb[2], pb[3]);
     if (og) og.forEach((v, i) => u.og[i].value.set(v[0], v[1], v[2]));   // ajuste de color al satélite (tools/igualar_orto.py)
   }
+  // textura de granito escaneado para el suelo de roca de las cimas de granito (Poly Haven rock_boulder_dry, CC0; luminancia lineal media 0,348)
+  let texGranitoP = null;
+  const texGranito = () => (texGranitoP ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/${movil ? 'granito-suelo-m' : 'granito-suelo'}.jpg?v=${window.WEB_V || 0}`, (t) => {
+    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, terrain.aniso ?? 4); res(t);
+  }, undefined, () => res(null))));
   const detalles = new Map(), detCarga = new Set();   // id -> detalle local (Paso de Mahoma)
   geo.setExtra((x, z) => {
     for (const d of detalles.values()) { const h = sample(d, x, z); if (h !== undefined) return h; }
@@ -200,6 +214,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
       g.setAttribute('aRoca', new THREE.BufferAttribute(roca, 1)); g.setIndex(idx); g.computeBoundingSphere();
       const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
+      if (d.roca === 'granito') texGranito().then((t) => { if (!t) return; const [tg, k, gm] = mat.userData.gran; tg.value = t; k.value = 1; gm.value = 0.348; });   // roca de la cima con granito escaneado (terrain.js)
       if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[id]?.og);
       // parche de ortofoto a máxima resolución solo en estos 200 m (tools/build_orto_cima.py), encima de la de la pieza; el color ya viene igualado a ella
       const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : movil ? d.ortoM : d.orto;
@@ -249,7 +264,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       // elementos de cumbre modelados en Blender a partir de fotografías (p. ej. Monte Perdido: vértice roto y mojón con buzón)
       const extras = [];
       if (d.modelo && d.elementos?.length) {
-        const gl = await cargaModelo(`${d.modelo}?v=${window.WEB_V || 0}`);   // la versión de la web evita modelos viejos en caché
+        const gl = await cargaModelo(`${!movil && d.modeloHD ? d.modeloHD : d.modelo}?v=${window.WEB_V || 0}`);   // en ordenador, la versión con texturas más grandes si la hay; la versión de la web evita modelos viejos en caché
         if (gl && detalles.has(id)) {
           const S = d.escalaModelo ?? 1, an = d.elementos.find((e) => e.ancla) ?? d.elementos[0];
           for (const e of d.elementos) {

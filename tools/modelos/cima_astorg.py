@@ -11,6 +11,7 @@ El contorno del bloque se dibuja a mano a partir de la foto (no es una forma al 
 Unidades: metros. Z arriba; origen en el centro del montón, a ras de suelo. Frente (la cara de la foto) = -Y; la cresta va a lo largo del eje X.
 Las piezas del montón se llaman «bloqueN» (la web las asienta una a una en el relieve); las de la torre, «torre_*» (se mueven juntas).
 Uso: blender -b --python tools/modelos/cima_astorg.py -- /tmp/cima-astorg.glb
+  (con --hd, la versión de ordenador con el color del bloque a 2048 px: models/cima-astorg-hd.glb)
   y después comprimir la malla (el Blender del sistema no trae Draco): npx -y @gltf-transform/cli@4 meshopt /tmp/cima-astorg.glb models/cima-astorg.glb --level medium
   (la web lo lee con el MeshoptDecoder de vendor/three/libs)."""
 import bpy, bmesh, math, sys, os, random
@@ -18,10 +19,11 @@ from mathutils import Vector, Matrix
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import rocas
 args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
+HD = '--hd' in args; args = [a for a in args if a != '--hd']   # --hd: color del bloque y la laja a 2048 px (versión de ordenador)
 OUT = args[0] if args else '/tmp/cima-astorg.glb'
 bpy.ops.wm.read_factory_settings(use_empty=True)
 R = random.Random(3355)
-M_OCRE = rocas.material_escaneado('granito_ocre', 'rock_08')            # granito ocre-pardo moteado (Poly Haven, CC0; 1,5 m de lado)
+M_OCRE = rocas.material_escaneado('granito_ocre', 'rock_08', tam='2k' if HD else '1k', tam_nor='1k')            # granito ocre-pardo moteado (Poly Haven, CC0; 1,5 m de lado)
 M_GRIS = rocas.material_escaneado('granito_gris', 'rock_boulder_dry', tam='512')   # piedra gris clara (Poly Haven, CC0; 1,8 m de lado)
 V = bpy.data.objects.new('Vertice', None); bpy.context.collection.objects.link(V)
 T = lambda x, y, z: Matrix.Translation((x, y, z))

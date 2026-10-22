@@ -128,11 +128,11 @@ def uv_caja(o, R, tam=1.2):
 
 # — texturas escaneadas (Poly Haven, CC0; ~/tresmiles-fuentes/texturas, ver LEEME.txt): color + mapa de normales, y la altura para deformar la malla —
 TEX = os.path.expanduser('~/tresmiles-fuentes/texturas')
-def material_escaneado(nombre, id_tex, rough=0.88, tam='1k'):
+def material_escaneado(nombre, id_tex, rough=0.88, tam='1k', tam_nor=None):
     m = bpy.data.materials.new(nombre); m.use_nodes = True; nt = m.node_tree
     b = next(x for x in nt.nodes if x.type == 'BSDF_PRINCIPLED'); b.inputs['Roughness'].default_value = rough
     c = nt.nodes.new('ShaderNodeTexImage'); c.image = bpy.data.images.load(f'{TEX}/web/{id_tex}_diff_{tam}.jpg'); nt.links.new(c.outputs['Color'], b.inputs['Base Color'])
-    n = nt.nodes.new('ShaderNodeTexImage'); n.image = bpy.data.images.load(f'{TEX}/web/{id_tex}_nor_{tam}.jpg'); n.image.colorspace_settings.name = 'Non-Color'
+    n = nt.nodes.new('ShaderNodeTexImage'); n.image = bpy.data.images.load(f'{TEX}/web/{id_tex}_nor_{tam_nor or tam}.jpg'); n.image.colorspace_settings.name = 'Non-Color'
     nm = nt.nodes.new('ShaderNodeNormalMap'); nt.links.new(n.outputs['Color'], nm.inputs['Color']); nt.links.new(nm.outputs['Normal'], b.inputs['Normal'])
     return m
 
