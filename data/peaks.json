@@ -2877,7 +2877,11 @@
    "basica": true,
    "inv": "PER-16",
    "foto": "espalda-del-marbore",
-   "pie": "La Espalda del Marboré y su gran pared sobre la cascada."
+   "pie": "La Espalda del Marboré y su gran pared sobre la cascada.",
+   "fotoCima": {
+    "foto": "espalda-marbore-nevero",
+    "pie": "Turqueta o Espalda del Marboré: el nevero bajo la pared."
+   }
   },
   {
    "id": "gran-astazu",
