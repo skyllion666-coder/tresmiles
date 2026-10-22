@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=4';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=5';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -117,6 +117,9 @@ export function crearRuta({ scene, geo, ruta }) {
     auto = auto.filter((z) => !z.fun);
     for (const q of lista) { const c = cercano(q.x, q.z); if (c.metros < 120) auto.push({ d0: c.dist - 45, d1: c.dist + 45, n: 1, fun: true }); }
   }
+  // hielo y glaciares (ruta.hielo: tramos [d0, d1] en m desde el inicio, de tools/build_hielo.py): se calzan los crampones 40 m antes de entrar y se quitan 40 m después de salir
+  const hielo = (ruta.hielo || []).map(([a, b]) => ({ d0: a - 40, d1: b + 40 }));
+  const nivelHielo = (d) => (hielo.some((z) => d >= z.d0 && d <= z.d1) ? 1 : 0);
   // intensidad del tramo especial (0 = marcha normal, 1 = en la arista) según la posición sobre el recorrido: sube durante la aproximación y baja tras la salida
   function nivelEn(d) {
     if (!paso) return 0; let n = 0;
@@ -135,13 +138,14 @@ export function crearRuta({ scene, geo, ruta }) {
     return { n, c: { agach: sstep(0.08, 0.7, n) * 0.8, manos: sstep(0.4, 0.95, n), cuatro: cu * sstep(0.8, 1, n), giro: 0.12 * Math.sin(tt * 0.7 + i * 1.7) * n } };
   }
   function colocar(p, d, lat, andando, pos = null, vrel = 1, vel = null) {
+    const hi = nivelHielo(d);
     const w = pos ? 8 + (40 - 8) * (1 - pos.n) : 40;
     const a = en(d), b = en(d + w), c = en(d - w);
     let dx = b.pos.x - c.pos.x, dz = b.pos.z - c.pos.z; const L = Math.hypot(dx, dz) || 1; dx /= L; dz /= L;
     const l = lat * (pos ? 1 - pos.n : 1), x = a.pos.x + dz * l, z = a.pos.z - dx * l;
     p.h.position.set(x, geo.heightAt(x, z) + 1.2, z);   // los pies sobre el relieve (la línea de la ruta queda aparte, por encima)
     const yaw = Math.atan2(dx, dz); p.yaw = p.yaw == null ? yaw : p.yaw + Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)) * 0.2; p.h.rotation.y = p.yaw;   // mira hacia donde avanza el recorrido
-    p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c, andando ? vel : 0);
+    p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c, andando ? vel : 0, hi);
   }
   // cuerda entre montañeros consecutivos: tubo fino de 4 caras que se rehace cada fotograma a partir de sus cinturas (curva con holgura, sin física)
   const NS = 12, cuerdaMat = new THREE.MeshBasicMaterial({ color: '#c0392b', fog: true, transparent: true, opacity: 0 });
@@ -221,7 +225,8 @@ export function crearRuta({ scene, geo, ruta }) {
       } else if (!reducido) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
-          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n);
+          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.4 * nivelHielo(q.d));   // sobre el hielo, con crampones, más despacio
+         
           const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
           if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }

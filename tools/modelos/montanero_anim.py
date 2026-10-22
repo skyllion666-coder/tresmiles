@@ -3,7 +3,7 @@
 Base: maniquí y animaciones del *Universal Animation Library* (Standard) de Quaternius, CC0 (https://quaternius.com/packs/universalanimationlibrary.html;
 zip «Universal Animation Library [Standard]» en https://opengameart.org/node/174563 → Godot/AnimationLibrary_Godot_Standard.glb). El archivo de origen se guarda fuera
 del repositorio: ~/tresmiles-fuentes/AnimationLibrary_Godot_Standard.glb.
-Aquí se le pone la ropa por zonas (materiales: chaqueta, pantalon, piel, guante, bota), casco, gafas, tres mochilas y dos bastones atados a los huesos, y se
+Aquí se le pone la ropa por zonas (materiales: chaqueta, pantalon, piel, guante, bota), casco, gafas, tres mochilas, dos bastones y unos crampones (en la bota o en la mochila) atados a los huesos, y se
 dejan solo los clips que usa la web, sin dedos ni traslaciones (para que pese poco). Los nodos «Casco», «Gafas», «Mochila_grande/media/pequena», «Baston_L/R»
 se encienden o apagan desde el código; los materiales se tiñen desde el código (cada montañero con su ropa).
 Unidades: metros, 1,83 m de alto, mira hacia +Z (glTF). Uso: blender -b --python tools/modelos/montanero_anim.py -- models/montanero-anim.glb [vista.png]
@@ -98,7 +98,8 @@ def esfera(r, seg=16):
     bm = bmesh.new(); bmesh.ops.create_uvsphere(bm, u_segments=seg, v_segments=max(6, seg // 2), radius=r); return bm
 def caja(w, d, h, bisel=0.02):
     bm = bmesh.new(); bmesh.ops.create_cube(bm, size=1); bmesh.ops.scale(bm, vec=(w, d, h), verts=bm.verts)
-    bmesh.ops.bevel(bm, geom=bm.edges[:], offset=bisel, segments=2, affect='EDGES'); return bm
+    if bisel > 0: bmesh.ops.bevel(bm, geom=bm.edges[:], offset=bisel, segments=2, affect='EDGES')
+    return bm
 M_CASCO = mat('casco', (0.91, 0.9, 0.86), 0.35); M_LENTE = mat('lente', (0.11, 0.16, 0.21), 0.15, 0.3); M_MOCH = mat('mochila', (0.85, 0.51, 0.17), 0.7); M_MOCH2 = mat('mochila2', (0.6, 0.35, 0.1), 0.7)
 M_PALO = mat('palo', (0.68, 0.7, 0.73), 0.35, 0.4); M_NEGRO = mat('negro', (0.1, 0.1, 0.11), 0.8)
 bpy.context.view_layer.update()
@@ -148,6 +149,42 @@ for nombre, (w, d, h, zc) in {'Mochila_grande': (0.36, 0.24, 0.52, 1.25), 'Mochi
     if CHICA: w *= 0.86; d *= 0.92
     pieza(nombre, caja(w, d, h, 0.04), M_MOCH, 'DEF-spine.003', T(0, 0.164 + d / 2 - 0.02, zc))
     if nombre == 'Mochila_grande': pieza('Mochila_tapa', caja(w * 0.98, d * 1.05, 0.1, 0.035), M_MOCH2, 'DEF-spine.003', T(0, 0.164 + d / 2 - 0.02, zc + h / 2 + 0.01))
+# crampones: 12 puntas (8 hacia abajo en dos tramos, 2 centrales y 2 frontales hacia delante). En la bota (tramo de la punta al hueso del dedo, tramo del talón al pie) y recogidos en la espalda de cada mochila.
+# Local: x ancho, y largo (la punta de la bota en -y), las puntas hacia -z. El código enciende «Crampon_*» en las botas o «Crampones_*» en la mochila según haya hielo.
+M_METAL = mat('metal', (0.72, 0.74, 0.78), 0.3, 0.8); M_CORREA = mat('correa', (0.88, 0.22, 0.1), 0.7)
+def suma(bm, parte, M):
+    bmesh.ops.transform(parte, matrix=M, verts=parte.verts); t = bpy.data.meshes.new('t'); parte.to_mesh(t); parte.free(); bm.from_mesh(t); bpy.data.meshes.remove(t)
+def puas(bm, y, xs, largo=0.026, base=0.009, z=-0.004):
+    for x in xs:
+        c = bmesh.new(); bmesh.ops.create_cone(c, cap_ends=True, segments=6, radius1=0.0015, radius2=base, depth=largo); suma(bm, c, T(x, y, z - largo / 2))
+def crampon(tramo, cx=0.0):   # tramo: 'punta' (y de -0.205 a -0.115) o 'talon' (y de -0.115 a 0.092)
+    bm = bmesh.new(); a, b = (-0.205, -0.115) if tramo == 'punta' else (-0.115, 0.092); ym = (a + b) / 2; L = b - a
+    for sg in (-1, 1): suma(bm, caja(0.011, L, 0.008, 0), T(cx + sg * 0.042, ym, -0.004))   # largueros
+    ys = (-0.185, -0.13) if tramo == 'punta' else (-0.02, 0.07)
+    for y in ys: suma(bm, caja(0.095, 0.012, 0.008, 0), T(cx, y, -0.004))   # travesaños
+    if tramo == 'talon': suma(bm, caja(0.012, 0.05, 0.008, 0), T(cx, -0.11, -0.004))   # barra de unión
+    for y in ys: puas(bm, y, (cx - 0.042, cx + 0.042))
+    puas(bm, -0.155 if tramo == 'punta' else 0.025, (cx,))
+    if tramo == 'punta':   # dos puntas frontales, inclinadas hacia delante
+        for sg in (-1, 1):
+            c = bmesh.new(); bmesh.ops.create_cone(c, cap_ends=True, segments=6, radius1=0.0015, radius2=0.009, depth=0.04); suma(bm, c, T(cx + sg * 0.025, -0.215, -0.012) @ Matrix.Rotation(-0.9, 4, 'X'))
+    return bm
+for lado, cx in (('L', 0.099), ('R', -0.099)):
+    pieza(f'Crampon_{lado}_punta', crampon('punta', cx), M_METAL, f'DEF-toe.{lado}'); pieza(f'Crampon_{lado}_talon', crampon('talon', cx), M_METAL, f'DEF-foot.{lado}')
+    b = bmesh.new()   # correas rojas: sobre el empeine y alrededor del tobillo
+    suma(b, caja(0.128, 0.024, 0.012, 0), T(cx, -0.05, 0.088)); suma(b, caja(0.128, 0.024, 0.012, 0), T(cx, 0.04, 0.115))
+    for sg in (-1, 1): suma(b, caja(0.012, 0.024, 0.09, 0), T(cx + sg * 0.062, -0.05, 0.04)); suma(b, caja(0.012, 0.024, 0.115, 0), T(cx + sg * 0.062, 0.04, 0.05))
+    pieza(f'Crampon_{lado}_correas', b, M_CORREA, f'DEF-foot.{lado}')
+for nombre, (w, d, h, zc) in {'grande': (0.36, 0.24, 0.52, 1.25), 'media': (0.32, 0.2, 0.42, 1.27), 'pequena': (0.28, 0.15, 0.32, 1.31)}.items():
+    if CHICA: w *= 0.86; d *= 0.92
+    ya = 0.164 + d - 0.02; k = min(1.0, (h - 0.04) / 0.3)   # cara trasera de la mochila y escala para que quepan
+    bm = bmesh.new()
+    for sg in (-1, 1):
+        c = crampon('punta') ; suma(c, crampon('talon'), Matrix.Identity(4)); suma(bm, c, T(sg * w * 0.2, ya + 0.004, zc) @ Matrix.Rotation(math.pi / 2, 4, 'X') @ Matrix.Scale(k, 4) @ T(0, 0.0, 0))
+    pieza(f'Crampones_{nombre}', bm, M_METAL, 'DEF-spine.003')
+    b = bmesh.new()
+    for dz in (-0.07, 0.07): suma(b, caja(w * 0.78, 0.012, 0.022, 0), T(0, ya + 0.002, zc + dz * k))
+    pieza(f'Crampones_{nombre}_correas', b, M_CORREA, 'DEF-spine.003')
 # bastones: se orientan con la mano en el primer fotograma de «andar» (puño casi vertical), punta algo hacia atrás
 arm.animation_data.action = walk; bpy.context.scene.frame_set(0); bpy.context.view_layer.update()
 for lado, hueso in (('L', 'DEF-hand.L'), ('R', 'DEF-hand.R')):

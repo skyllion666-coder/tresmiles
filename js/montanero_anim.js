@@ -4,7 +4,7 @@ import { clone } from 'three/addons/utils/SkeletonUtils.js';
 import { crearMontanero } from './montanero.js?v=7';
 
 // Montañero con esqueleto y animaciones (models/montanero-anim.glb, hecho en Blender con el maniquí y los clips CC0 de Quaternius: ver tools/modelos/montanero_anim.py).
-// Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel), altura }. Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
+// Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel, hielo), altura } (hielo > 0,5: lleva los crampones puestos; si no, en la mochila). Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
 // La velocidad `vel` (m/s del montañero) elige el clip: idle → andar (≈1,2 m/s) → trotar (≈5 m/s) → correr (≈7,5 m/s), mezclados y con el ritmo del paso ajustado a la velocidad
 // para que los pies no resbalen. c = { agach, manos, cuatro, brazos, giro }: agachado (clip «agachado») y brazos abiertos del funambulista (los brazos vuelven hacia la pose de reposo en T).
 const URL_GLB = { chico: new URL('../models/montanero-anim.glb', import.meta.url).href, chica: new URL('../models/montanera-anim.glb', import.meta.url).href };   // la montañera: mismo esqueleto y clips, otro cuerpo, pelo y coleta (tools/modelos/montanero_anim.py --chica)
@@ -27,6 +27,13 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
   const nodo = (n) => root.getObjectByName(n);
   for (const n of ['Mochila_grande', 'Mochila_media', 'Mochila_pequena']) { const o = nodo(n); if (o) o.visible = n === tapa; }
   const t = nodo('Mochila_tapa'); if (t) t.visible = tapa === 'Mochila_grande';
+  // crampones: recogidos en la espalda de la mochila (Crampones_<tipo>) o puestos en las botas (Crampon_L/R_*), según `hielo` (0-1; se cambian al pasar de 0,5)
+  const enMochila = ['', '_correas'].map((x) => nodo(`Crampones_${mochilaTipo}${x}`)).filter(Boolean);
+  for (const n of ['grande', 'media', 'pequena']) if (n !== mochilaTipo) for (const x of ['', '_correas']) { const o = nodo(`Crampones_${n}${x}`); if (o) o.visible = false; }
+  const enBotas = ['L', 'R'].flatMap((l) => ['punta', 'talon', 'correas'].map((x) => nodo(`Crampon_${l}_${x}`))).filter(Boolean);
+  let conHielo = null;
+  const ponCrampones = (si) => { if (si === conHielo) return; conHielo = si; for (const o of enMochila) o.visible = !si; for (const o of enBotas) o.visible = si; };
+  ponCrampones(false);
   for (const l of ['R', 'L']) for (const s of ['', '_mango', '_punta']) { const o = nodo(`Baston_${l}${s}`); if (o) o.visible = false; }   // los bastones del GLB van rígidos a la mano: se dibujan aparte para clavarlos en el suelo
   const matPalo = new THREE.MeshStandardMaterial({ color: col.palo, roughness: 0.35, metalness: 0.4 }), matNegro = new THREE.MeshStandardMaterial({ color: col.negro, roughness: 0.8 });
   const LB = 1.12;   // largo del bastón (m)
@@ -76,7 +83,8 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     V.d2.copy(V.a).addScaledVector(V.t, dist).sub(V.b).normalize(); giraHacia(codo, V.d1, V.d2, peso);
   }
   const AX = new THREE.Vector3(), OBJ = new THREE.Vector3(), POLO = new THREE.Vector3(), PH = new THREE.Vector3(), PH2 = new THREE.Vector3(), prevMano = { R: new THREE.Vector3(), L: new THREE.Vector3() };
-  function pose(fase, k, inc = 0, c = null, vel = null) {
+  function pose(fase, k, inc = 0, c = null, vel = null, hielo = 0) {
+    ponCrampones(hielo > 0.5);
     const ahora = performance.now(), dt = clamp((ahora - ultimo) / 1000, 0.001, 0.1); ultimo = ahora;
     let s = vel ?? (k > 0.01 ? 1 + 5 * k : 0);   // sin velocidad explícita (cursor): a ojo desde la amplitud del paso
     const a = clamp(Math.max(c?.agach ?? 0, c?.cuatro ?? 0) * 1.25, 0, 1), br = c?.brazos ?? 0;
@@ -137,5 +145,5 @@ export function crearMontaneroAnim(opts = {}) {
   const viejo = crearMontanero(opts), group = new THREE.Group(); group.add(viejo.group);
   let nuevo = null;
   cargaGLB(opts.chica ? 'chica' : 'chico').then((g) => { if (!g) return; nuevo = construye(g, opts); group.remove(viejo.group); group.add(nuevo.root); });
-  return { group, altura: opts.chica ? 1.71 : 1.84, pose: (fase, k, inc, c, vel) => (nuevo ? nuevo.pose(fase, k, inc, c, vel) : viejo.pose(fase, k, inc, c)), evento: (tipo) => (nuevo ? nuevo.evento(tipo) : 0) };
+  return { group, altura: opts.chica ? 1.71 : 1.84, pose: (fase, k, inc, c, vel, hielo) => (nuevo ? nuevo.pose(fase, k, inc, c, vel, hielo) : viejo.pose(fase, k, inc, c)), evento: (tipo) => (nuevo ? nuevo.evento(tipo) : 0) };
 }
