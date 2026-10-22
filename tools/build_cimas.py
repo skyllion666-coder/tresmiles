@@ -22,6 +22,7 @@ CIMAS = {
   'perdido':   (42.675548, 0.034357, 'caliza',  'OSM peak 42.675548,0.034357; IGN vértice 14660 (pilar 1,2 m, 1982) a 2 m, destruido el 26-12-2023; «El monte es muy pedregoso» (IGN). Macizo calcáreo (Ordesa-Monte Perdido).'),
   'maladeta':  (42.646432, 0.640276, 'granito', 'OSM peak 42.646432,0.640276 (CNIG). Macizo granítico de la Maladeta. Sin cruz ni vértice documentados.'),
   'balaitus':  (42.838917, -0.29025, 'neutra',  'Coordenada de la ficha (OSM/IGN). Pilar de hormigón en dos tramos sobre losa con placa de vértice geodésico, medallón y cartel «BALAITUS 3.145» según foto de la cima aportada por el usuario. Macizo de Balaitous (granodiorita); losas grises claras en la cima.'),
+  'astorg':    (42.63945, 0.64261, 'granito', 'Coordenada de la ficha. Cresta granítica Maldito–Astorg–Medio. Cima: torre de dos lajas apiladas (la alta encima de una plana) sobre un montón de bloques, con una piedrita encima, según fotos de referencia del usuario (una con una persona de pie encima, para la escala).'),
   'garmo':     (42.771667, -0.264139, 'neutra',  'Coordenada de la ficha (OSM/IGN). Montón de bloques de roca pardo-rojiza con una laja grande pintada «PICO GARMO NEGRO 3051», según foto de la cima aportada por el usuario. Litología no verificada en esta sesión.'),
   'vignemale': (42.773943, -0.147344, 'neutra', 'OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión.'),
 }
