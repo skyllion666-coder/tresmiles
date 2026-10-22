@@ -138,7 +138,21 @@
   "paso": 1.0,
   "archivo": "maladeta-cima.bin.gz",
   "roca": "granito",
-  "ref": "OSM peak 42.646432,0.640276 (CNIG). Macizo granítico de la Maladeta. Sin cruz ni vértice documentados."
+  "ref": "OSM peak 42.646432,0.640276 (CNIG). Macizo granítico de la Maladeta. Foto de la cima del usuario: bloques de granito, nieve y un poste con buzón; sin cruz ni vértice a la vista.",
+  "modelo": "models/cima-maladeta.glb",
+  "escalaModelo": 4,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 43325.39,
+    "z": 14462.8,
+    "giro": 0.0,
+    "ancla": true,
+    "ref": "Máximo del MDT05 (3310.2 m); cresta de bloques de granito con una torre, un canto encajado, nieve a la derecha y un poste con buzón, según la foto de la cima del usuario (22-10-2026)",
+    "huella": 1.8,
+    "escala": 4
+   }
+  ]
  },
  "vignemale": {
   "x0": -21138.87,
