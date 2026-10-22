@@ -147,7 +147,7 @@
   "paso": 1.0,
   "archivo": "vignemale-cima.bin.gz",
   "roca": "neutra",
-  "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con remache de hierro (IGN Francia, 1949, vu en place) sin confirmar hoy. Litología no verificada en esta sesión.",
+  "ref": "OSM peak 42.773943,-0.147344 (Pique Longue). Bloque de hormigón con la inscripción «GRAND VIGNEMALE (3298 m)» y placa verde de vértice (foto de la cima del usuario). Litología no verificada en esta sesión.",
   "modelo": "models/cima-vignemale.glb",
   "escalaModelo": 3,
   "elementos": [
@@ -157,8 +157,8 @@
     "z": 278.25,
     "giro": 0.0,
     "ancla": true,
-    "ref": "Máximo del MDT05; pilar de hormigón con pañuelos y banderas sobre losa, bloque plano y montón de bloques, según la foto de la cima de la ficha (Eva Gl)",
-    "huella": 1.2,
+    "ref": "Máximo del MDT05; bloque de hormigón con «GRAND VIGNEMALE (3298 m)», placa verde de vértice, piedras pintadas y lajas sobre un majano de bloques pardo-rojizos, según la foto de la cima aportada por el usuario (22-10-2026)",
+    "huella": 1.4,
     "escala": 3
    }
   ]
