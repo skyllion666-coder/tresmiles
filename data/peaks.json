@@ -4772,7 +4772,11 @@
    "basica": true,
    "inv": "ANE-21",
    "foto": "maladeta-noreste",
-   "pie": "La Maladeta Noreste y su cresta sobre el glaciar."
+   "pie": "La Maladeta Noreste y su cresta sobre el glaciar.",
+   "fotoCima": {
+    "foto": "maladeta-noreste-antecima",
+    "pie": "Maladeta Noreste o antecima, con el glaciar a la derecha."
+   }
   },
   {
    "id": "aguja-del-collado-de-coronas",
