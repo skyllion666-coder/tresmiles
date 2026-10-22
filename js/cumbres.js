@@ -113,7 +113,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.repeat.set(cw / pw, cd / pw); tex.offset.set((ch.x0 - x0) / pw, (pw - (ch.z0 - z0) - cd) / pw);   // de las coordenadas del bloque a las de la ortofoto
         aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado], d.og); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
-        const dt = detalles.get(id); if (dt?.mat) aplicaOrto(dt.mat, tex, ch, null, d.og);   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
+        const dt = detalles.get(id); if (dt?.mat && !dt.ortoCima) aplicaOrto(dt.mat, tex, ch, null, d.og);   // (si la cima ya tiene su parche de máxima resolución, se queda con él)   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
       }, undefined, () => {});
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
@@ -200,6 +200,14 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       g.setAttribute('aRoca', new THREE.BufferAttribute(roca, 1)); g.setIndex(idx); g.computeBoundingSphere();
       const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[id]?.og);
+      // parche de ortofoto a máxima resolución solo en estos 200 m (tools/build_orto_cima.py), encima de la de la pieza; el color ya viene igualado a ella
+      const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : movil ? d.ortoM : d.orto;
+      if (archivoCima) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoCima}?v=${window.WEB_V || 0}`, (tex) => {
+        const dt = detalles.get(id); if (!dt || dt.mat !== mat) { tex.dispose(); return; }
+        const L = (n - 1) * paso; tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4);
+        tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - d.x0) / L, (L - (ch.z0 - d.z0) - cd) / L);   // de las coordenadas del bloque a las del parche
+        aplicaOrto(mat, tex, ch, null, indice?.[id]?.og); dt.ortoCima = tex;
+      }, undefined, () => {});
       scene.add(mesh);
       // la pieza de 6 m se recorta debajo de esta (menos 14 m del borde, donde ambas coinciden)
       pz.mat.userData.holes.value[0].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);

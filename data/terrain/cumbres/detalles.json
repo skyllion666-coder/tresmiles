@@ -242,6 +242,8 @@
     "ref": "Máximo local del MDT05 en la Astorg (3.347 m; el MDT suaviza la aguja); la cresta va de oeste (Maldito) a este (Medio). Torre de dos lajas sobre un montón de bloques, según fotos de referencia del usuario con una persona encima para la escala.",
     "sueltas": "^(bloque|cresta)\\d"
    }
-  ]
+  ],
+  "orto": "astorg-cima-orto.webp",
+  "ortoM": "astorg-cima-orto-m.webp"
  }
 }
