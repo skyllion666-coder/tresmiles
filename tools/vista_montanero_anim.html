@@ -12,12 +12,12 @@ const cam = new THREE.PerspectiveCamera(30, 1200 / 560, 0.1, 100); cam.position.
 const defs = [
   [{ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }, 0, null],
   [{ chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 }, 1.0, null],
-  [{ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }, 4.5, null],
+  [{ chica: true, chaqueta: '#1aa6a0', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 }, +(new URLSearchParams(location.search).get('vchica') ?? 4.5), null],
   [{ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }, 7.5, null],
   [{ chaqueta: '#2d5f8f', mochila: '#3b7a55', mochilaTipo: 'media', palos: 0 }, 0.7, { agach: 0.8, manos: 1, brazos: 0 }],
   [{ chaqueta: '#c9962a', mochila: '#5a4a7a', mochilaTipo: 'pequena', palos: 0 }, 0.35, { brazos: 1 }],
 ];
-const ms = defs.map(([o, v, c], i) => { const m = crearMontaneroAnim(o); m.group.position.x = i * 1.5 - 0.5; m.group.rotation.y = 0.6; sc.add(m.group); return { m, v, c }; });
+const ms = defs.map(([o, v, c], i) => { const m = crearMontaneroAnim(o); m.group.position.x = i * 1.5 - 0.5; m.group.rotation.y = +(new URLSearchParams(location.search).get('giro') ?? 0.6); sc.add(m.group); return { m, v, c }; });
 const g = new THREE.Mesh(new THREE.PlaneGeometry(30, 10), new THREE.MeshStandardMaterial({ color: '#8a8478' })); g.rotation.x = -Math.PI / 2; sc.add(g);
 // reloj simulado (30 pasos/s) para que la imagen sea reproducible: ?t=segundos
 await new Promise((r) => setTimeout(r, 4000));   // espera a que el GLB esté cargado
@@ -27,5 +27,5 @@ const evq = new URLSearchParams(location.search).get('ev'); if (evq) for (const 
 for (let i = 0; i < Math.round(t * 30); i++) { T += 1 / 30; for (const { m, v, c } of ms) m.pose(0, v > 0 ? 1 : 0, 0, c, v);
   if (location.search.includes('dbg') && i % 5 === 0) { const b = ms[2].m.group.getObjectByName('DEF-foot.L'); console.log('dbg', i, b && b.getWorldPosition(new THREE.Vector3()).toArray().map((x) => x.toFixed(3)).join(' ')); } }
 const foco = new URLSearchParams(location.search).get('foco'); if (foco !== null) { const x = foco * 1.5 - 0.5; cam.position.set(x + 3.2, 1.0, 3.2); cam.lookAt(x, 0.8, 0); }   // ?foco=n: acerca la cámara al montañero n
-r.render(sc, cam); document.title = 'ok';
+window.ms = ms; window.THREE = THREE; r.render(sc, cam); document.title = 'ok';
 </script></body></html>

@@ -10,7 +10,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=43';
+import { cargarRuta, crearRuta } from './ruta.js?v=44';
 import { crearPanorama } from './panorama.js?v=3';
 import { crearSelector } from './selector.js?v=3';
 
@@ -1022,7 +1022,7 @@ async function boot() {
       <h3>Fotografías de los hitos</h3>
       <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Modelos 3D y animaciones</h3>
-      <ul><li>Animaciones de los montañeros (andar, trotar, correr, agacharse, tropezar y rodar): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> de Quaternius, CC0 (dominio público). El maniquí se ha vestido y equipado en Blender (ropa, mochila, casco y bastones propios).</li>
+      <ul><li>Animaciones de los montañeros (andar, trotar, correr, agacharse, tropezar y rodar): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> de Quaternius, CC0 (dominio público). El maniquí se ha vestido y equipado en Blender (ropa, mochila, casco y bastones propios); la montañera es una variante propia del mismo maniquí, con otra silueta, pelo y coleta.</li>
       <li>Resto de modelos (cimas, fauna, aves, refugios y objetos): modelados en Blender para esta web a partir de fotografías de referencia.</li></ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT. Blender (GPL) para los modelos.</li></ul>

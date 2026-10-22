@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=3';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=4';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -45,9 +45,9 @@ export function crearRuta({ scene, geo, ruta }) {
   const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mk = (o) => { const m = crearMontanero(o), h = new THREE.Group(); h.add(m.group); h.scale.setScalar(ESC_M); h.visible = false; scene.add(h); return { h, m, fase: Math.random() * 6, yaw: null, alt: 0.92 }; };
   const solo = mk({});
-  const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1)
+  const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1); el de en medio es una chica
     mk({ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }),
-    mk({ chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 }),
+    mk({ chica: true, chaqueta: '#1aa6a0', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 }),   // la montañera (coleta)
     mk({ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }),
   ];
   // un montañero se cae (tipo: 'tropiezo' | 'voltereta'): sale su animación y todo el grupo se detiene lo que dure

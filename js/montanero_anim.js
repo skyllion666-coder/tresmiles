@@ -7,17 +7,17 @@ import { crearMontanero } from './montanero.js?v=7';
 // Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel), altura }. Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
 // La velocidad `vel` (m/s del montañero) elige el clip: idle → andar (≈1,2 m/s) → trotar (≈5 m/s) → correr (≈7,5 m/s), mezclados y con el ritmo del paso ajustado a la velocidad
 // para que los pies no resbalen. c = { agach, manos, cuatro, brazos, giro }: agachado (clip «agachado») y brazos abiertos del funambulista (los brazos vuelven hacia la pose de reposo en T).
-const URL_GLB = new URL('../models/montanero-anim.glb', import.meta.url).href;
-let carga = null;
-const cargaGLB = () => (carga ??= new Promise((res) => new GLTFLoader().load(`${URL_GLB}?v=${window.WEB_V || 0}`, res, undefined, () => res(null))));
+const URL_GLB = { chico: new URL('../models/montanero-anim.glb', import.meta.url).href, chica: new URL('../models/montanera-anim.glb', import.meta.url).href };   // la montañera: mismo esqueleto y clips, otro cuerpo, pelo y coleta (tools/modelos/montanero_anim.py --chica)
+const carga = {};
+const cargaGLB = (tipo = 'chico') => (carga[tipo] ??= new Promise((res) => new GLTFLoader().load(`${URL_GLB[tipo]}?v=${window.WEB_V || 0}`, res, undefined, () => res(null))));
 const UP = new THREE.Vector3(0, 1, 0);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const CLIPS = ['idle', 'walk', 'jog', 'sprint', 'agachado', 'agachado_quieto', 'tropiezo', 'voltereta'];
 const NOMBRE_CLIP = { Idle_Loop: 'idle', Walk_Loop: 'walk', Jog_Fwd_Loop: 'jog', Sprint_Loop: 'sprint', Crouch_Fwd_Loop: 'agachado', Crouch_Idle_Loop: 'agachado_quieto', Hit_Chest: 'tropiezo', Roll: 'voltereta' };   // nombres de los clips en el GLB
 
-function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila = '#d9822b', casco = '#e9e6dc', palos = 1, mochilaTipo = 'grande' } = {}) {
+function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila = '#d9822b', casco = '#e9e6dc', palos = 1, mochilaTipo = 'grande', chica = false } = {}) {
   const root = clone(gltf.scene), mats = new Map();
-  const col = { chaqueta, pantalon, mochila, casco, mochila2: new THREE.Color(mochila).multiplyScalar(0.62), piel: '#c99273', guante: '#22262a', bota: '#4a3626', lente: '#1d2a36', palo: '#aeb4bb', negro: '#1a1b1d' };   // colores en sRGB, como en el montañero de siempre
+  const col = { chaqueta, pantalon, mochila, casco, mochila2: new THREE.Color(mochila).multiplyScalar(0.62), pelo: '#4b2f1c', cinta: '#f0c63e', piel: '#c99273', guante: '#22262a', bota: '#4a3626', lente: '#1d2a36', palo: '#aeb4bb', negro: '#1a1b1d' };   // colores en sRGB, como en el montañero de siempre
   root.traverse((o) => {
     if (!o.isMesh) return; o.castShadow = false; o.frustumCulled = false;
     const m = o.material.clone(); o.material = m;
@@ -41,6 +41,8 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
   const mano = { R: root.getObjectByName('DEF-handR'), L: root.getObjectByName('DEF-handL') };
   const cadena = { R: ['DEF-upper_armR', 'DEF-forearmR', 'DEF-handR'].map((n) => root.getObjectByName(n)), L: ['DEF-upper_armL', 'DEF-forearmL', 'DEF-handL'].map((n) => root.getObjectByName(n)) };
   const caderas = root.getObjectByName('DEF-hips'); let faseM = 0;
+  if (chica) root.scale.setScalar(0.93);   // 1,70 m
+  const coleta = ['Coleta1', 'Coleta2'].map((n) => root.getObjectByName(n)).filter(Boolean).map((b) => ({ b, rest: b.quaternion.clone() })); let faseC = 0;
   const mixer = new THREE.AnimationMixer(root), acc = {};
   for (const c of gltf.animations) { const n = NOMBRE_CLIP[c.name]; if (!n) continue; const a = mixer.clipAction(c); a.play(); a.setEffectiveWeight(0); a.time = Math.random() * c.duration; acc[n] = a; }
   acc.idle?.setEffectiveWeight(1);
@@ -73,7 +75,7 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     codo.getWorldPosition(V.b); muneca.getWorldPosition(V.c); V.d1.copy(V.c).sub(V.b).normalize();
     V.d2.copy(V.a).addScaledVector(V.t, dist).sub(V.b).normalize(); giraHacia(codo, V.d1, V.d2, peso);
   }
-  const OBJ = new THREE.Vector3(), POLO = new THREE.Vector3(), PH = new THREE.Vector3(), PH2 = new THREE.Vector3(), prevMano = { R: new THREE.Vector3(), L: new THREE.Vector3() };
+  const AX = new THREE.Vector3(), OBJ = new THREE.Vector3(), POLO = new THREE.Vector3(), PH = new THREE.Vector3(), PH2 = new THREE.Vector3(), prevMano = { R: new THREE.Vector3(), L: new THREE.Vector3() };
   function pose(fase, k, inc = 0, c = null, vel = null) {
     const ahora = performance.now(), dt = clamp((ahora - ultimo) / 1000, 0.001, 0.1); ultimo = ahora;
     let s = vel ?? (k > 0.01 ? 1 + 5 * k : 0);   // sin velocidad explícita (cursor): a ojo desde la amplitud del paso
@@ -92,6 +94,15 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     const f = ev ? Math.min(1, dt * 20) : Math.min(1, dt * 8);
     for (const n of CLIPS) { w[n] += (T[n] - w[n]) * f; const ac = acc[n]; if (ac) { ac.setEffectiveWeight(w[n]); ac.setEffectiveTimeScale(ts[n]); } }
     mixer.update(dt);
+    if (coleta.length) {   // coleta: se balancea de delante atrás con el paso (más al ir deprisa, y se echa hacia atrás), la punta un poco retrasada; el eje es el lateral del cuerpo
+      faseC += dt * (s > 0.12 ? 6.283 * (0.8 + 0.32 * Math.min(s, 6)) : 0.6);
+      const amp = s > 0.12 ? 0.1 + 0.035 * Math.min(s, 6) : 0.03, cola = 0.05 + 0.04 * Math.min(s, 6);
+      root.updateMatrixWorld(true); AX.set(1, 0, 0).transformDirection(root.matrixWorld);
+      coleta.forEach(({ b, rest }, i) => {
+        const ang = cola + amp * (i ? 1.35 : 0.8) * Math.sin(faseC - 0.9 * i);
+        b.parent.getWorldQuaternion(Q.p); Q.r.setFromAxisAngle(AX, ang); b.quaternion.copy(Q.p).invert().multiply(Q.r).multiply(Q.p).multiply(rest); b.updateMatrixWorld(true);
+      });
+    }
     if (br > 0.02) for (const q of brazos) q.b.quaternion.slerp(q.rest, br * q.k);   // funambulista: brazos abiertos, como en la pose de reposo (T)
     const mn = clamp(((c?.manos ?? 0) - 0.3) / 0.5, 0, 1) * (1 - clamp(br * 2, 0, 1)) * (ev ? 0 : 1);   // 0-1: las manos buscan agarres en la roca
     const lean = clamp(inc * 0.5, -0.3, 0.4) + 0.38 * mn;
@@ -125,6 +136,6 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
 export function crearMontaneroAnim(opts = {}) {
   const viejo = crearMontanero(opts), group = new THREE.Group(); group.add(viejo.group);
   let nuevo = null;
-  cargaGLB().then((g) => { if (!g) return; nuevo = construye(g, opts); group.remove(viejo.group); group.add(nuevo.root); });
-  return { group, altura: 1.84, pose: (fase, k, inc, c, vel) => (nuevo ? nuevo.pose(fase, k, inc, c, vel) : viejo.pose(fase, k, inc, c)), evento: (tipo) => (nuevo ? nuevo.evento(tipo) : 0) };
+  cargaGLB(opts.chica ? 'chica' : 'chico').then((g) => { if (!g) return; nuevo = construye(g, opts); group.remove(viejo.group); group.add(nuevo.root); });
+  return { group, altura: opts.chica ? 1.71 : 1.84, pose: (fase, k, inc, c, vel) => (nuevo ? nuevo.pose(fase, k, inc, c, vel) : viejo.pose(fase, k, inc, c)), evento: (tipo) => (nuevo ? nuevo.evento(tipo) : 0) };
 }
