@@ -37,7 +37,7 @@ def pinta(o, R, base=GRIS, oxido=0.35, liquen=0.25, var=0.12):
             at.data[li].color = (*c, 1.0)
     me.color_attributes.active_color = at
 
-def bloque(R, nombre, tam, pos=(0, 0, 0), rot=(0, 0, 0), cortes=7, mat=None, base=GRIS, oxido=0.35, liquen=0.25, coleccion=None):
+def bloque(R, nombre, tam, pos=(0, 0, 0), rot=(0, 0, 0), cortes=7, mat=None, base=GRIS, oxido=0.35, liquen=0.25, coleccion=None, pintar=True, uv=None):
     sx, sy, sz = tam
     bm = bmesh.new(); bmesh.ops.create_cube(bm, size=1); bmesh.ops.scale(bm, vec=(sx, sy, sz), verts=bm.verts)
     if max(tam) > 0.9: bmesh.ops.subdivide_edges(bm, edges=bm.edges[:], cuts=1, use_grid_fill=True)   # los grandes, con más vértices para el desplazamiento
@@ -56,7 +56,9 @@ def bloque(R, nombre, tam, pos=(0, 0, 0), rot=(0, 0, 0), cortes=7, mat=None, bas
     for p in me.polygons: p.use_smooth = False
     o = bpy.data.objects.new(nombre, me); (coleccion or bpy.context.collection).objects.link(o)
     o.location = pos; o.rotation_euler = rot; o.data.materials.append(mat or material())
-    pinta(o, R, base, oxido, liquen); return o
+    if pintar: pinta(o, R, base, oxido, liquen)
+    if uv: uv_caja(o, R, uv)
+    return o
 
 def asentar(objs, pasivos=(), pasos=140):
     """Cuerpos rígidos: `objs` caen y se asientan sobre `pasivos` (y entre sí); luego se fija la posición final y se quita la física."""
@@ -88,3 +90,38 @@ def apoyo(x, y, objs, z0=20.0):
         ok, loc, nrm, idx = o.ray_cast(a, d)
         if ok: mejor = max(mejor, (o.matrix_world @ loc).z)
     return mejor
+
+# — granito con textura (moteado de biotita y feldespato, manchas de óxido y líquenes), para piezas que se ven de cerca —
+def textura_granito(nombre, base=(0.62, 0.60, 0.56), oxido=(0.62, 0.42, 0.22), k_oxido=0.35, liquen=(0.72, 0.70, 0.38), k_liquen=0.12, n=512, semilla=1):
+    """Imagen de n×n que se repite sin costuras (ruido con np.roll), en sRGB. Se guarda empaquetada y sale en el GLB como JPEG."""
+    import numpy as np
+    rng = np.random.default_rng(semilla)
+    def suave(k):
+        a = rng.random((n, n))
+        for _ in range(k): a = (a + np.roll(a, 1, 0) + np.roll(a, -1, 0) + np.roll(a, 1, 1) + np.roll(a, -1, 1)) / 5
+        a -= a.min(); return a / (a.max() or 1)
+    liso = lambda a, b, x: np.clip((x - a) / (b - a), 0, 1) ** 2 * (3 - 2 * np.clip((x - a) / (b - a), 0, 1))
+    img = np.ones((n, n, 3)) * np.array(base)
+    img *= (0.9 + 0.2 * suave(60))[..., None]                                   # tono que varía en grande
+    img += (np.array(oxido) - img) * (k_oxido * liso(0.45, 0.75, suave(45)))[..., None]   # manchas de óxido
+    img += (np.array(liquen) - img) * (k_liquen * 4 * liso(0.62, 0.8, suave(10)))[..., None].clip(0, 1)   # líquenes
+    g = rng.random((n, n)); g2 = suave(1)
+    img[(g < 0.13) | (g2 < 0.2)] *= 0.42                                        # motas oscuras (biotita), finas y algunas en grumo
+    img[g > 0.93] = img[g > 0.93] * 0.45 + 0.5                                  # motas claras (feldespato)
+    img *= (0.93 + 0.14 * rng.random((n, n)))[..., None]                        # grano fino
+    im = bpy.data.images.new(nombre, n, n); px = np.ones((n, n, 4)); px[..., :3] = img.clip(0, 1)
+    im.pixels.foreach_set(px.ravel().astype('f4')); im.file_format = 'JPEG'; im.pack(); return im
+
+def material_textura(nombre, imagen, rough=0.9):
+    m = bpy.data.materials.new(nombre); m.use_nodes = True
+    b = next(x for x in m.node_tree.nodes if x.type == 'BSDF_PRINCIPLED'); b.inputs['Roughness'].default_value = rough
+    t = m.node_tree.nodes.new('ShaderNodeTexImage'); t.image = imagen; m.node_tree.links.new(t.outputs['Color'], b.inputs['Base Color'])
+    return m
+
+def uv_caja(o, R, tam=1.2):
+    """Coordenadas de textura por proyección en caja (cada cara sobre el plano de su eje dominante), tamaño del motivo `tam` m, con desfase al azar."""
+    me = o.data; uv = me.uv_layers.get('UVMap') or me.uv_layers.new(name='UVMap'); du, dv = R.random(), R.random()
+    for p in me.polygons:
+        ax = max(range(3), key=lambda i: abs(p.normal[i])); a, b = [(1, 2), (0, 2), (0, 1)][ax]
+        for li in p.loop_indices:
+            co = me.vertices[me.loops[li].vertex_index].co; uv.data[li].uv = (co[a] / tam + du, co[b] / tam + dv)
