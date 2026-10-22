@@ -2679,7 +2679,9 @@
    "clase": "discutida",
    "nombres": "Sin nombre clásico",
    "basica": true,
-   "inv": "PER-07"
+   "inv": "PER-07",
+   "foto": "punta-dera-canal-fonda",
+   "pie": "La Canal Fonda, con un nevero en lo alto."
   },
   {
    "id": "dedo-del-monte-perdido",

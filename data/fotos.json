@@ -1727,5 +1727,15 @@
   "fuente": "Wikiloc",
   "w": 1100,
   "h": 825
+ },
+ "punta-dera-canal-fonda": {
+  "archivo": "foto aportada por el usuario",
+  "autor": "Montaña.segura",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "aportada por el usuario",
+  "w": 1100,
+  "h": 1100
  }
 }
