@@ -20,7 +20,8 @@ function asientaPiedras(o, sueltas, alto, Se) {
     const { min, max } = _caja, cx = (min.x + max.x) / 2, cz = (min.z + max.z) / 2, rx = (max.x - min.x) * 0.35, rz = (max.z - min.z) * 0.35;
     const hs = [[cx, cz], [cx - rx, cz - rz], [cx + rx, cz - rz], [cx - rx, cz + rz], [cx + rx, cz + rz]].map(([x, z]) => alto(x, z));
     const h = modo === 'fija' ? (Math.min(...hs) + hs[0]) / 2 : Math.min(...hs), dy = (h - suelo) / Se;
-    if (modo === 'min' && h - suelo < -2.5) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 2,5 m del mapa por debajo): quedaría colgando de la ladera, mejor no dibujarla
+    const ancho = Math.max(max.x - min.x, max.z - min.z), desnivel = Math.max(...hs) - Math.min(...hs);
+    if (modo === 'min' && (h - suelo < -2.5 || desnivel > 0.45 * ancho)) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 2,5 m del mapa por debajo) o en una pendiente fuerte: quedaría colgando de la ladera, mejor no dibujarla
     for (const c of objs) c.position.y += dy;
   };
   for (const c of [...o.children]) { if (!c.isMesh) continue; if (sueltas.test(c.name)) desplaza([c], 'min'); else fijas.push(c); }

@@ -686,9 +686,23 @@
   "paso": 1.0,
   "archivo": "casco-cima.bin.gz",
   "roca": "caliza",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: hito alto de bloques de caliza gris con un tubo oxidado arriba, según la foto de la cima de la ficha (img/hitos/casco-cima.jpg).",
   "orto": "casco-cima-orto.webp",
-  "ortoM": "casco-cima-orto-m.webp"
+  "ortoM": "casco-cima-orto-m.webp",
+  "modelo": "models/cima-casco.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -11183.82,
+    "z": 9868.27,
+    "giro": 0.0,
+    "ancla": true,
+    "huella": 0.9,
+    "ref": "Máximo del MDT05 (3008.3 m). Hito de ~2,3 m sobre un montón de piedras, según la foto de la ficha.",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "robinera": {
   "x0": 1731.13,

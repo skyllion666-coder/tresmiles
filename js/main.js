@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=20';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=39';
+import { crearCumbres } from './cumbres.js?v=40';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
@@ -1153,7 +1153,7 @@ async function boot() {
   requestAnimationFrame(frame);
   await window.Carga?.fin();   // el 100 % se ve un instante antes de abrir el mapa
   document.body.classList.remove('is-loading');
-  window.tresmiles = { geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
+  window.tresmiles = { scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {
