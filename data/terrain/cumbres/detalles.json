@@ -719,9 +719,23 @@
   "paso": 1.0,
   "archivo": "mulleres-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: mojón grande de lajas de granito con «PIC DE MULLERES 3009» escrito, según la foto de la cima de la ficha (img/hitos/mul-cima.jpg).",
   "orto": "mulleres-cima-orto.webp",
-  "ortoM": "mulleres-cima-orto-m.webp"
+  "ortoM": "mulleres-cima-orto-m.webp",
+  "modelo": "models/cima-mulleres.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 48073.58,
+    "z": 16344.82,
+    "giro": 0.0,
+    "ancla": true,
+    "huella": 0.8,
+    "ref": "Máximo del MDT05 (3009.1 m). Mojón de lajas de ~2,1 m con la piedra escrita, según la foto de la ficha.",
+    "sueltas": "^bloque\\d"
+   }
+  ]
  },
  "sabre": {
   "x0": 23293.36,
