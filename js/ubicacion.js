@@ -2,7 +2,7 @@
 // la vista sigue la posición y gira con la brújula. Fuera del mapa, solo avisa de a cuánto se está.
 // Botón: 1.º toque, localizar (la cámara va al punto); 2.º, seguir con la brújula; 3.º, apagar. Mover el mapa con el dedo deja de seguir.
 import * as THREE from 'three';
-import { leeOrientacion } from './panorama.js?v=4';
+import { leeOrientacion } from './panorama.js?v=5';
 
 const RAD = Math.PI / 180;
 const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)
@@ -12,7 +12,7 @@ const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la
 const delPico = (n) => (/^(La|Las|Los) /.test(n) ? `de ${n}` : /^El /.test(n) ? `del ${n.slice(3)}` : `del ${n}`);   // «del Aneto», «de La Munia»
 const fmtKm = (d) => (d < 10 ? d.toFixed(1).replace('.', ',') : String(Math.round(d)));
 
-export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton, picos = [], picoAbierto = () => null }) {
+export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton, botonPanorama = null, abrePanorama = null, picos = [], picoAbierto = () => null }) {
   const st = { modo: 0, watch: null, pos: null, rumbo: null, abs: false, raf: 0, primera: true };   // modo: 0 apagado, 1 localizado, 2 siguiendo
 
   // — marcador: punto (siempre del mismo tamaño en pantalla), círculo de precisión y cuña hacia donde se mira —
@@ -44,6 +44,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     const r = Math.max(15, p.prec); circulo.scale.set(r, r, 1);
     const largo = Math.max(700, r * 3); giro.scale.set(largo, 1, largo); giro.visible = st.rumbo != null; giro.rotation.y = -(st.rumbo ?? 0) * RAD;   // la cuña se tiene que ver con la cámara a 2–3 km
     grupo.visible = true;
+    if (botonPanorama && abrePanorama) botonPanorama.hidden = false;   // «Qué montañas veo»: solo con la posición dentro del mapa
   }
 
   function enMapa(x, z) { return Math.abs(x) <= geo.W / 2 && Math.abs(z) <= geo.D / 2; }
@@ -51,7 +52,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
   function alPosicion(e) {
     const { longitude: lon, latitude: lat, accuracy, altitude } = e.coords, q = geo.toXZ(lon, lat);
     if (!enMapa(q.x, q.z)) {
-      grupo.visible = false; st.pos = null;
+      grupo.visible = false; st.pos = null; if (botonPanorama) botonPanorama.hidden = true;
       const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, Math.abs(q.z) - geo.D / 2);
       if (st.primera) {   // con una cumbre abierta, la distancia a ella; si no, al borde del mapa y al tresmil más cercano
         const p = picoAbierto(), cerca = p ? null : picos.reduce((m, q) => { const d = km(lat, lon, q.lat, q.lon); return !m || d < m.d ? { q, d } : m; }, null);
@@ -104,6 +105,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
   function apaga() {
     if (st.watch != null) navigator.geolocation.clearWatch(st.watch);
     st.watch = null; st.modo = 0; st.pos = null; grupo.visible = false; brujula(false); pinta();
+    if (botonPanorama) botonPanorama.hidden = true;
   }
 
   boton.addEventListener('click', () => {
@@ -116,6 +118,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
       st.modo = 2; pinta(); brujula(true); avisa('Siguiendo tu posición: la vista gira con el móvil.'); sigue();
     } else apaga();
   });
+  botonPanorama?.addEventListener('click', () => { if (st.pos) abrePanorama(st.pos.x, st.pos.z); });
   controls.addEventListener('start', () => { if (st.modo === 2) { st.modo = 1; brujula(false); pinta(); avisa('Has movido el mapa: ya no te sigo (toca el botón para volver).'); } });
   pinta();
   window.tresmilesUbic = st;   // para revisar el estado desde la consola o una prueba

@@ -216,21 +216,23 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
     el._cerrar = cerrar;
   }
 
-  async function abrirPanorama(p) {
+  // op.desdeAqui: desde la posición del GPS (p = { id: null, nombre, q }; altura del relieve en ese punto); op.brujula: con la brújula ya encendida
+  async function abrirPanorama(p, op = {}) {
     if (!el) crea();
     const tok = ++token, sc = el.querySelector('#pan-scroll'), cv = el.querySelector('#pan-canvas');
     apagaBrujula(); ctxP = null; el.dataset.orden = 'altura';
     el.hidden = false; document.body.classList.add('pan-abierto'); vista('pan');
-    el.querySelector('#pan-titulo').textContent = `Panorama desde ${p.nombre}`; el.querySelector('#pan-sub').textContent = 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
+    el.querySelector('#pan-titulo').textContent = `Panorama desde ${p.nombre}`; el.querySelector('#pan-sub').textContent = op.desdeAqui ? 'Calculando lo que se ve desde aquí…' : 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
     cv.width = 1;
     const bloques = await cargaN4(); if (tok !== token) return;
     await new Promise((r) => setTimeout(r, 30)); if (tok !== token) return;
-    const alt = sampler(bloques), h0 = p.altitud + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
+    const alt = sampler(bloques), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
     if (tok !== token) return;
     const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520); ctxP = { p, res, g };
     el.querySelector('#pan-sub').textContent = res.vis.length ? `${res.vis.length} cumbres con nombre a la vista${g.omitidas ? `: en el panorama van las ${g.n} principales; todas están en la lista` : ''}.` : 'Desde aquí no se ve ninguna cumbre de la lista.';
     el.querySelector('#pan-nota').textContent = `Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×${g.exag.toFixed(1).replace('.', ',')} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.`;
     centraEn(sc, g, res.vis[0]?.az ?? 0);
+    if (op.brujula && !br.on) activaBrujula();
   }
   return { abrir: abrirPanorama, cerrar: () => el?._cerrar?.() };
 }
