@@ -10,12 +10,13 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=49';
-import { crearPanorama } from './panorama.js?v=7';
-import { crearUbicacion } from './ubicacion.js?v=5';
-import { crearRealidad } from './realidad.js?v=2';
-import { crearSelector } from './selector.js?v=4';
-import { t, EN_INGLES } from './i18n.js?v=1';
+import { cargarRuta, crearRuta } from './ruta.js?v=50';
+import { crearPanorama } from './panorama.js?v=8';
+import { crearUbicacion } from './ubicacion.js?v=6';
+import { crearRealidad } from './realidad.js?v=3';
+import { crearSelector } from './selector.js?v=5';
+import { t, EN_INGLES } from './i18n.js?v=2';
+import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=1';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -90,9 +91,12 @@ async function boot() {
   if (EN_INGLES) {   // contenido de las fichas en inglés (data/textos_en.json: frase en español → inglés); lo que no esté se queda en español
     const tx = await json('data/textos_en.json').catch(() => ({})), tr = (s) => (typeof s === 'string' && tx[s]) || s;
     for (const p of data.picos) {
-      for (const k of ['descripcion', 'ruta', 'curiosidad', 'pie', 'acceso', 'desnivel', 'grado', 'otras', 'epoca', 'situacion']) if (p[k]) p[k] = tr(p[k]);
+      for (const k of ['descripcion', 'ruta', 'curiosidad', 'pie', 'acceso', 'desnivel', 'grado', 'otras', 'epoca', 'situacion', 'cerca']) if (p[k]) {
+        const r = tr(p[k]); p[k] = r !== p[k] ? r : ['descripcion', 'ruta'].includes(k) ? reglaTexto(p[k], t) : reglaCampo(k, p[k]);   // traducción guardada o, si no hay, regla de molde fijo (js/i18n_reglas.js)
+      }
       if (p.fotoCima?.pie) p.fotoCima.pie = tr(p.fotoCima.pie);
-      if (p.enlace?.texto) p.enlace.texto = p.enlace.texto.replace(/^Ver la ruta en Wikiloc: (.*), de ([^,]+)$/, 'See the route on Wikiloc: $1, by $2');
+      if (p.info?.texto) { const r = tr(p.info.texto); if (r !== p.info.texto) { p.info.texto = r; p.info.alIngles = true; } }
+      if (p.enlace?.texto) p.enlace.texto = reglaCampo('enlace', p.enlace.texto.replace(/^Ver la ruta en Wikiloc: (.*), de ([^,]+)$/, 'See the route on Wikiloc: $1, by $2'));
     }
     window.tresmilesTextos = tx;   // también para los hitos de las rutas
   }
@@ -676,9 +680,9 @@ async function boot() {
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${cumbres.ficha()?.[p.id]?.modelo ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
-      ${p.ruta ? `<h3>${/^Esta (cima|cumbre) aparece en la ruta/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
+      ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
-      ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
+      ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
