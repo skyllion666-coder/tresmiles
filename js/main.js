@@ -429,6 +429,14 @@ async function boot() {
   const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
   let hitoTimer = 0;
   const hitosDatos = await json('data/hitos.json').catch(() => []);
+  // textos de los hitos en inglés (solo al mostrarlos: el nombre en español se usa para reconocer pasos y cimas); la coletilla de la altitud del GPS va aparte
+  const trH = (s) => {
+    if (!EN_INGLES || typeof s !== 'string') return s;
+    const tx = window.tresmilesTextos || {}, m = /^(.*?)\s*Altitud del GPS del track: ([\d.]+) m\.$/.exec(s);
+    if (!m) return tx[s] || s;
+    const base = m[1] ? (tx[m[1]] || m[1]) + ' ' : '';
+    return `${base}GPS altitude from the track: ${m[2].replace('.', ',')} m.`;
+  };
   window.Carga?.paso(4);
   const hitos = [];
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
@@ -442,9 +450,9 @@ async function boot() {
       if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) continue;
       h._hecho = true;
       const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
-      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.nombre)}"><i></i></button><b>${esc(h.nombre)}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
+      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(trH(h.nombre))}"><i></i></button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
       if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
-      el.title = h.nota; $('#pins').appendChild(el);
+      el.title = trH(h.nota); $('#pins').appendChild(el);
       el.querySelector('.hito-btn').addEventListener('click', (e) => {
         e.stopPropagation();
         const abrir = !el.classList.contains('is-open');
@@ -462,7 +470,7 @@ async function boot() {
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
