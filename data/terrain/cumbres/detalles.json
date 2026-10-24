@@ -589,9 +589,24 @@
   "paso": 1.0,
   "archivo": "paul-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: Cima: no hay foto de la cima; bloques de granito pardo rojizo partidos en vertical (alguno de pie, con una piedra encima) y bloques gris verdosos con liquen, como la roca de los gendarmes de la cresta en la foto de la ficha (img/hitos/pau-gendarmes.jpg)., según la foto de la cima de la ficha.",
   "orto": "paul-cima-orto.webp",
-  "ortoM": "paul-cima-orto-m.webp"
+  "ortoM": "paul-cima-orto-m.webp",
+  "modelo": "models/cima-paul.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 27455.15,
+    "z": 12897.84,
+    "giro": 0.393,
+    "ancla": true,
+    "huella": 1.3,
+    "allana": 1.5,
+    "ref": "Máximo del MDT05 (3076.1 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "gorgs": {
   "x0": 29935.22,
