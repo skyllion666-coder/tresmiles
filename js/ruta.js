@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=6';
+import { t as tr } from './i18n.js?v=1';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
@@ -269,7 +270,7 @@ export function crearRuta({ scene, geo, ruta }) {
     },
     perfil() {
       const lin = ruta.puntos.map((p) => `${X(p[3]).toFixed(1)},${Y(p[2]).toFixed(1)}`).join(' ');
-      return `<svg viewBox="0 0 ${PW} ${PH}" class="perfil" role="img" aria-label="Perfil de altura de la ruta, de ${ruta.min} a ${ruta.max} metros en ${fmtKm(ruta.distancia)} kilómetros. Desliza el dedo para ver un punto concreto en el mapa.">
+      return `<svg viewBox="0 0 ${PW} ${PH}" class="perfil" role="img" aria-label="${tr('Perfil de altura de la ruta, de {a} a {b} metros en {k} kilómetros. Desliza el dedo para ver un punto concreto en el mapa.', { a: ruta.min, b: ruta.max, k: fmtKm(ruta.distancia) })}">
         <line x1="${PL}" x2="${PW - PR}" y1="${Y(hi)}" y2="${Y(hi)}" class="g"/><line x1="${PL}" x2="${PW - PR}" y1="${Y(lo)}" y2="${Y(lo)}" class="g"/>
         <polygon points="${X(0)},${Y(lo)} ${lin} ${X(ruta.distancia)},${Y(lo)}" class="a"/><polyline points="${lin}" class="l"/>
         <text x="${PL - 4}" y="${Y(hi) + 3}" text-anchor="end">${hi}</text><text x="${PL - 4}" y="${Y(lo) + 3}" text-anchor="end">${lo}</text>

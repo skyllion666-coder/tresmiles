@@ -10,15 +10,16 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=48';
-import { crearPanorama } from './panorama.js?v=6';
-import { crearUbicacion } from './ubicacion.js?v=4';
-import { crearRealidad } from './realidad.js?v=1';
-import { crearSelector } from './selector.js?v=3';
+import { cargarRuta, crearRuta } from './ruta.js?v=49';
+import { crearPanorama } from './panorama.js?v=7';
+import { crearUbicacion } from './ubicacion.js?v=5';
+import { crearRealidad } from './realidad.js?v=2';
+import { crearSelector } from './selector.js?v=4';
+import { t, EN_INGLES } from './i18n.js?v=1';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const fmt = (n) => new Intl.NumberFormat('es-ES', { useGrouping: 'always' }).format(n);
+const fmt = (n) => new Intl.NumberFormat(document.documentElement.lang === 'en' ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);   // (lang lo pone js/i18n.js, que carga antes)
 const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
 const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);   // sube DATOS_V en index.html al cambiar datos
 const json = (u) => fetch(conV(u), { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
@@ -54,7 +55,7 @@ async function boot() {
   data.picos.push(...menores.picos); data.macizos.push(...menores.zonas); window.Carga?.paso(1);
   Object.assign(fotos, menores.fotos ?? {});   // sus fotos (pequeñas, WebP) vienen en el mismo archivo
   const relieve = new HeightStore(meta, 'data/terrain'); await relieve.init();   // vista general ligera; el detalle se pide por zonas
-  $('#load-text').textContent = 'Preparando el mapa…'; window.Carga?.paso(2);
+  $('#load-text').textContent = t('Preparando el mapa…'); window.Carga?.paso(2);
 
   // — motor —
   const canvas = $('#gl');
@@ -86,6 +87,8 @@ async function boot() {
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
   const activos = params.has('todos') ? data.picos.map((p) => p.id) : [...data.activos, ...menores.picos.map((p) => p.id)];
+  for (const m of data.macizos) m.nombre = t(m.nombre);   // nombres de macizos y dificultades ya en el idioma de la web (también los usa el selector)
+  for (const d of data.dificultades) d.nombre = t(d.nombre);
   const macizoName = Object.fromEntries(data.macizos.map((m) => [m.id, m.nombre]));
   const difName = Object.fromEntries(data.dificultades.map((d) => [d.id, d.nombre]));
   const difN = { moderada: 1, alta: 2, 'muy-alta': 3 };
@@ -216,7 +219,7 @@ async function boot() {
   for (const p of peaks) {
     const b = document.createElement('button');
     b.className = `pin is-hidden${p.activo ? '' : ' pin-prox'}${p.clase && p.clase !== 'principal' ? ' pin-sec' : ''}${p.menor ? ' pin-menor' : ''}`; b.type = 'button'; b.dataset.id = p.id;
-    b.setAttribute('aria-label', p.activo ? `${p.nombre}, ${fmt(p.altitud)} metros. Abrir ficha` : `${p.nombre}, ${fmt(p.altitud)} metros. Próximamente`);
+    b.setAttribute('aria-label', t(p.activo ? '{n}, {a} metros. Abrir ficha' : '{n}, {a} metros. Próximamente', { n: p.nombre, a: fmt(p.altitud) }));
     b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
     if (p.foto && !p.menor) b.dataset.mini = `img/mini/${p.id}.webp`;   // miniatura de la ficha dentro del círculo (se carga al acercarse)
@@ -252,7 +255,7 @@ async function boot() {
     if (!mejor) { picoSel = null; picoEl.hidden = true; return; }
     const y = geo.heightAt(mejor.x, mejor.z);
     picoSel = { x: mejor.x, y, z: mejor.z };
-    picoEl.innerHTML = `<b>${esc(mejor.nombre)}</b><i>${mejor.ele ? `${fmt(mejor.ele)} m` : 'altitud sin datos'}</i>`;
+    picoEl.innerHTML = `<b>${esc(mejor.nombre)}</b><i>${mejor.ele ? `${fmt(mejor.ele)} m` : t('altitud sin datos')}</i>`;
     picoEl.hidden = false; picoEl.classList.remove('is-hidden');
     picoTimer = setTimeout(() => { picoSel = null; picoEl.hidden = true; }, 7000);
   }
@@ -413,13 +416,13 @@ async function boot() {
   }
 
   // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
-  const TIPO_HITO = { refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima', ibon: 'Ibón', barranco: 'Barranco', lugar: 'Lugar' };
+  const TIPO_HITO = Object.fromEntries(Object.entries({ refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima', ibon: 'Ibón', barranco: 'Barranco', lugar: 'Lugar' }).map(([k, v]) => [k, t(v)]));
   const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
   let hitoTimer = 0;
   const hitosDatos = await json('data/hitos.json').catch(() => []);
   window.Carga?.paso(4);
   const hitos = [];
-  const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? ` · km ${ps.map((c) => km(c.dist)).join(' y ')} del recorrido` : ''; };
+  const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
   const normNombre = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').replace(/\b(cima|del|de|la|las|los|el|pico|pic|punta|tuca|gran|pequeno)\b/g, '').replace(/[^a-z0-9]/g, '');
   function crearHitosDe(picoId) {
@@ -441,16 +444,16 @@ async function boot() {
       // el hito «Cima» que lleva el nombre de la cumbre se coloca en el punto de la cumbre (si no, el relieve fino los separa y salen dos marcadores y dos nombres)
       let hx = q.x, hz = q.z, hy = geo.heightAt(q.x, q.z) + 12, fusion = null;
       if (h.tipo === 'cima') { const nh = normNombre(h.nombre), pc = peaks.find((p) => picos.includes(p.id) && p.w && normNombre(p.nombre) === nh && Math.hypot(p.q.x - q.x, p.q.z - q.z) < 250); if (pc) { hx = pc.w.x; hz = pc.w.z; hy = pc.w.y + 12; fusion = pc; } }
-      hitos.push({ fusion: fusion ? fusion.id : null, h, el, picos, kms: {}, tipoTxt: h.inicio ? 'Inicio del recorrido' : (TIPO_HITO[h.tipo] ?? ''), last: null, x: hx, y: hy, z: hz });
+      hitos.push({ fusion: fusion ? fusion.id : null, h, el, picos, kms: {}, tipoTxt: h.inicio ? t('Inicio del recorrido') : (TIPO_HITO[h.tipo] ?? ''), last: null, x: hx, y: hy, z: hz });
     }
   }
   function figCima(p) {
     const c = p.fotoCima, f = c && fotosHitos[c.foto]; if (!f) return '';
-    return `<figure class="fig-cima"><img src="img/hitos/${esc(c.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} Foto: ${esc(f.autor)}.</figcaption></figure>`;
+    return `<figure class="fig-cima"><img src="img/hitos/${esc(c.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} ${t('Foto:')} ${esc(f.autor)}.</figcaption></figure>`;
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(h.pie)}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(h.nombre)}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
@@ -608,8 +611,8 @@ async function boot() {
   function refreshLists() {
     if (!listEl.hidden) selMapa.pinta();
     if (!$('#intro-picos').hidden) introSel?.pinta();
-    const fc = $('#f-count'); if (fc) fc.textContent = `${peaks.filter(passes).length} de ${peaks.length} cumbres`;
-    $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? `Explorar el ${peaks.find((p) => p.activo).nombre}` : 'Explorar las cumbres';
+    const fc = $('#f-count'); if (fc) fc.textContent = t('{n} de {t} cumbres', { n: peaks.filter(passes).length, t: peaks.length });
+    $('#dock-label').textContent = S.active ? byId[S.active].nombre : activas.size === 1 ? t('Explorar el {n}', { n: peaks.find((p) => p.activo).nombre }) : t('Explorar las cumbres');
   }
   const setList = (open) => {
     listEl.hidden = !open; listBtn.setAttribute('aria-expanded', open); document.body.classList.toggle('selector-abierto', open);
@@ -637,7 +640,7 @@ async function boot() {
       ? `<div class="nav2"><button type="button" data-go="${vis[(i - 1 + vis.length) % vis.length].id}">← Anterior</button><button type="button" data-go="${vis[(i + 1) % vis.length].id}">Siguiente →</button></div>` : '';
     const foto = f
       ? `<figure><img src="${f.ruta ?? `img/peaks/${p.foto}.jpg`}" width="${f.w}" height="${f.h}" alt="${esc(p.nombre)}: ${esc(p.pie)}" decoding="async" onerror="this.parentNode.classList.add('sin-foto')">
-        <figcaption>${esc(p.pie)} Foto: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</figcaption></figure>`
+        <figcaption>${esc(p.pie)} ${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}.</figcaption></figure>`
       : p.menor ? '' : '<figure class="sin-foto" aria-hidden="true"></figure>';   // ficha sencilla sin foto: sin marco   // sin imagen: marco con la silueta de una montaña
     return `
       ${foto}
@@ -658,7 +661,7 @@ async function boot() {
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${cumbres.ficha()?.[p.id]?.modelo ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
       ${p.ruta ? `<h3>${/^Esta (cima|cumbre) aparece en la ruta/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
-      ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${p.info.traducido ? 'Texto traducido al castellano' : 'Texto'} de Wikipedia en ${{ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]}, artículo «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.</p>` : ''}
+      ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
@@ -825,7 +828,7 @@ async function boot() {
     if (S.mode !== 'explore') return;
     closeFicha();
     flyTo({ t: new THREE.Vector3(p.w.x, p.w.y - 300, p.w.z), theta: -0.45, phi: 1.0, r: 15000 }, { shift: { x: 0, y: 0 } });
-    avisoCarga(`${p.nombre}: próximamente`); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
+    avisoCarga(t('{n}: próximamente', { n: p.nombre })); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
   }
   async function openPeak(id, { instant = false, hash = true } = {}) {
     const p = byId[id]; if (!p || !p.activo) return;
@@ -852,7 +855,7 @@ async function boot() {
   const textoSubir = (p) => (p?.menor ? 'He subido esta cumbre' : 'He subido este tresmil');
   function resumenHechos(p = null) {
     const menor = !!p?.menor, n = [...hechos].filter((id) => byId[id]?.activo && !!byId[id].menor === menor).length;
-    return `${n} de ${totalActivas(menor)} ${menor ? 'cumbres de 2.000 a 3.000 m subidas' : 'tresmiles subidos'}`;
+    return t(menor ? '{n} de {t} cumbres de 2.000 a 3.000 m subidas' : '{n} de {t} tresmiles subidos', { n, t: totalActivas(menor) });
   }
   function pintaHechos() {
     for (const p of peaks) pinEls.get(p.id)?.classList.toggle('is-hecho', hechos.has(p.id));
@@ -874,7 +877,7 @@ async function boot() {
   });
   $('#hechos-importar')?.addEventListener('change', async (e) => {
     const f = e.target.files?.[0]; if (!f) return;
-    try { const j = JSON.parse(await f.text()); const ids = (j.hechos ?? j).filter((id) => byId[id]); for (const id of ids) { hechos.add(id); banderines.pone(byId[id], false); } guardarHechos(hechos); pintaHechos(); refreshLists(); avisoCarga(`${ids.length} tresmiles importados`); setTimeout(() => avisoCarga(null), 2200); }
+    try { const j = JSON.parse(await f.text()); const ids = (j.hechos ?? j).filter((id) => byId[id]); for (const id of ids) { hechos.add(id); banderines.pone(byId[id], false); } guardarHechos(hechos); pintaHechos(); refreshLists(); avisoCarga(t('{n} tresmiles importados', { n: ids.length })); setTimeout(() => avisoCarga(null), 2200); }
     catch { avisoCarga('Ese archivo no es una copia de tus tresmiles'); setTimeout(() => avisoCarga(null), 2600); }
     e.target.value = '';
   });
@@ -936,7 +939,7 @@ async function boot() {
     S.look.to = LOOK[i]; sky.material.uniforms.uSunDir.value.copy(sun.position).normalize();
     S.bruma.to = BRUMA[i];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
     sun.color.set(s.col); sun.intensity = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1);
-    $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', `Cambiar la luz: ${s.nombre.toLowerCase()}`);
+    $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', t('Cambiar la luz: {n}', { n: t(s.nombre).toLowerCase() }));
   }
   $('#btn-light').addEventListener('click', (e) => {
     sonido.fx('toque');
@@ -952,18 +955,18 @@ async function boot() {
   const VISITAS_ANTES = 141;   // filtro «Tresmiles» del panel el 24-10-2026: 151 en total, menos las 10 que ya estaban en «/tresmiles»
   if (!EN_APP) fetch('https://skyllion.goatcounter.com/counter/%2Ftresmiles.json').then((r) => (r.ok ? r.json() : null)).then((d) => {
     const n = Number(String(d?.count ?? '').replace(/\D/g, '') || 0) + VISITAS_ANTES; if (!n) return;
-    const el = $('#visitas'); el.textContent = `${new Intl.NumberFormat('es-ES').format(n)} visitas`; el.title = 'Visitas a la web (GoatCounter, sin cookies)'; el.hidden = false;
+    const el = $('#visitas'); el.textContent = t('{n} visitas', { n: new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES').format(n) }); el.title = 'Visitas a la web (GoatCounter, sin cookies)'; el.hidden = false;
   }).catch(() => {});
 
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
-  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: 'tu posición', q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
+  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
   // — calidad (solo en la app): «HD» dibuja como en el ordenador; se guarda y recarga, porque el terreno se prepara al arrancar —
   if (EN_APP) {
     const btnCal = $('#btn-calidad'); btnCal.hidden = false;
-    btnCal.setAttribute('aria-pressed', CALIDAD_ALTA); btnCal.setAttribute('aria-label', `Calidad alta: ${CALIDAD_ALTA ? 'activada' : 'desactivada'}`);
+    btnCal.setAttribute('aria-pressed', CALIDAD_ALTA); btnCal.setAttribute('aria-label', t('Calidad alta: {n}', { n: t(CALIDAD_ALTA ? 'activada' : 'desactivada') }));
     btnCal.addEventListener('click', () => {
-      if (!confirm(CALIDAD_ALTA ? '¿Volver a la calidad normal? (gasta menos batería; la app se recarga)' : '¿Activar la calidad alta? Se ve como en el ordenador, pero el móvil trabaja más y gasta más batería. La app se recarga.')) return;
+      if (!confirm(t(CALIDAD_ALTA ? '¿Volver a la calidad normal? (gasta menos batería; la app se recarga)' : '¿Activar la calidad alta? Se ve como en el ordenador, pero el móvil trabaja más y gasta más batería. La app se recarga.'))) return;
       store.set('tresmiles-calidad', CALIDAD_ALTA ? 'normal' : 'alta'); location.reload();
     });
   }
@@ -1048,6 +1051,51 @@ async function boot() {
       const lic = f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : '';
       return `${esc(nombre)}: ${esc(f.autor)}${lic}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(fuente)}</a>` : `, vía ${esc(fuente)}`}.`;
     };
+    if (EN_INGLES) {   // «Acerca de» en inglés: mismo contenido y créditos (los nombres de fotos, autores y fuentes no se traducen)
+      const credEN = (nombre, f) => {
+        const fuente = f.fuente && f.fuente !== 'Wikimedia Commons' ? t(f.fuente) : (f.archivo || 'Wikimedia Commons');
+        const lic = f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : '';
+        return `${esc(nombre)}: ${esc(f.autor)}${lic}${f.pagina ? `, via <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(fuente)}</a>` : `, via ${esc(fuente)}`}.`;
+      };
+      $('#about-body').innerHTML = `
+      <h2>The 3,000ers of the Aragonese Pyrenees</h2>
+      <p class="firma">Created by SKYLLION (FRANK)</p>
+      ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 385 MB), with features only the app has: <b>Where am I</b> (GPS and compass), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a>. When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
+      <p>A 3D explorer of the summits above 3,000 metres in the Aragonese Pyrenees and along its border with France. It already includes ${totalActivas()} 3,000ers: about ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} with an example route, waypoints and photographs, and the rest with basic info (name, altitude, massif and location). It also has ${totalActivas(true)} summits between 2,000 and 3,000 m with simple info (name, altitude and position from OpenStreetMap, no route), shown by choosing “Below 3,000” or “All” in the selector.</p>
+      <p><i>The summit descriptions and routes are still in Spanish: they are being translated.</i></p>
+      <h3>Summits and routes</h3>
+      <ul><li>Official altitudes and names: Order VMV/914/2020 (BOA no. 192) of the Government of Aragon, checked against tresmiles.es (CC0), Buyse (1993) and UIAA (1995).</li>
+      <li>Routes, elevation gains and difficulties: our own summary based on public guides and route descriptions (Rutas Pirineos, Xiruca, Hiking Iberia, SummitPost, Wikiloc). The figures are for guidance only and vary by source.</li></ul>
+      <h3>Terrain and imagery</h3>
+      <ul><li>Terrain: Copernicus DEM GLO-30, © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA. Shown with a ×1.3 vertical exaggeration.</li>
+      <li>Summits with their own detail (Aneto, Posets, Monte Perdido, Maladeta, Vignemale and others): the summit terrain comes from the IGN MDT05 (interpolated to 1 m) and the position from OpenStreetMap and the IGN Geodetic Network descriptions. The summit models (crosses, survey pillars, cairns, signs and rocks) were modelled in Blender from photographs of each summit; they are at the scale of the hikers, so they look much larger than in reality. The rock type is a visual approximation.</li>
+      <li>Mahoma Pass (Aneto): the ridge and the summit cross are placed using the axis of the pass and the cross from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL) and the IGN MDT05 interpolated to 1.5 m. The granite fractures and blocks are a visual (procedural) approximation, not a survey. The cross (about 32 m in the model) and the hikers (about 21 m) are greatly enlarged, while keeping the proportion cross ≈ 1.5 times a hiker. The postures on the ridge and the rope are a graphic animation, not a simulation.</li>
+      <li>Summit terrain detail: MDT05 (5 m) from the <a href="https://www.ign.es" target="_blank" rel="noopener">Spanish National Geographic Institute</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, resampled to 6 m (12 m on phones) around each summit with info. On the summit of the Gran Facha, on the border, where the MDT05 has no data: RGE ALTI from the <a href="https://geoservices.ign.fr" target="_blank" rel="noopener">French IGN</a> (Géoplateforme, Licence Ouverte Etalab 2.0). PNOA orthophotos (25–50 cm, CC BY 4.0, © Instituto Geográfico Nacional de España) over the summit areas.</li>
+      <li>Land cover (where there is forest, grassland or rock): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Trees are placed where that map shows woodland; their exact position, type and size are a visual approximation, not a forest inventory. The rock detail (strata, fractures, scree) is a procedural texture, not a geological survey.</li>
+      <li>Satellite imagery: Sentinel-2 cloudless 2016 by <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), with modified Copernicus Sentinel data.</li>
+      <li>Outlines and names of the tarns, names and positions of villages, and positions of huts and waypoints: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL). Birds and ambient sound (wind, water and birdsong): our own animation and synthesis; the birds are an illustration, not real tracking. The bearded vulture, griffon vulture, cinereous vulture, Egyptian vulture (March to September) and the 3D chamois are our own Blender models. Bearded vulture call: recording by the “adalaves” channel on <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Background music: our own composition with VSCO-2 Community Edition instruments (CC0).</li></ul>
+      <h3>Summit photographs</h3>
+      <p>Each photo is shown with its author’s name and a link to its source page (Wikimedia Commons, Wikiloc, Mendikat or others). Photos from Wikiloc and Mendikat are used with the author’s name and a link to their page; if you are the author and would rather it were removed, let us know and it will be taken down.</p>
+      <ul>${usadas.map(({ p, f }) => `<li>${credEN(p.nombre, f)}</li>`).join('')}</ul>
+      ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Summits from 2,000 to 3,000 m (${menoresUsadas.length} photos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credEN(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
+      <h3>Routes and waypoints</h3>
+      <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: a guidance preview of the track by <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> on Wikiloc; the original, to download, is on <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">its page</a>.</li>`).join('')}
+      <li>The route waypoints come from the points marked on their authors’ tracks (Wikiloc).</li></ul>
+      <h3>Waypoint photographs</h3>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Summit: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, via <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}.</li>`).join('')}</ul>
+      <h3>3D models and animations</h3>
+      <ul><li>Hiker animations (walking, jogging, running, crouching, tripping and rolling): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> by Quaternius, CC0 (public domain). The mannequin was dressed and equipped in Blender (our own clothes, backpack, helmet and poles); the woman hiker is our own variant of the same mannequin.</li>
+      <li>All other models (summits, wildlife, birds, huts and objects): modelled in Blender for this website from reference photographs.</li></ul>
+      <h3>Fonts and software</h3>
+      <ul><li>Cormorant Garamond and Barlow, SIL OFL 1.1 licence. three.js, MIT licence. Blender (GPL) for the models.</li></ul>
+      <h3>Website addresses</h3>
+      <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> and, as a backup, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (the same website). In Spain, some Cloudflare addresses are blocked during football matches at weekends: if the first one does not load, use the second.</p>
+      <h3>Visits</h3>
+      <p>This website uses <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, a visit counter without cookies that stores no personal data and does not follow you around other websites: it only counts how many times each page is opened.</p>
+      <h3>Safety</h3>
+      <p>This website does not replace a guidebook, a conditions report or experience in high mountains. Always check the forecast and the state of the route before setting out.</p>`;
+      return;
+    }
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p class="firma">Creado por SKYLLION (FRANK)</p>

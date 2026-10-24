@@ -2,14 +2,15 @@
 // Cálculo propio con el relieve de 120 m (nivel 4 de los bloques, ~1 MB, se pide la primera vez); no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
+import { t, EN_INGLES } from './i18n.js?v=1';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const COLORES = ['#2f4c45', '#4a6a60', '#6d8b85', '#93a9ac', '#b8c7ce'];   // de cerca a lejos (más lejos = más claro, como la bruma)
 const AZ_PASO = 0.25, ALCANCE = 90000, RAD = Math.PI / 180, DECL = 1.3;   // DECL: declinación magnética del Pirineo (este), para pasar de rumbo magnético a geográfico
 const RUMBOS = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'], RUMBOS16 = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
-const rumbo = (az) => RUMBOS16[Math.round((((az % 360) + 360) % 360) / 22.5) % 16];
-const fmtKm = (d) => (d < 10000 ? (d / 1000).toFixed(1).replace('.', ',') : String(Math.round(d / 1000))) + ' km';
-const fmtM = (n) => new Intl.NumberFormat('es-ES').format(n) + ' m';
+const rumbo = (az) => { const r = RUMBOS16[Math.round((((az % 360) + 360) % 360) / 22.5) % 16]; return EN_INGLES ? r.replace(/O/g, 'W') : r; };   // en inglés, oeste = W
+const fmtKm = (d) => (d < 10000 ? (d / 1000).toFixed(1).replace('.', EN_INGLES ? '.' : ',') : String(Math.round(d / 1000))) + ' km';
+const fmtM = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES').format(n) + ' m';
 const FUENTE = '"Barlow Condensed", "Barlow", sans-serif';
 
 // rumbo geográfico (0–360°, 0 = norte) hacia el que mira la cámara trasera del móvil, a partir de un evento de orientación; null si no lo da
@@ -143,7 +144,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   function pintaLista(orden) {
     const ul = el.querySelector('#pan-ul'), v = ctxP.res.vis.slice();
     if (orden === 'rumbo') v.sort((a, b) => a.az - b.az); else if (orden === 'distancia') v.sort((a, b) => a.d - b.d); else v.sort((a, b) => b.p.altitud - a.p.altitud);
-    ul.innerHTML = v.map((x) => `<li><button type="button" data-id="${esc(x.p.id)}"><span class="pl-n">${esc(x.p.nombre)}${x.otros.length ? `<small>también «${esc(x.otros.join('», «'))}»</small>` : ''}</span><span class="pl-a">${fmtM(x.p.altitud)}</span><span class="pl-d">${fmtKm(x.d)} · ${rumbo(x.az)} ${Math.round(x.az)}°</span></button></li>`).join('') || '<li class="pl-vacio">Desde aquí no se ve ninguna cumbre de la lista.</li>';
+    ul.innerHTML = v.map((x) => `<li><button type="button" data-id="${esc(x.p.id)}"><span class="pl-n">${esc(x.p.nombre)}${x.otros.length ? `<small>${t('también «{n}»', { n: esc(x.otros.join(EN_INGLES ? '”, “' : '», «')) })}</small>` : ''}</span><span class="pl-a">${fmtM(x.p.altitud)}</span><span class="pl-d">${fmtKm(x.d)} · ${rumbo(x.az)} ${Math.round(x.az)}°</span></button></li>`).join('') || '<li class="pl-vacio">Desde aquí no se ve ninguna cumbre de la lista.</li>';
     for (const b of el.querySelectorAll('#pan-orden button')) b.setAttribute('aria-pressed', String(b.dataset.o === orden));
   }
 
@@ -166,7 +167,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     if (performance.now() > br.pausa && !el.querySelector('#pan-vista').hidden) centraEn(el.querySelector('#pan-scroll'), ctxP.g, br.rumbo);
     const v = apuntada(br.rumbo); ctxP.apunta = v;
     if (v) ponApunta(v.p.nombre, `${fmtM(v.p.altitud)} · ${fmtKm(v.d)} · ${rumbo(v.az)} ${Math.round(v.az)}°`, true, true);
-    else ponApunta('Sin cumbre con nombre', `Rumbo ${rumbo(br.rumbo)} ${Math.round(br.rumbo)}°`, false, false);
+    else ponApunta(t('Sin cumbre con nombre'), t('Rumbo {n}', { n: `${rumbo(br.rumbo)} ${Math.round(br.rumbo)}°` }), false, false);
   }
   async function activaBrujula() {
     if (br.on) { apagaBrujula(); return; }
@@ -223,15 +224,15 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     const tok = ++token, sc = el.querySelector('#pan-scroll'), cv = el.querySelector('#pan-canvas');
     apagaBrujula(); ctxP = null; el.dataset.orden = 'altura'; el.querySelector('#pan-camara').hidden = !(op.desdeAqui && camara);
     el.hidden = false; document.body.classList.add('pan-abierto'); vista('pan');
-    el.querySelector('#pan-titulo').textContent = `Panorama desde ${p.nombre}`; el.querySelector('#pan-sub').textContent = op.desdeAqui ? 'Calculando lo que se ve desde aquí…' : 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
+    el.querySelector('#pan-titulo').textContent = t('Panorama desde {n}', { n: p.nombre }); el.querySelector('#pan-sub').textContent = op.desdeAqui ? 'Calculando lo que se ve desde aquí…' : 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
     cv.width = 1;
     const bloques = await cargaN4(); if (tok !== token) return;
     await new Promise((r) => setTimeout(r, 30)); if (tok !== token) return;
     const alt = sampler(bloques), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
     if (tok !== token) return;
     const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520); ctxP = { p, res, g };
-    el.querySelector('#pan-sub').textContent = res.vis.length ? `${res.vis.length} cumbres con nombre a la vista${g.omitidas ? `: en el panorama van las ${g.n} principales; todas están en la lista` : ''}.` : 'Desde aquí no se ve ninguna cumbre de la lista.';
-    el.querySelector('#pan-nota').textContent = `Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×${g.exag.toFixed(1).replace('.', ',')} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.`;
+    el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
+    el.querySelector('#pan-nota').textContent = t('Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
     centraEn(sc, g, res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }

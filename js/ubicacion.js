@@ -2,15 +2,16 @@
 // la vista sigue la posición y gira con la brújula. Fuera del mapa, solo avisa de a cuánto se está.
 // Botón: 1.º toque, localizar (la cámara va al punto); 2.º, seguir con la brújula; 3.º, apagar. Mover el mapa con el dedo deja de seguir.
 import * as THREE from 'three';
-import { leeOrientacion } from './panorama.js?v=6';
+import { leeOrientacion } from './panorama.js?v=7';
+import { t, EN_INGLES } from './i18n.js?v=1';
 
 const RAD = Math.PI / 180;
 const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)
   const a = Math.sin(((lat2 - lat1) * RAD) / 2) ** 2 + Math.cos(lat1 * RAD) * Math.cos(lat2 * RAD) * Math.sin(((lon2 - lon1) * RAD) / 2) ** 2;
   return 2 * 6371 * Math.asin(Math.sqrt(a));
 };
-const delPico = (n) => (/^(La|Las|Los) /.test(n) ? `de ${n}` : /^El /.test(n) ? `del ${n.slice(3)}` : `del ${n}`);   // «del Aneto», «de La Munia»
-const fmtKm = (d) => (d < 10 ? d.toFixed(1).replace('.', ',') : String(Math.round(d)));
+const delPico = (n) => (EN_INGLES ? n : /^(La|Las|Los) /.test(n) ? `de ${n}` : /^El /.test(n) ? `del ${n.slice(3)}` : `del ${n}`);   // «del Aneto», «de La Munia» (en inglés, «from» va en la frase)
+const fmtKm = (d) => (d < 10 ? d.toFixed(1).replace('.', EN_INGLES ? '.' : ',') : String(Math.round(d)));
 
 export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton, botonPanorama = null, abrePanorama = null, picos = [], picoAbierto = () => null }) {
   const st = { modo: 0, watch: null, pos: null, rumbo: null, abs: false, raf: 0, primera: true };   // modo: 0 apagado, 1 localizado, 2 siguiendo
@@ -34,7 +35,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
 
   const pinta = () => {
     boton.setAttribute('aria-pressed', st.modo === 2 ? 'true' : 'false'); boton.dataset.modo = st.modo;
-    boton.setAttribute('aria-label', ['Dónde estoy', 'Seguir mi posición con la brújula', 'Apagar la ubicación'][st.modo]);
+    boton.setAttribute('aria-label', t(['Dónde estoy', 'Seguir mi posición con la brújula', 'Apagar la ubicación'][st.modo]));
   };
 
   function colocaMarcador() {
@@ -56,8 +57,8 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
       const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, Math.abs(q.z) - geo.D / 2);
       if (st.primera) {   // con una cumbre abierta, la distancia a ella; si no, al borde del mapa y al tresmil más cercano
         const p = picoAbierto(), cerca = p ? null : picos.reduce((m, q) => { const d = km(lat, lon, q.lat, q.lon); return !m || d < m.d ? { q, d } : m; }, null);
-        avisa(p ? `Estás fuera del mapa, a ${fmtKm(km(lat, lon, p.lat, p.lon))} km en línea recta ${delPico(p.nombre)}.`
-          : `Estás fuera del mapa, a ${Math.round(Math.hypot(fx, fz) / 1000)} km de su borde.${cerca ? ` El tresmil más cercano es ${cerca.q.nombre}, a ${fmtKm(cerca.d)} km en línea recta.` : ''}`, 7000);
+        avisa(p ? t('Estás fuera del mapa, a {d} km en línea recta {p}.', { d: fmtKm(km(lat, lon, p.lat, p.lon)), p: delPico(p.nombre) })
+          : t('Estás fuera del mapa, a {d} km de su borde.', { d: Math.round(Math.hypot(fx, fz) / 1000) }) + (cerca ? t(' El tresmil más cercano es {n}, a {d} km en línea recta.', { n: cerca.q.nombre, d: fmtKm(cerca.d) }) : ''), 7000);
       }
       st.primera = false; return;
     }
@@ -65,10 +66,10 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     colocaMarcador();
     if (st.primera) {
       st.primera = false;
-      const a = camState(), t = new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z);
-      flyTo({ t, theta: a.theta, phi: 0.95, r: 2600 });
+      const a = camState(), destino = new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z);
+      flyTo({ t: destino, theta: a.theta, phi: 0.95, r: 2600 });
       const p = picoAbierto();
-      avisa(`Estás aquí (precisión ±${Math.round(accuracy)} m${altitude != null ? ` · altitud GPS ${Math.round(altitude)} m` : ''})${p ? ` · a ${fmtKm(km(lat, lon, p.lat, p.lon))} km ${delPico(p.nombre)}` : ''}.`);
+      avisa(t('Estás aquí (precisión ±{m} m{alt}){p}.', { m: Math.round(accuracy), alt: altitude != null ? t(' · altitud GPS {a} m', { a: Math.round(altitude) }) : '', p: p ? t(' · a {d} km {p}', { d: fmtKm(km(lat, lon, p.lat, p.lon)), p: delPico(p.nombre) }) : '' }));
     }
     if (st.modo === 2) sigue();
   }
@@ -87,9 +88,9 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
   }
   function sigue() {
     if (!st.pos) return;
-    const a = camState(), t = new THREE.Vector3(st.pos.x, geo.heightAt(st.pos.x, st.pos.z), st.pos.z);
+    const a = camState(), destino = new THREE.Vector3(st.pos.x, geo.heightAt(st.pos.x, st.pos.z), st.pos.z);
     const theta = st.rumbo == null ? a.theta : -st.rumbo * RAD;   // la cámara detrás del punto, mirando hacia el rumbo
-    applyState({ t: a.t.clone().lerp(t, 0.25), theta: a.theta + Math.atan2(Math.sin(theta - a.theta), Math.cos(theta - a.theta)) * 0.25, phi: a.phi, r: a.r });
+    applyState({ t: a.t.clone().lerp(destino, 0.25), theta: a.theta + Math.atan2(Math.sin(theta - a.theta), Math.cos(theta - a.theta)) * 0.25, phi: a.phi, r: a.r });
   }
   async function brujula(on) {
     if (on) {

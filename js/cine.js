@@ -11,10 +11,11 @@
     if (store.get(KEY) !== '1') { try { document.cookie = KEY + '=1; max-age=31536000; path=/; SameSite=Lax'; } catch { /* sin cookies */ } }
   };
   // «Ver introducción» en la cabecera (a la izquierda, discreto): recarga con ?intro, que la repite desde el principio
+  const tr = window.tresmilesT || ((s) => s);   // js/i18n.js (si ya cargó)
   const cabecera = $('header.top');
   if (cabecera) {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'textbtn'; b.id = 'btn-reintro';
-    b.setAttribute('aria-label', 'Ver introducción'); b.title = 'Ver introducción';
+    b.setAttribute('aria-label', tr('Ver introducción')); b.title = tr('Ver introducción');
     b.innerHTML = '<svg viewBox="0 0 48 32" width="17" height="12" aria-hidden="true"><path d="M2 30 16 6l7 11 5-8 18 21z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg><span>Ver introducción</span>';
     b.addEventListener('click', () => { location.href = location.pathname + '?intro'; });
     cabecera.appendChild(b);

@@ -1,7 +1,8 @@
 // Selector de cumbres (el del inicio y el del mapa): buscador sin tildes que mira también los nombres alternativos,
 // macizos plegados de oeste a este con su número, principales primero y secundarias plegadas dentro de cada macizo.
+import { t as tr, EN_INGLES } from './i18n.js?v=1';   // «tr»: aquí «t» es nombre de variable en muchas funciones
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const fmt = (n) => new Intl.NumberFormat('es-ES', { useGrouping: 'always' }).format(n);
+const fmt = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);
 
 // texto comparable: sin tildes ni diéresis, sin apóstrofos ni guiones, en minúsculas; devuelve también la posición de cada letra en el original
 function plano(t) {
@@ -23,7 +24,7 @@ function marca(nombre, q) {
 }
 
 // capas: qué cumbres se ven (en el mapa y en la lista)
-const CAPAS = [['tres', 'Tresmiles'], ['menos', 'Menos de 3.000'], ['todos', 'Todas']];
+const CAPAS = [['tres', EN_INGLES ? '3,000ers' : 'Tresmiles'], ['menos', 'Menos de 3.000'], ['todos', 'Todas']];   // «Tresmiles» no va al diccionario: es también el nombre de la web
 
 const ATAJOS = [['subidos', 'Mis subidos'], ['pend', 'Pendientes'], ['cerca', 'Cercanas'], ['altas', 'Más altas']];
 
@@ -87,9 +88,9 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
       res.push({ p, s, via });
     }
     res.sort((a, b) => a.s - b.s || (esPrincipal(b.p) - esPrincipal(a.p)) || b.p.altitud - a.p.altitud);
-    if (!res.length) return `<p class="sel-vacio">Ninguna cumbre coincide con «${esc(q.value.trim())}».${filtrado() ? ' Prueba a quitar los filtros.' : ''}</p>`;
+    if (!res.length) return `<p class="sel-vacio">${tr('Ninguna cumbre coincide con «{q}».', { q: esc(q.value.trim()) })}${filtrado() ? tr(' Prueba a quitar los filtros.') : ''}</p>`;
     return `<p class="sel-cuenta">${res.length === 1 ? '1 cumbre' : `${res.length} cumbres`}</p>` + res.map(({ p, via }) => {
-      const otro = via ? `<small class="sel-via">también «${marca(via, f)}»</small>` : '';
+      const otro = via ? `<small class="sel-via">${tr('también «{n}»', { n: marca(via, f) })}</small>` : '';
       return fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}</small>${otro}`, marca(p.nombre, f));
     }).join('');
   }
@@ -117,10 +118,10 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     const n = picos.filter(pasa).length;
     if (capa) {
       for (const b of root.querySelectorAll('[data-capa]')) b.setAttribute('aria-checked', b.dataset.capa === capa.get());
-      q.placeholder = `Buscar entre ${n === 1 ? '1 cumbre' : `las ${n} cumbres`}`;
+      q.placeholder = n === 1 ? tr('Buscar entre 1 cumbre') : tr('Buscar entre las {n} cumbres', { n });
     }
     filtroEl.hidden = !filtrado();
-    if (filtrado()) filtroEl.innerHTML = `Con filtros: ${n} de ${picos.length} cumbres${quitarFiltros ? ' · <button type="button" class="sel-quita">Quitar filtros</button>' : ''}`;
+    if (filtrado()) filtroEl.innerHTML = `${tr('Con filtros: {n} de {t} cumbres', { n, t: picos.length })}${quitarFiltros ? ` · <button type="button" class="sel-quita">${tr('Quitar filtros')}</button>` : ''}`;
     lista.innerHTML = f ? porBusqueda(f) : atajo ? porAtajo() : (porMacizos() || '<p class="sel-vacio">Ninguna cumbre con estos filtros.</p>');
   }
   function alAbrir() {
