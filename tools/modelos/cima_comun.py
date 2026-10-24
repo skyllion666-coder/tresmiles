@@ -101,6 +101,25 @@ def placa(nombre, texto, tam, pos, rot, tex='rock_boulder_dry', tinte='1,1,1', t
     for p in me.polygons: p.use_smooth = liso   # liso=False: caras planas (lajas de cantos vivos)
     o = bpy.data.objects.new(nombre, me); bpy.context.collection.objects.link(o); o.data.materials.append(m); return o
 
+def rotular(o, texto, tex='rock_boulder_dry', tinte='1,1,1', tinta='18,18,20', salida='/tmp', grueso=1.0, ancho_img=1024, ocupa=0.8):
+    """Pinta letras en la cara de delante (-Y) de una piedra ya hecha (p. ej. con piedra()): nueva textura con las letras y coordenadas de textura
+    a medida (las caras de delante, la imagen entera; `ocupa`, tamaño del texto; el resto, la franja de abajo, que no lleva letras)."""
+    os.makedirs(salida, exist_ok=True); img = os.path.join(salida, f'{o.name}.jpg')
+    me = o.data; xs = [v.co.x for v in me.vertices]; zs = [v.co.z for v in me.vertices]; ys = [v.co.y for v in me.vertices]
+    x0, x1, z0, z1 = min(xs), max(xs), min(zs), max(zs); w, h = x1 - x0, z1 - z0
+    subprocess.run(['python3', os.path.join(AQUI, 'rotulo_piedra.py'), f'{rocas.TEX}/web/{tex}_diff_1k.jpg', img, texto, str(ancho_img), str(int(ancho_img * h / w)), tinte, str(grueso), tinta, str(ocupa)], check=True, capture_output=True)
+    m = bpy.data.materials.new(o.name); m.use_nodes = True; nt = m.node_tree; b = next(x for x in nt.nodes if x.type == 'BSDF_PRINCIPLED'); b.inputs['Roughness'].default_value = 0.88
+    t = nt.nodes.new('ShaderNodeTexImage'); t.image = bpy.data.images.load(img); nt.links.new(t.outputs['Color'], b.inputs['Base Color'])
+    me.materials.clear(); me.materials.append(m)
+    uv = me.uv_layers.get('UVMap') or me.uv_layers.new(name='UVMap'); L = max(w, max(ys) - min(ys), h)
+    for p in me.polygons:
+        for li in p.loop_indices:
+            co = me.vertices[me.loops[li].vertex_index].co
+            if p.normal.y < -0.5: uv.data[li].uv = ((co.x - x0) / w, (co.z - z0) / h)
+            elif abs(p.normal.z) > 0.6: uv.data[li].uv = ((co.x - x0) / L, 0.01 + 0.15 * (co.y - min(ys)) / (max(ys) - min(ys)))   # arriba y abajo: en planta
+            else: uv.data[li].uv = (((co.x if abs(p.normal.x) < 0.6 else co.y) - x0) / L, 0.01 + 0.15 * (co.z - z0) / h)
+    return o
+
 def cerrar(OUT, PREV=None, unir=('hito_',), relieve=None, cam=((0.8, -4.5, 1.6), (0.2, 0, 0.9), 30), cielo=(0.55, 0.68, 0.9), fuerza_cielo=0.9, sol=True, suelo='rock_boulder_dry', res=(800, 600)):
     """Aplica todo, une lo fijo (nombres que empiezan por `unir`) en una malla por material, cuelga todo de «Vertice», exporta y, si se pide, hace una vista.
     relieve = (textura, fuerza): relieve escaneado de verdad en las piedras sueltas (las fijas van solo con el mapa de normales: pesan menos)."""
