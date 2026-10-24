@@ -674,7 +674,7 @@
   "paso": 1.0,
   "archivo": "gran-facha-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: pilar de hormigón con «GRAN FACHA 3.006» pintado en amarillo sobre una plataforma de bloques de granito con un buzón, según la foto de la cima de la ficha (img/hitos/gf-cima.jpg).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m y, en la frontera (donde el MDT05 no tiene dato), RGE ALTI del IGN de Francia (Géoplateforme, Licence Ouverte). Cima: pilar de hormigón con «GRAN FACHA 3.006» pintado en amarillo sobre una plataforma de bloques de granito con un buzón, según la foto de la cima de la ficha (img/hitos/gf-cima.jpg).",
   "orto": "gran-facha-cima-orto.webp",
   "ortoM": "gran-facha-cima-orto-m.webp",
   "modelo": "models/cima-gran-facha.glb",
@@ -682,13 +682,13 @@
   "elementos": [
    {
     "nodo": "Vertice",
-    "x": -28433.67,
-    "z": -3493.57,
-    "giro": 1.571,
+    "x": -28377.67,
+    "z": -3482.57,
+    "giro": 0.393,
     "ancla": true,
     "huella": 0.95,
     "allana": 0.95,
-    "ref": "Máximo del MDT05 (2967.0 m).",
+    "ref": "Máximo del relieve (RGE ALTI) (2985.1 m).",
     "sueltas": "^(bloque|caida)\\d"
    }
   ]
