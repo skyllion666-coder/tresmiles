@@ -67,6 +67,23 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
   const texRoca = (tipo) => (texRocaP[tipo] ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/roca-${tipo}${archivosM ? '-m' : ''}.jpg?v=${window.WEB_V || 0}`, (t) => {
     t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, terrain.aniso ?? 4); res(t);
   }, undefined, () => res(null))));
+  // ortofotos de zona y de cima: la grande (ordenador, HD de la app) y, si falla (memoria del móvil…), la ligera; cada intento queda
+  // apuntado en window.tresmilesDiag para el «Diagnóstico» de la app (Acerca de)
+  const diag = (window.tresmilesDiag ??= []);
+  const cargaOrto = (grande, ligera, alCargar) => {
+    const intento = (f, otra) => {
+      const t0 = performance.now();
+      new THREE.TextureLoader().load(`data/terrain/cumbres/${f}?v=${window.WEB_V || 0}`, (tex) => {
+        diag.push({ f, ok: true, px: `${tex.image?.width}×${tex.image?.height}`, ms: Math.round(performance.now() - t0) }); diag.splice(0, diag.length - 30);
+        alCargar(tex);
+      }, undefined, () => {
+        diag.push({ f, ok: false, ms: Math.round(performance.now() - t0) }); diag.splice(0, diag.length - 30);
+        if (otra) intento(otra, null);
+      });
+    };
+    const f = archivosM ? ligera || grande : grande || ligera;
+    if (f) intento(f, f === grande && ligera !== grande ? ligera : null);
+  };
   const ROCAS_VIEJAS = /[?&]rocasviejas/.test(location.search), rocasCima = crearRocas({ movil, archivosM });
   const detalles = new Map(), detCarga = new Set();   // id -> detalle local (Paso de Mahoma)
   geo.setExtra((x, z) => {
@@ -124,15 +141,14 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       const p = { id, H, x0, z0, n, paso, mesh, mat, ch, hueco }; piezas.set(id, p);
       const lado = (nm - 1) * m * paso;
       // ortofoto del PNOA (IGN, 25–50 cm, CC BY 4.0) sobre la pieza: sustituye al satélite de 10 m dentro de ella (tools/build_orto.py)
-      const archivoOrto = /[?&]sinorto/.test(location.search) ? null : archivosM ? d.ortoM : d.orto;
-      if (archivoOrto) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoOrto}?v=${window.WEB_V || 0}`, (tex) => {
+      if (!/[?&]sinorto/.test(location.search)) cargaOrto(d.orto, d.ortoM, (tex) => {
         if (piezas.get(id) !== p) { tex.dispose(); return; }
         const pw = (nm - 1) * m * paso;   // lado de la pieza (m)
         tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.repeat.set(cw / pw, cd / pw); tex.offset.set((ch.x0 - x0) / pw, (pw - (ch.z0 - z0) - cd) / pw);   // de las coordenadas del bloque a las de la ortofoto
         aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado], d.og); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
         for (const dt of detalles.values()) if (dt.pieza === p && dt.mat && !dt.ortoCima) aplicaOrto(dt.mat, tex, ch, null, d.og);   // (si la cima ya tiene su parche de máxima resolución, se queda con él)   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
-      }, undefined, () => {});
+      });
       alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
     })().catch((e) => { console.warn("cumbres", id, e); return null; }).finally(() => cargando.delete(id));
@@ -232,13 +248,12 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       { const tr = ['granito', 'caliza', 'oscura'].includes(d.roca) ? d.roca : 'neutra'; texRoca(tr).then((t) => { if (!t) return; const [tg, k, gm] = mat.userData.gran; tg.value = t; k.value = 1; gm.value = LUM_ROCA[tr]; }); }   // roca de la cima con textura escaneada (terrain.js)
       if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[pid]?.og);
       // parche de ortofoto a máxima resolución solo en estos 200 m (tools/build_orto_cima.py), encima de la de la pieza; el color ya viene igualado a ella
-      const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : archivosM ? d.ortoM : d.orto;
-      if (archivoCima) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoCima}?v=${window.WEB_V || 0}`, (tex) => {
+      if (!/[?&](sinorto|sinparche)/.test(location.search)) cargaOrto(d.orto, d.ortoM, (tex) => {
         const dt = detalles.get(id); if (dt !== registro) { tex.dispose(); return; }
         const L = (n - 1) * paso; tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4);
         tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - d.x0) / L, (L - (ch.z0 - d.z0) - cd) / L);   // de las coordenadas del bloque a las del parche
         aplicaOrto(mat, tex, ch, null, indice?.[pid]?.og); dt.ortoCima = tex;
-      }, undefined, () => {});
+      });
       scene.add(mesh);
       { // rocas con textura escaneada colocadas sobre el relieve (js/rocas.js); en las cimas con modelo de Blender, sin mojón y sin rocas encima del modelo
         const tipo = ['granito', 'caliza', 'oscura'].includes(d.roca) ? d.roca : 'neutra', an = d.modelo ? (d.elementos?.find((e) => e.ancla) ?? d.elementos?.[0]) : null;

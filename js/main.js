@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=20';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=44';
+import { crearCumbres } from './cumbres.js?v=45';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
@@ -55,6 +55,7 @@ async function boot() {
   // — motor —
   const canvas = $('#gl');
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+  canvas.addEventListener('webglcontextlost', () => (window.tresmilesDiag ??= []).push({ f: 'contexto WebGL perdido (memoria gráfica)', ok: false }));
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight, false);
   instalaNiebla();   // niebla de valle (antes de crear ningún material)
@@ -1087,7 +1088,21 @@ async function boot() {
     lista.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); abre(false); btn.focus(); } });
     document.addEventListener('pointerdown', (e) => { if (!lista.hidden && !e.target.closest('#intro-elegir')) abre(false); });
   })();
-  $('#btn-about').addEventListener('click', () => about.showModal());
+  // — diagnóstico (solo en la app): qué ortofotos se cargaron y qué admite la tarjeta gráfica del móvil, para revisar fallos a distancia —
+  function diagnosticoApp() {
+    const gl = renderer.getContext(), ext = gl.getExtension('WEBGL_debug_renderer_info');
+    const gpu = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+    const ev = (window.tresmilesDiag || []).slice(-12).reverse().map((e) => `<li>${e.ok ? '✓' : '✗'} ${esc(e.f)}${e.px ? ` (${e.px})` : ''}${e.ms != null ? ` · ${e.ms} ms` : ''}</li>`).join('') || '<li>Aún no se ha cargado ninguna foto de zona: abre una cumbre y vuelve aquí.</li>';
+    return `<h3>Diagnóstico de la app</h3><ul class="diag">
+      <li>Web v${esc(String(window.WEB_V || '?'))} · calidad ${CALIDAD_ALTA ? 'alta (HD)' : 'normal'} · dibujo ${terrain.movil ? 'móvil' : 'ordenador'}</li>
+      <li>Tarjeta gráfica: ${esc(String(gpu))} · imagen máx. ${renderer.capabilities.maxTextureSize} px · pantalla ${innerWidth}×${innerHeight} ×${devicePixelRatio}${navigator.deviceMemory ? ` · memoria ${navigator.deviceMemory} GB` : ''}</li>
+      <li>Texturas en memoria: ${renderer.info.memory.textures} · geometrías: ${renderer.info.memory.geometries}</li></ul>
+      <p class="ruta-credito">Últimas fotos aéreas (✓ cargada, ✗ fallo):</p><ul class="diag">${ev}</ul>`;
+  }
+  $('#btn-about').addEventListener('click', () => {
+    if (EN_APP) { buildAbout(); $('#about-body').insertAdjacentHTML('beforeend', diagnosticoApp()); }
+    about.showModal();
+  });
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
 
   // — arranque —

@@ -561,3 +561,4 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-ul .pl-a { font: 700 .86rem var(--cond); text-align: right; color: #8a4f12; } #pan-ul .pl-d { grid-column: 1 / -1; font: 500 .76rem var(--cond); letter-spacing: .05em; color: var(--ink-2, #5b6760); }
 #pan-ul .pl-vacio { padding: 18px 16px; color: var(--ink-2, #5b6760); }
 #pan-sub { min-height: 2.5em; } #pan-nota { min-height: 4.2em; }   /* alto fijo: el panorama se mide una sola vez */
+#about-body ul.diag { font-size: .8rem; line-height: 1.45; padding-left: 18px; word-break: break-word; }   /* diagnóstico de la app */
