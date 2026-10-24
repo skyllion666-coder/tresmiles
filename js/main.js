@@ -1069,6 +1069,8 @@ async function boot() {
       <li>Resto de modelos (cimas, fauna, aves, refugios y objetos): modelados en Blender para esta web a partir de fotografías de referencia.</li></ul>
       <h3>Tipografías y software</h3>
       <ul><li>Cormorant Garamond y Barlow, licencia SIL OFL 1.1. three.js, licencia MIT. Blender (GPL) para los modelos.</li></ul>
+      <h3>Direcciones de la web</h3>
+      <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> y, de reserva, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (la misma web). En España, algunos fines de semana se bloquean direcciones de Cloudflare durante el fútbol: si la primera no carga, usa la segunda.</p>
       <h3>Visitas</h3>
       <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página.</p>
       <h3>Seguridad</h3>

@@ -1,5 +1,7 @@
 # Tresmiles del Pirineo aragonés
 
+Web: https://tresmiles.pages.dev · reserva: https://skyllion666-coder.github.io/tresmiles/ (si Cloudflare está bloqueado durante el fútbol) · App para Android: https://github.com/skyllion666-coder/tresmiles/releases/latest
+
 Explorador 3D de las cumbres que superan los 3.000 m en el Pirineo aragonés, inspirado en la experiencia de
 «mapa para explorar» (vuelo aéreo, puntos sobre el terreno y ficha lateral), con contenido, código y diseño propios.
 
