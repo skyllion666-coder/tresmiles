@@ -27,6 +27,7 @@ const ease = (k) => (k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
 const wrapPi = (a) => ((a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } } };
 const isMobile = () => innerWidth <= 760;
+const EN_APP = /[?&]app=1\b/.test(location.search);   // dentro de la APK (TresmilesApp): solo lleva los archivos del móvil
 
 // colores del cielo, la niebla y la luz ambiente según la luz elegida: amanecer, mediodía y atardecer (cambian con suavidad)
 const LOOK = [
@@ -65,7 +66,7 @@ async function boot() {
   scene.add(hemi, sun);
 
   const geo = makeGeo(meta, relieve);
-  const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: isMobile() || matchMedia('(pointer: coarse)').matches });
+  const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP || isMobile() || matchMedia('(pointer: coarse)').matches });
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
