@@ -12,6 +12,19 @@ const fmtKm = (d) => (d < 10000 ? (d / 1000).toFixed(1).replace('.', ',') : Stri
 const fmtM = (n) => new Intl.NumberFormat('es-ES').format(n) + ' m';
 const FUENTE = '"Barlow Condensed", "Barlow", sans-serif';
 
+// rumbo geográfico (0–360°, 0 = norte) hacia el que mira la cámara trasera del móvil, a partir de un evento de orientación; null si no lo da
+export function leeOrientacion(e) {
+  let h = null;
+  if (typeof e.webkitCompassHeading === 'number') h = e.webkitCompassHeading;   // iPhone
+  else if (e.alpha != null && (e.absolute || e.type === 'deviceorientationabsolute')) {
+    const a = e.alpha * RAD, b = (e.beta ?? 0) * RAD, g = (e.gamma ?? 0) * RAD, cA = Math.cos(a), sA = Math.sin(a), sB = Math.sin(b), cG = Math.cos(g), sG = Math.sin(g), cB = Math.cos(b);
+    const este = -(cA * sG + sA * sB * cG), norte = -(sA * sG - cA * sB * cG);   // hacia dónde mira la cámara trasera (eje −Z del móvil), componentes este y norte
+    h = Math.hypot(este, norte) > 0.35 ? Math.atan2(este, norte) / RAD : -e.alpha;   // casi horizontal (mirando al suelo o al cielo): vale el borde superior del móvil
+    void cB;
+  }
+  return h == null ? null : (((h + DECL) % 360) + 360) % 360;
+}
+
 export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
   let n4 = null, el = null, token = 0, cajas = [], ctxP = null;   // ctxP: panorama abierto { p, res, g }
   const CH = meta.chunk, dim4 = CH / 4 + 3;
@@ -136,17 +149,6 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
 
   // — modo brújula —
   const br = { on: false, rumbo: null, pausa: 0, raf: 0, abs: false, tmo: 0 };
-  function leeOrientacion(e) {
-    let h = null;
-    if (typeof e.webkitCompassHeading === 'number') h = e.webkitCompassHeading;   // iPhone
-    else if (e.alpha != null && (e.absolute || e.type === 'deviceorientationabsolute')) {
-      const a = e.alpha * RAD, b = (e.beta ?? 0) * RAD, g = (e.gamma ?? 0) * RAD, cA = Math.cos(a), sA = Math.sin(a), sB = Math.sin(b), cG = Math.cos(g), sG = Math.sin(g), cB = Math.cos(b);
-      const este = -(cA * sG + sA * sB * cG), norte = -(sA * sG - cA * sB * cG);   // hacia dónde mira la cámara trasera (eje −Z del móvil), componentes este y norte
-      h = Math.hypot(este, norte) > 0.35 ? Math.atan2(este, norte) / RAD : -e.alpha;   // casi horizontal (mirando al suelo o al cielo): vale el borde superior del móvil
-      void cB;
-    }
-    return h == null ? null : (((h + DECL) % 360) + 360) % 360;
-  }
   function alOrientar(e) {
     if (e.type === 'deviceorientationabsolute') br.abs = true; else if (br.abs) return;   // en Android la relativa no vale
     const h = leeOrientacion(e); if (h == null) return;
