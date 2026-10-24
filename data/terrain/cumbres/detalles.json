@@ -601,7 +601,8 @@
     "ancla": true,
     "huella": 0.7,
     "ref": "Máximo del MDT05 (3111.1 m).",
-    "sueltas": "^(bloque|caida)\\d"
+    "sueltas": "^(bloque|caida)\\d",
+    "allana": 0.8
    }
   ]
  },
@@ -714,7 +715,8 @@
     "ancla": true,
     "huella": 0.9,
     "ref": "Máximo del MDT05 (3008.3 m). Hito de ~2,3 m sobre un montón de piedras, según la foto de la ficha.",
-    "sueltas": "^(bloque|caida)\\d"
+    "sueltas": "^(bloque|caida)\\d",
+    "allana": 0.95
    }
   ]
  },
@@ -739,7 +741,8 @@
     "ancla": true,
     "huella": 1.0,
     "ref": "Máximo del MDT05 (3000.3 m).",
-    "sueltas": "^(bloque|caida)\\d"
+    "sueltas": "^(bloque|caida)\\d",
+    "allana": 1.0
    }
   ]
  },
@@ -775,7 +778,8 @@
     "ancla": true,
     "huella": 0.8,
     "ref": "Máximo del MDT05 (3009.1 m). Mojón de lajas de ~2,1 m con la piedra escrita, según la foto de la ficha.",
-    "sueltas": "^bloque\\d"
+    "sueltas": "^bloque\\d",
+    "allana": 0.9
    }
   ]
  },

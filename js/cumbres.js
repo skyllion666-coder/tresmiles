@@ -202,6 +202,16 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         const hb = sample(pz, x, z) ?? base, bd = Math.min(i, j, n - 1 - i, n - 1 - j) * paso;
         F[k] = hb + (base - hb) * sstep(0, 14, bd);
       }
+      { // explanada bajo el modelo de Blender (elemento con `allana`: radio de su base, en metros reales): a escala ×16 la base mide ~30 m y en una cima afilada
+        // se enterraba o quedaba en el aire; el relieve se iguala a su altura media dentro de ese radio y se funde con la ladera en unos metros más
+        const an = d.modelo ? d.elementos?.find((e) => e.ancla && e.allana) : null;
+        if (an) {
+          const R1 = an.allana * (an.escala ?? d.escalaModelo ?? 1), R2 = R1 + Math.max(10, 0.6 * R1); let suma = 0, cuenta = 0;
+          for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) if (Math.hypot(d.x0 + i * paso - an.x, d.z0 + j * paso - an.z) < R1) { suma += F[j * n + i]; cuenta++; }
+          const b = cuenta ? suma / cuenta : 0;
+          if (cuenta) for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const w = 1 - sstep(R1, R2, Math.hypot(d.x0 + i * paso - an.x, d.z0 + j * paso - an.z)); if (w > 0) F[j * n + i] += (b - F[j * n + i]) * w; }
+        }
+      }
       const registro = { ...d, H: F }; detalles.set(id, registro);   // a partir de aquí heightAt la usa
       const ch = pz.ch, cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
       const pos = new Float32Array(n * n * 3), nor = new Float32Array(n * n * 3), uv = new Float32Array(n * n * 2);

@@ -4,7 +4,7 @@ Uso: python3 tools/modelos/registra_cima.py <id> <huella m> "<qué hay en la cim
 import json, gzip, sys, os, argparse
 import numpy as np
 a = argparse.ArgumentParser(); a.add_argument('id'); a.add_argument('huella', type=float); a.add_argument('ref'); a.add_argument('--giro', type=float, default=None)
-a.add_argument('--sueltas', default='^(bloque|caida)\\d'); a.add_argument('--foto', default=''); a.add_argument('--escala', type=float, default=16)
+a.add_argument('--sueltas', default='^(bloque|caida)\\d'); a.add_argument('--foto', default=''); a.add_argument('--escala', type=float, default=16); a.add_argument('--allana', type=float, default=None)   # radio de la base fija del modelo (m): la web allana el relieve debajo
 o = a.parse_args()
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'); P = os.path.join(ROOT, 'data/terrain/cumbres/detalles.json')
 det = json.load(open(P)); d = det[o.id]
@@ -16,6 +16,6 @@ if o.giro is None:   # el frente del modelo (y la cámara de «Ver la cima de ce
     o.giro = round(min((k * math.pi / 8 for k in range(16)), key=alto), 3)
 caida = {r: round(float(H.max() - min(H[j, min(i + r, d['n'] - 1)], H[j, max(i - r, 0)], H[min(j + r, d['n'] - 1), i], H[max(j - r, 0), i])), 1) for r in (3, 6, 10)}
 d.update(modelo=f'models/cima-{o.id}.glb', escalaModelo=o.escala, ref=f'Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: {o.ref}, según la foto de la cima de la ficha{" (" + o.foto + ")" if o.foto else ""}.',
-         elementos=[dict(nodo='Vertice', x=round(float(x), 2), z=round(float(z), 2), giro=o.giro, ancla=True, huella=o.huella, ref=f'Máximo del MDT05 ({H.max():.1f} m).', sueltas=o.sueltas)])
+         elementos=[dict(nodo='Vertice', x=round(float(x), 2), z=round(float(z), 2), giro=o.giro, ancla=True, huella=o.huella, **({'allana': o.allana} if o.allana else {}), ref=f'Máximo del MDT05 ({H.max():.1f} m).', sueltas=o.sueltas)])
 json.dump(det, open(P, 'w'), ensure_ascii=False, indent=1)
 print(o.id, 'máx', H.max(), 'giro', o.giro, 'caída máxima a 3/6/10 m:', caida)
