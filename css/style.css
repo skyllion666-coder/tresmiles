@@ -261,6 +261,12 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
   .lead { margin: 16px 0 24px; }
 }
 @media (max-height: 520px) and (orientation: landscape) {
+  /* móvil en horizontal: la columna de botones no cabe (hasta 7 botones en la app) → dos columnas de tres, más pequeños, sin llegar a la cabecera */
+  #tools { grid-template-rows: repeat(3, auto); grid-auto-flow: column; gap: 7px; direction: rtl; }
+  #tools .tool { width: 38px; height: 38px; direction: ltr; }
+  :root { --panel-w: min(400px, 44vw); }   /* la ficha no se come la pantalla */
+  .dock-main { min-width: min(220px, 36vw); height: 40px; gap: 8px; padding: 0 12px; }
+  #dock-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   #intro { padding-top: 56px; } #intro h1 { font-size: 2.4rem; } .lead { margin: 10px 0 14px; } .hint .rule { height: 24px; margin: 8px auto; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition-duration: .01s !important; } }
