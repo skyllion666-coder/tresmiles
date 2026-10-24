@@ -947,8 +947,9 @@ async function boot() {
   if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
 
   // — contador de visitas (solo en la web): el total de GoatCounter, si la cuenta permite el contador público (Ajustes → «Allow adding visitor counts») —
-  if (!EN_APP) fetch('https://skyllion.goatcounter.com/counter/TOTAL.json').then((r) => (r.ok ? r.json() : null)).then((d) => {
-    const n = Number(String(d?.count ?? '').replace(/\D/g, '')); if (!n) return;
+  // la cuenta es compartida (Bolsa de Horas…): solo se suman «/tresmiles» (todas las visitas desde el 24-10-2026) y «/» (tresmiles.pages.dev antes de esa fecha)
+  if (!EN_APP) Promise.all(['%2Ftresmiles', '%2F'].map((p) => fetch(`https://skyllion.goatcounter.com/counter/${p}.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null))).then((ds) => {
+    const n = ds.reduce((s, d) => s + Number(String(d?.count ?? '').replace(/\D/g, '') || 0), 0); if (!n) return;
     const el = $('#visitas'); el.textContent = `${new Intl.NumberFormat('es-ES').format(n)} visitas`; el.title = 'Visitas a la web (GoatCounter, sin cookies)'; el.hidden = false;
   }).catch(() => {});
 
