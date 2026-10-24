@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { EXAG } from './geo.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { crearRocas } from './rocas.js?v=3';   // los modelos de cima con texturas escaneadas van comprimidos con meshopt (gltf-transform)
+import { crearRocas } from './rocas.js?v=4';   // los modelos de cima con texturas escaneadas van comprimidos con meshopt (gltf-transform)
 const modelos = new Map();   // url -> Promise<gltf>
 // Las cimas de Blender están modeladas sobre suelo plano; en una arista el relieve cae a los lados y las piedras de fuera quedarían en el aire.
 // Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
@@ -41,7 +41,7 @@ const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promi
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
+export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, alCargar, fijo }) {   // movil: calidad de dibujo; archivosM: versiones ligeras de los archivos (siempre en la app)
   const MAX = movil ? 1 : 3, CARGA = movil ? 5500 : 7500, DESCARGA = movil ? 8000 : 11000, FUNDE = 90, INSET = 4;
   let indice = null, cuenta = 0;
   let ficha = null;
@@ -64,10 +64,10 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
   }
   // texturas escaneadas para el suelo de roca de las cimas (Poly Haven, CC0), por tipo de roca, con su luminancia lineal media (para conservar el brillo del terreno)
   const LUM_ROCA = { granito: 0.348, caliza: 0.309, oscura: 0.053, neutra: 0.127 }, texRocaP = {};
-  const texRoca = (tipo) => (texRocaP[tipo] ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/roca-${tipo}${movil ? '-m' : ''}.jpg?v=${window.WEB_V || 0}`, (t) => {
+  const texRoca = (tipo) => (texRocaP[tipo] ??= new Promise((res) => new THREE.TextureLoader().load(`data/terrain/texturas/roca-${tipo}${archivosM ? '-m' : ''}.jpg?v=${window.WEB_V || 0}`, (t) => {
     t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = Math.min(8, terrain.aniso ?? 4); res(t);
   }, undefined, () => res(null))));
-  const ROCAS_VIEJAS = /[?&]rocasviejas/.test(location.search), rocasCima = crearRocas({ movil });
+  const ROCAS_VIEJAS = /[?&]rocasviejas/.test(location.search), rocasCima = crearRocas({ movil, archivosM });
   const detalles = new Map(), detCarga = new Set();   // id -> detalle local (Paso de Mahoma)
   geo.setExtra((x, z) => {
     for (const d of detalles.values()) { const h = sample(d, x, z); if (h !== undefined) return h; }
@@ -124,7 +124,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       const p = { id, H, x0, z0, n, paso, mesh, mat, ch, hueco }; piezas.set(id, p);
       const lado = (nm - 1) * m * paso;
       // ortofoto del PNOA (IGN, 25–50 cm, CC BY 4.0) sobre la pieza: sustituye al satélite de 10 m dentro de ella (tools/build_orto.py)
-      const archivoOrto = /[?&]sinorto/.test(location.search) ? null : movil ? d.ortoM : d.orto;
+      const archivoOrto = /[?&]sinorto/.test(location.search) ? null : archivosM ? d.ortoM : d.orto;
       if (archivoOrto) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoOrto}?v=${window.WEB_V || 0}`, (tex) => {
         if (piezas.get(id) !== p) { tex.dispose(); return; }
         const pw = (nm - 1) * m * paso;   // lado de la pieza (m)
@@ -232,7 +232,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       { const tr = ['granito', 'caliza', 'oscura'].includes(d.roca) ? d.roca : 'neutra'; texRoca(tr).then((t) => { if (!t) return; const [tg, k, gm] = mat.userData.gran; tg.value = t; k.value = 1; gm.value = LUM_ROCA[tr]; }); }   // roca de la cima con textura escaneada (terrain.js)
       if (pz.orto) aplicaOrto(mat, pz.orto, ch, null, indice?.[pid]?.og);
       // parche de ortofoto a máxima resolución solo en estos 200 m (tools/build_orto_cima.py), encima de la de la pieza; el color ya viene igualado a ella
-      const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : movil ? d.ortoM : d.orto;
+      const archivoCima = /[?&](sinorto|sinparche)/.test(location.search) ? null : archivosM ? d.ortoM : d.orto;
       if (archivoCima) new THREE.TextureLoader().load(`data/terrain/cumbres/${archivoCima}?v=${window.WEB_V || 0}`, (tex) => {
         const dt = detalles.get(id); if (dt !== registro) { tex.dispose(); return; }
         const L = (n - 1) * paso; tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(8, terrain.aniso ?? 4);
@@ -285,7 +285,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
       // elementos de cumbre modelados en Blender a partir de fotografías (p. ej. Monte Perdido: vértice roto y mojón con buzón)
       const extras = [];
       if (d.modelo && d.elementos?.length) {
-        const gl = await cargaModelo(`${!movil && d.modeloHD ? d.modeloHD : d.modelo}?v=${window.WEB_V || 0}`);   // en ordenador, la versión con texturas más grandes si la hay; la versión de la web evita modelos viejos en caché
+        const gl = await cargaModelo(`${!archivosM && d.modeloHD ? d.modeloHD : d.modelo}?v=${window.WEB_V || 0}`);   // en ordenador, la versión con texturas más grandes si la hay; la versión de la web evita modelos viejos en caché
         if (gl && detalles.has(id)) {
           const S = d.escalaModelo ?? 1, an = d.elementos.find((e) => e.ancla) ?? d.elementos[0];
           for (const e of d.elementos) {

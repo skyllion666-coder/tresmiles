@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 304;
+  window.WEB_V = 305;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -16,8 +16,8 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=53">
-  <link rel="stylesheet" href="css/cine.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=54">
+  <link rel="stylesheet" href="css/cine.css?v=6">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
     // movimiento reducido o ahorro de datos. La preferencia se lee de localStorage o, si falla, de una cookie.
@@ -78,6 +78,7 @@
     <button type="button" class="tool" id="btn-vuelo" aria-label="Volar por la ruta" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span class="tool-tip">Volar por la ruta</span></button>
     <button type="button" class="tool" id="btn-light" aria-label="Cambiar la luz: mañana"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="tool-tip" id="light-name">Mañana</span></button>
     <button type="button" class="tool" id="btn-sound" aria-label="Activar el sonido ambiente" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path class="snd-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="snd-off" d="m16 9.5 5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    <button type="button" class="tool" id="btn-calidad" aria-label="Calidad alta: desactivada" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" font-family="Barlow Semi Condensed, sans-serif" fill="currentColor" letter-spacing=".5">HD</text></svg></button>
   </div>
 
   <button type="button" class="giro" id="giro-izq" aria-label="Girar la vista a la izquierda (mantén pulsado para girar sin parar)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8.5 6.2A8 8 0 1 1 4.6 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3.6 4.4l5 1.6-1.6 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
@@ -122,7 +123,7 @@
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 203;</script>
-  <script type="module" src="js/main.js?v=304"></script>
+  <script type="module" src="js/main.js?v=305"></script>
   <script defer src="js/cine.js?v=6"></script>
 </body>
 </html>

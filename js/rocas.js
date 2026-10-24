@@ -10,9 +10,9 @@ import { EXAG } from './geo.js';
 const TONO = { granito: [0.95, 0.98, 1.04], caliza: [0.92, 0.93, 0.95], oscura: [0.96, 0.98, 1.02], neutra: [0.95, 0.97, 1.02] };   // tono frío contra la luz cálida (la caliza escaneada es algo rosada)
 const SAT = { caliza: 0.45 };   // cuánto se le quita de saturación a la textura
 
-export function crearRocas({ movil }) {
+export function crearRocas({ movil, archivosM = movil }) {
   const libs = {};
-  const biblioteca = (tipo) => (libs[tipo] ??= new Promise((res) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(`models/rocas-${tipo}${movil ? '-m' : ''}.glb?v=${window.WEB_V || 0}`, (g) => {
+  const biblioteca = (tipo) => (libs[tipo] ??= new Promise((res) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(`models/rocas-${tipo}${archivosM ? '-m' : ''}.glb?v=${window.WEB_V || 0}`, (g) => {
     const formas = []; g.scene.traverse((o) => { if (o.isMesh && /^roca\d/.test(o.name)) formas.push(o); });
     formas.sort((a, b) => a.name.localeCompare(b.name, 'es', { numeric: true }));
     res(formas.map((o) => {

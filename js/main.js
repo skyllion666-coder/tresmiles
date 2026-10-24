@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=20';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=43';
+import { crearCumbres } from './cumbres.js?v=44';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
@@ -28,6 +28,8 @@ const wrapPi = (a) => ((a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* sin almacenamiento */ } } };
 const isMobile = () => innerWidth <= 760;
 const EN_APP = /[?&]app=1\b/.test(location.search);   // dentro de la APK (TresmilesApp): solo lleva los archivos del móvil
+// en la app, «Calidad alta» dibuja como en el ordenador (relieve, árboles, rocas, cimas a la vez) pero con los archivos del móvil
+const CALIDAD_ALTA = EN_APP && (store.get('tresmiles-calidad') === 'alta' || /[?&]calidad=alta\b/.test(location.search));   // ?calidad=alta: para probarla
 
 // colores del cielo, la niebla y la luz ambiente según la luz elegida: amanecer, mediodía y atardecer (cambian con suavidad)
 const LOOK = [
@@ -66,10 +68,10 @@ async function boot() {
   scene.add(hemi, sun);
 
   const geo = makeGeo(meta, relieve);
-  const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP || isMobile() || matchMedia('(pointer: coarse)').matches });
+  const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
-  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
+  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: EN_APP || terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
@@ -933,6 +935,16 @@ async function boot() {
     setSun((S.sun + 1) % SUN.length); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
   });
   setSun(0);
+
+  // — calidad (solo en la app): «HD» dibuja como en el ordenador; se guarda y recarga, porque el terreno se prepara al arrancar —
+  if (EN_APP) {
+    const btnCal = $('#btn-calidad'); btnCal.hidden = false;
+    btnCal.setAttribute('aria-pressed', CALIDAD_ALTA); btnCal.setAttribute('aria-label', `Calidad alta: ${CALIDAD_ALTA ? 'activada' : 'desactivada'}`);
+    btnCal.addEventListener('click', () => {
+      if (!confirm(CALIDAD_ALTA ? '¿Volver a la calidad normal? (gasta menos batería; la app se recarga)' : '¿Activar la calidad alta? Se ve como en el ordenador, pero el móvil trabaja más y gasta más batería. La app se recarga.')) return;
+      store.set('tresmiles-calidad', CALIDAD_ALTA ? 'normal' : 'alta'); location.reload();
+    });
+  }
 
   // — sonido (activo desde el inicio; si el navegador lo bloquea, arranca con el primer toque) —
   const btnSound = $('#btn-sound');
