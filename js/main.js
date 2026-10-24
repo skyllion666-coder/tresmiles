@@ -87,6 +87,15 @@ async function boot() {
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
   const activos = params.has('todos') ? data.picos.map((p) => p.id) : [...data.activos, ...menores.picos.map((p) => p.id)];
+  if (EN_INGLES) {   // contenido de las fichas en inglés (data/textos_en.json: frase en español → inglés); lo que no esté se queda en español
+    const tx = await json('data/textos_en.json').catch(() => ({})), tr = (s) => (typeof s === 'string' && tx[s]) || s;
+    for (const p of data.picos) {
+      for (const k of ['descripcion', 'ruta', 'curiosidad', 'pie', 'acceso', 'desnivel', 'grado', 'otras', 'epoca', 'situacion']) if (p[k]) p[k] = tr(p[k]);
+      if (p.fotoCima?.pie) p.fotoCima.pie = tr(p.fotoCima.pie);
+      if (p.enlace?.texto) p.enlace.texto = p.enlace.texto.replace(/^Ver la ruta en Wikiloc: (.*), de ([^,]+)$/, 'See the route on Wikiloc: $1, by $2');
+    }
+    window.tresmilesTextos = tx;   // también para los hitos de las rutas
+  }
   for (const m of data.macizos) m.nombre = t(m.nombre);   // nombres de macizos y dificultades ya en el idioma de la web (también los usa el selector)
   for (const d of data.dificultades) d.nombre = t(d.nombre);
   const macizoName = Object.fromEntries(data.macizos.map((m) => [m.id, m.nombre]));
