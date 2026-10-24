@@ -542,6 +542,8 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-tabs button { padding: 6px 15px; font: 600 .76rem var(--cond); letter-spacing: .1em; text-transform: uppercase; color: var(--cream, #f7f2e4); }
 #pan-tabs button[aria-selected="true"] { background: var(--cream, #f7f2e4); color: var(--spruce-d, #1f3530); }
 #pan-brujula { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .1em; text-transform: uppercase; color: var(--cream, #f7f2e4); }
+#pan-camara { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; margin-left: 8px; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--cream); background: none; }
+#pan-camara[hidden] { display: none; }
 #pan-brujula[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }
 #pan-apunta { position: absolute; top: 0; left: 0; right: 0; z-index: 3; box-shadow: 0 2px 8px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 16px; background: #fbf6e8; color: var(--ink, #24302c); border-bottom: 3px solid #d99a45; }
 #pan-apunta[data-v="0"] { border-bottom-color: rgba(36,48,44,.25); }
@@ -567,3 +569,15 @@ body.selector-abierto #intro { z-index: 31; }
 #btn-ubicacion[data-modo="1"] { color: #2f80ed; }   /* localizado */
 #btn-ubicacion[aria-pressed="true"] { background: #2f80ed; border-color: #2f80ed; color: #fff; }   /* siguiendo con la brújula */
 #ubic-aviso { position: fixed; z-index: 9; left: 50%; bottom: calc(110px + var(--sa-bottom, env(safe-area-inset-bottom))); transform: translateX(-50%); max-width: min(92vw, 420px); background: rgba(36,48,44,.94); color: var(--cream); padding: 10px 16px; border-radius: 10px; font: 500 .8rem/1.35 var(--cond); letter-spacing: .03em; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,.3); pointer-events: none; }
+/* modo cámara (js/realidad.js, solo en la app) */
+#ra { position: fixed; inset: 0; z-index: 120; background: #10181a; touch-action: none; }
+#ra[hidden] { display: none; }
+#ra video, #ra canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+#ra video { object-fit: cover; }
+#ra header { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: flex-start; gap: 10px; padding: calc(10px + var(--sa-top, env(safe-area-inset-top))) 12px 10px 16px; background: linear-gradient(rgba(10,16,15,.6), rgba(10,16,15,0)); pointer-events: none; }
+#ra-ayuda { flex: 1; margin: 6px 0 0; font: 500 .78rem/1.35 var(--cond); color: #f7f2e4; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+#ra-cerrar { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(36,48,44,.8); color: #f7f2e4; font-size: 1.6rem; line-height: 1; }
+#ra-apunta { position: absolute; left: 50%; bottom: calc(26px + var(--sa-bottom, env(safe-area-inset-bottom))); transform: translateX(-50%); padding: 8px 16px; border-radius: 12px; background: rgba(36,48,44,.88); color: #f7f2e4; text-align: center; pointer-events: none; }
+#ra-apunta[hidden] { display: none; }
+#ra-apunta b { display: block; font: 500 1.15rem var(--serif); }
+#ra-apunta span { font: 500 .75rem var(--cond); letter-spacing: .04em; opacity: .85; }

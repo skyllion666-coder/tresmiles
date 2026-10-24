@@ -11,8 +11,9 @@ import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=48';
-import { crearPanorama } from './panorama.js?v=5';
-import { crearUbicacion } from './ubicacion.js?v=3';
+import { crearPanorama } from './panorama.js?v=6';
+import { crearUbicacion } from './ubicacion.js?v=4';
+import { crearRealidad } from './realidad.js?v=1';
 import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -738,7 +739,8 @@ async function boot() {
   }
 
   fichaBody.addEventListener('toggle', (e) => { if (e.target.classList?.contains('perfil-det')) store.set('perfil-oculto', e.target.open ? '0' : '1'); }, true);   // el perfil se puede ocultar y se recuerda
-  const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc });
+  const realidad = EN_APP ? crearRealidad({ esc, abrirFicha: (id) => { panorama.cerrar(); openPeak(id); } }) : null;   // modo cámara (solo en la app)
+  const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null });
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
   let perfilT = 0;
   const sobrePerfil = (e) => {

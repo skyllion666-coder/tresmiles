@@ -25,7 +25,7 @@ export function leeOrientacion(e) {
   return h == null ? null : (((h + DECL) % 360) + 360) % 360;
 }
 
-export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
+export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = null }) {   // camara(res): modo cámara (js/realidad.js), solo en la app y desde tu posición
   let n4 = null, el = null, token = 0, cajas = [], ctxP = null;   // ctxP: panorama abierto { p, res, g }
   const CH = meta.chunk, dim4 = CH / 4 + 3;
 
@@ -193,7 +193,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
     el = document.createElement('div'); el.id = 'panorama'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'pan-titulo'); el.hidden = true;
     el.innerHTML = `<header><div><h2 id="pan-titulo"></h2><p id="pan-sub"></p></div><button type="button" id="pan-cerrar" aria-label="Cerrar el panorama">×</button></header>
       <nav id="pan-barra"><div id="pan-tabs" role="tablist"><button type="button" role="tab" data-v="pan" aria-selected="true">Panorama</button><button type="button" role="tab" data-v="lis" aria-selected="false">Lista</button></div>
-      <button type="button" id="pan-brujula" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor"/></svg>Brújula</button></nav>
+      <button type="button" id="pan-brujula" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor"/></svg>Brújula</button><button type="button" id="pan-camara" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 8h3l1.6-2.2h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13.2" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Cámara</button></nav>
       <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
       <div id="pan-lista" hidden><div id="pan-orden" role="group" aria-label="Ordenar"><button type="button" data-o="rumbo">Por rumbo</button><button type="button" data-o="distancia">Por distancia</button><button type="button" data-o="altura">Por altura</button></div><ul id="pan-ul"></ul></div>
       <p id="pan-nota"></p>`;
@@ -203,6 +203,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && !el.hidden) cerrar(); });
     el.querySelector('#pan-tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) vista(b.dataset.v); });
     el.querySelector('#pan-brujula').addEventListener('click', activaBrujula);
+    el.querySelector('#pan-camara').addEventListener('click', () => { if (ctxP && camara) { apagaBrujula(); camara(ctxP.res); } });
     el.querySelector('#pan-orden').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { el.dataset.orden = b.dataset.o; pintaLista(b.dataset.o); } });
     el.querySelector('#pan-ul').addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { cerrar(); abrir(b.dataset.id); } });
     el.querySelector('.ap-ficha').addEventListener('click', () => { const v = ctxP?.apunta; if (v) { cerrar(); abrir(v.p.id); } });
@@ -220,7 +221,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc }) {
   async function abrirPanorama(p, op = {}) {
     if (!el) crea();
     const tok = ++token, sc = el.querySelector('#pan-scroll'), cv = el.querySelector('#pan-canvas');
-    apagaBrujula(); ctxP = null; el.dataset.orden = 'altura';
+    apagaBrujula(); ctxP = null; el.dataset.orden = 'altura'; el.querySelector('#pan-camara').hidden = !(op.desdeAqui && camara);
     el.hidden = false; document.body.classList.add('pan-abierto'); vista('pan');
     el.querySelector('#pan-titulo').textContent = `Panorama desde ${p.nombre}`; el.querySelector('#pan-sub').textContent = op.desdeAqui ? 'Calculando lo que se ve desde aquí…' : 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
     cv.width = 1;
