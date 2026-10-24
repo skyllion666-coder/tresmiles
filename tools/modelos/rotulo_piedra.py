@@ -19,7 +19,9 @@ lineas = txt.split('|'); fuente = '/usr/share/fonts/truetype/dejavu/DejaVuSansCo
 capa = Image.new('L', (W, H), 0); dr = ImageDraw.Draw(capa)
 alto = int(H * 0.62 / len(lineas)); y = (H - alto * len(lineas)) / 2
 for ln in lineas:
-    f = ImageFont.truetype(fuente, int(alto * 0.8)); x = (W - dr.textlength(ln, font=f)) / 2 + R.uniform(-W * 0.04, W * 0.04)
+    t = int(alto * 0.8)
+    while t > 8 and dr.textlength(ln, font=ImageFont.truetype(fuente, t)) > W * 0.8: t -= 2   # que quepa en el ancho de la piedra
+    f = ImageFont.truetype(fuente, t); x = (W - dr.textlength(ln, font=f)) / 2 + R.uniform(-W * 0.04, W * 0.04)
     for k, ch in enumerate(ln):   # letra a letra, un poco bailadas, como escritas a mano
         dr.text((x, y + R.uniform(-alto * 0.05, alto * 0.05)), ch, font=f, fill=255, stroke_width=max(1, int(alto * 0.03 * grueso)), stroke_fill=255)
         x += dr.textlength(ch, font=f) * R.uniform(0.98, 1.06)

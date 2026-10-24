@@ -268,9 +268,24 @@
   "paso": 1.0,
   "archivo": "cilindro-cima.bin.gz",
   "roca": "caliza",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: montón bajo de bloques de caliza anaranjada con una piedra escrita a mano «MARBORÉ», según la foto de la cima de la ficha (img/hitos/cil-cima.jpg).",
   "orto": "cilindro-cima-orto.webp",
-  "ortoM": "cilindro-cima-orto-m.webp"
+  "ortoM": "cilindro-cima-orto-m.webp",
+  "modelo": "models/cima-cilindro.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -7039.97,
+    "z": 10209.67,
+    "giro": 2.356,
+    "ancla": true,
+    "huella": 1.0,
+    "allana": 1.0,
+    "ref": "Máximo del MDT05 (3324.2 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "perdiguero": {
   "x0": 33292.1,
@@ -279,9 +294,24 @@
   "paso": 1.0,
   "archivo": "perdiguero-cima.bin.gz",
   "roca": "neutra",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: poste de madera con el cartel «Pic Perdiguère 3222» clavado en un montón de bloques gris claro, según la foto de la cima de la ficha (img/hitos/prd-cima-aurora.jpg).",
   "orto": "perdiguero-cima-orto.webp",
-  "ortoM": "perdiguero-cima-orto-m.webp"
+  "ortoM": "perdiguero-cima-orto-m.webp",
+  "modelo": "models/cima-perdiguero.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 33396.1,
+    "z": 9398.96,
+    "giro": 1.963,
+    "ancla": true,
+    "huella": 0.8,
+    "allana": 0.8,
+    "ref": "Máximo del MDT05 (3220.1 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "bachimala": {
   "x0": 23123.73,
@@ -448,9 +478,24 @@
   "paso": 1.0,
   "archivo": "algas-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: amontonamiento de bloques grandes de caliza gris clara con liquen naranja, con un bloque alto de pie, según la foto de la cima de la ficha (img/hitos/alg-pico.jpg).",
   "orto": "algas-cima-orto.webp",
-  "ortoM": "algas-cima-orto-m.webp"
+  "ortoM": "algas-cima-orto-m.webp",
+  "modelo": "models/cima-algas.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -31115.09,
+    "z": 918.37,
+    "giro": 5.105,
+    "ancla": true,
+    "huella": 1.0,
+    "allana": 1.0,
+    "ref": "Máximo del MDT05 (3031.1 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "argualas": {
   "x0": -30907.77,
@@ -459,9 +504,24 @@
   "paso": 1.0,
   "archivo": "argualas-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: mojón de bloques grandes de roca gris parda con una laja plana encima, según la foto de la cima de la ficha (img/hitos/alg-argualas.jpg).",
   "orto": "argualas-cima-orto.webp",
-  "ortoM": "argualas-cima-orto-m.webp"
+  "ortoM": "argualas-cima-orto-m.webp",
+  "modelo": "models/cima-argualas.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -30821.77,
+    "z": 1100.41,
+    "giro": 3.927,
+    "ancla": true,
+    "huella": 0.9,
+    "allana": 0.95,
+    "ref": "Máximo del MDT05 (3038.2 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "frondiellas": {
   "x0": -32839.96,
@@ -569,9 +629,24 @@
   "paso": 1.0,
   "archivo": "gran-facha-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: pilar de hormigón con «GRAN FACHA 3.006» pintado en amarillo sobre una plataforma de bloques de granito con un buzón, según la foto de la cima de la ficha (img/hitos/gf-cima.jpg).",
   "orto": "gran-facha-cima-orto.webp",
-  "ortoM": "gran-facha-cima-orto-m.webp"
+  "ortoM": "gran-facha-cima-orto-m.webp",
+  "modelo": "models/cima-gran-facha.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": -28433.67,
+    "z": -3493.57,
+    "giro": 1.571,
+    "ancla": true,
+    "huella": 0.95,
+    "allana": 0.95,
+    "ref": "Máximo del MDT05 (2967.0 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "olas": {
   "x0": -4707.69,
