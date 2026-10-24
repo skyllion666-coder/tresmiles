@@ -8,6 +8,7 @@ para que rocas.material_escaneado('x', '<nombre>') las use igual que las escanea
 - caliza_clara (de rock_boulder_dry): caliza gris clara con manchas de liquen naranja (Pico de Algas).
 - pizarra (de seaside_rock y rock_08): pizarra gris azulada con manchas pardas de óxido, en bandas (Gran Bachimala).
 - granito_oscuro / granito_gris (de rock_boulder_dry): granito gris oscuro y gris medio, sin el tono beige (Pico de Alba).
+- granito_liquen (de rock_boulder_dry): granito gris claro algo cálido con manchas de liquen amarillo verdoso y motas oscuras (Diente de Alba).
 - roca_parda (de rock_08 y rock_surface): roca parda rojiza (Infiernos, Paúl).
 Uso: python3 tools/modelos/texturas_derivadas.py"""
 import os, shutil
@@ -57,6 +58,11 @@ for tam, N in (('1k', 1024), ('512', 512)):
     guarda('caliza_clara', clara * (1 - lq * 0.45) + clara * np.array([1.05, 0.7, 0.4]) * lq * 0.45, tam, 'rock_boulder_dry')
     guarda('granito_oscuro', gb * np.array([0.97, 0.99, 1.02]) * 0.78, tam, 'rock_boulder_dry')
     guarda('granito_gris', gb * np.array([0.98, 1.0, 1.02]) * 0.95, tam, 'rock_boulder_dry')
+    lv = np.clip((ruido(N, 0.012, 31) - 0.58) / 0.08, 0, 1) * np.clip((ruido(N, 0.003, 32) - 0.35) / 0.3, 0, 1)   # liquen amarillo verdoso, en motas dentro de manchas
+    ln = np.clip((ruido(N, 0.003, 33) - 0.72) / 0.08, 0, 1) * 0.5   # motas oscuras (liquen negro)
+    cl = gb * np.array([1.0, 0.99, 0.95]) * 1.12
+    cl = cl * (1 - lv[..., None] * 0.6) + cl * np.array([1.05, 1.05, 0.45]) * lv[..., None] * 0.6
+    guarda('granito_liquen', cl * (1 - ln[..., None] * 0.55), tam, 'rock_boulder_dry')
     # pizarra: gris azulada oscura con bandas pardas de óxido estiradas en horizontal
     sr = lee('seaside_rock', tam); r8 = lee('rock_08', tam)
     banda = ruido(N, 0.05, 21); banda = np.repeat(banda.mean(1, keepdims=True), N, 1) * 0.5 + banda * 0.5

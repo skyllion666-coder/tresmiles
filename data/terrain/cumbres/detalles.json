@@ -718,9 +718,25 @@
   "paso": 1.0,
   "archivo": "diente-alba-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: Cima: sin hito; bloque enorme de granito gris claro con líquenes y una losa encima que vuela hacia un lado, según la foto de la cima de la ficha (img/hitos/die-cima.jpg). Va en el punto más alto del relieve (a ~80 m de la coordenada de la ficha, que cae en una punta 10 m más baja)., según la foto de la cima de la ficha.",
   "orto": "diente-alba-cima-orto.webp",
-  "ortoM": "diente-alba-cima-orto-m.webp"
+  "ortoM": "diente-alba-cima-orto-m.webp",
+  "modelo": "models/cima-diente-alba.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 42019.96,
+    "z": 13621.77,
+    "giro": 2.749,
+    "ancla": true,
+    "huella": 1.3,
+    "allana": 1.6,
+    "ref": "Máximo del MDT05 (3118.4 m).",
+    "sueltas": "^(bloque|caida)\\d",
+    "nivel": 0.7
+   }
+  ]
  },
  "araguells": {
   "x0": 42199.2,

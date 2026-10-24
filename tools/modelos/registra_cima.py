@@ -4,13 +4,14 @@ Uso: python3 tools/modelos/registra_cima.py <id> <huella m> "<qué hay en la cim
 import json, gzip, sys, os, argparse
 import numpy as np
 a = argparse.ArgumentParser(); a.add_argument('id'); a.add_argument('huella', type=float); a.add_argument('ref'); a.add_argument('--giro', type=float, default=None)
-a.add_argument('--sueltas', default='^(bloque|caida)\\d'); a.add_argument('--foto', default=''); a.add_argument('--escala', type=float, default=16); a.add_argument('--allana', type=float, default=None)   # radio de la base fija del modelo (m): la web allana el relieve debajo
+a.add_argument('--sueltas', default='^(bloque|caida)\\d'); a.add_argument('--foto', default=''); a.add_argument('--escala', type=float, default=16); a.add_argument('--allana', type=float, default=None)
+a.add_argument('--maximo', action='store_true')   # usar el máximo de la ventana aunque caiga lejos de la ficha (la coordenada de la ficha no cae en la punta: Diente de Alba)   # radio de la base fija del modelo (m): la web allana el relieve debajo
 o = a.parse_args()
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'); P = os.path.join(ROOT, 'data/terrain/cumbres/detalles.json')
 det = json.load(open(P)); d = det[o.id]
 H = np.frombuffer(gzip.open(os.path.join(ROOT, 'data/terrain/cumbres', d['archivo'])).read(), '<u2').reshape(d['n'], d['n']) / 10
 j, i = np.unravel_index(H.argmax(), H.shape); c = (d['n'] - 1) // 2
-if np.hypot(i - c, j - c) * d['paso'] > 30:   # el máximo cae lejos de la coordenada de la ficha (cimas de la frontera: el MDT05 solo cubre España): el más alto a menos de 20 m de ella
+if np.hypot(i - c, j - c) * d['paso'] > 30 and not o.maximo:   # el máximo cae lejos de la coordenada de la ficha (cimas de la frontera: el MDT05 solo cubre España): el más alto a menos de 20 m de ella
     r = int(20 / d['paso']); sub = H[c - r:c + r + 1, c - r:c + r + 1]; jj, ii = np.unravel_index(sub.argmax(), sub.shape); print('aviso: máximo lejos de la ficha; uso el de junto a la ficha', H.max(), '→', sub.max())
     j, i = c - r + jj, c - r + ii
 x = d['x0'] + i * d['paso']; z = d['z0'] + j * d['paso']

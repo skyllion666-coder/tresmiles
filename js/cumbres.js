@@ -13,13 +13,13 @@ const modelos = new Map();   // url -> Promise<gltf>
 // Cada pieza suelta (nombre que cumple `sueltas`) baja o sube hasta el punto más bajo del relieve bajo su huella (así no flota; como mucho se hunde un poco
 // por el lado alto; si queda fuera de la cima, más de 2,5 m del mapa por debajo, no se dibuja) y el resto (torre, pilar, placas…) se mueve junto, a medio camino entre el relieve bajo su centro y el punto más bajo de su huella, para no romperse ni quedar volado.
 const _caja = new THREE.Box3();
-function asientaPiedras(o, sueltas, alto, Se) {
+function asientaPiedras(o, sueltas, alto, Se, plano = false) {   // plano: hay explanada debajo (elemento con `allana`); lo fijo se mide solo en el centro
   o.updateMatrixWorld(true); const suelo = o.position.y, fijas = [];
   const desplaza = (objs, modo) => {
     _caja.makeEmpty(); for (const c of objs) _caja.expandByObject(c);
     const { min, max } = _caja, cx = (min.x + max.x) / 2, cz = (min.z + max.z) / 2, rx = (max.x - min.x) * 0.35, rz = (max.z - min.z) * 0.35;
     const hs = [[cx, cz], [cx - rx, cz - rz], [cx + rx, cz - rz], [cx - rx, cz + rz], [cx + rx, cz + rz]].map(([x, z]) => alto(x, z));
-    const h = modo === 'fija' ? (Math.min(...hs) + hs[0]) / 2 : Math.min(...hs), dy = (h - suelo) / Se;
+    const h = modo === 'fija' ? (plano ? hs[0] : (Math.min(...hs) + hs[0]) / 2) : Math.min(...hs), dy = (h - suelo) / Se;   // con explanada, las esquinas de la caja (girada) pueden caer ya en la ladera
     const ancho = Math.max(max.x - min.x, max.z - min.z), desnivel = Math.max(...hs) - Math.min(...hs);
     if (modo === 'min' && (h - suelo < -2.5 || desnivel > 0.45 * ancho)) { for (const c of objs) c.visible = false; return; }   // cae fuera de la cima (más de 2,5 m del mapa por debajo) o en una pendiente fuerte: quedaría colgando de la ladera, mejor no dibujarla
     for (const c of objs) c.position.y += dy;
@@ -206,9 +206,10 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
         // se enterraba o quedaba en el aire; el relieve se iguala a su altura media dentro de ese radio y se funde con la ladera en unos metros más
         const an = d.modelo ? d.elementos?.find((e) => e.ancla && e.allana) : null;
         if (an) {
-          const R1 = an.allana * (an.escala ?? d.escalaModelo ?? 1), R2 = R1 + Math.max(10, 0.6 * R1); let suma = 0, cuenta = 0;
-          for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) if (Math.hypot(d.x0 + i * paso - an.x, d.z0 + j * paso - an.z) < R1) { suma += F[j * n + i]; cuenta++; }
-          const b = cuenta ? suma / cuenta : 0;
+          // `nivel` (0–1): en vez de la media, ese cuantil de las alturas (en crestas largas la media queda por debajo de los lados y el modelo se ve en un hoyo)
+          const R1 = an.allana * (an.escala ?? d.escalaModelo ?? 1), R2 = R1 + Math.max(10, 0.6 * R1), hs = [];
+          for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) if (Math.hypot(d.x0 + i * paso - an.x, d.z0 + j * paso - an.z) < R1) hs.push(F[j * n + i]);
+          const cuenta = hs.length, b = !cuenta ? 0 : an.nivel != null ? hs.sort((p, q) => p - q)[Math.min(cuenta - 1, Math.floor(an.nivel * cuenta))] : hs.reduce((p, q) => p + q, 0) / cuenta;
           if (cuenta) for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { const w = 1 - sstep(R1, R2, Math.hypot(d.x0 + i * paso - an.x, d.z0 + j * paso - an.z)); if (w > 0) F[j * n + i] += (b - F[j * n + i]) * w; }
         }
       }
@@ -297,7 +298,7 @@ export function crearCumbres({ scene, geo, terrain, movil, alCargar, fijo }) {
             for (const [ox, oz] of [[R0, 0], [-R0, 0], [0, R0], [0, -R0]]) y = Math.min(y, sample(detalles.get(id), px + ox, pz2 + oz) ?? geo.heightAt(px + ox, pz2 + oz));
             y = Math.max(y, hc - 0.25 * Se * EXAG);
             o.position.set(px, y - 0.04 * Se, pz2); o.traverse((c) => { if (c.isMesh) c.frustumCulled = true; });
-            if (e.sueltas) asientaPiedras(o, new RegExp(e.sueltas), (x, z) => sample(detalles.get(id), x, z) ?? geo.heightAt(x, z), Se);
+            if (e.sueltas) asientaPiedras(o, new RegExp(e.sueltas), (x, z) => sample(detalles.get(id), x, z) ?? geo.heightAt(x, z), Se, !!e.allana);
             scene.add(o); extras.push(o);
           }
         }
