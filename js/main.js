@@ -31,6 +31,8 @@ const store = { get: (k) => { try { return localStorage.getItem(k); } catch { re
 const isMobile = () => innerWidth <= 760;
 const EN_APP = /[?&]app=1\b/.test(location.search);   // dentro de la APK (TresmilesApp); sin HD usa la versión de móvil
 // en la app, «Calidad alta» (HD) dibuja y carga como en el ordenador (ortofotos grandes de las zonas, relieve, árboles, rocas, cimas a la vez)
+const APK_URL = 'https://github.com/skyllion666-coder/tresmiles/releases/latest/download/tresmiles.apk';   // última versión de la app (Release de GitHub; la web no puede alojar archivos de ese tamaño)
+const SIN_APK = EN_APP || /iPhone|iPad|iPod/.test(navigator.userAgent);   // dentro de la app o en iPhone no se ofrece
 const CALIDAD_ALTA = EN_APP && (store.get('tresmiles-calidad') === 'alta' || /[?&]calidad=alta\b/.test(location.search));   // ?calidad=alta: para probarla
 
 // colores del cielo, la niebla y la luz ambiente según la luz elegida: amanecer, mediodía y atardecer (cambian con suavidad)
@@ -942,6 +944,8 @@ async function boot() {
   });
   setSun(0);
 
+  if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
+
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
   if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: 'tu posición', q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
@@ -1038,6 +1042,7 @@ async function boot() {
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p class="firma">Creado por SKYLLION (FRANK)</p>
+      ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 385 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a>. Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>

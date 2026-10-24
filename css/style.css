@@ -394,6 +394,8 @@ body.ficha-plegada .hito-btn i { transform: rotate(45deg) scale(1.35); }
 .cta-2 { background: rgba(36,48,44,.72); color: var(--cream); box-shadow: 0 0 0 1px rgba(247,242,228,.45); }
 .cta-2:hover { background: rgba(36,48,44,.9); }
 #intro .firma { margin: 22px 0 0; font: 600 .68rem var(--cond); letter-spacing: .22em; text-transform: uppercase; color: rgba(247,242,228,.82); text-shadow: 0 1px 6px rgba(0,0,0,.45); }   /* firma del autor (también en «Acerca de») */
+#intro .descarga-app { display: inline-block; margin-top: 12px; padding: 7px 14px; border: 1px solid rgba(247,242,228,.55); border-radius: 999px; font: 600 .7rem var(--cond); letter-spacing: .14em; text-transform: uppercase; color: #f7f2e4; text-decoration: none; background: rgba(36,48,44,.45); pointer-events: auto; }
+#intro .descarga-app small { margin-left: 6px; font-weight: 500; letter-spacing: .06em; opacity: .8; text-transform: none; }
 #about-body .firma { margin: -4px 0 14px; font-weight: 600; letter-spacing: .08em; }
 #intro-picos { position: absolute; z-index: 5; left: 50%; top: calc(100% + 8px); transform: translateX(-50%); width: min(360px, 88vw); max-height: 52vh; overflow: auto; background: var(--cream); color: var(--ink); text-align: left; box-shadow: 0 14px 40px rgba(0,0,0,.4); }
 #intro-picos.arriba { top: auto; bottom: calc(100% + 8px); }
