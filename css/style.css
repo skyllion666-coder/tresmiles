@@ -132,6 +132,8 @@ input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-
 .pin.con-foto.is-active::after { background: var(--foto) center / cover no-repeat, rgba(30, 92, 74, .4); border-color: rgba(126, 224, 178, .95); }
 @media (min-width: 1100px) { .pin.con-foto { --pin-d: 38px; --pin-d-base: 38px; } }
 /* cumbres de 2.500 a 3.000 m: punto pequeño y claro, sin hilo (no compiten con los tresmiles) */
+.pin:not([data-mini]):not(.pin-menor) { --pin-d: 14px; --pin-d-base: 14px; --lift: 20px; }   /* cumbre sin foto: un punto pequeño, no un círculo vacío que parezca una foto sin cargar */
+.pin:not([data-mini]):not(.pin-menor)::before { width: 5px; height: 5px; }
 .pin.pin-menor { --pin-d: 13px; --pin-d-base: 13px; --lift: 0px; }
 .pin.pin-menor::before { width: 5px; height: 5px; background: #f8f1de; box-shadow: 0 0 0 1px rgba(20, 34, 30, .65); }
 .pin.pin-menor::after { background: rgba(36, 48, 44, .22); border-color: rgba(255, 255, 255, .45); }
