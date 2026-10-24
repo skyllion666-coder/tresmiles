@@ -20,7 +20,7 @@ export function crearRuta({ scene, geo, ruta }) {
   const centro = { x: (bb.x0 + bb.x1) / 2, z: (bb.z0 + bb.z1) / 2 }, extension = Math.hypot(bb.x1 - bb.x0, bb.z1 - bb.z0);
   const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
   const tub = 1800, rad = 5;
-  const geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
+  let geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
   // la línea se adelgaza al acercarse: el radio (0,5–11 m) y la altura sobre el relieve (7–24 m) crecen con la distancia a la cámara, calculados por vértice en el shader.
   // La geometría guarda el radio de 11 m; el centro del tubo es posición − normal × 11, así que no hace falta otra línea ni más vértices.
   const mat = new THREE.MeshBasicMaterial({ color: '#ffa930', fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
@@ -208,8 +208,19 @@ export function crearRuta({ scene, geo, ruta }) {
   const X = (m) => PL + (m / ruta.distancia) * (PW - PL - PR), Y = (e) => PT + (1 - (e - lo) / (hi - lo)) * (PH - PT - PB);
   const fmtKm = (m) => (m / 1000).toFixed(1).replace('.', ',');
 
+  // el relieve cambió en una zona (se cargó o se quitó el detalle de una cima): la línea vuelve a ir a su altura sobre el suelo
+  function reajusta({ x0, z0, x1, z1 }) {
+    if (bb.x1 < x0 || bb.x0 > x1 || bb.z1 < z0 || bb.z0 > z1) return;
+    let cambio = 0;
+    for (const p of pts) if (p.x >= x0 && p.x <= x1 && p.z >= z0 && p.z <= z1) { const y = geo.heightAt(p.x, p.z) + 24; cambio = Math.max(cambio, Math.abs(y - p.y)); p.y = y; }
+    if (cambio < 1) return;
+    curve.updateArcLengths();
+    const g = new THREE.TubeGeometry(curve, tub, 11, rad, false); g.setDrawRange(geom.drawRange.start, geom.drawRange.count);
+    mesh.geometry = g; geom.dispose(); geom = g;
+  }
+
   return {
-    ruta, centro, extension, en, cercano, pasos,
+    ruta, centro, extension, en, cercano, pasos, reajusta,
     mostrar(v, { animar = true } = {}) {
       activo = v; mesh.visible = v; ver();
       if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); resetEquipo(); }

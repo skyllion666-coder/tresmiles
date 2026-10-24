@@ -3,14 +3,14 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js';
 import { Terrain } from './terrain.js?v=20';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=45';
+import { crearCumbres } from './cumbres.js?v=46';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
 import { HeightStore } from './heights.js';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
 import { instalaNiebla } from './niebla.js?v=4';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
-import { cargarRuta, crearRuta } from './ruta.js?v=47';
+import { cargarRuta, crearRuta } from './ruta.js?v=48';
 import { crearPanorama } from './panorama.js?v=5';
 import { crearUbicacion } from './ubicacion.js?v=3';
 import { crearSelector } from './selector.js?v=3';
@@ -73,7 +73,8 @@ async function boot() {
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
-  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: terrain.movil, alCargar: (r) => veg.refrescar(r), fijo: () => S.active });
+  let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
+  const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: terrain.movil, alCargar: (r) => veg.refrescar(r), alRelieve: (z) => reajustaRutas?.(z), fijo: () => S.active });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
@@ -99,6 +100,7 @@ async function boot() {
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
+  reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); };
   for (const p of peaks) for (const rid of p.activo ? p.rutas ?? [] : []) {
     try {
       const ruta = await cargarRuta(rid);

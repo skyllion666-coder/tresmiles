@@ -41,7 +41,7 @@ const cargaModelo = (url) => { if (!modelos.has(url)) modelos.set(url, new Promi
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, alCargar, fijo }) {   // movil: calidad de dibujo; archivosM: versiones ligeras de los archivos (siempre en la app)
+export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, alCargar, alRelieve, fijo }) {   // alRelieve(zona): el relieve cambió ahí (se cargó o se quitó una zona o una cima); la ruta se recoloca   // movil: calidad de dibujo; archivosM: versiones ligeras de los archivos (siempre en la app)
   const MAX = movil ? 1 : 3, CARGA = movil ? 5500 : 7500, DESCARGA = movil ? 8000 : 11000, FUNDE = 90, INSET = 4;
   let indice = null, cuenta = 0;
   let ficha = null;
@@ -149,7 +149,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
         aplicaOrto(mat, tex, ch, [x0, z0, x0 + lado, z0 + lado], d.og); p.orto = tex;   // con fundido hacia el satélite en el borde de la pieza
         for (const dt of detalles.values()) if (dt.pieza === p && dt.mat && !dt.ortoCima) aplicaOrto(dt.mat, tex, ch, null, d.og);   // (si la cima ya tiene su parche de máxima resolución, se queda con él)   // el detalle de 1 m lleva la misma ortofoto (sin fundido: su borde cae dentro de la pieza)
       });
-      alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
+      alCargar?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso }); alRelieve?.({ x0, z0, x1: x0 + (n - 1) * paso, z1: z0 + (n - 1) * paso });
       return p;
     })().catch((e) => { console.warn("cumbres", id, e); return null; }).finally(() => cargando.delete(id));
     cargando.set(id, pr); return pr;
@@ -230,6 +230,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
         }
       }
       const registro = { ...d, H: F }; detalles.set(id, registro);   // a partir de aquí heightAt la usa
+      alRelieve?.({ x0: d.x0, z0: d.z0, x1: d.x0 + (n - 1) * paso, z1: d.z0 + (n - 1) * paso });
       const ch = pz.ch, cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
       const pos = new Float32Array(n * n * 3), nor = new Float32Array(n * n * 3), uv = new Float32Array(n * n * 2);
       for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
@@ -325,12 +326,14 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
     const d = detalles.get(id); if (!d) { detalles.delete(id); return; }
     for (const o of [d.mesh, ...(d.insts ?? []), d.cruz, ...(d.extras ?? [])]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
     d.mat?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); rocasCima.quitar(d.rocas); detalles.delete(id);
+    alRelieve?.({ x0: d.x0, z0: d.z0, x1: d.x0 + (d.n - 1) * d.paso, z1: d.z0 + (d.n - 1) * d.paso });
   }
 
   function quita(id) {
     for (const [k, dd] of [...detalles]) if ((dd.pieza === piezas.get(id)) || k === id) quitaDetalle(k);
     const p = piezas.get(id); if (!p) return;
     scene.remove(p.mesh); p.mesh.geometry.dispose(); p.mat.dispose(); p.orto?.dispose(); terrain.hueco(p.hueco, 1e9, 1e9, 1e9, 1e9); piezas.delete(id);
+    alRelieve?.({ x0: p.x0, z0: p.z0, x1: p.x0 + (p.n - 1) * p.paso, z1: p.z0 + (p.n - 1) * p.paso });
   }
 
   return {
