@@ -9,6 +9,7 @@ para que rocas.material_escaneado('x', '<nombre>') las use igual que las escanea
 - pizarra (de seaside_rock y rock_08): pizarra gris azulada con manchas pardas de óxido, en bandas (Gran Bachimala).
 - granito_oscuro / granito_gris (de rock_boulder_dry): granito gris oscuro y gris medio, sin el tono beige (Pico de Alba).
 - granito_liquen (de rock_boulder_dry): granito gris claro algo cálido con manchas de liquen amarillo verdoso y motas oscuras (Diente de Alba).
+- granito_oscuro_liquen (de rock_boulder_dry): granito gris oscuro con mucho liquen amarillo verdoso (Frondiella).
 - granito_rojizo (de rock_boulder_dry y rock_08): granito pardo rojizo con grano y manchas grises (La Paúl).
 - roca_beis (de rock_boulder_dry): roca gris beis con manchas pardas (Infierno Occidental).
 - roca_parda (de rock_08 y rock_surface): roca parda rojiza (Infiernos, Paúl).
@@ -65,6 +66,9 @@ for tam, N in (('1k', 1024), ('512', 512)):
     cl = gb * np.array([1.0, 0.99, 0.95]) * 1.12
     cl = cl * (1 - lv[..., None] * 0.6) + cl * np.array([1.05, 1.05, 0.45]) * lv[..., None] * 0.6
     guarda('granito_liquen', cl * (1 - ln[..., None] * 0.55), tam, 'rock_boulder_dry')
+    lv2 = np.clip((ruido(N, 0.015, 34) - 0.6) / 0.08, 0, 1) * np.clip((ruido(N, 0.003, 35) - 0.3) / 0.3, 0, 1)
+    os_ = ((gb - gb.mean()) * 1.3 + gb.mean()) * np.array([0.95, 0.98, 0.98]) * 0.62
+    guarda('granito_oscuro_liquen', os_ * (1 - lv2[..., None] * 0.6) + np.array([140, 150, 85]) * lv2[..., None] * 0.6, tam, 'rock_boulder_dry')
     mg = np.clip((ruido(N, 0.03, 41) - 0.5) / 0.15, 0, 1)[..., None] * 0.6   # manchas grises
     gc = (gb - gb.mean()) * 1.5 + gb.mean()
     roj = (gc * 0.7 + gris(lee('rock_08', tam)) * 0.3) * np.array([1.06, 0.88, 0.8]) * 0.72
