@@ -1038,9 +1038,25 @@
   "paso": 1.0,
   "archivo": "diente-llardana-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: sin hito; cresta afilada de lajas de pizarra y roca gris inclinadas hacia el mismo lado y partidas en bloques, con alguna piedra ocre y cascajo, según la foto de la cima de la ficha (img/hitos/ld-cima.jpg).",
   "orto": "diente-llardana-cima-orto.webp",
-  "ortoM": "diente-llardana-cima-orto-m.webp"
+  "ortoM": "diente-llardana-cima-orto-m.webp",
+  "modelo": "models/cima-diente-llardana.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 26553.67,
+    "z": 14483.7,
+    "giro": 4.712,
+    "ancla": true,
+    "huella": 1.2,
+    "allana": 1.4,
+    "ref": "Máximo del MDT05 (3088.1 m).",
+    "sueltas": "^(bloque|caida)\\d",
+    "nivel": 0.9
+   }
+  ]
  },
  "gran-eriste": {
   "x0": 24346.11,
