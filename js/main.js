@@ -879,7 +879,11 @@ async function boot() {
     S.detalle = true; controls.minDistance = 20;
     if (S.sun !== 1) setSun(1);   // luz de mediodía: neutra y alta, deja ver el color de la roca (la de mañana y tarde la tiñe de naranja)
     const Se = e.escala ?? d.escalaModelo ?? 1, t = new THREE.Vector3(e.x, geo.heightAt(e.x, e.z) + 1.3 * Se, e.z);
-    flyTo({ t, r: Math.max(45, 7.5 * Se), phi: 1.2, theta: e.giro ?? 0 }, { dur: 3.2, shift: { x: 0, y: 0 } });   // el frente del modelo (−Y en Blender) mira hacia +Z, girado `giro`
+    // el frente del modelo (−Y en Blender) mira hacia +Z, girado `giro`; si desde ahí la cámara quedaría dentro del relieve, se gira hasta ver despejado
+    const r = Math.max(45, 7.5 * Se), phi = 1.2, holgura = (th) => { let m = Infinity; for (let k = 1; k <= 10; k++) { const f = k / 10, x = t.x + r * Math.sin(phi) * Math.sin(th) * f, z = t.z + r * Math.sin(phi) * Math.cos(th) * f; m = Math.min(m, t.y + r * Math.cos(phi) * f - geo.heightAt(x, z)); } return m; };
+    let theta = e.giro ?? 0;
+    if (holgura(theta) < 6) theta = [1, -1, 2, -2, 3, -3, 4].map((k) => theta + (k * Math.PI) / 4).reduce((a, b) => (holgura(b) > holgura(a) ? b : a));
+    flyTo({ t, r, phi, theta }, { dur: 3.2, shift: { x: 0, y: 0 } });
   }
   async function vistaMahoma(cual) {
     if (S.active !== 'aneto') return;

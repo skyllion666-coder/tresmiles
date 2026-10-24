@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 280;
+  window.WEB_V = 282;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -121,7 +121,7 @@
 
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 203;</script>
-  <script type="module" src="js/main.js?v=280"></script>
+  <script type="module" src="js/main.js?v=282"></script>
   <script defer src="js/cine.js?v=6"></script>
 </body>
 </html>
