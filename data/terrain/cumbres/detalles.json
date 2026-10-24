@@ -816,9 +816,24 @@
   "paso": 1.0,
   "archivo": "espalda-aneto-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: losas de granito gris claro con liquen, un mojón pequeño de piedras redondeadas y bloques grandes muy gastados, según la foto de la cima de la ficha (img/hitos/esp-cima.jpg).",
   "orto": "espalda-aneto-cima-orto.webp",
-  "ortoM": "espalda-aneto-cima-orto-m.webp"
+  "ortoM": "espalda-aneto-cima-orto-m.webp",
+  "modelo": "models/cima-espalda-aneto.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 44903.97,
+    "z": 16358.49,
+    "giro": 5.498,
+    "ancla": true,
+    "huella": 1.4,
+    "allana": 1.8,
+    "ref": "Máximo del MDT05 (3345.3 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "cerbillona": {
   "x0": -21339.96,
