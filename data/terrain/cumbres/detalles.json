@@ -726,9 +726,24 @@
   "paso": 1.0,
   "archivo": "margalida-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: sin hito; placas y bloques enormes de granito gris claro con motas de liquen, separados por grietas hondas, con una laja alta e inclinada a un lado, según la foto de la cima de la ficha (img/hitos/mar-cima.jpg).",
   "orto": "margalida-cima-orto.webp",
-  "ortoM": "margalida-cima-orto-m.webp"
+  "ortoM": "margalida-cima-orto-m.webp",
+  "modelo": "models/cima-margalida.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 45415.29,
+    "z": 16901.15,
+    "giro": 4.32,
+    "ancla": true,
+    "huella": 1.5,
+    "allana": 1.8,
+    "ref": "Máximo del MDT05 (3241.4 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "alba": {
   "x0": 41636.88,
