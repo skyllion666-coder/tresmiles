@@ -1065,9 +1065,25 @@
   "paso": 1.0,
   "archivo": "gran-eriste-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: sin hito a la vista; loma redondeada de cascajo y bloques angulosos de granito gris con alguna losa grande, según la foto de la cima de la ficha (img/hitos/eri-gran.jpg).",
   "orto": "gran-eriste-cima-orto.webp",
-  "ortoM": "gran-eriste-cima-orto-m.webp"
+  "ortoM": "gran-eriste-cima-orto-m.webp",
+  "modelo": "models/cima-gran-eriste.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 24457.11,
+    "z": 16817.92,
+    "giro": 2.749,
+    "ancla": true,
+    "huella": 1.3,
+    "allana": 1.5,
+    "ref": "Máximo del MDT05 (3050.5 m).",
+    "sueltas": "^(bloque|caida)\\d",
+    "nivel": 0.85
+   }
+  ]
  },
  "bardamina": {
   "x0": 27748.83,
