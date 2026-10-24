@@ -583,3 +583,5 @@ body.selector-abierto #intro { z-index: 31; }
 #ra-apunta[hidden] { display: none; }
 #ra-apunta b { display: block; font: 500 1.15rem var(--serif); }
 #ra-apunta span { font: 500 .75rem var(--cond); letter-spacing: .04em; opacity: .85; }
+#visitas { position: absolute; right: var(--gutter, 20px); top: calc(max(16px, var(--sa-top, env(safe-area-inset-top))) + 30px); font: 500 .66rem var(--cond); letter-spacing: .12em; text-transform: uppercase; color: rgba(247,242,228,.78); text-shadow: 0 1px 8px rgba(0,0,0,.5); pointer-events: none; }   /* contador de visitas bajo «Acerca de» */
+#visitas::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: #7ee0b2; vertical-align: 1px; }

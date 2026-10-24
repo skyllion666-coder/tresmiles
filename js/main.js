@@ -946,6 +946,12 @@ async function boot() {
 
   if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
 
+  // — contador de visitas (solo en la web): el total de GoatCounter, si la cuenta permite el contador público (Ajustes → «Allow adding visitor counts») —
+  if (!EN_APP) fetch('https://skyllion.goatcounter.com/counter/TOTAL.json').then((r) => (r.ok ? r.json() : null)).then((d) => {
+    const n = Number(String(d?.count ?? '').replace(/\D/g, '')); if (!n) return;
+    const el = $('#visitas'); el.textContent = `${new Intl.NumberFormat('es-ES').format(n)} visitas`; el.title = 'Visitas a la web (GoatCounter, sin cookies)'; el.hidden = false;
+  }).catch(() => {});
+
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
   if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: 'tu posición', q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
