@@ -10,6 +10,7 @@ para que rocas.material_escaneado('x', '<nombre>') las use igual que las escanea
 - granito_oscuro / granito_gris (de rock_boulder_dry): granito gris oscuro y gris medio, sin el tono beige (Pico de Alba).
 - granito_liquen (de rock_boulder_dry): granito gris claro algo cálido con manchas de liquen amarillo verdoso y motas oscuras (Diente de Alba).
 - granito_rojizo (de rock_boulder_dry y rock_08): granito pardo rojizo con grano y manchas grises (La Paúl).
+- roca_beis (de rock_boulder_dry): roca gris beis con manchas pardas (Infierno Occidental).
 - roca_parda (de rock_08 y rock_surface): roca parda rojiza (Infiernos, Paúl).
 Uso: python3 tools/modelos/texturas_derivadas.py"""
 import os, shutil
@@ -68,6 +69,9 @@ for tam, N in (('1k', 1024), ('512', 512)):
     gc = (gb - gb.mean()) * 1.5 + gb.mean()
     roj = (gc * 0.7 + gris(lee('rock_08', tam)) * 0.3) * np.array([1.06, 0.88, 0.8]) * 0.72
     guarda('granito_rojizo', roj * (1 - mg) + gc * np.array([0.97, 0.98, 0.95]) * 0.8 * mg, tam, 'rock_boulder_dry')
+    mp = np.clip((ruido(N, 0.035, 51) - 0.5) / 0.2, 0, 1)[..., None] * 0.5   # manchas pardas
+    beis = gc * np.array([1.04, 0.98, 0.9]) * 0.92
+    guarda('roca_beis', beis * (1 - mp) + gc * np.array([1.0, 0.82, 0.68]) * 0.7 * mp, tam, 'rock_boulder_dry')
     # pizarra: gris azulada oscura con bandas pardas de óxido estiradas en horizontal
     sr = lee('seaside_rock', tam); r8 = lee('rock_08', tam)
     banda = ruido(N, 0.05, 21); banda = np.repeat(banda.mean(1, keepdims=True), N, 1) * 0.5 + banda * 0.5
