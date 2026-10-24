@@ -78,7 +78,7 @@ def monton(lista, prefijo, n, radio, tam, color, centro=(0.0, 0.0), plano=(0.5, 
         o = piedra(f'{prefijo}{len(lista)}', t, (centro[0] + rr * math.cos(a), centro[1] + rr * math.sin(a), 5.0), (R.uniform(-0.3, 0.3), R.uniform(-0.3, 0.3), R.uniform(0, math.tau)), color(), **kw)
         soltar(o, (sobre or []) + lista, hundir=0.03 * s); lista.append(o)
 
-def placa(nombre, texto, tam, pos, rot, tex='rock_boulder_dry', tinte='1,1,1', tinta='18,18,20', ancho_img=1024, salida='/tmp', bisel=0.25, irregular=True, grueso=1.0):
+def placa(nombre, texto, tam, pos, rot, tex='rock_boulder_dry', tinte='1,1,1', tinta='18,18,20', ancho_img=1024, salida='/tmp', bisel=0.25, irregular=True, grueso=1.0, liso=True):
     """Piedra con letras pintadas o escritas en la cara de delante (-Y). La textura la hace rotulo_piedra.py fuera de Blender (PIL)."""
     os.makedirs(salida, exist_ok=True); img = os.path.join(salida, f'{nombre}.jpg'); sx, sy, sz = tam
     subprocess.run(['python3', os.path.join(AQUI, 'rotulo_piedra.py'), f'{rocas.TEX}/web/{tex}_diff_1k.jpg', img, texto, str(ancho_img), str(int(ancho_img * sz / sx)), tinte, str(grueso), tinta], check=True, capture_output=True)
@@ -98,7 +98,7 @@ def placa(nombre, texto, tam, pos, rot, tex='rock_boulder_dry', tinte='1,1,1', t
     if not isinstance(rot, (tuple, list)): rot = (0, 0, rot)
     bmesh.ops.transform(bm, matrix=Matrix.Translation(pos) @ Matrix.Rotation(rot[2], 4, 'Z') @ Matrix.Rotation(rot[0], 4, 'X') @ Matrix.Rotation(rot[1], 4, 'Y'), verts=bm.verts)
     me = bpy.data.meshes.new(nombre); bm.to_mesh(me); bm.free()
-    for p in me.polygons: p.use_smooth = True
+    for p in me.polygons: p.use_smooth = liso   # liso=False: caras planas (lajas de cantos vivos)
     o = bpy.data.objects.new(nombre, me); bpy.context.collection.objects.link(o); o.data.materials.append(m); return o
 
 def cerrar(OUT, PREV=None, unir=('hito_',), relieve=None, cam=((0.8, -4.5, 1.6), (0.2, 0, 0.9), 30), cielo=(0.55, 0.68, 0.9), fuerza_cielo=0.9, sol=True, suelo='rock_boulder_dry', res=(800, 600)):

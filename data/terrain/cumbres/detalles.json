@@ -290,9 +290,24 @@
   "paso": 1.0,
   "archivo": "bachimala-cima.bin.gz",
   "roca": "neutra",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: montón de lajas de pizarra con dos lajas escritas en blanco, «BACHIMALA» y «GRAN 3177m», según la foto de la cima de la ficha (img/hitos/bac-cima.jpg).",
   "orto": "bachimala-cima-orto.webp",
-  "ortoM": "bachimala-cima-orto-m.webp"
+  "ortoM": "bachimala-cima-orto-m.webp",
+  "modelo": "models/cima-bachimala.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 23221.73,
+    "z": 8665.16,
+    "giro": 2.356,
+    "ancla": true,
+    "huella": 1.0,
+    "allana": 1.15,
+    "ref": "Máximo del MDT05 (3178.5 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "tempestades": {
   "x0": 45051.45,
