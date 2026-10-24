@@ -5,8 +5,14 @@ import * as THREE from 'three';
 import { leeOrientacion } from './panorama.js?v=4';
 
 const RAD = Math.PI / 180;
+const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)
+  const a = Math.sin(((lat2 - lat1) * RAD) / 2) ** 2 + Math.cos(lat1 * RAD) * Math.cos(lat2 * RAD) * Math.sin(((lon2 - lon1) * RAD) / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(a));
+};
+const delPico = (n) => (/^(La|Las|Los) /.test(n) ? `de ${n}` : /^El /.test(n) ? `del ${n.slice(3)}` : `del ${n}`);   // «del Aneto», «de La Munia»
+const fmtKm = (d) => (d < 10 ? d.toFixed(1).replace('.', ',') : String(Math.round(d)));
 
-export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton }) {
+export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton, picos = [], picoAbierto = () => null }) {
   const st = { modo: 0, watch: null, pos: null, rumbo: null, abs: false, raf: 0, primera: true };   // modo: 0 apagado, 1 localizado, 2 siguiendo
 
   // — marcador: punto (siempre del mismo tamaño en pantalla), círculo de precisión y cuña hacia donde se mira —
@@ -47,7 +53,11 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     if (!enMapa(q.x, q.z)) {
       grupo.visible = false; st.pos = null;
       const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, Math.abs(q.z) - geo.D / 2);
-      if (st.primera) avisa(`Estás fuera del mapa, a unos ${Math.round(Math.hypot(fx, fz) / 1000)} km del Pirineo aragonés.`, 6000);
+      if (st.primera) {   // con una cumbre abierta, la distancia a ella; si no, al borde del mapa y al tresmil más cercano
+        const p = picoAbierto(), cerca = p ? null : picos.reduce((m, q) => { const d = km(lat, lon, q.lat, q.lon); return !m || d < m.d ? { q, d } : m; }, null);
+        avisa(p ? `Estás fuera del mapa, a ${fmtKm(km(lat, lon, p.lat, p.lon))} km en línea recta ${delPico(p.nombre)}.`
+          : `Estás fuera del mapa, a ${Math.round(Math.hypot(fx, fz) / 1000)} km de su borde.${cerca ? ` El tresmil más cercano es ${cerca.q.nombre}, a ${fmtKm(cerca.d)} km en línea recta.` : ''}`, 7000);
+      }
       st.primera = false; return;
     }
     st.pos = { x: q.x, z: q.z, prec: accuracy || 30, alt: altitude };
@@ -56,7 +66,8 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
       st.primera = false;
       const a = camState(), t = new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z);
       flyTo({ t, theta: a.theta, phi: 0.95, r: 2600 });
-      avisa(`Estás aquí (precisión ±${Math.round(accuracy)} m${altitude != null ? ` · altitud GPS ${Math.round(altitude)} m` : ''}).`);
+      const p = picoAbierto();
+      avisa(`Estás aquí (precisión ±${Math.round(accuracy)} m${altitude != null ? ` · altitud GPS ${Math.round(altitude)} m` : ''})${p ? ` · a ${fmtKm(km(lat, lon, p.lat, p.lon))} km ${delPico(p.nombre)}` : ''}.`);
     }
     if (st.modo === 2) sigue();
   }

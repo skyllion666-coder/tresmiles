@@ -12,7 +12,7 @@ import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=47';
 import { crearPanorama } from './panorama.js?v=4';
-import { crearUbicacion } from './ubicacion.js?v=1';
+import { crearUbicacion } from './ubicacion.js?v=2';
 import { crearSelector } from './selector.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -939,7 +939,7 @@ async function boot() {
   setSun(0);
 
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
-  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b }); }
+  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
   // — calidad (solo en la app): «HD» dibuja como en el ordenador; se guarda y recarga, porque el terreno se prepara al arrancar —
   if (EN_APP) {
