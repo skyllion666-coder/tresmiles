@@ -805,9 +805,24 @@
   "paso": 1.0,
   "archivo": "araguells-cima.bin.gz",
   "roca": "granito",
-  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
+  "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Cima: sin hito; caos de bloques angulosos de granito claro, gris beis algo rosado con motas de liquen, amontonados en punta, con una losa grande inclinada, según la foto de la cima de la ficha (img/hitos/ara-cima.jpg).",
   "orto": "araguells-cima-orto.webp",
-  "ortoM": "araguells-cima-orto-m.webp"
+  "ortoM": "araguells-cima-orto-m.webp",
+  "modelo": "models/cima-araguells.glb",
+  "escalaModelo": 16,
+  "elementos": [
+   {
+    "nodo": "Vertice",
+    "x": 42301.2,
+    "z": 16130.34,
+    "giro": 2.749,
+    "ancla": true,
+    "huella": 1.3,
+    "allana": 1.5,
+    "ref": "Máximo del MDT05 (3047.0 m).",
+    "sueltas": "^(bloque|caida)\\d"
+   }
+  ]
  },
  "espalda-aneto": {
   "x0": 44806.97,
