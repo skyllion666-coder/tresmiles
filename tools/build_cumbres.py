@@ -22,6 +22,8 @@ fromXZ = lambda x, z: (meta['lon0'] + (x + W / 2) / mLon, meta['lat0'] - (z + D 
 ids = sys.argv[1:] or peaks['activos']
 idx_path = os.path.join(OUT, 'index.json'); idx = json.load(open(idx_path)) if os.path.exists(idx_path) else {}
 byid = {p['id']: p for p in peaks['picos']}
+men = os.path.join(ROOT, 'data/menores.json')   # también las cumbres de menos de 3.000 m (ficha sencilla), p. ej. las de la Sierra de Guara
+if os.path.exists(men): byid.update({p['id']: p for p in json.load(open(men))['picos'] if p['id'] not in byid})
 for pid in ids:
     p = byid[pid]; cx, cz = toXZ(p['lon'], p['lat'])
     x0, z0 = round(cx - R), round(cz - R)
