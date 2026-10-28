@@ -151,8 +151,8 @@ export class Terrain {
   }
 
   // material para una pieza local de cumbre: comparte textura y cobertura del bloque, pero no se recorta con los huecos
-  crearMaterialPieza(c, roca = 'granito') {   // roca: tono de la roca desnuda (granito frío y oscuro, caliza clara y cálida, neutra)
-    const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], neutra: [0.40, [1, 1, 1]], oscura: [0.22, [1.04, 0.97, 0.90]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
+  crearMaterialPieza(c, roca = 'granito') {   // roca: tono de la roca desnuda (granito frío y oscuro, caliza clara y cálida, conglomerado ocre rojizo como Riglos o el Salto de Roldán, neutra)
+    const [L, T] = { granito: [0.34, [0.96, 0.98, 1.02]], caliza: [0.50, [1.05, 1.02, 0.93]], conglomerado: [0.44, [1.13, 0.96, 0.80]], neutra: [0.40, [1, 1, 1]], oscura: [0.22, [1.04, 0.97, 0.90]] }[roca] ?? [0.34, [0.96, 0.98, 1.02]];
     const u = { ...c.u, uHoles: { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uRocaL: { value: L }, uRocaT: { value: new THREE.Vector3(...T) }, uOrto: { value: 0 }, uGran: { value: null }, uGranK: { value: 0 }, uGranM: { value: 0.35 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) }, uOA: { value: new THREE.Vector3(0, 0, 0) }, uOB: { value: new THREE.Vector3(1, 1, 1) }, uOC: { value: new THREE.Vector3(0, 0, 0) } };
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide, map: c.mat.map, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
     mat.color.set(c.mat.map ? 0xffffff : 0x8a9488); mat.userData.holes = u.uHoles; mat.userData.orto = u.uOrto; mat.userData.sat = u.uSat; mat.userData.pb = u.uPb; mat.userData.og = [u.uOA, u.uOB, u.uOC]; mat.userData.gran = [u.uGran, u.uGranK, u.uGranM]; this._shader(mat, u); return mat;
@@ -241,7 +241,8 @@ export class Terrain {
     const k = c.id; let p = this.coberturas.get(k);
     if (p) { this.coberturas.delete(k); this.coberturas.set(k, p); return p; }
     p = (typeof DecompressionStream === 'undefined' ? Promise.resolve(null)
-      : fetch(`${this.base}/cover/c_${k}.bin.gz`).then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null))
+      : fetch(`${this.base}/cover/c_${k}.bin.gz${this.meta.vcover ? `?v=${this.meta.vcover}` : ''}`)   // vcover: tools/cover_orto.py corrige el arbolado con la ortofoto
+       .then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null))
         .then((b) => (b && b.byteLength === 512 * 512 ? new Uint8Array(b) : null))).catch(() => null);
     this.coberturas.set(k, p);
     for (const [kk] of this.coberturas) { if (this.coberturas.size <= MAX_COBERTURA) break; this.coberturas.delete(kk); }

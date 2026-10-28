@@ -134,7 +134,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       const g = new THREE.BufferGeometry();
       g.setAttribute('position', new THREE.BufferAttribute(pos2, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor2, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2));
       g.setIndex(new THREE.BufferAttribute(idx2, 1)); g.computeBoundingSphere();
-      const mat = terrain.crearMaterialPieza(ch), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false; mesh.frustumCulled = true;
+      const mat = terrain.crearMaterialPieza(ch, d.roca), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false; mesh.frustumCulled = true;
       const usados = new Set([...piezas.values()].map((p) => p.hueco)); let hueco = 0; while (usados.has(hueco)) hueco++;
       if (hueco > 3) { g.dispose(); mat.dispose(); return null; }
       scene.add(mesh); terrain.hueco(hueco, x0 + INSET, z0 + INSET, x0 + (nm - 1) * m * paso - INSET, z0 + (nm - 1) * m * paso - INSET);
