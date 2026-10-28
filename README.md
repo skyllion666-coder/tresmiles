@@ -5,8 +5,8 @@ Web: https://tresmiles.pages.dev · reserva: https://skyllion666-coder.github.io
 Explorador 3D de las cumbres que superan los 3.000 m en el Pirineo aragonés, inspirado en la experiencia de
 «mapa para explorar» (vuelo aéreo, puntos sobre el terreno y ficha lateral), con contenido, código y diseño propios.
 
-**Estado actual:** primera cumbre completa, el **Balaitús**. Los datos de las otras once ya están preparados
-(`data/peaks.json`) y se activan siguiendo los pasos de «Añadir más cumbres».
+**Estado actual:** los 181 tresmiles con ficha (55 con ruta de Wikiloc, hitos y fotos; 30 cimas modeladas en Blender;
+relieve fino y ortofoto PNOA en todas), 568 cumbres de 2.000 a 3.000 m con ficha sencilla, versión en inglés y app para Android.
 
 ## Cómo verlo en local
 
@@ -37,8 +37,8 @@ Con **dos o más** cumbres activas aparece además el botón de **filtros** (mac
 
 ## Cómo publicarlo
 
-Es un sitio **estático** (sin compilación): se publica copiando la carpeta tal cual. Pesa unos 40 MB en total, pero el visitante
-solo descarga ≈ 5 MB al entrar y ≈ 2 MB más por cada zona que abre.
+Es un sitio **estático** (sin compilación): se publica copiando la carpeta tal cual. Pesa unos 400 MB en total, pero el visitante
+solo descarga lo básico al entrar y después lo de cada zona y cima que abre.
 
 - **GitHub Pages**: crea un repositorio, sube el contenido de `tresmiles/` (sin `analisis/` si no quieres publicarlo) y
   en *Settings → Pages* elige la rama `main` y la carpeta `/ (root)`. El archivo `.nojekyll` ya está incluido.
@@ -61,14 +61,14 @@ js/geo.js             lon/lat → metros locales, altura bilineal, exageración 
 js/sky.js             cielo y nubes
 js/vida.js            agua de los ibones, aves planeando, sonido ambiente y música (Web Audio)
 js/ruta.js            recorridos GPX: línea sobre el relieve, perfil de altura y vuelo por la ruta
-data/peaks.json       fichas de las 12 cumbres y lista de las activas ("activos")
+data/peaks.json       fichas de los 181 tresmiles y lista de las activas ("activos")
 data/fotos.json       autor, licencia y enlace de cada foto
 data/hitos.json       refugios, pasos e ibones (waypoints de los tracks y OpenStreetMap); `foto` enlaza con fotos_hitos.json
 data/fotos_hitos.json autor, licencia y fuente de las fotos de los hitos
 data/rutas/           recorridos simplificados (autor y ficha de Wikiloc obligatorios)
 audio/ambiente.mp3    música de fondo (bucle de 90 s, composición propia con VSCO-2 CE, CC0)
 img/hitos/            fotos de los hitos
-data/lagos.json       contornos (se regenera con tools/fetch_lagos.py) y nombres de ibones de la zona del Balaitús (OpenStreetMap, ODbL)
+data/lagos.json       contornos (se regenera con tools/fetch_lagos.py) y nombres de los ibones de todo el relieve (OpenStreetMap, ODbL)
 data/terrain/         relieve por zonas: overview.bin (vista general), h/ (alturas por nivel y bloque) y texturas Sentinel-2 lo/ (384 px) y hi/ (1536 px)
 img/peaks/            fotos (Wikimedia Commons)
 vendor/three/         three.js (MIT) y OrbitControls
