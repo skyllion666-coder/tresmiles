@@ -24,7 +24,12 @@ ZONAS_NUEVAS = [
     {'id': 'z-sobrarbe', 'nombre': 'Bielsa–Escuaín', 'c': (0.05, 42.60)},
     {'id': 'z-chistau', 'nombre': 'Valle de Chistau', 'c': (0.25, 42.57)},
     {'id': 'z-cerler', 'nombre': 'Cerler–Castanesa', 'c': (0.58, 42.59)},
+    {'id': 'z-guara', 'nombre': 'Sierra de Guara', 'c': (-0.18, 42.25)},
+    {'id': 'z-exteriores', 'nombre': 'Sierras Exteriores', 'c': (-0.47, 42.31)},
 ]
+# Sierra de Guara y Sierras Exteriores (28-10-2026): aquí la lista baja hasta los 1.000 m (lon0, lon1, lat0, lat1); fuera de esta caja sigue en 2.000 m
+GUARA = (-0.56, 0.12, 41.99, 42.40)
+enGuara = lambda lo, la: GUARA[0] <= lo <= GUARA[1] and GUARA[2] <= la <= GUARA[3]
 centros = {}
 for m in data['macizos']:
     ps = [p for p in data['picos'] if p['macizo'] == m['id']]
@@ -32,14 +37,17 @@ for m in data['macizos']:
 for z in ZONAS_NUEVAS: centros[z['id']] = z['c']
 nombreZona = {**{m['id']: m['nombre'] for m in data['macizos']}, **{z['id']: z['nombre'] for z in ZONAS_NUEVAS}}
 
-pueblos = [(n, lo, la) for n, lo, la, tipo, pob in json.load(open(D('data', 'pueblos.json'))) if tipo in ('village', 'town') and ARAGON.contains(Point(lo, la))]
+pueblos = [(n, lo, la) for n, lo, la, tipo, pob in json.load(open(D('data', 'pueblos.json'))) if (tipo in ('village', 'town') or (tipo == 'hamlet' and enGuara(lo, la))) and ARAGON.contains(Point(lo, la))]   # en Guara las aldeas cuentan: casi no hay otra cosa cerca
 fmt = lambda n: f'{n:,}'.replace(',', '.')
 slug = lambda s: re.sub(r'[^a-z0-9]+', '-', unicodedata.normalize('NFD', s.lower()).encode('ascii', 'ignore').decode()).strip('-')
 
-ids = {p['id'] for p in data['picos']}
+# ids fijos: una cumbre conserva su id aunque lleguen otras con el mismo nombre (tools/datos/ids_menores.json: «nombre|lat|lon» → id); las nuevas toman el siguiente libre
+RIDS = D('tools', 'datos', 'ids_menores.json')
+fijos = json.load(open(RIDS, encoding='utf-8')) if os.path.exists(RIDS) else {}
+ids = {p['id'] for p in data['picos']} | set(fijos.values())
 out, vistos = [], []
 for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
-    if not (2000 <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
+    if not ((1000 if enGuara(lon, lat) else 2000) <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
     pt = Point(lon, lat)
     limite = ARAGON.boundary.distance(pt) * KX * 1000   # m
     if not ARAGON.contains(pt) and limite > 300: continue
@@ -51,10 +59,13 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
     zona = min(centros, key=lambda k: km(lon, lat, *centros[k]))
     pn, plo, pla = min(pueblos, key=lambda q: km(lon, lat, q[1], q[2]))
     dist = km(lon, lat, plo, pla)
-    pid = base = slug(nombre) or 'pico'
-    k = 2
-    while pid in ids: pid = f'{base}-{k}'; k += 1
-    ids.add(pid)
+    clave = f'{nombre}|{lat:.4f}|{lon:.4f}'
+    if clave in fijos: pid = fijos[clave]
+    else:
+        pid = base = slug(nombre) or 'pico'
+        k = 2
+        while pid in ids: pid = f'{base}-{k}'; k += 1
+        ids.add(pid); fijos[clave] = pid
     lugar = 'en la frontera entre Aragón y Francia' if frontera else ('en el límite de Aragón' if limite < 300 else 'en territorio aragonés')
     out.append({
         'id': pid, 'nombre': nombre, 'altitud': alt, 'lat': lat, 'lon': lon, 'macizo': zona, 'frontera': frontera, 'situacion': situacion,
@@ -107,7 +118,8 @@ for p in out:
 OTROS = {'tuca-dels-tatats': 'Pico de Estatás (ruta de Pelopin en Wikiloc, cumbre a 5 m del nodo de OSM)'}
 for p in out:
     if p['id'] in OTROS: p['alias'] = 'También «' + OTROS[p['id']].split(' (')[0] + '»'; p['nombres'] = OTROS[p['id']].split(' (')[0] + ' · Pico Estatás'
+json.dump(fijos, open(RIDS, 'w', encoding='utf-8'), ensure_ascii=False, indent=0, sort_keys=True)
 out.sort(key=lambda p: -p['altitud'])
 json.dump({'fotos': {'m-' + k: v for k, v in fotos.items() if any(p['id'] == k for p in out)}, 'zonas': [{'id': z['id'], 'nombre': z['nombre']} for z in ZONAS_NUEVAS if any(p['macizo'] == z['id'] for p in out)], 'picos': out},
           open(D('data', 'menores.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-print(len(out), 'picos de 2.000 a 3.000 m;', sum('foto' in p for p in out), 'con foto;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')
+print(len(out), 'picos (2.000–3.000 m, y 1.000–3.000 m en Guara);', sum('foto' in p for p in out), 'con foto;', sum(p['frontera'] for p in out), 'en la frontera con Francia;', os.path.getsize(D('data', 'menores.json')) // 1024, 'KB')

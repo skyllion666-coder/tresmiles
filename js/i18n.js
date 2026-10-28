@@ -45,7 +45,7 @@ const EN = {
   'Mis tresmiles ·': 'My 3,000ers ·', 'Se guardan en este móvil.': 'They are saved on this device.', 'Guardar copia': 'Save a backup', 'Recuperar copia': 'Restore a backup',
   '{n} tresmiles importados': '{n} 3,000ers imported', 'Ese archivo no es una copia de tus tresmiles': 'That file is not a backup of your 3,000ers',
   'He subido esta cumbre': 'I have climbed this summit', 'He subido este tresmil': 'I have climbed this 3,000er', 'Subido · banderín puesto': 'Climbed · flag planted',
-  '{n} de {t} tresmiles subidos': '{n} of {t} 3,000ers climbed', '{n} de {t} cumbres de 2.000 a 3.000 m subidas': '{n} of {t} 2,000–3,000 m summits climbed',
+  '{n} de {t} tresmiles subidos': '{n} of {t} 3,000ers climbed', '{n} de {t} cumbres de menos de 3.000 m subidas': '{n} of {t} summits under 3,000 m climbed',
   // — ficha —
   'Ficha': 'Info', 'Ficha de la cumbre': 'Summit info', 'Abrir la ficha': 'Open the info', 'Cerrar': 'Close', 'Cerrar la ficha': 'Close the info',
   'Recoger la ficha para ver el recorrido': 'Fold the info to see the route', '← Anterior': '← Previous', 'Siguiente →': 'Next →',

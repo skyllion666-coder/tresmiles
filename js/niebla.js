@@ -39,7 +39,9 @@ export function instalaNiebla() {
   #endif
   gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
   // bruma de valle / mar de nubes: capa baja con el borde superior irregular (más alta y densa cuanto mayor es kB)
-  float topeB = ( 1450.0 + 700.0 * kB + 120.0 * ( nbRuido( vFogXZ * 0.00045 ) - 0.5 ) * 2.0 + 40.0 * ( nbRuido( vFogXZ * 0.0021 ) - 0.5 ) * 2.0 ) * 1.3;
+  // al sur del Pirineo (z de 20 a 45 km, hacia la Sierra de Guara) el techo baja hasta 950 m: allí las cimas llegan solo a 1.000–2.078 m y quedarían todas bajo la bruma
+  float surB = smoothstep( 20000.0, 45000.0, vFogXZ.y );
+  float topeB = ( 1450.0 + 700.0 * kB - 950.0 * surB + 120.0 * ( nbRuido( vFogXZ * 0.00045 ) - 0.5 ) * 2.0 + 40.0 * ( nbRuido( vFogXZ * 0.0021 ) - 0.5 ) * 2.0 ) * 1.3;
   float capaB = 1.0 - smoothstep( topeB - 340.0, topeB, vFogY );
   float vistaB = smoothstep( 700.0, 7000.0, vFogDepth );
   float bruma = capaB * vistaB * ( 0.10 + 0.82 * kB );

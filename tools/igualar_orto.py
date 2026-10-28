@@ -7,6 +7,7 @@ import numpy as np
 from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'); D = lambda *p: os.path.join(ROOT, *p)
 m = json.load(open(D('data', 'terrain', 'meta.json'))); idx_path = D('data', 'terrain', 'cumbres', 'index.json'); idx = json.load(open(idx_path))
+m['nrows'] = m.get('nrows0', m['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
 latC = m['lat0'] - ((m['nrows'] - 1) * m['step']) / 2; mLat = 111132; mLon = 111320 * math.cos(math.radians(latC))
 W = (m['ncols'] - 1) * m['step'] * mLon; Dd = (m['nrows'] - 1) * m['step'] * mLat
 col = lambda x: (x + W / 2) / mLon / m['step']; row = lambda z: (z + Dd / 2) / mLat / m['step']   # columna y fila de celda (1 celda = 1 paso)

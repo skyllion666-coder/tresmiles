@@ -43,7 +43,7 @@ export class Clouds {
       const s = new THREE.Sprite(mat);
       const size = 4500 + Math.random() * 7000;
       s.scale.set(size, size * (0.45 + Math.random() * 0.2), 1);
-      s.position.set((Math.random() - 0.5) * geo.W * 1.1, 3600 + Math.random() * 1500, (Math.random() - 0.5) * geo.D * 1.1);
+      s.position.set((Math.random() - 0.5) * geo.W * 1.1, 3600 + Math.random() * 1500, geo.zmin + geo.D / 2 + (Math.random() - 0.5) * geo.D * 1.1);
       s.userData = { base: 0.3 + Math.random() * 0.3, speed: 18 + Math.random() * 22 };
       scene.add(s); this.sprites.push(s);
     }

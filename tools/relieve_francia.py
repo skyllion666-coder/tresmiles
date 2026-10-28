@@ -11,6 +11,7 @@ from scipy.ndimage import zoom, gaussian_filter
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'); os.chdir(ROOT)
 pid = sys.argv[1]; paso = int(sys.argv[2]) if len(sys.argv) > 2 else 2
 meta = json.load(open('data/terrain/meta.json'))
+meta['nrows'] = meta.get('nrows0', meta['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
 latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2
 mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; D = (meta['nrows'] - 1) * meta['step'] * mLat

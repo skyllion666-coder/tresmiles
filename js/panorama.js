@@ -37,7 +37,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   function sampler(bloques) {
     const maxC = meta.nci * CH, maxR = meta.ncj * CH;
     return (x, z) => {
-      let fc = (x + geo.W / 2) / geo.dx, fr = (z + geo.D / 2) / geo.dz;
+      let fc = (x + geo.W / 2) / geo.dx, fr = (z + geo.oz) / geo.dz;
       fc = fc < 0 ? 0 : fc > maxC ? maxC : fc; fr = fr < 0 ? 0 : fr > maxR ? maxR : fr;
       const i = Math.min(meta.nci - 1, Math.floor(fc / CH)), j = Math.min(meta.ncj - 1, Math.floor(fr / CH)), a = bloques[j * meta.nci + i];
       if (!a) return store.sample(fc, fr) * meta.hscale;

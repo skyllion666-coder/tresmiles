@@ -1,19 +1,19 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
-import { makeGeo } from './geo.js';
-import { Terrain } from './terrain.js?v=20';
+import { makeGeo } from './geo.js?v=2';
+import { Terrain } from './terrain.js?v=21';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=46';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
-import { HeightStore } from './heights.js';
-import { makeSky, Clouds, HORIZON } from './sky.js?v=3';
-import { instalaNiebla } from './niebla.js?v=4';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=20';
+import { HeightStore } from './heights.js?v=2';
+import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
+import { instalaNiebla } from './niebla.js?v=5';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=21';
 import { crearFauna } from './fauna.js?v=11';
 import { cargarRuta, crearRuta } from './ruta.js?v=50';
-import { crearPanorama } from './panorama.js?v=8';
-import { crearUbicacion } from './ubicacion.js?v=6';
-import { crearRealidad } from './realidad.js?v=3';
+import { crearPanorama } from './panorama.js?v=9';
+import { crearUbicacion } from './ubicacion.js?v=7';
+import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
 import { t, EN_INGLES } from './i18n.js?v=2';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=1';
@@ -108,7 +108,7 @@ async function boot() {
   // todas las cumbres del proyecto; solo las `activo` tienen ficha, ruta y hitos (el resto sale como «Próximamente»)
   const peaks = data.picos.map((p) => {
     const q = geo.toXZ(p.lon, p.lat);
-    return { ...p, q, activo: activos.includes(p.id), inside: Math.abs(q.x) < geo.W / 2 - 800 && Math.abs(q.z) < geo.D / 2 - 800, w: { x: q.x, y: p.altitud * geo.hs / meta.hscale - 40, z: q.z } };
+    return { ...p, q, activo: activos.includes(p.id), inside: geo.dentro(q.x, q.z, 800), w: { x: q.x, y: p.altitud * geo.hs / meta.hscale - 40, z: q.z } };
   }).filter((p) => p.inside).sort((a, b) => b.altitud - a.altitud);
   const byId = Object.fromEntries(peaks.map((p) => [p.id, p]));
   const activas = new Set(peaks.filter((p) => p.activo).map((p) => p.id));
@@ -139,10 +139,19 @@ async function boot() {
   json('data/pueblos.json').then((lista) => {
     for (const [nombre, lon, lat, tipo, pob] of lista) {
       const q = geo.toXZ(lon, lat);
-      if (Math.abs(q.x) > geo.W / 2 || Math.abs(q.z) > geo.D / 2) continue;
+      if (!geo.dentro(q.x, q.z)) continue;
       const grande = tipo === 'village' && pob >= 500, el = document.createElement('span');
       el.className = `pueblo ${grande ? 'pueblo-grande' : tipo === 'hamlet' ? 'pueblo-aldea' : ''} is-hidden`; el.textContent = nombre; $('#pins').appendChild(el);
       puebloEls.push({ x: q.x, z: q.z, lim: grande ? 42000 : tipo === 'hamlet' ? 9000 : 22000, el });
+    }
+  }).catch(() => {});
+  // nombres de barrancos, gargantas y otros lugares conocidos (data/lugares.json, sin ficha; hoy solo la Sierra de Guara): se ven de cerca
+  json('data/lugares.json').then((lista) => {
+    for (const [nombre, lon, lat] of lista) {
+      const q = geo.toXZ(lon, lat);
+      if (!geo.dentro(q.x, q.z)) continue;
+      const el = document.createElement('span'); el.className = 'pueblo pueblo-lugar is-hidden'; el.textContent = nombre; $('#pins').appendChild(el);
+      puebloEls.push({ x: q.x, z: q.z, lim: 11000, el });
     }
   }).catch(() => {});
   // al llegar las alturas de un bloque se dibujan sus ibones y se afina la posición de sus cumbres
@@ -151,7 +160,7 @@ async function boot() {
     if (lagos) añadirLagos(lagos.construirBloque(i, j));
     const CH = meta.chunk;
     for (const p of peaks) {
-      const pi = Math.min(meta.nci - 1, Math.floor((p.q.x + geo.W / 2) / geo.dx / CH)), pj = Math.min(meta.ncj - 1, Math.floor((p.q.z + geo.D / 2) / geo.dz / CH));
+      const pi = Math.min(meta.nci - 1, Math.floor((p.q.x + geo.W / 2) / geo.dx / CH)), pj = Math.min(meta.ncj - 1, Math.floor((p.q.z + geo.oz) / geo.dz / CH));
       if (pi === i && pj === j) p.w = geo.summitNear(p.q.x, p.q.z, nivel === 1 ? 90 : 160);
     }
   });
@@ -251,7 +260,7 @@ async function boot() {
     for (let i = 0; i < 2600; i++) {
       t += Math.max(30, t * 0.012);
       const x = o.x + d.x * t, y = o.y + d.y * t, z = o.z + d.z * t;
-      if (Math.abs(x) > geo.W / 2 || Math.abs(z) > geo.D / 2) return null;
+      if (!geo.dentro(x, z)) return null;
       if (y < geo.heightAt(x, z)) { let a = prev, b = t; for (let k = 0; k < 14; k++) { const m = (a + b) / 2; if (o.y + d.y * m < geo.heightAt(o.x + d.x * m, o.z + d.z * m)) b = m; else a = m; } return { x: o.x + d.x * b, z: o.z + d.z * b }; }
       prev = t;
     }
@@ -451,7 +460,7 @@ async function boot() {
       const picos = h.picos ?? [h.pico ?? 'balaitus'];
       if (!picos.includes(picoId) || h._hecho) continue;
       const q = geo.toXZ(h.lon, h.lat);
-      if (Math.abs(q.x) > geo.W / 2 - 800 || Math.abs(q.z) > geo.D / 2 - 800) continue;
+      if (!geo.dentro(q.x, q.z, 800)) continue;
       h._hecho = true;
       const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
       el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(trH(h.nombre))}"><i></i></button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
@@ -876,7 +885,7 @@ async function boot() {
   const textoSubir = (p) => (p?.menor ? 'He subido esta cumbre' : 'He subido este tresmil');
   function resumenHechos(p = null) {
     const menor = !!p?.menor, n = [...hechos].filter((id) => byId[id]?.activo && !!byId[id].menor === menor).length;
-    return t(menor ? '{n} de {t} cumbres de 2.000 a 3.000 m subidas' : '{n} de {t} tresmiles subidos', { n, t: totalActivas(menor) });
+    return t(menor ? '{n} de {t} cumbres de menos de 3.000 m subidas' : '{n} de {t} tresmiles subidos', { n, t: totalActivas(menor) });
   }
   function pintaHechos() {
     for (const p of peaks) pinEls.get(p.id)?.classList.toggle('is-hecho', hechos.has(p.id));
@@ -1136,7 +1145,7 @@ async function boot() {
       <h3>Fotografías de las cumbres</h3>
       <p>Cada foto se muestra con el nombre de su autor y un enlace a la página de origen (Wikimedia Commons, Wikiloc, Mendikat u otras). Las fotos de Wikiloc y Mendikat se usan con el nombre de su autor y el enlace a su ficha; si eres su autor y prefieres que se quite, dínoslo y se retirará.</p>
       <ul>${usadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul>
-      ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Cumbres de 2.000 a 3.000 m (${menoresUsadas.length} fotos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
+      ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Cumbres de menos de 3.000 m (${menoresUsadas.length} fotos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
       <h3>Recorrido y hitos</h3>
       <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de sus autores (Wikiloc).</li></ul>
@@ -1244,8 +1253,8 @@ async function boot() {
       if (!reduced) { orbit += dt * 0.03; const s = introState(focusPeak); s.theta += orbit; applyState(s); }
     } else {
       controls.update();
-      const t = controls.target, mx = geo.W / 2 - 3000, mz = geo.D / 2 - 3000;
-      t.x = clamp(t.x, -mx, mx); t.z = clamp(t.z, -mz, mz);
+      const t = controls.target, mx = geo.W / 2 - 3000;
+      t.x = clamp(t.x, -mx, mx); t.z = clamp(t.z, geo.zmin + 3000, geo.zmax - 3000);
       t.y += (geo.heightAt(t.x, t.z) - t.y) * 0.08;
       const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle ? 18 : 120);
       if (camera.position.y < g) camera.position.y = g;

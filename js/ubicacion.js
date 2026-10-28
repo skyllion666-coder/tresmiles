@@ -2,7 +2,7 @@
 // la vista sigue la posición y gira con la brújula. Fuera del mapa, solo avisa de a cuánto se está.
 // Botón: 1.º toque, localizar (la cámara va al punto); 2.º, seguir con la brújula; 3.º, apagar. Mover el mapa con el dedo deja de seguir.
 import * as THREE from 'three';
-import { leeOrientacion } from './panorama.js?v=8';
+import { leeOrientacion } from './panorama.js?v=9';
 import { t, EN_INGLES } from './i18n.js?v=2';
 
 const RAD = Math.PI / 180;
@@ -48,13 +48,13 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     if (botonPanorama && abrePanorama) botonPanorama.hidden = false;   // «Qué montañas veo»: solo con la posición dentro del mapa
   }
 
-  function enMapa(x, z) { return Math.abs(x) <= geo.W / 2 && Math.abs(z) <= geo.D / 2; }
+  function enMapa(x, z) { return geo.dentro(x, z); }
 
   function alPosicion(e) {
     const { longitude: lon, latitude: lat, accuracy, altitude } = e.coords, q = geo.toXZ(lon, lat);
     if (!enMapa(q.x, q.z)) {
       grupo.visible = false; st.pos = null; if (botonPanorama) botonPanorama.hidden = true;
-      const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, Math.abs(q.z) - geo.D / 2);
+      const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, geo.zmin - q.z, q.z - geo.zmax);
       if (st.primera) {   // con una cumbre abierta, la distancia a ella; si no, al borde del mapa y al tresmil más cercano
         const p = picoAbierto(), cerca = p ? null : picos.reduce((m, q) => { const d = km(lat, lon, q.lat, q.lon); return !m || d < m.d ? { q, d } : m; }, null);
         avisa(p ? t('Estás fuera del mapa, a {d} km en línea recta {p}.', { d: fmtKm(km(lat, lon, p.lat, p.lon)), p: delPico(p.nombre) })

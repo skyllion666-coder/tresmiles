@@ -159,8 +159,8 @@ export class Terrain {
   }
   hueco(slot, x0, z0, x1, z1) { this.holes.value[slot].set(x0, z0, x1, z1); }
   chunkEn(x, z) {
-    const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo;
-    const i = Math.min(this.meta.nci - 1, Math.max(0, Math.floor((x + W / 2) / dx / CH))), j = Math.min(this.meta.ncj - 1, Math.max(0, Math.floor((z + D / 2) / dz / CH)));
+    const { chunk: CH } = this.meta, { dx, dz, W, oz } = this.geo;
+    const i = Math.min(this.meta.nci - 1, Math.max(0, Math.floor((x + W / 2) / dx / CH))), j = Math.min(this.meta.ncj - 1, Math.max(0, Math.floor((z + oz) / dz / CH)));
     return this.chunks.find((c) => c.t.i === i && c.t.j === j);
   }
 
@@ -173,8 +173,8 @@ export class Terrain {
   }
 
   _makeChunk(t) {
-    const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo;
-    const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - D / 2;
+    const { chunk: CH } = this.meta, { dx, dz, W, oz } = this.geo;
+    const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - oz;
     const mat = new THREE.MeshLambertMaterial({ color: 0x8a9488, side: THREE.DoubleSide });
     const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uGran: { value: null }, uGranK: { value: 0 }, uGranM: { value: 0.35 }, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) }, uOrto: { value: 0 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) }, uOA: { value: new THREE.Vector3() }, uOB: { value: new THREE.Vector3(1, 1, 1) }, uOC: { value: new THREE.Vector3() } };
     this._shader(mat, u);
@@ -303,9 +303,9 @@ export class Terrain {
 
   // carga el nivel s de las alturas en los bloques que cruzan los puntos dados [{x, z}] (rutas, ibones…) y espera a tenerlo
   asegurar(puntos, s = 1) {
-    const { chunk: CH } = this.meta, { dx, dz, W, D } = this.geo, vistos = new Set(), pr = [];
+    const { chunk: CH } = this.meta, { dx, dz, W, oz } = this.geo, vistos = new Set(), pr = [];
     for (const p of puntos) {
-      const i = Math.min(this.meta.nci - 1, Math.max(0, Math.floor((p.x + W / 2) / dx / CH))), j = Math.min(this.meta.ncj - 1, Math.max(0, Math.floor((p.z + D / 2) / dz / CH)));
+      const i = Math.min(this.meta.nci - 1, Math.max(0, Math.floor((p.x + W / 2) / dx / CH))), j = Math.min(this.meta.ncj - 1, Math.max(0, Math.floor((p.z + oz) / dz / CH)));
       const k = `${i}_${j}`; if (vistos.has(k)) continue; vistos.add(k); pr.push(this.store.load(i, j, s));
     }
     return Promise.all(pr);

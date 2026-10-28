@@ -281,6 +281,8 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
 .pueblo-grande::before { width: 7px; height: 7px; }
 .pueblo-aldea { font-size: .54rem; letter-spacing: .12em; opacity: .9; }
 .pueblo-aldea::before { width: 4px; height: 4px; }
+.pueblo-lugar { font-size: .54rem; letter-spacing: .1em; font-style: italic; color: #cfe9e2; }
+.pueblo-lugar::before { width: 4px; height: 4px; background: #cfe9e2; }
 .pueblo.is-hidden { opacity: 0; }
 .pueblo.sin-nombre { color: transparent; text-shadow: none; }
 @media (max-width: 760px) { .lago { font-size: .78rem; text-shadow: 0 0 3px rgba(12,38,48,.95), 0 1px 5px rgba(12,38,48,.85), 0 0 9px rgba(12,38,48,.6); } .pueblo { font-size: .56rem; letter-spacing: .13em; } .pueblo-grande { font-size: .66rem; } .pueblo-aldea { font-size: .5rem; } }

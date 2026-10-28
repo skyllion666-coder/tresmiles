@@ -8,10 +8,12 @@ export class HeightStore {
     this.cells = Array.from({ length: this.nci * this.ncj }, () => ({ 8: null, 4: null, 2: null, 1: null, esperando: {} }));
     this.listeners = [];
     this.activas = 0;   // descargas en curso
+    // el relieve se guarda un mes en la caché: el overview y los bloques de la fila `vdesde` en adelante (los que cambiaron al ampliar el mapa al sur) llevan ?v= para que nadie mezcle versiones
+    this.v = meta.v ?? 1; this.vdesde = meta.vdesde ?? 1e9;
   }
 
   async init() {
-    const buf = new Uint16Array(await (await fetch(`${this.base}/overview.bin`)).arrayBuffer());
+    const buf = new Uint16Array(await (await fetch(`${this.base}/overview.bin?v=${this.v}`)).arrayBuffer());
     const dim = this.CH / 8 + 3, n = dim * dim;
     this.cells.forEach((c, k) => { c[8] = buf.subarray(k * n, (k + 1) * n); });
   }
@@ -27,7 +29,7 @@ export class HeightStore {
     if (c[s]) return Promise.resolve();
     if (c.esperando[s]) return c.esperando[s];
     this.activas++;
-    c.esperando[s] = fetch(`${this.base}/h/c_${i}_${j}_${s}.bin`).then((r) => r.arrayBuffer()).then((b) => {
+    c.esperando[s] = fetch(`${this.base}/h/c_${i}_${j}_${s}.bin${j >= this.vdesde ? `?v=${this.v}` : ''}`).then((r) => r.arrayBuffer()).then((b) => {
       c[s] = new Uint16Array(b); this.activas--; delete c.esperando[s];
       for (const f of this.listeners) f(i, j, s);
     }).catch(() => { this.activas--; delete c.esperando[s]; });

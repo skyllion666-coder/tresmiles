@@ -10,6 +10,7 @@ from rasterio.warp import transform
 from scipy.ndimage import map_coordinates
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 meta = json.load(open(os.path.join(ROOT, 'data/terrain/meta.json')))
+meta['nrows'] = meta.get('nrows0', meta['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
 peaks = json.load(open(os.path.join(ROOT, 'data/peaks.json')))
 OUT = os.path.join(ROOT, 'data/terrain/cumbres'); os.makedirs(OUT, exist_ok=True)
 latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2

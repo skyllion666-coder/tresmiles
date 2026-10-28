@@ -115,9 +115,9 @@ export async function crearLagos({ scene, geo, url, meta }) {
   let n = 0;
   for (const l of data) {
     const pts = l.poly.map(([lon, lat]) => geo.toXZ(lon, lat));
-    if (pts.some((p) => Math.abs(p.x) > geo.W / 2 - 100 || Math.abs(p.z) > geo.D / 2 - 100)) continue;
+    if (pts.some((p) => !geo.dentro(p.x, p.z, 100))) continue;
     const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length, cz = pts.reduce((s, p) => s + p.z, 0) / pts.length;
-    const i = Math.min(meta.nci - 1, Math.max(0, Math.floor((cx + geo.W / 2) / geo.dx / CH))), j = Math.min(meta.ncj - 1, Math.max(0, Math.floor((cz + geo.D / 2) / geo.dz / CH)));
+    const i = Math.min(meta.nci - 1, Math.max(0, Math.floor((cx + geo.W / 2) / geo.dx / CH))), j = Math.min(meta.ncj - 1, Math.max(0, Math.floor((cz + geo.oz) / geo.dz / CH)));
     const k = `${i}_${j}`; if (!porBloque.has(k)) porBloque.set(k, { lista: [], hecho: false });
     porBloque.get(k).lista.push({ l, pts, cx, cz });
     todos.push({ pts, cx, cz, area: l.area });
