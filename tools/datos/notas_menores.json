@@ -1640,7 +1640,14 @@
   "curiosidad": "Da nombre a toda la sierra y se ve desde la ciudad de Huesca. Entre su cima y el río Alcanadre, que corre cerca a unos 430 m, hay más de 1.600 m de desnivel."
  },
  "pena-de-san-miguel": {
-  "curiosidad": "En lo alto están las ruinas del castillo de Sen, una fortaleza musulmana citada ya en el siglo X: restos de dos torres, dos grandes aljibes, una pequeña iglesia y viviendas. El rey García Sánchez I de Pamplona la tomó en el año 941 y al año siguiente la recuperó el señor musulmán de Zaragoza."
+  "curiosidad": "En lo alto están las ruinas del castillo de Sen, una fortaleza musulmana citada ya en el siglo X: restos de dos torres, dos grandes aljibes, una pequeña iglesia y viviendas. El rey García Sánchez I de Pamplona la tomó en el año 941 y al año siguiente la recuperó el señor musulmán de Zaragoza.",
+  "ruta": "Sendero S-9 (Salto de Roldán – Peña San Miguel), de la Red Natural de Aragón. Sale del aparcamiento al que lleva una pista asfaltada de unos 2 km, que se toma 500 m antes de Santa Eulalia de la Peña. Sube por la ladera hasta la parte vertical, donde clavijas de hierro, grapas y un cable permiten llegar a la meseta de la cima. El folleto oficial la da como de dificultad alta; quien tenga vértigo debe ir con prudencia. Hay peligro de desprendimientos: no subir con lluvia.",
+  "desnivel": "Unos 100 m · 1 h ida y vuelta",
+  "acceso": "Santa Eulalia de la Peña (Nueno)",
+  "enlace": {
+   "url": "https://www.aragon.es/documents/20127/674325/S9_Salto_de_Roldan_Pena_San_Miguel.pdf/35ac3e8e-5acd-85ab-18de-0235c5f3109e",
+   "texto": "Folleto oficial del sendero S-9 (Gobierno de Aragón)"
+  }
  },
  "pena-de-l-aman": {
   "curiosidad": "Cuenta la leyenda que Roldán, el caballero de Carlomagno, se vio rodeado en esta peña y saltó con su caballo hasta la de San Miguel, al otro lado del abismo, dejando sus huellas marcadas en la roca. En lo alto estuvo el baluarte musulmán de Men, pareja del castillo de Sen."
