@@ -39,12 +39,13 @@ export function instalaNiebla() {
   #endif
   gl_FragColor.rgb = mix( gl_FragColor.rgb, fogColor, fogFactor );
   // bruma de valle / mar de nubes: capa baja con el borde superior irregular (más alta y densa cuanto mayor es kB)
-  // al sur del Pirineo (z de 20 a 45 km, hacia la Sierra de Guara) el techo baja hasta 950 m: allí las cimas llegan solo a 1.000–2.078 m y quedarían todas bajo la bruma
+  // al sur del Pirineo (z de 20 a 45 km, hacia la Sierra de Guara) el techo baja 1.150 m y la bruma es más tenue: allí las cimas llegan solo a 1.000–2.078 m
+  // y los valles (Flumen, Alcanadre, Hoya de Huesca) están a 450–900 m; con más bruma tapaba las peñas y los barrancos (28-10-2026)
   float surB = smoothstep( 20000.0, 45000.0, vFogXZ.y );
-  float topeB = ( 1450.0 + 700.0 * kB - 950.0 * surB + 120.0 * ( nbRuido( vFogXZ * 0.00045 ) - 0.5 ) * 2.0 + 40.0 * ( nbRuido( vFogXZ * 0.0021 ) - 0.5 ) * 2.0 ) * 1.3;
+  float topeB = ( 1450.0 + 700.0 * kB - 1150.0 * surB + 120.0 * ( nbRuido( vFogXZ * 0.00045 ) - 0.5 ) * 2.0 + 40.0 * ( nbRuido( vFogXZ * 0.0021 ) - 0.5 ) * 2.0 ) * 1.3;
   float capaB = 1.0 - smoothstep( topeB - 340.0, topeB, vFogY );
   float vistaB = smoothstep( 700.0, 7000.0, vFogDepth );
-  float bruma = capaB * vistaB * ( 0.10 + 0.82 * kB );
+  float bruma = capaB * vistaB * ( 0.10 + 0.82 * kB ) * ( 1.0 - 0.45 * surB );
   vec3 colB = mix( mix( fogColor, vec3( 0.93, 0.95, 0.97 ), 0.55 ), vec3( 1.0, 0.82, 0.62 ), tB * 0.55 );
   gl_FragColor.rgb = mix( gl_FragColor.rgb, colB, clamp( bruma, 0.0, 0.92 ) );
 #endif`;

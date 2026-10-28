@@ -338,5 +338,53 @@
   "titulo": "Pico de Pineta",
   "url": "https://an.wikipedia.org/wiki/Pico_de_Pineta",
   "traducido": true
+ },
+ "tozal-de-guara": {
+  "texto": "El pico de Guara (Tozal de Guara en aragonés) es una montaña de 2077 m s. n. m. situada en la Sierra de Guara. Pertenece al parque natural de la Sierra y Cañones de Guara. Se puede observar desde la ciudad de Huesca. Su altura contrasta con el vecino río Alcanadre, que su altura mínima es de 430 m s. n. m. Se trata de la estribación más importante del Prepirineo aragonés y se encuentra en varias rutas de senderismo.",
+  "idioma": "es",
+  "titulo": "Pico de Guara",
+  "url": "https://es.wikipedia.org/wiki/Pico_de_Guara"
+ },
+ "pena-de-san-miguel": {
+  "texto": "El llamado «Salto de Roldán» es una formación rocosa en el Prepirineo oscense, en el Alto Aragón. Está formada por dos inmensas moles pétreas que configuran la puerta de entrada a la sierra de Guara y avanzan como proas sobre la Hoya de Huesca. Se trata de la peña San Miguel (izquierda), de 1123 m, y la peña Amán, de 1124 m, entre las que discurre el río Flumen. A mediados del periodo Terciario, los ríos arrastraron las gravas y cantos desde el Pirineo hasta la depresión del Ebro. Estos depósitos, consolidados como conglomerados, han sido esculpidos por los ríos dando unas formas columnares denominadas «mallos».",
+  "idioma": "es",
+  "titulo": "Salto de Roldán",
+  "url": "https://es.wikipedia.org/wiki/Salto_de_Roldán"
+ },
+ "pena-de-l-aman": {
+  "texto": "El llamado «Salto de Roldán» es una formación rocosa en el Prepirineo oscense, en el Alto Aragón. Está formada por dos inmensas moles pétreas que configuran la puerta de entrada a la sierra de Guara y avanzan como proas sobre la Hoya de Huesca. Se trata de la peña San Miguel (izquierda), de 1123 m, y la peña Amán, de 1124 m, entre las que discurre el río Flumen. A mediados del periodo Terciario, los ríos arrastraron las gravas y cantos desde el Pirineo hasta la depresión del Ebro. Estos depósitos, consolidados como conglomerados, han sido esculpidos por los ríos dando unas formas columnares denominadas «mallos».",
+  "idioma": "es",
+  "titulo": "Salto de Roldán",
+  "url": "https://es.wikipedia.org/wiki/Salto_de_Roldán"
+ },
+ "tozal-de-gratal": {
+  "texto": "La sierra de Gratal es una cadena montañosa aragonesa situada en las primeras estribaciones de los Pirineos, orientada de oeste a este. Está situada al norte de la ciudad de Huesca. Una de sus principales alturas, vértice geodésico, es la Peña Gratal, situada en el centro de la sierra, con 1543 metros de altura. La mayor altura es el Pico de la Calma, situada en la vertiente norte de la sierra, a los pies del embalse de Arguis, con 1581 metros de altura. En la vertiente sur, el Pico Gratal, con 1567 metros, es la segunda altura de la sierra.",
+  "idioma": "es",
+  "titulo": "Sierra de Gratal",
+  "url": "https://es.wikipedia.org/wiki/Sierra_de_Gratal"
+ },
+ "el-turbon": {
+  "texto": "El Turbón es un macizo de los Pirineos, en la comarca de Ribagorza, provincia de Huesca, que tiene su cumbre a 2492 m s. n. m. Se orienta de norte a sur, dominando por el este la cuenca del río Isábena y por el oeste, la depresión de Campo, en la cuenca del río Ésera. Está formado por un gran anticlinal fallado en su flanco este y modelado fundamentalmente en margas y potentes bancos calcáreos de la edad cretácica que dan escarpes verticales de más de 500 m. Su flora, con abundantes endemismos, es de gran interés geobotánico.",
+  "idioma": "es",
+  "titulo": "Turbón",
+  "url": "https://es.wikipedia.org/wiki/Turbón"
+ },
+ "pena-montanesa-o-picon-de-libro": {
+  "texto": "La Peña Montañesa es el nombre que recibe la región con mayor altitud de la Sierra Ferrera, en la comarca oscense del Sobrarbe, España. A menudo este nombre es empleado para denominar a toda la sierra de la que forma parte. Queda enmarcada, entre otros, en los términos municipales Laspuña y El Pueyo de Araguás, desde donde se divisan perfectamente sus impresionantes paredones. La denominación hace referencia a la estructura de esta sierra, formada en su mayor parte por una gran formación sedimentaria de caliza, profundamente socavada por relieve kárstico, que expone una pared de notable altitud, visible desde muchos ángulos en la comarca y los alrededores por su elevada prominencia.",
+  "idioma": "es",
+  "titulo": "Peña Montañesa",
+  "url": "https://es.wikipedia.org/wiki/Peña_Montañesa"
+ },
+ "cotiella": {
+  "texto": "Cotiella es un macizo calcáreo del Prepirineo aragonés. El mismo nombre designa el pico principal del macizo, de 2.912 m. Otras cumbres importantes del mismo son la Punta de Armeña (2822 m), la Punta de las Neiss (2751 m) o el Cotielleta (2731 m). Pese a no superar los 3.000 m de altura, el relativo aislamiento en que se alza la mole del Cotiella hace que se muestre como el coloso de la zona, ofreciendo grandes vistas desde su vértice. Se encuentra ubicado entre los cursos de los ríos Cinca y Ésera.",
+  "idioma": "es",
+  "titulo": "Cotiella",
+  "url": "https://es.wikipedia.org/wiki/Cotiella"
+ },
+ "tozal-de-sevill": {
+  "texto": "La sierra de Sevil es una elevación del nordeste de la península ibérica. Está situada en la provincia de Huesca. La sierra se encuentra rodeada por los ríos Vero e Isuela.",
+  "idioma": "es",
+  "titulo": "Sierra de Sevil",
+  "url": "https://es.wikipedia.org/wiki/Sierra_de_Sevil"
  }
 }

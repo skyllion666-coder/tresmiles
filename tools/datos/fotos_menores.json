@@ -2388,6 +2388,32 @@
   "propia": true,
   "pie": "Pico Soubirón, en una foto de su ruta."
  },
+ "frondella-sw": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "yivatosal",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/ibones-de-arriel-y-pico-de-la-frondella-sw-2992m-8-9-09-2023-163136703",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 359,
+  "ruta": "img/menores/frondella-sw.webp",
+  "propia": true,
+  "pie": "Vista tomada a unos 13 m de la cima, de una ruta de Wikiloc"
+ },
+ "tuc-de-la-feixa-de-la-vall": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Banzaifer",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/hiking-trails/reto-11ptc-tuc-de-mulleres-tuca-feixa-de-la-vall-desde-tunel-sur-de-viella-216757237",
+  "fuente": "Wikiloc",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/tuc-de-la-feixa-de-la-vall.webp",
+  "propia": true,
+  "pie": "Foto de la ruta tomada a unos 12 m de esta cima"
+ },
  "pointe-bazillac": {
   "archivo": "De Brèche de Roland en de 'Dedo'.jpg",
   "autor": "Frederik Vandaele",
@@ -2894,30 +2920,86 @@
   "h": 427,
   "ruta": "img/menores/pena-foratata.webp"
  },
- "frondella-sw": {
-  "archivo": "foto de la ruta de Wikiloc",
-  "autor": "yivatosal",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "https://www.wikiloc.com/mountaineering-trails/ibones-de-arriel-y-pico-de-la-frondella-sw-2992m-8-9-09-2023-163136703",
-  "fuente": "Wikiloc",
-  "w": 640,
-  "h": 359,
-  "ruta": "img/menores/frondella-sw.webp",
-  "propia": true,
-  "pie": "Vista tomada a unos 13 m de la cima, de una ruta de Wikiloc"
- },
- "tuc-de-la-feixa-de-la-vall": {
-  "archivo": "foto de la ruta de Wikiloc",
-  "autor": "Banzaifer",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "https://www.wikiloc.com/hiking-trails/reto-11ptc-tuc-de-mulleres-tuca-feixa-de-la-vall-desde-tunel-sur-de-viella-216757237",
-  "fuente": "Wikiloc",
+ "tozal-de-guara": {
+  "archivo": "Tozal de Guara 1.jpg",
+  "autor": "Mynomadicbackpack",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Tozal_de_Guara_1.jpg",
+  "fuente": "Wikimedia Commons",
   "w": 640,
   "h": 480,
-  "ruta": "img/menores/tuc-de-la-feixa-de-la-vall.webp",
-  "propia": true,
-  "pie": "Foto de la ruta tomada a unos 12 m de esta cima"
+  "ruta": "img/menores/tozal-de-guara.webp"
+ },
+ "pena-de-san-miguel": {
+  "archivo": "Salto de Roldán, au sommet de la Peña de San Miguel, 2009 (DSCF0012).JPG",
+  "autor": "En rouge",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_de_Rold%C3%A1n,_au_sommet_de_la_Pe%C3%B1a_de_San_Miguel,_2009_(DSCF0012).JPG",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/pena-de-san-miguel.webp",
+  "pie": "Cima de la Peña de San Miguel, con los restos del castillo de Sen."
+ },
+ "pena-de-l-aman": {
+  "archivo": "Salto de roldan.jpg",
+  "autor": "User. José Luis Núñez",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_de_roldan.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 425,
+  "ruta": "img/menores/pena-de-l-aman.webp",
+  "pie": "El Salto de Roldán: la Peña de San Miguel y la Peña de l'Amán, con el río Flumen entre las dos."
+ },
+ "mallo-san-jorge": {
+  "archivo": "Mallos san jorge2.jpg",
+  "autor": "Jvelillagil",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mallos_san_jorge2.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/mallo-san-jorge.webp",
+  "pie": "Mallos de San Jorge."
+ },
+ "el-turbon": {
+  "archivo": "El Turbón.jpg",
+  "autor": "Rockwurm",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:El_Turb%C3%B3n.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 425,
+  "ruta": "img/menores/el-turbon.webp"
+ },
+ "pena-montanesa-o-picon-de-libro": {
+  "archivo": "Peña Montañesa desde Ainsa.jpg",
+  "autor": "Papitu11",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pe%C3%B1a_Monta%C3%B1esa_desde_Ainsa.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/pena-montanesa-o-picon-de-libro.webp",
+  "pie": "La Peña Montañesa desde Aínsa."
+ },
+ "cotiella": {
+  "archivo": "Cotiella visto desde La Puebla de Fantova.jpg",
+  "autor": "Carlos González Sanz",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Cotiella_visto_desde_La_Puebla_de_Fantova.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 327,
+  "ruta": "img/menores/cotiella.webp",
+  "pie": "El Cotiella desde La Puebla de Fantova."
  }
 }

@@ -57,6 +57,9 @@ for pid in sys.argv[1:] or [k for k in idx if k in menores]:
             if pb - pa < 8 or qb - qa < 8: continue
             fa, fc = arbol[qa:qb, pa:pb].mean(), claro[qa:qb, pa:pb].mean()
             nuevo = cl
+            # cerca del borde de la pieza el cambio se aplica a salto (más probable hacia dentro) para que no se vea un cuadrado de árboles cortado en seco
+            borde = min(xa - x0, x0 + lado - xb, za - z0, z0 + lado - zb)
+            if ((gi * 73856093) ^ (gj * 19349663)) % 1000 / 1000 >= min(1, max(0, borde / 350)): continue
             if cl == 1 and (fc > 0.45 or fa < 0.12): nuevo = 4 if fc > 0.65 else 2   # solo quita: sombras y matorral denso se confunden con bosque
             if nuevo != cl: c[gj % CH, gi % CH] = nuevo; cambios[(ci, cj)] = True; n[f'{cl}>{nuevo}'] = n.get(f'{cl}>{nuevo}', 0) + 1
             dep[gj - gj0, gi - gi0] = {1: (30, 90, 40), 2: (150, 150, 60), 3: (120, 200, 90), 4: (220, 210, 190)}.get(nuevo, (60, 60, 160))

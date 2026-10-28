@@ -38,6 +38,10 @@ for i in range(0, len(ids), 40):
         if not autor or re.search(r'unknown|desconocido', autor, re.I): autor = 'Autor desconocido' if re.match('Public domain', lic, re.I) else ii.get('user') or 'Autor desconocido'   # sin autor escrito (y no es una foto antigua de dominio público): quien la subió
         meta[k] = {'archivo': sel[k], 'autor': autor[:90], 'licencia': lic.replace('Public domain', 'Dominio público').replace('No restrictions', 'Sin restricciones'),
                    'licencia_url': g('LicenseUrl'), 'pagina': ii['descriptionurl'], 'fuente': 'Wikimedia Commons', 'w': w, 'h': h, 'ruta': f'img/menores/{k}.webp'}
+# pies de foto escritos a mano (tools/datos/pies_menores.json); sin pie, build_menores pone el nombre de la cumbre
+pies = json.load(open(D('tools', 'datos', 'pies_menores.json'))) if os.path.exists(D('tools', 'datos', 'pies_menores.json')) else {}
+for k, v in pies.items():
+    if k in meta: meta[k]['pie'] = v
 json.dump(meta, open(D('tools', 'datos', 'fotos_menores.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 tam = sum(os.path.getsize(D('img', 'menores', f)) for f in os.listdir(D('img', 'menores')))
 print(len(meta), 'fotos;', tam // 1024, 'KB en total')
