@@ -4,6 +4,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { clone } from 'three/addons/utils/SkeletonUtils.js';
+import { EXAG } from './geo.js';
 
 const ENVERGADURA = 2.84;   // m del modelo (de punta a punta)
 const KM_REBECO = 42 * 1.275 * 0.75 * 0.75;   // un 25 % más pequeños que antes (18-10-2026) y otro 25 % (20-10-2026); los montañeros (ruta.js) van al doble
@@ -22,7 +23,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
     { esp: 'negro', env: 2.85 * X, rx: 3800, rz: 2600, vel: -0.026, fase: 4.0, alt: 1300, rot: 1.2, flap: 40 },
     ...(alimocheAqui ? [{ esp: 'alimoche', env: 1.6 * X, rx: 1700, rz: 1200, vel: 0.06, fase: 5.2, alt: 420, rot: -0.3, flap: 18, cx: -1500, cz: 900 }] : []),
   ];
-  const c = { x: centro.x, z: centro.z }, destino = { x: centro.x, z: centro.z };
+  const c = { x: centro.x, z: centro.z, e: 1 }, destino = { x: centro.x, z: centro.z, e: 1 };   // e: escala del vuelo (1 en los tresmiles; menos en cumbres bajas, ver setCentro)
   const aves = [];
   let listo = false;
 
@@ -248,9 +249,9 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
 
   const pos = (d, t) => {
     const ang = d.fase + t * d.vel;
-    const lx = Math.cos(ang) * d.rx, lz = Math.sin(ang) * d.rz, cs = Math.cos(d.rot), sn = Math.sin(d.rot);
-    const x = c.x + (d.cx ?? 0) + lx * cs - lz * sn, z = c.z + (d.cz ?? 0) + lx * sn + lz * cs;
-    return { x, z, y: geo.heightAt(x, z) + d.alt * (0.55 + 0.45 * Math.sin(t * 0.11 + d.fase * 1.7)) + 220 };
+    const r = 0.25 + 0.75 * c.e, lx = Math.cos(ang) * d.rx * r, lz = Math.sin(ang) * d.rz * r, cs = Math.cos(d.rot), sn = Math.sin(d.rot);
+    const x = c.x + (d.cx ?? 0) * c.e + lx * cs - lz * sn, z = c.z + (d.cz ?? 0) * c.e + lx * sn + lz * cs;   // en cumbres bajas la térmica de los leonados se acerca a la cumbre
+    return { x, z, y: geo.heightAt(x, z) + (d.alt * (0.55 + 0.45 * Math.sin(t * 0.11 + d.fase * 1.7)) + 220) * c.e };
   };
   const mira = new THREE.Vector3();
 
@@ -259,13 +260,18 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
     aves,
     rebecos,
     // x, z: cumbre; y (opcional): su altura, para repartir los rebecos por sus laderas
-    setCentro(x, z, y) { destino.x = x; destino.z = z; if (y != null) { anclaje = { x, z, y }; colocaRebecos(); } },
+    setCentro(x, z, y) {
+      destino.x = x; destino.z = z;
+      // en las cumbres bajas (Guara, Sierras Exteriores) la cámara se acerca más: los buitres vuelan más bajo y en círculos más cerrados; si no, quedan fuera de la vista
+      destino.e = y != null ? Math.min(1, Math.max(0.2, (y / EXAG - 800) / 1800)) : 1;
+      if (y != null) { anclaje = { x, z, y }; colocaRebecos(); }
+    },
     setAmenazas(fn) { amenazas = fn; },
     update(t, dt) {
       actualizaRebecos(dt, amenazas());
       if (!listo) return;
       const k = 1 - Math.exp(-dt * 0.35);
-      c.x += (destino.x - c.x) * k; c.z += (destino.z - c.z) * k;
+      c.x += (destino.x - c.x) * k; c.z += (destino.z - c.z) * k; c.e += (destino.e - c.e) * k;
       for (const a of aves) {
         const p = pos(a.d, t), q = pos(a.d, t + 0.4);
         a.g.position.set(p.x, p.y, p.z);
