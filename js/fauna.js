@@ -1,5 +1,6 @@
 // Fauna 3D hecha en Blender (tools/modelos/): quebrantahuesos y rebeco. Es una ilustración, no seguimiento real.
-// Los quebrantahuesos planean en círculos sobre la cumbre abierta y de vez en cuando dan unos aleteos lentos;
+// Los quebrantahuesos (modelo v3, tools/modelos/quebrantahuesos3.py) planean sobre la cumbre abierta, se inclinan y tuercen la cola en las curvas,
+// de vez en cuando aletean o pliegan las alas, y giran la cabeza hacia la cámara si pasa cerca;
 // los rebecos (un rebaño, dos grupitos y machos sueltos) se quedan quietos, se ponen alerta y pasean por las laderas pedregosas de esa cumbre.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -29,7 +30,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
 
   const glb = (u) => new Promise((res) => new GLTFLoader().load(u, res, undefined, () => res(null)));
   const modelos = {};
-  Promise.all([...new Set(defs.map((d) => d.esp))].map((e) => glb(`models/${e}-v2.glb?v=1`).then((g) => { modelos[e] = g; }))).then(() => {
+  Promise.all([...new Set(defs.map((d) => d.esp))].map((e) => glb(e === 'quebrantahuesos' ? 'models/quebrantahuesos-v3.glb?v=1' : `models/${e}-v2.glb?v=1`).then((g) => { modelos[e] = g; }))).then(() => {
     for (const d of defs) {
       const gltf = modelos[d.esp]; if (!gltf) continue;   // sin modelo: las aves sencillas de vida.js siguen volando
       const obj = clone(gltf.scene);
@@ -40,7 +41,9 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
       acc.Planeo.play(); acc.Planeo.time = Math.random() * acc.Planeo.getClip().duration;
       acc.Aleteo.setEffectiveWeight(0).play();
-      aves.push({ g, d, esp: d.esp, mixer, acc, aleteando: false, proximo: d.flap });
+      let cuello = null; obj.traverse((o) => { if (o.isBone && o.name === 'neck') cuello = o; });
+      for (const n of ['ViraIzq', 'ViraDer', 'Plegado']) acc[n]?.setEffectiveWeight(0).play();
+      aves.push({ g, d, esp: d.esp, mixer, acc, cuello, aleteando: false, proximo: d.flap, plegado: 0, proxPleg: 30 + Math.random() * 40, giro: 0, mira: 0 });
     }
     listo = aves.length > 0;
   });
@@ -278,17 +281,48 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         const lejos = camera.position.distanceToSquared(a.g.position) > 45000 * 45000;
         a.g.visible = !lejos; if (lejos) continue;
         mira.set(q.x - p.x, q.y - p.y, q.z - p.z);
-        a.g.rotation.set(0, Math.atan2(mira.x, mira.z), 0, 'YXZ');
+        const rumbo = Math.atan2(mira.x, mira.z);
+        // giro (rad/s) a partir del rumbo de ahora y el de dentro de 0,4 s: inclinación del cuerpo y mezcla de las posturas de viraje
+        const q2 = pos(a.d, t + 0.8), r2 = Math.atan2(q2.x - q.x, q2.z - q.z);
+        let dr = r2 - rumbo; dr -= Math.round(dr / (2 * Math.PI)) * 2 * Math.PI;
+        a.giro += (dr / 0.4 - a.giro) * Math.min(1, dt * 1.5);
+        const banco = Math.max(-0.6, Math.min(0.6, a.giro * 4.5));
+        a.g.rotation.set(0, rumbo, 0, 'YXZ');
         a.g.rotateX(-Math.asin(mira.y / mira.length()) * 0.6);
-        a.g.rotateZ(-Math.sign(a.d.vel) * 0.30);
+        a.g.rotateZ(a.acc.ViraIzq ? -banco : -Math.sign(a.d.vel) * 0.30);
         // cada cierto tiempo, unos aleteos lentos; el resto del vuelo es planeo
-        if (t > a.proximo) {
+        if (t > a.proximo && a.plegado <= 0) {
           a.aleteando = !a.aleteando;
           const [de, a2] = a.aleteando ? ['Planeo', 'Aleteo'] : ['Aleteo', 'Planeo'];
           a.acc[de].crossFadeTo(a.acc[a2], 0.9, false); a.acc[a2].setEffectiveWeight(1).play();
           a.proximo = t + (a.aleteando ? 6.6 : 25 + Math.random() * 25);
         }
+        if (a.acc.ViraIzq) {
+          // alas plegadas unos segundos de vez en cuando (cuando no aletea); las posturas de viraje se mezclan con el planeo según lo cerrado del giro
+          if (!a.aleteando && t > a.proxPleg) { a.plegado = 7 + Math.random() * 4; a.proxPleg = t + 45 + Math.random() * 45; }
+          a.plegado -= dt;
+          const wp = a.wp = (a.wp ?? 0) + ((a.plegado > 0 ? 1 : 0) - (a.wp ?? 0)) * Math.min(1, dt * 0.8);
+          const v = Math.min(1, Math.abs(banco) / 0.45) * (1 - wp), libre = a.aleteando ? 0 : 1;
+          a.acc.ViraIzq.setEffectiveWeight(libre * v * (banco > 0 ? 1 : 0));
+          a.acc.ViraDer.setEffectiveWeight(libre * v * (banco < 0 ? 1 : 0));
+          a.acc.Plegado.setEffectiveWeight(libre * wp);
+          if (!a.aleteando) a.acc.Planeo.setEffectiveWeight(Math.max(0, 1 - v - wp));
+        }
         a.mixer.update(dt);
+        if (a.cuello) {
+          // si la cámara pasa cerca, gira el cuello hacia ella (hasta ±60°)
+          const dc = camera.position.distanceTo(a.g.position), objetivo = dc < 2500 ? 1 : 0;
+          a.mira += (objetivo - a.mira) * Math.min(1, dt * 1.2);
+          if (a.mira > 0.01) {
+            a.g.updateMatrixWorld(true);
+            const loc = a.g.worldToLocal(camera.position.clone());
+            const yaw = Math.max(-1.05, Math.min(1.05, Math.atan2(loc.x, loc.z))) * a.mira;
+            const eje = new THREE.Vector3(0, 1, 0).applyQuaternion(a.g.getWorldQuaternion(new THREE.Quaternion()));
+            const qp = a.cuello.parent.getWorldQuaternion(new THREE.Quaternion());
+            const ql = qp.clone().invert().multiply(new THREE.Quaternion().setFromAxisAngle(eje, yaw)).multiply(qp);
+            a.cuello.quaternion.premultiply(ql);
+          }
+        }
       }
     },
   };

@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Vista quebrantahuesos</title>
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.js", "three/addons/": "../vendor/three/" } }</script>
+<style>body{margin:0;background:#9fb3c4;font:13px sans-serif}#et{position:absolute;top:8px;left:0;width:1200px;display:flex;justify-content:space-around;color:#223}</style></head><body>
+<div id="et"><span>Planeo</span><span>Aleteo</span><span>ViraIzq</span><span>ViraDer</span><span>Plegado</span></div>
+<script type="module">
+// Herramienta de desarrollo: el quebrantahuesos v3 (tools/modelos/quebrantahuesos3.py) con cada animación, visto desde abajo (fila de arriba) y desde atrás (fila de abajo).
+// ?t=segundos (reloj simulado, imagen reproducible) · ?vivo para verlo en movimiento
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { clone } from 'three/addons/utils/SkeletonUtils.js';
+const q = new URLSearchParams(location.search);
+const r = new THREE.WebGLRenderer({ antialias: true }); r.setSize(1200, 640); document.body.appendChild(r.domElement);
+const sc = new THREE.Scene(); sc.background = new THREE.Color('#9fb3c4');
+sc.add(new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 2.2)); const s = new THREE.DirectionalLight(0xffffff, 2.2); s.position.set(2, 6, 3); sc.add(s);
+const cam = new THREE.OrthographicCamera(-8.6, 8.6, 4.6, -4.6, 0.1, 100); cam.position.set(0, 0, 30); cam.lookAt(0, 0, 0);
+const gltf = await new GLTFLoader().loadAsync('../models/quebrantahuesos-v3.glb?v=' + Date.now());
+const CLIPS = ['Planeo', 'Aleteo', 'ViraIzq', 'ViraDer', 'Plegado'], mix = [];
+CLIPS.forEach((n, i) => {
+  for (const fila of [0, 1]) {
+    const o = clone(gltf.scene); o.traverse((m) => { if (m.isMesh) m.frustumCulled = false; });
+    const g = new THREE.Group(); g.add(o); g.position.set(-6.9 + i * 3.45, fila ? -2.2 : 2.0, 0);
+    if (fila === 0) g.rotation.set(Math.PI / 2, 0, Math.PI); else g.rotation.set(0.35, Math.PI, 0);   // arriba: visto desde abajo · abajo: desde atrás y algo desde arriba
+    sc.add(g);
+    const m = new THREE.AnimationMixer(o); m.clipAction(gltf.animations.find((a) => a.name === n)).play(); mix.push(m);
+  }
+});
+const t = +(q.get('t') ?? 0.5);
+for (const m of mix) m.update(t);
+window.THREE = THREE; r.render(sc, cam); document.title = 'ok';
+if (q.has('vivo')) { let a = performance.now(); r.setAnimationLoop((n) => { const dt = (n - a) / 1000; a = n; for (const m of mix) m.update(dt); r.render(sc, cam); }); }
+</script></body></html>
