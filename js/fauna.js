@@ -35,15 +35,16 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       const gltf = modelos[d.esp]; if (!gltf) continue;   // sin modelo: las aves sencillas de vida.js siguen volando
       const obj = clone(gltf.scene);
       obj.scale.setScalar(d.env / ENVERGADURA);
-      obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = true; } });
+      obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = d.esp !== 'quebrantahuesos'; } });   // el modelo v3 es de sombreado suave
       const g = new THREE.Group(); g.add(obj); g.visible = false; scene.add(g);
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
+      // todas las animaciones suenan siempre y solo cambian sus pesos (crossFadeTo deja la acción apagada al acabar y ya no vuelve)
       acc.Planeo.play(); acc.Planeo.time = Math.random() * acc.Planeo.getClip().duration;
       acc.Aleteo.setEffectiveWeight(0).play();
       let cuello = null; obj.traverse((o) => { if (o.isBone && o.name === 'neck') cuello = o; });
       for (const n of ['ViraIzq', 'ViraDer', 'Plegado']) acc[n]?.setEffectiveWeight(0).play();
-      aves.push({ g, d, esp: d.esp, mixer, acc, cuello, aleteando: false, proximo: d.flap, plegado: 0, proxPleg: 30 + Math.random() * 40, giro: 0, mira: 0 });
+      aves.push({ g, d, esp: d.esp, mixer, acc, cuello, cuello0: cuello && cuello.quaternion.clone(), yaw: 0, aleteando: false, fa: 0, proximo: d.flap, plegado: 0, proxPleg: 30 + Math.random() * 40, giro: 0, mira: 0 });
     }
     listo = aves.length > 0;
   });
@@ -293,21 +294,25 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
         // cada cierto tiempo, unos aleteos lentos; el resto del vuelo es planeo
         if (t > a.proximo && a.plegado <= 0) {
           a.aleteando = !a.aleteando;
-          const [de, a2] = a.aleteando ? ['Planeo', 'Aleteo'] : ['Aleteo', 'Planeo'];
-          a.acc[de].crossFadeTo(a.acc[a2], 0.9, false); a.acc[a2].setEffectiveWeight(1).play();
+          if (a.aleteando) a.acc.Aleteo.time = 0;
           a.proximo = t + (a.aleteando ? 6.6 : 25 + Math.random() * 25);
         }
-        if (a.acc.ViraIzq) {
+        a.fa += ((a.aleteando ? 1 : 0) - a.fa) * Math.min(1, dt * 2.5);   // paso suave entre planeo y aleteo (~1 s)
+        const libre = 1 - a.fa;
+        a.acc.Aleteo.setEffectiveWeight(a.fa);
+        if (!a.acc.ViraIzq) a.acc.Planeo.setEffectiveWeight(libre);
+        else {
           // alas plegadas unos segundos de vez en cuando (cuando no aletea); las posturas de viraje se mezclan con el planeo según lo cerrado del giro
           if (!a.aleteando && t > a.proxPleg) { a.plegado = 7 + Math.random() * 4; a.proxPleg = t + 45 + Math.random() * 45; }
           a.plegado -= dt;
           const wp = a.wp = (a.wp ?? 0) + ((a.plegado > 0 ? 1 : 0) - (a.wp ?? 0)) * Math.min(1, dt * 0.8);
-          const v = Math.min(1, Math.abs(banco) / 0.45) * (1 - wp), libre = a.aleteando ? 0 : 1;
+          const v = Math.min(1, Math.abs(banco) / 0.45) * (1 - wp);
           a.acc.ViraIzq.setEffectiveWeight(libre * v * (banco > 0 ? 1 : 0));
           a.acc.ViraDer.setEffectiveWeight(libre * v * (banco < 0 ? 1 : 0));
           a.acc.Plegado.setEffectiveWeight(libre * wp);
-          if (!a.aleteando) a.acc.Planeo.setEffectiveWeight(Math.max(0, 1 - v - wp));
+          a.acc.Planeo.setEffectiveWeight(libre * Math.max(0, 1 - v - wp));
         }
+        if (a.cuello) a.cuello.quaternion.copy(a.cuello0);   // no todas las animaciones mueven el cuello: sin esto el giro hacia la cámara se acumula
         a.mixer.update(dt);
         if (a.cuello) {
           // si la cámara pasa cerca, gira el cuello hacia ella (hasta ±60°)
@@ -316,7 +321,10 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
           if (a.mira > 0.01) {
             a.g.updateMatrixWorld(true);
             const loc = a.g.worldToLocal(camera.position.clone());
-            const yaw = Math.max(-1.05, Math.min(1.05, Math.atan2(loc.x, loc.z))) * a.mira;
+            // cámara detrás (más de 110°): no la sigue, vuelve al frente en vez de saltar de un lado al otro
+            const ang = Math.atan2(loc.x, loc.z), obj = Math.abs(ang) > 1.9 ? 0 : Math.max(-1.05, Math.min(1.05, ang));
+            a.yaw += (obj - a.yaw) * Math.min(1, dt * 1.5);
+            const yaw = a.yaw * a.mira;
             const eje = new THREE.Vector3(0, 1, 0).applyQuaternion(a.g.getWorldQuaternion(new THREE.Quaternion()));
             const qp = a.cuello.parent.getWorldQuaternion(new THREE.Quaternion());
             const ql = qp.clone().invert().multiply(new THREE.Quaternion().setFromAxisAngle(eje, yaw)).multiply(qp);
