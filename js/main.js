@@ -16,7 +16,7 @@ import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
 import { t, EN_INGLES } from './i18n.js?v=2';
-import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=2';
+import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

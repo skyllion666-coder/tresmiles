@@ -53,5 +53,6 @@ export function reglaCampo(k, s) {
   if (k === 'pie' && (m = /^(.+), visto desde la ruta\.$/.exec(s))) return `${m[1]}, seen from the route.`;
   if (k === 'pie' && (m = /^Vista (?:desde|de) (?:la cima del |la cima de la |el |la )?(.+)\.$/.exec(s)) && !/[,;]/.test(m[1])) return `View from ${m[1]}.`;
   if (k === 'enlace' && (m = /^Ruta de (.+) en Wikiloc$/.exec(s))) return `Route by ${m[1]} on Wikiloc`;
+  if (k === 'enlace' && (m = /^Ver la ruta en Wikiloc: (.+)$/.exec(s))) return `See the route on Wikiloc: ${m[1]}`;
   return s;
 }

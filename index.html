@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 337;
+  window.WEB_V = 338;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -128,9 +128,9 @@
   <!-- la cuenta de GoatCounter es compartida con otras webs: Tresmiles se apunta siempre como «/tresmiles» (sin ?… ni la dirección), para poder contarla aparte -->
   <script>window.goatcounter = { path: () => '/tresmiles' };</script>
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
-  <script>window.DATOS_V = 211;</script>
+  <script>window.DATOS_V = 212;</script>
   <script type="module" src="js/i18n.js?v=2"></script>
-  <script type="module" src="js/main.js?v=337"></script>
+  <script type="module" src="js/main.js?v=338"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>
