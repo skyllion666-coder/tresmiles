@@ -2541,5 +2541,25 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Mallos_San_Jorge.jpg",
   "w": 800,
   "h": 600
+ },
+ "g-guara-cima": {
+  "archivo": "01_Tozal_de_Guara_1_Tossal_6304r_Adrian_Sediles_CC-BY-SA.jpg",
+  "autor": "Adrian Sediles",
+  "licencia": "CC BY-SA",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pagina": "",
+  "fuente": "Wikimedia Commons",
+  "w": 800,
+  "h": 533
+ },
+ "g-guara-nocito": {
+  "archivo": "01_Tozal_de_Guara_2_desde_Nocito_Adrian_Sediles_Embi_CC-BY-SA-4.0.jpg",
+  "autor": "Adrian Sediles Embi",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "pagina": "",
+  "fuente": "Wikimedia Commons",
+  "w": 800,
+  "h": 445
  }
 }

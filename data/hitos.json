@@ -4522,5 +4522,33 @@
   ],
   "foto": "g-mallos",
   "pie": "Los mallos de conglomerado, cerca del embalse de Vadiello."
+ },
+ {
+  "id": "g-guara-cima",
+  "nombre": "Cima del Tozal de Guara",
+  "tipo": "lugar",
+  "lat": 42.2858,
+  "lon": -0.23,
+  "nota": "Vista general de la cima del Tozal de Guara.",
+  "pico": "tozal-de-guara",
+  "picos": [
+   "tozal-de-guara"
+  ],
+  "foto": "g-guara-cima",
+  "pie": "Vista general de la cima del Tozal de Guara."
+ },
+ {
+  "id": "g-guara-nocito",
+  "nombre": "El Tozal de Guara desde Nocito",
+  "tipo": "lugar",
+  "lat": 42.32132,
+  "lon": -0.25296,
+  "nota": "El Tozal de Guara visto desde Nocito.",
+  "pico": "tozal-de-guara",
+  "picos": [
+   "tozal-de-guara"
+  ],
+  "foto": "g-guara-nocito",
+  "pie": "El Tozal de Guara visto desde Nocito."
  }
 ]
