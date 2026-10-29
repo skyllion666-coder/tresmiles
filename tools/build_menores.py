@@ -45,6 +45,8 @@ slug = lambda s: re.sub(r'[^a-z0-9]+', '-', unicodedata.normalize('NFD', s.lower
 RIDS = D('tools', 'datos', 'ids_menores.json')
 fijos = json.load(open(RIDS, encoding='utf-8')) if os.path.exists(RIDS) else {}
 ids = {p['id'] for p in data['picos']} | set(fijos.values())
+# la misma cumbre con otro nombre en OSM (se queda la otra entrada): Pico de l'Aguila = Pico del Águila; Gratal = Tozal de Gratal
+DUPLICADOS = {("Pico de l'Aguila", 1611), ('Gratal', 1543)}
 out, vistos = [], []
 for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
     if not ((1000 if enGuara(lon, lat) else 2000) <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
@@ -53,6 +55,7 @@ for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
     if not ARAGON.contains(pt) and limite > 300: continue
     if any(km(lon, lat, p['lon'], p['lat']) < 0.1 for p in data['picos']): continue   # ya es un tresmil del inventario
     if any(n == nombre and km(lon, lat, a, b) < 0.6 for n, a, b in vistos): continue   # repetido
+    if (nombre, alt) in DUPLICADOS: continue
     vistos.append((nombre, lon, lat))
     frontera = limite < 300 and FRANCIA.distance(pt) * KX < 1.5
     situacion = 'Frontera Aragón–Francia' if frontera else ('Límite de Aragón' if limite < 300 else 'Aragón')
