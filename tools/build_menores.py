@@ -109,6 +109,7 @@ nr = D('tools', 'datos', 'notas_menores.json')
 notas = json.load(open(nr)) if os.path.exists(nr) else {}
 for p in out:
     if p['id'] in notas: p.update(notas[p['id']])
+    if p.get('ruta'): p['descripcion'] = p['descripcion'].replace('Ficha sencilla: sin ruta ni recorrido en el mapa.', 'Con la ruta normal descrita abajo; sin recorrido dibujado en el mapa.')
 # fotos pequeñas (tools/fotos_menores.py): la clave en `fotos` es «m-<id>» para no chocar con las de los tresmiles
 ruta_fotos = D('tools', 'datos', 'fotos_menores.json')
 fotos = json.load(open(ruta_fotos)) if os.path.exists(ruta_fotos) else {}

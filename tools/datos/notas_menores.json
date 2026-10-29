@@ -1637,7 +1637,10 @@
   "ruta": "Esta cumbre aparece en la ruta «RETOS: ICGC-FEEC-42TCC-11PTC. Tuc de Mulleres-Tuca Feixa de la Vall. Desde T&uacute;nel Sur de Viella.», de Banzaifer en Wikiloc. En el enlace de abajo están su recorrido completo y sus fotos."
  },
  "tozal-de-guara": {
-  "curiosidad": "Da nombre a toda la sierra y se ve desde la ciudad de Huesca. Entre su cima y el río Alcanadre, que corre cerca a unos 430 m, hay más de 1.600 m de desnivel."
+  "curiosidad": "Da nombre a toda la sierra y se ve desde la ciudad de Huesca. Entre su cima y el río Alcanadre, que corre cerca a unos 430 m, hay más de 1.600 m de desnivel.",
+  "ruta": "La subida más clásica del parque natural (sendero S-5 de la Red Natural de Aragón). Desde Santa Cilia de Panzano (743 m): pista hacia el cementerio y, por senda, el refugio y las balsas de Fondarrés (1.538 m); después el collado de Vallemona (1.812 m) y la cresta hasta la cima. También se sube desde Nocito (922 m) por el barranco de la Pillera y el collado de Petreñales (1.558 m), desde donde un sendero señalizado rodea la cima por la derecha. Sin dificultad técnica, pero larga y sin agua segura.",
+  "desnivel": "Unos 1.300 m · 8–9 h ida y vuelta",
+  "acceso": "Santa Cilia de Panzano o Nocito"
  },
  "pena-de-san-miguel": {
   "curiosidad": "En lo alto están las ruinas del castillo de Sen, una fortaleza musulmana citada ya en el siglo X: restos de dos torres, dos grandes aljibes, una pequeña iglesia y viviendas. El rey García Sánchez I de Pamplona la tomó en el año 941 y al año siguiente la recuperó el señor musulmán de Zaragoza.",
@@ -1662,12 +1665,42 @@
   "curiosidad": "En el macizo está el ibón de Plan o Basa de la Mora: cuenta la tradición que la noche de San Juan se aparece en él una princesa mora a los puros de corazón. En días despejados el Cotiella se ve desde la ciudad de Lérida."
  },
  "tozal-de-gratal": {
-  "curiosidad": "El punto más alto de la sierra es el Pico de la Calma (1.581 m), sobre el embalse de Arguis; la Peña Gratal (1.543 m), en el centro, es vértice geodésico."
+  "curiosidad": "El punto más alto de la sierra es el Pico de la Calma (1.581 m), sobre el embalse de Arguis; la Peña Gratal (1.543 m), en el centro, es vértice geodésico.",
+  "ruta": "Circular desde la presa de Arguis: se sube por la ladera norte hasta la cima y se vuelve por la cresta de la sierra. Dificultad moderada (T2).",
+  "desnivel": "Unos 600–840 m · 14–15 km, 5–6 h",
+  "acceso": "Arguis"
  },
  "tozal-de-sevill": {
   "curiosidad": "Su nombre viene de Sevil, un pueblo del municipio de Adahuesca que a mediados del siglo XIX ya estaba despoblado."
  },
  "pico-del-aguila": {
-  "curiosidad": "Es el punto más alto del municipio de Arguis. Al oeste, a sus pies, está el embalse de Arguis, el más antiguo de Aragón."
+  "curiosidad": "Es el punto más alto del municipio de Arguis. Al oeste, a sus pies, está el embalse de Arguis, el más antiguo de Aragón.",
+  "ruta": "Desde Arguis (Centro de Interpretación o embalse) por pista y sendero hasta la cima, coronada de antenas. Sin dificultad técnica. También se llega en coche por la pista de servicio desde el puerto de Monrepós.",
+  "desnivel": "Unos 600 m · 9–10 km ida y vuelta",
+  "acceso": "Arguis"
+ },
+ "tozal-de-cubilars": {
+  "ruta": "Desde Santa Cilia de Panzano por el mismo camino que al Tozal de Guara hasta pasadas las balsas de Fondarrés; en el desvío al collado de Cubilars, un sendero a la derecha lleva a la cima, fácil de reconocer por las antenas.",
+  "desnivel": "Unos 1.300 m · 7 h 30 ida y vuelta",
+  "acceso": "Santa Cilia de Panzano",
+  "curiosidad": "También se le llama Tozal de los Buitres. Las antenas de su cima se ven desde buena parte del Somontano."
+ },
+ "punta-vallemona": {
+  "ruta": "Se alza junto al collado de Vallemona (1.812 m), paso del camino de Santa Cilia de Panzano al Tozal de Guara: desde el collado se sube a la cima sin camino marcado.",
+  "acceso": "Santa Cilia de Panzano"
+ },
+ "cabezo-de-guara": {
+  "ruta": "Se suele subir desde Pedruel, en una circular que pasa por la cima y por el pueblo deshabitado de Bara.",
+  "acceso": "Pedruel"
+ },
+ "la-gabardiella": {
+  "ruta": "Desde el puente de Lúsera, cerca de Belsué, la subida más directa va por la cara norte. Hay una circular que encadena la Punta Sur, la Gabardiella y el Pico de Luna y baja por los collados de la Luna y de las Paúles hasta la presa de Belsué; sus bajadas son técnicas.",
+  "desnivel": "Unos 1.000 m",
+  "acceso": "Puente de Lúsera (Belsué)",
+  "curiosidad": "Da nombre a la sierra de Gabardiella, el extremo occidental del parque natural. Desde la cima se ve el Pirineo y la Hoya de Huesca."
+ },
+ "pico-de-luna": {
+  "ruta": "Se sube en la circular de la Gabardiella desde el puente de Lúsera (Belsué): tras la Gabardiella se sigue la cresta hasta el Pico de Luna y se baja por los collados de la Luna y de las Paúles. Bajadas técnicas.",
+  "acceso": "Puente de Lúsera (Belsué)"
  }
 }
