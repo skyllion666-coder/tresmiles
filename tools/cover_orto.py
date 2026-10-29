@@ -8,7 +8,7 @@ Solo toca las celdas cuyo centro cae dentro de alguna de las piezas indicadas; g
 (la primera vez) y parte siempre de ella, así que se puede repetir. Sube `meta.vcover` para renovar la caché (js/terrain.js pide cover/…?v=).
 Sin argumentos usa todas las piezas de cumbres de menos de 3.000 (data/menores.json); con ids, solo esas (y las demás vuelven al original: pasar siempre todas).
 Uso: ~/venv-tresmiles/bin/python tools/cover_orto.py [id ...]   (DEPURA=1 guarda /tmp/cover_orto_<id>.png con la clasificación)"""
-import gzip, json, math, os, shutil, sys
+import gzip, json, math, os, shutil, subprocess, sys, time
 import numpy as np
 from PIL import Image
 
@@ -31,40 +31,67 @@ def cover(i, j):
         covers[k] = np.frombuffer(gzip.open(o).read(), np.uint8).reshape(CH, CH).copy()
     return covers[k]
 
-menores = {p['id'] for p in json.load(open(os.path.join(ROOT, 'data', 'menores.json')))['picos']}
-for pid in sys.argv[1:] or [k for k in idx if k in menores]:
-    d = idx.get(pid)
-    if not d or 'orto' not in d: print(pid, 'sin pieza u ortofoto'); continue
-    x0, z0 = d['x0'], d['z0']; lado = (d['n'] - 1) * d['paso']
-    im = np.asarray(Image.open(T('cumbres', d['orto'])).convert('RGB'), np.float32); N = im.shape[0]
+def corrige(nom, im, x0, z0, lx, lz, marco=None):
+    """Corrige las celdas cuyo centro cae en el rectángulo [x0, x0+lx] × [z0, z0+lz] del mundo, que la imagen `im` cubre entera.
+    `marco` (x0, z0, lx, lz): rectángulo cuyo borde se difumina (por defecto el de la imagen; en las teselas de la zona, el de toda la zona)."""
+    mx0, mz0, mlx, mlz = marco or (x0, z0, lx, lz)
+    im = np.asarray(im.convert('RGB'), np.float32); NZ, NX = im.shape[:2]
     R, G, B = im[..., 0], im[..., 1], im[..., 2]; L = 0.3 * R + 0.59 * G + 0.11 * B
     arbol = (L < 65) & (G >= R * 0.95)                            # copa: verde muy oscuro (pino, encina, haya); la foto es de poco contraste
     claro = L > 110                                               # roca o suelo claro
-    # celdas de la cobertura cuyo centro está en la pieza
-    lon_a, lon_b = meta['lon0'] + (x0 + W / 2) / mLon, meta['lon0'] + (x0 + lado + W / 2) / mLon
-    lat_a, lat_b = meta['lat0'] - (z0 + lado + Dd / 2) / mLat, meta['lat0'] - (z0 + Dd / 2) / mLat
+    lon_a, lon_b = meta['lon0'] + (x0 + W / 2) / mLon, meta['lon0'] + (x0 + lx + W / 2) / mLon
+    lat_a, lat_b = meta['lat0'] - (z0 + lz + Dd / 2) / mLat, meta['lat0'] - (z0 + Dd / 2) / mLat
     gi0, gi1 = int(math.ceil((lon_a - meta['lon0']) / meta['step'] - 0.5)), int((lon_b - meta['lon0']) / meta['step'] - 0.5)
     gj0, gj1 = int(math.ceil((meta['lat0'] - lat_b) / meta['step'] - 0.5)), int((meta['lat0'] - lat_a) / meta['step'] - 0.5)
     dep = np.zeros((gj1 - gj0 + 1, gi1 - gi0 + 1, 3), np.uint8); n = {}
     for gj in range(gj0, gj1 + 1):
         for gi in range(gi0, gi1 + 1):
             ci, cj = gi // CH, gj // CH; c = cover(ci, cj); cl = int(c[gj % CH, gi % CH])
-            # la celda en píxeles de la ortofoto
+            # la celda en píxeles de la imagen
             xa, za = toXZ(meta['lon0'] + gi * meta['step'], meta['lat0'] - gj * meta['step'])
             xb, zb = toXZ(meta['lon0'] + (gi + 1) * meta['step'], meta['lat0'] - (gj + 1) * meta['step'])
-            pa, pb = int(max(0, (xa - x0) / lado * N)), int(min(N, (xb - x0) / lado * N))
-            qa, qb = int(max(0, (za - z0) / lado * N)), int(min(N, (zb - z0) / lado * N))
-            if pb - pa < 8 or qb - qa < 8: continue
+            pa, pb = int(max(0, (xa - x0) / lx * NX)), int(min(NX, (xb - x0) / lx * NX))
+            qa, qb = int(max(0, (za - z0) / lz * NZ)), int(min(NZ, (zb - z0) / lz * NZ))
+            if pb - pa < 3 or qb - qa < 3: continue
             fa, fc = arbol[qa:qb, pa:pb].mean(), claro[qa:qb, pa:pb].mean()
             nuevo = cl
-            # cerca del borde de la pieza el cambio se aplica a salto (más probable hacia dentro) para que no se vea un cuadrado de árboles cortado en seco
-            borde = min(xa - x0, x0 + lado - xb, za - z0, z0 + lado - zb)
+            # cerca del borde el cambio se aplica a salto (más probable hacia dentro) para que no se vea un cuadrado de árboles cortado en seco
+            borde = min(xa - mx0, mx0 + mlx - xb, za - mz0, mz0 + mlz - zb)
             if ((gi * 73856093) ^ (gj * 19349663)) % 1000 / 1000 >= min(1, max(0, borde / 350)): continue
             if cl == 1 and (fc > 0.45 or fa < 0.12): nuevo = 4 if fc > 0.65 else 2   # solo quita: sombras y matorral denso se confunden con bosque
             if nuevo != cl: c[gj % CH, gi % CH] = nuevo; cambios[(ci, cj)] = True; n[f'{cl}>{nuevo}'] = n.get(f'{cl}>{nuevo}', 0) + 1
             dep[gj - gj0, gi - gi0] = {1: (30, 90, 40), 2: (150, 150, 60), 3: (120, 200, 90), 4: (220, 210, 190)}.get(nuevo, (60, 60, 160))
-    print(pid, 'cambios', n or 'ninguno', flush=True)
-    if os.environ.get('DEPURA'): Image.fromarray(dep).resize((dep.shape[1] * 12, dep.shape[0] * 12), Image.NEAREST).save(f'/tmp/cover_orto_{pid}.png')
+    print(nom, 'cambios', n or 'ninguno', flush=True)
+    if os.environ.get('DEPURA'): Image.fromarray(dep).resize((dep.shape[1] * 4, dep.shape[0] * 4), Image.NEAREST).save(f'/tmp/cover_orto_{nom}.png')
+
+# 1) toda la Sierra de Guara y las sierras exteriores con la ortofoto del PNOA a ~3 m/px (teselas guardadas en tools/datos/orto_zona/, no se publican)
+ZONA = (-0.52, 42.20, 0.04, 42.34); TL, TB = 0.07, 0.05   # lon0, lat0, lon1, lat1 y tamaño de tesela en grados
+os.makedirs(os.path.join(ROOT, 'tools', 'datos', 'orto_zona'), exist_ok=True)
+_a, _b = toXZ(ZONA[0], ZONA[3]), toXZ(ZONA[2], ZONA[1]); MARCO = (_a[0], _a[1], _b[0] - _a[0], _b[1] - _a[1])
+lon = ZONA[0]
+while lon < ZONA[2] - 1e-9:
+    lat = ZONA[1]
+    while lat < ZONA[3] - 1e-9:
+        f = os.path.join(ROOT, 'tools', 'datos', 'orto_zona', f'z_{lon:.2f}_{lat:.2f}.jpg')
+        if not os.path.exists(f) or os.path.getsize(f) < 50000:
+            url = ('https://www.ign.es/wms-inspire/pnoa-ma?service=WMS&version=1.3.0&request=GetMap&layers=OI.OrthoimageCoverage&styles=&crs=CRS:84'
+                   f'&bbox={lon},{lat},{lon + TL},{lat + TB}&width=2048&height=1984&format=image/jpeg')
+            for k in range(6):
+                if subprocess.run(['curl', '-s', '-m', '300', '-o', f, '-w', '%{http_code}', url], capture_output=True, text=True).stdout == '200' and os.path.getsize(f) > 50000: break
+                time.sleep(10 * (k + 1))
+            else: print('sin tesela', f); lat += TB; continue
+        xa, za = toXZ(lon, lat + TB); xb, zb = toXZ(lon + TL, lat)
+        corrige(f'zona_{lon:.2f}_{lat:.2f}', Image.open(f), xa, za, xb - xa, zb - za, MARCO)
+        lat += TB
+    lon += TL
+
+# 2) las piezas de cumbres, con su ortofoto de ~0,4 m/px (manda sobre la de la zona)
+menores = {p['id'] for p in json.load(open(os.path.join(ROOT, 'data', 'menores.json')))['picos']}
+for pid in sys.argv[1:] or [k for k in idx if k in menores]:
+    d = idx.get(pid)
+    if not d or 'orto' not in d: print(pid, 'sin pieza u ortofoto'); continue
+    lado = (d['n'] - 1) * d['paso']
+    corrige(pid, Image.open(T('cumbres', d['orto'])), d['x0'], d['z0'], lado, lado)
 
 for (ci, cj) in cambios:
     gzip.open(T('cover', f'c_{ci}_{cj}.bin.gz'), 'wb', 9).write(covers[(ci, cj)].tobytes())
