@@ -1644,7 +1644,10 @@
   "enlace": {
    "url": "https://www.wikiloc.com/hiking-trails/tozal-de-guara-2077-m-desde-santa-cilia-de-panzano-17330284",
    "texto": "Ver la ruta en Wikiloc: Tozal de Guara (2.077 m) desde Santa Cilia de Panzano"
-  }
+  },
+  "rutas": [
+   "tozal-guara-santa-cilia"
+  ]
  },
  "pena-de-san-miguel": {
   "curiosidad": "En lo alto están las ruinas del castillo de Sen, una fortaleza musulmana citada ya en el siglo X: restos de dos torres, dos grandes aljibes, una pequeña iglesia y viviendas. El rey García Sánchez I de Pamplona la tomó en el año 941 y al año siguiente la recuperó el señor musulmán de Zaragoza.",

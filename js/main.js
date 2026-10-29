@@ -10,12 +10,12 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=21';
 import { crearFauna } from './fauna.js?v=14';
-import { cargarRuta, crearRuta } from './ruta.js?v=50';
+import { cargarRuta, crearRuta } from './ruta.js?v=51';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
-import { t, EN_INGLES } from './i18n.js?v=2';
+import { t, EN_INGLES } from './i18n.js?v=3';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -709,8 +709,10 @@ async function boot() {
         <button type="button" class="btn-ruta btn-suave" id="btn-ruta" aria-pressed="${rutaOn}">${rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa'}</button>
       </div>
       ${p.id === 'aneto' ? `<h3>Paso de Mahoma</h3><p class="ruta-credito">Vista opcional de detalle de la arista entre la antecima y la cumbre. Relieve: MDT05 del IGN; los bloques de granito son una aproximación visual.</p><div class="ruta-acciones"><button type="button" class="btn-ruta" data-act="vista" data-vista="antecima">Ver desde la antecima</button><button type="button" class="btn-ruta" data-act="vista" data-vista="lateral">Ver desde un lateral</button></div>` : ''}
-      <p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
-      <p class="ruta-credito">Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`;
+      ${r.osm ? `<p class="enlace-ruta"><a href="${esc(r.gpx)}" download>Descargar el GPX ↓</a></p>
+      <p class="ruta-credito">Recorrido trazado por los senderos de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">© OpenStreetMap</a> (licencia ODbL), con altitudes del modelo Copernicus GLO-30. Es orientativo y no sustituye a un GPS ni a un mapa: comprueba el estado de los caminos antes de salir.</p>`
+      : `<p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
+      <p class="ruta-credito">Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`}`;
   }
   function pintaRuta(id, { animar = true } = {}) {
     for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
@@ -1109,7 +1111,7 @@ async function boot() {
       <ul>${usadas.map(({ p, f }) => `<li>${credEN(p.nombre, f)}</li>`).join('')}</ul>
       ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Summits from 2,000 to 3,000 m (${menoresUsadas.length} photos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credEN(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
       <h3>Routes and waypoints</h3>
-      <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: a guidance preview of the track by <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> on Wikiloc; the original, to download, is on <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">its page</a>.</li>`).join('')}
+      <ul>${Object.values(rutaDatos).flat().map((r) => r.osm ? `<li>${esc(r.nombre)}: route traced on the paths of <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL).</li>` : `<li>${esc(r.nombre)}: a guidance preview of the track by <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> on Wikiloc; the original, to download, is on <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">its page</a>.</li>`).join('')}
       <li>The route waypoints come from the points marked on their authors’ tracks (Wikiloc).</li></ul>
       <h3>Waypoint photographs</h3>
       <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Summit: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, via <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}.</li>`).join('')}</ul>
@@ -1147,7 +1149,7 @@ async function boot() {
       <ul>${usadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul>
       ${menoresUsadas.length ? `<details class="creditos-menores"><summary>Cumbres de menos de 3.000 m (${menoresUsadas.length} fotos)</summary><ul>${menoresUsadas.map(({ p, f }) => `<li>${credFoto(p.nombre, f)}</li>`).join('')}</ul></details>` : ''}
       <h3>Recorrido y hitos</h3>
-      <ul>${Object.values(rutaDatos).flat().map((r) => `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
+      <ul>${Object.values(rutaDatos).flat().map((r) => r.osm ? `<li>${esc(r.nombre)}: recorrido trazado por los senderos de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">© colaboradores de OpenStreetMap</a> (ODbL).</li>` : `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de sus autores (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
       <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
