@@ -3001,5 +3001,41 @@
   "h": 327,
   "ruta": "img/menores/cotiella.webp",
   "pie": "El Cotiella desde La Puebla de Fantova."
+ },
+ "pico-del-aguila": {
+  "archivo": "Desde los Pozos de Hielo , vista al Pico del Aguila. - panoramio.jpg",
+  "autor": "McBodes",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Desde_los_Pozos_de_Hielo_,_vista_al_Pico_del_Aguila._-_panoramio.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/pico-del-aguila.webp",
+  "pie": "El Pico del Águila, con sus antenas, desde los Pozos de Hielo."
+ },
+ "tozal-de-gratal": {
+  "archivo": "Penya Gratal.jpg",
+  "autor": "Willtron",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Penya_Gratal.jpg",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 389,
+  "ruta": "img/menores/tozal-de-gratal.webp",
+  "pie": "La peña del Tozal de Gratal."
+ },
+ "tozal-de-sevill": {
+  "archivo": "Río Isuala, depuis la Sierra de Balced, 2009 (DSCF0028).JPG",
+  "autor": "En rouge",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:R%C3%ADo_Isuala,_depuis_la_Sierra_de_Balced,_2009_(DSCF0028).JPG",
+  "fuente": "Wikimedia Commons",
+  "w": 640,
+  "h": 480,
+  "ruta": "img/menores/tozal-de-sevill.webp",
+  "pie": "La Sierra de Sevil, al otro lado del río Isuala, desde la Sierra de Balced."
  }
 }

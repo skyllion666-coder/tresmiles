@@ -4407,5 +4407,120 @@
   "nota": "Altitud del GPS del track: 2.798 m.",
   "foto": "gran-chelau",
   "pie": "El ibón Chelau, al pie del paso de la Gralla."
+ },
+ {
+  "id": "g-aguila-sur",
+  "nombre": "Vista desde el Pico del Águila",
+  "tipo": "lugar",
+  "lat": 42.306,
+  "lon": -0.403,
+  "nota": "Desde la cima, hacia el sur y la Hoya de Huesca.",
+  "pico": "pico-del-aguila",
+  "picos": [
+   "pico-del-aguila"
+  ],
+  "foto": "g-aguila-sur",
+  "pie": "Desde la cima, hacia el sur y la Hoya de Huesca."
+ },
+ {
+  "id": "g-aguila-perdido",
+  "nombre": "Monte Perdido desde el Pico del Águila",
+  "tipo": "lugar",
+  "lat": 42.3092,
+  "lon": -0.4022,
+  "nota": "El macizo de Monte Perdido nevado, visto desde la cima.",
+  "pico": "pico-del-aguila",
+  "picos": [
+   "pico-del-aguila"
+  ],
+  "foto": "g-aguila-perdido",
+  "pie": "El macizo de Monte Perdido nevado, visto desde la cima."
+ },
+ {
+  "id": "g-gratal-nueno",
+  "nombre": "El Gratal desde Nueno",
+  "tipo": "lugar",
+  "lat": 42.266355,
+  "lon": -0.459042,
+  "nota": "El Tozal de Gratal visto desde el sur.",
+  "pico": "tozal-de-gratal",
+  "picos": [
+   "tozal-de-gratal"
+  ],
+  "foto": "g-gratal-nueno",
+  "pie": "El Tozal de Gratal visto desde el sur."
+ },
+ {
+  "id": "g-gratal-lierta",
+  "nombre": "El Gratal desde Lierta",
+  "tipo": "lugar",
+  "lat": 42.24655,
+  "lon": -0.49151,
+  "nota": "La cima y su ladera oeste desde Lierta.",
+  "pico": "tozal-de-gratal",
+  "picos": [
+   "tozal-de-gratal"
+  ],
+  "foto": "g-gratal-lierta",
+  "pie": "La cima y su ladera oeste desde Lierta."
+ },
+ {
+  "id": "g-salto-mirador",
+  "nombre": "Mirador del Salto de Roldán",
+  "tipo": "lugar",
+  "lat": 42.262247,
+  "lon": -0.384747,
+  "nota": "Las dos peñas desde el mirador del noroeste.",
+  "pico": "pena-de-san-miguel",
+  "picos": [
+   "pena-de-san-miguel",
+   "pena-de-l-aman"
+  ],
+  "foto": "g-salto-mirador",
+  "pie": "Las dos peñas desde el mirador del noroeste."
+ },
+ {
+  "id": "g-salto-cima",
+  "nombre": "La Peña de l'Amán desde San Miguel",
+  "tipo": "lugar",
+  "lat": 42.2532,
+  "lon": -0.38,
+  "nota": "Desde la cima de la Peña de San Miguel, mirando al río Flumen.",
+  "pico": "pena-de-san-miguel",
+  "picos": [
+   "pena-de-san-miguel",
+   "pena-de-l-aman"
+  ],
+  "foto": "g-salto-cima",
+  "pie": "Desde la cima de la Peña de San Miguel, mirando al río Flumen."
+ },
+ {
+  "id": "g-salto-norte",
+  "nombre": "Las dos peñas desde el norte",
+  "tipo": "lugar",
+  "lat": 42.259,
+  "lon": -0.3772,
+  "nota": "La Peña de San Miguel, la Peña de l'Amán y el Pico del Fraile.",
+  "pico": "pena-de-san-miguel",
+  "picos": [
+   "pena-de-san-miguel",
+   "pena-de-l-aman"
+  ],
+  "foto": "g-salto-norte",
+  "pie": "La Peña de San Miguel, la Peña de l'Amán y el Pico del Fraile."
+ },
+ {
+  "id": "g-mallos",
+  "nombre": "Mallos de San Jorge",
+  "tipo": "lugar",
+  "lat": 42.2462,
+  "lon": -0.2876,
+  "nota": "Los mallos de conglomerado, cerca del embalse de Vadiello.",
+  "pico": "mallo-san-jorge",
+  "picos": [
+   "mallo-san-jorge"
+  ],
+  "foto": "g-mallos",
+  "pie": "Los mallos de conglomerado, cerca del embalse de Vadiello."
  }
 ]

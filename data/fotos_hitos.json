@@ -2469,5 +2469,77 @@
   "w": 692,
   "h": 922,
   "pos": "50% 50%"
+ },
+ "g-aguila-sur": {
+  "archivo": "Vista desde el Pico del Aguila ( Huesca ) - panoramio.jpg",
+  "autor": "McBodes",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Vista_desde_el_Pico_del_Aguila_(_Huesca_)_-_panoramio.jpg",
+  "w": 800,
+  "h": 600
+ },
+ "g-aguila-perdido": {
+  "archivo": "Monte perdido desde pico del aguila - panoramio.jpg",
+  "autor": "2008dago21",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Monte_perdido_desde_pico_del_aguila_-_panoramio.jpg",
+  "w": 800,
+  "h": 600
+ },
+ "g-gratal-nueno": {
+  "archivo": "\" El Gratal desde Nueno \" - panoramio.jpg",
+  "autor": "McBodes",
+  "licencia": "CC BY 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:%22_El_Gratal_desde_Nueno_%22_-_panoramio.jpg",
+  "w": 800,
+  "h": 1067
+ },
+ "g-gratal-lierta": {
+  "archivo": "Gratal visto desde Lierta.jpg",
+  "autor": "Azahara00",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Gratal_visto_desde_Lierta.jpg",
+  "w": 800,
+  "h": 532
+ },
+ "g-salto-mirador": {
+  "archivo": "Salto de Roldán from northwest mirador 01.jpg",
+  "autor": "Kent Wang",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_de_Rold%C3%A1n_from_northwest_mirador_01.jpg",
+  "w": 800,
+  "h": 600
+ },
+ "g-salto-cima": {
+  "archivo": "Salto de Roldán, au sommet de la Peña de San Miguel, 2009 (DSCF0019).JPG",
+  "autor": "En rouge",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_de_Rold%C3%A1n,_au_sommet_de_la_Pe%C3%B1a_de_San_Miguel,_2009_(DSCF0019).JPG",
+  "w": 800,
+  "h": 600
+ },
+ "g-salto-norte": {
+  "archivo": "Salto de Roldán, las Peñas, vue du coté nord, 2009 (DSCF0041).JPG",
+  "autor": "En rouge",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salto_de_Rold%C3%A1n,_las_Pe%C3%B1as,_vue_du_cot%C3%A9_nord,_2009_(DSCF0041).JPG",
+  "w": 800,
+  "h": 600
+ },
+ "g-mallos": {
+  "archivo": "Mallos San Jorge.jpg",
+  "autor": "Jvelillagil",
+  "licencia": "CC BY-SA 3.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mallos_San_Jorge.jpg",
+  "w": 800,
+  "h": 600
  }
 }

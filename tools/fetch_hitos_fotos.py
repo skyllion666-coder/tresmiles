@@ -7,6 +7,14 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 UA = {'User-Agent': 'tresmiles-web/1.0 (proyecto educativo)'}
 FOTOS = {
+    'g-aguila-sur': 'Vista desde el Pico del Aguila ( Huesca ) - panoramio.jpg',
+    'g-aguila-perdido': 'Monte perdido desde pico del aguila - panoramio.jpg',
+    'g-gratal-nueno': '" El Gratal desde Nueno " - panoramio.jpg',
+    'g-gratal-lierta': 'Gratal visto desde Lierta.jpg',
+    'g-salto-mirador': 'Salto de Roldán from northwest mirador 01.jpg',
+    'g-salto-cima': 'Salto de Roldán, au sommet de la Peña de San Miguel, 2009 (DSCF0019).JPG',
+    'g-salto-norte': 'Salto de Roldán, las Peñas, vue du coté nord, 2009 (DSCF0041).JPG',
+    'g-mallos': 'Mallos San Jorge.jpg',
     'ossoue-lago': "Lac d'Ossoue (Hautes-Pyrénées) 1.jpg",
     'ossoue-glaciar-vista': "Ossoue Glacier Vignemale Pyrennes.jpg",
     'ossoue-serac': "Séracs du glacier d'Ossoue devant le Petit Vignemale - Fonds Trutat - MHNT.PHa.138.b26.008.jpg",
@@ -31,6 +39,7 @@ clean = lambda x: re.sub('<[^>]+>', '', x).strip()
 fp = os.path.join(ROOT, 'data', 'fotos_hitos.json')
 out = json.load(open(fp, encoding='utf-8')) if os.path.exists(fp) else {}   # conserva las fotos propias
 for k, archivo in FOTOS.items():
+    if k in out and os.path.exists(os.path.join(ROOT, 'img', 'hitos', k + '.jpg')): continue   # ya bajada
     q = urllib.parse.urlencode(dict(action='query', format='json', titles='File:' + archivo, prop='imageinfo', iiprop='url|extmetadata', iiurlwidth=800))
     pg = list(json.loads(get('https://commons.wikimedia.org/w/api.php?' + q))['query']['pages'].values())[0]
     ii = pg['imageinfo'][0]; m = ii['extmetadata']
