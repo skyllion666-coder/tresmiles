@@ -611,10 +611,11 @@ body.selector-abierto #intro { z-index: 31; }
 .meteo-ahora b { display: block; font: 600 1.5rem/1.1 var(--serif); }
 .meteo-ahora span { display: block; font-size: .8rem; color: var(--ink-2); }
 .meteo-dias { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 0 0 10px; padding: 0; }
-.meteo-dias li { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; background: var(--cream-2); font-size: .72rem; color: var(--ink-2); text-align: center; }
-.meteo-dias li > span:first-child { font: 600 .7rem/1.2 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
+.meteo-dias li { display: flex; } .meteo-dia { flex: 1; font: inherit; border: 2px solid transparent; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 4px; background: var(--cream-2); font-size: .72rem; color: var(--ink-2); text-align: center; }
+.meteo-dia > span:first-child { font: 600 .7rem/1.2 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
 .meteo-dias i { font-style: normal; font-size: 1.4rem; line-height: 1.2; }
 .meteo-dias b { font-size: .9rem; color: var(--ink); } .meteo-dias b small { font-weight: 400; color: var(--ink-2); }
+.meteo-dia[aria-pressed="true"] { border-color: var(--green, #456a4b); } .meteo-dia:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .meteo-mapa { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; cursor: pointer; font: 600 .74rem/1.3 var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--ink); }
 .meteo-mapa input { appearance: none; -webkit-appearance: none; flex: none; width: 34px; height: 20px; margin: 0; border-radius: 10px; background: rgba(36,48,44,.25); position: relative; cursor: pointer; transition: background .2s; }
 .meteo-mapa input::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fffbe7; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .2s; }
@@ -622,3 +623,5 @@ body.selector-abierto #intro { z-index: 31; }
 .meteo-mapa input:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
 .ficha-body p.meteo-nota { margin: 0 0 12px; font: 400 .78rem/1.4 var(--sans); color: var(--ink-2); }
 .meteo-mapa:has(input:not(:checked)) + .meteo-nota { display: none; }
+
+.ruta-tiempos { margin-top: -4px; } .acceso-bus { font-size: .85rem; background: var(--cream-2); padding: 8px 10px; }

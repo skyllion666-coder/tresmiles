@@ -13,6 +13,7 @@ uniform vec4 uHoles[4];
 uniform float uOrto; uniform sampler2D uSat; uniform vec4 uPb; uniform vec3 uOA, uOB, uOC;   // ortofoto del PNOA en una pieza de cumbre: ajuste de color y fundido con el satélite en su borde
 uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
 uniform sampler2D uGran; uniform float uGranK; uniform float uGranM;   // granito escaneado en la malla fina de las cimas de granito (uGranK = 1), uGranM: su luminancia media
+uniform float uCota, uCotaK, uAcum, uMoj, uCliR; uniform vec3 uCliC;   // tiempo real (js/tiempo.js): cota de nieve en todo el mapa, nieve que cuaja y suelo mojado alrededor de la cumbre abierta
 varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
 float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
@@ -110,6 +111,20 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   }
   diffuseColor.rgb = c;
 }
+// tiempo real: por encima de la cota de nieve (isocero del parte) y, si nieva, alrededor de la cumbre, el suelo poco inclinado se pone blanco; si llueve, se oscurece
+if (uCotaK + uAcum + uMoj > .001) {
+  float slc = 1. - normalize(vWNrm).y, plano = 1. - smoothstep(.38, .66, slc);
+  float rd = vn(vWPos * .0035) * 160. + vn(vWPos * .03) * 40.;
+  float sc = smoothstep(uCota - 80., uCota + 160., vWPos.y + rd - 100.) * uCotaK;
+  float loc = 1. - smoothstep(uCliR * .55, uCliR, distance(vWPos.xz, uCliC.xz));
+  float sa = loc * uAcum * smoothstep(uCliC.y - 2200., uCliC.y - 900., vWPos.y + rd);
+  float sn = clamp(max(sc, sa) * plano * (.75 + .5 * vn(vWPos * .02)), 0., 1.);
+  vec3 c2 = diffuseColor.rgb;
+  c2 = mix(c2, vec3(.90, .93, .97) * (.92 + .08 * vn(vWPos * .4)), sn * .88);
+  float mj = loc * uMoj * (1. - sn);
+  c2 = mix(c2, c2 * vec3(.66, .70, .74), mj * .55);
+  diffuseColor.rgb = c2;
+}
 `;
 const GLSL_BUMP = `
 if (uBump > .5) {
@@ -128,6 +143,7 @@ if (uBump > .5) {
 export class Terrain {
   constructor({ scene, meta, store, geo, renderer, base, movil = false }) {
     this.movil = movil; this.coberturas = new Map();
+    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() } };   // compartidos por todos los materiales del relieve
     this.holes = { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) };
     this.meta = meta; this.store = store; this.geo = geo; this.base = base;
     this.group = new THREE.Group(); scene.add(this.group);
@@ -177,7 +193,7 @@ export class Terrain {
     const { chunk: CH } = this.meta, { dx, dz, W, oz } = this.geo;
     const x0 = t.i * CH * dx - W / 2, z0 = t.j * CH * dz - oz;
     const mat = new THREE.MeshLambertMaterial({ color: 0x8a9488, side: THREE.DoubleSide });
-    const u = { uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uGran: { value: null }, uGranK: { value: 0 }, uGranM: { value: 0.35 }, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) }, uOrto: { value: 0 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) }, uOA: { value: new THREE.Vector3() }, uOB: { value: new THREE.Vector3(1, 1, 1) }, uOC: { value: new THREE.Vector3() } };
+    const u = { ...this.clima, uCover: { value: null }, uHasCover: { value: 0 }, uOct: { value: this.movil ? 2 : 4 }, uBump: { value: this.movil ? 0 : 1 }, uHoles: this.holes, uGran: { value: null }, uGranK: { value: 0 }, uGranM: { value: 0.35 }, uRocaL: { value: .34 }, uRocaT: { value: new THREE.Vector3(.96, .98, 1.02) }, uOrto: { value: 0 }, uSat: { value: null }, uPb: { value: new THREE.Vector4(-1e9, -1e9, 1e9, 1e9) }, uOA: { value: new THREE.Vector3() }, uOB: { value: new THREE.Vector3(1, 1, 1) }, uOC: { value: new THREE.Vector3() } };
     this._shader(mat, u);
     const c = {
       id: `${t.i}_${t.j}`, t, mat, mesh: null, stride: 0, wantStride: 8,

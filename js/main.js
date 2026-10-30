@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js?v=2';
-import { Terrain } from './terrain.js?v=23';
+import { Terrain } from './terrain.js?v=24';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=47';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
-import { crearTiempo, tipoTiempo } from './tiempo.js?v=3';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=4';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
@@ -16,8 +16,8 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
-import { t, EN_INGLES } from './i18n.js?v=7';
-import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
+import { t, EN_INGLES } from './i18n.js?v=8';
+import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -43,13 +43,15 @@ const LOOK = [
   { top: '#3a5a8c', mid: '#bfb2c0', hor: '#f3cfae', fog: '#e4cdbb', hemiC: '#ffe6d2', hemiG: '#6c6a70', hemiK: 0.76, glow: '#ffbb80', glowK: 0.36, nube: '#ffe3d6' },
   { top: '#3a6a9e', mid: '#97b8d2', hor: '#d6dde0', fog: '#d6dde0', hemiC: '#f1eee6', hemiG: '#767060', hemiK: 0.70, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
   { top: '#434a82', mid: '#c49aa0', hor: '#f2b88e', fog: '#e0bba6', hemiC: '#ffd8bf', hemiG: '#6a5f5e', hemiK: 0.74, glow: '#ff9a5c', glowK: 0.42, nube: '#ffd3bc' },
+  { top: '#08122a', mid: '#16233f', hor: '#2c3a58', fog: '#26314a', hemiC: '#8ea2c8', hemiG: '#1c2130', hemiK: 0.36, glow: '#a8b8ff', glowK: 0.04, nube: '#5a6680' },   // noche
 ].map((l) => Object.fromEntries(Object.entries(l).map(([k, v]) => [k, typeof v === 'string' ? new THREE.Color(v) : v])));
 const GRIS = { top: new THREE.Color('#7d8a96'), mid: new THREE.Color('#aab3ba'), hor: new THREE.Color('#c3c8cc'), nube: new THREE.Color('#b4bac0'), c: new THREE.Color() };   // cielo cubierto (tiempo real)
-const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
+const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }, { k: 0.25, t: 0 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
   { id: 'mediodia', nombre: 'Mediodía', az: 180, el: 52, col: '#ffe9c8', k: 1.08 },
   { id: 'tarde', nombre: 'Tarde', az: 252, el: 18, col: '#ffbf86', k: 1.0 },
+  { id: 'ahora', nombre: 'Hora real', az: 180, el: 40, col: '#ffe9c8', k: 1.0 },   // el sol donde está ahora mismo en el Pirineo (de noche, luz de luna y estrellas)
 ];
 
 async function boot() {
@@ -71,6 +73,15 @@ async function boot() {
   scene.fog = new THREE.Fog(HORIZON, 24000, 100000);
   const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 60, 260000);
   const sky = makeSky(); scene.add(sky);
+  // estrellas de la luz «Hora real» de noche (se apagan con el cielo cubierto); acompañan a la cámara como la cúpula
+  const estrellas = (() => {
+    const n = 2200, p = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, y = 0.04 + Math.random() * 0.96, r = Math.sqrt(1 - y * y); p.set([Math.cos(a) * r * 150000, y * 150000, Math.sin(a) * r * 150000], i * 3); }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+    const o = new THREE.Points(g, new THREE.PointsMaterial({ color: 0xffffff, size: 1.7, sizeAttenuation: false, transparent: true, opacity: 0, fog: false, depthWrite: false }));
+    o.renderOrder = -9; o.frustumCulled = false; o.visible = false; return o;
+  })();
+  scene.add(estrellas);
   renderer.setClearColor(HORIZON);
   const hemi = new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 0.78 * Math.PI);
   const sun = new THREE.DirectionalLight(0xffffff, 0.62 * Math.PI);
@@ -86,7 +97,7 @@ async function boot() {
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
   const sonido = crearSonido();
-  const tiempo = crearTiempo({ scene, geo, movil: isMobile(), reducido: reduced, sonido });   // el tiempo real en la cumbre abierta (lluvia, nieve, tormenta, nubes, niebla, viento)
+  const tiempo = crearTiempo({ scene, geo, movil: isMobile(), reducido: reduced, sonido, clima: terrain.clima });   // el tiempo real en la cumbre abierta (lluvia, nieve, tormenta, nubes, niebla, viento)
 
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
@@ -123,13 +134,14 @@ async function boot() {
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
   reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); };
-  for (const p of peaks) for (const rid of p.activo ? p.rutas ?? [] : []) {
+  const leeRutas = async (p) => { for (const rid of p.rutas ?? []) {
     try {
       const ruta = await cargarRuta(rid);
       if (!ruta.fuenteUrl || !ruta.autor) { console.warn(`Ruta ${rid} sin autor o sin enlace a su ficha: no se muestra`); continue; }
       (rutaDatos[p.id] ??= []).push(ruta);
     } catch { /* sin ruta en esta copia */ }
-  }
+  } };
+  for (const p of peaks) if (p.activo && !p.menor) await leeRutas(p);   // las de las cumbres menores (trazadas con OSM) se leen al abrirlas
   const rutasDe = (id) => rutas[id] ?? [];
   fauna?.setAmenazas(() => { const out = []; if (S.active) for (const r of rutasDe(S.active)) if (r.visible) { const ps = r.posiciones(); for (const q of ps.equipo) out.push(q); out.push(ps.solo); } return out; });   // los rebecos se alejan de los montañeros
   let rutaOn = true;
@@ -545,6 +557,14 @@ async function boot() {
     }
   }
   // refugios cercanos a una cumbre, para la ficha: los guardados a menos de 10 km y los libres a menos de 5 km (los 4 más cerca)
+  // peligro de aludes: boletín diario de AEMET para el Pirineo navarro y aragonés (de diciembre a mayo; fuera de temporada, solo el enlace)
+  function aludesHTML(p) {
+    if (p.altitud < 2000) return '';
+    const mes = new Date().getMonth(), temporada = mes >= 11 || mes <= 4;
+    return `<h3>${t('Peligro de aludes')}</h3><p>${t(temporada ? 'Con nieve, consulta antes de salir el boletín de peligro de aludes de AEMET para el Pirineo navarro y aragonés, que se publica cada día en temporada.' : 'Fuera de temporada (AEMET publica el boletín de diciembre a mayo). Si hay nieve, el peligro de aludes existe igualmente.')}</p>
+      <p class="enlace-ruta"><a href="https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_Pirineo_Nav_Ara.pdf" target="_blank" rel="noopener">${t('Boletín de peligro de aludes (AEMET)')} ↗</a></p>
+      <p class="ruta-credito"><a href="https://www.aemet.es/es/conocermas/montana/detalles/escala_peligro_aludes" target="_blank" rel="noopener">${t('Escala europea de peligro de aludes')}</a>: ${t('1 débil, 2 limitado, 3 notable, 4 fuerte, 5 muy fuerte.')}</p>`;
+  }
   function refugiosCerca(p) {
     const d = (r) => Math.hypot((r.lon - p.lon) * geo.mLon, (r.lat - p.lat) * geo.mLat);
     const l = refugiosDatos.map((r) => ({ r, d: d(r) })).filter((o) => o.d < (o.r.guardado ? 10000 : 5000)).sort((a, b) => a.d - b.d).slice(0, 4);
@@ -562,38 +582,47 @@ async function boot() {
   const rumbo = (g) => (EN_INGLES ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'])[Math.round(((g ?? 0) % 360) / 45) % 8];
   const tiempoEnMapa = () => store.get('tresmiles-tiempo-mapa') !== '0';
   // lo que se ve en el mapa con el tiempo de ahora («nieve, nubes y viento del NO»)
-  function notaMapa(c) {
+  function notaMapa(c, cuando) {
     const w = tipoTiempo(c.weather_code, c.temperature_2m, c.precipitation), l = [];
     if (w.tormenta) l.push(t('tormenta con rayos')); else if (w.aguanieve) l.push(t('aguanieve')); else if (w.lluvia) l.push(t(w.lluvia < 0.35 ? 'lluvia débil' : w.lluvia < 0.75 ? 'lluvia' : 'lluvia fuerte')); else if (w.nieve) l.push(t(w.nieve < 0.35 ? 'nieve débil' : w.nieve < 0.75 ? 'nieve' : 'nevada fuerte'));
     if (w.niebla) l.push(t('niebla en la cima'));
     if (!w.niebla) l.push((c.cloud_cover ?? 0) < 20 ? t('sol') : (c.cloud_cover ?? 0) < 70 ? t('algunas nubes') : t('cielo cubierto'));
     if ((c.wind_gusts_10m ?? 0) >= 30) l.push(t('viento del {d}', { d: rumbo(c.wind_direction_10m) }));
-    return t('En el mapa: {l}.', { l: l.join(', ') });
+    return cuando ? t('En el mapa, {d}: {l}.', { d: cuando, l: l.join(', ') }) : t('En el mapa: {l}.', { l: l.join(', ') });
   }
   // ?tiempo=llovizna|lluvia|diluvio|aguanieve|nieve|nevada|tormenta|niebla|nubes|sol: fuerza ese tiempo en la cumbre abierta, para probarlo sin esperar a que llueva de verdad
-  const FORZADO = { llovizna: [51, 8, 100, 0.3], lluvia: [63, 8, 100, 3], diluvio: [65, 8, 100, 12], nieve: [73, -4, 100, 2], aguanieve: [63, 2, 100, 4], nevada: [75, -6, 100, 8], tormenta: [95, 9, 100, 10], niebla: [45, 2, 100, 0], nubes: [3, 5, 100, 0], sol: [0, 5, 0, 0] }[params.get('tiempo')];
-  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], precipitation: FORZADO[3], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
+  const FORZADO = { llovizna: [51, 8, 100, 0.3], lluvia: [63, 8, 100, 3], diluvio: [65, 8, 100, 12], nieve: [73, -4, 100, 2, 2000], aguanieve: [63, 2, 100, 4, 2600], nevada: [75, -6, 100, 8, 1700], tormenta: [95, 9, 100, 10], niebla: [45, 2, 100, 0], nubes: [3, 5, 100, 0], sol: [0, 5, 0, 0] }[params.get('tiempo')];
+  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], precipitation: FORZADO[3], isocero: FORZADO[4], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
   function aplicaTiempo(p, d) {
     const on = !!d && tiempoEnMapa() && S.active === p?.id;
     tiempo.set(on ? d : null, p); banderines.setViento(on ? d.current.wind_gusts_10m ?? 0 : 0);
+  }
+  // previsión de un día (0 = ahora): el parte diario llevado al formato de «current» para verlo en el mapa
+  let diaSel = { id: null, i: 0 };
+  function vistaDia(dat, i) {
+    if (!i || !dat?.daily) return dat;
+    const d = dat.daily, k = d.weather_code[i];
+    return { ...dat, current: { time: d.time[i] + 'T12:00', weather_code: k, temperature_2m: (d.temperature_2m_max[i] + d.temperature_2m_min[i]) / 2, apparent_temperature: d.temperature_2m_min[i],
+      cloud_cover: d.cloud_cover_mean?.[i] ?? (k >= 3 ? 90 : k >= 1 ? 40 : 5), precipitation: (d.precipitation_sum[i] ?? 0) / 8, wind_gusts_10m: d.wind_gusts_10m_max[i], wind_speed_10m: (d.wind_gusts_10m_max[i] ?? 0) * 0.6, wind_direction_10m: d.wind_direction_10m_dominant?.[i] ?? 270 } };
   }
   async function pintaMeteo(p) {
     const caja = fichaBody.querySelector('.meteo'); if (!caja) return;
     let m = meteoCache.get(p.id);
     if (!m || Date.now() - m.t > 30 * 60e3) {
-      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,precipitation,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
+      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,precipitation,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,cloud_cover_mean,wind_direction_10m_dominant,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
       try { const r = await fetch(u); if (!r.ok) throw new Error(r.status); m = { t: Date.now(), d: await r.json() }; meteoCache.set(p.id, m); }
       catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; aplicaTiempo(p, null); return; }
     }
     if (!fichaBody.contains(caja) || S.active !== p.id) return;
-    const dat = forzar(m.d); aplicaTiempo(p, dat);
+    if (diaSel.id !== p.id) diaSel = { id: p.id, i: 0 };
+    const dat = forzar(m.d), vis = vistaDia(dat, diaSel.i); aplicaTiempo(p, vis);
     const { current: c, daily: d, hourly: h } = dat, cielo = (k) => CIELO[k] ?? ['·', ''];
     const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
-    const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? t('Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
+    const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? (EN_INGLES ? 'Tomorrow' : 'Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
     const r0 = (v) => Math.round(v);
     caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento del {d}, {v} km/h, rachas de {r}', { d: rumbo(c.wind_direction_10m), v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span></div></div>
-      <label class="meteo-mapa"><input type="checkbox" data-act="tiempo-mapa"${tiempoEnMapa() ? ' checked' : ''}><span>${t('Ver este tiempo en el mapa')}</span></label><p class="meteo-nota">${notaMapa(c)}</p>
-      <ol class="meteo-dias">${d.time.map((s, i) => `<li><span>${dia(s, i)}</span><i aria-hidden="true">${cielo(d.weather_code[i])[0]}</i><b>${r0(d.temperature_2m_max[i])}° <small>${r0(d.temperature_2m_min[i])}°</small></b><span title="${t('Rachas máximas')}">💨 ${r0(d.wind_gusts_10m_max[i])}</span>${d.precipitation_sum[i] >= 0.5 ? `<span>💧 ${r0(d.precipitation_sum[i])} mm</span>` : ''}${iso(s) != null ? `<span title="${t('Cota de nieve aproximada: isocero a mediodía')}">${t('isocero')} ${fmt(iso(s))} m</span>` : ''}</li>`).join('')}</ol>
+      <label class="meteo-mapa"><input type="checkbox" data-act="tiempo-mapa"${tiempoEnMapa() ? ' checked' : ''}><span>${t('Ver este tiempo en el mapa')}</span></label><p class="meteo-nota">${notaMapa(vis.current, diaSel.i ? (diaSel.i === 1 ? dia(d.time[1], 1).toLowerCase() : new Date(d.time[diaSel.i] + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'long' })) : null)}</p>
+      <ol class="meteo-dias">${d.time.map((s, i) => `<li><button type="button" class="meteo-dia" data-dia="${i}" aria-pressed="${i === diaSel.i}" title="${t('Ver ese día en el mapa')}"><span>${dia(s, i)}</span><i aria-hidden="true">${cielo(d.weather_code[i])[0]}</i><b>${r0(d.temperature_2m_max[i])}° <small>${r0(d.temperature_2m_min[i])}°</small></b><span title="${t('Rachas máximas')}">💨 ${r0(d.wind_gusts_10m_max[i])}</span>${d.precipitation_sum[i] >= 0.5 ? `<span>💧 ${r0(d.precipitation_sum[i])} mm</span>` : ''}${iso(s) != null ? `<span title="${t('Cota de nieve aproximada: isocero a mediodía')}">${t('isocero')} ${fmt(iso(s))} m</span>` : ''}</button></li>`).join('')}</ol>
       <p class="ruta-credito">${t('Previsión de')} <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0) ${t('para el punto de la cumbre, con la temperatura calculada a {a} m. Viento en km/h; la «isocero» es la altura a la que el aire está a 0 °C a mediodía. Es orientativa: en montaña el tiempo cambia rápido; consulta también la predicción de montaña de AEMET.', { a: fmt(p.altitud) })}</p>`;
   }
 
@@ -783,15 +812,45 @@ async function boot() {
       ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
+      ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
+      ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
+  }
+  // tiempos de marcha (método MIDE: 4 km/h en llano, 400 m/h subiendo, 600 m/h bajando; el mayor más la mitad del menor), sin paradas
+  function tramoMIDE(pts) {
+    let sube = 0, baja = 0, ref = pts[0][2]; for (const q of pts) { if (q[2] > ref + 15) { sube += q[2] - ref; ref = q[2]; } else if (q[2] < ref - 15) { baja += ref - q[2]; ref = q[2]; } }   // histéresis de 15 m: filtra el ruido del GPS
+    const th = Math.abs(pts[pts.length - 1][3] - pts[0][3]) / 4000, tv = sube / 400 + baja / 600;
+    return Math.max(th, tv) + Math.min(th, tv) / 2;
+  }
+  const horas = (h) => { const m = Math.round(h * 60 / 15) * 15; return m < 60 ? `${m} min` : `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ''}`; };
+  function tiemposRuta(r) {
+    const P = r.puntos; let im = 0; P.forEach((q, i) => { if (q[2] > P[im][2]) im = i; });
+    const subida = tramoMIDE(P.slice(0, im + 1)), resto = P.slice(im);
+    const bajada = resto.length > 1 && resto[resto.length - 1][3] - P[im][3] > 400 ? tramoMIDE(resto) : tramoMIDE(P.slice(0, im + 1).reverse().map((q) => [q[0], q[1], q[2], P[im][3] - q[3]]));
+    return { subida, bajada };
+  }
+  // acceso al inicio de la ruta: enlaces para llegar en coche, refugio de salida y autobuses de temporada conocidos
+  const BUSES = [
+    { lat: 42.679, lon: 0.650, r: 3500, txt: 'En verano, la pista de los Llanos del Hospital a La Besurta se cierra a los coches y hay autobús desde Benasque y los Llanos del Hospital. Consulta fechas y horarios en el Ayuntamiento de Benasque.' },
+    { lat: 42.649, lon: -0.06, r: 9000, txt: 'En Semana Santa, verano y puentes, la carretera a la Pradera de Ordesa se cierra a los coches y hay autobús desde Torla. Consulta fechas y horarios en el Parque Nacional de Ordesa y Monte Perdido.' },
+  ];
+  function accesoRuta(r) {
+    const [lon, lat, z] = r.puntos[0], dm = (a, b) => Math.hypot((a.lon - lon) * geo.mLon, (a.lat - lat) * geo.mLat);
+    const ref = refugiosDatos.filter((h) => h.guardado).map((h) => ({ h, d: dm(h) })).sort((a, b) => a.d - b.d)[0];
+    const bus = BUSES.find((b) => dm(b) < b.r);
+    return `<h3>${t('Cómo llegar al inicio')}</h3>
+      <p>${ref && ref.d < 350 ? t('La ruta empieza en el {n} ({a} m), al que se llega a pie.', { n: esc(ref.h.nombre), a: fmt(z) }) : t('La ruta empieza a {a} m de altitud.', { a: fmt(z) })}
+      <a href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}" target="_blank" rel="noopener">${t('Cómo llegar en coche')} ↗</a> · <a href="https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=15/${lat}/${lon}" target="_blank" rel="noopener">${t('Ver en OpenStreetMap')} ↗</a></p>
+      ${bus ? `<p class="acceso-bus">🚌 ${t(bus.txt)}</p>` : ''}`;
   }
   function rutaHTML(p) {
     const r = rutasDe(p.id)[0]?.ruta; if (!r) return '';
     return `<h3>Recorrido en el mapa</h3>
       <p class="ruta-nombre">${esc(r.nombre)}</p>
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
+      ${(() => { const tm = tiemposRuta(r); return `<div class="ruta-datos ruta-tiempos"><span><b>≈ ${horas(tm.subida)}</b>${t('subida')}</span><span><b>≈ ${horas(tm.bajada)}</b>${t('bajada')}</span><span><b>≈ ${horas(tm.subida + tm.bajada)}</b>${t('en total, sin paradas')}</span></div><p class="ruta-credito">${t('Tiempos estimados con el método MIDE (4 km/h en llano, 400 m/h de subida y 600 m/h de bajada). Varían mucho con la forma física, la nieve y el tiempo.')}</p>`; })()}
       <details class="perfil-det" ${store.get('perfil-oculto') === '1' ? '' : 'open'}><summary>Perfil de altura</summary>${rutasDe(p.id)[0].perfil()}</details>
       <div class="ruta-acciones">
         <button type="button" class="btn-ruta" data-act="plegar">Ver el recorrido a pantalla completa</button>
@@ -822,7 +881,11 @@ async function boot() {
   fichaBody.addEventListener('change', (e) => {
     if (e.target.dataset?.act !== 'tiempo-mapa') return;
     store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
-    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, forzar(m?.d) ?? null);
+    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, vistaDia(forzar(m?.d), diaSel.i) ?? null);
+  });
+  fichaBody.addEventListener('click', (e) => {   // tocar un día de la previsión: el mapa muestra ese día
+    const b = e.target.closest('[data-dia]'), p = byId[S.active]; if (!b || !p) return;
+    diaSel = { id: p.id, i: +b.dataset.dia }; sonido.fx('toque'); pintaMeteo(p);
   });
   // — ficha plegable (ver el recorrido con el mapa libre) —
   const tab = $('#ficha-tab'), foldBtn = $('#ficha-fold');
@@ -938,6 +1001,7 @@ async function boot() {
   const avisoCarga = (txt) => { zonaCarga.textContent = txt ?? ''; zonaCarga.hidden = !txt; };
   function cargarZona(p) {
     if (!preparados.has(p.id)) preparados.set(p.id, (async () => {
+      if (p.menor && !rutaDatos[p.id]) await leeRutas(p);
       const datos = rutaDatos[p.id] ?? [];
       const pts = [p.q]; for (const r of datos) for (const q of r.puntos) pts.push(geo.toXZ(q[0], q[1]));
       await terrain.asegurar(pts, 1);
@@ -1061,20 +1125,41 @@ async function boot() {
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
 
   // — luz —
+  // posición del sol ahora en el centro del mapa (fórmulas de baja precisión del Almanaque Náutico; sobra para la luz): acimut desde el norte y elevación, en grados
+  const horaPrueba = () => { const d = new Date(), h = params.get('hora'); if (h != null) d.setHours(+h, 0, 0); return d; };   // ?hora=22: probar la luz «Hora real» a otra hora
+  function solAhora(d = horaPrueba(), lat = 42.6, lon = 0.3) {
+    const rad = Math.PI / 180, n = d.getTime() / 864e5 - 10957.5, g = ((357.528 + 0.9856003 * n) % 360) * rad;
+    const lam = ((280.46 + 0.9856474 * n) % 360 + 1.915 * Math.sin(g) + 0.02 * Math.sin(2 * g)) * rad, eps = (23.439 - 4e-7 * n) * rad;
+    const ra = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam)), dec = Math.asin(Math.sin(eps) * Math.sin(lam));
+    const H = ((280.46061837 + 360.98564736629 * n + lon) * rad - ra), la = lat * rad;
+    const el = Math.asin(Math.sin(la) * Math.sin(dec) + Math.cos(la) * Math.cos(dec) * Math.cos(H));
+    const az = Math.atan2(-Math.sin(H), Math.tan(dec) * Math.cos(la) - Math.sin(la) * Math.cos(H));
+    return { el: el / rad, az: ((az / rad) % 360 + 360) % 360 };
+  }
+  // la luz «Hora real»: de día, el sol real (con su color según lo alto que esté) y el aspecto de mañana, mediodía o tarde; de noche, luna fría y estrellas
+  function solReal() {
+    const { el, az } = solAhora(), noche = el < -5, s = SUN[3];
+    if (noche) Object.assign(s, { az: (az + 180) % 360, el: 38, col: '#a9b9dd', k: 0.32 });
+    else Object.assign(s, { az, el: Math.max(7, el), col: el < 10 ? '#ffbf86' : el < 25 ? '#ffd7a8' : '#ffe9c8', k: el < 2 ? 0.7 : 1.0 });
+    return noche ? 3 : el < 16 ? (az < 180 ? 0 : 2) : 1;
+  }
   function setSun(i) {
-    S.sun = i; const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
+    S.sun = i;
+    const vista = i === 3 ? solReal() : i; S.noche = vista === 3;
+    const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
     sun.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).multiplyScalar(1000);
     lagos?.setSol(sun.position, s.col);
-    S.look.to = LOOK[i]; sky.material.uniforms.uSunDir.value.copy(sun.position).normalize();
-    S.bruma.to = BRUMA[i];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
+    S.look.to = LOOK[vista]; sky.material.uniforms.uSunDir.value.copy(sun.position).normalize();
+    S.bruma.to = BRUMA[vista];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
     sun.color.set(s.col); S.solK = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1); sun.intensity = S.solK;
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', t('Cambiar la luz: {n}', { n: t(s.nombre).toLowerCase() }));
   }
   $('#btn-light').addEventListener('click', (e) => {
     sonido.fx('toque');
-    setSun((S.sun + 1) % SUN.length); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
+    setSun((S.sun + 1) % SUN.length); store.set('tresmiles-luz', String(S.sun)); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
   });
-  setSun(0);
+  setSun(+(store.get('tresmiles-luz') ?? 3) % SUN.length || 0);   // por defecto, la hora real
+  setInterval(() => { if (S.sun === 3) setSun(3); }, 60e3);
 
   if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
 
@@ -1370,7 +1455,8 @@ async function boot() {
     else if (camera.view?.enabled) camera.clearViewOffset();
     { const cerca = S.detalle ? 8 : 60; if (camera.near !== cerca) { camera.near = cerca; camera.updateProjectionMatrix(); } }   // en las vistas de cerca (cima, Paso de Mahoma) el recorte cercano de 60 m cortaba los modelos
     camera.updateMatrixWorld();
-    sky.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
+    sky.position.copy(camera.position); estrellas.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
+    { const m = estrellas.material, ob = S.noche ? 0.85 * (1 - tiempo.cubierto) : 0; m.opacity += (ob - m.opacity) * Math.min(1, dt * 0.8); estrellas.visible = m.opacity > 0.01; }
     terrain.update(camera); cumbres.update(camera); veg.update(camera); banderines.update(camera, now / 1000);
     clouds.update(dt, camera, !reduced);
     tiempo.update(dt, camera, renderer.domElement.height);

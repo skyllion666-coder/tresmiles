@@ -3,6 +3,7 @@
 // nunca entre la cámara y la cumbre), niebla en la cima y viento (inclina la lluvia y la nieve y arrastra las nubes). El resto del mapa no cambia.
 // La lluvia y la nieve son una sola malla cada una y se mueven en el shader (sin cálculo por gota en JS).
 import * as THREE from 'three';
+import { EXAG } from './geo.js';
 
 const R = 2600;   // m alrededor de la cima
 const ALTO = 3200;   // m de columna de lluvia/nieve (de 2.000 m bajo la cima a 1.200 m sobre ella)
@@ -81,7 +82,7 @@ function caida(n, nieve) {
   return { o, u, n, por };
 }
 
-export function crearTiempo({ scene, geo, movil = false, reducido = false, sonido = null }) {
+export function crearTiempo({ scene, geo, movil = false, reducido = false, sonido = null, clima = null }) {   // clima: uniformes del relieve (Terrain.clima)
   const N = movil ? 9000 : 20000;
   const lluvia = caida(N, false), nieve = caida(Math.round(N * 0.9), true);
   scene.add(lluvia.o, nieve.o);
@@ -145,7 +146,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     get _est() { return est; },   // para las pruebas
     // d: respuesta de Open-Meteo (current con weather_code, temperature_2m, cloud_cover, wind_speed_10m, wind_direction_10m, wind_gusts_10m); p: la cumbre (p.w)
     set(d, p) {
-      if (!d || !p?.w) { est.activo = false; est.cubObj = 0; sonido?.setTiempo?.({ lluvia: 0, viento: 0 }); return; }
+      if (!d || !p?.w) { est.activo = false; est.cubObj = 0; est.cota = null; sonido?.setTiempo?.({ lluvia: 0, viento: 0 }); return; }
       const c = d.current, w = tipoTiempo(c.weather_code, c.temperature_2m, c.precipitation);
       est.activo = true; est.c = new THREE.Vector3(p.w.x, p.w.y, p.w.z); est.w = w;
       // viento: de dónde sopla (grados desde el norte) → hacia dónde va, en el mundo (x este, z sur); velocidad en m/s, exagerada para que se note de lejos
@@ -153,6 +154,9 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       est.viento.set(Math.sin(hacia), -Math.cos(hacia)).multiplyScalar(ms);
       est.cubObj = Math.min(1, (c.cloud_cover ?? 0) / 100 * 0.75 + (w.lluvia || w.nieve ? 0.25 : 0) + w.niebla * 0.45);
       colocaNubes(c.cloud_cover ?? 0, w);
+      // cota de nieve: unos 300 m bajo la isocero de esa hora (o la que traiga el dato del día elegido)
+      const h = d.hourly, i = h?.time?.indexOf((c.time ?? '').slice(0, 13) + ':00'), iso = c.isocero ?? (i >= 0 ? h.freezing_level_height[i] : null);
+      est.cota = iso != null && iso < 4600 ? (iso - 300) * EXAG : null;
       est.prox = performance.now() + 2500 + Math.random() * 5000;
       sonido?.setTiempo?.({ lluvia: w.lluvia, viento: Math.min(1, (c.wind_gusts_10m ?? 0) / 90) });
     },
@@ -167,6 +171,16 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
         s.u.uT.value = t / 1000; s.u.uEsc.value = esc; s.u.uOpac.value = (s === lluvia ? 0.7 : 0.95) * Math.min(1, 0.55 + 0.6 * v);
         s.u.uCentro.value.set(est.c.x, est.c.y - 2000, est.c.z); s.u.uViento.value.copy(est.viento).multiplyScalar(vx);
         s.o.geometry.setDrawRange(0, Math.round(s.n * Math.min(1, 0.08 + 0.92 * v)) * s.por);
+      }
+      // relieve: cota de nieve en todo el mapa, nieve que cuaja poco a poco mientras nieva y suelo mojado con lluvia (alrededor de la cumbre)
+      if (clima) {
+        const kk = Math.min(1, dt * 0.5);
+        if (est.cota != null && est.activo) clima.uCota.value = est.cota;
+        clima.uCotaK.value += ((est.activo && est.cota != null ? 1 : 0) - clima.uCotaK.value) * kk;
+        const ac = est.activo ? est.w.nieve : 0, mj = est.activo ? est.w.lluvia : 0;
+        clima.uAcum.value = ac ? Math.min(0.5 + 0.5 * ac, clima.uAcum.value + dt * ac / 25) : Math.max(0, clima.uAcum.value - dt / 6);
+        clima.uMoj.value = mj ? Math.min(0.5 + 0.5 * mj, clima.uMoj.value + dt / 12) : Math.max(0, clima.uMoj.value - dt / 6);
+        if (est.c) { clima.uCliC.value.copy(est.c); clima.uCliR.value = R * 1.35; }
       }
       // nubes: derivan con el viento dentro de un anillo; transparentes de cerca y si quedan entre la cámara y la cumbre
       if (est.c) {

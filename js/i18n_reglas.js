@@ -18,6 +18,7 @@ function frase(f, zona) {
     return `Its nearest higher neighbour is ${m[1]} (${numEN(m[2])} m), ${numEN(m[3])} km to the ${DIR[m[4]]}.`;
   if ((m = /^Se alza unos ([\d.]+) m sobre (.+)\.$/.exec(f))) return `It rises about ${numEN(m[1])} m above ${m[2]}.`;
   if (f === 'Ficha sencilla: sin ruta ni recorrido en el mapa.') return 'Basic info: no route or track on the map.';
+  if (f === 'Ruta orientativa por los senderos de OpenStreetMap.') return 'Guidance route along OpenStreetMap paths.';
   if (f === 'Con la ruta normal descrita abajo; sin recorrido dibujado en el mapa.') return 'With the normal route described below; no route drawn on the map.';
   if (f === 'Nombre, altitud y posición de OpenStreetMap.') return 'Name, altitude and position from OpenStreetMap.';
   if ((m = /^Esta (?:cumbre|cima) aparece en la ruta «(.*)», de (.+?) en Wikiloc, de ([\d.,]+) km y ([\d.,]+) m de desnivel acumulado\.$/.exec(f)))
