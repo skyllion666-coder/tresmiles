@@ -58,6 +58,17 @@ const EN = {
   'Altitud': 'Altitude', 'Desnivel': 'Elevation gain', 'Acceso': 'Access', 'Grado': 'Grade', 'Época': 'Season',
   // dificultades, tipos de hito y macizos (vienen de los datos)
   'Moderada': 'Moderate', 'Alta': 'High', 'Muy alta': 'Very high',
+  // — refugios y tiempo —
+  'Refugio guardado': 'Staffed hut', 'Refugio libre': 'Unstaffed hut', 'Guardado': 'Staffed', 'Libre': 'Unstaffed', '{n} plazas': '{n} beds', 'Web del refugio': 'Hut website', 'web': 'website',
+  'a {d} km en línea recta': '{d} km in a straight line', 'Refugios cercanos': 'Nearby huts', 'Refugios de': 'Huts from',
+  'Los guardados suelen pedir reserva: confirma fechas y plazas con el refugio antes de ir.': 'Staffed huts usually require booking: confirm dates and beds with the hut before you go.',
+  'El tiempo en la cumbre': 'Weather at the summit', 'Cargando la previsión…': 'Loading the forecast…', 'No se ha podido cargar la previsión (hace falta conexión).': 'The forecast could not be loaded (a connection is needed).',
+  'Hoy': 'Today', 'isocero': 'freezing lvl', 'Mañana': 'Tomorrow', 'sensación {n} °C': 'feels like {n} °C', 'Viento {v} km/h, rachas de {r}': 'Wind {v} km/h, gusts of {r}', 'Rachas máximas': 'Maximum gusts',
+  'Cota de nieve aproximada: isocero a mediodía': 'Approximate snow line: freezing level at midday', 'Previsión de': 'Forecast from',
+  'para el punto de la cumbre, con la temperatura calculada a {a} m. Viento en km/h; la «isocero» es la altura a la que el aire está a 0 °C a mediodía. Es orientativa: en montaña el tiempo cambia rápido; consulta también la predicción de montaña de AEMET.': 'for the summit point, with the temperature calculated at {a} m. Wind in km/h; the “freezing level” is the height at which the air is at 0 °C at midday. It is a guide only: mountain weather changes fast; also check the AEMET mountain forecast.',
+  'Despejado': 'Clear', 'Casi despejado': 'Mostly clear', 'Nubes y claros': 'Partly cloudy', 'Cubierto': 'Overcast', 'Niebla': 'Fog', 'Niebla con escarcha': 'Freezing fog', 'Llovizna': 'Drizzle', 'Llovizna intensa': 'Heavy drizzle',
+  'Llovizna helada': 'Freezing drizzle', 'Lluvia débil': 'Light rain', 'Lluvia': 'Rain', 'Lluvia fuerte': 'Heavy rain', 'Lluvia helada': 'Freezing rain', 'Nieve débil': 'Light snow', 'Nieve': 'Snow', 'Nieve fuerte': 'Heavy snow',
+  'Granizo menudo': 'Snow grains', 'Chubascos': 'Showers', 'Chubascos fuertes': 'Heavy showers', 'Chubascos de nieve': 'Snow showers', 'Chubascos de nieve fuertes': 'Heavy snow showers', 'Tormenta': 'Thunderstorm', 'Tormenta con granizo': 'Thunderstorm with hail',
   'Refugio': 'Hut', 'Paso': 'Pass', 'Vivac': 'Bivouac', 'Cima': 'Summit', 'Ibón': 'Tarn', 'Barranco': 'Gorge', 'Lugar': 'Place',
   'Valle de Tena · Balaitús–Infiernos': 'Tena Valley · Balaitús–Infiernos', 'Valle de Chistau': 'Chistau Valley', 'Monte Perdido–Taillón': 'Monte Perdido–Taillón',
   'Foto:': 'Photo:', 'vía': 'via', 'su ficha de Wikiloc': 'their Wikiloc page', ' y ': ' and ', ' · km {k} del recorrido': ' · km {k} of the route',

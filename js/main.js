@@ -15,7 +15,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
-import { t, EN_INGLES } from './i18n.js?v=3';
+import { t, EN_INGLES } from './i18n.js?v=4';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -451,7 +451,7 @@ async function boot() {
     return `${base}GPS altitude from the track: ${m[2].replace('.', ',')} m.`;
   };
   window.Carga?.paso(4);
-  const hitos = [];
+  const hitos = [], refugios = [];
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
   const normNombre = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').replace(/\b(cima|del|de|la|las|los|el|pico|pic|punta|tuca|gran|pequeno)\b/g, '').replace(/[^a-z0-9]/g, '');
@@ -485,7 +485,7 @@ async function boot() {
     const f = fotosHitos[h.foto]; if (!f) return '';
     return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
   }
-  function closeHitos() { clearTimeout(hitoTimer); for (const o of hitos) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
+  function closeHitos() { clearTimeout(hitoTimer); for (const o of [...hitos, ...refugios]) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape') closeHitos(); });
   const hitoTmp = new THREE.Vector3();
@@ -507,6 +507,71 @@ async function boot() {
       if (show) o.el.style.transform = `translate3d(${((hitoTmp.x * 0.5 + 0.5) * W).toFixed(1)}px, ${((-hitoTmp.y * 0.5 + 0.5) * H).toFixed(1)}px, 0)`;
       if (show) obstaculos.push({ x: (hitoTmp.x * 0.5 + 0.5) * W - 14, y: (-hitoTmp.y * 0.5 + 0.5) * H - 14, w: 28, h: 28 });
     }
+  }
+
+  // — refugios de OpenStreetMap (data/refugios.json, tools/fetch_refugios.py): marcador con su ficha (altitud, plazas, teléfono, web); se ven de cerca —
+  const refugiosDatos = await json('data/refugios.json').catch(() => []);
+  const datoRef = (r) => [r.plazas ? `<small>${t('{n} plazas', { n: r.plazas })}${r.gestor ? ` · ${esc(r.gestor)}` : ''}</small>` : r.gestor ? `<small>${esc(r.gestor)}</small>` : '',
+    r.tel ? `<small><a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a></small>` : '', r.web ? `<small><a href="${esc(r.web)}" target="_blank" rel="noopener">${t('Web del refugio')} ↗</a></small>` : ''].join('');
+  for (const r of refugiosDatos) {
+    const q = geo.toXZ(r.lon, r.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
+    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'} is-hidden`;
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}"><i></i></button><b>${esc(r.nombre)}<em>${t(r.guardado ? 'Refugio guardado' : 'Refugio libre')} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
+    el.querySelector('.hito-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const abrir = !el.classList.contains('is-open');
+      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
+    });
+    $('#pins').appendChild(el);
+    refugios.push({ r, el, x: q.x, z: q.z, lim: r.guardado ? 9000 : 5000 });
+  }
+  function updateRefugios() {
+    const W = innerWidth, H = innerHeight;
+    const deRuta = hitos.filter((o) => o.h.tipo === 'refugio' && !o.el.classList.contains('is-hidden'));   // el hito de la ruta ya lo enseña (con su foto)
+    for (const o of refugios) {
+      let show = S.mode === 'explore' && Math.hypot(camera.position.x - o.x, camera.position.z - o.z) < o.lim;
+      if (show) { hitoTmp.set(o.x, geo.heightAt(o.x, o.z) + 12, o.z); show = camera.position.distanceTo(hitoTmp) < o.lim && !deRuta.some((h) => Math.hypot(h.x - o.x, h.z - o.z) < 250); }
+      if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: geo.heightAt(o.x, o.z) + 22, z: o.z }); }
+      if (show && pinAct && Math.hypot((hitoTmp.x * 0.5 + 0.5) * W - pinAct.px, (-hitoTmp.y * 0.5 + 0.5) * H - pinAct.py) < 44) show = false;
+      o.el.classList.toggle('is-hidden', !show);
+      if (!show) { o.el.classList.remove('is-open'); continue; }
+      const px = (hitoTmp.x * 0.5 + 0.5) * W, py = (-hitoTmp.y * 0.5 + 0.5) * H;
+      o.el.classList.toggle('abajo', py < 130);
+      o.el.style.transform = `translate3d(${px.toFixed(1)}px, ${py.toFixed(1)}px, 0)`;
+      obstaculos.push({ x: px - 14, y: py - 14, w: 28, h: 28 });
+    }
+  }
+  // refugios cercanos a una cumbre, para la ficha: los guardados a menos de 10 km y los libres a menos de 5 km (los 4 más cerca)
+  function refugiosCerca(p) {
+    const d = (r) => Math.hypot((r.lon - p.lon) * geo.mLon, (r.lat - p.lat) * geo.mLat);
+    const l = refugiosDatos.map((r) => ({ r, d: d(r) })).filter((o) => o.d < (o.r.guardado ? 10000 : 5000)).sort((a, b) => a.d - b.d).slice(0, 4);
+    if (!l.length) return '';
+    return `<h3>Refugios cercanos</h3><ul class="refugios">${l.map(({ r, d }) => `<li><b>${esc(r.nombre)}</b><span>${t(r.guardado ? 'Guardado' : 'Libre')} · ${fmt(r.alt)} m · ${t('a {d} km en línea recta', { d: km(d) })}${r.plazas ? ` · ${t('{n} plazas', { n: r.plazas })}` : ''}</span>${r.tel || r.web ? `<span>${r.tel ? `<a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a>` : ''}${r.tel && r.web ? ' · ' : ''}${r.web ? `<a href="${esc(r.web)}" target="_blank" rel="noopener">${t('web')} ↗</a>` : ''}</span>` : ''}</li>`).join('')}</ul>
+      <p class="ruta-credito">${t('Refugios de')} <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a> (ODbL). ${t('Los guardados suelen pedir reserva: confirma fechas y plazas con el refugio antes de ir.')}</p>`;
+  }
+
+  // — el tiempo en la cima: previsión de Open-Meteo (gratis, sin clave) en el punto de la cumbre, con la temperatura corregida a su altitud; se pide al abrir la ficha y se guarda 30 min —
+  const CIELO = { 0: ['☀️', 'Despejado'], 1: ['🌤️', 'Casi despejado'], 2: ['⛅', 'Nubes y claros'], 3: ['☁️', 'Cubierto'], 45: ['🌫️', 'Niebla'], 48: ['🌫️', 'Niebla con escarcha'],
+    51: ['🌦️', 'Llovizna'], 53: ['🌦️', 'Llovizna'], 55: ['🌧️', 'Llovizna intensa'], 56: ['🌧️', 'Llovizna helada'], 57: ['🌧️', 'Llovizna helada'], 61: ['🌧️', 'Lluvia débil'], 63: ['🌧️', 'Lluvia'], 65: ['🌧️', 'Lluvia fuerte'],
+    66: ['🌧️', 'Lluvia helada'], 67: ['🌧️', 'Lluvia helada'], 71: ['🌨️', 'Nieve débil'], 73: ['🌨️', 'Nieve'], 75: ['❄️', 'Nieve fuerte'], 77: ['🌨️', 'Granizo menudo'], 80: ['🌦️', 'Chubascos'], 81: ['🌧️', 'Chubascos'],
+    82: ['🌧️', 'Chubascos fuertes'], 85: ['🌨️', 'Chubascos de nieve'], 86: ['❄️', 'Chubascos de nieve fuertes'], 95: ['⛈️', 'Tormenta'], 96: ['⛈️', 'Tormenta con granizo'], 99: ['⛈️', 'Tormenta con granizo'] };
+  const meteoCache = new Map();
+  async function pintaMeteo(p) {
+    const caja = fichaBody.querySelector('.meteo'); if (!caja) return;
+    let m = meteoCache.get(p.id);
+    if (!m || Date.now() - m.t > 30 * 60e3) {
+      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
+      try { const r = await fetch(u); if (!r.ok) throw new Error(r.status); m = { t: Date.now(), d: await r.json() }; meteoCache.set(p.id, m); }
+      catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; return; }
+    }
+    if (!fichaBody.contains(caja) || S.active !== p.id) return;
+    const { current: c, daily: d, hourly: h } = m.d, cielo = (k) => CIELO[k] ?? ['·', ''];
+    const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
+    const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? t('Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
+    const r0 = (v) => Math.round(v);
+    caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento {v} km/h, rachas de {r}', { v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span></div></div>
+      <ol class="meteo-dias">${d.time.map((s, i) => `<li><span>${dia(s, i)}</span><i aria-hidden="true">${cielo(d.weather_code[i])[0]}</i><b>${r0(d.temperature_2m_max[i])}° <small>${r0(d.temperature_2m_min[i])}°</small></b><span title="${t('Rachas máximas')}">💨 ${r0(d.wind_gusts_10m_max[i])}</span>${d.precipitation_sum[i] >= 0.5 ? `<span>💧 ${r0(d.precipitation_sum[i])} mm</span>` : ''}${iso(s) != null ? `<span title="${t('Cota de nieve aproximada: isocero a mediodía')}">${t('isocero')} ${fmt(iso(s))} m</span>` : ''}</li>`).join('')}</ol>
+      <p class="ruta-credito">${t('Previsión de')} <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0) ${t('para el punto de la cumbre, con la temperatura calculada a {a} m. Viento en km/h; la «isocero» es la altura a la que el aire está a 0 °C a mediodía. Es orientativa: en montaña el tiempo cambia rápido; consulta también la predicción de montaña de AEMET.', { a: fmt(p.altitud) })}</p>`;
   }
 
   // — nombres geográficos (ibones y pueblos): se reparten para que no se pisen entre ellos ni con marcadores, brújula o controles —
@@ -689,12 +754,14 @@ async function boot() {
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${cumbres.ficha()?.[p.id]?.modelo ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
+      <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
       ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
+      ${refugiosCerca(p)}
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   function rutaHTML(p) {
@@ -874,6 +941,7 @@ async function boot() {
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
+    pintaMeteo(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1106,6 +1174,7 @@ async function boot() {
       <li>Summit terrain detail: MDT05 (5 m) from the <a href="https://www.ign.es" target="_blank" rel="noopener">Spanish National Geographic Institute</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, resampled to 6 m (12 m on phones) around each summit with info. On the summit of the Gran Facha, on the border, where the MDT05 has no data: RGE ALTI from the <a href="https://geoservices.ign.fr" target="_blank" rel="noopener">French IGN</a> (Géoplateforme, Licence Ouverte Etalab 2.0). PNOA orthophotos (25–50 cm, CC BY 4.0, © Instituto Geográfico Nacional de España) over the summit areas.</li>
       <li>Land cover (where there is forest, grassland or rock): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Trees are placed where that map shows woodland; their exact position, type and size are a visual approximation, not a forest inventory. The rock detail (strata, fractures, scree) is a procedural texture, not a geological survey.</li>
       <li>Satellite imagery: Sentinel-2 cloudless 2016 by <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), with modified Copernicus Sentinel data.</li>
+      <li>Huts (position, altitude, beds, phone and website): © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL). Summit weather forecast: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0), requested live when a summit is opened.</li>
       <li>Outlines and names of the tarns, names and positions of villages, and positions of huts and waypoints: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL). Birds and ambient sound (wind, water and birdsong): our own animation and synthesis; the birds are an illustration, not real tracking. The bearded vulture, griffon vulture, cinereous vulture, Egyptian vulture (March to September) and the 3D chamois are our own Blender models. Bearded vulture call: recording by the “adalaves” channel on <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Background music: our own composition with VSCO-2 Community Edition instruments (CC0).</li></ul>
       <h3>Summit photographs</h3>
       <p>Each photo is shown with its author’s name and a link to its source page (Wikimedia Commons, Wikiloc, Mendikat or others). Photos from Wikiloc and Mendikat are used with the author’s name and a link to their page; if you are the author and would rather it were removed, let us know and it will be taken down.</p>
@@ -1144,6 +1213,7 @@ async function boot() {
       <li>Detalle del relieve en las cumbres: MDT05 (5 m) del <a href="https://www.ign.es" target="_blank" rel="noopener">Instituto Geográfico Nacional</a>, CC BY 4.0 © Instituto Geográfico Nacional de España, remuestreado a 6 m (12 m en móvil) en torno a cada cumbre con ficha. En la cima de la Gran Facha, en la frontera, donde el MDT05 no tiene dato: RGE ALTI del <a href="https://geoservices.ign.fr" target="_blank" rel="noopener">IGN de Francia</a> (Géoplateforme, Licence Ouverte Etalab 2.0). Ortofotografía del PNOA (25–50 cm, CC BY 4.0, © Instituto Geográfico Nacional de España) sobre la cima del Monte Perdido y del Aneto.</li>
       <li>Cobertura del suelo (dónde hay bosque, pradera o roca): <a href="https://esa-worldcover.org" target="_blank" rel="noopener">ESA WorldCover 2021</a> (10 m, CC BY 4.0), © ESA WorldCover project / Contains modified Copernicus Sentinel data. Los árboles se colocan donde ese mapa marca arbolado; su posición exacta, tipo (conífera o frondosa, según altitud y orientación) y tamaño son una aproximación visual, no un inventario forestal. El detalle de la roca (estratos, fracturas, canchales) es una textura procedural, no un levantamiento geológico.</li>
       <li>Imagen de satélite: Sentinel-2 cloudless 2016 de <a href="https://s2maps.eu" target="_blank" rel="noopener">EOX IT Services GmbH</a> (CC BY 4.0), con datos modificados de Copernicus Sentinel.</li>
+      <li>Refugios (posición, altitud, plazas, teléfono y web): © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Previsión del tiempo en las cumbres: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0), pedida en directo al abrir cada cumbre.</li>
       <li>Contornos y nombres de los ibones, nombres y posición de pueblos y aldeas, y posición de refugios y hitos: © colaboradores de <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> (ODbL). Aves y sonido ambiente (viento, agua y cantos): animación y síntesis propias; las aves son una ilustración, no seguimiento real. El quebrantahuesos, el buitre leonado, el buitre negro, el alimoche (de marzo a septiembre) y el rebeco 3D son modelos propios hechos con Blender. Llamada del quebrantahuesos: grabación del canal «adalaves» en <a href="https://www.youtube.com/watch?v=FwhmelnlDUs" target="_blank" rel="noopener">YouTube</a>. Música de fondo: composición propia con instrumentos de VSCO-2 Community Edition (CC0).</li></ul>
       <h3>Fotografías de las cumbres</h3>
       <p>Cada foto se muestra con el nombre de su autor y un enlace a la página de origen (Wikimedia Commons, Wikiloc, Mendikat u otras). Las fotos de Wikiloc y Mendikat se usan con el nombre de su autor y el enlace a su ficha; si eres su autor y prefieres que se quite, dínoslo y se retirará.</p>
@@ -1277,7 +1347,7 @@ async function boot() {
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
     etiquetas.length = 0;
-    const cerca = updateLagos(); updateHitos(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
+    const cerca = updateLagos(); updateHitos(); updateRefugios(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
     if (!!S.detalle !== detPrev) { detPrev = !!S.detalle; for (const l of Object.values(rutas)) for (const r of l) r.delgada?.(detPrev); }
     ajustaVelocidad(dt); aplicaGiro(dt);
