@@ -7,13 +7,13 @@ import { crearMontanero } from './montanero.js?v=7';
 // Mismo contrato que `crearMontanero`: { group, pose(fase, k, inc, c, vel, hielo), altura } (hielo > 0,5: crampones puestos, piolet en la mano y bastones guardados; si no, crampones en la mochila). Hasta que el GLB está cargado (y si falla) se ve el montañero de siempre.
 // La velocidad `vel` (m/s del montañero) elige el clip: idle → andar (≈1,2 m/s) → trotar (≈5 m/s) → correr (≈7,5 m/s), mezclados y con el ritmo del paso ajustado a la velocidad
 // para que los pies no resbalen. c = { agach, manos, cuatro, brazos, giro }: agachado (clip «agachado») y brazos abiertos del funambulista (los brazos vuelven hacia la pose de reposo en T).
-const URL_GLB = { chico: new URL('../models/montanero-anim.glb', import.meta.url).href, chica: new URL('../models/montanera-anim.glb', import.meta.url).href };   // la montañera: mismo esqueleto y clips, otro cuerpo, pelo y coleta (tools/modelos/montanero_anim.py --chica)
+const URL_GLB = { chico: new URL('../models/montanero-anim.glb?v=2', import.meta.url).href, chica: new URL('../models/montanera-anim.glb?v=2', import.meta.url).href };   // la montañera: mismo esqueleto y clips, otro cuerpo, pelo y coleta (tools/modelos/montanero_anim.py --chica)
 const carga = {};
 const cargaGLB = (tipo = 'chico') => (carga[tipo] ??= new Promise((res) => new GLTFLoader().load(`${URL_GLB[tipo]}?v=${window.WEB_V || 0}`, res, undefined, () => res(null))));
 const UP = new THREE.Vector3(0, 1, 0);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
-const CLIPS = ['idle', 'walk', 'jog', 'sprint', 'agachado', 'agachado_quieto', 'tropiezo', 'voltereta'];
-const NOMBRE_CLIP = { Idle_Loop: 'idle', Walk_Loop: 'walk', Jog_Fwd_Loop: 'jog', Sprint_Loop: 'sprint', Crouch_Fwd_Loop: 'agachado', Crouch_Idle_Loop: 'agachado_quieto', Hit_Chest: 'tropiezo', Roll: 'voltereta' };   // nombres de los clips en el GLB
+const CLIPS = ['idle', 'walk', 'jog', 'sprint', 'agachado', 'agachado_quieto', 'tropiezo', 'voltereta', 'trepar'];
+const NOMBRE_CLIP = { Idle_Loop: 'idle', Walk_Loop: 'walk', Jog_Fwd_Loop: 'jog', Sprint_Loop: 'sprint', Crouch_Fwd_Loop: 'agachado', Crouch_Idle_Loop: 'agachado_quieto', Hit_Chest: 'tropiezo', Roll: 'voltereta', trepar: 'trepar' };   // nombres de los clips en el GLB
 
 function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila = '#d9822b', casco = '#e9e6dc', palos = 1, mochilaTipo = 'grande', chica = false } = {}) {
   const root = clone(gltf.scene), mats = new Map();
@@ -57,7 +57,7 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
   const w = Object.fromEntries(CLIPS.map((n) => [n, n === 'idle' ? 1 : 0]));
   const brazos = ['DEF-upper_armL', 'DEF-upper_armR', 'DEF-forearmL', 'DEF-forearmR']   // (three quita los puntos de los nombres)
     .map((n) => root.getObjectByName(n)).filter(Boolean).map((b) => ({ b, rest: b.quaternion.clone(), k: /upper/.test(b.name) ? 0.82 : 0.5 }));
-  let ultimo = performance.now(), ev = null;   // ev: episodio en curso (caída o tropiezo): lista de fases [clip, segundos]
+  let ultimo = performance.now(), ev = null, vuelta = 0;   // ev: episodio en curso (caída o tropiezo): lista de fases [clip, segundos]
   for (const n of ['tropiezo', 'voltereta']) if (acc[n]) { acc[n].setLoop(THREE.LoopOnce, 1); acc[n].clampWhenFinished = true; }
   // tropiezo: sacudida y se agacha un momento para recuperar el equilibrio; voltereta: cae y rueda por el suelo hasta volver a ponerse de pie. Devuelve la duración total (s), 0 si no puede.
   const FASES = { tropiezo: [['tropiezo', 0.4], ['agachado_quieto', 1.1]], voltereta: [['voltereta', 1.5], ['idle', 0.5]] };
@@ -89,17 +89,21 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
     const ahora = performance.now(), dt = clamp((ahora - ultimo) / 1000, 0.001, 0.1); ultimo = ahora;
     let s = vel ?? (k > 0.01 ? 1 + 5 * k : 0);   // sin velocidad explícita (cursor): a ojo desde la amplitud del paso
     const a = clamp(Math.max(c?.agach ?? 0, c?.cuatro ?? 0) * 1.25, 0, 1), br = c?.brazos ?? 0;
-    const T = { idle: 0, walk: 0, jog: 0, sprint: 0, agachado: 0, agachado_quieto: 0 };
+    const T = { idle: 0, walk: 0, jog: 0, sprint: 0, agachado: 0, agachado_quieto: 0, trepar: 0 };
     if (s < 0.12) T.idle = 1; else if (s < 0.45) { T.walk = (s - 0.12) / 0.33; T.idle = 1 - T.walk; }
     else if (s < 1.9) T.walk = 1; else if (s < 3.0) { T.jog = (s - 1.9) / 1.1; T.walk = 1 - T.jog; }
     else if (s < 5.6) T.jog = 1; else if (s < 6.8) { T.sprint = (s - 5.6) / 1.2; T.jog = 1 - T.sprint; } else T.sprint = 1;
     for (const n of ['idle', 'walk', 'jog', 'sprint']) T[n] *= 1 - a;
     if (s < 0.12) T.agachado_quieto = a; else { const mov = clamp((s - 0.12) / 0.3, 0, 1); T.agachado = a * mov; T.agachado_quieto = a * (1 - mov); }
+    const tp = acc.trepar ? clamp(c?.trepa ?? 0, 0, 1) : 0;   // trepada: de cara a la roca, manos y pies (clip «trepar», tools/modelos/trepar.py)
+    // destrepe: si el tramo baja, se da la vuelta (de cara a la roca) y el clip va hacia atrás
+    const pend = c?.pend ?? 0.6; vuelta += ((tp > 0.3 && pend < -0.12 ? 1 : 0) - vuelta) * Math.min(1, dt * 2.5);
+    if (tp > 0) { for (const n of CLIPS) T[n] *= 1 - tp; T.trepar = tp; }
     if (ev) {   // durante una caída solo suena el clip de la fase en curso
       ev.t += dt; if (ev.t >= ev.fases[ev.i][1]) { ev.t = 0; ev.i++; if (ev.i >= ev.fases.length) ev = null; else { const a = acc[ev.fases[ev.i][0]]; if (a?.loop === THREE.LoopOnce) { a.reset(); a.play(); } } }
       for (const n of CLIPS) T[n] = 0; if (ev) T[ev.fases[ev.i][0]] = 1; else T.idle = 1;
     }
-    const ts = { tropiezo: 1, voltereta: 1, idle: 1, walk: clamp(s / 1.15, 0.25, 1.7), jog: clamp(s / 5.0, 0.55, 1.25), sprint: clamp(s / 7.5, 0.8, 1.2), agachado: clamp(s / 0.67, 0.3, 1.6), agachado_quieto: 1 };
+    const ts = { tropiezo: 1, voltereta: 1, idle: 1, walk: clamp(s / 1.15, 0.25, 1.7), jog: clamp(s / 5.0, 0.55, 1.25), sprint: clamp(s / 7.5, 0.8, 1.2), agachado: clamp(s / 0.67, 0.3, 1.6), agachado_quieto: 1, trepar: (s < 0.12 ? 0.12 : clamp(s / 0.3, 0.35, 1.5)) * (vuelta > 0.5 ? -1 : 1) };   // el clip sube ≈0,3 m/s por la roca; parado, casi quieto colgado
     const f = ev ? Math.min(1, dt * 20) : Math.min(1, dt * 8);
     for (const n of CLIPS) { w[n] += (T[n] - w[n]) * f; const ac = acc[n]; if (ac) { ac.setEffectiveWeight(w[n]); ac.setEffectiveTimeScale(ts[n]); } }
     mixer.update(dt);
@@ -113,9 +117,10 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
       });
     }
     if (br > 0.02) for (const q of brazos) q.b.quaternion.slerp(q.rest, br * q.k);   // funambulista: brazos abiertos, como en la pose de reposo (T)
-    const mn = clamp(((c?.manos ?? 0) - 0.3) / 0.5, 0, 1) * (1 - clamp(br * 2, 0, 1)) * (ev ? 0 : 1);   // 0-1: las manos buscan agarres en la roca
-    const lean = clamp(inc * 0.5, -0.3, 0.4) + 0.38 * mn;
-    root.rotation.x = lean; root.rotation.y = c?.giro ?? 0;
+    const mn = clamp(((c?.manos ?? 0) - 0.3) / 0.5, 0, 1) * (1 - clamp(br * 2, 0, 1)) * (ev ? 0 : 1) * (1 - tp);   // 0-1: las manos buscan agarres en la roca
+    // la pared del clip de trepar está a 60°: en roca menos empinada se tumba hacia delante para que manos y pies queden sobre ella
+    const lean = (clamp(inc * 0.5, -0.3, 0.4) + 0.38 * mn) * (1 - tp) + tp * clamp(1.05 - Math.abs(pend), 0, 0.4) * (1 - 2 * vuelta);   // vuelto hacia la roca, la inclinación va al otro lado
+    root.rotation.x = lean; root.rotation.y = (c?.giro ?? 0) + Math.PI * vuelta;
     root.updateMatrixWorld(true);
     if (mn > 0.01) {   // agarres: cada mano alterna alcanzar un saliente delante y algo más alto; el codo se abre hacia fuera
       faseM += dt * (s > 0.12 ? 2.4 : 0.5);
@@ -127,7 +132,7 @@ function construye(gltf, { chaqueta = '#b8392e', pantalon = '#2c333b', mochila =
       }
     }
     // bastones: el agarre en la mano y la punta clavada en el suelo por detrás; al adelantar la mano, la punta se despega
-    const libres = (c?.manos ?? 0) > 0.3 || br > 0.3;
+    const libres = (c?.manos ?? 0) > 0.3 || br > 0.3 || tp > 0.2;
     for (const l of ['R', 'L']) {
       const g = bastones[l], ok = (l === 'R' ? palos >= 1 : palos >= 2) && !libres && !conHielo; g.visible = ok; if (!ok || !mano[l]) { prevMano[l].set(0, 0, 0); continue; }
       mano[l].getWorldPosition(PH2); root.worldToLocal(PH2);

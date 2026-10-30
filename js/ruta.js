@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=6';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
 import { t as tr } from './i18n.js?v=3';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
@@ -109,14 +109,19 @@ export function crearRuta({ scene, geo, ruta }) {
     cierra();
   }
   function nivelAuto(d) {
-    let n = 0, fun = false;
-    for (const z of auto) { const fuera = d < z.d0 ? z.d0 - d : d > z.d1 ? d - z.d1 : 0, k2 = (1 - sstep(0, d < z.d0 ? 40 : 60, fuera)) * z.n; if (k2 > n) { n = k2; fun = z.fun; } }
-    return { n, fun };
+    let n = 0, fun = false, tr = false;
+    for (const z of auto) { const fuera = d < z.d0 ? z.d0 - d : d > z.d1 ? d - z.d1 : 0, k2 = (1 - sstep(0, d < z.d0 ? 40 : 60, fuera)) * z.n; if (k2 > n || (z.tr && k2 > 0.01 && k2 >= n - 0.05)) { n = Math.max(n, k2); fun = z.fun; tr = !!z.tr; } }   // la trepada manda sobre el funambulista
+    return { n, fun, tr };
   }
   // pasos difíciles con nombre (hitos «paso»): lista de { x, z } en coordenadas del mundo; los que caen a menos de 120 m del recorrido marcan ±45 m de paso de funambulista
   function setPasosHito(lista) {
     auto = auto.filter((z) => !z.fun);
     for (const q of lista) { const c = cercano(q.x, q.z); if (c.metros < 120) auto.push({ d0: c.dist - 45, d1: c.dist + 45, n: 1, fun: true }); }
+  }
+  // pasos de trepada (hitos «paso» con trepada, chimenea, cadenas o grado I-III): ±45 m de subir con manos y pies, de cara a la roca (clip «trepar»)
+  function setTrepadas(lista) {
+    auto = auto.filter((z) => !z.tr);
+    for (const q of lista) { const c = cercano(q.x, q.z); if (c.metros < 120) auto.push({ d0: c.dist - 45, d1: c.dist + 45, n: 1, fun: true, tr: true }); }
   }
   // hielo y glaciares (ruta.hielo: tramos [d0, d1] en m desde el inicio, de tools/build_hielo.py): se calzan los crampones 40 m antes de entrar y se quitan 40 m después de salir
   const hielo = (ruta.hielo || []).map(([a, b]) => ({ d0: a - 40, d1: b + 40 }));
@@ -131,6 +136,7 @@ export function crearRuta({ scene, geo, ruta }) {
     const n = nivelEn(d);
     if (n < 0.01) {   // fuera del Paso de Mahoma: aristas y pasos detectados
       const a = nivelAuto(d); if (a.n < 0.01) return { n: 0, c: null };
+      if (a.tr) return { n: a.n, r: a.n, c: { trepa: sstep(0.15, 0.85, a.n), giro: 0.05 * Math.sin(tt * 0.6 + i * 1.7) * a.n } };
       const g = a.fun ? sstep(0.2, 0.8, 0.5 + 0.5 * Math.sin(tt * 0.35 + i * 2.3 + d * 0.02)) : 0;   // en los pasos marcados, a ratos agachados con las manos en la roca
       return { n: a.n, r: a.fun ? a.n : 0, c: { brazos: sstep(0.2, 0.9, a.n) * (1 - g), agach: (a.fun ? 0.15 + 0.6 * g : 0.12) * sstep(0.1, 0.8, a.n), manos: g * sstep(0.3, 0.9, a.n) * 0.9, giro: 0.1 * Math.sin(tt * 0.8 + i * 1.7) * a.n } };
     }
@@ -146,6 +152,7 @@ export function crearRuta({ scene, geo, ruta }) {
     const l = lat * (pos ? 1 - pos.n : 1), x = a.pos.x + dz * l, z = a.pos.z - dx * l;
     p.h.position.set(x, geo.heightAt(x, z) + 1.2, z);   // los pies sobre el relieve (la línea de la ruta queda aparte, por encima)
     const yaw = Math.atan2(dx, dz); p.yaw = p.yaw == null ? yaw : p.yaw + Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)) * 0.2; p.h.rotation.y = p.yaw;   // mira hacia donde avanza el recorrido
+    if (pos?.c?.trepa) { const b2 = en(d + 25), c2 = en(d - 25); pos.c.pend = Math.atan2(b2.pos.y - c2.pos.y, Math.hypot(b2.pos.x - c2.pos.x, b2.pos.z - c2.pos.z) || 1); }   // pendiente del tramo (±25 m): el que trepa se tumba hacia la roca lo que haga falta; si baja, destrepa
     p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c, andando ? vel : 0, hi);
   }
   // cuerda entre montañeros consecutivos: tubo fino de 4 caras que se rehace cada fotograma a partir de sus cinturas (curva con holgura, sin física)
@@ -261,7 +268,7 @@ export function crearRuta({ scene, geo, ruta }) {
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
     // tamaño fijo (ESC_M) a cualquier distancia, igual que los modelos de las cimas, para que guarden la proporción
     escalar() { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M); },
-    setPaso, setPasosHito, caer, _est: est, _auto: () => auto,
+    setPaso, setPasosHito, setTrepadas, caer, _est: est, _auto: () => auto,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }

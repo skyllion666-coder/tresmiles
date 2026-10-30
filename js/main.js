@@ -10,7 +10,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=21';
 import { crearFauna } from './fauna.js?v=14';
-import { cargarRuta, crearRuta } from './ruta.js?v=51';
+import { cargarRuta, crearRuta } from './ruta.js?v=52';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
@@ -850,6 +850,7 @@ async function boot() {
       await cumbres.carga(p.id);
       for (const r of datos) (rutas[p.id] ??= []).push(crearRuta({ scene, geo, ruta: r }));
       { const dif = hitosDatos.filter((h) => h.tipo === 'paso' && (h.picos ?? [h.pico]).includes(p.id) && /funambul|regleta|gato|onso|acrob|clave|cadenas/i.test(h.nombre)).map((h) => geo.toXZ(h.lon, h.lat)); if (dif.length) for (const r of rutas[p.id] ?? []) r.setPasosHito(dif); }   // pasos difíciles con nombre: postura de funambulista
+      { const tre = hitosDatos.filter((h) => h.tipo === 'paso' && (h.picos ?? [h.pico]).includes(p.id) && /trepad|chimenea|grado (I|II|III)\b|cadenas|acrob/i.test(`${h.nombre} ${h.nota ?? ''}`)).map((h) => geo.toXZ(h.lon, h.lat)); if (tre.length) for (const r of rutas[p.id] ?? []) r.setTrepadas(tre); }   // pasos de trepada: suben con manos y pies
       { const fi = await cumbres.fichaListo; const cfg = fi?.aneto?.tramo; if (cfg) for (const r of rutas[p.id] ?? []) r.setPaso({ ...cfg, cresta: fi.aneto.cresta }); }   // tramo especial (Paso de Mahoma): se detecta si el recorrido pasa por la arista
       crearHitosDe(p.id);
     })());
