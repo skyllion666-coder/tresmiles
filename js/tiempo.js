@@ -18,6 +18,7 @@ export function tipoTiempo(code, temp, mm) {
   if (code >= 95) o.tormenta = 1;
   if (code === 45 || code === 48) o.niebla = 1;
   if (o.lluvia && temp != null && temp <= 1) { o.nieve = Math.max(o.nieve, o.lluvia); o.lluvia = 0; }   // en la cima, con frío, nieva
+  else if (o.lluvia && temp != null && temp <= 3) { const f = (temp - 1) / 2, L0 = o.lluvia; o.lluvia = L0 * Math.max(0.6, f); o.nieve = Math.max(o.nieve, L0 * Math.max(0.6, 1 - f)); o.aguanieve = 1; }   // entre 1 y 3 °C: aguanieve (gotas y copos mezclados)
   return o;
 }
 
@@ -122,11 +123,11 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
   const tmp = new THREE.Vector3(), aCum = new THREE.Vector3(), aNub = new THREE.Vector3();
 
   function colocaNubes(cobertura, w) {
-    const nN = Math.min(7, Math.round(cobertura / 100 * 5) + (w.lluvia || w.nieve ? 2 : 0)), nB = w.niebla ? 5 : 0;
+    const nN = Math.min(7, Math.round(cobertura / 100 * 5) + (w.lluvia || w.nieve ? 2 : 0)), nB = w.niebla ? 7 : 0;
     const gris = w.lluvia || w.nieve || w.tormenta ? 0.62 : 0.92;
     nubes.forEach((s, i) => {
       const niebla = i >= 12 - nB, usada = i < nN || niebla;
-      s.visible = usada; s.userData.base = !usada ? 0 : niebla ? 0.5 : 0.75 + Math.random() * 0.2;
+      s.visible = usada; s.userData.base = !usada ? 0 : niebla ? 0.68 : 0.75 + Math.random() * 0.2;
       if (!usada) return;
       const a = Math.random() * Math.PI * 2, r = niebla ? 500 + Math.random() * 900 : 1400 + Math.random() * 3000;
       const sz = niebla ? 1300 + Math.random() * 900 : 1800 + Math.random() * 1800;
@@ -150,7 +151,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       // viento: de dónde sopla (grados desde el norte) → hacia dónde va, en el mundo (x este, z sur); velocidad en m/s, exagerada para que se note de lejos
       const hacia = ((c.wind_direction_10m ?? 0) + 180) * Math.PI / 180, ms = (c.wind_speed_10m ?? 0) / 3.6;
       est.viento.set(Math.sin(hacia), -Math.cos(hacia)).multiplyScalar(ms);
-      est.cubObj = Math.min(1, (c.cloud_cover ?? 0) / 100 * 0.75 + (w.lluvia || w.nieve ? 0.25 : 0) + w.niebla * 0.3);
+      est.cubObj = Math.min(1, (c.cloud_cover ?? 0) / 100 * 0.75 + (w.lluvia || w.nieve ? 0.25 : 0) + w.niebla * 0.45);
       colocaNubes(c.cloud_cover ?? 0, w);
       est.prox = performance.now() + 2500 + Math.random() * 5000;
       sonido?.setTiempo?.({ lluvia: w.lluvia, viento: Math.min(1, (c.wind_gusts_10m ?? 0) / 90) });
@@ -179,7 +180,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
           let obj = s.userData.base * est.k * THREE.MathUtils.smoothstep(dN, 1200, 3500);
           if (dN < dCum + 300) {   // delante de la cumbre: si en pantalla la taparía, se aclara (la niebla deja un velo fino)
             const ang = Math.acos(Math.min(1, aNub.dot(aCum))), radio = Math.atan(s.scale.x * 0.42 / dN);
-            obj *= Math.max(s.userData.niebla ? 0.25 : 0, Math.min(1, (ang - radio * 0.6) / Math.max(0.02, radio * 0.5)));
+            obj *= Math.max(s.userData.niebla ? 0.38 : 0, Math.min(1, (ang - radio * 0.6) / Math.max(0.02, radio * 0.5)));
           }
           s.userData.op += (obj - s.userData.op) * Math.min(1, dt * 1.5); s.material.opacity = s.userData.op;
           if (!est.activo && s.userData.op < 0.01) s.visible = false;
