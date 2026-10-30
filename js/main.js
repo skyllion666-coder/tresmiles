@@ -4,18 +4,19 @@ import { makeGeo } from './geo.js?v=2';
 import { Terrain } from './terrain.js?v=23';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=47';
-import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=4';
+import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=1';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=21';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=22';
 import { crearFauna } from './fauna.js?v=14';
 import { cargarRuta, crearRuta } from './ruta.js?v=52';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
-import { t, EN_INGLES } from './i18n.js?v=4';
+import { t, EN_INGLES } from './i18n.js?v=5';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -43,6 +44,7 @@ const LOOK = [
   { top: '#3a6a9e', mid: '#97b8d2', hor: '#d6dde0', fog: '#d6dde0', hemiC: '#f1eee6', hemiG: '#767060', hemiK: 0.70, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
   { top: '#434a82', mid: '#c49aa0', hor: '#f2b88e', fog: '#e0bba6', hemiC: '#ffd8bf', hemiG: '#6a5f5e', hemiK: 0.74, glow: '#ff9a5c', glowK: 0.42, nube: '#ffd3bc' },
 ].map((l) => Object.fromEntries(Object.entries(l).map(([k, v]) => [k, typeof v === 'string' ? new THREE.Color(v) : v])));
+const GRIS = { top: new THREE.Color('#7d8a96'), mid: new THREE.Color('#aab3ba'), hor: new THREE.Color('#c3c8cc'), nube: new THREE.Color('#b4bac0'), c: new THREE.Color() };   // cielo cubierto (tiempo real)
 const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
@@ -84,6 +86,7 @@ async function boot() {
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
   const sonido = crearSonido();
+  const tiempo = crearTiempo({ scene, geo, movil: isMobile(), reducido: reduced, sonido });   // el tiempo real en la cumbre abierta (lluvia, nieve, tormenta, nubes, niebla, viento)
 
   // — cumbres activas (dentro del terreno cargado) —
   const params = new URLSearchParams(location.search);
@@ -556,20 +559,37 @@ async function boot() {
     66: ['🌧️', 'Lluvia helada'], 67: ['🌧️', 'Lluvia helada'], 71: ['🌨️', 'Nieve débil'], 73: ['🌨️', 'Nieve'], 75: ['❄️', 'Nieve fuerte'], 77: ['🌨️', 'Granizo menudo'], 80: ['🌦️', 'Chubascos'], 81: ['🌧️', 'Chubascos'],
     82: ['🌧️', 'Chubascos fuertes'], 85: ['🌨️', 'Chubascos de nieve'], 86: ['❄️', 'Chubascos de nieve fuertes'], 95: ['⛈️', 'Tormenta'], 96: ['⛈️', 'Tormenta con granizo'], 99: ['⛈️', 'Tormenta con granizo'] };
   const meteoCache = new Map();
+  const rumbo = (g) => (EN_INGLES ? ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'] : ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'])[Math.round(((g ?? 0) % 360) / 45) % 8];
+  const tiempoEnMapa = () => store.get('tresmiles-tiempo-mapa') !== '0';
+  // lo que se ve en el mapa con el tiempo de ahora («nieve, nubes y viento del NO»)
+  function notaMapa(c) {
+    const w = tipoTiempo(c.weather_code, c.temperature_2m), l = [];
+    if (w.tormenta) l.push(t('tormenta con rayos')); else if (w.lluvia) l.push(t('lluvia')); else if (w.nieve) l.push(t('nieve'));
+    if (w.niebla) l.push(t('niebla en la cima'));
+    if (!w.niebla) l.push((c.cloud_cover ?? 0) < 20 ? t('sol') : (c.cloud_cover ?? 0) < 70 ? t('algunas nubes') : t('cielo cubierto'));
+    if ((c.wind_gusts_10m ?? 0) >= 30) l.push(t('viento del {d}', { d: rumbo(c.wind_direction_10m) }));
+    return t('En el mapa: {l}.', { l: l.join(', ') });
+  }
+  function aplicaTiempo(p, d) {
+    const on = !!d && tiempoEnMapa() && S.active === p?.id;
+    tiempo.set(on ? d : null, p); banderines.setViento(on ? d.current.wind_gusts_10m ?? 0 : 0);
+  }
   async function pintaMeteo(p) {
     const caja = fichaBody.querySelector('.meteo'); if (!caja) return;
     let m = meteoCache.get(p.id);
     if (!m || Date.now() - m.t > 30 * 60e3) {
-      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
+      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
       try { const r = await fetch(u); if (!r.ok) throw new Error(r.status); m = { t: Date.now(), d: await r.json() }; meteoCache.set(p.id, m); }
-      catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; return; }
+      catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; aplicaTiempo(p, null); return; }
     }
     if (!fichaBody.contains(caja) || S.active !== p.id) return;
+    aplicaTiempo(p, m.d);
     const { current: c, daily: d, hourly: h } = m.d, cielo = (k) => CIELO[k] ?? ['·', ''];
     const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
     const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? t('Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
     const r0 = (v) => Math.round(v);
-    caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento {v} km/h, rachas de {r}', { v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span></div></div>
+    caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento del {d}, {v} km/h, rachas de {r}', { d: rumbo(c.wind_direction_10m), v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span></div></div>
+      <label class="meteo-mapa"><input type="checkbox" data-act="tiempo-mapa"${tiempoEnMapa() ? ' checked' : ''}><span>${t('Ver este tiempo en el mapa')}</span></label><p class="meteo-nota">${notaMapa(c)}</p>
       <ol class="meteo-dias">${d.time.map((s, i) => `<li><span>${dia(s, i)}</span><i aria-hidden="true">${cielo(d.weather_code[i])[0]}</i><b>${r0(d.temperature_2m_max[i])}° <small>${r0(d.temperature_2m_min[i])}°</small></b><span title="${t('Rachas máximas')}">💨 ${r0(d.wind_gusts_10m_max[i])}</span>${d.precipitation_sum[i] >= 0.5 ? `<span>💧 ${r0(d.precipitation_sum[i])} mm</span>` : ''}${iso(s) != null ? `<span title="${t('Cota de nieve aproximada: isocero a mediodía')}">${t('isocero')} ${fmt(iso(s))} m</span>` : ''}</li>`).join('')}</ol>
       <p class="ruta-credito">${t('Previsión de')} <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0) ${t('para el punto de la cumbre, con la temperatura calculada a {a} m. Viento en km/h; la «isocero» es la altura a la que el aire está a 0 °C a mediodía. Es orientativa: en montaña el tiempo cambia rápido; consulta también la predicción de montaña de AEMET.', { a: fmt(p.altitud) })}</p>`;
   }
@@ -796,6 +816,11 @@ async function boot() {
     rutaOn = !rutaOn; b.setAttribute('aria-pressed', rutaOn); b.textContent = rutaOn ? 'Ocultar la ruta del mapa' : 'Mostrar la ruta en el mapa';
     pintaRuta(S.active);
   });
+  fichaBody.addEventListener('change', (e) => {
+    if (e.target.dataset?.act !== 'tiempo-mapa') return;
+    store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
+    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, m?.d ?? null);
+  });
   // — ficha plegable (ver el recorrido con el mapa libre) —
   const tab = $('#ficha-tab'), foldBtn = $('#ficha-fold');
   const aplicaAltura = () => { fichaEl.style.height = !S.plegada && S.sheetH && isMobile() ? `${S.sheetH}px` : ''; };
@@ -941,7 +966,7 @@ async function boot() {
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
-    pintaMeteo(p);
+    tiempo.set(null); pintaMeteo(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1018,7 +1043,7 @@ async function boot() {
   function closeFicha({ fly = false } = {}) {
     if (!S.active) return;
     S.detalle = false; controls.minDistance = 500;
-    const was = S.active; sonido.fx('cerrar'); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
+    const was = S.active; sonido.fx('cerrar'); tiempo.set(null); banderines.setViento(0); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
@@ -1028,7 +1053,7 @@ async function boot() {
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
   addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
-  const goHome = () => { S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  const goHome = () => { tiempo.set(null); banderines.setViento(0); S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
 
@@ -1039,7 +1064,7 @@ async function boot() {
     lagos?.setSol(sun.position, s.col);
     S.look.to = LOOK[i]; sky.material.uniforms.uSunDir.value.copy(sun.position).normalize();
     S.bruma.to = BRUMA[i];   // mar de nubes por la mañana, calima suave a mediodía, bruma dorada por la tarde
-    sun.color.set(s.col); sun.intensity = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1);
+    sun.color.set(s.col); S.solK = s.k * 0.62 * Math.PI * (s.el < 30 ? 1.25 : 1); sun.intensity = S.solK;
     $('#light-name').textContent = s.nombre; $('#btn-light').setAttribute('aria-label', t('Cambiar la luz: {n}', { n: t(s.nombre).toLowerCase() }));
   }
   $('#btn-light').addEventListener('click', (e) => {
@@ -1313,11 +1338,14 @@ async function boot() {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     { // colores del cielo, la niebla y la luz ambiente hacia los de la luz elegida (el primer fotograma, de golpe)
       const L = S.look, T = L.to, kc = L.ini ? 1 - Math.exp(-dt * 1.1) : 1, u = sky.material.uniforms; L.ini = true;
-      u.uTop.value.lerp(T.top, kc); u.uMid.value.lerp(T.mid, kc); u.uHor.value.lerp(T.hor, kc); u.uGlow.value.lerp(T.glow, kc);
-      L.glowK += (T.glowK - L.glowK) * kc; u.uGlowK.value = L.glowK;
-      scene.fog.color.lerp(T.fog, kc); renderer.setClearColor(scene.fog.color);
-      hemi.color.lerp(T.hemiC, kc); hemi.groundColor.lerp(T.hemiG, kc); L.hemiK += (T.hemiK - L.hemiK) * kc; hemi.intensity = L.hemiK * Math.PI;
-      clouds?.setTinte(T.nube, kc);
+      // con el tiempo real nublado, el cielo, la niebla y las nubes tiran a gris y el sol pierde fuerza; el relámpago lo ilumina todo un instante
+      const o = tiempo.cubierto, gk = o * 0.75, fl = tiempo.destello;
+      u.uTop.value.lerp(GRIS.c.copy(T.top).lerp(GRIS.top, gk), kc); u.uMid.value.lerp(GRIS.c.copy(T.mid).lerp(GRIS.mid, gk), kc); u.uHor.value.lerp(GRIS.c.copy(T.hor).lerp(GRIS.hor, gk), kc); u.uGlow.value.lerp(T.glow, kc);
+      L.glowK += (T.glowK * (1 - o) - L.glowK) * kc; u.uGlowK.value = L.glowK;
+      scene.fog.color.lerp(GRIS.c.copy(T.fog).lerp(GRIS.hor, gk), kc); renderer.setClearColor(scene.fog.color);
+      hemi.color.lerp(T.hemiC, kc); hemi.groundColor.lerp(T.hemiG, kc); L.hemiK += (T.hemiK - L.hemiK) * kc; hemi.intensity = L.hemiK * Math.PI * (1 + 0.12 * o + 1.6 * fl);
+      if (S.solK) sun.intensity = S.solK * (1 - 0.6 * o) + fl * 2.5;
+      clouds?.setTinte(GRIS.c.copy(T.nube).lerp(GRIS.nube, gk), kc);
     }
     { const b = S.bruma, kk = 1 - Math.exp(-dt * 0.9); b.k += (b.to.k - b.k) * kk; b.t += (b.to.t - b.t) * kk; scene.fog.near = 24000 + Math.min(0.995, b.k); scene.fog.far = 100000 + Math.min(0.995, b.t); }   // la bruma cambia suavemente al cambiar la luz
     if (S.vuelo) tickVuelo(dt);
@@ -1342,6 +1370,7 @@ async function boot() {
     sky.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     terrain.update(camera); cumbres.update(camera); veg.update(camera); banderines.update(camera, now / 1000);
     clouds.update(dt, camera, !reduced);
+    tiempo.update(dt, camera, renderer.domElement.height);
     updatePins();
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
@@ -1361,7 +1390,7 @@ async function boot() {
   requestAnimationFrame(frame);
   await window.Carga?.fin();   // el 100 % se ve un instante antes de abrir el mapa
   document.body.classList.remove('is-loading');
-  window.tresmiles = { scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
+  window.tresmiles = { tiempo, scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
 }
 
 boot().catch((err) => {

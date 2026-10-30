@@ -42,6 +42,7 @@ export function crearBanderines({ scene, geo }) {
   const gPomo = new THREE.SphereGeometry(0.05, 10, 8).translate(0, ALTO + 0.03, 0), mPomo = new THREE.MeshLambertMaterial({ color: 0xd8b44a });
   const gPiedras = new THREE.IcosahedronGeometry(0.22, 0).scale(1.4, 0.6, 1.2), mPiedras = new THREE.MeshLambertMaterial({ color: 0x77736c, flatShading: true });
   const lista = new Map();   // id -> { g, p }
+  let ritmo = 1, tPrev = null;   // velocidad del ondeo: más deprisa con las rachas del tiempo real (setViento)
 
   function pone(p, cerca) {
     if (lista.has(p.id)) return;
@@ -54,8 +55,9 @@ export function crearBanderines({ scene, geo }) {
   function quita(id) { const b = lista.get(id); if (!b) return; scene.remove(b.g); lista.delete(id); }
   return {
     pone, quita,
+    setViento(rachaKmh) { ritmo = 1 + Math.min(2, Math.max(0, (rachaKmh - 20) / 35)); },
     update(cam, t) {
-      uT.value = t;
+      uT.value += tPrev === null ? 0 : Math.min(0.1, t - tPrev) * ritmo; tPrev = t;
       for (const b of lista.values()) {
         b.g.position.y = geo.heightAt(b.x, b.z) - 0.2;   // por si llega el relieve fino de la cima
         const d = cam.position.distanceTo(b.g.position);

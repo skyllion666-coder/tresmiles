@@ -218,8 +218,61 @@ export function crearAves({ scene, geo, centro }) {
 
 // — sonido ambiental (viento y agua), generado con Web Audio: sin archivos ni licencias —
 const NIVEL_MUSICA = 0.64;   // música de fondo al 64 % del nivel original (-25 % y luego -15 % más)
+// — trueno procedural, el mismo del barco en la botella (~/barco-botella/src/audio.js): chasquido si cae cerca, retumbo de ruido marrón
+// saturado (para que se oiga en el móvil), varios rodamientos y un fondo subgrave —
+function bufferRuidoT(ctx, segundos, tipo) {
+  const n = Math.floor(ctx.sampleRate * segundos), b = ctx.createBuffer(1, n, ctx.sampleRate), d = b.getChannelData(0);
+  let ultimo = 0, m = 0;
+  for (let i = 0; i < n; i++) { const w = Math.random() * 2 - 1; if (tipo === 'marron') { ultimo = (ultimo + 0.02 * w) / 1.02; d[i] = ultimo * 3.5; } else d[i] = w; }
+  const f = Math.floor(ctx.sampleRate * 0.05);
+  for (let i = 0; i < f; i++) { const k = i / f; d[n - 1 - i] = d[n - 1 - i] * k + d[i] * (1 - k); }
+  for (let i = 0; i < n; i++) m = Math.max(m, Math.abs(d[i]));
+  if (m > 0) for (let i = 0; i < n; i++) d[i] *= 0.9 / m;
+  return b;
+}
+function curvaSaturacion(drive) { const n = 1024, c = new Float32Array(n); for (let i = 0; i < n; i++) { const x = (i / (n - 1)) * 2 - 1; c[i] = Math.tanh(x * drive) / Math.tanh(drive); } return c; }
+let bufsTrueno = null;
+function sintetizarTrueno(ctx, destino, t0, cerca = 0.5) {
+  bufsTrueno ??= { marron: bufferRuidoT(ctx, 7, 'marron'), blanco: bufferRuidoT(ctx, 1.5, 'blanco') };
+  const bufs = bufsTrueno, dur = 3.6 + 2.6 * (1 - cerca), al = (a, b) => a + Math.random() * (b - a);
+  const salida = ctx.createGain(); salida.gain.value = 1;
+  if (ctx.createStereoPanner) { const pan = ctx.createStereoPanner(); pan.pan.value = al(-0.6, 0.6); salida.connect(pan); pan.connect(destino); } else salida.connect(destino);
+  const fin = t0 + dur + 0.3;
+  if (cerca > 0.25) {
+    const s = ctx.createBufferSource(); s.buffer = bufs.blanco;
+    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = al(2200, 3200); bp.Q.value = 0.6;
+    const g = ctx.createGain(), a = 0.75 * cerca; g.gain.setValueAtTime(0, t0);
+    let t = t0;
+    for (let i = 0; i < 14; i++) { t += al(0.008, 0.03); g.gain.setValueAtTime(a * al(0.25, 1) * Math.exp(-(t - t0) * 7), t); }
+    g.gain.setTargetAtTime(0, t, 0.06); s.connect(bp); bp.connect(g); g.connect(salida); s.start(t0, al(0, 0.4)); s.stop(t0 + 0.9);
+  }
+  const s = ctx.createBufferSource(); s.buffer = bufs.marron; s.playbackRate.value = al(0.85, 1.15);
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.5;
+  lp.frequency.setValueAtTime(900 + 1600 * cerca, t0); lp.frequency.exponentialRampToValueAtTime(260 + 200 * cerca, t0 + dur);
+  const pre = ctx.createGain(); pre.gain.value = 2.2;
+  const sat = ctx.createWaveShaper(); sat.curve = curvaSaturacion(2.5); sat.oversample = '2x';
+  const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 120;
+  const pico = ctx.createBiquadFilter(); pico.type = 'peaking'; pico.frequency.value = 420; pico.Q.value = 0.8; pico.gain.value = 5;
+  const g = ctx.createGain(), ataque = 0.03 + 0.25 * (1 - cerca), nivel = 0.55 + 0.45 * cerca;
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(nivel, t0 + ataque);
+  let t = t0 + ataque; const rodamientos = 3 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < rodamientos; i++) {
+    const caida = (i + 1) / (rodamientos + 1); t += al(0.35, 0.9) * (dur / 4.5);
+    g.gain.setTargetAtTime(nivel * al(0.25, 0.45) * (1 - caida * 0.5), t - 0.25, 0.12); g.gain.setTargetAtTime(nivel * al(0.55, 0.9) * (1 - caida * 0.6), t, 0.08);
+  }
+  g.gain.setTargetAtTime(0, Math.min(t + 0.2, t0 + dur - 0.6), dur * 0.16);
+  s.connect(lp); lp.connect(pre); pre.connect(sat); sat.connect(hp); hp.connect(pico); pico.connect(g); g.connect(salida);
+  const off = al(0, 2); s.start(t0, off); s.stop(fin);
+  const sb = ctx.createBufferSource(); sb.buffer = bufs.marron;
+  const lps = ctx.createBiquadFilter(); lps.type = 'lowpass'; lps.frequency.value = 110;
+  const gs = ctx.createGain(); gs.gain.setValueAtTime(0, t0); gs.gain.linearRampToValueAtTime(0.7 * nivel, t0 + ataque + 0.1); gs.gain.setTargetAtTime(0, t0 + dur * 0.45, dur * 0.2);
+  sb.connect(lps); lps.connect(gs); gs.connect(salida); sb.start(t0, (off + 3) % 6); sb.stop(fin);
+  return dur;
+}
+
 export function crearSonido() {
   let ctx = null, master, windGain, waterGain, windF, musicGain, on = false, alturaAct = 0, timerAves = null, esperando = false, analizador = null, bufRuido = null, fxGain = null, ultimoFx = 0;
+  let rainGain = null, rainSuave = null, tiempo = { lluvia: 0, viento: 0 };   // el tiempo real de la cumbre abierta (js/tiempo.js)
   const ruido = (c) => {
     const len = c.sampleRate * 4, buf = c.createBuffer(1, len, c.sampleRate), d = buf.getChannelData(0);
     let b0 = 0, b1 = 0, b2 = 0;
@@ -245,6 +298,9 @@ export function crearSonido() {
     const waterMod = ctx.createGain(); waterMod.gain.value = 0.5;
     fuente().connect(wf).connect(waterMod).connect(waterGain).connect(master);
     lfo(0.35, 0.32, waterMod.gain); lfo(0.13, 0.18, waterMod.gain);
+    // lluvia (como en el barco en la botella): ruido blanco agudo para el repiqueteo y uno suave para el fondo
+    const blanco = bufferRuidoT(ctx, 4, 'blanco'), fB = (tipo, f, g0) => { const src = ctx.createBufferSource(); src.buffer = blanco; src.loop = true; src.start(0, Math.random() * 3); const fl = ctx.createBiquadFilter(); fl.type = tipo; fl.frequency.value = f; fl.Q.value = 0.5; const g = ctx.createGain(); g.gain.value = g0; src.connect(fl).connect(g).connect(master); return g; };
+    rainGain = fB('highpass', 2600, 0); rainSuave = fB('lowpass', 9000, 0);
     // música de fondo: bucle propio (instrumentos de VSCO-2 CE, CC0)
     musicGain = ctx.createGain(); musicGain.gain.value = NIVEL_MUSICA; musicGain.connect(master);
     fetch('audio/ambiente.mp3').then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b)).then((buf) => {
@@ -339,6 +395,9 @@ export function crearSonido() {
   return {
     get on() { return on; },
     fx, llamada,
+    setTiempo(o) { tiempo = { lluvia: o.lluvia ?? 0, viento: o.viento ?? 0 }; },
+    // trueno: cerca (0–1) según el retraso entre el relámpago y el trueno
+    trueno(cerca = 0.5) { try { if (!on || !ctx || ctx.state !== 'running' || document.hidden) return; sintetizarTrueno(ctx, master, ctx.currentTime + 0.02, cerca); } catch (e) { /* sin audio */ } },
     get msUltimaLlamada() { return ultimaLlamada; },
     get nivel() { if (!analizador) return 0; const d = new Float32Array(analizador.fftSize); analizador.getFloatTimeDomainData(d); return Math.sqrt(d.reduce((a, x) => a + x * x, 0) / d.length); },
     get estado() { return ctx ? ctx.state : 'sin iniciar'; },
@@ -366,7 +425,8 @@ export function crearSonido() {
       if (!ctx || !on) return;
       alturaAct = alturaSobreSuelo;
       const alto = Math.min(1, alturaSobreSuelo / 9000);
-      windGain.gain.setTargetAtTime(0.03 + 0.09 * alto, ctx.currentTime, 0.5);
+      windGain.gain.setTargetAtTime(0.03 + 0.09 * alto + 0.09 * tiempo.viento, ctx.currentTime, 0.5);
+      rainGain.gain.setTargetAtTime(0.05 * tiempo.lluvia * tiempo.lluvia, ctx.currentTime, 0.8); rainSuave.gain.setTargetAtTime(0.035 * tiempo.lluvia, ctx.currentTime, 0.8);
       waterGain.gain.setTargetAtTime(0.012 * Math.max(0, 1 - lago / 3500) * (1 - alto * 0.6), ctx.currentTime, 0.4);
     },
   };

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=4';
+import { t as tr } from './i18n.js?v=5';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 export async function cargarRuta(id) {
