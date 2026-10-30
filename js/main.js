@@ -570,6 +570,9 @@ async function boot() {
     if ((c.wind_gusts_10m ?? 0) >= 30) l.push(t('viento del {d}', { d: rumbo(c.wind_direction_10m) }));
     return t('En el mapa: {l}.', { l: l.join(', ') });
   }
+  // ?tiempo=lluvia|nieve|tormenta|niebla|nubes|sol: fuerza ese tiempo en la cumbre abierta, para probarlo sin esperar a que llueva de verdad
+  const FORZADO = { lluvia: [63, 8, 100], nieve: [73, -4, 100], tormenta: [95, 9, 100], niebla: [45, 2, 100], nubes: [3, 5, 100], sol: [0, 5, 0] }[params.get('tiempo')];
+  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
   function aplicaTiempo(p, d) {
     const on = !!d && tiempoEnMapa() && S.active === p?.id;
     tiempo.set(on ? d : null, p); banderines.setViento(on ? d.current.wind_gusts_10m ?? 0 : 0);
@@ -583,8 +586,8 @@ async function boot() {
       catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; aplicaTiempo(p, null); return; }
     }
     if (!fichaBody.contains(caja) || S.active !== p.id) return;
-    aplicaTiempo(p, m.d);
-    const { current: c, daily: d, hourly: h } = m.d, cielo = (k) => CIELO[k] ?? ['·', ''];
+    const dat = forzar(m.d); aplicaTiempo(p, dat);
+    const { current: c, daily: d, hourly: h } = dat, cielo = (k) => CIELO[k] ?? ['·', ''];
     const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
     const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? t('Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
     const r0 = (v) => Math.round(v);
@@ -819,7 +822,7 @@ async function boot() {
   fichaBody.addEventListener('change', (e) => {
     if (e.target.dataset?.act !== 'tiempo-mapa') return;
     store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
-    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, m?.d ?? null);
+    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, forzar(m?.d) ?? null);
   });
   // — ficha plegable (ver el recorrido con el mapa libre) —
   const tab = $('#ficha-tab'), foldBtn = $('#ficha-fold');
