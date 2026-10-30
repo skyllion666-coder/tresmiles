@@ -5,7 +5,7 @@ import { Terrain } from './terrain.js?v=23';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=47';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
-import { crearTiempo, tipoTiempo } from './tiempo.js?v=1';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=2';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
@@ -16,7 +16,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=5';
-import { t, EN_INGLES } from './i18n.js?v=5';
+import { t, EN_INGLES } from './i18n.js?v=6';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=3';
 
 const $ = (s) => document.querySelector(s);
@@ -563,16 +563,16 @@ async function boot() {
   const tiempoEnMapa = () => store.get('tresmiles-tiempo-mapa') !== '0';
   // lo que se ve en el mapa con el tiempo de ahora («nieve, nubes y viento del NO»)
   function notaMapa(c) {
-    const w = tipoTiempo(c.weather_code, c.temperature_2m), l = [];
-    if (w.tormenta) l.push(t('tormenta con rayos')); else if (w.lluvia) l.push(t('lluvia')); else if (w.nieve) l.push(t('nieve'));
+    const w = tipoTiempo(c.weather_code, c.temperature_2m, c.precipitation), l = [];
+    if (w.tormenta) l.push(t('tormenta con rayos')); else if (w.lluvia) l.push(t(w.lluvia < 0.35 ? 'lluvia débil' : w.lluvia < 0.75 ? 'lluvia' : 'lluvia fuerte')); else if (w.nieve) l.push(t(w.nieve < 0.35 ? 'nieve débil' : w.nieve < 0.75 ? 'nieve' : 'nevada fuerte'));
     if (w.niebla) l.push(t('niebla en la cima'));
     if (!w.niebla) l.push((c.cloud_cover ?? 0) < 20 ? t('sol') : (c.cloud_cover ?? 0) < 70 ? t('algunas nubes') : t('cielo cubierto'));
     if ((c.wind_gusts_10m ?? 0) >= 30) l.push(t('viento del {d}', { d: rumbo(c.wind_direction_10m) }));
     return t('En el mapa: {l}.', { l: l.join(', ') });
   }
-  // ?tiempo=lluvia|nieve|tormenta|niebla|nubes|sol: fuerza ese tiempo en la cumbre abierta, para probarlo sin esperar a que llueva de verdad
-  const FORZADO = { lluvia: [63, 8, 100], nieve: [73, -4, 100], tormenta: [95, 9, 100], niebla: [45, 2, 100], nubes: [3, 5, 100], sol: [0, 5, 0] }[params.get('tiempo')];
-  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
+  // ?tiempo=llovizna|lluvia|diluvio|nieve|nevada|tormenta|niebla|nubes|sol: fuerza ese tiempo en la cumbre abierta, para probarlo sin esperar a que llueva de verdad
+  const FORZADO = { llovizna: [51, 8, 100, 0.3], lluvia: [63, 8, 100, 3], diluvio: [65, 8, 100, 12], nieve: [73, -4, 100, 2], nevada: [75, -6, 100, 8], tormenta: [95, 9, 100, 10], niebla: [45, 2, 100, 0], nubes: [3, 5, 100, 0], sol: [0, 5, 0, 0] }[params.get('tiempo')];
+  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], precipitation: FORZADO[3], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
   function aplicaTiempo(p, d) {
     const on = !!d && tiempoEnMapa() && S.active === p?.id;
     tiempo.set(on ? d : null, p); banderines.setViento(on ? d.current.wind_gusts_10m ?? 0 : 0);
@@ -581,7 +581,7 @@ async function boot() {
     const caja = fichaBody.querySelector('.meteo'); if (!caja) return;
     let m = meteoCache.get(p.id);
     if (!m || Date.now() - m.t > 30 * 60e3) {
-      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
+      const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,precipitation,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
       try { const r = await fetch(u); if (!r.ok) throw new Error(r.status); m = { t: Date.now(), d: await r.json() }; meteoCache.set(p.id, m); }
       catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; aplicaTiempo(p, null); return; }
     }

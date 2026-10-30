@@ -8,12 +8,13 @@ const R = 2600;   // m alrededor de la cima
 const ALTO = 3200;   // m de columna de lluvia/nieve (de 2.000 m bajo la cima a 1.200 m sobre ella)
 
 // código WMO de Open-Meteo → intensidades 0–1
-export function tipoTiempo(code, temp) {
+export function tipoTiempo(code, temp, mm) {
   const o = { lluvia: 0, nieve: 0, tormenta: 0, niebla: 0 };
-  const L = { 51: 0.25, 53: 0.3, 55: 0.4, 56: 0.3, 57: 0.4, 61: 0.4, 63: 0.7, 65: 1, 66: 0.5, 67: 0.8, 80: 0.5, 81: 0.75, 82: 1, 95: 0.8, 96: 0.9, 99: 1 };
-  const N = { 71: 0.4, 73: 0.7, 75: 1, 77: 0.3, 85: 0.6, 86: 1 };
+  const L = { 51: 0.12, 53: 0.2, 55: 0.3, 56: 0.2, 57: 0.3, 61: 0.3, 63: 0.6, 65: 0.9, 66: 0.4, 67: 0.75, 80: 0.4, 81: 0.7, 82: 1, 95: 0.8, 96: 0.9, 99: 1 };
+  const N = { 71: 0.3, 73: 0.6, 75: 1, 77: 0.2, 85: 0.5, 86: 1 };
   if (L[code]) o.lluvia = L[code];
   if (N[code]) o.nieve = N[code];
+  if (mm > 0) { const k = Math.min(1, mm / 6); if (o.lluvia) o.lluvia = Math.max(o.lluvia, k); if (o.nieve) o.nieve = Math.max(o.nieve, k); }   // mm/h reales: cuanto más cae, más densa
   if (code >= 95) o.tormenta = 1;
   if (code === 45 || code === 48) o.niebla = 1;
   if (o.lluvia && temp != null && temp <= 1) { o.nieve = Math.max(o.nieve, o.lluvia); o.lluvia = 0; }   // en la cima, con frío, nieva
@@ -80,8 +81,8 @@ function caida(n, nieve) {
 }
 
 export function crearTiempo({ scene, geo, movil = false, reducido = false, sonido = null }) {
-  const N = movil ? 3500 : 7000;
-  const lluvia = caida(N, false), nieve = caida(Math.round(N * 0.8), true);
+  const N = movil ? 9000 : 20000;
+  const lluvia = caida(N, false), nieve = caida(Math.round(N * 0.9), true);
   scene.add(lluvia.o, nieve.o);
   // nubes y niebla de la cima: sprites que se apartan de la línea cámara–cumbre
   const tex = [texturaPuff(), texturaPuff(), texturaPuff()], nubes = [];
@@ -144,7 +145,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     // d: respuesta de Open-Meteo (current con weather_code, temperature_2m, cloud_cover, wind_speed_10m, wind_direction_10m, wind_gusts_10m); p: la cumbre (p.w)
     set(d, p) {
       if (!d || !p?.w) { est.activo = false; est.cubObj = 0; sonido?.setTiempo?.({ lluvia: 0, viento: 0 }); return; }
-      const c = d.current, w = tipoTiempo(c.weather_code, c.temperature_2m);
+      const c = d.current, w = tipoTiempo(c.weather_code, c.temperature_2m, c.precipitation);
       est.activo = true; est.c = new THREE.Vector3(p.w.x, p.w.y, p.w.z); est.w = w;
       // viento: de dónde sopla (grados desde el norte) → hacia dónde va, en el mundo (x este, z sur); velocidad en m/s, exagerada para que se note de lejos
       const hacia = ((c.wind_direction_10m ?? 0) + 180) * Math.PI / 180, ms = (c.wind_speed_10m ?? 0) / 3.6;
@@ -162,9 +163,9 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       const esc = alturaPx / (2 * Math.tan((cam.fov * Math.PI) / 360));
       for (const [s, w, vx] of [[lluvia, est.w.lluvia, 2.6], [nieve, est.w.nieve, 1.4]]) {
         const v = w * est.k; s.o.visible = v > 0.01; if (!s.o.visible) continue;
-        s.u.uT.value = t / 1000; s.u.uEsc.value = esc; s.u.uOpac.value = (s === lluvia ? 0.5 : 0.85) * Math.min(1, 0.45 + v);
+        s.u.uT.value = t / 1000; s.u.uEsc.value = esc; s.u.uOpac.value = (s === lluvia ? 0.7 : 0.95) * Math.min(1, 0.55 + 0.6 * v);
         s.u.uCentro.value.set(est.c.x, est.c.y - 2000, est.c.z); s.u.uViento.value.copy(est.viento).multiplyScalar(vx);
-        s.o.geometry.setDrawRange(0, Math.round(s.n * Math.min(1, 0.25 + v)) * s.por);
+        s.o.geometry.setDrawRange(0, Math.round(s.n * Math.min(1, 0.08 + 0.92 * v)) * s.por);
       }
       // nubes: derivan con el viento dentro de un anillo; transparentes de cerca y si quedan entre la cámara y la cumbre
       if (est.c) {

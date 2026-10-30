@@ -3,7 +3,7 @@
 // Botón: 1.º toque, localizar (la cámara va al punto); 2.º, seguir con la brújula; 3.º, apagar. Mover el mapa con el dedo deja de seguir.
 import * as THREE from 'three';
 import { leeOrientacion } from './panorama.js?v=9';
-import { t, EN_INGLES } from './i18n.js?v=5';
+import { t, EN_INGLES } from './i18n.js?v=6';
 
 const RAD = Math.PI / 180;
 const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)
