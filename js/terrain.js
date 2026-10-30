@@ -35,13 +35,14 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   if (uOrto > .5) {
     vec3 og = max((c - uOA) * uOB + uOC, 0.);   // color de la ortofoto llevado al del satélite de alrededor (media y desviación por canal, tools/igualar_orto.py)
     float edge = min(min(vWPos.x - uPb.x, uPb.z - vWPos.x), min(vWPos.z - uPb.y, uPb.w - vWPos.z));
-    ofk = smoothstep(0., (uPb.z - uPb.x) * .12, edge);
+    ofk = smoothstep(0., (uPb.z - uPb.x) * .25, edge); ofk *= ofk;
     c = mix(texture2D(uSat, vCUv).rgb, og, ofk); oq = 1. - .75 * ofk;
   }
 #ifdef USE_MAP
   // nitidez: máscara de enfoque sobre la imagen de satélite (la fuente tiene 10 m por píxel; esto recupera contraste de borde sin inventar datos)
   { vec2 ts = 1. / vec2(textureSize(map, 0)); vec3 bl = (texture2D(map, vMapUv + vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv - vec2(ts.x, 0.)).rgb + texture2D(map, vMapUv + vec2(0., ts.y)).rgb + texture2D(map, vMapUv - vec2(0., ts.y)).rgb) * .25;
-    c = max(c + (c - bl) * (.5 + 1.3 * fc) * (1. - sl * .5) * (1. - .4 * ofk), 0.); }
+    vec3 det = uOrto > .5 ? (texture2D(map, vMapUv).rgb - bl) * uOB * ofk : c - bl;   // con ortofoto, solo su propio detalle y nada en el fundido (si no, el borde de la pieza sale como una raya oscura)
+    c = max(c + det * (.5 + 1.3 * fc) * (1. - sl * .5) * (1. - .4 * ofk), 0.); }
 #endif
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
