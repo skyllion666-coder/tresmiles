@@ -638,3 +638,17 @@ body.selector-abierto #intro { z-index: 31; }
 .subida-aviso { font: 500 .8rem/1.35 var(--cond); color: #8a4b12; }
 .subida[aria-pressed="true"] { background: #efe6ff; border-color: #b98cff; }
 .subida:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* fichas en el móvil: más legibles sin agrandar la letra — trazo algo más grueso, tinta más oscura, textos pequeños sin gris claro ni transparencias
+   y un poco más de aire entre letras (la Cormorant es fina y en pantallas pequeñas, sobre todo al sol, se lee peor) */
+@media (max-width: 760px), (pointer: coarse) {
+  .ficha-body { color: #17211d; }
+  .ficha-body p, .ficha-body p.lede { font-weight: 560; color: #17211d; letter-spacing: .005em; }
+  .ficha-body p.ruta { font-weight: 500; color: #17211d; }
+  .ficha-body figcaption, .ruta-credito, .ficha-body p.ruta-credito { color: #34403a; font-weight: 500; letter-spacing: .012em; }
+  .ficha-body h3 { color: #1f3a33; }
+  dl.stats dt { color: #3a4640; }
+  dl.stats dd { color: #17211d; font-weight: 500; }
+  .subida small, .subida-datos { opacity: 1; color: #2c3833; font-weight: 500; }
+  .subida-aviso { color: #7a3f0c; font-weight: 600; }
+}
