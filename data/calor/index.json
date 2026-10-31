@@ -75,5 +75,478 @@
   "trazas": 104,
   "png": "data/calor/vignemale.png",
   "datos": "data/calor/vignemale-datos.png"
+ },
+ "z01": {
+  "caja": [
+   -0.53,
+   42.72,
+   -0.38,
+   42.9
+  ],
+  "trazas": 213,
+  "png": "data/calor/z01.png",
+  "datos": "data/calor/z01-datos.png"
+ },
+ "z02": {
+  "caja": [
+   -0.53,
+   42.17,
+   -0.29,
+   42.35
+  ],
+  "trazas": 77,
+  "png": "data/calor/z02.png",
+  "datos": "data/calor/z02-datos.png"
+ },
+ "z03": {
+  "caja": [
+   -0.29,
+   42.17,
+   -0.05,
+   42.35
+  ],
+  "trazas": 86,
+  "png": "data/calor/z03.png",
+  "datos": "data/calor/z03-datos.png"
+ },
+ "z04": {
+  "caja": [
+   -0.53,
+   42.53,
+   -0.29,
+   42.71
+  ],
+  "trazas": 65,
+  "png": "data/calor/z04.png",
+  "datos": "data/calor/z04-datos.png"
+ },
+ "z05": {
+  "caja": [
+   -0.05,
+   42.17,
+   0.19,
+   42.35
+  ],
+  "trazas": 56,
+  "png": "data/calor/z05.png",
+  "datos": "data/calor/z05-datos.png"
+ },
+ "z06": {
+  "caja": [
+   0.19,
+   42.35,
+   0.43,
+   42.53
+  ],
+  "trazas": 45,
+  "png": "data/calor/z06.png",
+  "datos": "data/calor/z06-datos.png"
+ },
+ "z07": {
+  "caja": [
+   -0.29,
+   42.64,
+   -0.18,
+   42.72
+  ],
+  "trazas": 24,
+  "png": "data/calor/z07.png",
+  "datos": "data/calor/z07-datos.png"
+ },
+ "z08": {
+  "caja": [
+   0.19,
+   42.53,
+   0.43,
+   42.55
+  ],
+  "trazas": 11,
+  "png": "data/calor/z08.png",
+  "datos": "data/calor/z08-datos.png"
+ },
+ "z09": {
+  "caja": [
+   0.43,
+   42.35,
+   0.67,
+   42.53
+  ],
+  "trazas": 52,
+  "png": "data/calor/z09.png",
+  "datos": "data/calor/z09-datos.png"
+ },
+ "z10": {
+  "caja": [
+   -0.53,
+   42.35,
+   -0.29,
+   42.53
+  ],
+  "trazas": 34,
+  "png": "data/calor/z10.png",
+  "datos": "data/calor/z10-datos.png"
+ },
+ "z11": {
+  "caja": [
+   -0.29,
+   42.35,
+   -0.05,
+   42.53
+  ],
+  "trazas": 23,
+  "png": "data/calor/z11.png",
+  "datos": "data/calor/z11-datos.png"
+ },
+ "z12": {
+  "caja": [
+   0.43,
+   42.53,
+   0.67,
+   42.55
+  ],
+  "trazas": 10,
+  "png": "data/calor/z12.png",
+  "datos": "data/calor/z12-datos.png"
+ },
+ "z13": {
+  "caja": [
+   -0.53,
+   42.71,
+   -0.29,
+   42.72
+  ],
+  "trazas": 26,
+  "png": "data/calor/z13.png",
+  "datos": "data/calor/z13-datos.png"
+ },
+ "z14": {
+  "caja": [
+   -0.05,
+   42.35,
+   0.19,
+   42.53
+  ],
+  "trazas": 63,
+  "png": "data/calor/z14.png",
+  "datos": "data/calor/z14-datos.png"
+ },
+ "z15": {
+  "caja": [
+   0.55,
+   42.55,
+   0.67,
+   42.58
+  ],
+  "trazas": 4,
+  "png": "data/calor/z15.png",
+  "datos": "data/calor/z15-datos.png"
+ },
+ "z16": {
+  "caja": [
+   -0.05,
+   42.53,
+   0.19,
+   42.6
+  ],
+  "trazas": 31,
+  "png": "data/calor/z16.png",
+  "datos": "data/calor/z16-datos.png"
+ },
+ "z17": {
+  "caja": [
+   0.67,
+   42.53,
+   0.76,
+   42.58
+  ],
+  "trazas": 16,
+  "png": "data/calor/z17.png",
+  "datos": "data/calor/z17-datos.png"
+ },
+ "z18": {
+  "caja": [
+   -0.29,
+   42.53,
+   -0.05,
+   42.6
+  ],
+  "trazas": 28,
+  "png": "data/calor/z18.png",
+  "datos": "data/calor/z18-datos.png"
+ },
+ "z19": {
+  "caja": [
+   -0.29,
+   42.6,
+   -0.06,
+   42.64
+  ],
+  "trazas": 26,
+  "png": "data/calor/z19.png",
+  "datos": "data/calor/z19-datos.png"
+ },
+ "z20": {
+  "caja": [
+   0.67,
+   42.35,
+   0.76,
+   42.53
+  ],
+  "trazas": 61,
+  "png": "data/calor/z20.png",
+  "datos": "data/calor/z20-datos.png"
+ },
+ "z21": {
+  "caja": [
+   -0.53,
+   41.99,
+   -0.29,
+   42.17
+  ],
+  "trazas": 71,
+  "png": "data/calor/z21.png",
+  "datos": "data/calor/z21-datos.png"
+ },
+ "z22": {
+  "caja": [
+   -0.29,
+   41.99,
+   -0.05,
+   42.17
+  ],
+  "trazas": 44,
+  "png": "data/calor/z22.png",
+  "datos": "data/calor/z22-datos.png"
+ },
+ "z23": {
+  "caja": [
+   -0.05,
+   41.99,
+   0.19,
+   42.17
+  ],
+  "trazas": 30,
+  "png": "data/calor/z23.png",
+  "datos": "data/calor/z23-datos.png"
+ },
+ "z24": {
+  "caja": [
+   0.19,
+   41.99,
+   0.43,
+   42.17
+  ],
+  "trazas": 56,
+  "png": "data/calor/z24.png",
+  "datos": "data/calor/z24-datos.png"
+ },
+ "z25": {
+  "caja": [
+   0.43,
+   41.99,
+   0.67,
+   42.17
+  ],
+  "trazas": 40,
+  "png": "data/calor/z25.png",
+  "datos": "data/calor/z25-datos.png"
+ },
+ "z26": {
+  "caja": [
+   0.67,
+   41.99,
+   0.76,
+   42.17
+  ],
+  "trazas": 27,
+  "png": "data/calor/z26.png",
+  "datos": "data/calor/z26-datos.png"
+ },
+ "z27": {
+  "caja": [
+   0.19,
+   42.17,
+   0.43,
+   42.35
+  ],
+  "trazas": 48,
+  "png": "data/calor/z27.png",
+  "datos": "data/calor/z27-datos.png"
+ },
+ "z28": {
+  "caja": [
+   0.43,
+   42.17,
+   0.67,
+   42.35
+  ],
+  "trazas": 17,
+  "png": "data/calor/z28.png",
+  "datos": "data/calor/z28-datos.png"
+ },
+ "z29": {
+  "caja": [
+   0.67,
+   42.17,
+   0.76,
+   42.35
+  ],
+  "trazas": 17,
+  "png": "data/calor/z29.png",
+  "datos": "data/calor/z29-datos.png"
+ },
+ "z30": {
+  "caja": [
+   0.19,
+   42.55,
+   0.25,
+   42.6
+  ],
+  "trazas": 5,
+  "png": "data/calor/z30.png",
+  "datos": "data/calor/z30-datos.png"
+ },
+ "z31": {
+  "caja": [
+   0.55,
+   42.72,
+   0.76,
+   42.9
+  ],
+  "trazas": 75,
+  "png": "data/calor/z31.png",
+  "datos": "data/calor/z31-datos.png"
+ },
+ "z32": {
+  "caja": [
+   0.4,
+   42.74,
+   0.55,
+   42.92
+  ],
+  "trazas": 73,
+  "png": "data/calor/z32.png",
+  "datos": "data/calor/z32-datos.png"
+ },
+ "z33": {
+  "caja": [
+   0.25,
+   42.75,
+   0.4,
+   42.93
+  ],
+  "trazas": 97,
+  "png": "data/calor/z33.png",
+  "datos": "data/calor/z33-datos.png"
+ },
+ "z34": {
+  "caja": [
+   -0.06,
+   42.76,
+   0.18,
+   42.94
+  ],
+  "trazas": 102,
+  "png": "data/calor/z34.png",
+  "datos": "data/calor/z34-datos.png"
+ },
+ "z35": {
+  "caja": [
+   0.18,
+   42.76,
+   0.25,
+   42.94
+  ],
+  "trazas": 63,
+  "png": "data/calor/z35.png",
+  "datos": "data/calor/z35-datos.png"
+ },
+ "z36": {
+  "caja": [
+   -0.18,
+   42.82,
+   -0.06,
+   43.0
+  ],
+  "trazas": 46,
+  "png": "data/calor/z36.png",
+  "datos": "data/calor/z36-datos.png"
+ },
+ "z37": {
+  "caja": [
+   -0.38,
+   42.88,
+   -0.18,
+   43.0
+  ],
+  "trazas": 96,
+  "png": "data/calor/z37.png",
+  "datos": "data/calor/z37-datos.png"
+ },
+ "z38": {
+  "caja": [
+   -0.53,
+   42.9,
+   -0.38,
+   43.0
+  ],
+  "trazas": 31,
+  "png": "data/calor/z38.png",
+  "datos": "data/calor/z38-datos.png"
+ },
+ "z39": {
+  "caja": [
+   0.55,
+   42.9,
+   0.76,
+   43.0
+  ],
+  "trazas": 20,
+  "png": "data/calor/z39.png",
+  "datos": "data/calor/z39-datos.png"
+ },
+ "z40": {
+  "caja": [
+   0.4,
+   42.92,
+   0.55,
+   43.0
+  ],
+  "trazas": 12,
+  "png": "data/calor/z40.png",
+  "datos": "data/calor/z40-datos.png"
+ },
+ "z41": {
+  "caja": [
+   0.25,
+   42.93,
+   0.4,
+   43.0
+  ],
+  "trazas": 41,
+  "png": "data/calor/z41.png",
+  "datos": "data/calor/z41-datos.png"
+ },
+ "z42": {
+  "caja": [
+   -0.06,
+   42.94,
+   0.18,
+   43.0
+  ],
+  "trazas": 16,
+  "png": "data/calor/z42.png",
+  "datos": "data/calor/z42-datos.png"
+ },
+ "z43": {
+  "caja": [
+   0.18,
+   42.94,
+   0.25,
+   43.0
+  ],
+  "trazas": 15,
+  "png": "data/calor/z43.png",
+  "datos": "data/calor/z43-datos.png"
  }
 }
