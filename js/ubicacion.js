@@ -1,9 +1,10 @@
 // «Dónde estoy» (solo en la app, ?app=1): el GPS del móvil pone un punto en el mapa con su círculo de precisión y, si se pide,
-// la vista sigue la posición y gira con la brújula. Fuera del mapa, solo avisa de a cuánto se está.
-// Botón: 1.º toque, localizar (la cámara va al punto); 2.º, seguir con la brújula; 3.º, apagar. Mover el mapa con el dedo deja de seguir.
+// la vista sigue la posición. Fuera del mapa, solo avisa de a cuánto se está. Un cono azul marca hacia dónde mira el móvil (brújula).
+// Botón: 1.º toque, «Norte arriba» (te sigue con el norte arriba); 2.º, «El mapa gira contigo» (lo que tienes delante en el móvil es lo que tienes delante);
+// 3.º, apagar. Mover el mapa con el dedo deja de seguir sin cambiar de modo; el siguiente toque vuelve a seguir.
 import * as THREE from 'three';
 import { leeOrientacion } from './panorama.js?v=9';
-import { t, EN_INGLES } from './i18n.js?v=11';
+import { t, EN_INGLES } from './i18n.js?v=12';
 
 const RAD = Math.PI / 180;
 const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)
@@ -14,7 +15,7 @@ const delPico = (n) => (EN_INGLES ? n : /^(La|Las|Los) /.test(n) ? `de ${n}` : /
 const fmtKm = (d) => (d < 10 ? d.toFixed(1).replace('.', EN_INGLES ? '.' : ',') : String(Math.round(d)));
 
 export function crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton, botonPanorama = null, abrePanorama = null, picos = [], picoAbierto = () => null }) {
-  const st = { modo: 0, watch: null, pos: null, rumbo: null, abs: false, raf: 0, primera: true };   // modo: 0 apagado, 1 localizado, 2 siguiendo
+  const st = { modo: 0, sigo: false, watch: null, pos: null, rumbo: null, abs: false, raf: 0, primera: true };   // modo: 0 apagado, 1 norte arriba, 2 el mapa gira con el móvil; sigo: la vista va con la posición
 
   // — marcador: punto (siempre del mismo tamaño en pantalla), círculo de precisión y cuña hacia donde se mira —
   const grupo = new THREE.Group(); grupo.visible = false; grupo.renderOrder = 20; scene.add(grupo);
@@ -24,7 +25,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
   punto.scale.set(0.06, 0.06, 1); punto.renderOrder = 22; grupo.add(punto);
   const circulo = new THREE.Mesh(new THREE.CircleGeometry(1, 48), new THREE.MeshBasicMaterial({ color: 0x2f80ed, transparent: true, opacity: 0.22, depthTest: false, depthWrite: false }));
   circulo.rotation.x = -Math.PI / 2; circulo.renderOrder = 20; grupo.add(circulo);
-  const forma = new THREE.Shape(); forma.moveTo(0, 0); forma.lineTo(-0.38, -1); forma.lineTo(0.38, -1); forma.closePath();   // cuña hacia −z (norte) antes de girar
+  const forma = new THREE.Shape(); forma.moveTo(0, 0); forma.lineTo(-0.38, 1); forma.lineTo(0.38, 1); forma.closePath();   // +y de la forma, tumbada con rotation.x = −90°, queda hacia −z (norte) antes de girar
   const cuna = new THREE.Mesh(new THREE.ShapeGeometry(forma), new THREE.MeshBasicMaterial({ color: 0x2f80ed, transparent: true, opacity: 0.45, depthTest: false, depthWrite: false, side: THREE.DoubleSide }));
   cuna.rotation.x = -Math.PI / 2; const giro = new THREE.Group(); giro.add(cuna); giro.visible = false; giro.renderOrder = 21; grupo.add(giro);
 
@@ -35,7 +36,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
 
   const pinta = () => {
     boton.setAttribute('aria-pressed', st.modo === 2 ? 'true' : 'false'); boton.dataset.modo = st.modo;
-    boton.setAttribute('aria-label', t(['Dónde estoy', 'Seguir mi posición con la brújula', 'Apagar la ubicación'][st.modo]));
+    boton.setAttribute('aria-label', t(!st.sigo && st.modo ? 'Volver a seguir mi posición' : ['Dónde estoy', 'Girar el mapa con el móvil', 'Apagar la ubicación'][st.modo]));
   };
 
   function colocaMarcador() {
@@ -66,12 +67,12 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     colocaMarcador();
     if (st.primera) {
       st.primera = false;
-      const a = camState(), destino = new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z);
-      flyTo({ t: destino, theta: a.theta, phi: 0.95, r: 2600 });
+      const destino = new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z);
+      flyTo({ t: destino, theta: 0, phi: 0.95, r: 2600 });   // norte arriba
       const p = picoAbierto();
       avisa(t('Estás aquí (precisión ±{m} m{alt}){p}.', { m: Math.round(accuracy), alt: altitude != null ? t(' · altitud GPS {a} m', { a: Math.round(altitude) }) : '', p: p ? t(' · a {d} km {p}', { d: fmtKm(km(lat, lon, p.lat, p.lon)), p: delPico(p.nombre) }) : '' }));
     }
-    if (st.modo === 2) sigue();
+    if (st.sigo) sigue();
   }
 
   function alError(err) {
@@ -84,12 +85,12 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     if (e.type === 'deviceorientationabsolute') st.abs = true; else if (st.abs) return;   // en Android la relativa no vale
     const h = leeOrientacion(e); if (h == null) return;
     if (st.rumbo == null) st.rumbo = h; else { const d = ((h - st.rumbo + 540) % 360) - 180; st.rumbo = (st.rumbo + d * 0.15 + 360) % 360; }
-    if (!st.raf) st.raf = requestAnimationFrame(() => { st.raf = 0; colocaMarcador(); if (st.modo === 2) sigue(); });
+    if (!st.raf) st.raf = requestAnimationFrame(() => { st.raf = 0; colocaMarcador(); if (st.sigo && st.modo === 2) sigue(); });
   }
   function sigue() {
     if (!st.pos) return;
     const a = camState(), destino = new THREE.Vector3(st.pos.x, geo.heightAt(st.pos.x, st.pos.z), st.pos.z);
-    const theta = st.rumbo == null ? a.theta : -st.rumbo * RAD;   // la cámara detrás del punto, mirando hacia el rumbo
+    const theta = st.modo === 1 ? 0 : st.rumbo == null ? a.theta : -st.rumbo * RAD;   // norte arriba, o la cámara detrás del punto mirando hacia el rumbo
     applyState({ t: a.t.clone().lerp(destino, 0.25), theta: a.theta + Math.atan2(Math.sin(theta - a.theta), Math.cos(theta - a.theta)) * 0.25, phi: a.phi, r: a.r });
   }
   async function brujula(on) {
@@ -105,22 +106,24 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
 
   function apaga() {
     if (st.watch != null) navigator.geolocation.clearWatch(st.watch);
-    st.watch = null; st.modo = 0; st.pos = null; grupo.visible = false; brujula(false); pinta();
+    st.watch = null; st.modo = 0; st.sigo = false; st.pos = null; grupo.visible = false; brujula(false); pinta();
     if (botonPanorama) botonPanorama.hidden = true;
   }
 
   boton.addEventListener('click', () => {
     if (st.modo === 0) {
       if (!navigator.geolocation) { avisa('Este móvil no da la ubicación.'); return; }
-      st.modo = 1; st.primera = true; pinta(); avisa('Buscando tu posición…', 15000);
+      st.modo = 1; st.sigo = true; st.primera = true; pinta(); avisa('Buscando tu posición…', 15000); brujula(true);   // el cono de hacia dónde miras, desde el principio
       st.watch = navigator.geolocation.watchPosition(alPosicion, alError, { enableHighAccuracy: true, maximumAge: 5000, timeout: 30000 });
+    } else if (!st.sigo) {   // se había movido el mapa con el dedo: vuelve a seguir en el mismo modo
+      st.sigo = true; pinta(); avisa(t(st.modo === 1 ? 'Te sigo otra vez, con el norte arriba.' : 'Te sigo otra vez: el mapa gira con el móvil.')); sigue();
     } else if (st.modo === 1) {
       if (!st.pos) { avisa('Aún no sé dónde estás: espera a que el GPS te encuentre.'); return; }
-      st.modo = 2; pinta(); brujula(true); avisa('Siguiendo tu posición: la vista gira con el móvil.'); sigue();
+      st.modo = 2; pinta(); avisa(t('El mapa gira contigo: lo que tienes delante en el móvil es lo que tienes delante en el monte.')); sigue();
     } else apaga();
   });
   botonPanorama?.addEventListener('click', () => { if (st.pos) abrePanorama(st.pos.x, st.pos.z); });
-  controls.addEventListener('start', () => { if (st.modo === 2) { st.modo = 1; brujula(false); pinta(); avisa('Has movido el mapa: ya no te sigo (toca el botón para volver).'); } });
+  controls.addEventListener('start', () => { if (st.sigo && st.pos) { st.sigo = false; pinta(); avisa('Has movido el mapa: ya no te sigo (toca el botón para volver).'); } });
   pinta();
   window.tresmilesUbic = st;   // para revisar el estado desde la consola o una prueba
   return { apaga };

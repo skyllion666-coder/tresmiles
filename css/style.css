@@ -578,8 +578,8 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-ul .pl-vacio { padding: 18px 16px; color: var(--ink-2, #5b6760); }
 #pan-sub { min-height: 2.5em; } #pan-nota { min-height: 4.2em; }   /* alto fijo: el panorama se mide una sola vez */
 #about-body ul.diag { font-size: .8rem; line-height: 1.45; padding-left: 18px; word-break: break-word; }   /* diagnóstico de la app */
-#btn-ubicacion[data-modo="1"] { color: #2f80ed; }   /* localizado */
-#btn-ubicacion[aria-pressed="true"] { background: #2f80ed; border-color: #2f80ed; color: #fff; }   /* siguiendo con la brújula */
+#btn-ubicacion[data-modo="1"] { color: #2f80ed; border-color: #2f80ed; }   /* norte arriba */
+#btn-ubicacion[aria-pressed="true"] { background: #2f80ed; border-color: #2f80ed; color: #fff; }   /* el mapa gira con el móvil */
 #ubic-aviso { position: fixed; z-index: 9; left: 50%; bottom: calc(110px + var(--sa-bottom, env(safe-area-inset-bottom))); transform: translateX(-50%); max-width: min(92vw, 420px); background: rgba(36,48,44,.94); color: var(--cream); padding: 10px 16px; border-radius: 10px; font: 500 .8rem/1.35 var(--cond); letter-spacing: .03em; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,.3); pointer-events: none; }
 /* modo cámara (js/realidad.js, solo en la app) */
 #ra { position: fixed; inset: 0; z-index: 120; background: #10181a; touch-action: none; }

@@ -13,10 +13,10 @@ import { crearLagos, crearAves, crearSonido } from './vida.js?v=22';
 import { crearFauna } from './fauna.js?v=14';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=53';
 import { crearPanorama } from './panorama.js?v=9';
-import { crearUbicacion } from './ubicacion.js?v=7';
+import { crearUbicacion } from './ubicacion.js?v=8';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=11';
+import { t, EN_INGLES } from './i18n.js?v=12';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);

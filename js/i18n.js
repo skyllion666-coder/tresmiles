@@ -114,7 +114,7 @@ const EN = {
   'No se puede abrir la cámara (¿falta el permiso?). La silueta y los nombres siguen funcionando con la brújula.': 'The camera cannot be opened (missing permission?). The skyline and names still work with the compass.',
   'Este móvil no da la brújula: no se puede saber hacia dónde apuntas.': 'This phone has no compass: it cannot tell where you are pointing.',
   // — dónde estoy —
-  'Seguir mi posición con la brújula': 'Follow my position with the compass', 'Apagar la ubicación': 'Turn off location',
+  'Seguir mi posición con la brújula': 'Follow my position with the compass', 'Girar el mapa con el móvil': 'Turn the map with the phone', 'Volver a seguir mi posición': 'Follow my position again', 'Te sigo otra vez, con el norte arriba.': 'Following you again, with north up.', 'Te sigo otra vez: el mapa gira con el móvil.': 'Following you again: the map turns with the phone.', 'El mapa gira contigo: lo que tienes delante en el móvil es lo que tienes delante en el monte.': 'The map turns with you: what is ahead on the phone is what is ahead on the mountain.', 'Norte arriba': 'North up', 'Apagar la ubicación': 'Turn off location',
   'Sin permiso de ubicación: actívalo en los ajustes de la app.': 'No location permission: turn it on in the app settings.',
   'El GPS tarda en responder: sal a cielo abierto y vuelve a probar.': 'The GPS is slow to respond: go out into the open and try again.',
   'No se ha podido saber dónde estás.': 'Your position could not be found.', 'Sin permiso para la brújula.': 'No permission for the compass.',
