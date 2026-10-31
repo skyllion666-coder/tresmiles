@@ -1195,7 +1195,28 @@ async function boot() {
   }
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
   $('#ficha-close').addEventListener('click', () => closeFicha());
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') { if (S.vuelo) pararVuelo(true); else if (!listEl.hidden) setList(false); else if (!$('#filters').hidden) { cierraFiltros(); } else closeFicha(); } });
+  // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
+  const segPanel = () => document.getElementById('seg-panel');
+  const algoAbierto = () => $('#about').open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
+  function cierraUno() {
+    if ($('#about').open) { $('#about').close(); return true; }
+    if (segPanel() && !segPanel().hidden) { segPanel().querySelector('.seg-cerrar')?.click(); return true; }
+    if (S.vuelo) { pararVuelo(true); return true; }
+    if (!listEl.hidden) { setList(false); return true; }
+    if (!$('#filters').hidden) { cierraFiltros(); return true; }
+    if (S.active) { closeFicha(); return true; }
+    return false;
+  }
+  addEventListener('keydown', (e) => { if (e.key === 'Escape') cierraUno(); });
+  // historial: mientras haya algo abierto hay una entrada «de guarda»; «atrás» la gasta y cierra una cosa (si queda algo abierto, se vuelve a poner)
+  let guarda = false, ignoraPop = false;
+  addEventListener('popstate', () => { if (ignoraPop) { ignoraPop = false; return; } if (guarda) { guarda = false; cierraUno(); } });
+  setInterval(() => {
+    const abierto = algoAbierto();
+    if (abierto && !guarda) { history.pushState({ tresmiles: 1 }, '', location.href); guarda = true; }
+    else if (!abierto && guarda && history.state?.tresmiles) { guarda = false; ignoraPop = true; history.back(); }   // se cerró con el dedo: se quita la guarda
+  }, 300);
+  $('#filters-cerrar').addEventListener('click', () => { sonido.fx('cerrar'); cierraFiltros(); });
   const goHome = () => { tiempo.set(null); banderines.setViento(0); S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });

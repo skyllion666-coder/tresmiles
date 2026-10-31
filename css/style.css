@@ -89,6 +89,7 @@ body.is-ready #compass { opacity: .95; pointer-events: auto; }
 
 /* — panel de filtros — */
 .panel { position: fixed; z-index: 7; left: var(--gutter); bottom: 98px; width: min(330px, calc(100vw - 2 * var(--gutter))); background: var(--cream); color: var(--ink); padding: 18px 20px 16px; filter: drop-shadow(0 12px 28px rgba(0,0,0,.35)); }
+#filters { max-height: calc(100dvh - 98px - max(16px, var(--sa-top, env(safe-area-inset-top)))); overflow-y: auto; overscroll-behavior: contain; }   /* nunca más alto que la pantalla: se desplaza por dentro y la cabecera (con la ×) queda fija arriba */
 .panel h2 { margin: 0 0 8px; font: 500 1.7rem/1 var(--serif); color: var(--spruce); }
 .panel fieldset { border: 0; margin: 14px 0 0; padding: 0; }
 .panel legend { padding: 0; margin-bottom: 8px; font: 500 .7rem var(--cond); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
@@ -255,6 +256,7 @@ body:not(.is-loading) #loading { opacity: 0; pointer-events: none; }
   dl.stats { grid-template-columns: 1fr; }
   body.ficha-open #dock, body.ficha-open #tools, body.ficha-open #compass { opacity: 0; pointer-events: none; }
   .panel { bottom: 76px; }
+  #filters { max-height: calc(100dvh - 76px - max(16px, var(--sa-top, env(safe-area-inset-top)))); }
   .dock-main { min-width: min(250px, 60vw); padding: 0 12px; gap: 8px; font-size: .72rem; letter-spacing: .12em; white-space: nowrap; }
   #compass { bottom: calc(max(18px, var(--sa-bottom, env(safe-area-inset-bottom))) + 52px); }
   #compass svg { width: 52px; height: 52px; }
@@ -682,3 +684,9 @@ body.selector-abierto #intro { z-index: 31; }
 .seg-veredicto.justo { background: #fbf0d6; border-color: #d99a1e; }
 .seg-veredicto.mal { background: #f8dcd8; border-color: #c8372d; }
 .seg-nota { font-size: .8rem !important; color: #34403a; }
+
+/* panel de filtros: cabecera fija con el botón de cerrar (en el móvil el panel tapa casi toda la pantalla y el botón que lo abre) */
+.panel-cab { position: sticky; top: -18px; z-index: 1; display: flex; align-items: center; justify-content: space-between; margin: -18px -20px 6px; padding: 12px 10px 8px 20px; background: var(--cream); }
+.panel-cab h2 { margin: 0; }
+.panel-cerrar { width: 44px; height: 44px; border: 0; background: none; color: var(--ink); font-size: 1.9rem; line-height: 1; cursor: pointer; }
+.panel-cerrar:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
