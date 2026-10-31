@@ -685,7 +685,7 @@
    "nombre": "Pico Maldito",
    "alias": "Pico Maldito · Pic Maudit",
    "altitud": 3350,
-   "otras": "Otras fuentes: 3.354 m",
+   "otras": "Otras fuentes: 3.354 m · medida de 3.353 m con solo 8,1 m de prominencia sobre la Punta Astorg (Sostremetries, 2025)",
    "lat": 42.639577,
    "lon": 0.641345,
    "descripcion": "Primera cumbre de la cresta que baja desde el Aneto hacia la Maladeta. Hay que remontar un corredor y salvar el paso de la «Regleta» (grado III) antes de pisar la cima.",
@@ -695,7 +695,7 @@
     "foto": "med-maldito",
     "pie": "Vista cercana al Pico Maldito, con el glaciar y los ibones abajo."
    },
-   "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio.",
+   "curiosidad": "Hay datos contradictorios sobre su primera ascensión: unas fuentes la fechan en 1905, por Le Bondidier, Sansuc, Camboué y Luquet; otras, en agosto de 1910, por Emilio Juncadella y J. Haurillon. Su cresta se conoce también como Cresta del Medio. En 2025 el grupo Sostremetries comprobó que solo tiene 8,1 m de prominencia sobre la Punta Astorg, por debajo de los 10 m que pide un tresmil independiente, así que en su lista cuenta como antecima.",
    "clase": "discutida",
    "nombres": ""
   },
@@ -1745,14 +1745,14 @@
     "eriste-forqueta-viados"
    ],
    "id": "forqueta",
-   "nombre": "Pico de la Forqueta",
-   "alias": "Tuca de la Forqueta · Las Forquetas",
-   "altitud": 3007,
-   "otras": "3.011 m (Forqueta Norte, OpenStreetMap)",
+   "nombre": "Pico SE de la Forqueta",
+   "alias": "Tuca de la Forqueta S · Punta SE de la Forqueta",
+   "altitud": 3004,
+   "otras": "3.007 m (Tuca de la Forqueta Sur, OpenStreetMap)",
    "lat": 42.63073,
    "lon": 0.426617,
    "grado": "PD+ · cresta y pedreras",
-   "descripcion": "Cumbre doble al este del Posets, sobre el collado de Eriste. En esta ruta se visita tras las crestas de Eriste, con las dos Forquetas —Norte y Sur— a un paso una de otra.",
+   "descripcion": "La más baja de las dos Forquetas, al este del Posets, a un centenar de metros de la Norte. En esta ruta se visita tras las crestas de Eriste, justo antes de la Forqueta Norte.",
    "foto": "forqueta",
    "pie": "Las Forquetas, vistas desde el Diente Royo.",
    "fotoCima": {
@@ -1761,7 +1761,9 @@
    },
    "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta.",
    "clase": "secundaria",
-   "nombres": "Pico SE de la Forqueta · Tuca de la Forqueta S · Punta SE de la Forqueta"
+   "nombres": "Pico SE de la Forqueta · Tuca de la Forqueta S · Punta SE de la Forqueta · Pico de la Forqueta",
+   "inv": "POS-21",
+   "situacion": "Aragón"
   },
   {
    "id": "casco",
@@ -2105,10 +2107,9 @@
    "situacion": "Aragón",
    "lat": 42.83216,
    "lon": -0.29288,
-   "descripcion": "La Frondella Central (3.055 m) es la primera cumbre de las Frondellas, la cresta que se alza sobre el refugio de Respomuso, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Frondella Central (3.055 m) es la primera cumbre de las Frondellas, la cresta que se alza sobre el refugio de Respomuso, en el macizo de Balaitús–Infiernos. El recorrido del mapa es la ruta de ejemplo de Frondella (Frondiellas), que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Frondella Central",
-   "basica": true,
    "inv": "BAL-04",
    "foto": "frondella",
    "pie": "La cresta de la Frondella, vista durante la subida desde Respomuso.",
@@ -2121,7 +2122,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/frondella-central-pico-de-la-frondella-frondella-norte-y-aguja-cadier-desde-respomuso-189677396",
     "texto": "Ruta de yivatosal en Wikiloc"
-   }
+   },
+   "rutas": [
+    "frondiellas-sarra"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "torre-de-costerillou",
@@ -2221,10 +2226,9 @@
    "situacion": "Aragón",
    "lat": 42.76958,
    "lon": -0.27095,
-   "descripcion": "Las Algas Norte (3.032 m) son una de las cumbres de la cresta Garmo Negro–Algas–Argualas, sobre el Balneario de Panticosa, en el macizo de Balaitús–Infiernos. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Las Algas Norte (3.032 m) son una de las cumbres de la cresta Garmo Negro–Algas–Argualas, sobre el Balneario de Panticosa, en el macizo de Balaitús–Infiernos. El recorrido del mapa es la ruta de ejemplo de Pico Algas, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Antecima N de Algas",
-   "basica": true,
    "inv": "INF-07",
    "foto": "algas-norte",
    "pie": "Las Algas Norte, desde la subida desde Casa de Piedra.",
@@ -2238,7 +2242,14 @@
     "url": "https://www.wikiloc.com/hiking-trails/garmo-negro-y-algas-norte-circular-desde-casa-de-piedra-29188961",
     "texto": "Ruta de Alfredo Barberan en Wikiloc"
    },
-   "epoca": "Final del verano (la ruta se hizo el 29 de septiembre de 2018)"
+   "epoca": "Final del verano (la ruta se hizo el 29 de septiembre de 2018)",
+   "rutas": [
+    "algas-argualas"
+   ],
+   "fotoCima": {
+    "foto": "alg-norte",
+    "pie": "La cima de Algas Norte, con los bastones sobre el mojón."
+   }
   },
   {
    "id": "algas-se",
@@ -2332,14 +2343,14 @@
    "nombre": "Algas SO",
    "alias": "Punda dero Corral",
    "altitud": 3006,
-   "otras": "",
+   "otras": "confirmada como tresmil (Sostremetries, 2026)",
    "macizo": "bal",
    "frontera": false,
    "situacion": "Aragón",
    "lat": 42.767528,
    "lon": -0.271278,
-   "descripcion": "Cima discutida de 3.006 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
-   "clase": "discutida",
+   "descripcion": "Cima secundaria de 3.006 m del macizo Valle de Tena · Balaitús–Infiernos, en territorio aragonés. En 2026 el grupo de topógrafos Sostremetries confirmó que supera los 10 m de prominencia, así que entra en la lista de tresmiles como «Algas SW». Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "clase": "secundaria",
    "nombres": "Punda dero Corral",
    "basica": true,
    "inv": "INF-11",
@@ -2351,7 +2362,8 @@
    },
    "desnivel": "+1.174 m · 11,3 km",
    "ruta": "Esta cima aparece en la ruta «Aguja de Pondiellos-Garmo Negro-Algas Norte-Algas SO», de Pau Armengol i Muñoz en Wikiloc, de 11,3 km y 1.174 m de desnivel acumulado. Está situada en Baños de Panticosa (Aragón). El autor tardó 10 h 33 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Baños de Panticosa"
+   "acceso": "Ruta en Baños de Panticosa",
+   "curiosidad": "Es una de las seis cimas que Sostremetries añadió en 2026 a la lista de tresmiles de los Pirineos, que pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026."
   },
   {
    "id": "pico-del-clot-de-la-hount",
@@ -2394,10 +2406,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.768361,
    "lon": -0.146583,
-   "descripcion": "El Pico Central (3.227 m) es la cima que cierra la cresta de cuatro tresmiles sobre el glaciar de Ossoue, junto al Vignemale, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pico Central (3.227 m) es la cima que cierra la cresta de cuatro tresmiles sobre el glaciar de Ossoue, junto al Vignemale, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico Cerbillona, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda dera Blanquera · Pic Central",
-   "basica": true,
    "inv": "VIG-04",
    "foto": "pico-central",
    "pie": "La cima del Pico Central, en la cresta del Vignemale.",
@@ -2411,7 +2422,14 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/vignemale-4-tresmiles-desde-refugio-de-bayssellance-vignemale-clot-de-la-hount-cerbillona-y-pico-ce-219577337",
     "texto": "Ruta de TrotaríosySendas en Wikiloc"
    },
-   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)"
+   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)",
+   "rutas": [
+    "cerbillona-bujaruelo"
+   ],
+   "fotoCima": {
+    "foto": "cer-central",
+    "pie": "El Pic Central, con nieve en su cumbre."
+   }
   },
   {
    "id": "gran-tapou",
@@ -2745,10 +2763,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.689972,
    "lon": 0.007833,
-   "descripcion": "Cumbre de 3.161 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.161 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico de Marboré, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda deras Crepas · Picos de la Cascada-Pic Oriental",
-   "basica": true,
    "inv": "PER-10",
    "foto": "pico-oriental-de-la-cascada",
    "pie": "Pico Oriental de la Cascada: «15 Pico Oriental de la Cascada 3161 m.», en una foto de su ruta.",
@@ -2757,7 +2774,14 @@
     "texto": "Ruta de Santialpino en Wikiloc"
    },
    "desnivel": "+1.250 m · 25,2 km",
-   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "rutas": [
+    "marbore-cascada"
+   ],
+   "dificultad": "alta",
+   "grado": "PD · trepadas de I y II, paso clave",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz"
   },
   {
    "id": "pico-central-de-la-cascada",
@@ -2770,10 +2794,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.688833,
    "lon": 0.004722,
-   "descripcion": "Cumbre de 3.111 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.111 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico de Marboré, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Repunda deras Bruixas · Pico Brulle",
-   "basica": true,
    "inv": "PER-12",
    "foto": "pico-central-de-la-cascada",
    "pie": "Pico Central de la Cascada: «17 Pico Central de la Cascada ó pico Brulle 3106 m.», en una foto de su ruta.",
@@ -2782,7 +2805,14 @@
     "texto": "Ruta de Santialpino en Wikiloc"
    },
    "desnivel": "+1.250 m · 25,2 km",
-   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "rutas": [
+    "marbore-cascada"
+   ],
+   "dificultad": "alta",
+   "grado": "PD · trepadas de I y II, paso clave",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz"
   },
   {
    "id": "pico-occidental-de-la-cascada",
@@ -2872,16 +2902,28 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.685306,
    "lon": 0.000333,
-   "descripcion": "Cumbre de 3.075 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.075 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico de Marboré, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda dero Espaldador · Pico de la Espalda",
-   "basica": true,
    "inv": "PER-16",
    "foto": "espalda-del-marbore",
    "pie": "La Espalda del Marboré y su gran pared sobre la cascada.",
    "fotoCima": {
     "foto": "espalda-marbore-nevero",
     "pie": "Turqueta o Espalda del Marboré: el nevero bajo la pared."
+   },
+   "rutas": [
+    "marbore-cascada"
+   ],
+   "dificultad": "alta",
+   "grado": "PD · trepadas de I y II, paso clave",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+   "desnivel": "≈ 1.250 m desde Góriz (≈ 25 km con los picos de la Cascada, solo ida)",
+   "ruta": "Refugio de Góriz → Ciudad de Piedra → Faja Roya → embudo del Marboré → arista norte → cumbre; cresta de los picos de la Cascada",
+   "enlace": {
+    "url": "https://es.wikiloc.com/rutas-alpinismo/marbore-3248-m-y-picos-de-la-cascada-desde-refugio-de-goriz-109571719",
+    "texto": "Ver la ruta en Wikiloc: Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz, de Santialpino"
    }
   },
   {
@@ -3011,10 +3053,9 @@
    "situacion": "Aragón",
    "lat": 42.669639,
    "lon": 0.052111,
-   "descripcion": "El Pico Baudrimont SE (3.023 m) es una cima del macizo de Monte Perdido–Taillón, junto a la Punta de las Olas y el Soum de Ramond. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pico Baudrimont SE (3.023 m) es una cima del macizo de Monte Perdido–Taillón, junto a la Punta de las Olas y el Soum de Ramond. El recorrido del mapa es la ruta de ejemplo de Soum de Ramond, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punta de Tormosa · Pico SE Baudrimont",
-   "basica": true,
    "inv": "PER-21",
    "foto": "pico-baudrimont-se",
    "pie": "El Pico Baudrimont SE, con su nevero.",
@@ -3026,7 +3067,16 @@
    "dificultad": "muy-alta",
    "grado": "Itinerario largo de alta montaña con nevero",
    "ruta": "La ruta de Carlos_cumbres enlaza en una sola jornada el Soum de Ramond (pico Añisclo), el Baudrimont, la Punta de las Olas y la Punta dera Cuniestra, con una vista de la cima sobre un nevero.",
-   "curiosidad": "Se enlaza con el Soum de Ramond, la Punta de las Olas y la Punta dera Cuniestra en una sola ruta."
+   "curiosidad": "Se enlaza con el Soum de Ramond, la Punta de las Olas y la Punta dera Cuniestra en una sola ruta.",
+   "rutas": [
+    "soum-tres-sorores"
+   ],
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+   "fotoCima": {
+    "foto": "soum-baudrimont",
+    "pie": "La subida a la cresta de Baudrimont SE."
+   }
   },
   {
    "id": "punta-de-las-escaleras",
@@ -3060,19 +3110,20 @@
   {
    "id": "cabieto-dero-baziero",
    "nombre": "Cabieto dero Baziero",
-   "alias": "Gabieto Central (propuesta, sin nombre clásico)",
+   "alias": "Gabieto Central",
    "altitud": 3018,
-   "otras": "",
+   "otras": "confirmada como tresmil (Sostremetries, 2026)",
    "macizo": "per",
    "frontera": false,
    "situacion": "Aragón",
    "lat": 42.693861,
    "lon": -0.063056,
-   "descripcion": "Cima discutida de 3.018 m del macizo Monte Perdido–Taillón, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
-   "clase": "discutida",
-   "nombres": "Gabieto Central (propuesta, sin nombre clásico)",
+   "descripcion": "Cima secundaria de 3.018 m entre los dos Gabietos, en el macizo Monte Perdido–Taillón, en territorio aragonés. En 2026 el grupo de topógrafos Sostremetries confirmó que supera los 10 m de prominencia, así que entra en la lista de tresmiles como «Gabieto Central». Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "clase": "secundaria",
+   "nombres": "Gabieto Central",
    "basica": true,
-   "inv": "PER-24"
+   "inv": "PER-24",
+   "curiosidad": "Sostremetries la midió con dos antenas GNSS, una en el collado y otra en la cima, durante al menos 20 minutos. Con ella y otras cinco altas, la lista de tresmiles de los Pirineos pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026."
   },
   {
    "id": "pequeno-astazu",
@@ -3115,10 +3166,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.68575,
    "lon": -0.017083,
-   "descripcion": "Cumbre de 3.012 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.012 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Casco de Marboré, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda dero Faixón · Torre de Marboré · La Torre · Punda dero Faixón / Torre de Marboré",
-   "basica": true,
    "inv": "PER-26",
    "foto": "torre-del-marbore",
    "pie": "La cima de la Torre del Marboré, con una piedra escrita.",
@@ -3128,7 +3178,17 @@
    },
    "desnivel": "+1.665 m · 30,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «RUTA 3000 ORDESA - TORRE DE MARBORÉ - ESPALDA DE MARBORÉ - PICO ORIENTAL , CENTRAL Y ORIENTAL DE LA CASCADA - PICO DE MARBORÉ», de Ricardo 747 en Wikiloc, de 30,3 km y 1.665 m de desnivel acumulado. Está situada en Fanlo del Valle de Vío (Aragón). El autor tardó 11 h 59 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Fanlo del Valle de Vío"
+   "acceso": "Ruta en Fanlo del Valle de Vío",
+   "rutas": [
+    "casco-goriz"
+   ],
+   "dificultad": "alta",
+   "grado": "PD · cresta y pasos de I",
+   "epoca": "Julio – septiembre",
+   "fotoCima": {
+    "foto": "casco-torre",
+    "pie": "La Torre de Marboré, con el recorrido de ascenso dibujado en amarillo."
+   }
   },
   {
    "id": "pequena-munia",
@@ -3352,10 +3412,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.710444,
    "lon": 0.339444,
-   "descripcion": "Cima secundaria de 3.033 m del macizo Bachimala, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.033 m del macizo Bachimala, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico de Culfreda, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Punta Culfreda Norte · Culfreda Norte · Pico NE de Culfreda · Punta Batoa",
-   "basica": true,
    "inv": "BAC-09",
    "foto": "culfreda-ne",
    "pie": "La cima del Culfreda NE, con su nombre escrito en una piedra.",
@@ -3365,7 +3424,13 @@
    },
    "desnivel": "+1.433 m · 18,9 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «PIRINEOS. Pic Cauarère y Picos de Culfreda o Batoua desde refugio de Tabernés», de beatriz0509 en Wikiloc, de 18,9 km y 1.433 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 8 h en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "rutas": [
+    "culfreda-tabernes"
+   ],
+   "dificultad": "moderada",
+   "grado": "F+ · senda, pedreras y cresta fácil",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "culfreda-central",
@@ -3378,10 +3443,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.709972,
    "lon": 0.338167,
-   "descripcion": "Cima secundaria de 3.031 m del macizo Bachimala, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.031 m del macizo Bachimala, en la frontera entre Aragón y Francia. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico de Culfreda, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Punta Culfreda d’el Medio · Pico Central de Culfreda",
-   "basica": true,
    "inv": "BAC-10",
    "foto": "culfreda-central",
    "pie": "El nombre del Culfreda Central, escrito en la roca de la cima.",
@@ -3391,7 +3455,13 @@
    },
    "desnivel": "+1.433 m · 18,9 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «PIRINEOS. Pic Cauarère y Picos de Culfreda o Batoua desde refugio de Tabernés», de beatriz0509 en Wikiloc, de 18,9 km y 1.433 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 8 h en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "rutas": [
+    "culfreda-tabernes"
+   ],
+   "dificultad": "moderada",
+   "grado": "F+ · senda, pedreras y cresta fácil",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pic-de-l-abeille",
@@ -3505,14 +3575,14 @@
    "nombre": "Tuca Llardaneta Suroeste",
    "alias": "Punta de la Lit",
    "altitud": 3292,
-   "otras": "",
+   "otras": "medida de 3.292,5 m y 11,1 m de prominencia (Sostremetries, 2025)",
    "macizo": "pos",
    "frontera": false,
    "situacion": "Aragón",
    "lat": 42.651556,
    "lon": 0.429,
-   "descripcion": "La Tuca Llardaneta Suroeste (3.292 m) es una cima de la cresta de las Espadas, entre las Espadas y la Tuqueta Roya, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
-   "clase": "discutida",
+   "descripcion": "La Tuca Llardaneta Suroeste (3.292 m) es una cima de la cresta de las Espadas, entre las Espadas y la Tuqueta Roya, en el macizo de Posets–Eriste. En 2025 el grupo Sostremetries la confirmó como tresmil con el nombre de Punta de la Lit. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "clase": "secundaria",
    "nombres": "Punta de la Lit",
    "basica": true,
    "inv": "POS-05",
@@ -3540,10 +3610,9 @@
    "situacion": "Aragón",
    "lat": 42.653028,
    "lon": 0.43275,
-   "descripcion": "La Tuqueta Roya (3.266 m) es una cima de la cresta de las Espadas, antes del Posets, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Tuqueta Roya (3.266 m) es una cima de la cresta de las Espadas, antes del Posets, en el macizo de Posets–Eriste. El recorrido del mapa es la ruta de ejemplo de Las Espadas, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "",
-   "basica": true,
    "inv": "POS-06",
    "foto": "tuqueta-roya",
    "pie": "La cima de la Tuqueta Roya, con su altura grabada en una piedra.",
@@ -3556,7 +3625,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/diente-royo-pico-pavots-espadas-tuca-de-llardaneta-tuqueta-roya-posets-per-la-cresta-de-espadas-144524069",
     "texto": "Ruta de Evarp en Wikiloc"
-   }
+   },
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "cima-234-sin-nombre",
@@ -3627,10 +3700,9 @@
    "situacion": "Aragón",
    "lat": 42.644,
    "lon": 0.427917,
-   "descripcion": "Cima secundaria de 3.076 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.076 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico de Pavots, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Forau de la Nèu · Tuca del Forao de la Neu",
-   "basica": true,
    "inv": "POS-13",
    "foto": "tuca-forau-de-la-neu",
    "pie": "Vista desde la Tuca Forau de la Neu.",
@@ -3640,7 +3712,17 @@
    },
    "desnivel": "+1.154 m · 10,1 km, circular",
    "ruta": "Esta cima aparece en la ruta «231003 ( *111 tresmil*) Collado de Eriste, Picos de la Forqueta N y SE , Tuca Forau de la Neu desde Refugio Ángel Orús», de Paco Rodriguez Garcia en Wikiloc, de 10,1 km y 1.154 m de desnivel acumulado. Está situada en Eriste (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Eriste"
+   "acceso": "Ruta en Eriste",
+   "rutas": [
+    "pavots-orus"
+   ],
+   "dificultad": "moderada",
+   "grado": "F · senda, pedreras y neveros",
+   "epoca": "Julio – septiembre",
+   "fotoCima": {
+    "foto": "pav-forau",
+    "pie": "Piedras de la cima de la Tuca Forau de la Neu, con su nombre pintado."
+   }
   },
   {
    "id": "pico-inferior-de-la-paul",
@@ -3653,10 +3735,9 @@
    "situacion": "Aragón",
    "lat": 42.658528,
    "lon": 0.443444,
-   "descripcion": "Cima secundaria de 3.075 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.075 m del macizo Posets–Eriste, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico de la Paúl, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tuca de la Collada de la Paúl",
-   "basica": true,
    "inv": "POS-14",
    "foto": "pico-inferior-de-la-paul",
    "pie": "La cresta del Pico Inferior de la Paúl.",
@@ -3666,7 +3747,13 @@
    },
    "desnivel": "+1.783 m · 19,9 km, circular",
    "ruta": "Esta cima aparece en la ruta «Cresta Bardamina - La Paúl desde Espigantosa (valle de Eriste)», de Pelopin en Wikiloc, de 19,9 km y 1.783 m de desnivel acumulado. Está situada en Eriste (Aragón). El autor tardó 10 h 12 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Eriste"
+   "acceso": "Ruta en Eriste",
+   "rutas": [
+    "paul-bardamina"
+   ],
+   "dificultad": "alta",
+   "grado": "PD+ · cresta con trepadas y destrepes",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-eriste-sur",
@@ -3679,10 +3766,9 @@
    "situacion": "Aragón",
    "lat": 42.62325,
    "lon": 0.409028,
-   "descripcion": "Cumbre de 3.041 m del macizo Posets–Eriste, en territorio aragonés. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.041 m del macizo Posets–Eriste, en territorio aragonés. El recorrido del mapa es la ruta de ejemplo de Pico de Eriste Norte, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punta de Peña Solana · Tuca de Bagüeñola S · Pico Eriste S · Punta de Peña Solana / Tuca de Bagüeñola S",
-   "basica": true,
    "inv": "POS-17",
    "foto": "pico-de-eriste-sur",
    "pie": "La cresta nevada del Pico de Eriste Sur.",
@@ -3692,7 +3778,13 @@
    },
    "desnivel": "+2.388 m · 28,4 km, circular",
    "ruta": "Esta cima aparece en la ruta «Tuca Bagüeña 2943m, Eriste Sur 3045m y Gran Eriste 3053m desde Sahún por la Ball», de Marian Bonafonte en Wikiloc, de 28,4 km y 2.388 m de desnivel acumulado. Está situada en Sahún (Aragón). El autor tardó 11 h 18 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Sahún"
+   "acceso": "Ruta en Sahún",
+   "rutas": [
+    "eriste-forqueta-viados"
+   ],
+   "dificultad": "muy-alta",
+   "grado": "AD · cresta de roca mala",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "diente-royo",
@@ -3734,24 +3826,30 @@
    "situacion": "Aragón",
    "lat": 42.631556,
    "lon": 0.425722,
-   "descripcion": "Cumbre de 3.008 m del macizo Posets–Eriste, en territorio aragonés. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La cumbre principal de las Forquetas, al este del Posets, sobre el collado de Eriste. En esta ruta se sube tras las crestas de Eriste y la Forqueta Sureste, a un paso una de otra.",
    "clase": "principal",
    "nombres": "Tuca de la Forqueta N · Turets · La Forqueta",
-   "basica": true,
    "inv": "POS-20",
    "foto": "pico-de-la-forqueta",
    "pie": "El hito de la cima del Pico de la Forqueta, con piedras escritas.",
    "enlace": {
-    "url": "https://www.wikiloc.com/mountaineering-trails/231003-110-tresmil-collado-de-eriste-pico-de-la-forqueta-n-y-se-tuca-forau-de-la-neu-desde-refugio-149098808",
-    "texto": "Ruta de Paco Rodriguez Garcia en Wikiloc"
+    "url": "https://es.wikiloc.com/rutas-senderismo/refugio-de-viados-eriste-norte-gran-pico-eriste-eriste-sur-forqueta-sw-y-forqueta-140420382",
+    "texto": "Ver la ruta en Wikiloc: Refugio de Viadós, Eriste Norte, Gran Pico Eriste, Eriste Sur, Forqueta SW y Forqueta, de Pablo Turrado Martínez"
    },
-   "desnivel": "+1.154 m · 10,1 km, circular",
-   "ruta": "Esta cima aparece en la ruta «231003 ( *111 tresmil*) Collado de Eriste, Picos de la Forqueta N y SE , Tuca Forau de la Neu desde Refugio Ángel Orús», de Paco Rodriguez Garcia en Wikiloc, de 10,1 km y 1.154 m de desnivel acumulado. Está situada en Eriste (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Eriste",
+   "desnivel": "≈ 2.100 m desde las Bordas de Viadós (19 km ida y vuelta)",
+   "ruta": "Bordas de Viadós → fuen del Incante → Paso de la Gralla → Eriste Sur, Gran Pico y Eriste Norte → collado de Millares → Forqueta Sur y Norte → collado de Eriste → bajada a Viadós",
+   "acceso": "Valle de Chistau · Bordas de Viadós",
    "fotoCima": {
     "foto": "eri-forqueta",
     "pie": "Las dos Forquetas (la Norte y la Sureste), con un ibón a sus pies."
-   }
+   },
+   "dificultad": "muy-alta",
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "eriste-forqueta-viados"
+   ],
+   "grado": "PD+ · cresta y pedreras",
+   "curiosidad": "OpenStreetMap distingue dos cimas casi iguales: la Tuca de la Forqueta Norte, de 3.011 m, y la Sur, de 3.007 m, con el collado de Eriste o de la Forqueta (2.862 m) algo más al norte. La ruta de Wikiloc llama además «Forqueta SW» a un resalte de la cresta."
   },
   {
    "id": "hito-occidental-del-perdiguero",
@@ -3764,10 +3862,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.691278,
    "lon": 0.515167,
-   "descripcion": "El Hito Occidental del Perdiguero (3.176 m) es la cima occidental del macizo del Perdiguero, junto al Perdiguero (3.222 m), sobre el valle de Literola. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Hito Occidental del Perdiguero (3.176 m) es la cima occidental del macizo del Perdiguero, junto al Perdiguero (3.222 m), sobre el valle de Literola. El recorrido del mapa es la ruta de ejemplo de Tuca de Lliterola, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Molsèro · Hito W de Perdiguero",
-   "basica": true,
    "inv": "PRD-02",
    "foto": "hito-occidental-del-perdiguero",
    "pie": "La cima del Hito Occidental del Perdiguero, con su cresta.",
@@ -3780,7 +3877,11 @@
    "dificultad": "alta",
    "grado": "Cresta de roca con trepadas",
    "ruta": "Desde el parking de Literola se sube por el Aintzira y el ibonet de Literola hasta el Perdiguero Oriental y el Perdiguero; desde el collado superior de Literola se encadena la cresta de Literola hasta la Forca de Remuñe, y se baja por el portal de Remuñe al ibón Blanco de Lliterola.",
-   "curiosidad": "La ruta de ric__mountains lo ve desde el Perdiguero Oriental y sigue por la cresta de Literola."
+   "curiosidad": "La ruta de ric__mountains lo ve desde el Perdiguero Oriental y sigue por la cresta de Literola.",
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "hito-oriental-de-perdiguero",
@@ -3822,10 +3923,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.697639,
    "lon": 0.520889,
-   "descripcion": "El Pico Royo (3.122 m) es una cima de la cresta de Literola, junto al collado superior de Literola, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pico Royo (3.122 m) es una cima de la cresta de Literola, junto al collado superior de Literola, en el macizo del Perdiguero. El recorrido del mapa es la ruta de ejemplo de Tuca de Lliterola, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Tuca Ròya de Lliteròla",
-   "basica": true,
    "inv": "PRD-06",
    "foto": "pico-royo",
    "pie": "El Pico Royo, con su piedra grabada.",
@@ -3838,6 +3938,14 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
     "texto": "Ruta de ric__mountains en Wikiloc"
+   },
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "epoca": "Julio – septiembre",
+   "fotoCima": {
+    "foto": "lli-royo",
+    "pie": "Las rocas rojizas del Pico Royo."
    }
   },
   {
@@ -3851,10 +3959,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700025,
    "lon": 0.476414,
-   "descripcion": "La Torre Armengaud (3.114 m) es una cima de la cresta de Gourgs Blancs, tras la falsa Torre Armengaud, sobre el valle de Estós. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Torre Armengaud (3.114 m) es una cima de la cresta de Gourgs Blancs, tras la falsa Torre Armengaud, sobre el valle de Estós. El recorrido del mapa es la ruta de ejemplo de Tuca de Gorgs Blancs, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "",
-   "basica": true,
    "inv": "PRD-07",
    "foto": "torre-armengaud",
    "pie": "La Torre Armengaud, en la cresta de Gourgs Blancs.",
@@ -3867,7 +3974,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
     "texto": "Ruta de Santiago González en Wikiloc"
-   }
+   },
+   "rutas": [
+    "gorgs-estos"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-maupas",
@@ -4109,10 +4220,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.695389,
    "lon": 0.521194,
-   "descripcion": "La Tuca de Lliterola (3.097 m) es una cima de la cresta de Literola, en el macizo del Perdiguero. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Tuca de Lliterola (3.097 m) es una cima de la cresta de Literola, en el macizo del Perdiguero. El recorrido del mapa es la ruta de ejemplo de Tuca de Lliterola, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Paso d'Alto de Lliteròla",
-   "basica": true,
    "inv": "PRD-16",
    "foto": "tuca-de-lliterola",
    "pie": "La cima de la Tuca de Lliterola, con su piedra grabada.",
@@ -4125,7 +4235,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
     "texto": "Ruta de ric__mountains en Wikiloc"
-   }
+   },
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-jean-arlaud",
@@ -4138,10 +4252,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.699639,
    "lon": 0.481139,
-   "descripcion": "El Pico Jean Arlaud (3.064 m) es una cima de la cresta de Gourgs Blancs, sobre el ibón de Gías. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pico Jean Arlaud (3.064 m) es una cima de la cresta de Gourgs Blancs, sobre el ibón de Gías. El recorrido del mapa es la ruta de ejemplo de Tuca de Gorgs Blancs, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Tuca d'el Puerto d'O · Pico del Puerto de Oô · Tuca de O",
-   "basica": true,
    "inv": "PRD-17",
    "foto": "pico-jean-arlaud",
    "pie": "El pico Jean Arlaud, en la cresta de Gourgs Blancs.",
@@ -4154,7 +4267,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/cresta-jean-arlaud-gourgs-blancs-clarabide-y-gias-7898652",
     "texto": "Ruta de Santiago González en Wikiloc"
-   }
+   },
+   "rutas": [
+    "gorgs-estos"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-audoubert",
@@ -4312,10 +4429,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.700487,
    "lon": 0.526188,
-   "descripcion": "La Aguja de Lliterola (3.028 m) es una aguja de roca en la cresta de Literola, entre la Punta de Literola y el Tusse de Remuñe. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Aguja de Lliterola (3.028 m) es una aguja de roca en la cresta de Literola, entre la Punta de Literola y el Tusse de Remuñe. El recorrido del mapa es la ruta de ejemplo de Tuca de Lliterola, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Aguja de Literola",
-   "basica": true,
    "inv": "PRD-23",
    "foto": "aguja-de-lliterola",
    "pie": "La Aguja de Lliterola, vista desde la cresta.",
@@ -4328,7 +4444,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
     "texto": "Ruta de ric__mountains en Wikiloc"
-   }
+   },
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-clarabide",
@@ -4542,10 +4662,9 @@
    "situacion": "Aragón",
    "lat": 42.630411,
    "lon": 0.655618,
-   "descripcion": "Cima secundaria de 3.350 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.350 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Espalda de Aneto, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "",
-   "basica": true,
    "inv": "ANE-04",
    "foto": "aguja-daviu",
    "pie": "La cima de la Aguja Daviu, con su hito.",
@@ -4555,7 +4674,17 @@
    },
    "desnivel": "+2.466 m · 35,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 19 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "rutas": [
+    "espalda-aneto-salterillo"
+   ],
+   "dificultad": "alta",
+   "grado": "PD+ · cresta rocosa, glaciar y trepadas",
+   "epoca": "Julio – septiembre",
+   "fotoCima": {
+    "foto": "esp-daviu",
+    "pie": "La arista rocosa de la Aguja Daviú."
+   }
   },
   {
    "id": "aguja-escudier",
@@ -4644,10 +4773,9 @@
    "situacion": "Aragón",
    "lat": 42.635889,
    "lon": 0.651028,
-   "descripcion": "Cima secundaria de 3.281 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.281 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico Maldito, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tuca de la Collada de Corones · Tuca del Collado de Coronas",
-   "basica": true,
    "inv": "ANE-13",
    "foto": "tuca-de-collado-de-coronas",
    "pie": "La cima de la Tuca del Collado de Coronas, con su hito.",
@@ -4657,7 +4785,13 @@
    },
    "desnivel": "+2.466 m · 35,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 19 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-brecha-de-tempestades",
@@ -4790,10 +4924,9 @@
    "situacion": "Aragón",
    "lat": 42.634306,
    "lon": 0.6525,
-   "descripcion": "Cima secundaria de 3.226 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.226 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico Maldito, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Agulla de la Collada de Corones",
-   "basica": true,
    "inv": "ANE-22",
    "foto": "aguja-del-collado-de-coronas",
    "pie": "La punta de la Aguja del Collado de Coronas.",
@@ -4803,7 +4936,13 @@
    },
    "desnivel": "+2.466 m · 35,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 19 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-sayo",
@@ -4842,10 +4981,9 @@
    "situacion": "Aragón",
    "lat": 42.617405,
    "lon": 0.671915,
-   "descripcion": "La Antecima Sureste del Russell (3.206 m) es una cima rocosa justo antes del Pico Russell, en el macizo Aneto–Maladeta. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Antecima Sureste del Russell (3.206 m) es una cima rocosa justo antes del Pico Russell, en el macizo Aneto–Maladeta. El recorrido del mapa es la ruta de ejemplo de Pico Russell, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Antecima SE de Russell",
-   "basica": true,
    "inv": "ANE-24",
    "foto": "antecima-sureste-russell",
    "pie": "La antecima del Russell, vista desde la cresta.",
@@ -4858,6 +4996,14 @@
    "enlace": {
     "url": "https://www.wikiloc.com/hiking-trails/pico-russell-desde-el-refugio-de-cap-de-llauset-y-regreso-al-refugio-de-la-renclusa-por-el-collado-40906294",
     "texto": "Ruta de Igor Gonzalez en Wikiloc"
+   },
+   "rutas": [
+    "russell-llauset"
+   ],
+   "epoca": "Julio – septiembre",
+   "fotoCima": {
+    "foto": "rus-se",
+    "pie": "La antecima SE del Russell, entre nubes."
    }
   },
   {
@@ -5258,10 +5404,9 @@
    "situacion": "Aragón",
    "lat": 42.616556,
    "lon": 0.677028,
-   "descripcion": "La Punta Oriental del Russell (3.051 m) es una cima del cresterío del Russell, sobre el valle de Salenques, en el macizo Aneto–Maladeta. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Punta Oriental del Russell (3.051 m) es una cima del cresterío del Russell, sobre el valle de Salenques, en el macizo Aneto–Maladeta. El recorrido del mapa es la ruta de ejemplo de Pico Russell, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Cap de la Tartereta · Punta Oriental de Russell · Punta Russell oriental",
-   "basica": true,
    "inv": "ANE-47",
    "foto": "punta-oriental-russell",
    "pie": "La Punta Oriental del Russell, con montañeros en la cresta.",
@@ -5274,7 +5419,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/hiking-trails/2023-09-19-y-20-russell-y-subiendo-por-y-bajando-por-xxxxx-152484618",
     "texto": "Ruta de Alfredo Barberan en Wikiloc"
-   }
+   },
+   "rutas": [
+    "russell-llauset"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-tchihatcheff",

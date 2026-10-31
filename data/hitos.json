@@ -1494,7 +1494,9 @@
    "astorg",
    "medio",
    "coronas",
-   "araguells"
+   "araguells",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Ibón Medio de Coronas",
   "tipo": "ibon",
@@ -1511,7 +1513,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Corredor de acceso a la cresta",
   "tipo": "paso",
@@ -1528,7 +1532,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Paso de la «Regleta»",
   "tipo": "paso",
@@ -1545,7 +1551,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Pico Maldito",
   "tipo": "cima",
@@ -1562,7 +1570,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Punta de Astorg",
   "tipo": "cima",
@@ -1579,7 +1589,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Collado de Coronas",
   "tipo": "paso",
@@ -1597,7 +1609,9 @@
    "astorg",
    "medio",
    "coronas",
-   "araguells"
+   "araguells",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Inicio del recorrido (Puente de Coronas)",
   "tipo": "lugar",
@@ -1613,7 +1627,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Pico del Medio",
   "tipo": "cima",
@@ -1628,7 +1644,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Pico Coronas",
   "tipo": "cima",
@@ -1643,7 +1661,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Tuca del Collado de Coronas",
   "tipo": "cima",
@@ -1658,7 +1678,9 @@
    "maldito",
    "astorg",
    "medio",
-   "coronas"
+   "coronas",
+   "tuca-de-collado-de-coronas",
+   "aguja-del-collado-de-coronas"
   ],
   "nombre": "Aguja del Collado de Coronas",
   "tipo": "cima",
@@ -1672,7 +1694,8 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "diente-llardana"
+   "diente-llardana",
+   "tuqueta-roya"
   ],
   "nombre": "Collado del Diente",
   "tipo": "paso",
@@ -1687,7 +1710,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Diente Royo",
   "tipo": "cima",
@@ -1703,7 +1727,8 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "pavots"
+   "pavots",
+   "tuqueta-roya"
   ],
   "nombre": "Ibón de Llardaneta",
   "tipo": "ibon",
@@ -1719,7 +1744,8 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "pavots"
+   "pavots",
+   "tuqueta-roya"
   ],
   "nombre": "Pavots",
   "tipo": "cima",
@@ -1734,7 +1760,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Las Espadas",
   "tipo": "cima",
@@ -1749,7 +1776,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Paso del Funambulista",
   "tipo": "paso",
@@ -1762,7 +1790,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Tuca de Llardaneta",
   "tipo": "cima",
@@ -1775,7 +1804,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Tuqueta Roya",
   "tipo": "cima",
@@ -1788,7 +1818,8 @@
   "pico": "espadas",
   "picos": [
    "espadas",
-   "llardaneta"
+   "llardaneta",
+   "tuqueta-roya"
   ],
   "nombre": "Cima del Posets",
   "tipo": "cima",
@@ -1801,7 +1832,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "olas"
+   "olas",
+   "pico-baudrimont-se"
   ],
   "nombre": "Punta de las Olas",
   "tipo": "cima",
@@ -1815,7 +1847,8 @@
   "id": "soum-baudrimont",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "pico-baudrimont-se"
   ],
   "nombre": "Baudrimont SE",
   "tipo": "cima",
@@ -1829,7 +1862,8 @@
   "id": "soum-collado",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "pico-baudrimont-se"
   ],
   "nombre": "Collado Oriental de Monte Perdido",
   "tipo": "paso",
@@ -1843,7 +1877,8 @@
   "id": "soum-cima",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "pico-baudrimont-se"
   ],
   "nombre": "Soum de Ramond (Pico de Añisclo)",
   "tipo": "cima",
@@ -1858,7 +1893,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "olas"
+   "olas",
+   "pico-baudrimont-se"
   ],
   "nombre": "Abandonar el GR 11",
   "tipo": "paso",
@@ -1871,7 +1907,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "olas"
+   "olas",
+   "pico-baudrimont-se"
   ],
   "nombre": "Collado SE de la Punta de las Olas",
   "tipo": "paso",
@@ -1883,7 +1920,8 @@
   "id": "soum-perdido",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "pico-baudrimont-se"
   ],
   "nombre": "Monte Perdido",
   "tipo": "cima",
@@ -1895,7 +1933,8 @@
   "id": "soum-cilindro",
   "pico": "soum",
   "picos": [
-   "soum"
+   "soum",
+   "pico-baudrimont-se"
   ],
   "nombre": "Cilindro de Marboré",
   "tipo": "cima",
@@ -1908,7 +1947,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Trepada de grado I",
   "tipo": "paso",
@@ -1921,7 +1963,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Ciudad de Piedra",
   "tipo": "lugar",
@@ -1935,7 +1980,10 @@
   "id": "mar-embudo",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Embudo del Marboré",
   "tipo": "paso",
@@ -1949,7 +1997,10 @@
   "id": "mar-arista",
   "pico": "marbore",
   "picos": [
-   "marbore"
+   "marbore",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Arista norte del Marboré",
   "tipo": "paso",
@@ -1964,7 +2015,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Senda a la Punta de las Escaleras",
   "tipo": "paso",
@@ -1977,7 +2031,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Faja Roya",
   "tipo": "paso",
@@ -1990,7 +2047,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Paso clave",
   "tipo": "paso",
@@ -2003,7 +2063,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Pico Oriental de la Cascada",
   "tipo": "cima",
@@ -2016,7 +2079,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Pico Central de la Cascada (Pico Brulle)",
   "tipo": "cima",
@@ -2029,7 +2095,10 @@
   "pico": "marbore",
   "picos": [
    "marbore",
-   "casco"
+   "casco",
+   "pico-oriental-de-la-cascada",
+   "pico-central-de-la-cascada",
+   "espalda-del-marbore"
   ],
   "nombre": "Espalda de Marboré",
   "tipo": "cima",
@@ -2134,7 +2203,11 @@
   "id": "lli-blanco",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Ibón Blanco de Lliterola",
   "tipo": "ibon",
@@ -2148,7 +2221,11 @@
   "id": "lli-royo",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Pico Royo",
   "tipo": "cima",
@@ -2162,7 +2239,11 @@
   "id": "lli-collado-sup",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Collado Superior de Lliterola",
   "tipo": "paso",
@@ -2176,7 +2257,11 @@
   "id": "lli-parking",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Aparcamiento (Parquin)",
   "tipo": "lugar",
@@ -2189,7 +2274,11 @@
   "id": "lli-capellans",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Pleta des Capellans",
   "tipo": "lugar",
@@ -2201,7 +2290,11 @@
   "id": "lli-arenals",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Ibonet de les Arenals",
   "tipo": "ibon",
@@ -2213,7 +2306,11 @@
   "id": "lli-collado-inf",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Collado Inferior de Lliterola",
   "tipo": "paso",
@@ -2225,7 +2322,11 @@
   "id": "lli-aguja",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Aguja de Lliterola",
   "tipo": "cima",
@@ -2237,7 +2338,11 @@
   "id": "lli-punta",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Punta de Lliterola (Tuca de Lliterola, 3.133 m en OpenStreetMap)",
   "tipo": "cima",
@@ -2249,7 +2354,11 @@
   "id": "lli-tuca",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Tuca de Lliterola (3.095 m según el track)",
   "tipo": "cima",
@@ -2261,7 +2370,11 @@
   "id": "lli-hito-occ",
   "pico": "lliterola",
   "picos": [
-   "lliterola"
+   "lliterola",
+   "hito-occidental-del-perdiguero",
+   "pico-royo",
+   "tuca-de-lliterola",
+   "aguja-de-lliterola"
   ],
   "nombre": "Hito Occidental del Perdiguero",
   "tipo": "cima",
@@ -2273,7 +2386,9 @@
   "id": "rus-cima",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Cima del Pico Russell",
   "tipo": "cima",
@@ -2287,7 +2402,9 @@
   "id": "rus-se",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Pico Russell SE (antecima)",
   "tipo": "cima",
@@ -2301,7 +2418,9 @@
   "id": "rus-ibon-llauset",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Ibón Cap de Llauset",
   "tipo": "ibon",
@@ -2315,7 +2434,9 @@
   "id": "rus-refugio",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Refugio Cap de Llauset",
   "tipo": "refugio",
@@ -2329,7 +2450,9 @@
   "id": "rus-estany",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Estany de la Cap de la Vall",
   "tipo": "ibon",
@@ -2343,7 +2466,9 @@
   "id": "rus-botornas",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Refugio de Botornás",
   "tipo": "refugio",
@@ -2357,7 +2482,9 @@
   "id": "rus-parking",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Aparcamiento del embalse de Llauset",
   "tipo": "lugar",
@@ -2370,7 +2497,9 @@
   "id": "rus-vallibierna",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Collado de Vallibierna",
   "tipo": "paso",
@@ -2382,7 +2511,9 @@
   "id": "rus-bucardos",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Collada de los Bucardos o de Isards",
   "tipo": "paso",
@@ -2394,7 +2525,9 @@
   "id": "rus-oriental",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Punta Russell Oriental",
   "tipo": "cima",
@@ -2406,7 +2539,9 @@
   "id": "rus-negre",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Collado de Estany Negre",
   "tipo": "paso",
@@ -2418,7 +2553,9 @@
   "id": "rus-ibones",
   "pico": "russell",
   "picos": [
-   "russell"
+   "russell",
+   "antecima-sureste-russell",
+   "punta-oriental-russell"
   ],
   "nombre": "Collado de los Ibones",
   "tipo": "paso",
@@ -2431,7 +2568,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Collado Argualas",
   "tipo": "paso",
@@ -2446,7 +2584,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Algas Norte",
   "tipo": "cima",
@@ -2461,7 +2600,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Pico Algas",
   "tipo": "cima",
@@ -2476,7 +2616,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Argualas",
   "tipo": "cima",
@@ -2491,7 +2632,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Pequeño ibón del circo de Argualas",
   "tipo": "ibon",
@@ -2507,7 +2649,8 @@
   "picos": [
    "algas",
    "argualas",
-   "arnales"
+   "arnales",
+   "algas-norte"
   ],
   "nombre": "Desvío a Arnales",
   "tipo": "paso",
@@ -2520,7 +2663,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Senda bajo el Collado de Pondiellos",
   "tipo": "paso",
@@ -2533,7 +2677,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Garmo Negro",
   "tipo": "cima",
@@ -2546,7 +2691,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Collado Algas",
   "tipo": "paso",
@@ -2559,7 +2705,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Ligera trepada (precaución)",
   "tipo": "paso",
@@ -2572,7 +2719,8 @@
   "pico": "algas",
   "picos": [
    "algas",
-   "argualas"
+   "argualas",
+   "algas-norte"
   ],
   "nombre": "Punta Argualas",
   "tipo": "cima",
@@ -2584,7 +2732,8 @@
   "id": "fro-vistas",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Vistas bajo la cima",
   "tipo": "lugar",
@@ -2598,7 +2747,8 @@
   "id": "fro-cima",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Pico de la Frondella",
   "tipo": "cima",
@@ -2612,7 +2762,8 @@
   "id": "fro-arriel-alto",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Ibón de Arriel Alto",
   "tipo": "ibon",
@@ -2626,7 +2777,8 @@
   "id": "fro-arriel-bajo",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Ibón Arriel Bajo",
   "tipo": "ibon",
@@ -2640,7 +2792,8 @@
   "id": "fro-central",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Frondella Central",
   "tipo": "cima",
@@ -2652,7 +2805,8 @@
   "id": "fro-cruce",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Cruce de bajada hacia Respomuso",
   "tipo": "paso",
@@ -2664,7 +2818,8 @@
   "id": "fro-parking",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Parking de La Sarra",
   "tipo": "lugar",
@@ -2677,7 +2832,8 @@
   "id": "fro-onso",
   "pico": "frondiellas",
   "picos": [
-   "frondiellas"
+   "frondiellas",
+   "frondella"
   ],
   "nombre": "Paso del Onso",
   "tipo": "paso",
@@ -2998,7 +3154,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Ibón de Eriste",
   "tipo": "ibon",
@@ -3013,7 +3170,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Ibón de les Alforches",
   "tipo": "ibon",
@@ -3028,7 +3186,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Pico Bardamina",
   "tipo": "cima",
@@ -3041,7 +3200,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Paso acrobático",
   "tipo": "paso",
@@ -3056,7 +3216,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Pico de la Paúl",
   "tipo": "cima",
@@ -3069,7 +3230,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Gendarmes",
   "tipo": "paso",
@@ -3084,7 +3246,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Pico Inferior de la Paúl",
   "tipo": "cima",
@@ -3097,7 +3260,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Collado de la Paúl",
   "tipo": "paso",
@@ -3112,7 +3276,8 @@
   "pico": "paul",
   "picos": [
    "paul",
-   "bardamina"
+   "bardamina",
+   "pico-inferior-de-la-paul"
   ],
   "nombre": "Ibón de Farradura",
   "tipo": "ibon",
@@ -3126,7 +3291,9 @@
   "id": "gor-parking",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Parking de Estós",
   "tipo": "lugar",
@@ -3139,7 +3306,9 @@
   "id": "gor-galantes",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Gorgas de los Galantes",
   "tipo": "barranco",
@@ -3153,7 +3322,9 @@
   "id": "gor-tormo",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Cabaña del Tormo",
   "tipo": "lugar",
@@ -3167,7 +3338,9 @@
   "id": "gor-forau",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Forau de O",
   "tipo": "lugar",
@@ -3179,7 +3352,9 @@
   "id": "gor-gias",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Ibones de Gías o de O",
   "tipo": "ibon",
@@ -3191,7 +3366,9 @@
   "id": "gor-puerto",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Puerto de Guías o de Puxebres",
   "tipo": "paso",
@@ -3203,7 +3380,9 @@
   "id": "gor-tuca-o",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Tuca de O",
   "tipo": "cima",
@@ -3215,7 +3394,9 @@
   "id": "gor-armengaud",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Torre Armengaud",
   "tipo": "cima",
@@ -3227,7 +3408,9 @@
   "id": "gor-cima",
   "pico": "gorgs",
   "picos": [
-   "gorgs"
+   "gorgs",
+   "torre-armengaud",
+   "pico-jean-arlaud"
   ],
   "nombre": "Tuca de Gorgs Blancs",
   "tipo": "cima",
@@ -3561,7 +3744,8 @@
   "id": "esp-escaleta",
   "pico": "espalda-aneto",
   "picos": [
-   "espalda-aneto"
+   "espalda-aneto",
+   "aguja-daviu"
   ],
   "nombre": "Barranco de La Escaleta",
   "tipo": "barranco",
@@ -3575,7 +3759,8 @@
   "id": "esp-canales",
   "pico": "espalda-aneto",
   "picos": [
-   "espalda-aneto"
+   "espalda-aneto",
+   "aguja-daviu"
   ],
   "nombre": "Canales de la antecima",
   "tipo": "paso",
@@ -3589,7 +3774,8 @@
   "id": "esp-daviu",
   "pico": "espalda-aneto",
   "picos": [
-   "espalda-aneto"
+   "espalda-aneto",
+   "aguja-daviu"
   ],
   "nombre": "Aguja Daviú",
   "tipo": "cima",
@@ -3603,7 +3789,8 @@
   "id": "esp-cima",
   "pico": "espalda-aneto",
   "picos": [
-   "espalda-aneto"
+   "espalda-aneto",
+   "aguja-daviu"
   ],
   "nombre": "Espalda de Aneto",
   "tipo": "cima",
@@ -3617,7 +3804,8 @@
   "id": "cer-bujaruelo",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "pico-central"
   ],
   "nombre": "San Nicolás de Bujaruelo",
   "tipo": "lugar",
@@ -3632,7 +3820,8 @@
   "id": "cer-pradera",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "pico-central"
   ],
   "nombre": "Pradera de Laña Larga",
   "tipo": "lugar",
@@ -3644,7 +3833,8 @@
   "id": "cer-cabana",
   "pico": "cerbillona",
   "picos": [
-   "cerbillona"
+   "cerbillona",
+   "pico-central"
   ],
   "nombre": "Cabaña de Cerbillonar",
   "tipo": "refugio",
@@ -3657,7 +3847,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "montferrat"
+   "montferrat",
+   "pico-central"
   ],
   "nombre": "Pic Central",
   "tipo": "cima",
@@ -3672,7 +3863,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "montferrat"
+   "montferrat",
+   "pico-central"
   ],
   "nombre": "Col Lady Lister",
   "tipo": "paso",
@@ -3685,7 +3877,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "montferrat"
+   "montferrat",
+   "pico-central"
   ],
   "nombre": "Pico Cerbillona",
   "tipo": "cima",
@@ -3698,7 +3891,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "montferrat"
+   "montferrat",
+   "pico-central"
   ],
   "nombre": "Col de Cerbillona",
   "tipo": "paso",
@@ -3789,7 +3983,9 @@
   "picos": [
    "eriste-norte",
    "forqueta",
-   "sabre"
+   "sabre",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Bordas de Viadós",
   "tipo": "lugar",
@@ -3805,7 +4001,9 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Fuen del Incante",
   "tipo": "barranco",
@@ -3819,7 +4017,9 @@
   "picos": [
    "eriste-norte",
    "forqueta",
-   "gran-eriste"
+   "gran-eriste",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Paso de la Gralla",
   "tipo": "paso",
@@ -3835,7 +4035,9 @@
   "picos": [
    "eriste-norte",
    "forqueta",
-   "gran-eriste"
+   "gran-eriste",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Eriste Sur",
   "tipo": "cima",
@@ -3849,7 +4051,9 @@
   "picos": [
    "eriste-norte",
    "forqueta",
-   "gran-eriste"
+   "gran-eriste",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Gran Pico Eriste",
   "tipo": "cima",
@@ -3865,7 +4069,9 @@
   "picos": [
    "eriste-norte",
    "forqueta",
-   "gran-eriste"
+   "gran-eriste",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Pico Eriste Norte",
   "tipo": "cima",
@@ -3880,7 +4086,9 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Collado de Millares",
   "tipo": "paso",
@@ -3893,7 +4101,9 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Forqueta Sur",
   "tipo": "cima",
@@ -3906,7 +4116,9 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Forqueta Norte",
   "tipo": "cima",
@@ -3921,7 +4133,9 @@
   "pico": "eriste-norte",
   "picos": [
    "eriste-norte",
-   "forqueta"
+   "forqueta",
+   "pico-de-eriste-sur",
+   "pico-de-la-forqueta"
   ],
   "nombre": "Collado de Eriste o de la Forqueta",
   "tipo": "paso",
@@ -3933,7 +4147,8 @@
   "id": "casco-millaris",
   "pico": "casco",
   "picos": [
-   "casco"
+   "casco",
+   "torre-del-marbore"
   ],
   "nombre": "Collado de Millaris",
   "tipo": "paso",
@@ -3947,7 +4162,8 @@
   "id": "casco-torre",
   "pico": "casco",
   "picos": [
-   "casco"
+   "casco",
+   "torre-del-marbore"
   ],
   "nombre": "Torre de Marboré",
   "tipo": "cima",
@@ -3961,7 +4177,8 @@
   "id": "casco-cima",
   "pico": "casco",
   "picos": [
-   "casco"
+   "casco",
+   "torre-del-marbore"
   ],
   "nombre": "Casco de Marboré",
   "tipo": "cima",
@@ -4072,7 +4289,9 @@
   "id": "cul-tabernes",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Tabernés",
   "tipo": "lugar",
@@ -4087,7 +4306,9 @@
   "id": "cul-descanso",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Descanso",
   "tipo": "lugar",
@@ -4101,7 +4322,9 @@
   "id": "cul-madera",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Puerto de la Madera",
   "tipo": "paso",
@@ -4115,7 +4338,9 @@
   "id": "cul-foto",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Vistas del valle",
   "tipo": "lugar",
@@ -4129,7 +4354,9 @@
   "id": "cul-cauarere",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Pico Cauarère",
   "tipo": "cima",
@@ -4141,7 +4368,9 @@
   "id": "cul-rodeo",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Rodeo",
   "tipo": "paso",
@@ -4155,7 +4384,9 @@
   "id": "cul-cima",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Culfreda o Batoua",
   "tipo": "cima",
@@ -4169,7 +4400,9 @@
   "id": "cul-central",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Culfreda Central",
   "tipo": "cima",
@@ -4181,7 +4414,9 @@
   "id": "cul-ne",
   "pico": "culfreda",
   "picos": [
-   "culfreda"
+   "culfreda",
+   "culfreda-ne",
+   "culfreda-central"
   ],
   "nombre": "Culfreda Norte",
   "tipo": "cima",
@@ -4262,7 +4497,8 @@
   "pico": "pavots",
   "picos": [
    "pavots",
-   "diente-llardana"
+   "diente-llardana",
+   "tuca-forau-de-la-neu"
   ],
   "nombre": "Cruce hacia Posets",
   "tipo": "paso",
@@ -4274,7 +4510,8 @@
   "id": "pav-collado",
   "pico": "pavots",
   "picos": [
-   "pavots"
+   "pavots",
+   "tuca-forau-de-la-neu"
   ],
   "nombre": "Collado de Pavots",
   "tipo": "paso",
@@ -4286,7 +4523,8 @@
   "id": "pav-forau",
   "pico": "pavots",
   "picos": [
-   "pavots"
+   "pavots",
+   "tuca-forau-de-la-neu"
   ],
   "nombre": "Tuca Forau de la Neu",
   "tipo": "cima",
@@ -4301,7 +4539,8 @@
   "pico": "pavots",
   "picos": [
    "pavots",
-   "diente-llardana"
+   "diente-llardana",
+   "tuca-forau-de-la-neu"
   ],
   "nombre": "Canal Fonda",
   "tipo": "paso",
@@ -4315,7 +4554,8 @@
   "id": "pav-estallo",
   "pico": "pavots",
   "picos": [
-   "pavots"
+   "pavots",
+   "tuca-forau-de-la-neu"
   ],
   "nombre": "Pleta Estallo",
   "tipo": "lugar",
