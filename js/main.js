@@ -16,7 +16,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=14';
+import { t, EN_INGLES } from './i18n.js?v=15';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -537,21 +537,22 @@ async function boot() {
   }
 
   // — refugios de OpenStreetMap (data/refugios.json, tools/fetch_refugios.py): casita (tejado rojo, guardado; gris, libre) con su ficha (altitud, plazas, teléfono, web).
-  //   Los guardados se ven hasta 20 km y con el nombre a menos de 16 km; los libres, hasta 8 km y con el nombre a menos de 4 km. Si dos nombres se pisan, se queda el primero (guardados antes) —
+  //   Los guardados se ven hasta 20 km y con el nombre a menos de 16 km; los libres, hasta 8 km y con el nombre a menos de 4 km; las cabañas y abrigos (casita marrón, más pequeña), hasta 5 km y con el nombre a menos de 2,5 km. Si dos nombres se pisan, se queda el primero (guardados antes) —
   const refugiosDatos = await json('data/refugios.json').catch(() => []);
   const datoRef = (r) => [r.plazas ? `<small>${t('{n} plazas', { n: r.plazas })}${r.gestor ? ` · ${esc(r.gestor)}` : ''}</small>` : r.gestor ? `<small>${esc(r.gestor)}</small>` : '',
     r.tel ? `<small><a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a></small>` : '', r.web ? `<small><a href="${esc(r.web)}" target="_blank" rel="noopener">${t('Web del refugio')} ↗</a></small>` : ''].join('');
-  for (const r of [...refugiosDatos].sort((a, b) => b.guardado - a.guardado)) {
+  const ORDEN_REF = { guardado: 0, libre: 1, cabana: 2 }, tipoRef = (r) => r.tipo ?? (r.guardado ? 'guardado' : 'libre');
+  for (const r of [...refugiosDatos].sort((a, b) => ORDEN_REF[tipoRef(a)] - ORDEN_REF[tipoRef(b)])) {
     const q = geo.toXZ(r.lon, r.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
-    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'} is-hidden`;
-    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}">${CASITA}</button><span class="ref-nombre">${esc(r.nombre.replace(/^(Refugio|Refugi|Refuge|Cabaña|Abrigo) (de |del |d'|dera |deth |de la )?/i, ''))}</span><b>${esc(r.nombre)}<em>${t(r.guardado ? 'Refugio guardado' : 'Refugio libre')} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
+    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'}${tipoRef(r) === 'cabana' ? ' refugio-cabana' : ''} is-hidden`;
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}">${CASITA}</button><span class="ref-nombre">${esc(/^(Refugio guardado|Refugio libre|Cabaña o abrigo)$/.test(r.nombre) ? t(r.nombre) : r.nombre.replace(/^(Refugio|Refugi|Refuge|Cabaña|Abrigo|Borda|Caseta) (de |del |d'|dera |deth |de la |de los |de las )?/i, ''))}</span><b>${esc(r.nombre)}<em>${t({ guardado: 'Refugio guardado', libre: 'Refugio libre', cabana: 'Cabaña o abrigo' }[tipoRef(r)])} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const abrir = !el.classList.contains('is-open');
       closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
     });
     $('#pins').appendChild(el);
-    refugios.push({ r, el, x: q.x, z: q.z, lim: r.guardado ? 20000 : 8000, limNombre: r.guardado ? 16000 : 4000 });
+    refugios.push({ r, el, x: q.x, z: q.z, lim: { guardado: 20000, libre: 8000, cabana: 5000 }[tipoRef(r)], limNombre: { guardado: 16000, libre: 4000, cabana: 2500 }[tipoRef(r)] });
   }
   function updateRefugios() {
     const W = innerWidth, H = innerHeight;
@@ -585,7 +586,7 @@ async function boot() {
   }
   function refugiosCerca(p) {
     const d = (r) => Math.hypot((r.lon - p.lon) * geo.mLon, (r.lat - p.lat) * geo.mLat);
-    const l = refugiosDatos.map((r) => ({ r, d: d(r) })).filter((o) => o.d < (o.r.guardado ? 10000 : 5000)).sort((a, b) => a.d - b.d).slice(0, 4);
+    const l = refugiosDatos.filter((r) => r.tipo !== 'cabana').map((r) => ({ r, d: d(r) })).filter((o) => o.d < (o.r.guardado ? 10000 : 5000)).sort((a, b) => a.d - b.d).slice(0, 4);
     if (!l.length) return '';
     return `<h3>Refugios cercanos</h3><ul class="refugios">${l.map(({ r, d }) => `<li><b>${esc(r.nombre)}</b><span>${t(r.guardado ? 'Guardado' : 'Libre')} · ${fmt(r.alt)} m · ${t('a {d} km en línea recta', { d: km(d) })}${r.plazas ? ` · ${t('{n} plazas', { n: r.plazas })}` : ''}</span>${r.tel || r.web ? `<span>${r.tel ? `<a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a>` : ''}${r.tel && r.web ? ' · ' : ''}${r.web ? `<a href="${esc(r.web)}" target="_blank" rel="noopener">${t('web')} ↗</a>` : ''}</span>` : ''}</li>`).join('')}</ul>
       <p class="ruta-credito">${t('Refugios de')} <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a> (ODbL). ${t('Los guardados suelen pedir reserva: confirma fechas y plazas con el refugio antes de ir.')}</p>`;
