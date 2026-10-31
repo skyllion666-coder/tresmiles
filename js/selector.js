@@ -1,6 +1,6 @@
 // Selector de cumbres (el del inicio y el del mapa): buscador sin tildes que mira también los nombres alternativos,
 // macizos plegados de oeste a este con su número, principales primero y secundarias plegadas dentro de cada macizo.
-import { t as tr, EN_INGLES } from './i18n.js?v=8';   // «tr»: aquí «t» es nombre de variable en muchas funciones
+import { t as tr, EN_INGLES } from './i18n.js?v=9';   // «tr»: aquí «t» es nombre de variable en muchas funciones
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);
 
@@ -15,12 +15,51 @@ function plano(t) {
   return { t: out, pos };
 }
 const norm = (t) => plano(t).t.trim();
+// búsqueda permisiva: palabras genéricas que no cuentan, letras que suenan igual y erratas (una letra de más, de menos, cambiada o dos intercambiadas)
+const VACIAS = new Set(['pico', 'pic', 'pica', 'tuca', 'tuc', 'punta', 'tozal', 'de', 'del', 'la', 'el', 'los', 'las', 'd', 'l', 'deth', 'era', 'eth']);
+const fon = (w) => w.replace(/ch/g, 'x').replace(/tx/g, 'x').replace(/h/g, '').replace(/ll/g, 'y').replace(/qu/g, 'k').replace(/gu(?=[ei])/g, 'g').replace(/g(?=[ei])/g, 'j')
+  .replace(/c(?=[ei])/g, 's').replace(/c/g, 'k').replace(/z/g, 's').replace(/v/g, 'b').replace(/y$/, 'i').replace(/(.)\1+/g, '$1');
+const palabras = (t) => t.split(' ').filter((w) => w && !VACIAS.has(w));
+const tolera = (n) => (n <= 4 ? 0 : n <= 7 ? 1 : 2);
+// distancia de Damerau-Levenshtein restringida (con trasposición de letras vecinas); corta en cuanto supera `max`
+function distancia(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let p2 = null, p1 = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const c = [i]; let fila = i;
+    for (let j = 1; j <= b.length; j++) {
+      let v = Math.min(p1[j] + 1, c[j - 1] + 1, p1[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (p2 && i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) v = Math.min(v, p2[j - 2] + 1);
+      c.push(v); fila = Math.min(fila, v);
+    }
+    if (fila > max) return max + 1;
+    p2 = p1; p1 = c;
+  }
+  return p1[b.length];
+}
+// cuánto se parece una palabra buscada a la mejor palabra del nombre (0 = igual o empieza igual; null = nada parecido); también vale a medio escribir
+function parecido(qw, cands) {
+  const max = tolera(qw.length); let best = null;
+  for (const c of cands) {
+    if (c.startsWith(qw)) return 0;
+    let d = distancia(qw, c, max);
+    if (d > max && qw.length >= 5 && c.length > qw.length) d = distancia(qw, c.slice(0, qw.length), max);
+    if (d <= max && (best === null || d < best)) best = d;
+  }
+  return best;
+}
+
 // marca en el nombre la parte que coincide con la búsqueda
 function marca(nombre, q) {
   const { t, pos } = plano(nombre), k = t.indexOf(q);
   if (!q || k < 0) return esc(nombre);
   const a = pos[k], b = pos[k + q.length - 1] + 1;
   return `${esc(nombre.slice(0, a))}<mark>${esc(nombre.slice(a, b))}</mark>${esc(nombre.slice(b))}`;
+}
+
+// marca en el nombre las palabras que se parecen a las buscadas
+function marcaParecida(nombre, qf) {
+  return String(nombre).split(/([\p{L}\p{N}]+)/u).map((w, i) => { if (i % 2 === 0) return esc(w); const n = norm(w); return !VACIAS.has(n) && qf.some((q) => parecido(q, [fon(n)]) !== null) ? `<mark>${esc(w)}</mark>` : esc(w); }).join('');
 }
 
 // capas: qué cumbres se ven (en el mapa y en la lista)
@@ -33,7 +72,8 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
   // índice de búsqueda por cumbre: nombre, otros nombres y macizo
   const idx = new Map(picos.map((p) => {
     const otros = [...String(p.alias ?? '').split('·'), ...String(p.nombres ?? '').split('·')].map((s) => s.trim()).filter(Boolean);
-    return [p.id, { n: norm(p.nombre), otros: otros.map((o) => ({ o, n: norm(o) })), m: norm(nombreMacizo[p.macizo]) }];
+    const n = norm(p.nombre), on = otros.map((o) => ({ o, n: norm(o) }));
+    return [p.id, { n, otros: on, m: norm(nombreMacizo[p.macizo]), f: [n, ...on.map((o) => o.n)].flatMap(palabras).map(fon) }];
   }));
   // macizos de oeste a este (como se recorre el Pirineo en el mapa)
   const lonMedia = (id) => { const ps = picos.filter((p) => p.macizo === id); return ps.reduce((s, p) => s + p.lon, 0) / (ps.length || 1); };
@@ -72,7 +112,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
   }
 
   function porBusqueda(f) {
-    const pal = f.split(' ').filter(Boolean), res = [];
+    const pal0 = f.split(' ').filter(Boolean), pal = pal0.some((w) => !VACIAS.has(w)) ? pal0.filter((w) => !VACIAS.has(w)) : pal0, res = [];
     for (const p of picos) {
       if (!pasa(p)) continue;
       const ix = idx.get(p.id), todo = `${ix.n} ${ix.otros.map((o) => o.n).join(' ')} ${ix.m}`;
@@ -88,11 +128,21 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
       res.push({ p, s, via });
     }
     res.sort((a, b) => a.s - b.s || (esPrincipal(b.p) - esPrincipal(a.p)) || b.p.altitud - a.p.altitud);
+    // parecidas: las que no coinciden tal cual pero suenan igual o tienen alguna errata (debajo y aparte)
+    const qf = palabras(f).map(fon), ya = new Set(res.map((r) => r.p.id)), par = [];
+    if (qf.length) for (const p of picos) {
+      if (!pasa(p) || ya.has(p.id)) continue;
+      let tot = 0; for (const w of qf) { const d = parecido(w, idx.get(p.id).f); if (d === null) { tot = -1; break; } tot += d; }
+      if (tot >= 0) par.push({ p, d: tot });
+    }
+    par.sort((a, b) => a.d - b.d || (esPrincipal(b.p) - esPrincipal(a.p)) || b.p.altitud - a.p.altitud);
+    const parHTML = par.length ? `<p class="sel-cuenta sel-parecidas">${tr('Parecidas')}</p>` + par.slice(0, 30).map(({ p }) => fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}</small>`, marcaParecida(p.nombre, qf))).join('') : '';
+    if (!res.length && par.length) return parHTML;
     if (!res.length) return `<p class="sel-vacio">${tr('Ninguna cumbre coincide con «{q}».', { q: esc(q.value.trim()) })}${filtrado() ? tr(' Prueba a quitar los filtros.') : ''}</p>`;
     return `<p class="sel-cuenta">${res.length === 1 ? '1 cumbre' : `${res.length} cumbres`}</p>` + res.map(({ p, via }) => {
       const otro = via ? `<small class="sel-via">${tr('también «{n}»', { n: marca(via, f) })}</small>` : '';
       return fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}</small>${otro}`, marca(p.nombre, f));
-    }).join('');
+    }).join('') + parHTML;
   }
 
   // atajos: lista plana ordenada (mis subidas, las que faltan, las más cercanas al centro del mapa, las más altas)

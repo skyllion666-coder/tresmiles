@@ -625,3 +625,4 @@ body.selector-abierto #intro { z-index: 31; }
 .meteo-mapa:has(input:not(:checked)) + .meteo-nota { display: none; }
 
 .ruta-tiempos { margin-top: -4px; } .acceso-bus { font-size: .85rem; background: var(--cream-2); padding: 8px 10px; }
+.sel-parecidas { border-top: 1px solid rgba(36,48,44,.15); margin-top: 6px; padding-top: 12px; }
