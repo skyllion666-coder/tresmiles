@@ -1,12 +1,16 @@
 #!/bin/bash
 # Baja las trazas GPS públicas de OpenStreetMap de cada zona del mapa de calor (api/0.6/trackpoints, 5.000 puntos por página) a tools/datos/calor/<zona>_<página>.gpx.
-# Las zonas no se solapan (si no, una traza contaría dos veces). Uso: tools/bajar_calor.sh [zona ...]
+# Las zonas están en tools/calor_zonas.json (no se solapan: si no, una traza contaría dos veces). Se puede reanudar: salta las páginas ya bajadas enteras.
+# Uso: tools/bajar_calor.sh [zona ...]   (sin zonas: todas, en el orden del archivo)
+ZJ="$(cd "$(dirname "$0")" && pwd)/calor_zonas.json"
 cd "$(dirname "$0")/datos/calor" || exit 1
-declare -A Z=( [aneto]="0.55,42.58,0.76,42.72" [benasque]="0.40,42.55,0.55,42.74" [posets]="0.25,42.55,0.40,42.75" [perdido-e]="0.05,42.60,0.25,42.76" [perdido-o]="-0.06,42.60,0.05,42.76" [vignemale]="-0.18,42.64,-0.06,42.82" [balaitus]="-0.38,42.72,-0.18,42.88" )
-for z in "${@:-${!Z[@]}}"; do
+zonas=("$@"); [ ${#zonas[@]} -eq 0 ] && mapfile -t zonas < <(python3 -c "import json;print('\n'.join(json.load(open('$ZJ'))))")
+for z in "${zonas[@]}"; do
+  bb=$(python3 -c "import json;print(','.join(str(v) for v in json.load(open('$ZJ'))['$z']))")
   for p in $(seq 0 3000); do
-    [ -s "${z}_$p.gpx" ] && [ "$(grep -c '<trkpt' "${z}_$p.gpx")" -eq 5000 ] && continue   # ya bajada (se puede reanudar)
-    curl -s -m 180 --retry 4 -A "tresmiles/1.0 (proyecto educativo)" -o "${z}_$p.gpx" "https://api.openstreetmap.org/api/0.6/trackpoints?bbox=${Z[$z]}&page=$p"
+    [ -s "${z}_$p.gpx" ] && [ "$(grep -c '<trkpt' "${z}_$p.gpx")" -eq 5000 ] && continue
+    [ -s "${z}_$p.gpx" ] && [ "$(grep -c '<trkpt' "${z}_$p.gpx")" -lt 5000 ] && grep -q '</gpx>' "${z}_$p.gpx" && break   # zona ya terminada
+    curl -s -m 180 --retry 4 -A "tresmiles/1.0 (proyecto educativo)" -o "${z}_$p.gpx" "https://api.openstreetmap.org/api/0.6/trackpoints?bbox=$bb&page=$p"
     n=$(grep -c "<trkpt" "${z}_$p.gpx"); echo "$z pág $p: $n"
     [ "$n" -lt 5000 ] && break; sleep 1
   done

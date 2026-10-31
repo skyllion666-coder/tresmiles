@@ -18,8 +18,7 @@ from scipy.ndimage import gaussian_filter
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 DATOS = os.path.join(ROOT, 'tools/datos/calor')
-ZONAS = {'aneto': (0.55, 42.58, 0.76, 42.72), 'benasque': (0.40, 42.55, 0.55, 42.74), 'posets': (0.25, 42.55, 0.40, 42.75), 'perdido-e': (0.05, 42.60, 0.25, 42.76),
-         'perdido-o': (-0.06, 42.60, 0.05, 42.76), 'vignemale': (-0.18, 42.64, -0.06, 42.82), 'balaitus': (-0.38, 42.72, -0.18, 42.88)}   # las mismas que tools/bajar_calor.sh
+ZONAS = json.load(open(os.path.join(ROOT, 'tools/calor_zonas.json')))   # las mismas que tools/bajar_calor.sh
 PX = 10.0   # metros por píxel
 PUNTOS_PASADA = 5   # puntos sueltos que equivalen a una pasada por un píxel
 REF = 60.0   # pasadas equivalentes que dan el brillo máximo (igual en todas las zonas, para que se puedan comparar)

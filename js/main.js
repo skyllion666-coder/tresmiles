@@ -1235,15 +1235,29 @@ async function boot() {
   // ayuda a ver los caminos más pisados (por ejemplo, para volver a una senda conocida si te sales de la ruta); no dice si un paso es seguro.
   // Cada PNG lleva en rojo la densidad (log de las trazas) y en verde el tipo de vía de OSM (carretera / pista): las carreteras se dicen, no se quitan.
   fetch(`data/calor/index.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((idx) => {
-    const zonas = Object.values(idx ?? {}).slice(0, NCALOR); if (!zonas.length) return;
+    // hay más zonas (≈50) que texturas en el sombreado (NCALOR): se cargan solo las más cercanas al punto que se mira, como el relieve, y se sueltan las lejanas
+    const zonas = Object.values(idx ?? {}); if (!zonas.length) return;
     const b = $('#btn-calor'); b.hidden = false;
     const K = terrain.clima, lienzo = document.createElement('canvas'), cx = lienzo.getContext('2d', { willReadFrequently: true }); lienzo.width = lienzo.height = 9;
-    zonas.forEach((z, i) => { const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s); z.b = [a.x, a.z, c.x, c.z]; z.datos_png = z.datos; z.datos = null; K.uCalorB.value[i].set(...z.b); });
-    let on = false, cargando = null, tf = null;
-    const carga = () => (cargando ??= Promise.all(zonas.map((z, i) => new Promise((res) => {
-      const img = new Image(); img.onload = () => { const tx = new THREE.Texture(img); tx.colorSpace = THREE.NoColorSpace; tx.needsUpdate = true; K.uCalor.value[i] = tx; z.img = img; res(); }; img.onerror = () => res();
+    zonas.forEach((z) => { const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s); z.b = [a.x, a.z, c.x, c.z]; z.datos_png = z.datos; z.datos = null; });
+    let on = false, tf = null, tReparto = 0;
+    const ranura = Array(NCALOR).fill(null);   // zona que ocupa cada textura del sombreado
+    const cargaZona = (z) => (z.cargando ??= new Promise((res) => {
+      const img = new Image(); img.onload = () => { z.tx = new THREE.Texture(img); z.tx.colorSpace = THREE.NoColorSpace; z.tx.needsUpdate = true; z.img = img; res(); }; img.onerror = () => res();
       img.src = `${z.png}?dv=${window.DATOS_V || 0}`;
-    }))));
+    }));
+    const lejos = (z, x, y) => Math.hypot(Math.max(z.b[0] - x, 0, x - z.b[2]), Math.max(z.b[1] - y, 0, y - z.b[3]));   // del punto al recuadro (0 si está dentro)
+    async function reparto() {
+      const tg = controls.target, cerca = zonas.map((z) => ({ z, d: lejos(z, tg.x, tg.z) })).filter((o) => o.d < 30000).sort((a, b) => a.d - b.d).slice(0, NCALOR).map((o) => o.z);
+      await Promise.all(cerca.map(cargaZona));
+      for (let i = 0; i < NCALOR; i++) if (ranura[i] && !cerca.includes(ranura[i])) ranura[i] = null;
+      for (const z of cerca) if (z.tx && !ranura.includes(z)) ranura[ranura.indexOf(null)] = z;
+      ranura.forEach((z, i) => { K.uCalor.value[i] = z?.tx ?? null; if (z) K.uCalorB.value[i].set(...z.b); else K.uCalorB.value[i].set(1e9, 1e9, 1e9, 1e9); });
+      // memoria: se sueltan las texturas de zonas a más de 60 km
+      for (const z of zonas) if (z.tx && !ranura.includes(z) && lejos(z, tg.x, tg.z) > 60000) { z.tx.dispose(); z.tx = z.img = null; z.cargando = null; }
+    }
+    setInterval(() => { if (on && performance.now() - tReparto > 1500) { tReparto = performance.now(); reparto(); } }, 500);
+    const carga = () => reparto();
     // lo que hay en un punto (±40 m, el dedo no es preciso), de <zona>-datos.png (se carga al primer toque): trazas completas (las públicas; el máximo,
     // porque cada una ya cuenta una vez por píxel) y puntos sueltos de trazas privadas (la suma); el tipo de vía, del PNG de la capa
     const px9 = (img, u, v) => { cx.clearRect(0, 0, 9, 9); cx.drawImage(img, u, v, 9, 9, 0, 0, 9, 9); return cx.getImageData(0, 0, 9, 9).data; };
