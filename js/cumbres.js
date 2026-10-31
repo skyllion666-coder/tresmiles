@@ -191,8 +191,9 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
 
   async function cargaDetalle(id) {
     const pid = ficha?.[id]?.pieza ?? id;   // la pieza de 6 m que contiene esta cima (varias cimas pueden compartir una)
-    if (detalles.has(id) || detCarga.has(id) || !ficha?.[id] || !piezas.has(pid)) return;
-    const d = ficha[id], pz = piezas.get(pid); detCarga.add(id);
+    const fd = ficha?.[id], ext = fd && !piezas.has(pid) ? api.piezaExterna?.(fd.x0 + (fd.n - 1) * fd.paso / 2, fd.z0 + (fd.n - 1) * fd.paso / 2) : null;   // dentro de un paquete de zona: se apoya en su pieza
+    if (detalles.has(id) || detCarga.has(id) || !fd || (!piezas.has(pid) && !ext)) return;
+    const d = ficha[id], pz = piezas.get(pid) ?? ext; detCarga.add(id);
     try {
       const r = await fetch(`data/terrain/cumbres/${d.archivo}?v=${window.WEB_V || 0}`);
       if (!r.ok || typeof DecompressionStream === 'undefined') throw new Error('sin datos');
@@ -262,8 +263,9 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
           .then((gr) => { if (!gr) return; const dt = detalles.get(id); if (dt !== registro) { rocasCima.quitar(gr); return; } scene.add(gr); dt.rocas = gr; });   // (si la cima se descargó mientras tanto, fuera)
       }
       // la pieza de 6 m se recorta debajo de esta (menos 14 m del borde, donde ambas coinciden)
-      const hv = pz.mat.userData.holes.value, slot = hv.findIndex((v) => v.x > 1e8);   // hasta 4 huecos por pieza (uno por cima fina cargada)
+      const hv = pz.mat.userData.holes.value, slot = ext ? -1 : hv.findIndex((v) => v.x > 1e8);   // hasta 4 huecos por pieza (uno por cima fina cargada)
       if (slot >= 0) hv[slot].set(d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14);
+      if (ext) api.huecoExterno?.(id, [d.x0 + 14, d.z0 + 14, d.x0 + (n - 1) * paso - 14, d.z0 + (n - 1) * paso - 14]);   // en un paquete, el recorte va en todas sus piezas bajo la cima
       // algunos bloques mayores medio enterrados (3 formas distintas, tamaños y giros variados) en las zonas de pendiente suave junto a la arista
       const col = new THREE.Color(), forma = [0, 1, 2].map((v) => {
         const g = new THREE.IcosahedronGeometry(1, 1), pa = g.attributes.position, plano = d.roca === 'caliza' ? 0.55 : d.roca === 'oscura' ? 0.85 : 1;
@@ -325,7 +327,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
   function quitaDetalle(id) {
     const d = detalles.get(id); if (!d) { detalles.delete(id); return; }
     for (const o of [d.mesh, ...(d.insts ?? []), d.cruz, ...(d.extras ?? [])]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
-    d.mat?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); rocasCima.quitar(d.rocas); detalles.delete(id);
+    d.mat?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); api.quitaHuecoExterno?.(id); rocasCima.quitar(d.rocas); detalles.delete(id);
     alRelieve?.({ x0: d.x0, z0: d.z0, x1: d.x0 + (d.n - 1) * d.paso, z1: d.z0 + (d.n - 1) * d.paso });
   }
 
@@ -338,6 +340,9 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
 
   const api = {
     excluye: null,   // (x, z) => true si ese punto lo cubre un paquete de zona
+    piezaExterna: null,   // (x, z) => pieza del paquete de zona cargada en ese punto (para apoyar en ella el detalle de cima)
+    huecoExterno: null, quitaHuecoExterno: null,
+    alturaDetalle(x, z) { for (const d of detalles.values()) { const h = sample(d, x, z); if (h !== undefined) return h; } return undefined; },   // el detalle de cima manda sobre el paquete   // recortan / reponen las piezas del paquete bajo el detalle de una cima
     get cargadas() { return [...piezas.keys()]; },
     get cruz() { const d = detalles.get('aneto'), o = d?.cruz ?? d?.extras?.[0]; return o ? { x: o.position.x, y: o.position.y, z: o.position.z, s: o.scale.x, visible: o.visible } : null; },
     get detalle() { return [...detalles.keys()]; },
@@ -352,7 +357,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
         for (const [id, d] of Object.entries(ficha)) {
           const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
           if (detalles.has(id)) { if ((dist > 3000 || (fijo?.() && !detalles.has(fijo()) && detalles.size >= (movil ? 3 : 6))) && id !== fijo?.()) quitaDetalle(id); }   // deja sitio a la cima abierta
-          else if (!detCarga.has(id) && (dist < 2200 || id === fijo?.()) && piezas.has(piezaDe(id))) cand.push([id === fijo?.() ? -1 : dist, id]);   // la cima abierta, la primera
+          else if (!detCarga.has(id) && (dist < 2200 || id === fijo?.()) && (piezas.has(piezaDe(id)) || api.piezaExterna?.(d.x0 + (d.n * d.paso) / 2, d.z0 + (d.n * d.paso) / 2))) cand.push([id === fijo?.() ? -1 : dist, id]);   // la cima abierta, la primera
         }
         cand.sort((x, y) => x[0] - y[0]);
         for (const [, id] of cand) {

@@ -140,13 +140,21 @@ export async function crearLagos({ scene, geo, url, meta }) {
       g.setIndex(out.ind);
       const m = new THREE.Mesh(g, mat);
       m.renderOrder = 1; m.frustumCulled = false;
-      scene.add(m);
+      scene.add(m); b.mesh = m;
     }
     return nuevos;
   }
+  // el relieve de una zona cambió (pieza fina de un paquete de zona): los ibones de sus bloques se rehacen a la nueva altura de la orilla
+  function rehacerZona(rc) {
+    for (const [k, b] of porBloque) {
+      if (!b.hecho || !b.lista.some((o) => o.cx > rc.x0 - 300 && o.cx < rc.x1 + 300 && o.cz > rc.z0 - 300 && o.cz < rc.z1 + 300)) continue;
+      if (b.mesh) { scene.remove(b.mesh); b.mesh.geometry.dispose(); b.mesh = null; }
+      b.hecho = false; const [i, j] = k.split('_').map(Number); n -= b.lista.length; construirBloque(i, j);
+    }
+  }
   const _c = new THREE.Color(), AZUL = new THREE.Color('#a9c8dc');
   return {
-    get count() { return n; }, nombrados, construirBloque,
+    get count() { return n; }, nombrados, construirBloque, rehacerZona,
     // ibón más cercano a (x, z) dentro de `radio` m y de al menos `areaMin` m²: su contorno y el vértice de la orilla más próximo
     orillaCerca(x, z, radio, areaMin = 0) {
       let mejor = null, md = radio * radio;

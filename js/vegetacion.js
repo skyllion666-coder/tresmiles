@@ -62,6 +62,7 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
       const dens = sstep(0.22, 0.52, ruido(ai / 14, aj / 14, 3)) * 0.85 + 0.15;   // masas de bosque y claros
       if (hash(ai, aj, 1) > prob * dens) continue;
       const x = ch.x0 + (pi * PS + lx + hash(ai, aj, 2) * g) * dx, zz = ch.z0 + (pj * PS + lz + hash(ai, aj, 3) * g) * dz;
+      if (api.excluye?.(x, zz)) continue;   // dentro de un paquete de zona: la ortofoto de 25 cm ya trae los árboles reales
       const y = geo.heightAt(x, zz), alt = y / EXAG;
       const hx = geo.heightAt(x + dx, zz) - geo.heightAt(x - dx, zz), hz = geo.heightAt(x, zz + dz) - geo.heightAt(x, zz - dz);
       if (Math.hypot(hx / (2 * dx), hz / (2 * dz)) > 1.1) continue;   // no en paredes
@@ -87,7 +88,8 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
     parcelas.set(k, { nivel, meshes, n, cx: ch.x0 + (pi + 0.5) * PS * geo.dx, cz: ch.z0 + (pj + 0.5) * PS * geo.dz }); total += n;
   }
 
-  return {
+  const api = {
+    excluye: null,   // (x, z) => true donde no se ponen árboles (js/paquete.js)
     get arboles() { return total; },
     // una pieza de alta resolución cambia la superficie: las parcelas que la tocan se regeneran
     refrescar(rc) { for (const [k, pc] of [...parcelas]) if (pc.cx > rc.x0 - 1200 && pc.cx < rc.x1 + 1200 && pc.cz > rc.z0 - 1200 && pc.cz < rc.z1 + 1200) quita(k); },
@@ -114,4 +116,5 @@ export function crearVegetacion({ scene, geo, meta, terrain, movil }) {
       if (cola.length && total < MAXN) { const j = cola.shift(); construye(j.ch, j.pi, j.pj, j.nivel, j.k).catch(() => {}); }
     },
   };
+  return api;
 }

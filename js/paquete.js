@@ -6,7 +6,7 @@ import * as THREE from 'three';
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
-export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, alRelieve }) {
+export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, movil, alRelieve }) {
   const idx = await fetch(`${base}/index.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (!idx?.piezas?.length) return null;
   const L = idx.lado, MAX = movil ? 8 : 14, CARGA = movil ? 2200 : 3200, DESCARGA = CARGA + 1200, FUNDE = 90;
@@ -27,8 +27,17 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, 
     const i = Math.min(p.n - 2, Math.floor(fx)), j = Math.min(p.n - 2, Math.floor(fz)), tx = fx - i, tz = fz - j, H = p.H, n = p.n;
     return (H[j * n + i] * (1 - tx) + H[j * n + i + 1] * tx) * (1 - tz) + (H[(j + 1) * n + i] * (1 - tx) + H[(j + 1) * n + i + 1] * tx) * tz;
   };
-  geo.setPaquete((x, z) => { for (const p of piezas.values()) { const h = sample(p, x, z); if (h !== undefined) return h; } return undefined; });
+  geo.setPaquete((x, z) => { const hd = cumbres.alturaDetalle?.(x, z); if (hd !== undefined) return hd; for (const p of piezas.values()) { const h = sample(p, x, z); if (h !== undefined) return h; } return undefined; });
   cumbres.excluye = (x, z) => [...piezas.values()].some((p) => x > p.x0 - 600 && x < p.x0 + L + 600 && z > p.z0 - 600 && z < p.z0 + L + 600);
+  // el detalle de cima (1 m y su modelo de Blender, js/cumbres.js) se apoya en las piezas del paquete, que se recortan debajo (puede caer entre dos)
+  const enPieza = (x, z) => [...piezas.values()].find((p) => x >= p.x0 && x <= p.x0 + L && z >= p.z0 && z <= p.z0 + L) ?? null;
+  const huecos = new Map();   // cima -> recuadro recortado
+  const ponHuecos = (p) => { const hv = p.mat.userData.holes.value; hv.forEach((v) => v.set(1e9, 1e9, 1e9, 1e9)); let k = 0; for (const r of huecos.values()) if (k < 4 && r[0] < p.x0 + L && r[2] > p.x0 && r[1] < p.z0 + L && r[3] > p.z0) hv[k++].set(...r); };
+  cumbres.piezaExterna = enPieza;
+  cumbres.huecoExterno = (id, r) => { huecos.set(id, r); for (const p of piezas.values()) ponHuecos(p); };
+  cumbres.quitaHuecoExterno = (id) => { if (huecos.delete(id)) for (const p of piezas.values()) ponHuecos(p); };
+  // árboles: no dentro de las piezas cargadas (la ortofoto de 25 cm ya trae los reales)
+  if (veg) veg.excluye = (x, z) => enPieza(x, z) !== null;
 
   async function carga(d) {
     cargando.add(d.id);
@@ -71,7 +80,7 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, 
       const mat = terrain.crearMaterialPieza(ch, 'granito'); mat.side = THREE.DoubleSide; const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       const p = { d, H, x0, z0, n, paso, mesh, mat, ch, lados };
       if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
-      scene.add(mesh); piezas.set(d.id, p); marca(d, true);
+      scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
       alRelieve?.({ x0, z0, x1: x0 + L, z1: z0 + L });
       if (d.orto) new THREE.TextureLoader().load(`${base}/${d.orto}`, (tex) => {
         if (piezas.get(d.id) !== p) { tex.dispose(); return; }

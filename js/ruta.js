@@ -24,10 +24,19 @@ export function crearRuta({ scene, geo, ruta }) {
   const centro = { x: (bb.x0 + bb.x1) / 2, z: (bb.z0 + bb.z1) / 2 }, extension = Math.hypot(bb.x1 - bb.x0, bb.z1 - bb.z0);
   const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
   const tub = 1800, rad = 5;
-  let geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
+  // subida con el color de la ruta y bajada más apagada (en las rutas de ida y vuelta las dos líneas van casi juntas y en los zigzags se confundían):
+  // color por vértice según el tramo (la geometría del tubo recorre la curva por longitud de arco, anillo a anillo)
+  let im = 0; ruta.puntos.forEach((p, i) => { if (p[2] > ruta.puntos[im][2]) im = i; });
+  const fCima = dist[im] / (dist[dist.length - 1] || 1), hayBajada = dist[dist.length - 1] - dist[im] > 400;
+  const tono = (g) => {
+    const n = g.attributes.position.count, c = new Float32Array(n * 3);
+    for (let v = 0; v < n; v++) { const anillo = Math.floor(v / (rad + 1)), k = hayBajada && anillo / tub > fCima + 0.002 ? 0.55 : 1; c[v * 3] = c[v * 3 + 1] = c[v * 3 + 2] = k; }
+    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g;
+  };
+  let geom = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false));
   // la línea se adelgaza al acercarse: el radio (0,5–11 m) y la altura sobre el relieve (7–24 m) crecen con la distancia a la cámara, calculados por vértice en el shader.
   // La geometría guarda el radio de 11 m; el centro del tubo es posición − normal × 11, así que no hace falta otra línea ni más vértices.
-  const mat = new THREE.MeshBasicMaterial({ fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
   mat.onBeforeCompile = (sh) => {
     sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0;
@@ -227,7 +236,7 @@ export function crearRuta({ scene, geo, ruta }) {
     for (const p of pts) if (p.x >= x0 && p.x <= x1 && p.z >= z0 && p.z <= z1) { const y = geo.heightAt(p.x, p.z) + 24; cambio = Math.max(cambio, Math.abs(y - p.y)); p.y = y; }
     if (cambio < 1) return;
     curve.updateArcLengths();
-    const g = new THREE.TubeGeometry(curve, tub, 11, rad, false); g.setDrawRange(geom.drawRange.start, geom.drawRange.count);
+    const g = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false)); g.setDrawRange(geom.drawRange.start, geom.drawRange.count);
     mesh.geometry = g; geom.dispose(); geom = g;
   }
 
