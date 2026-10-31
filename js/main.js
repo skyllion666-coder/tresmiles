@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js?v=2';
-import { Terrain } from './terrain.js?v=25';
+import { Terrain, NCALOR } from './terrain.js?v=26';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=47';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
@@ -16,7 +16,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=10';
+import { t, EN_INGLES } from './i18n.js?v=11';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -281,8 +281,16 @@ async function boot() {
     }
     return null;
   }
+  const calor = { leer: () => null };   // capa «Por dónde pasa la gente» (se rellena más abajo): trazas y tipo de vía en un punto
+  const textoCalor = (c) => !c ? '' : `<small class="pico-calor">${c.trazas > 1 ? t('Por aquí pasan unas {n} trazas GPS', { n: fmt(c.trazas) }) : t('Por aquí pasa una traza GPS (puede ser una sola persona)')}${c.via ? ` · ${t(c.via === 'carretera' ? 'carretera' : 'pista')}` : ''}</small>`;
   async function nombrePico(cx, cy) {
     const pt = puntoDelRelieve(cx, cy); if (!pt) return;
+    const cal = calor.leer(pt.x, pt.z);
+    if (cal) {   // con la capa encendida, el toque sobre un camino dice cuánta gente pasa (en el punto tocado, no en el pico)
+      clearTimeout(picoTimer); picoSel = { x: pt.x, y: geo.heightAt(pt.x, pt.z), z: pt.z };
+      picoEl.innerHTML = textoCalor(cal); picoEl.hidden = false; picoEl.classList.remove('is-hidden');
+      picoTimer = setTimeout(() => { picoSel = null; picoEl.hidden = true; }, 7000); return;
+    }
     const lista = await cargaPicos(); if (!lista.length) return;
     const dist = Math.hypot(pt.x - camera.position.x, pt.z - camera.position.z);
     const radio = clamp(dist * 0.05, 500, 1800);   // cuanto más lejos está la cámara, más margen al tocar
@@ -1161,20 +1169,39 @@ async function boot() {
   setSun(+(store.get('tresmiles-luz') ?? 3) % SUN.length || 0);   // por defecto, la hora real
   setInterval(() => { if (S.sun === 3) setSun(3); }, 60e3);
 
-  // — «Por dónde pasa la gente»: mapa de calor de las trazas GPS públicas de OpenStreetMap (tools/build_calor.py), pintado sobre el relieve —
-  // ayuda a ver los caminos más pisados (por ejemplo, para volver a una senda conocida si te sales de la ruta); no dice si un paso es seguro
+  // — «Por dónde pasa la gente»: mapa de calor de las trazas GPS públicas de OpenStreetMap (tools/build_calor.py), pintado sobre el relieve por zonas —
+  // ayuda a ver los caminos más pisados (por ejemplo, para volver a una senda conocida si te sales de la ruta); no dice si un paso es seguro.
+  // Cada PNG lleva en rojo la densidad (log de las trazas) y en verde el tipo de vía de OSM (carretera / pista): las carreteras se dicen, no se quitan.
   fetch(`data/calor/index.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((idx) => {
-    const z = idx && Object.values(idx)[0]; if (!z) return;   // de momento, una zona (macizo del Aneto)
+    const zonas = Object.values(idx ?? {}).slice(0, NCALOR); if (!zonas.length) return;
     const b = $('#btn-calor'); b.hidden = false;
-    const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s), K = terrain.clima;
-    K.uCalorB.value.set(a.x, a.z, c.x, c.z);
+    const K = terrain.clima, lienzo = document.createElement('canvas'), cx = lienzo.getContext('2d', { willReadFrequently: true }); lienzo.width = lienzo.height = 9;
+    zonas.forEach((z, i) => { const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s); z.b = [a.x, a.z, c.x, c.z]; K.uCalorB.value[i].set(...z.b); });
     let on = false, cargando = null, tf = null;
+    const carga = () => (cargando ??= Promise.all(zonas.map((z, i) => new Promise((res) => {
+      const img = new Image(); img.onload = () => { const tx = new THREE.Texture(img); tx.colorSpace = THREE.NoColorSpace; tx.needsUpdate = true; K.uCalor.value[i] = tx; z.img = img; res(); }; img.onerror = () => res();
+      img.src = `${z.png}?dv=${window.DATOS_V || 0}`;
+    }))));
+    // lo que hay en un punto: trazas (máximo en ±40 m, el dedo no es preciso) y tipo de vía
+    calor.leer = (x, z0) => {
+      if (!on) return null;
+      for (const z of zonas) {
+        const [x0, zz0, x1, zz1] = z.b; if (!z.img || x < x0 || x > x1 || z0 < zz0 || z0 > zz1) continue;
+        const u = Math.round((x - x0) / (x1 - x0) * z.img.width) - 4, v = Math.round((z0 - zz0) / (zz1 - zz0) * z.img.height) - 4;
+        cx.clearRect(0, 0, 9, 9); cx.drawImage(z.img, u, v, 9, 9, 0, 0, 9, 9);
+        const d = cx.getImageData(0, 0, 9, 9).data; let r = 0, g = 0;
+        for (let k = 0; k < d.length; k += 4) if (d[k] > r) { r = d[k]; g = d[k + 1]; }
+        if (r < 12) return null;
+        return { trazas: Math.max(1, Math.round(Math.expm1(r / 255 * z.escala) / 2.2)), via: g > 190 ? 'carretera' : g > 64 ? 'pista' : null };
+      }
+      return null;
+    };
     const fundido = (to) => { cancelAnimationFrame(tf); const v0 = K.uCalorK.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 600); K.uCalorK.value = v0 + (to - v0) * k; COLOR_RUTA.actual.lerpColors(COLOR_RUTA.naranja, COLOR_RUTA.verde, K.uCalorK.value); if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
     const pon = async (v) => {
       on = v; b.setAttribute('aria-pressed', on); store.set('tresmiles-calor', on ? '1' : '0');
-      if (on && !K.uCalor.value) { cargando ??= new THREE.TextureLoader().loadAsync(`${z.png}?dv=${window.DATOS_V || 0}`).then((tx) => { tx.colorSpace = THREE.NoColorSpace; K.uCalor.value = tx; }).catch(() => {}); await cargando; }
+      if (on) await carga();
       if (on !== v) return;
-      fundido(on && K.uCalor.value ? 1 : 0);
+      fundido(on ? 1 : 0);
     };
     b.addEventListener('click', () => { sonido.fx('toque'); pon(!on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
     if (store.get('tresmiles-calor') === '1') pon(true);
@@ -1327,7 +1354,7 @@ async function boot() {
       <h3>Visits</h3>
       <p>This website uses <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, a visit counter without cookies that stores no personal data and does not follow you around other websites: it only counts how many times each page is opened.</p>
       <h3>Where people go</h3>
-      <p>The footprints button lights up, in orange and yellow, the places where many people have passed with a GPS (for now, around the Aneto). It is made from the public GPS traces that people upload to <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: the brighter, the more traces. It helps you spot the most trodden paths, for example to get back to a known trail if you leave your route. <b>It does not say whether a passage is safe</b>: there are traces across glaciers, snowfields and gullies, and from people who also got lost. A faint glow can be a single person.</p>
+      <p>The footprints button lights up the places where people have passed with a GPS: faint orange for a few traces and yellow for many. Roads are shown in greyish blue and dirt tracks in sand, because many people also record GPS in the car. Tap a path to see how many traces pass there; while it is on, the example route turns green. It is made from the public GPS traces that people upload to <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: the brighter, the more traces. It helps you spot the most trodden paths, for example to get back to a known trail if you leave your route. <b>It does not say whether a passage is safe</b>: there are traces across glaciers, snowfields and gullies, and from people who also got lost. A faint glow can be a single person.</p>
       <h3>Safety</h3>
       <p>This website does not replace a guidebook, a conditions report or experience in high mountains. Always check the forecast and the state of the route before setting out.</p>`;
       return;
@@ -1368,7 +1395,7 @@ async function boot() {
       <h3>Visitas</h3>
       <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página.</p>
       <h3>Por dónde pasa la gente</h3>
-      <p>El botón de las huellas ilumina en naranja y amarillo los sitios por donde ha pasado mucha gente con GPS (de momento, en el entorno del Aneto). Está hecho con las trazas GPS públicas que la gente sube a <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: cuanto más brilla, más trazas. Sirve para ver los caminos más pisados, por ejemplo para volver a una senda conocida si te sales de la ruta. <b>No dice si un paso es seguro</b>: hay trazas por glaciares, neveros y canales, y de gente que también se perdió. Un brillo débil puede ser una sola persona.</p>
+      <p>El botón de las huellas ilumina los sitios por donde ha pasado gente con GPS: naranja tenue si son pocas trazas y amarillo si son muchas. Las carreteras se ven en azul grisáceo y las pistas en color arena, porque mucha gente graba el GPS también en el coche. Tocando un camino dice cuántas trazas pasan por allí, y mientras está encendido, la ruta de ejemplo se pinta en verde. Está hecho con las trazas GPS públicas que la gente sube a <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: cuanto más brilla, más trazas. Sirve para ver los caminos más pisados, por ejemplo para volver a una senda conocida si te sales de la ruta. <b>No dice si un paso es seguro</b>: hay trazas por glaciares, neveros y canales, y de gente que también se perdió. Un brillo débil puede ser una sola persona.</p>
       <h3>Seguridad</h3>
       <p>Esta web no sustituye a una guía, a un parte de condiciones ni a la experiencia en alta montaña. Consulta siempre la previsión y el estado de la ruta antes de salir.</p>`;
   }
