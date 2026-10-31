@@ -9,5 +9,71 @@
   "trazas": 149,
   "escala": 2.415,
   "png": "data/calor/aneto.png"
+ },
+ "balaitus": {
+  "caja": [
+   -0.38,
+   42.72,
+   -0.18,
+   42.88
+  ],
+  "trazas": 170,
+  "escala": 2.2329,
+  "png": "data/calor/balaitus.png"
+ },
+ "benasque": {
+  "caja": [
+   0.4,
+   42.55,
+   0.55,
+   42.74
+  ],
+  "trazas": 92,
+  "escala": 2.2021,
+  "png": "data/calor/benasque.png"
+ },
+ "perdido-e": {
+  "caja": [
+   0.05,
+   42.6,
+   0.25,
+   42.76
+  ],
+  "trazas": 67,
+  "escala": 1.8673,
+  "png": "data/calor/perdido-e.png"
+ },
+ "perdido-o": {
+  "caja": [
+   -0.06,
+   42.6,
+   0.05,
+   42.76
+  ],
+  "trazas": 138,
+  "escala": 2.5212,
+  "png": "data/calor/perdido-o.png"
+ },
+ "posets": {
+  "caja": [
+   0.25,
+   42.55,
+   0.4,
+   42.75
+  ],
+  "trazas": 37,
+  "escala": 1.9123,
+  "png": "data/calor/posets.png"
+ },
+ "vignemale": {
+  "caja": [
+   -0.18,
+   42.64,
+   -0.06,
+   42.82
+  ],
+  "trazas": 104,
+  "escala": 2.5316,
+  "png": "data/calor/vignemale.png"
  }
 }

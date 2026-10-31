@@ -66,8 +66,8 @@ def hacer(zona):
                 pts = [px(float(p.get('lat')), float(p.get('lon'))) for p in seg.iter(NS + 'trkpt')]
                 puntos += len(pts)
                 vis = linea(pts) if ident else {(int(y), int(x)) for x, y in pts}
-                ys, xs = zip(*[(y, x) for y, x in vis if 0 <= y < H and 0 <= x < W]) if vis else ((), ())
-                if ys: cuenta[list(ys), list(xs)] += 1
+                den = [(y, x) for y, x in vis if 0 <= y < H and 0 <= x < W]   # una traza puede caer entera fuera del recuadro
+                if den: ys, xs = zip(*den); cuenta[list(ys), list(xs)] += 1
                 trazas += ident
     # un poco de difuminado (el GPS tiene 5-15 m de error) y escala logarítmica: una traza ya se ve, cien se ven mucho más
     v = gaussian_filter(cuenta.astype(np.float32), 1.2)
