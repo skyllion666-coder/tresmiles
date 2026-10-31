@@ -1,6 +1,6 @@
 // Selector de cumbres (el del inicio y el del mapa): buscador sin tildes que mira también los nombres alternativos,
 // macizos plegados de oeste a este con su número, principales primero y secundarias plegadas dentro de cada macizo.
-import { t as tr, EN_INGLES } from './i18n.js?v=12';   // «tr»: aquí «t» es nombre de variable en muchas funciones
+import { t as tr, EN_INGLES } from './i18n.js?v=13';   // «tr»: aquí «t» es nombre de variable en muchas funciones
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);
 

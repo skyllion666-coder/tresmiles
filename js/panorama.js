@@ -2,7 +2,7 @@
 // Cálculo propio con el relieve de 120 m (nivel 4 de los bloques, ~1 MB, se pide la primera vez); no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=12';
+import { t, EN_INGLES } from './i18n.js?v=13';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const COLORES = ['#2f4c45', '#4a6a60', '#6d8b85', '#93a9ac', '#b8c7ce'];   // de cerca a lejos (más lejos = más claro, como la bruma)

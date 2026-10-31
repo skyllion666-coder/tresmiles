@@ -7,8 +7,8 @@
    42.72
   ],
   "trazas": 149,
-  "escala": 2.415,
-  "png": "data/calor/aneto.png"
+  "png": "data/calor/aneto.png",
+  "datos": "data/calor/aneto-datos.png"
  },
  "balaitus": {
   "caja": [
@@ -18,8 +18,8 @@
    42.88
   ],
   "trazas": 170,
-  "escala": 2.2329,
-  "png": "data/calor/balaitus.png"
+  "png": "data/calor/balaitus.png",
+  "datos": "data/calor/balaitus-datos.png"
  },
  "benasque": {
   "caja": [
@@ -29,8 +29,8 @@
    42.74
   ],
   "trazas": 92,
-  "escala": 2.2021,
-  "png": "data/calor/benasque.png"
+  "png": "data/calor/benasque.png",
+  "datos": "data/calor/benasque-datos.png"
  },
  "perdido-e": {
   "caja": [
@@ -40,8 +40,8 @@
    42.76
   ],
   "trazas": 67,
-  "escala": 1.8673,
-  "png": "data/calor/perdido-e.png"
+  "png": "data/calor/perdido-e.png",
+  "datos": "data/calor/perdido-e-datos.png"
  },
  "perdido-o": {
   "caja": [
@@ -51,8 +51,8 @@
    42.76
   ],
   "trazas": 138,
-  "escala": 2.5212,
-  "png": "data/calor/perdido-o.png"
+  "png": "data/calor/perdido-o.png",
+  "datos": "data/calor/perdido-o-datos.png"
  },
  "posets": {
   "caja": [
@@ -62,8 +62,8 @@
    42.75
   ],
   "trazas": 37,
-  "escala": 1.9123,
-  "png": "data/calor/posets.png"
+  "png": "data/calor/posets.png",
+  "datos": "data/calor/posets-datos.png"
  },
  "vignemale": {
   "caja": [
@@ -73,7 +73,7 @@
    42.82
   ],
   "trazas": 104,
-  "escala": 2.5316,
-  "png": "data/calor/vignemale.png"
+  "png": "data/calor/vignemale.png",
+  "datos": "data/calor/vignemale-datos.png"
  }
 }

@@ -89,7 +89,7 @@ const EN = {
   '{n} de {t} cumbres': '{n} of {t} summits',
   // — selector de cumbres —
   'Cerrar el selector': 'Close the selector', 'Qué cumbres ver': 'Which summits to show', 'Menos de 3.000': 'Below 3,000', 'Más altas': 'Highest',
-  'Por dónde pasa la gente': 'Where people go', 'Por aquí pasan unas {n} trazas GPS': 'About {n} GPS traces pass here', 'Por aquí pasa una traza GPS (puede ser una sola persona)': 'One GPS trace passes here (it may be a single person)', 'carretera': 'road', 'pista': 'dirt track', 'discutida': 'disputed', 'Cimas secundarias': 'Secondary summits', 'Las más cercanas al centro del mapa': 'Closest to the centre of the map', 'Las más altas': 'The highest',
+  'Por dónde pasa la gente': 'Where people go', 'Muy poco frecuentado: una o dos trazas, puede ser alguien que se perdió': 'Very rarely used: one or two traces, it may be someone who got lost', 'Poco frecuentado': 'Rarely used', 'Frecuentado': 'Used', 'Paso muy frecuentado': 'Very busy route', '{t} trazas completas y {p} puntos sueltos (GPS de OpenStreetMap)': '{t} full traces and {p} loose points (OpenStreetMap GPS)', 'carretera': 'road', 'pista': 'dirt track', 'discutida': 'disputed', 'Cimas secundarias': 'Secondary summits', 'Las más cercanas al centro del mapa': 'Closest to the centre of the map', 'Las más altas': 'The highest',
   'Ninguna cumbre con estos filtros.': 'No summits with these filters.', 'Todavía no has marcado ninguna cumbre como subida.': 'You have not marked any summit as climbed yet.',
   'Ninguna cumbre coincide con «{q}».': 'No summit matches “{q}”.', ' Prueba a quitar los filtros.': ' Try clearing the filters.',
   'Con filtros: {n} de {t} cumbres': 'Filtered: {n} of {t} summits', 'también «{n}»': 'also “{n}”',
