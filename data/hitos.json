@@ -1496,7 +1496,8 @@
    "coronas",
    "araguells",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Ibón Medio de Coronas",
   "tipo": "ibon",
@@ -1515,7 +1516,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Corredor de acceso a la cresta",
   "tipo": "paso",
@@ -1534,7 +1536,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Paso de la «Regleta»",
   "tipo": "paso",
@@ -1553,7 +1556,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Pico Maldito",
   "tipo": "cima",
@@ -1572,7 +1576,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Punta de Astorg",
   "tipo": "cima",
@@ -1591,7 +1596,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Collado de Coronas",
   "tipo": "paso",
@@ -1611,7 +1617,8 @@
    "coronas",
    "araguells",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Inicio del recorrido (Puente de Coronas)",
   "tipo": "lugar",
@@ -1629,7 +1636,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Pico del Medio",
   "tipo": "cima",
@@ -1646,7 +1654,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Pico Coronas",
   "tipo": "cima",
@@ -1663,7 +1672,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Tuca del Collado de Coronas",
   "tipo": "cima",
@@ -1680,7 +1690,8 @@
    "medio",
    "coronas",
    "tuca-de-collado-de-coronas",
-   "aguja-del-collado-de-coronas"
+   "aguja-del-collado-de-coronas",
+   "aguja-schmidt-endell"
   ],
   "nombre": "Aguja del Collado de Coronas",
   "tipo": "cima",
@@ -1695,7 +1706,10 @@
    "espadas",
    "llardaneta",
    "diente-llardana",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Collado del Diente",
   "tipo": "paso",
@@ -1711,7 +1725,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Diente Royo",
   "tipo": "cima",
@@ -1728,7 +1745,10 @@
    "espadas",
    "llardaneta",
    "pavots",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Ibón de Llardaneta",
   "tipo": "ibon",
@@ -1745,7 +1765,10 @@
    "espadas",
    "llardaneta",
    "pavots",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Pavots",
   "tipo": "cima",
@@ -1761,7 +1784,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Las Espadas",
   "tipo": "cima",
@@ -1777,7 +1803,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Paso del Funambulista",
   "tipo": "paso",
@@ -1791,7 +1820,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Tuca de Llardaneta",
   "tipo": "cima",
@@ -1805,7 +1837,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Tuqueta Roya",
   "tipo": "cima",
@@ -1819,7 +1854,10 @@
   "picos": [
    "espadas",
    "llardaneta",
-   "tuqueta-roya"
+   "tuqueta-roya",
+   "espades-so",
+   "tuca-llardaneta-suroeste",
+   "cima-234-sin-nombre"
   ],
   "nombre": "Cima del Posets",
   "tipo": "cima",
@@ -1833,7 +1871,8 @@
   "picos": [
    "soum",
    "olas",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Punta de las Olas",
   "tipo": "cima",
@@ -1848,7 +1887,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Baudrimont SE",
   "tipo": "cima",
@@ -1863,7 +1903,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Collado Oriental de Monte Perdido",
   "tipo": "paso",
@@ -1878,7 +1919,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Soum de Ramond (Pico de Añisclo)",
   "tipo": "cima",
@@ -1894,7 +1936,8 @@
   "picos": [
    "soum",
    "olas",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Abandonar el GR 11",
   "tipo": "paso",
@@ -1908,7 +1951,8 @@
   "picos": [
    "soum",
    "olas",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Collado SE de la Punta de las Olas",
   "tipo": "paso",
@@ -1921,7 +1965,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Monte Perdido",
   "tipo": "cima",
@@ -1934,7 +1979,8 @@
   "pico": "soum",
   "picos": [
    "soum",
-   "pico-baudrimont-se"
+   "pico-baudrimont-se",
+   "piton-so-del-cilindro"
   ],
   "nombre": "Cilindro de Marboré",
   "tipo": "cima",
@@ -1950,7 +1996,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Trepada de grado I",
   "tipo": "paso",
@@ -1966,7 +2013,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Ciudad de Piedra",
   "tipo": "lugar",
@@ -1983,7 +2031,8 @@
    "marbore",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Embudo del Marboré",
   "tipo": "paso",
@@ -2000,7 +2049,8 @@
    "marbore",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Arista norte del Marboré",
   "tipo": "paso",
@@ -2018,7 +2068,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Senda a la Punta de las Escaleras",
   "tipo": "paso",
@@ -2034,7 +2085,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Faja Roya",
   "tipo": "paso",
@@ -2050,7 +2102,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Paso clave",
   "tipo": "paso",
@@ -2066,7 +2119,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Pico Oriental de la Cascada",
   "tipo": "cima",
@@ -2082,7 +2136,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Pico Central de la Cascada (Pico Brulle)",
   "tipo": "cima",
@@ -2098,7 +2153,8 @@
    "casco",
    "pico-oriental-de-la-cascada",
    "pico-central-de-la-cascada",
-   "espalda-del-marbore"
+   "espalda-del-marbore",
+   "pico-occidental-de-la-cascada"
   ],
   "nombre": "Espalda de Marboré",
   "tipo": "cima",
@@ -2207,7 +2263,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Ibón Blanco de Lliterola",
   "tipo": "ibon",
@@ -2225,7 +2282,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Pico Royo",
   "tipo": "cima",
@@ -2243,7 +2301,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Collado Superior de Lliterola",
   "tipo": "paso",
@@ -2261,7 +2320,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Aparcamiento (Parquin)",
   "tipo": "lugar",
@@ -2278,7 +2338,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Pleta des Capellans",
   "tipo": "lugar",
@@ -2294,7 +2355,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Ibonet de les Arenals",
   "tipo": "ibon",
@@ -2310,7 +2372,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Collado Inferior de Lliterola",
   "tipo": "paso",
@@ -2326,7 +2389,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Aguja de Lliterola",
   "tipo": "cima",
@@ -2342,7 +2406,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Punta de Lliterola (Tuca de Lliterola, 3.133 m en OpenStreetMap)",
   "tipo": "cima",
@@ -2358,7 +2423,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Tuca de Lliterola (3.095 m según el track)",
   "tipo": "cima",
@@ -2374,7 +2440,8 @@
    "hito-occidental-del-perdiguero",
    "pico-royo",
    "tuca-de-lliterola",
-   "aguja-de-lliterola"
+   "aguja-de-lliterola",
+   "hito-oriental-de-perdiguero"
   ],
   "nombre": "Hito Occidental del Perdiguero",
   "tipo": "cima",
@@ -2569,7 +2636,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Collado Argualas",
   "tipo": "paso",
@@ -2585,7 +2653,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Algas Norte",
   "tipo": "cima",
@@ -2601,7 +2670,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Pico Algas",
   "tipo": "cima",
@@ -2617,7 +2687,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Argualas",
   "tipo": "cima",
@@ -2633,7 +2704,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Pequeño ibón del circo de Argualas",
   "tipo": "ibon",
@@ -2650,7 +2722,8 @@
    "algas",
    "argualas",
    "arnales",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Desvío a Arnales",
   "tipo": "paso",
@@ -2664,7 +2737,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Senda bajo el Collado de Pondiellos",
   "tipo": "paso",
@@ -2678,7 +2752,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Garmo Negro",
   "tipo": "cima",
@@ -2692,7 +2767,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Collado Algas",
   "tipo": "paso",
@@ -2706,7 +2782,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Ligera trepada (precaución)",
   "tipo": "paso",
@@ -2720,7 +2797,8 @@
   "picos": [
    "algas",
    "argualas",
-   "algas-norte"
+   "algas-norte",
+   "algas-se"
   ],
   "nombre": "Punta Argualas",
   "tipo": "cima",
@@ -2847,7 +2925,8 @@
   "picos": [
    "abadias",
    "espalda-aneto",
-   "mulleres"
+   "mulleres",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "La Besurta",
   "tipo": "lugar",
@@ -2864,7 +2943,8 @@
   "picos": [
    "abadias",
    "espalda-aneto",
-   "mulleres"
+   "mulleres",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "Forau d'Aigualluts",
   "tipo": "lugar",
@@ -2880,7 +2960,8 @@
   "picos": [
    "abadias",
    "espalda-aneto",
-   "mulleres"
+   "mulleres",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "Plan d'Aigualluts",
   "tipo": "lugar",
@@ -2895,7 +2976,8 @@
   "pico": "abadias",
   "picos": [
    "abadias",
-   "espalda-aneto"
+   "espalda-aneto",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "Ibón del Salterillo",
   "tipo": "ibon",
@@ -2909,7 +2991,8 @@
   "id": "aba-collado",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "Collado Maldito",
   "tipo": "paso",
@@ -2923,7 +3006,8 @@
   "id": "aba-cima",
   "pico": "abadias",
   "picos": [
-   "abadias"
+   "abadias",
+   "tuqueta-roya-de-creguena"
   ],
   "nombre": "Cima del Pico Abadías",
   "tipo": "cima",
@@ -3805,7 +3889,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "San Nicolás de Bujaruelo",
   "tipo": "lugar",
@@ -3821,7 +3906,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Pradera de Laña Larga",
   "tipo": "lugar",
@@ -3834,7 +3920,8 @@
   "pico": "cerbillona",
   "picos": [
    "cerbillona",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Cabaña de Cerbillonar",
   "tipo": "refugio",
@@ -3848,7 +3935,8 @@
   "picos": [
    "cerbillona",
    "montferrat",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Pic Central",
   "tipo": "cima",
@@ -3864,7 +3952,8 @@
   "picos": [
    "cerbillona",
    "montferrat",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Col Lady Lister",
   "tipo": "paso",
@@ -3878,7 +3967,8 @@
   "picos": [
    "cerbillona",
    "montferrat",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Pico Cerbillona",
   "tipo": "cima",
@@ -3892,7 +3982,8 @@
   "picos": [
    "cerbillona",
    "montferrat",
-   "pico-central"
+   "pico-central",
+   "aguja-so-de-cerbillona"
   ],
   "nombre": "Col de Cerbillona",
   "tipo": "paso",
@@ -3904,7 +3995,8 @@
   "id": "mon-cima",
   "pico": "montferrat",
   "picos": [
-   "montferrat"
+   "montferrat",
+   "pico-del-clot-de-la-hount"
   ],
   "nombre": "Pico Montferrat",
   "tipo": "cima",
@@ -4148,7 +4240,8 @@
   "pico": "casco",
   "picos": [
    "casco",
-   "torre-del-marbore"
+   "torre-del-marbore",
+   "tuqueta-de-marbore"
   ],
   "nombre": "Collado de Millaris",
   "tipo": "paso",
@@ -4163,7 +4256,8 @@
   "pico": "casco",
   "picos": [
    "casco",
-   "torre-del-marbore"
+   "torre-del-marbore",
+   "tuqueta-de-marbore"
   ],
   "nombre": "Torre de Marboré",
   "tipo": "cima",
@@ -4178,7 +4272,8 @@
   "pico": "casco",
   "picos": [
    "casco",
-   "torre-del-marbore"
+   "torre-del-marbore",
+   "tuqueta-de-marbore"
   ],
   "nombre": "Casco de Marboré",
   "tipo": "cima",

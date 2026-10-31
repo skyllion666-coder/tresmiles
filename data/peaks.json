@@ -2262,10 +2262,9 @@
    "situacion": "Aragón",
    "lat": 42.76755,
    "lon": -0.26988,
-   "descripcion": "Las Algas SE (3.023 m) son una de las cumbres de la cresta de las Algas, entre el Garmo Negro y Argualas, sobre el Balneario de Panticosa. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Las Algas SE (3.023 m) son una de las cumbres de la cresta de las Algas, entre el Garmo Negro y Argualas, sobre el Balneario de Panticosa. El recorrido del mapa es la ruta de ejemplo de Pico Algas, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "",
-   "basica": true,
    "inv": "INF-08",
    "foto": "algas-se",
    "pie": "Las Algas SE, vistas desde la cresta de Panticosa.",
@@ -2278,7 +2277,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/hiking-trails/cresta-panticosa-6x-3-000-3-064m-aguja-pondiellos-garmo-negro-algas-n-central-y-sw-argualas-desde-b-221794422",
     "texto": "Ruta de Spelowash en Wikiloc"
-   }
+   },
+   "rutas": [
+    "algas-argualas"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-de-arnales",
@@ -2363,7 +2366,10 @@
    "desnivel": "+1.174 m · 11,3 km",
    "ruta": "Esta cima aparece en la ruta «Aguja de Pondiellos-Garmo Negro-Algas Norte-Algas SO», de Pau Armengol i Muñoz en Wikiloc, de 11,3 km y 1.174 m de desnivel acumulado. Está situada en Baños de Panticosa (Aragón). El autor tardó 10 h 33 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
    "acceso": "Ruta en Baños de Panticosa",
-   "curiosidad": "Es una de las seis cimas que Sostremetries añadió en 2026 a la lista de tresmiles de los Pirineos, que pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026."
+   "curiosidad": "Es una de las seis cimas que Sostremetries añadió en 2026 a la lista de tresmiles de los Pirineos, que pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico Algas, a unos 100 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-del-clot-de-la-hount",
@@ -2376,10 +2382,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.773139,
    "lon": -0.14975,
-   "descripcion": "El Pico del Clot de la Hount (3.291 m) es la segunda cumbre de la cresta del Vignemale, sobre el glaciar de Ossoue, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pico del Clot de la Hount (3.291 m) es la segunda cumbre de la cresta del Vignemale, sobre el glaciar de Ossoue, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico Montferrat, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda dero Clot dera Fuen · Pic du Clot de la Hount",
-   "basica": true,
    "inv": "VIG-02",
    "foto": "pico-del-clot-de-la-hount",
    "pie": "La cresta del Vignemale hacia el Clot de la Hount.",
@@ -2393,7 +2398,10 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/vignemale-4-tresmiles-desde-refugio-de-bayssellance-vignemale-clot-de-la-hount-cerbillona-y-pico-ce-219577337",
     "texto": "Ruta de TrotaríosySendas en Wikiloc"
    },
-   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)"
+   "epoca": "Finales de junio, con nieve (la ruta se hizo con buenas condiciones, pero hace falta equipo de nieve)",
+   "rutas": [
+    "montferrat-ossoue"
+   ]
   },
   {
    "id": "pico-central",
@@ -2620,10 +2628,9 @@
    "situacion": "Aragón",
    "lat": 42.767556,
    "lon": -0.1525,
-   "descripcion": "Cima secundaria de 3.042 m del macizo Vignemale · Gavarnie, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.042 m del macizo Vignemale · Gavarnie, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Pico Cerbillona, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Garmo deros Musarez · Aguja SW de Cerbillona",
-   "basica": true,
    "inv": "VIG-12",
    "foto": "aguja-so-de-cerbillona",
    "pie": "La Aguja SO de Cerbillona, con su nevero.",
@@ -2633,7 +2640,13 @@
    },
    "desnivel": "+1.138 m · 15,6 km",
    "ruta": "Esta cima aparece en la ruta «Pico Cerbillona (3247m.) y Aguja SW de Cerbillona (3051m.) 25-07-2024», de yivatosal en Wikiloc, de 15,6 km y 1.138 m de desnivel acumulado. Está situada en Cauterets Puntas (Occitanie). El autor tardó 12 h 33 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cauterets Puntas"
+   "acceso": "Ruta en Cauterets Puntas",
+   "rutas": [
+    "cerbillona-bujaruelo"
+   ],
+   "dificultad": "muy-alta",
+   "grado": "AD · glaciar, canal y cresta",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-dera-cuniestra",
@@ -2650,7 +2663,11 @@
    "clase": "discutida",
    "nombres": "Sin nombre clásico",
    "basica": true,
-   "inv": "PER-05"
+   "inv": "PER-05",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Soum de Ramond, a unos 270 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)"
   },
   {
    "id": "piton-so-del-cilindro",
@@ -2663,10 +2680,9 @@
    "situacion": "Aragón",
    "lat": 42.681028,
    "lon": 0.020889,
-   "descripcion": "El Pitón SO del Cilindro (3.194 m) es una cima rocosa del macizo del Cilindro de Marboré, junto al Monte Perdido. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Pitón SO del Cilindro (3.194 m) es una cima rocosa del macizo del Cilindro de Marboré, junto al Monte Perdido. El recorrido del mapa es la ruta de ejemplo de Soum de Ramond, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Pundeta de Peña Roya · Peña Roya · Pitón SW del Cilindro",
-   "basica": true,
    "inv": "PER-06",
    "foto": "piton-so-del-cilindro",
    "pie": "La cima del Pitón SO del Cilindro, con su hito de piedras.",
@@ -2679,7 +2695,11 @@
    "dificultad": "alta",
    "grado": "Alta montaña con trepadas, en un itinerario largo",
    "ruta": "Desde el refugio de Goriz se enlazan la Punta de las Escaleras (3.027 m), el Monte Perdido (3.355 m), el Pitón SO (3.194 m) y el Cilindro de Marboré (3.325 m), en una ruta de 9,8 km.",
-   "curiosidad": "La ruta lo enlaza con el Monte Perdido y el Cilindro de Marboré en la misma jornada."
+   "curiosidad": "La ruta lo enlaza con el Monte Perdido y el Cilindro de Marboré en la misma jornada.",
+   "rutas": [
+    "soum-tres-sorores"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-dera-canal-fonda",
@@ -2692,13 +2712,17 @@
    "situacion": "Aragón",
    "lat": 42.673556,
    "lon": 0.040861,
-   "descripcion": "Cima discutida de 3.189 m del macizo Monte Perdido–Taillón, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima discutida de 3.189 m del macizo Monte Perdido–Taillón, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "Sin nombre clásico",
    "basica": true,
    "inv": "PER-07",
    "foto": "punta-dera-canal-fonda",
-   "pie": "La Canal Fonda, con un nevero en lo alto."
+   "pie": "La Canal Fonda, con un nevero en lo alto.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Soum de Ramond, a unos 480 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)"
   },
   {
    "id": "dedo-del-monte-perdido",
@@ -2724,7 +2748,10 @@
    },
    "desnivel": "+2.186 m · 38,6 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Dedo del Monte Perdido 3188 m., Torre de Marboré 3009 m. desde la Pradera de Ordesa y Refugio de Góriz», de Santialpino en Wikiloc, de 38,6 km y 2.186 m de desnivel acumulado. Está situada en Torla (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Torla"
+   "acceso": "Ruta en Torla",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Monte Perdido; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "nudillo-del-monte-perdido",
@@ -2750,7 +2777,10 @@
    },
    "desnivel": "+1.703 m · 26,7 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Nudillo de Monte Perdido y Monte Perdido con el autobús de Nerín.», de yivatosal en Wikiloc, de 26,7 km y 1.703 m de desnivel acumulado. Está situada en Fanlo del Valle de Vío (Aragón). El autor tardó 11 h 50 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Fanlo del Valle de Vío"
+   "acceso": "Ruta en Fanlo del Valle de Vío",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Monte Perdido; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-oriental-de-la-cascada",
@@ -2825,10 +2855,9 @@
    "situacion": "Frontera Aragón–Francia",
    "lat": 42.686694,
    "lon": 0.002361,
-   "descripcion": "Cumbre de 3.098 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cumbre de 3.098 m del macizo Monte Perdido–Taillón, en la frontera entre Aragón y Francia. El recorrido del mapa es la ruta de ejemplo de Pico de Marboré, que pasa por su cima.",
    "clase": "principal",
    "nombres": "Punda dera Ula · Picos de la Cascada",
-   "basica": true,
    "inv": "PER-13",
    "foto": "pico-occidental-de-la-cascada",
    "pie": "Pico Occidental de la Cascada: «18 Pico Occcidental de la Cascada 3.095 m.», en una foto de su ruta.",
@@ -2837,7 +2866,14 @@
     "texto": "Ruta de Santialpino en Wikiloc"
    },
    "desnivel": "+1.250 m · 25,2 km",
-   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Marboré 3248 m. y picos de la Cascada, desde refugio de Góriz», de Santialpino en Wikiloc, de 25,2 km y 1.250 m de desnivel acumulado. El autor tardó 12 h 44 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "rutas": [
+    "marbore-cascada"
+   ],
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+   "dificultad": "alta",
+   "grado": "PD · trepadas de I y II, paso clave",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "tuqueta-de-marbore",
@@ -2850,10 +2886,9 @@
    "situacion": "Aragón",
    "lat": 42.685444,
    "lon": 0.018917,
-   "descripcion": "Cima secundaria de 3.092 m del macizo Monte Perdido–Taillón, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.092 m del macizo Monte Perdido–Taillón, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. El recorrido del mapa es la ruta de ejemplo de Casco de Marboré, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Tozalón dera Nieu",
-   "basica": true,
    "inv": "PER-14",
    "foto": "tuqueta-de-marbore",
    "pie": "La cima de la Tuqueta de Marboré, entre la niebla.",
@@ -2863,7 +2898,13 @@
    },
    "desnivel": "+2.137 m · 37,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Tuqueta Marboré, Marboré, Cascadas, Espalda Marboré [6x3000's] Zona de Ordesa Monteperdido», de alexdsummit en Wikiloc, de 37,8 km y 2.137 m de desnivel acumulado. Está situada en Torla (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Torla"
+   "acceso": "Ruta en Torla",
+   "rutas": [
+    "casco-goriz"
+   ],
+   "dificultad": "alta",
+   "grado": "PD · cresta y pasos de I",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "espalda-esparets",
@@ -2889,7 +2930,10 @@
    },
    "desnivel": "+1.445 m · 25,6 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «16/09/2012 - PUNTA DE LAS OLAS - BAUDRIMONT NW - ESPALDA ESPARETS», de gruta en Wikiloc, de 25,6 km y 1.445 m de desnivel acumulado. Está situada en Fanlo del Valle de Vío (Aragón). El autor tardó 10 h 19 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Fanlo del Valle de Vío"
+   "acceso": "Ruta en Fanlo del Valle de Vío",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Monte Perdido, a unos 730 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "espalda-del-marbore",
@@ -2980,7 +3024,10 @@
    },
    "desnivel": "+1.445 m · 25,6 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «16/09/2012 - PUNTA DE LAS OLAS - BAUDRIMONT NW - ESPALDA ESPARETS», de gruta en Wikiloc, de 25,6 km y 1.445 m de desnivel acumulado. Está situada en Fanlo del Valle de Vío (Aragón). El autor tardó 10 h 19 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Fanlo del Valle de Vío"
+   "acceso": "Ruta en Fanlo del Valle de Vío",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Soum de Ramond, a unos 530 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "gabieto-occidental",
@@ -3123,7 +3170,11 @@
    "nombres": "Gabieto Central",
    "basica": true,
    "inv": "PER-24",
-   "curiosidad": "Sostremetries la midió con dos antenas GNSS, una en el collado y otra en la cima, durante al menos 20 minutos. Con ella y otras cinco altas, la lista de tresmiles de los Pirineos pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026."
+   "curiosidad": "Sostremetries la midió con dos antenas GNSS, una en el collado y otra en la cima, durante al menos 20 minutos. Con ella y otras cinco altas, la lista de tresmiles de los Pirineos pasó de 216 a 220. Fuente: La Vanguardia, 31-10-2026.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Tallón, a unos 960 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz"
   },
   {
    "id": "pequeno-astazu",
@@ -3214,7 +3265,10 @@
    },
    "desnivel": "+1.348 m · 15,0 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «La Munia - Pequeña Munia - Sierra Morena (Sobrarbe)», de Barbastro en Wikiloc, de 15,0 km y 1.348 m de desnivel acumulado. Está situada en Espierba (Aragón). El autor tardó 8 h 31 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Espierba"
+   "acceso": "Ruta en Espierba",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de La Munia, a unos 230 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-sierra-morena",
@@ -3269,7 +3323,10 @@
    },
    "desnivel": "+1.347 m · 16,2 km, circular",
    "ruta": "Esta cima aparece en la ruta «Cresta de Troumouse - Pic Heid - Pic de Troumouse- Pic de Serre Mouréne - Pequeña Munia - La Munia», de aneto.0713 en Wikiloc, de 16,2 km y 1.347 m de desnivel acumulado. Está situada en Bareilles (Occitanie). El autor tardó 13 h 50 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Bareilles"
+   "acceso": "Ruta en Bareilles",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de La Munia, a unos 930 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-ledormeur",
@@ -3295,7 +3352,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 160 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-del-ibon",
@@ -3321,7 +3381,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 500 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-marcos-feliu",
@@ -3347,7 +3410,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.260 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pequeno-bachimala",
@@ -3373,7 +3439,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.000 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pequeno-bachimala-s",
@@ -3399,7 +3468,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 870 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "culfreda-ne",
@@ -3487,7 +3559,10 @@
    },
    "desnivel": "+1.451 m · 17,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Punta Lerdormeur, Punta del Ibón, Pequeño Bachimala, Ramón Feliú y Abeillé desde Refugio Tabernés», de Unaiki32 en Wikiloc, de 17,8 km y 1.451 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 9 h 28 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.630 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-puerto-la-pez",
@@ -3513,7 +3588,10 @@
    },
    "desnivel": "+1.311 m · 14,8 km, circular",
    "ruta": "Esta cima aparece en la ruta «Pico de la Pez (3.024 m) y Pico del Puerto de la Pez (3.018 m), circular desde Tabernés», de Manu a la marcheta en Wikiloc, de 14,8 km y 1.311 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 8 h 21 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.590 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-la-pez",
@@ -3539,7 +3617,10 @@
    },
    "desnivel": "+1.329 m · 14,5 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Pico de la Pez SW- Pico de la Pez-Pico Puerto de la Pez-desde Tabernés», de Inaki Aristizabal en Wikiloc, de 14,5 km y 1.329 m de desnivel acumulado. Está situada en Gistaín (Aragón). El autor tardó 8 h 43 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Gistaín"
+   "acceso": "Ruta en Gistaín",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.560 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "espades-so",
@@ -3552,10 +3633,9 @@
    "situacion": "Aragón",
    "lat": 42.649472,
    "lon": 0.425444,
-   "descripcion": "Las Espadas SO (3.322 m) son la cima más alta de la cresta de las Espadas, en el macizo de Posets–Eriste. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Las Espadas SO (3.322 m) son la cima más alta de la cresta de las Espadas, en el macizo de Posets–Eriste. El recorrido del mapa es la ruta de ejemplo de Las Espadas, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Lardaneta SO · Sin nombre clásico · Punta Llardaneta o Pico de Espadas · Espades SO / Lardaneta SO",
-   "basica": true,
    "inv": "POS-03",
    "foto": "espades-so",
    "pie": "Vista desde la cima de las Espadas SO.",
@@ -3568,7 +3648,11 @@
    "dificultad": "alta",
    "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
    "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
-   "curiosidad": "Desde su cima se ve el circo y se domina la cresta de las Espadas hacia el Posets."
+   "curiosidad": "Desde su cima se ve el circo y se domina la cresta de las Espadas hacia el Posets.",
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "tuca-llardaneta-suroeste",
@@ -3581,10 +3665,9 @@
    "situacion": "Aragón",
    "lat": 42.651556,
    "lon": 0.429,
-   "descripcion": "La Tuca Llardaneta Suroeste (3.292 m) es una cima de la cresta de las Espadas, entre las Espadas y la Tuqueta Roya, en el macizo de Posets–Eriste. En 2025 el grupo Sostremetries la confirmó como tresmil con el nombre de Punta de la Lit. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "La Tuca Llardaneta Suroeste (3.292 m) es una cima de la cresta de las Espadas, entre las Espadas y la Tuqueta Roya, en el macizo de Posets–Eriste. En 2025 el grupo Sostremetries la confirmó como tresmil con el nombre de Punta de la Lit. El recorrido del mapa es la ruta de ejemplo de Las Espadas, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Punta de la Lit",
-   "basica": true,
    "inv": "POS-05",
    "foto": "tuca-llardaneta-suroeste",
    "pie": "La arista de la Tuca Llardaneta Suroeste.",
@@ -3597,7 +3680,11 @@
    "dificultad": "alta",
    "grado": "Cresta de roca; el paso del funambulista es el tramo más aéreo",
    "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
-   "curiosidad": "Cerca de ella está el paso del funambulista, una arista de roca muy fina."
+   "curiosidad": "Cerca de ella está el paso del funambulista, una arista de roca muy fina.",
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "tuqueta-roya",
@@ -3642,10 +3729,9 @@
    "situacion": "Aragón",
    "lat": 42.64752,
    "lon": 0.42475,
-   "descripcion": "Cima inédita y aún sin nombre, descubierta en 2025 por el grupo Sostremetries: 3.247,8 m y 10,8 m de prominencia, cerca de Las Espadas y del Posets. No figura en ningún catálogo oficial; «Cima 234» es solo su nombre provisional. El Instituto Geográfico de Aragón será el encargado de asignarle un topónimo definitivo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima inédita y aún sin nombre, descubierta en 2025 por el grupo Sostremetries: 3.247,8 m y 10,8 m de prominencia, cerca de Las Espadas y del Posets. No figura en ningún catálogo oficial; «Cima 234» es solo su nombre provisional. El Instituto Geográfico de Aragón será el encargado de asignarle un topónimo definitivo. El recorrido del mapa es la ruta de ejemplo de Las Espadas, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Cima 234 · cima_234 · Espades S · Lardaneta S",
-   "basica": true,
    "inv": "POS-07",
    "curiosidad": "Tresmiles.es apunta, solo como hipótesis, que su nombre podría ser «Espades S» o «Lardaneta S», siguiendo la toponimia del IGEAR. Sus coordenadas se publicaron como provisionales: en el relieve del IGN (MDT05) hay un máximo de unos 3.246 m a menos de 25 m de ellas. Fuente: Lugares de Aventura, 24-11-2025.",
    "foto": "cima-234-sin-nombre",
@@ -3658,7 +3744,11 @@
    "desnivel": "+1.480 m · 17,7 km",
    "dificultad": "alta",
    "grado": "Cresta de roca de las Espadas, con el paso del funambulista",
-   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista."
+   "ruta": "Se sigue la cresta de las Espadas desde el Diente Royo, pasando por el Pico Pavots o Tucón Royo y las Espadas, hasta la Tuca de Llardaneta, la Tuqueta Roya y el Posets, con el paso del funambulista.",
+   "rutas": [
+    "cresta-espadas"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-de-los-gemelos-ravier",
@@ -3894,10 +3984,9 @@
    "situacion": "Aragón",
    "lat": 42.690278,
    "lon": 0.524833,
-   "descripcion": "El Hito Oriental del Perdiguero (3.172 m) es la cima oriental del macizo del Perdiguero, sobre el valle de Literola. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "El Hito Oriental del Perdiguero (3.172 m) es la cima oriental del macizo del Perdiguero, sobre el valle de Literola. El recorrido del mapa es la ruta de ejemplo de Tuca de Lliterola, que pasa por su cima.",
    "clase": "secundaria",
    "nombres": "Fita d'el Perdiguèro · Hito E de Perdiguero",
-   "basica": true,
    "inv": "PRD-03",
    "foto": "hito-oriental-de-perdiguero",
    "pie": "El Hito Oriental del Perdiguero, con su piedra grabada.",
@@ -3910,7 +3999,11 @@
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/perdiguero-tuca-de-literola-pico-royo-punta-de-literola-aguja-de-literola-tusse-de-remune-pico-raba-234323166",
     "texto": "Ruta de ric__mountains en Wikiloc"
-   }
+   },
+   "rutas": [
+    "lliterola-cresta"
+   ],
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-royo",
@@ -4178,7 +4271,10 @@
    },
    "desnivel": "+2.036 m · 17,0 km, circular",
    "ruta": "Esta cima aparece en la ruta «Cresta Seil Dera Baquo - Gourgs Blancs (16x3000)», de Iñigo Etxegoien en Wikiloc, de 17,0 km y 2.036 m de desnivel acumulado. Está situada en Benasque (Aragón). El autor tardó 12 h 18 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Benasque"
+   "acceso": "Ruta en Benasque",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico Jean Arlaud, a unos 1.070 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "cap-dera-baquo-occidental",
@@ -4649,7 +4745,10 @@
    },
    "desnivel": "+1.982 m · 26,8 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «Picos Clarabides - Pico Gias - Gias Inferior desde Parking Estós», de xavifv1981 en Wikiloc, de 26,8 km y 1.982 m de desnivel acumulado. Está situada en Benasque (Aragón). El autor tardó 8 h 34 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Benasque"
+   "acceso": "Ruta en Benasque",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Torre Armengaud, a unos 860 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-daviu",
@@ -4710,7 +4809,10 @@
    },
    "desnivel": "+2.466 m · 35,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 19 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Aguja Daviu; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-schmidt-endell",
@@ -4723,10 +4825,9 @@
    "situacion": "Aragón",
    "lat": 42.639886,
    "lon": 0.640957,
-   "descripcion": "Cima discutida de 3.335 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima discutida de 3.335 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. El recorrido del mapa es la ruta de ejemplo de Punta de Astorg, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Gendarme Schmidt-Endell",
-   "basica": true,
    "inv": "ANE-08",
    "foto": "aguja-schmidt-endell",
    "pie": "Largo de III+ de la escalada a la Aguja Schmidt-Endell (hito «Llarg III+» de la ruta, a unos 150 m de la cima).",
@@ -4734,7 +4835,15 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/punta-dastorg-pico-maldito-i-punta-schmidt-endell-273845575",
     "texto": "Ruta de Raulbalaguer en Wikiloc"
    },
-   "ruta": "Esta cima aparece en la ruta «Punta d'Astorg, pico Maldito i punta Schmidt-Endell» de Raulbalaguer en Wikiloc."
+   "ruta": "Esta cima aparece en la ruta «Punta d'Astorg, pico Maldito i punta Schmidt-Endell» de Raulbalaguer en Wikiloc.",
+   "rutas": [
+    "cresta-del-medio"
+   ],
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)",
+   "desnivel": "≈ 1.500 m desde el Puente de Coronas (≈ 12 km, circuito de un día)",
+   "dificultad": "muy-alta",
+   "grado": "Alpinismo · cresta con pasos de III",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-oliveras-arenas",
@@ -4760,7 +4869,10 @@
    },
    "desnivel": "+2.466 m · 35,3 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aneto, Espalda del Aneto, Aguja Daviu, Aguja Escudier, Punta Oliveras, Aguja de la Collarada de Coronas, Tuca y Pico de Coronas», de Samuel Aded en Wikiloc, de 35,3 km y 2.466 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 19 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa, por la ruta de Aguja del Collado de Coronas, a unos 180 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "tuca-de-collado-de-coronas",
@@ -4804,7 +4916,7 @@
    "situacion": "Aragón",
    "lat": 42.627194,
    "lon": 0.661583,
-   "descripcion": "Cima secundaria de 3.272 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.272 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca de la Brecha de Tempestats · Punta de la Brecha de Tempestades",
    "basica": true,
@@ -4814,7 +4926,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/tempestades-punta-de-la-brecha-de-huesca-espana/9355",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico de Tempestades, a unos 150 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna)"
   },
   {
    "id": "tuqueta-roya-de-creguena",
@@ -4827,10 +4943,9 @@
    "situacion": "Aragón",
    "lat": 42.642417,
    "lon": 0.638472,
-   "descripcion": "Cima discutida de 3.270 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Ficha con los datos de una ruta publicada en Wikiloc; no tiene recorrido en el mapa.",
+   "descripcion": "Cima discutida de 3.270 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. El recorrido del mapa es la ruta de ejemplo de Pico Abadías, que pasa por su cima.",
    "clase": "discutida",
    "nombres": "Sin nombre clásico",
-   "basica": true,
    "inv": "ANE-16",
    "foto": "tuqueta-roya-de-creguena",
    "pie": "La Tuqueta Roya de Cregüeña, con el glaciar a sus pies.",
@@ -4839,7 +4954,14 @@
     "texto": "Ruta de David S C 5 en Wikiloc"
    },
    "desnivel": "+1.927 m · 14,1 km, ida y vuelta",
-   "ruta": "Esta cima aparece en la ruta «Refugio de la Renclusa, Pico de la Maladeta ,Pico Abadias ,Tuqueta Roya de Cregueña y Portillón Superior desde La Besurta», de David S C 5 en Wikiloc, de 14,1 km y 1.927 m de desnivel acumulado. El autor tardó 9 h 8 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Refugio de la Renclusa, Pico de la Maladeta ,Pico Abadias ,Tuqueta Roya de Cregueña y Portillón Superior desde La Besurta», de David S C 5 en Wikiloc, de 14,1 km y 1.927 m de desnivel acumulado. El autor tardó 9 h 8 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "rutas": [
+    "abadias-besurta"
+   ],
+   "acceso": "Benasque · La Besurta",
+   "dificultad": "alta",
+   "grado": "PD · glaciar y pedreras, crampones a principios de verano",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-cordier",
@@ -4864,7 +4986,11 @@
     "texto": "Ruta de manexlete en Wikiloc"
    },
    "desnivel": "+1.455 m · 13,9 km, ida y vuelta",
-   "ruta": "Esta cima aparece en la ruta «Punta Delmas (3.158m), Pico Mir (3.185m), Pico Sayó (3.211m) y Pico Cordier (3.266m) desde La Besurta», de manexlete en Wikiloc, de 13,9 km y 1.455 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Punta Delmas (3.158m), Pico Mir (3.185m), Pico Sayó (3.211m) y Pico Cordier (3.266m) desde La Besurta», de manexlete en Wikiloc, de 13,9 km y 1.455 m de desnivel acumulado. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico de la Maladeta, a unos 580 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · La Besurta / refugio de La Renclusa"
   },
   {
    "id": "pico-collado-de-la-rimaya",
@@ -4877,7 +5003,7 @@
    "situacion": "Aragón",
    "lat": 42.647694,
    "lon": 0.637,
-   "descripcion": "Cima secundaria de 3.261 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.261 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Pico de la Rimaya · Tuca de la Rimalla · Tuca d'el Cuello de la Rimalla · Pico del Collado de la Rimaya",
    "basica": true,
@@ -4888,7 +5014,11 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/maladeta-oriental-3312-m-por-el-corredor-de-la-rimaya-pd-80m-34426514",
     "texto": "Ruta de ᗩᒪTEᑕᗩ en Wikiloc"
    },
-   "ruta": "Esta cima aparece en la ruta «Maladeta Oriental (3312 m) por el corredor de la Rimaya (PD/80m)» de ᗩᒪTEᑕᗩ en Wikiloc."
+   "ruta": "Esta cima aparece en la ruta «Maladeta Oriental (3312 m) por el corredor de la Rimaya (PD/80m)» de ᗩᒪTEᑕᗩ en Wikiloc.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico de la Maladeta, a unos 310 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · La Besurta / refugio de La Renclusa"
   },
   {
    "id": "maladeta-noreste",
@@ -4901,7 +5031,7 @@
    "situacion": "Aragón",
    "lat": 42.647581,
    "lon": 0.642158,
-   "descripcion": "Cima discutida de 3.235 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima discutida de 3.235 m del macizo Aneto–Maladeta, en territorio aragonés. No todos los catálogos la consideran un tresmil independiente: su altitud o su prominencia están en discusión. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "discutida",
    "nombres": "",
    "basica": true,
@@ -4911,7 +5041,11 @@
    "fotoCima": {
     "foto": "maladeta-noreste-antecima",
     "pie": "Maladeta Noreste o antecima, con el glaciar a la derecha."
-   }
+   },
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico de la Maladeta, a unos 190 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · La Besurta / refugio de La Renclusa"
   },
   {
    "id": "aguja-del-collado-de-coronas",
@@ -4968,7 +5102,10 @@
    },
    "desnivel": "+1.275 m · 12,5 km",
    "ruta": "Esta cima aparece en la ruta «Pico Mir - Punta Delmás - Pico le Bondidier - Pico Cordier - Pico Sayó», de emili.d996 en Wikiloc, de 12,5 km y 1.275 m de desnivel acumulado. Está situada en es Bòrdes (Cataluña). El autor tardó 12 h 21 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en es Bòrdes"
+   "acceso": "Ruta en es Bòrdes",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Diente de Alba, a unos 410 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "antecima-sureste-russell",
@@ -5030,7 +5167,10 @@
    },
    "desnivel": "+2.049 m · 19,6 km, circular",
    "ruta": "Esta cima aparece en la ruta «Picos Russell (6 cimas), Pico Margalida (3241 m) y Pico Tempestades (3290 m) por Ibón de Llosás», de ᗩᒪTEᑕᗩ en Wikiloc, de 19,6 km y 2.049 m de desnivel acumulado. Está situada en Cerler (Aragón). En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Pico Margalida, a unos 310 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-mir",
@@ -5056,7 +5196,10 @@
    },
    "desnivel": "+1.275 m · 12,5 km",
    "ruta": "Esta cima aparece en la ruta «Pico Mir - Punta Delmás - Pico le Bondidier - Pico Cordier - Pico Sayó», de emili.d996 en Wikiloc, de 12,5 km y 1.275 m de desnivel acumulado. Está situada en es Bòrdes (Cataluña). El autor tardó 12 h 21 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en es Bòrdes"
+   "acceso": "Ruta en es Bòrdes",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Diente de Alba, a unos 300 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "punta-delmas",
@@ -5075,7 +5218,11 @@
    "basica": true,
    "inv": "ANE-28",
    "foto": "punta-delmas",
-   "pie": "La Punta Delmás."
+   "pie": "La Punta Delmás.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Diente de Alba, a unos 270 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · refugio de La Renclusa"
   },
   {
    "id": "pico-le-bondidier",
@@ -5101,7 +5248,10 @@
    },
    "desnivel": "+1.237 m · 14,3 km",
    "ruta": "Esta cima aparece en la ruta «28/08/2011 - LE BONDIDIER - CORDIER - SAYO - PICO MIR - PUNTA DELMAS - MUELA DE ALBA - DIENTE DE ALBA», de gruta en Wikiloc, de 14,3 km y 1.237 m de desnivel acumulado. Está situada en es Bòrdes (Cataluña). El autor tardó 12 h 27 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en es Bòrdes"
+   "acceso": "Ruta en es Bòrdes",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Diente de Alba, a unos 640 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "pico-le-bondidier-norte",
@@ -5114,7 +5264,7 @@
    "situacion": "Aragón",
    "lat": 42.64875,
    "lon": 0.627833,
-   "descripcion": "Cima secundaria de 3.152 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.152 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tuca d'el Morro de Cregüeña N",
    "basica": true,
@@ -5125,7 +5275,11 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/le-bondidier-cordier-sayo-pico-mir-punta-delmas-muela-de-alba-diente-de-alba-5859841",
     "texto": "Ruta de gruta en Wikiloc"
    },
-   "ruta": "Esta cima aparece en la ruta «28/08/2011 - LE BONDIDIER - CORDIER - SAYO - PICO MIR - PUNTA DELMAS - MUELA DE ALBA - DIENTE DE ALBA» de gruta en Wikiloc."
+   "ruta": "Esta cima aparece en la ruta «28/08/2011 - LE BONDIDIER - CORDIER - SAYO - PICO MIR - PUNTA DELMAS - MUELA DE ALBA - DIENTE DE ALBA» de gruta en Wikiloc.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Diente de Alba, a unos 570 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · refugio de La Renclusa"
   },
   {
    "id": "segundo-resalte-de-salenques",
@@ -5138,7 +5292,7 @@
    "situacion": "Aragón",
    "lat": 42.625356,
    "lon": 0.667447,
-   "descripcion": "Cima secundaria de 3.148 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.148 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "",
    "basica": true,
@@ -5148,7 +5302,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/segundo-resalte-de-salenques-huesca-espana/9361",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Margalida; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · valle de Llauset/Remuñe · puente de Coronas"
   },
   {
    "id": "aguja-sur-russell",
@@ -5174,7 +5332,10 @@
    },
    "desnivel": "+1.413 m · 16,2 km, ida y vuelta",
    "ruta": "Esta cima aparece en la ruta «ELS 6 RUSSELL DES DE LLAUSET: Agulla S, Oriental (E), Avantcim SE, Central, Punta Bretxa, Agulla SW», de El porquet de Sant Antoni en Wikiloc, de 16,2 km y 1.413 m de desnivel acumulado. Está situada en Aneto (Aragón). El autor tardó 10 h 16 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Aneto"
+   "acceso": "Ruta en Aneto",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Antecima Sureste Russell; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "primer-resalte-de-salenques",
@@ -5187,7 +5348,7 @@
    "situacion": "Aragón",
    "lat": 42.625333,
    "lon": 0.6685,
-   "descripcion": "Cima secundaria de 3.132 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.132 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla d'Ixalenques",
    "basica": true,
@@ -5197,7 +5358,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/primer-resalte-de-salenques-huesca-espana/9362",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Margalida; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · valle de Llauset/Remuñe · puente de Coronas"
   },
   {
    "id": "torre-de-salenques",
@@ -5210,7 +5375,7 @@
    "situacion": "Aragón",
    "lat": 42.625361,
    "lon": 0.668917,
-   "descripcion": "Cima secundaria de 3.116 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.116 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Torre d'Ixalenques · Gendarme-Torre de Salenques",
    "basica": true,
@@ -5220,7 +5385,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/torre-de-salenques-huesca-espana/9360",
     "texto": "Ficha en Mendikat (fotos de Javier Urrutia)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Margalida; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · valle de Llauset/Remuñe · puente de Coronas"
   },
   {
    "id": "punta-de-la-brecha-superior-de-llosas",
@@ -5246,7 +5415,10 @@
    },
    "desnivel": "+1.697 m · 24,8 km, circular",
    "ruta": "Esta cima aparece en la ruta «Punta de la Brecha Superior de Llosás (1x3000) desde Senarta», de Iñigo Etxegoien en Wikiloc, de 24,8 km y 1.697 m de desnivel acumulado. Está situada en Benasque (Aragón). El autor tardó 7 h 23 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Benasque"
+   "acceso": "Ruta en Benasque",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Aguja Daviu, a unos 530 m",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "colmillo-de-alba-oriental",
@@ -5271,7 +5443,11 @@
     "texto": "Ruta de Kilyfloid en Wikiloc"
    },
    "desnivel": "+1.411 m · 13,6 km, ida y vuelta",
-   "ruta": "Esta cima aparece en la ruta «Llanos del Hospital-Tubos de Paderna-Coma de Paderna-Diente de Alba-Colmillo Oriental de Alba-Muela de Alba-Cuello de Alba-Tubos», de Kilyfloid en Wikiloc, de 13,6 km y 1.411 m de desnivel acumulado. El autor tardó 8 h 37 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Llanos del Hospital-Tubos de Paderna-Coma de Paderna-Diente de Alba-Colmillo Oriental de Alba-Muela de Alba-Cuello de Alba-Tubos», de Kilyfloid en Wikiloc, de 13,6 km y 1.411 m de desnivel acumulado. El autor tardó 8 h 37 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Diente de Alba; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · refugio de La Renclusa"
   },
   {
    "id": "aguja-suroeste-del-pico-abadias",
@@ -5284,7 +5460,7 @@
    "situacion": "Aragón",
    "lat": 42.641776,
    "lon": 0.636858,
-   "descripcion": "Cima secundaria de 3.077 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.077 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla de la Roca de Cregüeña",
    "basica": true,
@@ -5294,7 +5470,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/abadias-aguja-sw-de-huesca-espana/12961",
     "texto": "Ficha en Mendikat (fotos de Jesus Mª Linaza Mardaras)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Tuqueta Ròya de Cregüeña; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · La Besurta"
   },
   {
    "id": "aguja-haurillon",
@@ -5320,7 +5500,10 @@
    },
    "desnivel": "+1.361 m · 12,5 km, circular",
    "ruta": "Esta cima aparece en la ruta «Aguja Haurillon Aguja de Cregüeña Aguja Juncadella Pico Aragüells desde el Refugio de Coronas», de yivatosal en Wikiloc, de 12,5 km y 1.361 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 13 h 13 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Maldito; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-franqueville",
@@ -5333,7 +5516,7 @@
    "situacion": "Aragón",
    "lat": 42.625139,
    "lon": 0.646806,
-   "descripcion": "Cima secundaria de 3.061 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.061 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Agulla de Franqueville",
    "basica": true,
@@ -5343,7 +5526,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/aguja-franqueville-huesca-espana/9352",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Aguja Daviu; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Ruta en Cerler"
   },
   {
    "id": "aguja-de-alba",
@@ -5356,7 +5543,7 @@
    "situacion": "Aragón",
    "lat": 42.655602,
    "lon": 0.618662,
-   "descripcion": "Cima secundaria de 3.054 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.054 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Gendarme de Alba",
    "basica": true,
@@ -5366,7 +5553,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/aguja-de-alba-huesca-espana/9364",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico de Alba; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "La Besurta (3 h 30 min); Balneario de Benasque (3 h 45 min)"
   },
   {
    "id": "torre-cordier",
@@ -5391,7 +5582,11 @@
     "texto": "Ruta de jengineer en Wikiloc"
    },
    "desnivel": "+1.097 m · 9,8 km",
-   "ruta": "Esta cima aparece en la ruta «Circular MEDIEVAL Pico y Aguja de Alba, Torre Cordier y Diente de Maladeta (+1500m desde Besurta)», de jengineer en Wikiloc, de 9,8 km y 1.097 m de desnivel acumulado. El autor tardó 7 h 48 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos."
+   "ruta": "Esta cima aparece en la ruta «Circular MEDIEVAL Pico y Aguja de Alba, Torre Cordier y Diente de Maladeta (+1500m desde Besurta)», de jengineer en Wikiloc, de 9,8 km y 1.097 m de desnivel acumulado. El autor tardó 7 h 48 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Diente de Alba; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · refugio de La Renclusa"
   },
   {
    "id": "punta-oriental-russell",
@@ -5449,7 +5644,10 @@
    },
    "desnivel": "+1.130 m · 10,0 km, circular",
    "ruta": "Esta cima aparece en la ruta «Agujas Argarot Sur (3031m), Argarot (3035m), Tchihatcheff (3052m) y Franqueville (3065m)», de JPSalas65 en Wikiloc, de 10,0 km y 1.130 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 9 h 47 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Aguja Daviu; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-de-creguena",
@@ -5475,7 +5673,10 @@
    },
    "desnivel": "+1.252 m · 10,1 km, circular",
    "ruta": "Esta cima aparece en la ruta «Pico Aragüells (3.037 m) - Aguja Juncadella (3.021 m) - Aguja Cregüeña (3.043 m)», de albertrek en Wikiloc, de 10,1 km y 1.252 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 9 h 11 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico de Aragüells; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-suroeste-russell",
@@ -5501,7 +5702,10 @@
    },
    "desnivel": "+1.285 m · 15,5 km",
    "ruta": "Esta cima aparece en la ruta «Cresta Russell : Russell Oriental - Aguja Sur Russell -Pico Russell -Punta Brecha Russell - Aguja Suroeste Russell», de aneto.0713 en Wikiloc, de 15,5 km y 1.285 m de desnivel acumulado. Está situada en Aneto (Aragón). El autor tardó 14 h en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Aneto"
+   "acceso": "Ruta en Aneto",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Russell; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "aguja-argarot",
@@ -5527,7 +5731,10 @@
    },
    "desnivel": "+1.130 m · 10,0 km, circular",
    "ruta": "Esta cima aparece en la ruta «Agujas Argarot Sur (3031m), Argarot (3035m), Tchihatcheff (3052m) y Franqueville (3065m)», de JPSalas65 en Wikiloc, de 10,0 km y 1.130 m de desnivel acumulado. Está situada en Cerler (Aragón). El autor tardó 9 h 47 min en total, con las paradas. En el enlace de abajo están su recorrido completo y sus fotos.",
-   "acceso": "Ruta en Cerler"
+   "acceso": "Ruta en Cerler",
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Aguja Daviu; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre"
   },
   {
    "id": "argarot-sur",
@@ -5546,7 +5753,11 @@
    "basica": true,
    "inv": "ANE-53",
    "foto": "argarot-sur",
-   "pie": "Cima de la Tuqueta de la Crencha, con vistas al valle."
+   "pie": "Cima de la Tuqueta de la Crencha, con vistas al valle.",
+   "dificultad": "alta",
+   "grado": "Orientativa, por la ruta de Aguja Daviu, a unos 1.160 m",
+   "epoca": "Julio – septiembre",
+   "acceso": "Ruta en Cerler"
   },
   {
    "id": "aguja-juncadella",
@@ -5559,7 +5770,7 @@
    "situacion": "Aragón",
    "lat": 42.633611,
    "lon": 0.63325,
-   "descripcion": "Cima secundaria de 3.022 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.022 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Tucón de la Crencha de Cregüeña",
    "basica": true,
@@ -5569,7 +5780,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/aguja-juncadella-huesca-espana/9343",
     "texto": "Ficha en Mendikat (fotos de Rafael Bartolomé Resano)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico de Aragüells; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · puente de Coronas · refugio de Pescadores"
   },
   {
    "id": "forca-estasen",
@@ -5582,7 +5797,7 @@
    "situacion": "Aragón",
    "lat": 42.625083,
    "lon": 0.673528,
-   "descripcion": "Cima secundaria de 3.019 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta, fotografías ni recorrido en el mapa.",
+   "descripcion": "Cima secundaria de 3.019 m del macizo Aneto–Maladeta, en territorio aragonés. Figura en los catálogos de tresmiles, pero no es la cumbre principal de su macizo. Es una ficha básica: todavía no tiene ruta ni recorrido en el mapa.",
    "clase": "secundaria",
    "nombres": "Cap d'Ixalenques",
    "basica": true,
@@ -5592,7 +5807,11 @@
    "enlace": {
     "url": "https://www.mendikat.net/mount/forca-estasen-huesca-espana/9363",
     "texto": "Ficha en Mendikat (fotos de Luis Alejos Escarpe)"
-   }
+   },
+   "dificultad": "muy-alta",
+   "grado": "Orientativa: aguja o torre de roca junto a Pico Margalida; se suele subir con trepada o escalada",
+   "epoca": "Julio – septiembre",
+   "acceso": "Benasque · valle de Llauset/Remuñe · puente de Coronas"
   }
  ]
 }
