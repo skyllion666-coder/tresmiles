@@ -11,7 +11,7 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=22';
 import { crearFauna } from './fauna.js?v=14';
-import { cargarRuta, crearRuta } from './ruta.js?v=52';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=53';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
@@ -1169,7 +1169,7 @@ async function boot() {
     const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s), K = terrain.clima;
     K.uCalorB.value.set(a.x, a.z, c.x, c.z);
     let on = false, cargando = null, tf = null;
-    const fundido = (to) => { cancelAnimationFrame(tf); const v0 = K.uCalorK.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 600); K.uCalorK.value = v0 + (to - v0) * k; if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
+    const fundido = (to) => { cancelAnimationFrame(tf); const v0 = K.uCalorK.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 600); K.uCalorK.value = v0 + (to - v0) * k; COLOR_RUTA.actual.lerpColors(COLOR_RUTA.naranja, COLOR_RUTA.verde, K.uCalorK.value); if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
     const pon = async (v) => {
       on = v; b.setAttribute('aria-pressed', on); store.set('tresmiles-calor', on ? '1' : '0');
       if (on && !K.uCalor.value) { cargando ??= new THREE.TextureLoader().loadAsync(`${z.png}?dv=${window.DATOS_V || 0}`).then((tx) => { tx.colorSpace = THREE.NoColorSpace; K.uCalor.value = tx; }).catch(() => {}); await cargando; }
