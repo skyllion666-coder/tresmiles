@@ -662,3 +662,23 @@ body.selector-abierto #intro { z-index: 31; }
   .subida small, .subida-datos { opacity: 1; color: #2c3833; font-weight: 500; }
   .subida-aviso { color: #7a3f0c; font-weight: 600; }
 }
+
+/* «Seguridad» (solo en la app): botón SOS y panel con la posición para enviar y la luz que queda */
+#btn-seguridad { color: #c8372d; }
+#btn-seguridad[aria-expanded="true"] { background: #c8372d; border-color: #c8372d; color: #fff; }
+#seg-panel { position: fixed; inset: 0; z-index: 60; display: grid; place-items: end center; background: rgba(10,16,14,.45); padding: 12px; }
+#seg-panel[hidden] { display: none; }
+.seg-caja { position: relative; width: min(520px, 100%); max-height: 88vh; overflow-y: auto; background: var(--cream); color: #17211d; padding: 18px 18px calc(18px + var(--sa-bottom, env(safe-area-inset-bottom))); border-radius: 14px; box-shadow: 0 -10px 40px rgba(0,0,0,.4); }
+.seg-caja h2 { margin: 0 0 6px; font: 600 1.5rem/1.1 var(--serif); color: var(--spruce); }
+.seg-caja h3 { margin: 16px 0 6px; font: 600 .72rem var(--cond); letter-spacing: .2em; text-transform: uppercase; color: #1f3a33; }
+.seg-caja p { margin: 6px 0; font: 500 .95rem/1.45 var(--sans); }
+.seg-cerrar { position: absolute; top: 8px; right: 10px; width: 40px; height: 40px; border: 0; background: none; font-size: 1.8rem; line-height: 1; color: #17211d; cursor: pointer; }
+.seg-msg { margin: 0; padding: 10px 12px; background: #fff; border: 1px solid rgba(45,74,67,.25); font: 500 .9rem/1.45 var(--sans); white-space: pre-wrap; word-break: break-word; }
+.seg-botones { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.seg-btn { display: grid; place-items: center; min-height: 46px; padding: 8px; border: 1px solid var(--spruce); background: #fff; color: var(--spruce); font: 600 .85rem var(--cond); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.seg-btn.seg-112 { background: #c8372d; border-color: #c8372d; color: #fff; }
+.seg-veredicto { padding: 10px 12px; font-weight: 600 !important; border-left: 5px solid; }
+.seg-veredicto.bien { background: #e3f1e3; border-color: #2f8a45; }
+.seg-veredicto.justo { background: #fbf0d6; border-color: #d99a1e; }
+.seg-veredicto.mal { background: #f8dcd8; border-color: #c8372d; }
+.seg-nota { font-size: .8rem !important; color: #34403a; }

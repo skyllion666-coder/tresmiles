@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=15';
+import { t as tr } from './i18n.js?v=16';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 // color de la línea de ruta, compartido por todas: naranja; pasa a verde vivo con la capa «Por dónde pasa la gente» (naranja) para no confundirse con ella

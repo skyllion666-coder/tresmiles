@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 365;
+  window.WEB_V = 367;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -16,7 +16,7 @@
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="css/style.css?v=75">
+  <link rel="stylesheet" href="css/style.css?v=76">
   <link rel="stylesheet" href="css/cine.css?v=6">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
@@ -83,6 +83,7 @@
     <button type="button" class="tool" id="btn-sound" aria-label="Activar el sonido ambiente" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path class="snd-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path class="snd-off" d="m16 9.5 5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     <button type="button" class="tool" id="btn-ubicacion" aria-label="Dónde estoy" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
     <button type="button" class="tool" id="btn-pan-aqui" aria-label="Qué montañas veo desde aquí" hidden><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M2 19 8.5 9l4 6 3-4L22 19z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="17.5" cy="5.5" r="2.2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button>
+    <button type="button" class="tool" id="btn-seguridad" aria-label="Seguridad: enviar mi posición y luz que queda" aria-expanded="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><text x="12" y="16" text-anchor="middle" font-size="9.5" font-weight="700" font-family="Barlow Semi Condensed, sans-serif" fill="currentColor" letter-spacing=".3">SOS</text></svg></button>
     <button type="button" class="tool" id="btn-calidad" aria-label="Calidad alta: desactivada" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" font-family="Barlow Semi Condensed, sans-serif" fill="currentColor" letter-spacing=".5">HD</text></svg></button>
   </div>
 
@@ -130,8 +131,8 @@
   <script>window.goatcounter = { path: () => '/tresmiles' };</script>
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 225;</script>
-  <script type="module" src="js/i18n.js?v=15"></script>
-  <script type="module" src="js/main.js?v=365"></script>
+  <script type="module" src="js/i18n.js?v=16"></script>
+  <script type="module" src="js/main.js?v=367"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>

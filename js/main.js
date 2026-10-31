@@ -14,9 +14,10 @@ import { crearFauna } from './fauna.js?v=14';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=53';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
+import { crearSeguridad } from './seguridad.js?v=2';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=15';
+import { t, EN_INGLES } from './i18n.js?v=16';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -150,8 +151,9 @@ async function boot() {
   const lagoEls = [];
   const añadirLagos = (nuevos) => { for (const l of nuevos) { const el = document.createElement('span'); el.className = 'lago is-hidden'; el.textContent = l.nombre; $('#pins').appendChild(el); lagoEls.push({ l, el }); } };
   // etiquetas de pueblos y aldeas (OpenStreetMap): los grandes se ven de más lejos, las aldeas solo de cerca
-  const puebloEls = [];
+  const puebloEls = [], pueblosLista = [];
   json('data/pueblos.json').then((lista) => {
+    pueblosLista.push(...lista);
     for (const [nombre, lon, lat, tipo, pob] of lista) {
       const q = geo.toXZ(lon, lat);
       if (!geo.dentro(q.x, q.z)) continue;
@@ -1285,6 +1287,12 @@ async function boot() {
 
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
   if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
+
+  // — «Seguridad» (solo en la app): enviar mi posición y si llego antes de que anochezca (js/seguridad.js) —
+  if (EN_APP) crearSeguridad({ geo, boton: $('#btn-seguridad'), solAhora, tramoMIDE, rutaAbierta: () => (S.active ? rutasDe(S.active)[0]?.ruta : null),
+    lugares: () => [...refugiosDatos.filter((r) => !/^(Refugio guardado|Refugio libre|Cabaña o abrigo)$/.test(r.nombre)).map((r) => ({ nombre: r.nombre, lon: r.lon, lat: r.lat })),
+      ...peaks.filter((p) => p.nombre && p.lon != null).map((p) => ({ nombre: p.nombre, lon: p.lon, lat: p.lat })),
+      ...pueblosLista.map(([nombre, lon, lat]) => ({ nombre, lon, lat, pueblo: true }))] });
 
   // — calidad (solo en la app): «HD» dibuja como en el ordenador; se guarda y recarga, porque el terreno se prepara al arrancar —
   if (EN_APP) {
