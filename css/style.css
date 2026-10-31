@@ -94,6 +94,7 @@ body.is-ready #compass { opacity: .95; pointer-events: auto; }
 .panel legend { padding: 0; margin-bottom: 8px; font: 500 .7rem var(--cond); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { border: 1px solid var(--line); padding: 6px 11px; font: 500 .78rem var(--cond); letter-spacing: .08em; color: var(--ink); background: transparent; }
+#btn-calor[aria-pressed="true"] { background: #e8833a; border-color: #e8833a; color: #1f1a14; }   /* capa «Por dónde pasa la gente» encendida */
 #btn-calidad[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }   /* calidad alta activada (solo en la app) */
 .chip[aria-pressed="true"] { background: var(--spruce); color: var(--cream); border-color: var(--spruce); }
 input[type=range] { width: 100%; accent-color: var(--spruce); touch-action: pan-x; }

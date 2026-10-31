@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js?v=2';
-import { Terrain } from './terrain.js?v=24';
+import { Terrain } from './terrain.js?v=25';
 import { crearVegetacion } from './vegetacion.js?v=8';
 import { crearCumbres } from './cumbres.js?v=47';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
@@ -16,7 +16,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=7';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=9';
+import { t, EN_INGLES } from './i18n.js?v=10';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1161,6 +1161,25 @@ async function boot() {
   setSun(+(store.get('tresmiles-luz') ?? 3) % SUN.length || 0);   // por defecto, la hora real
   setInterval(() => { if (S.sun === 3) setSun(3); }, 60e3);
 
+  // — «Por dónde pasa la gente»: mapa de calor de las trazas GPS públicas de OpenStreetMap (tools/build_calor.py), pintado sobre el relieve —
+  // ayuda a ver los caminos más pisados (por ejemplo, para volver a una senda conocida si te sales de la ruta); no dice si un paso es seguro
+  fetch(`data/calor/index.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((idx) => {
+    const z = idx && Object.values(idx)[0]; if (!z) return;   // de momento, una zona (macizo del Aneto)
+    const b = $('#btn-calor'); b.hidden = false;
+    const [w, s, e, n] = z.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, s), K = terrain.clima;
+    K.uCalorB.value.set(a.x, a.z, c.x, c.z);
+    let on = false, cargando = null, tf = null;
+    const fundido = (to) => { cancelAnimationFrame(tf); const v0 = K.uCalorK.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 600); K.uCalorK.value = v0 + (to - v0) * k; if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
+    const pon = async (v) => {
+      on = v; b.setAttribute('aria-pressed', on); store.set('tresmiles-calor', on ? '1' : '0');
+      if (on && !K.uCalor.value) { cargando ??= new THREE.TextureLoader().loadAsync(`${z.png}?dv=${window.DATOS_V || 0}`).then((tx) => { tx.colorSpace = THREE.NoColorSpace; K.uCalor.value = tx; }).catch(() => {}); await cargando; }
+      if (on !== v) return;
+      fundido(on && K.uCalor.value ? 1 : 0);
+    };
+    b.addEventListener('click', () => { sonido.fx('toque'); pon(!on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
+    if (store.get('tresmiles-calor') === '1') pon(true);
+  }).catch(() => {});
+
   if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
 
   // — contador de visitas (solo en la web): el total de GoatCounter, si la cuenta permite el contador público (Ajustes → «Allow adding visitor counts») —
@@ -1307,6 +1326,8 @@ async function boot() {
       <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> and, as a backup, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (the same website). In Spain, some Cloudflare addresses are blocked during football matches at weekends: if the first one does not load, use the second.</p>
       <h3>Visits</h3>
       <p>This website uses <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, a visit counter without cookies that stores no personal data and does not follow you around other websites: it only counts how many times each page is opened.</p>
+      <h3>Where people go</h3>
+      <p>The footprints button lights up, in orange and yellow, the places where many people have passed with a GPS (for now, around the Aneto). It is made from the public GPS traces that people upload to <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: the brighter, the more traces. It helps you spot the most trodden paths, for example to get back to a known trail if you leave your route. <b>It does not say whether a passage is safe</b>: there are traces across glaciers, snowfields and gullies, and from people who also got lost. A faint glow can be a single person.</p>
       <h3>Safety</h3>
       <p>This website does not replace a guidebook, a conditions report or experience in high mountains. Always check the forecast and the state of the route before setting out.</p>`;
       return;
@@ -1346,6 +1367,8 @@ async function boot() {
       <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> y, de reserva, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (la misma web). En España, algunos fines de semana se bloquean direcciones de Cloudflare durante el fútbol: si la primera no carga, usa la segunda.</p>
       <h3>Visitas</h3>
       <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página.</p>
+      <h3>Por dónde pasa la gente</h3>
+      <p>El botón de las huellas ilumina en naranja y amarillo los sitios por donde ha pasado mucha gente con GPS (de momento, en el entorno del Aneto). Está hecho con las trazas GPS públicas que la gente sube a <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: cuanto más brilla, más trazas. Sirve para ver los caminos más pisados, por ejemplo para volver a una senda conocida si te sales de la ruta. <b>No dice si un paso es seguro</b>: hay trazas por glaciares, neveros y canales, y de gente que también se perdió. Un brillo débil puede ser una sola persona.</p>
       <h3>Seguridad</h3>
       <p>Esta web no sustituye a una guía, a un parte de condiciones ni a la experiencia en alta montaña. Consulta siempre la previsión y el estado de la ruta antes de salir.</p>`;
   }

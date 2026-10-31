@@ -1,0 +1,12 @@
+{
+ "aneto": {
+  "caja": [
+   0.55,
+   42.58,
+   0.76,
+   42.72
+  ],
+  "trazas": 149,
+  "png": "data/calor/aneto.png"
+ }
+}

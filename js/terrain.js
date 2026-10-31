@@ -14,6 +14,7 @@ uniform float uOrto; uniform sampler2D uSat; uniform vec4 uPb; uniform vec3 uOA,
 uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
 uniform sampler2D uGran; uniform float uGranK; uniform float uGranM;   // granito escaneado en la malla fina de las cimas de granito (uGranK = 1), uGranM: su luminancia media
 uniform float uCota, uCotaK, uAcum, uMoj, uCliR; uniform vec3 uCliC;   // tiempo real (js/tiempo.js): cota de nieve en todo el mapa, nieve que cuaja y suelo mojado alrededor de la cumbre abierta
+uniform sampler2D uCalor; uniform vec4 uCalorB; uniform float uCalorK;   // «Por dónde pasa la gente»: densidad de trazas GPS públicas de OSM (data/calor), su recuadro en x/z y la intensidad de la capa
 varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
 float vn(vec3 x){ vec3 i=floor(x), f=fract(x); f=f*f*(3.-2.*f);
@@ -125,6 +126,17 @@ if (uCotaK + uAcum + uMoj > .001) {
   c2 = mix(c2, c2 * vec3(.66, .70, .74), mj * .55);
   diffuseColor.rgb = c2;
 }
+// capa de calor: cuantas más trazas pasan por un punto, más brillo (naranja → amarillo); también brilla un poco de noche
+if (uCalorK > .001) {
+  vec2 cu = (vWPos.xz - uCalorB.xy) / (uCalorB.zw - uCalorB.xy);
+  if (cu.x > 0. && cu.x < 1. && cu.y > 0. && cu.y < 1.) {
+    float hc = texture2D(uCalor, vec2(cu.x, 1. - cu.y)).r;
+    float ac = smoothstep(.04, .4, hc) * uCalorK;
+    vec3 cc = mix(vec3(1., .33, .06), vec3(1., .93, .55), smoothstep(.5, 1., hc));
+    diffuseColor.rgb = mix(diffuseColor.rgb, cc, ac * .85);
+    totalEmissiveRadiance += cc * ac * .35;
+  }
+}
 `;
 const GLSL_BUMP = `
 if (uBump > .5) {
@@ -143,7 +155,7 @@ if (uBump > .5) {
 export class Terrain {
   constructor({ scene, meta, store, geo, renderer, base, movil = false }) {
     this.movil = movil; this.coberturas = new Map();
-    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() } };   // compartidos por todos los materiales del relieve
+    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() }, uCalor: { value: null }, uCalorB: { value: new THREE.Vector4(0, 0, 1, 1) }, uCalorK: { value: 0 } };   // compartidos por todos los materiales del relieve
     this.holes = { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) };
     this.meta = meta; this.store = store; this.geo = geo; this.base = base;
     this.group = new THREE.Group(); scene.add(this.group);
