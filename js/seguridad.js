@@ -3,7 +3,7 @@
 //    por WhatsApp o SMS, copiar o dictar al 112 (el SMS suele salir con muy poca señal).
 // 2. ¿Llego antes de que anochezca?: hora de la puesta de sol y del fin del crepúsculo en tu posición, y el tiempo de bajada (método MIDE) hasta el inicio
 //    de la ruta abierta (siguiendo la ruta, si estás sobre ella) o, si no, hasta el pueblo más cercano en línea recta (orientativo).
-import { t, EN_INGLES } from './i18n.js?v=16';
+import { t, EN_INGLES } from './i18n.js?v=17';
 import { EXAG } from './geo.js';
 
 const RAD = Math.PI / 180;

@@ -14,10 +14,10 @@ import { crearFauna } from './fauna.js?v=14';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=53';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
-import { crearSeguridad } from './seguridad.js?v=2';
+import { crearSeguridad } from './seguridad.js?v=3';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=16';
+import { t, EN_INGLES } from './i18n.js?v=17';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1393,7 +1393,7 @@ async function boot() {
       $('#about-body').innerHTML = `
       <h2>The 3,000ers of the Aragonese Pyrenees</h2>
       <p class="firma">Created by SKYLLION (FRANK)</p>
-      ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 385 MB), with features only the app has: <b>Where am I</b> (GPS and compass), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a>. When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
+      ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 510 MB), with features only the app has: <b>Where am I</b> (GPS and compass, with north up or the map turning with you), <b>SOS</b> (send your position by WhatsApp or SMS or to 112, and whether you will get down before dark), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a>. When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
       <p>A 3D explorer of the summits above 3,000 metres in the Aragonese Pyrenees and along its border with France. It already includes ${totalActivas()} 3,000ers: about ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} with an example route, waypoints and photographs, and the rest with basic info (name, altitude, massif and location). It also has ${totalActivas(true)} summits between 2,000 and 3,000 m with simple info (name, altitude and position from OpenStreetMap, no route), shown by choosing “Below 3,000” or “All” in the selector.</p>
       <p><i>The summit descriptions and routes are still in Spanish: they are being translated.</i></p>
       <h3>Summits and routes</h3>
@@ -1435,7 +1435,7 @@ async function boot() {
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p class="firma">Creado por SKYLLION (FRANK)</p>
-      ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 385 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a>. Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
+      ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 510 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula, con el norte arriba o con el mapa girando contigo), <b>SOS</b> (enviar tu posición por WhatsApp o SMS o al 112, y si llegas abajo antes de que anochezca), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a>. Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>

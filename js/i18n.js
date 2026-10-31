@@ -15,7 +15,7 @@ const EN = {
   'En el corazón del Pirineo aragonés': 'In the heart of the Aragonese Pyrenees', 'Los tresmiles': 'The 3,000ers',
   'Una vista de pájaro a las cumbres que superan los 3.000 metros. Elige a dónde quieres ir.': 'A bird’s-eye view of the summits above 3,000 metres. Choose where you want to go.',
   'Elegir cumbre': 'Choose a summit', 'Explorar todo el mapa': 'Explore the whole map', 'Creado por SKYLLION (FRANK)': 'Created by SKYLLION (FRANK)',
-  'Descargar la app para Android': 'Download the Android app', 'sin conexión · 385 MB': 'works offline · 385 MB',
+  'Descargar la app para Android': 'Download the Android app', 'sin conexión · 510 MB': 'works offline · 510 MB',
   'Ver introducción': 'Watch the intro', 'Saltar introducción': 'Skip intro', 'Introducción': 'Intro', 'Toca para activar el sonido': 'Tap to turn the sound on',
   'del Pirineo aragonés': 'of the Aragonese Pyrenees', 'Mapa 3D del Pirineo aragonés': '3D map of the Aragonese Pyrenees',
   'Esta página necesita JavaScript y WebGL para mostrar el mapa 3D.': 'This page needs JavaScript and WebGL to show the 3D map.',
