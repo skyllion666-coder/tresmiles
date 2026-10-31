@@ -597,9 +597,17 @@ body.selector-abierto #intro { z-index: 31; }
 #visitas::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 6px; border-radius: 50%; background: #7ee0b2; vertical-align: 1px; }
 #btn-idioma { margin-right: 18px; }   /* ES | EN, a la izquierda de «Acerca de» */
 /* refugios de OpenStreetMap: cuadrado verde en el mapa; los libres, gris y más pequeño */
-.refugio-osm i { width: 10px; height: 10px; transform: none; background: #3f6d4e; }
-.refugio-osm .hito-btn:hover i, .refugio-osm.is-open i { transform: scale(1.35); }
-.refugio-osm.refugio-libre i { background: #7b7f78; width: 8px; height: 8px; }
+.refugio-osm .hito-btn { width: 30px; height: 30px; }
+.refugio-osm svg { width: 24px; height: 24px; overflow: visible; filter: drop-shadow(0 1px 2px rgba(0,0,0,.55)); transition: transform .2s; }
+.refugio-osm svg .pared { fill: #fffbe7; stroke: #2a2a26; stroke-width: 1.4; stroke-linejoin: round; }
+.refugio-osm svg .tejado { fill: #c8372d; stroke: #fffbe7; stroke-width: 1.2; stroke-linejoin: round; }
+.refugio-osm svg .puerta { fill: #4a3324; }
+.refugio-osm.refugio-libre svg { width: 19px; height: 19px; }
+.refugio-osm.refugio-libre svg .tejado { fill: #6f746c; }
+.refugio-osm .hito-btn:hover svg, .refugio-osm.is-open svg { transform: scale(1.25); }
+.refugio-osm .ref-nombre { order: 3; display: none; margin-top: 1px; max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 .66rem/1.2 var(--cond); letter-spacing: .04em; color: #fffbe7; text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,.6); }
+.refugio-osm.con-nombre:not(.is-open) .ref-nombre { display: block; }
+.refugio-osm.refugio-libre .ref-nombre { font-weight: 500; color: #ece6d4; }
 .refugio-osm.is-open b { pointer-events: auto; }
 .refugio-osm b small { padding: 3px 0 0; }
 .refugios { list-style: none; margin: 0 0 8px; padding: 0; }

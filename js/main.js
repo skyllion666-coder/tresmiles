@@ -534,25 +534,28 @@ async function boot() {
     }
   }
 
-  // — refugios de OpenStreetMap (data/refugios.json, tools/fetch_refugios.py): marcador con su ficha (altitud, plazas, teléfono, web); se ven de cerca —
+  // — refugios de OpenStreetMap (data/refugios.json, tools/fetch_refugios.py): casita (tejado rojo, guardado; gris, libre) con su ficha (altitud, plazas, teléfono, web).
+  //   Los guardados se ven hasta 20 km y con el nombre a menos de 16 km; los libres, hasta 8 km y con el nombre a menos de 4 km. Si dos nombres se pisan, se queda el primero (guardados antes) —
   const refugiosDatos = await json('data/refugios.json').catch(() => []);
   const datoRef = (r) => [r.plazas ? `<small>${t('{n} plazas', { n: r.plazas })}${r.gestor ? ` · ${esc(r.gestor)}` : ''}</small>` : r.gestor ? `<small>${esc(r.gestor)}</small>` : '',
     r.tel ? `<small><a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a></small>` : '', r.web ? `<small><a href="${esc(r.web)}" target="_blank" rel="noopener">${t('Web del refugio')} ↗</a></small>` : ''].join('');
-  for (const r of refugiosDatos) {
+  const CASITA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="pared" d="M5.5 11v9h13v-9"/><path class="tejado" d="M2.5 12 12 3.5l9.5 8.5-2 2L12 7.6 4.5 14z"/><path class="puerta" d="M10.4 20v-4.6h3.2V20"/></svg>`;
+  for (const r of [...refugiosDatos].sort((a, b) => b.guardado - a.guardado)) {
     const q = geo.toXZ(r.lon, r.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
     const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'} is-hidden`;
-    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}"><i></i></button><b>${esc(r.nombre)}<em>${t(r.guardado ? 'Refugio guardado' : 'Refugio libre')} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}">${CASITA}</button><span class="ref-nombre">${esc(r.nombre.replace(/^(Refugio|Refugi|Refuge|Cabaña|Abrigo) (de |del |d'|dera |deth |de la )?/i, ''))}</span><b>${esc(r.nombre)}<em>${t(r.guardado ? 'Refugio guardado' : 'Refugio libre')} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const abrir = !el.classList.contains('is-open');
       closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
     });
     $('#pins').appendChild(el);
-    refugios.push({ r, el, x: q.x, z: q.z, lim: r.guardado ? 9000 : 5000 });
+    refugios.push({ r, el, x: q.x, z: q.z, lim: r.guardado ? 20000 : 8000, limNombre: r.guardado ? 16000 : 4000 });
   }
   function updateRefugios() {
     const W = innerWidth, H = innerHeight;
     const deRuta = hitos.filter((o) => o.h.tipo === 'refugio' && !o.el.classList.contains('is-hidden'));   // el hito de la ruta ya lo enseña (con su foto)
+    const nombres = [];
     for (const o of refugios) {
       let show = S.mode === 'explore' && Math.hypot(camera.position.x - o.x, camera.position.z - o.z) < o.lim;
       if (show) { hitoTmp.set(o.x, geo.heightAt(o.x, o.z) + 12, o.z); show = camera.position.distanceTo(hitoTmp) < o.lim && !deRuta.some((h) => Math.hypot(h.x - o.x, h.z - o.z) < 250); }
@@ -564,6 +567,10 @@ async function boot() {
       o.el.classList.toggle('abajo', py < 130);
       o.el.style.transform = `translate3d(${px.toFixed(1)}px, ${py.toFixed(1)}px, 0)`;
       obstaculos.push({ x: px - 14, y: py - 14, w: 28, h: 28 });
+      // nombre: de cerca y si no pisa otro (unos 7 px por letra)
+      const an = (o.nombreAncho ??= Math.min(170, 14 + o.el.querySelector('.ref-nombre').textContent.length * 6.6)), caja = { x: px - an / 2, y: py + 2, w: an, h: 16 };
+      const conNombre = camera.position.distanceTo(hitoTmp.set(o.x, geo.heightAt(o.x, o.z) + 12, o.z)) < o.limNombre && !nombres.some((c) => c.x < caja.x + caja.w && caja.x < c.x + c.w && c.y < caja.y + caja.h && caja.y < c.y + c.h);
+      o.el.classList.toggle('con-nombre', conNombre); if (conNombre) nombres.push(caja);
     }
   }
   // refugios cercanos a una cumbre, para la ficha: los guardados a menos de 10 km y los libres a menos de 5 km (los 4 más cerca)
