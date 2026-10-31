@@ -16,7 +16,7 @@ import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=13';
+import { t, EN_INGLES } from './i18n.js?v=14';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -823,6 +823,7 @@ async function boot() {
       ${figCima(p)}
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
+      <div class="subidas-hueco"></div>
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
@@ -873,12 +874,58 @@ async function boot() {
       : `<p class="enlace-ruta"><a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">Descargar el GPX y ver la ruta completa en Wikiloc ↗</a></p>
       <p class="ruta-credito">Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.</p>`}`;
   }
+  // — «Otras subidas»: variantes por donde sube la gente, sacadas del mapa de calor (tools/subidas.py → data/subidas/<cumbre>.json) —
+  // al tocar una se dibuja en el mapa en morado (una cada vez); son orientativas: la dificultad real hay que mirarla en una guía
+  let subidasIdx = null, subidaMesh = null, subidaAct = null;
+  const NIVEL_SUBIDA = ['Muy poco frecuentada', 'Poco frecuentada', 'Frecuentada', 'Muy frecuentada'];
+  function lineaSubida(puntos) {
+    const pts = puntos.map(([lon, lat]) => { const q = geo.toXZ(lon, lat); return new THREE.Vector3(q.x, geo.heightAt(q.x, q.z) + 18, q.z); });
+    const geom = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'centripetal'), Math.min(1500, pts.length * 6), 11, 5, false);
+    const mat = new THREE.MeshBasicMaterial({ color: '#b98cff', fog: true, transparent: true, opacity: 0.95, depthWrite: false });
+    mat.onBeforeCompile = (sh) => { sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      vec3 ctr = position - normal * 11.0; float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
+      transformed = ctr + normal * clamp(dd * 0.0013, 0.22, 11.0); transformed.y += clamp(dd * 0.0035, 5.0, 24.0) - 18.0;`); };   // fina de cerca y visible de lejos, como la ruta
+    mat.customProgramCacheKey = () => 'subida-fina';
+    const m = new THREE.Mesh(geom, mat); m.renderOrder = 3; m.frustumCulled = false; return m;
+  }
+  function subidaSel(sub) {
+    if (subidaMesh) { scene.remove(subidaMesh); subidaMesh.geometry.dispose(); subidaMesh.material.dispose(); subidaMesh = null; }
+    subidaAct = sub?.id ?? null;
+    for (const b of fichaBody.querySelectorAll('.subida[data-id]')) b.setAttribute('aria-pressed', b.dataset.id === subidaAct);
+    if (!sub) return;
+    subidaMesh = lineaSubida(sub.puntos); scene.add(subidaMesh);
+    // la cámara enseña la subida entera
+    const xs = sub.puntos.map(([lon, lat]) => geo.toXZ(lon, lat)), x0 = Math.min(...xs.map((q) => q.x)), x1 = Math.max(...xs.map((q) => q.x)), z0 = Math.min(...xs.map((q) => q.z)), z1 = Math.max(...xs.map((q) => q.z));
+    const c = new THREE.Vector3((x0 + x1) / 2, 0, (z0 + z1) / 2); c.y = geo.heightAt(c.x, c.z);
+    const a = camState(); flyTo({ t: c, theta: a.theta, phi: 0.9, r: clamp(Math.hypot(x1 - x0, z1 - z0) * 1.3, 3000, 20000) }, { shift: viewShift() });
+  }
+  async function pintaSubidas(p) {
+    const hueco = fichaBody.querySelector('.subidas-hueco'); if (!hueco) return;
+    subidasIdx ??= json('data/subidas/index.json').then((l) => new Set(l)).catch(() => new Set());
+    if (!(await subidasIdx).has(p.id)) return;
+    const d = await json(`data/subidas/${p.id}.json`).catch(() => null);
+    if (!d?.subidas?.length || S.active !== p.id) return;
+    pintaSubidas.datos = d;
+    const r0 = rutasDe(p.id)[0]?.ruta?.puntos?.[0];
+    hueco.innerHTML = `<h3>${t('Otras subidas')}</h3>
+      <p class="ruta-credito">${t('Por dónde sube la gente, según las trazas GPS públicas de OpenStreetMap. Toca una para verla en el mapa.')}</p>
+      <ul class="subidas">${d.subidas.map((s) => {
+        const ej = r0 && Math.hypot((s.puntos[0][0] - r0[0]) * geo.mLon, (s.puntos[0][1] - r0[1]) * geo.mLat) < 800;
+        return `<li><button type="button" class="subida" data-act="subida" data-id="${s.id}" aria-pressed="false">
+          <b>${t('Desde {d}', { d: esc(s.desde) })}</b>${s.por.length ? `<small>${t('por {l}', { l: s.por.map(esc).join(', ') })}</small>` : ''}
+          <span class="subida-datos">${km(s.distancia)} km · +${fmt(s.desnivel)} m · ≈ ${horas(tramoMIDE(s.puntos))} ${t('de subida')} · ${t(NIVEL_SUBIDA[s.nivel])}${ej ? ` · ${t('como la ruta de ejemplo')}` : ''}</span>
+          ${s.hielo.length ? `<span class="subida-aviso">❄ ${t('Pasa por hielo o nieve: crampones y piolet')}</span>` : ''}
+          ${s.empinado.length ? `<span class="subida-aviso">⚠ ${t('Tramo muy empinado (más de 30°): puede haber trepada')}</span>` : ''}
+        </button></li>`; }).join('')}</ul>
+      <p class="ruta-credito">${t('Calculadas automáticamente: son orientativas, no reseñas. Una variante poco frecuentada puede ser una bajada de emergencia o de alguien que se perdió. Antes de ir, consulta una guía.')} <a href="${esc(d.autorUrl)}" target="_blank" rel="noopener">© OpenStreetMap</a></p>`;
+  }
   function pintaRuta(id, { animar = true } = {}) {
     for (const [rid, lista] of Object.entries(rutas)) for (const r of lista) r.mostrar(rid === id && rutaOn, { animar });
   }
   fichaBody.addEventListener('click', (e) => {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
+    if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
     if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
@@ -1044,6 +1091,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     tiempo.set(null); pintaMeteo(p);
+    subidaSel(null); pintaSubidas(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1118,6 +1166,7 @@ async function boot() {
   }
   const sueltaDetalle = () => { if (S.detalle) { S.detalle = false; if (!S.flight) controls.minDistance = 500; } };
   function closeFicha({ fly = false } = {}) {
+    subidaSel(null);
     if (!S.active) return;
     S.detalle = false; controls.minDistance = 500;
     const was = S.active; sonido.fx('cerrar'); tiempo.set(null); banderines.setViento(0); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);

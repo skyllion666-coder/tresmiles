@@ -628,3 +628,13 @@ body.selector-abierto #intro { z-index: 31; }
 
 .ruta-tiempos { margin-top: -4px; } .acceso-bus { font-size: .85rem; background: var(--cream-2); padding: 8px 10px; }
 .sel-parecidas { border-top: 1px solid rgba(36,48,44,.15); margin-top: 6px; padding-top: 12px; }
+
+/* «Otras subidas» (variantes sacadas del mapa de calor) */
+.subidas { list-style: none; margin: .4rem 0 .6rem; padding: 0; display: grid; gap: .45rem; }
+.subida { display: grid; gap: .15rem; width: 100%; text-align: left; padding: .6rem .75rem; border: 1px solid rgba(45,74,67,.25); border-left: 4px solid #b98cff; background: rgba(255,255,255,.45); color: var(--ink); font: inherit; cursor: pointer; }
+.subida b { font: 600 .8rem/1.3 var(--cond); letter-spacing: .08em; text-transform: uppercase; }
+.subida small { font-size: .88rem; opacity: .85; }
+.subida-datos { font: 500 .82rem/1.35 var(--cond); opacity: .8; }
+.subida-aviso { font: 500 .8rem/1.35 var(--cond); color: #8a4b12; }
+.subida[aria-pressed="true"] { background: #efe6ff; border-color: #b98cff; }
+.subida:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
