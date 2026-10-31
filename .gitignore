@@ -12,3 +12,4 @@ data/rutas/local/
 # Notas privadas de relevo (copia local, no se publican)
 NOTAS.md
 tools/datos/orto_zona/
+data/paquetes/   # paquetes de zona (piloto): se publican aparte, no en el repositorio

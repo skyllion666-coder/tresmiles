@@ -25,8 +25,8 @@ export function makeGeo(meta, store) {
   // altura bilineal en coordenadas locales (m, ya exagerada), con el nivel de detalle que haya cargado en ese punto
   const heightBase = (x, z) => store.sample((x + W / 2) / dx, (z + oz) / dz) * hs;
   // piezas locales de alta resolución (js/cumbres.js): si una cubre el punto, mandan; si no, el relieve general
-  let extra = null;
-  const heightAt = (x, z) => { if (extra) { const h = extra(x, z); if (h !== undefined) return h; } return heightBase(x, z); };
+  let extra = null, paq = null;   // paq: piezas del paquete de zona (js/paquete.js), que mandan sobre las de cumbre
+  const heightAt = (x, z) => { if (paq) { const h = paq(x, z); if (h !== undefined) return h; } if (extra) { const h = extra(x, z); if (h !== undefined) return h; } return heightBase(x, z); };
 
   // cima real = máximo en un entorno pequeño (la malla de 30 m puede desplazar la cima unas celdas)
   const summitNear = (x, z, radius = 90) => {
@@ -38,5 +38,5 @@ export function makeGeo(meta, store) {
     return { x: bx, y: best, z: bz };
   };
 
-  return { latC, mLat, mLon, dx, dz, W, D, oz, zmin, zmax, dentro, hs, toXZ, heightAt, heightBase, setExtra: (f) => { extra = f; }, summitNear };
+  return { latC, mLat, mLon, dx, dz, W, D, oz, zmin, zmax, dentro, hs, toXZ, heightAt, heightBase, setExtra: (f) => { extra = f; }, setPaquete: (f) => { paq = f; }, summitNear };
 }

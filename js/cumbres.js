@@ -336,7 +336,8 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
     alRelieve?.({ x0: p.x0, z0: p.z0, x1: p.x0 + (p.n - 1) * p.paso, z1: p.z0 + (p.n - 1) * p.paso });
   }
 
-  return {
+  const api = {
+    excluye: null,   // (x, z) => true si ese punto lo cubre un paquete de zona
     get cargadas() { return [...piezas.keys()]; },
     get cruz() { const d = detalles.get('aneto'), o = d?.cruz ?? d?.extras?.[0]; return o ? { x: o.position.x, y: o.position.y, z: o.position.z, s: o.scale.x, visible: o.visible } : null; },
     get detalle() { return [...detalles.keys()]; },
@@ -363,7 +364,8 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       const cerca = [];
       for (const [id, d] of Object.entries(indice)) {
         const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
-        if (piezas.has(id)) { if (dist > DESCARGA && id !== fijo?.()) quita(id); } else if (dist < CARGA) cerca.push([dist, id]);
+        const fuera = api.excluye?.(d.x0 + (d.n * d.paso) / 2, d.z0 + (d.n * d.paso) / 2);   // dentro de un paquete de zona cargado: manda el paquete
+        if (piezas.has(id)) { if ((dist > DESCARGA || fuera) && id !== fijo?.()) quita(id); else if (fuera) quita(id); } else if (dist < CARGA && !fuera) cerca.push([dist, id]);
       }
       cerca.sort((a, b) => a[0] - b[0]);
       let n = piezas.size + cargando.size;
@@ -374,4 +376,5 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       }
     },
   };
+  return api;
 }

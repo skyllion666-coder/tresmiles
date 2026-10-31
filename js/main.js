@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
-import { makeGeo } from './geo.js?v=2';
-import { Terrain, NCALOR } from './terrain.js?v=26';
+import { makeGeo } from './geo.js?v=3';
+import { Terrain, NCALOR } from './terrain.js?v=27';
 import { crearVegetacion } from './vegetacion.js?v=8';
-import { crearCumbres } from './cumbres.js?v=47';
+import { crearCumbres } from './cumbres.js?v=48';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
 import { crearTiempo, tipoTiempo } from './tiempo.js?v=4';
 import { HeightStore } from './heights.js?v=2';
@@ -15,6 +15,7 @@ import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=53';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
 import { crearSeguridad } from './seguridad.js?v=3';
+import { crearPaquete } from './paquete.js?v=2';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
 import { t, EN_INGLES } from './i18n.js?v=17';
@@ -94,6 +95,9 @@ async function boot() {
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
   let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: terrain.movil, alCargar: (r) => veg.refrescar(r), alRelieve: (z) => reajustaRutas?.(z), fijo: () => S.active });
+  // paquete de zona a máxima calidad (js/paquete.js; de momento con ?paquete=<cumbre>, p. ej. ?paquete=balaitus)
+  let paquete = null; const paqId = new URLSearchParams(location.search).get('paquete');
+  if (paqId) crearPaquete({ scene, geo, terrain, cumbres, base: `data/paquetes/${paqId.replace(/[^a-z0-9-]/g, '')}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); } }).then((p) => { paquete = p; });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
@@ -1594,7 +1598,7 @@ async function boot() {
     camera.updateMatrixWorld();
     sky.position.copy(camera.position); estrellas.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     { const m = estrellas.material, ob = S.noche ? 0.85 * (1 - tiempo.cubierto) : 0; m.opacity += (ob - m.opacity) * Math.min(1, dt * 0.8); estrellas.visible = m.opacity > 0.01; }
-    terrain.update(camera); cumbres.update(camera); veg.update(camera); banderines.update(camera, now / 1000);
+    terrain.update(camera); cumbres.update(camera); paquete?.update(camera, controls.target); veg.update(camera); banderines.update(camera, now / 1000);
     clouds.update(dt, camera, !reduced);
     tiempo.update(dt, camera, renderer.domElement.height);
     updatePins();
