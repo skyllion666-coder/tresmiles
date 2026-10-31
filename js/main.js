@@ -477,6 +477,7 @@ async function boot() {
   };
   window.Carga?.paso(4);
   const hitos = [], refugios = [];
+  const CASITA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="pared" d="M5.5 11v9h13v-9"/><path class="tejado" d="M2.5 12 12 3.5l9.5 8.5-2 2L12 7.6 4.5 14z"/><path class="puerta" d="M10.4 20v-4.6h3.2V20"/></svg>`;
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
   const normNombre = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').replace(/\b(cima|del|de|la|las|los|el|pico|pic|punta|tuca|gran|pequeno)\b/g, '').replace(/[^a-z0-9]/g, '');
@@ -487,8 +488,9 @@ async function boot() {
       const q = geo.toXZ(h.lon, h.lat);
       if (!geo.dentro(q.x, q.z, 800)) continue;
       h._hecho = true;
-      const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''} is-hidden`;
-      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(trH(h.nombre))}"><i></i></button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
+      const casita = h.tipo === 'refugio';   // un refugio de la ruta se dibuja con la misma casita que los refugios del mapa (si no, al abrir la ruta la casita «desaparecía» detrás del rombo)
+      const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''}${casita ? ' refugio-osm' : ''} is-hidden`;
+      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(trH(h.nombre))}">${casita ? CASITA : '<i></i>'}</button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
       if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
       el.title = trH(h.nota); $('#pins').appendChild(el);
       el.querySelector('.hito-btn').addEventListener('click', (e) => {
@@ -539,7 +541,6 @@ async function boot() {
   const refugiosDatos = await json('data/refugios.json').catch(() => []);
   const datoRef = (r) => [r.plazas ? `<small>${t('{n} plazas', { n: r.plazas })}${r.gestor ? ` · ${esc(r.gestor)}` : ''}</small>` : r.gestor ? `<small>${esc(r.gestor)}</small>` : '',
     r.tel ? `<small><a href="tel:${esc(r.tel.replace(/[^\d+]/g, ''))}">${esc(r.tel)}</a></small>` : '', r.web ? `<small><a href="${esc(r.web)}" target="_blank" rel="noopener">${t('Web del refugio')} ↗</a></small>` : ''].join('');
-  const CASITA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="pared" d="M5.5 11v9h13v-9"/><path class="tejado" d="M2.5 12 12 3.5l9.5 8.5-2 2L12 7.6 4.5 14z"/><path class="puerta" d="M10.4 20v-4.6h3.2V20"/></svg>`;
   for (const r of [...refugiosDatos].sort((a, b) => b.guardado - a.guardado)) {
     const q = geo.toXZ(r.lon, r.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
     const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'} is-hidden`;
