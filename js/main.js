@@ -96,7 +96,9 @@ async function boot() {
   let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: terrain.movil, alCargar: (r) => veg.refrescar(r), alRelieve: (z) => reajustaRutas?.(z), fijo: () => S.active });
   // paquete de zona a máxima calidad (js/paquete.js; de momento con ?paquete=<cumbre>, p. ej. ?paquete=balaitus)
-  let paquete = null; const paqId = new URLSearchParams(location.search).get('paquete');
+  // en la app, los paquetes que lleve instalados (data/paquetes/instalados.json, de momento uno); en la web, solo con ?paquete=
+  let paquete = null; let paqId = new URLSearchParams(location.search).get('paquete');
+  if (!paqId && EN_APP) paqId = (await fetch('data/paquetes/instalados.json').then((r) => (r.ok ? r.json() : [])).catch(() => []))[0] ?? null;
   if (paqId) crearPaquete({ scene, geo, terrain, cumbres, base: `data/paquetes/${paqId.replace(/[^a-z0-9-]/g, '')}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); } }).then((p) => { paquete = p; });
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
