@@ -14,11 +14,11 @@ import { crearFauna } from './fauna.js?v=14';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=54';
 import { crearPanorama } from './panorama.js?v=9';
 import { crearUbicacion } from './ubicacion.js?v=8';
-import { crearSeguridad } from './seguridad.js?v=3';
-import { crearPaquete } from './paquete.js?v=5';
+import { crearSeguridad } from './seguridad.js?v=4';
+import { crearPaquete } from './paquete.js?v=6';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=17';
+import { t, EN_INGLES } from './i18n.js?v=18';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -96,10 +96,37 @@ async function boot() {
   let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
   const cumbres = crearCumbres({ scene, geo, terrain, movil: terrain.movil, archivosM: terrain.movil, alCargar: (r) => veg.refrescar(r), alRelieve: (z) => reajustaRutas?.(z), fijo: () => S.active });
   // paquete de zona a máxima calidad (js/paquete.js; de momento con ?paquete=<cumbre>, p. ej. ?paquete=balaitus)
-  // en la app, los paquetes que lleve instalados (data/paquetes/instalados.json, de momento uno); en la web, solo con ?paquete=
-  let paquete = null; let paqId = new URLSearchParams(location.search).get('paquete');
-  if (!paqId && EN_APP) paqId = (await fetch('data/paquetes/instalados.json').then((r) => (r.ok ? r.json() : [])).catch(() => []))[0] ?? null;
-  if (paqId) crearPaquete({ scene, geo, terrain, cumbres, veg, base: `data/paquetes/${paqId.replace(/[^a-z0-9-]/g, '')}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } }).then((p) => { paquete = p; });
+  // — paquetes de zona a máxima calidad (js/paquete.js): en la app, los descargados en «Mis zonas» (window.TresmilesApp) o los que lleve dentro
+  //   (data/paquetes/instalados.json, apps de prueba); en la web, solo con ?paquete=<id>. Se activa el de la zona que se mira (a menos de 3 km de su recuadro)
+  //   y se quita al alejarse: un paquete a la vez —
+  const APP_PAQ = EN_APP ? window.TresmilesApp ?? null : null;
+  let paquete = null, paqActivo = null, paqCambiando = false, paqInstalados = [];
+  const paqCajas = new Map();   // id -> recuadro (de su index.json)
+  async function leePaquetes() {
+    let l = [];
+    const forzado = new URLSearchParams(location.search).get('paquete');
+    if (forzado) l = [forzado.replace(/[^a-z0-9-]/g, '')];
+    else if (APP_PAQ) { try { l = JSON.parse(APP_PAQ.instalados()); } catch { l = []; } }
+    if (!forzado && EN_APP) l = [...new Set([...l, ...(await fetch('data/paquetes/instalados.json').then((r) => (r.ok ? r.json() : [])).catch(() => []))])];
+    for (const id of l) if (!paqCajas.has(id)) {
+      const ix = await fetch(`data/paquetes/${id}/index.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      if (ix?.piezas?.length) paqCajas.set(id, ix.caja ?? [Math.min(...ix.piezas.map((q) => q.x0)), Math.min(...ix.piezas.map((q) => q.z0)), Math.max(...ix.piezas.map((q) => q.x0)) + ix.lado, Math.max(...ix.piezas.map((q) => q.z0)) + ix.lado]);
+    }
+    paqInstalados = l.filter((id) => paqCajas.has(id));
+  }
+  async function eligePaquete() {
+    if (paqCambiando) return;
+    const tg = controls.target, lejos = (c) => Math.hypot(Math.max(c[0] - tg.x, 0, tg.x - c[2]), Math.max(c[1] - tg.z, 0, tg.z - c[3]));
+    const mejor = paqInstalados.map((id) => ({ id, d: lejos(paqCajas.get(id)) })).filter((o) => o.d < 3000).sort((a, b) => a.d - b.d)[0]?.id ?? null;
+    if (mejor === paqActivo && (!mejor || paquete)) return;
+    paqCambiando = true;
+    try {
+      if (paquete) { paquete.quitar(); paquete = null; }
+      paqActivo = mejor;
+      if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: `data/paquetes/${mejor}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
+    } finally { paqCambiando = false; }
+  }
+  leePaquetes().then(() => setInterval(eligePaquete, 1500));
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);
@@ -841,6 +868,7 @@ async function boot() {
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
       <div class="subidas-hueco"></div>
+      <div class="zona-hueco"></div>
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
@@ -942,6 +970,7 @@ async function boot() {
   fichaBody.addEventListener('click', (e) => {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
+    if (act?.dataset.act === 'zonas') { abreZonas(); return; }
     if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
@@ -1108,7 +1137,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1197,8 +1226,9 @@ async function boot() {
   $('#ficha-close').addEventListener('click', () => closeFicha());
   // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
   const segPanel = () => document.getElementById('seg-panel');
-  const algoAbierto = () => $('#about').open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
+  const algoAbierto = () => $('#about').open || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
   function cierraUno() {
+    if (document.getElementById('zonas')?.open) { document.getElementById('zonas').close(); return true; }
     if ($('#about').open) { $('#about').close(); return true; }
     if (segPanel() && !segPanel().hidden) { segPanel().querySelector('.seg-cerrar')?.click(); return true; }
     if (S.vuelo) { pararVuelo(true); return true; }
@@ -1329,6 +1359,54 @@ async function boot() {
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
   if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
+  // — «Mis zonas» (solo en la app): catálogo de paquetes de zona (data/paquetes.json, tools/publicar_paquete.py), descargar con wifi, ver y borrar —
+  const catalogoZonas = json('data/paquetes.json').catch(() => []);
+  const zonasDlg = document.createElement('dialog'); zonasDlg.id = 'zonas'; document.body.appendChild(zonasDlg);
+  const avance = {};   // id -> { pct, estado }
+  async function pintaZonas() {
+    const cat = await catalogoZonas, inst = APP_PAQ ? JSON.parse(APP_PAQ.instalados()) : [], libre = APP_PAQ ? APP_PAQ.libreMB() : 0;
+    zonasDlg.innerHTML = `<div class="zonas-caja"><button type="button" class="seg-cerrar" data-z="cerrar" aria-label="${t('Cerrar')}">×</button>
+      <h2>${t('Mis zonas')}</h2>
+      <p class="zonas-intro">${t('Paquetes de alta calidad para llevar sin cobertura: ortofoto de 25 cm y relieve fino a lo largo de las rutas. Descárgalos con wifi antes de la excursión y bórralos al volver.')}</p>
+      <ul class="zonas-lista">${cat.map((z) => {
+        const a = avance[z.id], tiene = inst.includes(z.id), v = tiene ? APP_PAQ.version(z.id) : 0;
+        const estado = a && /^(descargando|descomprimiendo)/.test(a.estado) ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.estado === 'descomprimiendo' ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="zona-btn" data-z="cancelar">${t('Cancelar')}</button>`
+          : tiene ? `<small class="zona-ok">✓ ${t('Descargado')}${v && v < z.version ? ` · ${t('hay una versión nueva')}` : ''}</small> <button type="button" class="zona-btn" data-z="ver" data-id="${z.id}">${t('Ver en el mapa')}</button> ${v && v < z.version ? `<button type="button" class="zona-btn" data-z="bajar" data-id="${z.id}">${t('Actualizar')}</button> ` : ''}<button type="button" class="zona-btn zona-borrar" data-z="borrar" data-id="${z.id}">${t('Borrar')}</button>`
+          : `${a?.estado?.startsWith('error') ? `<small class="zona-error">${esc(a.estado)}</small> ` : ''}<button type="button" class="zona-btn zona-bajar" data-z="bajar" data-id="${z.id}">${t('Descargar · {m} MB', { m: z.mb })}</button>`;
+        return `<li><b>${esc(z.nombre)}</b><span>${esc(z.detalle)}</span>${estado}</li>`; }).join('')}</ul>
+      ${APP_PAQ ? `<p class="seg-nota">${t('Espacio libre en el móvil: {m} MB.', { m: new Intl.NumberFormat('es-ES').format(libre) })}</p>` : ''}</div>`;
+  }
+  const abreZonas = async () => { await pintaZonas(); if (!zonasDlg.open) zonasDlg.showModal(); };
+  zonasDlg.addEventListener('click', async (e) => {
+    if (e.target === zonasDlg) { zonasDlg.close(); return; }
+    const b = e.target.closest('[data-z]'); if (!b) return;
+    const cat = await catalogoZonas, z = cat.find((c) => c.id === b.dataset.id);
+    if (b.dataset.z === 'cerrar') zonasDlg.close();
+    else if (b.dataset.z === 'cancelar') APP_PAQ?.cancela();
+    else if (b.dataset.z === 'borrar' && z && confirm(t('¿Borrar el paquete {n}? Se libera su espacio ({m} MB); lo puedes volver a descargar cuando quieras.', { n: z.nombre, m: z.mb }))) {
+      if (paqActivo === z.id) { paquete?.quitar(); paquete = null; paqActivo = null; }
+      APP_PAQ.borra(z.id); paqCajas.delete(z.id); await leePaquetes(); pintaZonas();
+    } else if (b.dataset.z === 'bajar' && z && APP_PAQ) {
+      if (APP_PAQ.libreMB() < z.mb * 2 + 50) { alert(t('No hay espacio suficiente en el móvil para este paquete.')); return; }
+      if (!APP_PAQ.wifi() && !confirm(t('No estás conectado por wifi. ¿Descargar {m} MB con los datos del móvil?', { m: z.mb }))) return;
+      avance[z.id] = { pct: 0, estado: 'descargando' }; APP_PAQ.descarga(z.id, z.url, z.version); pintaZonas();
+    } else if (b.dataset.z === 'ver' && z) { zonasDlg.close(); openPeak(z.cumbre); }
+  });
+  window.tresmilesPaqProgreso = async (id, pct, estado) => {
+    avance[id] = { pct, estado };
+    if (estado === 'listo') { delete avance[id]; paqCajas.delete(id); await leePaquetes(); sonido.fx('activar'); }
+    if (zonasDlg.open && (estado !== 'descargando' || pct % 2 === 0)) pintaZonas();
+    if (S.active) pintaZona(byId[S.active]);
+  };
+  // en la ficha de una cumbre con paquete: botón a «Mis zonas»
+  async function pintaZona(p) {
+    const hueco = fichaBody.querySelector('.zona-hueco'); if (!hueco || !p || !APP_PAQ) return;
+    const z = (await catalogoZonas).find((c) => c.cumbre === p.id); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
+    const tiene = paqInstalados.includes(z.id);
+    hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3><p class="ruta-credito">${tiene ? t('Tienes descargado el paquete de esta zona: se carga solo al acercarte.') : t('Hay un paquete de esta zona con ortofoto de 25 cm y relieve fino para llevar sin cobertura ({m} MB).', { m: z.mb })}</p>
+      <div class="ruta-acciones"><button type="button" class="btn-ruta btn-suave" data-act="zonas">${t(tiene ? 'Mis zonas' : 'Descargar la zona en alta calidad')}</button></div>`;
+  }
+
   // — «Seguridad» (solo en la app): enviar mi posición y si llego antes de que anochezca (js/seguridad.js) —
   if (EN_APP) crearSeguridad({ geo, boton: $('#btn-seguridad'), solAhora, tramoMIDE, rutaAbierta: () => (S.active ? rutasDe(S.active)[0]?.ruta : null),
     lugares: () => [...refugiosDatos.filter((r) => !/^(Refugio guardado|Refugio libre|Cabaña o abrigo)$/.test(r.nombre)).map((r) => ({ nombre: r.nombre, lon: r.lon, lat: r.lat })),
@@ -1418,6 +1496,7 @@ async function boot() {
 
   // — acerca de —
   const about = $('#about');
+  about.addEventListener('click', (e) => { if (e.target.closest('#abre-zonas')) { about.close(); abreZonas(); } });
   function buildAbout() {
     const todas = peaks.map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f), usadas = todas.filter((u) => !u.p.menor), menoresUsadas = todas.filter((u) => u.p.menor);
     const credFoto = (nombre, f) => {
@@ -1434,6 +1513,7 @@ async function boot() {
       $('#about-body').innerHTML = `
       <h2>The 3,000ers of the Aragonese Pyrenees</h2>
       <p class="firma">Created by SKYLLION (FRANK)</p>
+      ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">My areas</button> <small>High-quality packs to carry without coverage</small></p>` : ''}
       ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 510 MB), with features only the app has: <b>Where am I</b> (GPS and compass, with north up or the map turning with you), <b>SOS</b> (send your position by WhatsApp or SMS or to 112, and whether you will get down before dark), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a>. When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
       <p>A 3D explorer of the summits above 3,000 metres in the Aragonese Pyrenees and along its border with France. It already includes ${totalActivas()} 3,000ers: about ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} with an example route, waypoints and photographs, and the rest with basic info (name, altitude, massif and location). It also has ${totalActivas(true)} summits between 2,000 and 3,000 m with simple info (name, altitude and position from OpenStreetMap, no route), shown by choosing “Below 3,000” or “All” in the selector.</p>
       <p><i>The summit descriptions and routes are still in Spanish: they are being translated.</i></p>
@@ -1476,6 +1556,7 @@ async function boot() {
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p class="firma">Creado por SKYLLION (FRANK)</p>
+      ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">${t('Mis zonas')}</button> <small>${t('Paquetes de alta calidad para llevar sin cobertura')}</small></p>` : ''}
       ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 510 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula, con el norte arriba o con el mapa girando contigo), <b>SOS</b> (enviar tu posición por WhatsApp o SMS o al 112, y si llegas abajo antes de que anochezca), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a>. Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
       <h3>Cumbres y rutas</h3>

@@ -690,3 +690,19 @@ body.selector-abierto #intro { z-index: 31; }
 .panel-cab h2 { margin: 0; }
 .panel-cerrar { width: 44px; height: 44px; border: 0; background: none; color: var(--ink); font-size: 1.9rem; line-height: 1; cursor: pointer; }
 .panel-cerrar:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+
+/* «Mis zonas» (solo en la app): paquetes de zona a máxima calidad para descargar y borrar */
+#zonas { border: 0; padding: 0; background: none; max-width: min(540px, 100vw - 24px); width: 100%; }
+#zonas::backdrop { background: rgba(10,16,14,.5); }
+.zonas-caja { position: relative; background: var(--cream); color: #17211d; padding: 18px; border-radius: 14px; max-height: 86vh; overflow-y: auto; }
+.zonas-caja h2 { margin: 0 0 6px; font: 600 1.5rem/1.1 var(--serif); color: var(--spruce); }
+.zonas-intro { margin: 0 0 10px; font: 500 .92rem/1.45 var(--sans); }
+.zonas-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.zonas-lista li { display: grid; gap: 6px; padding: 12px; background: #fff; border: 1px solid rgba(45,74,67,.22); border-left: 4px solid var(--spruce); }
+.zonas-lista b { font: 600 .82rem/1.2 var(--cond); letter-spacing: .12em; text-transform: uppercase; }
+.zonas-lista span, .zonas-lista small { font: 500 .88rem/1.4 var(--sans); }
+.zona-ok { color: #2f7a43; font-weight: 600 !important; } .zona-error { color: #b0362c; }
+.zona-btn { justify-self: start; min-height: 40px; padding: 6px 12px; border: 1px solid var(--spruce); background: #fff; color: var(--spruce); font: 600 .78rem var(--cond); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; margin: 2px 4px 0 0; }
+.zona-btn.zona-bajar { background: var(--spruce); color: var(--cream); }
+.zona-btn.zona-borrar { border-color: #b0362c; color: #b0362c; }
+.zona-barra { height: 8px; background: #e6e0cf; border-radius: 4px; overflow: hidden; } .zona-barra i { display: block; height: 100%; background: var(--spruce); transition: width .3s; }

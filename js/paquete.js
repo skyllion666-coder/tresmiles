@@ -102,6 +102,14 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
   }
   let cuenta = 0;
   return {
+    // quitar el paquete entero (al alejarse de su zona o al borrarlo): vuelven el relieve general, las piezas de cumbre y los árboles
+    quitar() {
+      for (const id of [...piezas.keys()]) quita(id);
+      terrain.paq.uPaqB.value.set(1e9, 1e9, 1e9, 1e9); terrain.paq.uPaq.value = null; texM.dispose();
+      geo.setPaquete(null); Object.assign(cumbres, { excluye: null, piezaExterna: null, huecoExterno: null, quitaHuecoExterno: null });
+      if (veg) { veg.excluye = null; veg.refrescar({ x0: i0 * L, z0: j0 * L, x1: (i0 + ni) * L, z1: (j0 + nj) * L }); }
+    },
+    caja: [i0 * L, j0 * L, (i0 + ni) * L, (j0 + nj) * L],
     idx, get cargadas() { return [...piezas.keys()]; }, get cargando() { return [...cargando]; },
     update(cam, objetivo) {
       for (const p of piezas.values()) if (p.orto) p.mat.userData.sat.value = p.ch.mat.map;
