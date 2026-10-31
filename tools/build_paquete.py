@@ -5,8 +5,11 @@ data/subidas/<id>.json) con piezas de 1 × 1 km alineadas a la rejilla de la web
     (no añade datos: suaviza el sombreado de cerca). <pieza>.bin.gz: u16 LE, decímetros, n×n (n = 401); 0 = sin dato (fuera de España: se queda el relieve general).
   - ortofoto: PNOA máxima actualidad del IGN (CC BY 4.0) a 4096 px por kilómetro (≈ 25 cm por píxel, la resolución del vuelo), en 4 teselas de 2048 px.
     <pieza>.webp (calidad alta; el paquete es para descargar y borrar).
+  - frontera: donde llegan, se usan los datos del IGN de Francia (Géoplateforme, Licence Ouverte Etalab 2.0): el RGE ALTI de 1 m allí donde el MDT05 no llega
+    o donde ambos coinciden (dentro de España el servicio francés rellena con datos que se desvían decenas de metros: ahí manda el MDT05), y la ortofoto
+    francesa allí donde existe (Francia y la franja de la frontera, con las sombras más suaves), fundida con la del PNOA.
 Salida: data/paquetes/<cumbre>/ con index.json {cumbre, lado, piezas: [{id, x0, z0, n, paso, orto}]}.
-Uso: python3 tools/build_paquete.py balaitus [subidas a incluir, p. ej. 1 2]   (sin subidas: la ruta de ejemplo y la primera subida)"""
+Uso: python3 tools/build_paquete.py balaitus [subidas a incluir, p. ej. 1 2] [--rehacer]   (sin subidas: la ruta de ejemplo y la primera subida)"""
 import gzip, json, math, os, subprocess, sys, tempfile
 import numpy as np, rasterio
 from rasterio.warp import transform
@@ -38,7 +41,21 @@ def curl(url, out, minimo):
         if r.stdout == '200' and os.path.exists(out) and os.path.getsize(out) > minimo: return True
     return False
 
-def relieve(x0, z0):
+def bbox_rejilla(x0, z0, n, paso):   # recuadro lon/lat cuyos centros de píxel caen en los puntos de la rejilla (con medio píxel de margen)
+    lo0, la1 = fromXZ(x0 - paso / 2, z0 - paso / 2); lo1, la0 = fromXZ(x0 + (n - 1) * paso + paso / 2, z0 + (n - 1) * paso + paso / 2)
+    return lo0, la0, lo1, la1
+
+def relieve_fr(x0, z0):
+    lo0, la0, lo1, la1 = bbox_rejilla(x0, z0, N, PASO); tmp = tempfile.mktemp(suffix='.bil')
+    url = ('https://data.geopf.fr/wms-r/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=ELEVATION.ELEVATIONGRIDCOVERAGE.HIGHRES&STYLES=&CRS=EPSG:4326'
+           f'&BBOX={la0},{lo0},{la1},{lo1}&WIDTH={N}&HEIGHT={N}&FORMAT=image/x-bil;bits=32')
+    if not curl(url, tmp, N * N * 4 - 1): return None
+    a = np.fromfile(tmp, '<f4'); os.remove(tmp)
+    if a.size != N * N: return None
+    a = a.reshape(N, N); a[(a < -1000) | (a > 5000)] = np.nan
+    return a
+
+def relieve(x0, z0, cobertura=None):   # cobertura: dónde hay datos franceses de verdad (la máscara de su ortofoto, n×n, 0–1)
     xs = x0 + np.arange(N) * PASO; zs = z0 + np.arange(N) * PASO
     X, Z = np.meshgrid(xs, zs); lon, lat = fromXZ(X, Z)
     ux, uy = transform('EPSG:4326', 'EPSG:25830', lon.ravel().tolist(), lat.ravel().tolist()); ux = np.array(ux).reshape(N, N); uy = np.array(uy).reshape(N, N)
@@ -53,7 +70,15 @@ def relieve(x0, z0):
     inside = (col >= 0) & (row >= 0) & (col <= h.shape[1] - 1) & (row <= h.shape[0] - 1)
     v = map_coordinates(np.nan_to_num(h, nan=-1), [row, col], order=3, mode='nearest')
     bad = ~inside | (map_coordinates(np.isnan(h).astype('f4'), [row, col], order=1, mode='nearest') > 0.01) | (v < 0)
-    return np.where(bad, 0, np.round(v * 10)).astype('<u2'), bad.mean()
+    # RGE ALTI (1 m): donde no hay MDT05, y donde coinciden (menos de 4 m: aporta detalle; más de 10 m, en España, es un relleno malo y manda el MDT05)
+    F = relieve_fr(x0, z0) if cobertura is not None else None; usoF = 0.0
+    if F is not None:
+        from scipy.ndimage import gaussian_filter
+        okF = ~np.isnan(F); Fz = np.nan_to_num(F)
+        w = np.where(bad, okF.astype('f4'), np.clip(1 - (np.abs(Fz - v) - 4) / 6, 0, 1) * okF)
+        w = np.clip(gaussian_filter(w.astype('f4'), 2), 0, 1) * okF * cobertura; okF = okF & (cobertura > 0.5)
+        v = np.where(okF, v * (1 - w) + Fz * w, v); v = np.where(bad & okF, Fz, v); bad = bad & ~okF; usoF = float((w > 0.5).mean())
+    return np.where(bad, 0, np.round(v * 10)).astype('<u2'), bad.mean(), usoF
 
 def orto(x0, z0, dest):
     lon0, lat1 = fromXZ(x0, z0); lon1, lat0 = fromXZ(x0 + LADO, z0 + LADO)
@@ -65,12 +90,34 @@ def orto(x0, z0, dest):
             tmp = tempfile.mktemp(suffix='.jpg')
             url = ('https://www.ign.es/wms-inspire/pnoa-ma?service=WMS&version=1.3.0&request=GetMap&layers=OI.OrthoimageCoverage&styles=&crs=CRS:84'
                    f'&bbox={la0},{ta0},{la1},{ta1}&width=2048&height=2048&format=image/jpeg')
-            if not curl(url, tmp, 30000): return False
+            if not curl(url, tmp, 30000): return False, None
             im.paste(Image.open(tmp).convert('RGB'), (a * 2048, c * 2048)); os.remove(tmp)
+    # ortofoto francesa (PNG con transparencia donde no hay foto): manda donde existe, con el borde fundido unos 10 m
+    fr = Image.new('RGBA', (4096, 4096), (0, 0, 0, 0)); hay = False
+    for a in range(2):
+        for c in range(2):
+            la0 = lon0 + (lon1 - lon0) * a / 2; la1 = lon0 + (lon1 - lon0) * (a + 1) / 2
+            ta1 = lat1 - (lat1 - lat0) * c / 2; ta0 = lat1 - (lat1 - lat0) * (c + 1) / 2
+            tmp = tempfile.mktemp(suffix='.png')
+            url = ('https://data.geopf.fr/wms-r/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=ORTHOIMAGERY.ORTHOPHOTOS&STYLES=&CRS=EPSG:4326'
+                   f'&BBOX={ta0},{la0},{ta1},{la1}&WIDTH=2048&HEIGHT=2048&FORMAT=image/png&TRANSPARENT=TRUE')
+            if curl(url, tmp, 1000):
+                t = Image.open(tmp).convert('RGBA'); os.remove(tmp); fr.paste(t, (a * 2048, c * 2048))
+    # donde no hay foto el servicio devuelve blanco liso (no transparencia): válido = transparente no y no blanco; se rellenan los huecos blancos pequeños
+    # (nieve, brillos) y se quitan los grandes (sin foto)
+    from PIL import ImageFilter
+    A = np.asarray(fr); val = (A[..., 3] > 200) & ~((A[..., 0] > 250) & (A[..., 1] > 250) & (A[..., 2] > 250))
+    m = Image.fromarray((val * 255).astype(np.uint8)).resize((1024, 1024), Image.BOX).point(lambda v: 255 if v > 127 else 0)
+    m = m.filter(ImageFilter.MaxFilter(9)).filter(ImageFilter.MinFilter(9)).filter(ImageFilter.MinFilter(5))   # cierra huecos de nieve; aleja del borde
+    hay = np.asarray(m).mean() > 2
+    if hay:
+        al = m.resize((4096, 4096), Image.BILINEAR).filter(ImageFilter.GaussianBlur(14))
+        im = Image.composite(fr.convert('RGB'), im, al)
     aplana_sombras(im).save(dest, quality=82, method=6)
-    return True
+    return ('fr' if hay else True), (np.asarray(m.resize((N, N), Image.BILINEAR), np.float32) / 255 if hay else None)
 
-cumbre = sys.argv[1]; elegidas = [int(a) for a in sys.argv[2:]] or [1]
+REHACER = '--rehacer' in sys.argv; args = [a for a in sys.argv[1:] if a != '--rehacer']
+cumbre = args[0]; elegidas = [int(a) for a in args[1:]] or [1]
 pico = next(p for p in json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos'] if p['id'] == cumbre)
 lineas = [json.load(open(os.path.join(ROOT, 'data/rutas', f'{r}.json')))['puntos'] for r in pico.get('rutas') or []]
 sub = os.path.join(ROOT, 'data/subidas', f'{cumbre}.json')
@@ -83,20 +130,22 @@ for L in lineas:
             for dz in (-MARGEN, 0, MARGEN): celdas.add((math.floor((x + dx) / LADO), math.floor((z + dz) / LADO)))
 OUT = os.path.join(ROOT, 'data/paquetes', cumbre); os.makedirs(OUT, exist_ok=True)
 I = os.path.join(OUT, 'index.json'); idx = json.load(open(I)) if os.path.exists(I) else {'cumbre': cumbre, 'lado': LADO, 'piezas': []}
+if REHACER: idx['piezas'] = []
 hechas = {p['id'] for p in idx['piezas']}
 print(cumbre, len(celdas), 'piezas de 1 km', flush=True)
 for i, j in sorted(celdas):
     pid = f'p_{i}_{j}'
     if pid in hechas: continue
     x0, z0 = i * LADO, j * LADO
-    r = relieve(x0, z0)
+    ok, cob = orto(x0, z0, os.path.join(OUT, f'{pid}.webp'))
+    r = relieve(x0, z0, cob)
     if r is None: print(pid, 'sin relieve del WCS', flush=True); continue
-    arr, sin = r
+    arr, sin, usoF = r
     gzip.open(os.path.join(OUT, f'{pid}.bin.gz'), 'wb', 9).write(arr.tobytes())
-    ok = orto(x0, z0, os.path.join(OUT, f'{pid}.webp'))
     idx['piezas'].append({'id': pid, 'x0': x0, 'z0': z0, 'n': N, 'paso': PASO, **({'orto': f'{pid}.webp'} if ok else {}), **({'sinDato': round(float(sin), 2)} if sin > 0.01 else {})})
     json.dump(idx, open(I, 'w'), separators=(',', ':'))
-    print(pid, f'sin dato {sin * 100:.0f} %', 'orto' if ok else 'SIN ORTO', os.path.getsize(os.path.join(OUT, f'{pid}.webp')) // 1024 if ok else 0, 'KB', flush=True)
+    if usoF > 0.01 or ok == 'fr': idx['piezas'][-1]['francia'] = {'relieve': round(usoF, 2), 'orto': ok == 'fr'}; json.dump(idx, open(I, 'w'), separators=(',', ':'))
+    print(pid, f'sin dato {sin * 100:.0f} %', f'RGE ALTI {usoF * 100:.0f} %', 'orto' + (' con la francesa' if ok == 'fr' else '') if ok else 'SIN ORTO', os.path.getsize(os.path.join(OUT, f'{pid}.webp')) // 1024 if ok else 0, 'KB', flush=True)
 # color: un solo ajuste para todo el paquete (como tools/igualar_orto.py, media y desviación por canal en lineal contra el satélite de debajo), para que el pasillo
 # case con el resto del mapa y las piezas no se distingan entre sí
 lin = lambda v: np.where(v <= .04045, v / 12.92, ((v + .055) / 1.055) ** 2.4)

@@ -9,7 +9,7 @@ const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a)
 export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, alRelieve }) {
   const idx = await fetch(`${base}/index.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (!idx?.piezas?.length) return null;
-  const L = idx.lado, MAX = movil ? 6 : 12, CARGA = movil ? 2200 : 3200, DESCARGA = CARGA + 1200, FUNDE = 90;
+  const L = idx.lado, MAX = movil ? 8 : 14, CARGA = movil ? 2200 : 3200, DESCARGA = CARGA + 1200, FUNDE = 90;
   const porCelda = new Map(idx.piezas.map((d) => [`${Math.round(d.x0 / L)}_${Math.round(d.z0 / L)}`, d]));
   const i0 = Math.min(...idx.piezas.map((d) => Math.round(d.x0 / L))), j0 = Math.min(...idx.piezas.map((d) => Math.round(d.z0 / L)));
   const ni = Math.max(...idx.piezas.map((d) => Math.round(d.x0 / L))) - i0 + 1, nj = Math.max(...idx.piezas.map((d) => Math.round(d.z0 / L))) - j0 + 1;
@@ -59,10 +59,16 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, 
       }
       const idx3 = new Uint32Array((nm - 1) * (nm - 1) * 6); let q = 0;
       for (let b = 0; b < nm - 1; b++) for (let a = 0; a < nm - 1; a++) { const v0 = b * nm + a, v1 = v0 + 1, v2 = v0 + nm, v3 = v2 + 1; idx3[q++] = v0; idx3[q++] = v2; idx3[q++] = v1; idx3[q++] = v1; idx3[q++] = v2; idx3[q++] = v3; }
+      // faldón: el borde baja 150 m para tapar la rendija con el relieve general cuando la pieza vecina aún no está cargada (allí manda el relieve general, más basto)
+      const borde = []; for (let a = 0; a < nm; a++) borde.push(a); for (let b = 1; b < nm; b++) borde.push(b * nm + nm - 1); for (let a = nm - 2; a >= 0; a--) borde.push((nm - 1) * nm + a); for (let b = nm - 2; b >= 1; b--) borde.push(b * nm);
+      const nb = borde.length, tot = nm * nm + nb, pos2 = new Float32Array(tot * 3), nor2 = new Float32Array(tot * 3), uv2 = new Float32Array(tot * 2), idx4 = new Uint32Array(idx3.length + nb * 6);
+      pos2.set(pos); nor2.set(nor); uv2.set(uv); idx4.set(idx3);
+      borde.forEach((v, k) => { const e = nm * nm + k; pos2.set([pos[v * 3], pos[v * 3 + 1] - 150, pos[v * 3 + 2]], e * 3); nor2.set([nor[v * 3], nor[v * 3 + 1], nor[v * 3 + 2]], e * 3); uv2.set([uv[v * 2], uv[v * 2 + 1]], e * 2); });
+      for (let k = 0; k < nb; k++) { const a = borde[k], b = borde[(k + 1) % nb], da = nm * nm + k, db = nm * nm + (k + 1) % nb; idx4.set([a, b, db, a, db, da], idx3.length + k * 6); }
       const g = new THREE.BufferGeometry();
-      g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
-      g.setIndex(new THREE.BufferAttribute(idx3, 1)); g.computeBoundingSphere();
-      const mat = terrain.crearMaterialPieza(ch, 'granito'), mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
+      g.setAttribute('position', new THREE.BufferAttribute(pos2, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor2, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2));
+      g.setIndex(new THREE.BufferAttribute(idx4, 1)); g.computeBoundingSphere();
+      const mat = terrain.crearMaterialPieza(ch, 'granito'); mat.side = THREE.DoubleSide; const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       const p = { d, H, x0, z0, n, paso, mesh, mat, ch, lados };
       if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
       scene.add(mesh); piezas.set(d.id, p); marca(d, true);
@@ -78,7 +84,7 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, 
         u.pb.value.set(lados[0] ? x0 : -1e7, lados[2] ? z0 : -1e7, lados[1] ? x0 + L : 1e7, lados[3] ? z0 + L : 1e7);
         p.orto = tex;
       });
-    } catch (e) { console.warn('paquete', d.id, e); } finally { cargando.delete(d.id); }
+    } catch (e) { console.warn('paquete', d.id, e); (window.tresmilesDiag ??= []).push({ paquete: d.id, error: String(e) }); } finally { cargando.delete(d.id); }
   }
   function quita(id) {
     const p = piezas.get(id); if (!p) return;
@@ -87,17 +93,26 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, base, movil, 
   }
   let cuenta = 0;
   return {
-    idx, get cargadas() { return [...piezas.keys()]; },
+    idx, get cargadas() { return [...piezas.keys()]; }, get cargando() { return [...cargando]; },
     update(cam, objetivo) {
       for (const p of piezas.values()) if (p.orto) p.mat.userData.sat.value = p.ch.mat.map;
       if (++cuenta % 10) return;
       const c = objetivo ?? cam.position, cerca = [];
-      for (const d of idx.piezas) {
-        const dist = Math.hypot(d.x0 + L / 2 - c.x, d.z0 + L / 2 - c.z);
+      for (const d of idx.piezas) {   // cerca del punto que se mira o de la cámara (lo que queda delante de ella se ve grande)
+        const dist = Math.min(Math.hypot(d.x0 + L / 2 - c.x, d.z0 + L / 2 - c.z), Math.hypot(d.x0 + L / 2 - cam.position.x, d.z0 + L / 2 - cam.position.z) + 300);
         if (piezas.has(d.id)) { if (dist > DESCARGA) quita(d.id); } else if (dist < CARGA && !cargando.has(d.id)) cerca.push([dist, d]);
       }
       cerca.sort((a, b) => a[0] - b[0]);
-      for (const [, d] of cerca) { if (piezas.size + cargando.size >= MAX) break; carga(d); }
+      // si no queda sitio y hay una pieza más cercana esperando, se suelta la cargada más lejana (si no, se quedan las de donde estaba antes la cámara)
+      const distP = (p) => Math.min(Math.hypot(p.x0 + L / 2 - c.x, p.z0 + L / 2 - c.z), Math.hypot(p.x0 + L / 2 - cam.position.x, p.z0 + L / 2 - cam.position.z) + 300);
+      for (const [dc, d] of cerca) {
+        if (piezas.size + cargando.size >= MAX) {
+          const lejos = [...piezas.values()].sort((a, b) => distP(b) - distP(a))[0];
+          if (!lejos || distP(lejos) < dc + 200) break;
+          quita(lejos.d.id);
+        }
+        carga(d);
+      }
     },
   };
 }
