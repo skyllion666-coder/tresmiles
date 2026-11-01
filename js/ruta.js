@@ -23,7 +23,7 @@ export function crearRuta({ scene, geo, ruta }) {
   const bb = pts.reduce((o, p) => ({ x0: Math.min(o.x0, p.x), x1: Math.max(o.x1, p.x), z0: Math.min(o.z0, p.z), z1: Math.max(o.z1, p.z) }), { x0: 1e9, x1: -1e9, z0: 1e9, z1: -1e9 });
   const centro = { x: (bb.x0 + bb.x1) / 2, z: (bb.z0 + bb.z1) / 2 }, extension = Math.hypot(bb.x1 - bb.x0, bb.z1 - bb.z0);
   const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal');
-  const tub = 1800, rad = 5;
+  const tub = Math.min(4000, Math.max(1800, Math.round(pts.length * 1.1))), rad = 5;   // rutas densificadas (un punto cada 5 m): un anillo cada ~5 m para que la línea siga el relieve
   // subida con el color de la ruta y bajada más apagada (en las rutas de ida y vuelta las dos líneas van casi juntas y en los zigzags se confundían):
   // color por vértice según el tramo (la geometría del tubo recorre la curva por longitud de arco, anillo a anillo)
   let im = 0; ruta.puntos.forEach((p, i) => { if (p[2] > ruta.puntos[im][2]) im = i; });
