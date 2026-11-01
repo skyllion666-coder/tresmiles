@@ -1449,7 +1449,7 @@ async function boot() {
     if (sonido.llamada(dm, _vAve.z < 1 ? _vAve.x : 0)) proxLlamada = now + 40000 + Math.random() * 50000;
   }
 
-  // — flechas de giro: un toque gira la vista 30° alrededor del punto que se mira; mantenerla pulsada gira sin parar (36°/s) —
+  // — flechas de giro: un toque gira la vista 1,5° alrededor del punto que se mira; mantenerla pulsada gira sin parar (10–15°/s) —
   const giro = { dir: 0, resta: 0, sostenido: false, t: null };
   for (const [id, dir] of [['#giro-izq', 1], ['#giro-der', -1]]) {
     const b = $(id);
@@ -1461,7 +1461,7 @@ async function boot() {
     });
     const suelta = () => {
       if (!b.classList.contains('is-on')) return; b.classList.remove('is-on'); clearTimeout(giro.t);
-      if (!giro.sostenido) { giro.resta = Math.PI / 180; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 1°
+      if (!giro.sostenido) { giro.resta = 1.5 * Math.PI / 180; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 1,5°
       giro.sostenido = false;
     };
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
@@ -1472,7 +1472,7 @@ async function boot() {
     if (!giro.dir) return;
     if (S.flight || S.vuelo || S.mode !== 'explore') { giro.dir = 0; giro.resta = 0; return; }
     let a;
-    if (giro.sostenido) { giro.vt = Math.min(1, (giro.vt ?? 0) + dt * 1.5); a = (0.11 + 0.065 * kVel) * giro.vt * dt; }   // 6–10°/s según la altura, arrancando poco a poco
+    if (giro.sostenido) { giro.vt = Math.min(1, (giro.vt ?? 0) + dt * 2.2); a = (0.17 + 0.1 * kVel) * giro.vt * dt; }   // 10–15°/s según la altura, arrancando poco a poco
     else if (giro.resta > 0) { a = Math.min(giro.resta, Math.max(0.1 * dt, giro.resta * Math.min(1, dt * 4))); giro.resta -= a; if (giro.resta <= 1e-4) { giro.resta = 0; giro.dir = 0; } }
     else return;
     _off.subVectors(camera.position, controls.target).applyAxisAngle(_ejeY, giro.dir * a);
