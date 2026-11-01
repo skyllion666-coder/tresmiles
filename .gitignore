@@ -12,4 +12,7 @@ data/rutas/local/
 # Notas privadas de relevo (copia local, no se publican)
 NOTAS.md
 tools/datos/orto_zona/
-data/paquetes/   # paquetes de zona (piloto): se publican aparte, no en el repositorio
+# paquetes de zona: se publican aparte (Releases), no en el repositorio
+data/paquetes/
+# datos de trabajo del mapa de calor (GPX y respuestas de Overpass)
+tools/datos/calor/
