@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=27';
+import { Terrain, NCALOR } from './terrain.js?v=28';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=49';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';

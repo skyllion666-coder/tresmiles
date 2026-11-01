@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import { EXAG } from './geo.js';
 
 export const NCALOR = 8;   // zonas del mapa de calor (tools/build_calor.py)
-const CALOR_ZONAS = Array.from({ length: NCALOR }, (_, i) => `{ vec4 b = uCalorB[${i}]; vec2 u = (vWPos.xz - b.xy) / (b.zw - b.xy); if (u.x > 0. && u.x < 1. && u.y > 0. && u.y < 1.) { vec3 tc = texture2D(uCalor[${i}], vec2(u.x, 1. - u.y)).rgb; if (tc.r > ct.x) ct = tc.rg; } }`).join('\n  ');
+// además del valor, la «curvatura» con cuatro vecinos a 10 m (laplaciano relativo): positiva en el centro del camino y negativa en sus bordes difuminados;
+// de cerca solo se pinta el centro, así la banda queda de ~25-50 m en vez de 60-120 m, tenga una traza o cien
+const CALOR_ZONAS = Array.from({ length: NCALOR }, (_, i) => `{ vec4 b = uCalorB[${i}]; vec2 ext = b.zw - b.xy; vec2 u = (vWPos.xz - b.xy) / ext; if (u.x > 0. && u.x < 1. && u.y > 0. && u.y < 1.) { vec2 uu = vec2(u.x, 1. - u.y); vec3 tc = texture2D(uCalor[${i}], uu).rgb; if (tc.r > ct.x) { vec2 o = 10. / ext; float sv = texture2D(uCalor[${i}], uu + vec2(o.x, 0.)).r + texture2D(uCalor[${i}], uu - vec2(o.x, 0.)).r + texture2D(uCalor[${i}], uu + vec2(0., o.y)).r + texture2D(uCalor[${i}], uu - vec2(0., o.y)).r; ct = vec3(tc.rg, (4. * tc.r - sv) / (tc.r + .05)); } } }`).join('\n  ');
 const SKIRT = 160; // faldón bajo los bordes de cada bloque para ocultar grietas entre niveles de detalle
 const MAX_HI = 8;  // texturas de alta resolución simultáneas
 const MAX_DESCARGAS = 4;   // alturas que se piden a la vez
@@ -133,11 +135,12 @@ if (uCotaK + uAcum + uMoj > .001) {
 // capa de calor: cuantas más trazas pasan por un punto, más brillo (naranja tenue con pocas → amarillo con muchas); carreteras en azul grisáceo y pistas en arena
 // (se dicen, no se quitan); de lejos solo queda el núcleo de los caminos más pisados; también brilla un poco de noche
 if (uCalorK > .001) {
-  vec2 ct = vec2(0.);
+  vec3 ct = vec3(0.);
   CALOR_ZONAS
   if (ct.x > .01) {
     float dc = distance(vWPos, cameraPosition), lo = mix(.03, .3, smoothstep(2500., 22000., dc));
-    float ac = smoothstep(lo, lo + .3, ct.x) * mix(.72, 1., smoothstep(.2, .7, ct.x)) * mix(1., .65, smoothstep(6000., 28000., dc)) * uCalorK;
+    float centro = mix(smoothstep(.02, .14, ct.z), 1., smoothstep(2500., 6000., dc));   // de cerca, solo el centro del camino (más fino)
+    float ac = smoothstep(lo, lo + .3, ct.x) * centro * mix(.72, 1., smoothstep(.2, .7, ct.x)) * mix(1., .65, smoothstep(6000., 28000., dc)) * uCalorK;
     vec3 cc = mix(vec3(1., .40, .08), vec3(1., .92, .5), smoothstep(.45, .95, ct.x));
     cc = mix(cc, vec3(.93, .80, .56), step(.3, ct.y) * (1. - step(.75, ct.y)));   // pista
     cc = mix(cc, vec3(.60, .70, .90), step(.75, ct.y));   // carretera o calle
