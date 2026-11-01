@@ -1,5 +1,5 @@
 // Fauna 3D hecha en Blender (tools/modelos/): quebrantahuesos y rebeco. Es una ilustración, no seguimiento real.
-// Los quebrantahuesos (modelo v3, tools/modelos/quebrantahuesos3.py) planean sobre la cumbre abierta, se inclinan y tuercen la cola en las curvas,
+// Los quebrantahuesos (modelo v4, tools/modelos/quebrantahuesos4.py: el v3 con textura de plumas y alas con grosor) planean sobre la cumbre abierta, se inclinan y tuercen la cola en las curvas,
 // de vez en cuando aletean o pliegan las alas, y giran la cabeza hacia la cámara si pasa cerca;
 // los rebecos (un rebaño, dos grupitos y machos sueltos) se quedan quietos, se ponen alerta y pasean por las laderas pedregosas de esa cumbre.
 import * as THREE from 'three';
@@ -30,12 +30,12 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
 
   const glb = (u) => new Promise((res) => new GLTFLoader().load(u, res, undefined, () => res(null)));
   const modelos = {};
-  Promise.all([...new Set(defs.map((d) => d.esp))].map((e) => glb(e === 'quebrantahuesos' ? 'models/quebrantahuesos-v3.glb?v=1' : `models/${e}-v2.glb?v=1`).then((g) => { modelos[e] = g; }))).then(() => {
+  Promise.all([...new Set(defs.map((d) => d.esp))].map((e) => glb(e === 'quebrantahuesos' ? 'models/quebrantahuesos-v4.glb?v=1' : `models/${e}-v2.glb?v=1`).then((g) => { modelos[e] = g; }))).then(() => {
     for (const d of defs) {
       const gltf = modelos[d.esp]; if (!gltf) continue;   // sin modelo: las aves sencillas de vida.js siguen volando
       const obj = clone(gltf.scene);
       obj.scale.setScalar(d.env / ENVERGADURA);
-      obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = d.esp !== 'quebrantahuesos'; } });   // el modelo v3 es de sombreado suave
+      obj.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; o.material = o.material.clone(); o.material.flatShading = d.esp !== 'quebrantahuesos'; } });   // el modelo v4 es de sombreado suave
       const g = new THREE.Group(); g.add(obj); g.visible = false; scene.add(g);
       const mixer = new THREE.AnimationMixer(obj);
       const acc = Object.fromEntries(gltf.animations.map((a) => [a.name, mixer.clipAction(a)]));
