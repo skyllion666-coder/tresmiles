@@ -1634,6 +1634,7 @@ async function boot() {
   }
   $('#btn-about').addEventListener('click', () => {
     if (EN_APP) { buildAbout(); $('#about-body').insertAdjacentHTML('beforeend', diagnosticoApp()); }
+    else if (!$('#about-ver')) $('#about-body').insertAdjacentHTML('beforeend', `<p class="ruta-credito" id="about-ver">Web v${esc(String(window.WEB_V || '?'))}</p>`);   // la versión, para saber si ya ha llegado la última
     about.showModal();
   });
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
