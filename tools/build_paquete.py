@@ -24,8 +24,9 @@ mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; D = (meta['nrows'] - 1) * meta['step'] * mLat
 toXZ = lambda lon, lat: ((lon - meta['lon0']) * mLon - W / 2, (meta['lat0'] - lat) * mLat - D / 2)
 fromXZ = lambda x, z: (meta['lon0'] + (x + W / 2) / mLon, meta['lat0'] - (z + D / 2) / mLat)
-LADO, MARGEN, PASO = 1000.0, 400.0, 2.5
+LADO, MARGEN, PASO = 1000.0, 400.0, 1.0   # relieve a 1 m (máxima calidad): js/paquete.js lo dibuja a 1, 2 o 4 m según la distancia
 N = int(LADO / PASO) + 1
+LIDAR = None   # relieve LiDAR de 1 m de la zona (tools/lidar_mdt.py), si existe: ~/tresmiles-fuentes/lidar/<cumbre>_mdt1m.tif
 
 def aplana_sombras(im, fuerza=0.5, sigma=80):   # como tools/build_orto.py: las sombras del vuelo chocan con la luz de la web
     from PIL import ImageFilter
@@ -78,7 +79,18 @@ def relieve(x0, z0, cobertura=None):   # cobertura: dónde hay datos franceses d
         w = np.where(bad, okF.astype('f4'), np.clip(1 - (np.abs(Fz - v) - 4) / 6, 0, 1) * okF)
         w = np.clip(gaussian_filter(w.astype('f4'), 2), 0, 1) * okF * cobertura; okF = okF & (cobertura > 0.5)
         v = np.where(okF, v * (1 - w) + Fz * w, v); v = np.where(bad & okF, Fz, v); bad = bad & ~okF; usoF = float((w > 0.5).mean())
-    return np.where(bad, 0, np.round(v * 10)).astype('<u2'), bad.mean(), usoF
+    # LiDAR del PNOA (1 m): manda donde existe, fundido 25 m hacia el resto en el borde de su cobertura
+    usoL = 0.0
+    if LIDAR is not None:
+        from scipy.ndimage import distance_transform_edt
+        Lz, Lt = LIDAR; colL = (ux - Lt.c) / Lt.a - 0.5; rowL = (uy - Lt.f) / Lt.e - 0.5
+        okL = (colL >= 0) & (rowL >= 0) & (colL <= Lz.shape[1] - 1) & (rowL <= Lz.shape[0] - 1)
+        zl = map_coordinates(np.nan_to_num(Lz, nan=-9999), [rowL, colL], order=1, mode='nearest')
+        okL &= zl > 0
+        if okL.any():
+            wl = np.clip(distance_transform_edt(okL) * PASO / 25.0, 0, 1)
+            v = np.where(bad, np.where(okL, zl, v), v * (1 - wl) + np.where(okL, zl, 0) * wl); bad = bad & ~okL; usoL = float(okL.mean())
+    return np.where(bad, 0, np.round(v * 10)).astype('<u2'), bad.mean(), usoF, usoL
 
 def orto(x0, z0, dest):
     lon0, lat1 = fromXZ(x0, z0); lon1, lat0 = fromXZ(x0 + LADO, z0 + LADO)
@@ -113,7 +125,7 @@ def orto(x0, z0, dest):
     if hay:
         al = m.resize((4096, 4096), Image.BILINEAR).filter(ImageFilter.GaussianBlur(14))
         im = Image.composite(fr.convert('RGB'), im, al)
-    aplana_sombras(im).save(dest, quality=82, method=6)
+    aplana_sombras(im).save(dest, quality=94, method=6)   # máxima calidad: el paquete es para una excursión (se descarga y se borra)
     return ('fr' if hay else True), (np.asarray(m.resize((N, N), Image.BILINEAR), np.float32) / 255 if hay else None)
 
 REHACER = '--rehacer' in sys.argv; args = [a for a in sys.argv[1:] if a != '--rehacer']
@@ -128,6 +140,10 @@ for L in lineas:
         x, z = toXZ(p[0], p[1])
         for dx in (-MARGEN, 0, MARGEN):
             for dz in (-MARGEN, 0, MARGEN): celdas.add((math.floor((x + dx) / LADO), math.floor((z + dz) / LADO)))
+fL = os.path.expanduser(f'~/tresmiles-fuentes/lidar/{cumbre}_mdt1m.tif')
+if os.path.exists(fL):
+    with rasterio.open(fL) as ds: LIDAR = (ds.read(1), ds.transform)
+    print('LiDAR', fL, LIDAR[0].shape, flush=True)
 OUT = os.path.join(ROOT, 'data/paquetes', cumbre); os.makedirs(OUT, exist_ok=True)
 I = os.path.join(OUT, 'index.json'); idx = json.load(open(I)) if os.path.exists(I) else {'cumbre': cumbre, 'lado': LADO, 'piezas': []}
 if REHACER: idx['piezas'] = []
@@ -140,12 +156,12 @@ for i, j in sorted(celdas):
     ok, cob = orto(x0, z0, os.path.join(OUT, f'{pid}.webp'))
     r = relieve(x0, z0, cob)
     if r is None: print(pid, 'sin relieve del WCS', flush=True); continue
-    arr, sin, usoF = r
+    arr, sin, usoF, usoL = r
     gzip.open(os.path.join(OUT, f'{pid}.bin.gz'), 'wb', 9).write(arr.tobytes())
     idx['piezas'].append({'id': pid, 'x0': x0, 'z0': z0, 'n': N, 'paso': PASO, **({'orto': f'{pid}.webp'} if ok else {}), **({'sinDato': round(float(sin), 2)} if sin > 0.01 else {})})
     json.dump(idx, open(I, 'w'), separators=(',', ':'))
     if usoF > 0.01 or ok == 'fr': idx['piezas'][-1]['francia'] = {'relieve': round(usoF, 2), 'orto': ok == 'fr'}; json.dump(idx, open(I, 'w'), separators=(',', ':'))
-    print(pid, f'sin dato {sin * 100:.0f} %', f'RGE ALTI {usoF * 100:.0f} %', 'orto' + (' con la francesa' if ok == 'fr' else '') if ok else 'SIN ORTO', os.path.getsize(os.path.join(OUT, f'{pid}.webp')) // 1024 if ok else 0, 'KB', flush=True)
+    print(pid, f'sin dato {sin * 100:.0f} %', f'LiDAR {usoL * 100:.0f} %', f'RGE ALTI {usoF * 100:.0f} %', 'orto' + (' con la francesa' if ok == 'fr' else '') if ok else 'SIN ORTO', os.path.getsize(os.path.join(OUT, f'{pid}.webp')) // 1024 if ok else 0, 'KB', flush=True)
 # color: un solo ajuste para todo el paquete (como tools/igualar_orto.py, media y desviación por canal en lineal contra el satélite de debajo), para que el pasillo
 # case con el resto del mapa y las piezas no se distingan entre sí
 lin = lambda v: np.where(v <= .04045, v / 12.92, ((v + .055) / 1.055) ** 2.4)

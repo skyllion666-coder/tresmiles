@@ -39,6 +39,42 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
   // árboles: no dentro de las piezas cargadas (la ortofoto de 25 cm ya trae los reales)
   if (veg) veg.excluye = (x, z) => enPieza(x, z) !== null;
 
+  // malla de una pieza con un paso de m celdas del dato (el relieve se guarda a 1 m; se dibuja a 1, 2 o 4 m según la distancia: ver update)
+  function malla(p, m) {
+    const { H, n, paso, x0, z0, ch } = p, nm = Math.floor((n - 1) / m) + 1;
+    const pos = new Float32Array(nm * nm * 3), nor = new Float32Array(nm * nm * 3), uv = new Float32Array(nm * nm * 2);
+    const cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
+    for (let b = 0; b < nm; b++) for (let a = 0; a < nm; a++) {
+      const i = a * m, j = b * m, k = b * nm + a, x = x0 + i * paso, z = z0 + j * paso;
+      pos[k * 3] = x; pos[k * 3 + 1] = H[j * n + i]; pos[k * 3 + 2] = z;
+      const ia = Math.max(0, i - m), ib = Math.min(n - 1, i + m), ja = Math.max(0, j - m), jb = Math.min(n - 1, j + m);
+      // en el borde con una vecina, la normal se calcula con el relieve de la vecina (geo.heightAt) para que no se marque la junta
+      const hx = ((i - m < 0 ? geo.heightAt(x - m * paso, z) : H[j * n + ia]) - (i + m > n - 1 ? geo.heightAt(x + m * paso, z) : H[j * n + ib])) / (2 * m * paso);
+      const hz = ((j - m < 0 ? geo.heightAt(x, z - m * paso) : H[ja * n + i]) - (j + m > n - 1 ? geo.heightAt(x, z + m * paso) : H[jb * n + i])) / (2 * m * paso), il = 1 / Math.hypot(hx, 1, hz);
+      nor[k * 3] = hx * il; nor[k * 3 + 1] = il; nor[k * 3 + 2] = hz * il;
+      uv[k * 2] = (x - ch.x0) / cw; uv[k * 2 + 1] = 1 - (z - ch.z0) / cd;
+    }
+    const idx3 = new Uint32Array((nm - 1) * (nm - 1) * 6); let q = 0;
+    for (let b = 0; b < nm - 1; b++) for (let a = 0; a < nm - 1; a++) { const v0 = b * nm + a, v1 = v0 + 1, v2 = v0 + nm, v3 = v2 + 1; idx3[q++] = v0; idx3[q++] = v2; idx3[q++] = v1; idx3[q++] = v1; idx3[q++] = v2; idx3[q++] = v3; }
+    // faldón: el borde baja 150 m para tapar la rendija con el relieve general cuando la pieza vecina aún no está cargada (allí manda el relieve general, más basto)
+    const borde = []; for (let a = 0; a < nm; a++) borde.push(a); for (let b = 1; b < nm; b++) borde.push(b * nm + nm - 1); for (let a = nm - 2; a >= 0; a--) borde.push((nm - 1) * nm + a); for (let b = nm - 2; b >= 1; b--) borde.push(b * nm);
+    const nb = borde.length, tot = nm * nm + nb, pos2 = new Float32Array(tot * 3), nor2 = new Float32Array(tot * 3), uv2 = new Float32Array(tot * 2), idx4 = new Uint32Array(idx3.length + nb * 6);
+    pos2.set(pos); nor2.set(nor); uv2.set(uv); idx4.set(idx3);
+    borde.forEach((v, k) => { const e = nm * nm + k; pos2.set([pos[v * 3], pos[v * 3 + 1] - 150, pos[v * 3 + 2]], e * 3); nor2.set([nor[v * 3], nor[v * 3 + 1], nor[v * 3 + 2]], e * 3); uv2.set([uv[v * 2], uv[v * 2 + 1]], e * 2); });
+    for (let k = 0; k < nb; k++) { const a = borde[k], b = borde[(k + 1) % nb], da = nm * nm + k, db = nm * nm + (k + 1) % nb; idx4.set([a, b, db, a, db, da], idx3.length + k * 6); }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos2, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor2, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2));
+    g.setIndex(new THREE.BufferAttribute(idx4, 1)); g.computeBoundingSphere();
+    return g;
+  }
+  // detalle según la distancia al punto que se mira: la pieza de delante a 1 m (2 m en el móvil sin HD), las vecinas a 2 m, las lejanas a 4 m
+  let objetivoUlt = null;
+  const pasoPara = (d) => {
+    const c = objetivoUlt; if (!c) return Math.max(1, Math.round(4 / d.paso));
+    const dist = Math.hypot(Math.max(d.x0 - c.x, 0, c.x - d.x0 - L), Math.max(d.z0 - c.z, 0, c.z - d.z0 - L));
+    const metros = dist < 250 ? (movil ? 2 : 1) : dist < 1400 ? 2 : 4;
+    return Math.max(1, Math.round(metros / d.paso));
+  };
   async function carga(d) {
     cargando.add(d.id);
     try {
@@ -53,32 +89,10 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
         let borde = 1e9; if (lados[0]) borde = Math.min(borde, i * paso); if (lados[1]) borde = Math.min(borde, (n - 1 - i) * paso); if (lados[2]) borde = Math.min(borde, j * paso); if (lados[3]) borde = Math.min(borde, (n - 1 - j) * paso);
         H[j * n + i] = v ? b + (v * hs - b) * sstep(0, FUNDE, borde) : b;
       }
-      const m = movil ? 2 : 1, nm = Math.floor((n - 1) / m) + 1;   // en el móvil, una malla de 5 m (el dato del MDT05); en el ordenador, la de 2,5 m
-      const pos = new Float32Array(nm * nm * 3), nor = new Float32Array(nm * nm * 3), uv = new Float32Array(nm * nm * 2);
-      const cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
-      for (let b = 0; b < nm; b++) for (let a = 0; a < nm; a++) {
-        const i = a * m, j = b * m, k = b * nm + a, x = x0 + i * paso, z = z0 + j * paso;
-        pos[k * 3] = x; pos[k * 3 + 1] = H[j * n + i]; pos[k * 3 + 2] = z;
-        const ia = Math.max(0, i - m), ib = Math.min(n - 1, i + m), ja = Math.max(0, j - m), jb = Math.min(n - 1, j + m);
-        // en el borde con una vecina, la normal se calcula con el relieve de la vecina (geo.heightAt) para que no se marque la junta
-        const hx = ((i - m < 0 ? geo.heightAt(x - m * paso, z) : H[j * n + ia]) - (i + m > n - 1 ? geo.heightAt(x + m * paso, z) : H[j * n + ib])) / (2 * m * paso);
-        const hz = ((j - m < 0 ? geo.heightAt(x, z - m * paso) : H[ja * n + i]) - (j + m > n - 1 ? geo.heightAt(x, z + m * paso) : H[jb * n + i])) / (2 * m * paso), il = 1 / Math.hypot(hx, 1, hz);
-        nor[k * 3] = hx * il; nor[k * 3 + 1] = il; nor[k * 3 + 2] = hz * il;
-        uv[k * 2] = (x - ch.x0) / cw; uv[k * 2 + 1] = 1 - (z - ch.z0) / cd;
-      }
-      const idx3 = new Uint32Array((nm - 1) * (nm - 1) * 6); let q = 0;
-      for (let b = 0; b < nm - 1; b++) for (let a = 0; a < nm - 1; a++) { const v0 = b * nm + a, v1 = v0 + 1, v2 = v0 + nm, v3 = v2 + 1; idx3[q++] = v0; idx3[q++] = v2; idx3[q++] = v1; idx3[q++] = v1; idx3[q++] = v2; idx3[q++] = v3; }
-      // faldón: el borde baja 150 m para tapar la rendija con el relieve general cuando la pieza vecina aún no está cargada (allí manda el relieve general, más basto)
-      const borde = []; for (let a = 0; a < nm; a++) borde.push(a); for (let b = 1; b < nm; b++) borde.push(b * nm + nm - 1); for (let a = nm - 2; a >= 0; a--) borde.push((nm - 1) * nm + a); for (let b = nm - 2; b >= 1; b--) borde.push(b * nm);
-      const nb = borde.length, tot = nm * nm + nb, pos2 = new Float32Array(tot * 3), nor2 = new Float32Array(tot * 3), uv2 = new Float32Array(tot * 2), idx4 = new Uint32Array(idx3.length + nb * 6);
-      pos2.set(pos); nor2.set(nor); uv2.set(uv); idx4.set(idx3);
-      borde.forEach((v, k) => { const e = nm * nm + k; pos2.set([pos[v * 3], pos[v * 3 + 1] - 150, pos[v * 3 + 2]], e * 3); nor2.set([nor[v * 3], nor[v * 3 + 1], nor[v * 3 + 2]], e * 3); uv2.set([uv[v * 2], uv[v * 2 + 1]], e * 2); });
-      for (let k = 0; k < nb; k++) { const a = borde[k], b = borde[(k + 1) % nb], da = nm * nm + k, db = nm * nm + (k + 1) % nb; idx4.set([a, b, db, a, db, da], idx3.length + k * 6); }
-      const g = new THREE.BufferGeometry();
-      g.setAttribute('position', new THREE.BufferAttribute(pos2, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor2, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2));
-      g.setIndex(new THREE.BufferAttribute(idx4, 1)); g.computeBoundingSphere();
+      const p = { d, H, x0, z0, n, paso, ch, lados, m: pasoPara(d) };
+      const g = malla(p, p.m), cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
       const mat = terrain.crearMaterialPieza(ch, 'granito'); mat.side = THREE.DoubleSide; const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
-      const p = { d, H, x0, z0, n, paso, mesh, mat, ch, lados };
+      Object.assign(p, { mesh, mat });
       if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
       scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
       alRelieve?.({ x0, z0, x1: x0 + L, z1: z0 + L });
@@ -114,7 +128,12 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
     update(cam, objetivo) {
       for (const p of piezas.values()) if (p.orto) p.mat.userData.sat.value = p.ch.mat.map;
       if (++cuenta % 10) return;
-      const c = objetivo ?? cam.position, cerca = [];
+      const c = objetivo ?? cam.position, cerca = []; objetivoUlt = { x: c.x, z: c.z };
+      for (const p of piezas.values()) {
+        const m = pasoPara(p.d); if (m === p.m) continue;
+        const g = malla(p, m), viejo = p.mesh.geometry; p.mesh.geometry = g; viejo.dispose(); p.m = m;
+        break;   // una por vuelta: rehacer la malla de 1 m cuesta unas décimas de segundo
+      }
       for (const d of idx.piezas) {   // cerca del punto que se mira o de la cámara (lo que queda delante de ella se ve grande)
         const dist = Math.min(Math.hypot(d.x0 + L / 2 - c.x, d.z0 + L / 2 - c.z), Math.hypot(d.x0 + L / 2 - cam.position.x, d.z0 + L / 2 - cam.position.z) + 300);
         if (piezas.has(d.id)) { if (dist > DESCARGA) quita(d.id); } else if (dist < CARGA && !cargando.has(d.id)) cerca.push([dist, d]);

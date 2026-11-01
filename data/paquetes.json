@@ -3,15 +3,15 @@
   "id": "balaitus",
   "cumbre": "balaitus",
   "nombre": "Balaitús",
-  "detalle": "Desde La Sarra por Respomuso y la Gran Diagonal, y por los ibones de Arriel",
-  "mb": 93,
-  "version": 1,
+  "detalle": "Desde La Sarra por Respomuso y la Gran Diagonal, y por los ibones de Arriel. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 186,
+  "version": 2,
   "caja": [
    -38000.0,
    -8000.0,
    -32000.0,
    -1000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-balaitus-1/balaitus.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-balaitus-2/balaitus.zip"
  }
 ]
