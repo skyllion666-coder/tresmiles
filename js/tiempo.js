@@ -157,6 +157,10 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       // cota de nieve: unos 300 m bajo la isocero de esa hora (o la que traiga el dato del día elegido)
       const h = d.hourly, i = h?.time?.indexOf((c.time ?? '').slice(0, 13) + ':00'), iso = c.isocero ?? (i >= 0 ? h.freezing_level_height[i] : null);
       est.cota = iso != null && iso < 4600 ? (iso - 300) * EXAG : null;
+      // cuánta nieve hay de verdad en el suelo (c.nieveCm, estimada en main.js): 0 = nada, ~1 cm = algún nevero suelto, 20 cm o más = todo blanco.
+      // Sin el dato (null) se pinta como antes, todo blanco sobre la cota
+      const cm = c.nieveCm;
+      est.nieveK = cm == null ? 1 : cm < 0.5 ? 0 : Math.min(1, Math.pow(cm / 20, 0.6));
       est.prox = performance.now() + 2500 + Math.random() * 5000;
       sonido?.setTiempo?.({ lluvia: w.lluvia, viento: Math.min(1, (c.wind_gusts_10m ?? 0) / 90) });
     },
@@ -176,7 +180,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       if (clima) {
         const kk = Math.min(1, dt * 0.5);
         if (est.cota != null && est.activo) clima.uCota.value = est.cota;
-        clima.uCotaK.value += ((est.activo && est.cota != null ? 1 : 0) - clima.uCotaK.value) * kk;
+        clima.uCotaK.value += ((est.activo && est.cota != null ? est.nieveK ?? 1 : 0) - clima.uCotaK.value) * kk;
         const ac = est.activo ? est.w.nieve : 0, mj = est.activo ? est.w.lluvia : 0;
         clima.uAcum.value = ac ? Math.min(0.5 + 0.5 * ac, clima.uAcum.value + dt * ac / 25) : Math.max(0, clima.uAcum.value - dt / 6);
         clima.uMoj.value = mj ? Math.min(0.5 + 0.5 * mj, clima.uMoj.value + dt / 12) : Math.max(0, clima.uMoj.value - dt / 6);

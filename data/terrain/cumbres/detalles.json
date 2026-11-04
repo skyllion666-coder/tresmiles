@@ -348,7 +348,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tempestades-cima-orto.webp",
-  "ortoM": "tempestades-cima-orto-m.webp"
+  "ortoM": "tempestades-cima-orto-m.webp",
+  "ancla": {
+   "x": 45153.45,
+   "z": 16717.01,
+   "giro": 2.356
+  }
  },
  "infiernos": {
   "x0": -30384.82,
@@ -359,7 +364,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "infiernos-cima-orto.webp",
-  "ortoM": "infiernos-cima-orto-m.webp"
+  "ortoM": "infiernos-cima-orto-m.webp",
+  "ancla": {
+   "x": -30282.82,
+   "z": -543.35,
+   "giro": 2.356
+  }
  },
  "maldito": {
   "x0": 43304.74,
@@ -370,7 +380,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "maldito-cima-orto.webp",
-  "ortoM": "maldito-cima-orto-m.webp"
+  "ortoM": "maldito-cima-orto-m.webp",
+  "ancla": {
+   "x": 43405.74,
+   "z": 15220.61,
+   "giro": 5.105
+  }
  },
  "medio": {
   "x0": 43616.3,
@@ -381,7 +396,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "medio-cima-orto.webp",
-  "ortoM": "medio-cima-orto-m.webp"
+  "ortoM": "medio-cima-orto-m.webp",
+  "ancla": {
+   "x": 43718.3,
+   "z": 15330.52,
+   "giro": 5.89
+  }
  },
  "coronas": {
   "x0": 43955.8,
@@ -392,7 +412,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "coronas-cima-orto.webp",
-  "ortoM": "coronas-cima-orto-m.webp"
+  "ortoM": "coronas-cima-orto-m.webp",
+  "ancla": {
+   "x": 44054.8,
+   "z": 15486.0,
+   "giro": 2.356
+  }
  },
  "espadas": {
   "x0": 25760.91,
@@ -403,7 +428,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "espadas-cima-orto.webp",
-  "ortoM": "espadas-cima-orto-m.webp"
+  "ortoM": "espadas-cima-orto-m.webp",
+  "ancla": {
+   "x": 25858.91,
+   "z": 14086.29,
+   "giro": 1.571
+  }
  },
  "llardaneta": {
   "x0": 26084.97,
@@ -414,7 +444,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "llardaneta-cima-orto.webp",
-  "ortoM": "llardaneta-cima-orto-m.webp"
+  "ortoM": "llardaneta-cima-orto-m.webp",
+  "ancla": {
+   "x": 26190.97,
+   "z": 13778.45,
+   "giro": 3.927
+  }
  },
  "soum": {
   "x0": -5575.04,
@@ -425,7 +460,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "soum-cima-orto.webp",
-  "ortoM": "soum-cima-orto-m.webp"
+  "ortoM": "soum-cima-orto-m.webp",
+  "ancla": {
+   "x": -5477.04,
+   "z": 11883.32,
+   "giro": 5.105
+  }
  },
  "marbore": {
   "x0": -8158.29,
@@ -436,7 +476,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "marbore-cima-orto.webp",
-  "ortoM": "marbore-cima-orto-m.webp"
+  "ortoM": "marbore-cima-orto-m.webp",
+  "ancla": {
+   "x": -8058.29,
+   "z": 9307.5,
+   "giro": 4.712
+  }
  },
  "tallon": {
   "x0": -13294.0,
@@ -447,7 +492,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tallon-cima-orto.webp",
-  "ortoM": "tallon-cima-orto-m.webp"
+  "ortoM": "tallon-cima-orto-m.webp",
+  "ancla": {
+   "x": -13189.0,
+   "z": 9208.15,
+   "giro": 3.142
+  }
  },
  "lliterola": {
   "x0": 33634.79,
@@ -458,7 +508,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "lliterola-cima-orto.webp",
-  "ortoM": "lliterola-cima-orto-m.webp"
+  "ortoM": "lliterola-cima-orto-m.webp",
+  "ancla": {
+   "x": 33728.79,
+   "z": 8628.82,
+   "giro": 3.927
+  }
  },
  "russell": {
   "x0": 45694.18,
@@ -469,7 +524,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "russell-cima-orto.webp",
-  "ortoM": "russell-cima-orto-m.webp"
+  "ortoM": "russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 45793.18,
+   "z": 17568.39,
+   "giro": 2.356
+  }
  },
  "algas": {
   "x0": -31210.09,
@@ -558,7 +618,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "abadias-cima-orto.webp",
-  "ortoM": "abadias-cima-orto-m.webp"
+  "ortoM": "abadias-cima-orto-m.webp",
+  "ancla": {
+   "x": 43167.97,
+   "z": 14822.87,
+   "giro": 4.712
+  }
  },
  "munia": {
   "x0": 1679.4,
@@ -647,7 +712,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gorgs-cima-orto.webp",
-  "ortoM": "gorgs-cima-orto-m.webp"
+  "ortoM": "gorgs-cima-orto-m.webp",
+  "ancla": {
+   "x": 30035.22,
+   "z": 8508.24,
+   "giro": 3.927
+  }
  },
  "infierno-occidental": {
   "x0": -30611.73,
@@ -684,7 +754,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "infierno-oriental-cima-orto.webp",
-  "ortoM": "infierno-oriental-cima-orto-m.webp"
+  "ortoM": "infierno-oriental-cima-orto-m.webp",
+  "ancla": {
+   "x": -30173.74,
+   "z": -542.79,
+   "giro": 3.927
+  }
  },
  "arnales": {
   "x0": -30015.17,
@@ -695,7 +770,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "arnales-cima-orto.webp",
-  "ortoM": "arnales-cima-orto-m.webp"
+  "ortoM": "arnales-cima-orto-m.webp",
+  "ancla": {
+   "x": -29908.17,
+   "z": -404.54,
+   "giro": 2.749
+  }
  },
  "gran-facha": {
   "x0": -28513.67,
@@ -732,7 +812,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "olas-cima-orto.webp",
-  "ortoM": "olas-cima-orto-m.webp"
+  "ortoM": "olas-cima-orto-m.webp",
+  "ancla": {
+   "x": -4627.69,
+   "z": 12697.25,
+   "giro": 5.498
+  }
  },
  "margalida": {
   "x0": 45319.29,
@@ -874,7 +959,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "cerbillona-cima-orto.webp",
-  "ortoM": "cerbillona-cima-orto-m.webp"
+  "ortoM": "cerbillona-cima-orto-m.webp",
+  "ancla": {
+   "x": -21245.96,
+   "z": 805.35,
+   "giro": 4.32
+  }
  },
  "montferrat": {
   "x0": -20398.91,
@@ -885,7 +975,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "montferrat-cima-orto.webp",
-  "ortoM": "montferrat-cima-orto-m.webp"
+  "ortoM": "montferrat-cima-orto-m.webp",
+  "ancla": {
+   "x": -20303.91,
+   "z": 1091.18,
+   "giro": 5.498
+  }
  },
  "veteranos": {
   "x0": 26642.15,
@@ -896,7 +991,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "veteranos-cima-orto.webp",
-  "ortoM": "veteranos-cima-orto-m.webp"
+  "ortoM": "veteranos-cima-orto-m.webp",
+  "ancla": {
+   "x": 26743.15,
+   "z": 12381.41,
+   "giro": 2.749
+  }
  },
  "eriste-norte": {
   "x0": 24650.15,
@@ -907,7 +1007,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "eriste-norte-cima-orto.webp",
-  "ortoM": "eriste-norte-cima-orto-m.webp"
+  "ortoM": "eriste-norte-cima-orto-m.webp",
+  "ancla": {
+   "x": 24752.15,
+   "z": 16664.33,
+   "giro": 3.927
+  }
  },
  "forqueta": {
   "x0": 25759.36,
@@ -918,7 +1023,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "forqueta-cima-orto.webp",
-  "ortoM": "forqueta-cima-orto-m.webp"
+  "ortoM": "forqueta-cima-orto-m.webp",
+  "ancla": {
+   "x": 25861.36,
+   "z": 16202.8,
+   "giro": 1.963
+  }
  },
  "casco": {
   "x0": -11285.82,
@@ -981,7 +1091,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "culfreda-cima-orto.webp",
-  "ortoM": "culfreda-cima-orto-m.webp"
+  "ortoM": "culfreda-cima-orto-m.webp",
+  "ancla": {
+   "x": 18475.15,
+   "z": 7543.39,
+   "giro": 3.927
+  }
  },
  "mulleres": {
   "x0": 47980.58,
@@ -1018,7 +1133,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "sabre-cima-orto.webp",
-  "ortoM": "sabre-cima-orto-m.webp"
+  "ortoM": "sabre-cima-orto-m.webp",
+  "ancla": {
+   "x": 23397.36,
+   "z": 9124.91,
+   "giro": 5.105
+  }
  },
  "pavots": {
   "x0": 25539.48,
@@ -1109,7 +1229,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "bardamina-cima-orto.webp",
-  "ortoM": "bardamina-cima-orto-m.webp"
+  "ortoM": "bardamina-cima-orto-m.webp",
+  "ancla": {
+   "x": 27852.83,
+   "z": 12686.8,
+   "giro": 3.927
+  }
  },
  "frondella-norte": {
   "x0": -32808.34,
@@ -1121,7 +1246,12 @@
   "pieza": "frondiellas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "frondella-norte-cima-orto.webp",
-  "ortoM": "frondella-norte-cima-orto-m.webp"
+  "ortoM": "frondella-norte-cima-orto-m.webp",
+  "ancla": {
+   "x": -32709.34,
+   "z": -6312.1,
+   "giro": 3.927
+  }
  },
  "frondella": {
   "x0": -33030.59,
@@ -1133,7 +1263,12 @@
   "pieza": "frondiellas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "frondella-cima-orto.webp",
-  "ortoM": "frondella-cima-orto-m.webp"
+  "ortoM": "frondella-cima-orto-m.webp",
+  "ancla": {
+   "x": -32927.59,
+   "z": -6180.52,
+   "giro": 3.534
+  }
  },
  "torre-de-costerillou": {
   "x0": -32441.21,
@@ -1145,7 +1280,12 @@
   "pieza": "balaitus",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "torre-de-costerillou-cima-orto.webp",
-  "ortoM": "torre-de-costerillou-cima-orto-m.webp"
+  "ortoM": "torre-de-costerillou-cima-orto-m.webp",
+  "ancla": {
+   "x": -32361.21,
+   "z": -6799.52,
+   "giro": 3.142
+  }
  },
  "aguja-cadier": {
   "x0": -32786.19,
@@ -1157,7 +1297,12 @@
   "pieza": "frondiellas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-cadier-cima-orto.webp",
-  "ortoM": "aguja-cadier-cima-orto-m.webp"
+  "ortoM": "aguja-cadier-cima-orto-m.webp",
+  "ancla": {
+   "x": -32677.19,
+   "z": -6427.12,
+   "giro": 3.927
+  }
  },
  "aguja-ussel": {
   "x0": -32318.65,
@@ -1169,7 +1314,12 @@
   "pieza": "balaitus",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-ussel-cima-orto.webp",
-  "ortoM": "aguja-ussel-cima-orto-m.webp"
+  "ortoM": "aguja-ussel-cima-orto-m.webp",
+  "ancla": {
+   "x": -32212.65,
+   "z": -6786.19,
+   "giro": 0.785
+  }
  },
  "algas-norte": {
   "x0": -31238.69,
@@ -1181,7 +1331,12 @@
   "pieza": "algas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "algas-norte-cima-orto.webp",
-  "ortoM": "algas-norte-cima-orto-m.webp"
+  "ortoM": "algas-norte-cima-orto-m.webp",
+  "ancla": {
+   "x": -31139.69,
+   "z": 765.12,
+   "giro": 3.534
+  }
  },
  "algas-se": {
   "x0": -31151.26,
@@ -1193,7 +1348,12 @@
   "pieza": "algas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "algas-se-cima-orto.webp",
-  "ortoM": "algas-se-cima-orto-m.webp"
+  "ortoM": "algas-se-cima-orto-m.webp",
+  "ancla": {
+   "x": -31055.26,
+   "z": 990.72,
+   "giro": 5.498
+  }
  },
  "aguja-de-arnales": {
   "x0": -30135.12,
@@ -1205,7 +1365,12 @@
   "pieza": "arnales",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-de-arnales-cima-orto.webp",
-  "ortoM": "aguja-de-arnales-cima-orto-m.webp"
+  "ortoM": "aguja-de-arnales-cima-orto-m.webp",
+  "ancla": {
+   "x": -30055.12,
+   "z": -496.78,
+   "giro": 2.356
+  }
  },
  "aguja-de-pondiellos": {
   "x0": -30518.75,
@@ -1217,7 +1382,12 @@
   "pieza": "garmo",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-de-pondiellos-cima-orto.webp",
-  "ortoM": "aguja-de-pondiellos-cima-orto-m.webp"
+  "ortoM": "aguja-de-pondiellos-cima-orto-m.webp",
+  "ancla": {
+   "x": -30418.75,
+   "z": 516.74,
+   "giro": 0.0
+  }
  },
  "algas-so": {
   "x0": -31265.49,
@@ -1229,7 +1399,12 @@
   "pieza": "algas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "algas-so-cima-orto.webp",
-  "ortoM": "algas-so-cima-orto-m.webp"
+  "ortoM": "algas-so-cima-orto-m.webp",
+  "ancla": {
+   "x": -31165.49,
+   "z": 1003.16,
+   "giro": 3.927
+  }
  },
  "pico-del-clot-de-la-hount": {
   "x0": -21335.47,
@@ -1241,7 +1416,12 @@
   "pieza": "vignemale",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-del-clot-de-la-hount-cima-orto.webp",
-  "ortoM": "pico-del-clot-de-la-hount-cima-orto-m.webp"
+  "ortoM": "pico-del-clot-de-la-hount-cima-orto-m.webp",
+  "ancla": {
+   "x": -21242.47,
+   "z": 376.6,
+   "giro": 3.534
+  }
  },
  "pico-central": {
   "x0": -21076.69,
@@ -1253,7 +1433,12 @@
   "pieza": "cerbillona",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-central-cima-orto.webp",
-  "ortoM": "pico-central-cima-orto-m.webp"
+  "ortoM": "pico-central-cima-orto-m.webp",
+  "ancla": {
+   "x": -20976.69,
+   "z": 905.59,
+   "giro": 0.0
+  }
  },
  "gran-tapou": {
   "x0": -20198.31,
@@ -1265,7 +1450,12 @@
   "pieza": "montferrat",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gran-tapou-cima-orto.webp",
-  "ortoM": "gran-tapou-cima-orto-m.webp"
+  "ortoM": "gran-tapou-cima-orto-m.webp",
+  "ancla": {
+   "x": -20101.31,
+   "z": 1520.93,
+   "giro": 4.32
+  }
  },
  "punta-superior-del-tapou": {
   "x0": -20254.77,
@@ -1277,7 +1467,12 @@
   "pieza": "montferrat",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-superior-del-tapou-cima-orto.webp",
-  "ortoM": "punta-superior-del-tapou-cima-orto-m.webp"
+  "ortoM": "punta-superior-del-tapou-cima-orto-m.webp",
+  "ancla": {
+   "x": -20155.77,
+   "z": 1383.12,
+   "giro": 5.498
+  }
  },
  "pico-del-medio": {
   "x0": -20246.03,
@@ -1289,7 +1484,12 @@
   "pieza": "montferrat",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-del-medio-cima-orto.webp",
-  "ortoM": "pico-del-medio-cima-orto-m.webp"
+  "ortoM": "pico-del-medio-cima-orto-m.webp",
+  "ancla": {
+   "x": -20151.03,
+   "z": 1661.84,
+   "giro": 0.393
+  }
  },
  "punta-inferior-del-tapou": {
   "x0": -20200.35,
@@ -1301,7 +1501,12 @@
   "pieza": "montferrat",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-inferior-del-tapou-cima-orto.webp",
-  "ortoM": "punta-inferior-del-tapou-cima-orto-m.webp"
+  "ortoM": "punta-inferior-del-tapou-cima-orto-m.webp",
+  "ancla": {
+   "x": -20097.35,
+   "z": 1465.69,
+   "giro": 3.927
+  }
  },
  "aguja-superior-del-clot-de-la-hount": {
   "x0": -21578.31,
@@ -1313,7 +1518,12 @@
   "pieza": "vignemale",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-superior-del-clot-de-la-hount-cima-orto.webp",
-  "ortoM": "aguja-superior-del-clot-de-la-hount-cima-orto-m.webp"
+  "ortoM": "aguja-superior-del-clot-de-la-hount-cima-orto-m.webp",
+  "ancla": {
+   "x": -21458.31,
+   "z": 309.81,
+   "giro": 5.105
+  }
  },
  "aguja-inferior-del-clot-de-la-hount": {
   "x0": -21616.87,
@@ -1325,7 +1535,12 @@
   "pieza": "vignemale",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-inferior-del-clot-de-la-hount-cima-orto.webp",
-  "ortoM": "aguja-inferior-del-clot-de-la-hount-cima-orto-m.webp"
+  "ortoM": "aguja-inferior-del-clot-de-la-hount-cima-orto-m.webp",
+  "ancla": {
+   "x": -21496.87,
+   "z": 270.02,
+   "giro": 4.712
+  }
  },
  "aguja-so-de-cerbillona": {
   "x0": -21560.17,
@@ -1337,7 +1552,12 @@
   "pieza": "cerbillona",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-so-de-cerbillona-cima-orto.webp",
-  "ortoM": "aguja-so-de-cerbillona-cima-orto-m.webp"
+  "ortoM": "aguja-so-de-cerbillona-cima-orto-m.webp",
+  "ancla": {
+   "x": -21474.17,
+   "z": 1002.05,
+   "giro": 0.785
+  }
  },
  "punta-dera-cuniestra": {
   "x0": -5678.97,
@@ -1349,7 +1569,12 @@
   "pieza": "soum",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-dera-cuniestra-cima-orto.webp",
-  "ortoM": "punta-dera-cuniestra-cima-orto-m.webp"
+  "ortoM": "punta-dera-cuniestra-cima-orto-m.webp",
+  "ancla": {
+   "x": -5580.97,
+   "z": 11625.83,
+   "giro": 4.712
+  }
  },
  "piton-so-del-cilindro": {
   "x0": -7392.59,
@@ -1361,7 +1586,12 @@
   "pieza": "cilindro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "piton-so-del-cilindro-cima-orto.webp",
-  "ortoM": "piton-so-del-cilindro-cima-orto-m.webp"
+  "ortoM": "piton-so-del-cilindro-cima-orto-m.webp",
+  "ancla": {
+   "x": -7305.59,
+   "z": 10602.08,
+   "giro": 5.498
+  }
  },
  "punta-dera-canal-fonda": {
   "x0": -5760.68,
@@ -1373,7 +1603,12 @@
   "pieza": "soum",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-dera-canal-fonda-cima-orto.webp",
-  "ortoM": "punta-dera-canal-fonda-cima-orto-m.webp"
+  "ortoM": "punta-dera-canal-fonda-cima-orto-m.webp",
+  "ancla": {
+   "x": -5655.68,
+   "z": 11448.46,
+   "giro": 4.712
+  }
  },
  "dedo-del-monte-perdido": {
   "x0": -6520.99,
@@ -1385,7 +1620,12 @@
   "pieza": "perdido",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "dedo-del-monte-perdido-cima-orto.webp",
-  "ortoM": "dedo-del-monte-perdido-cima-orto-m.webp"
+  "ortoM": "dedo-del-monte-perdido-cima-orto-m.webp",
+  "ancla": {
+   "x": -6417.99,
+   "z": 10827.23,
+   "giro": 1.571
+  }
  },
  "nudillo-del-monte-perdido": {
   "x0": -6586.85,
@@ -1397,7 +1637,12 @@
   "pieza": "perdido",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "nudillo-del-monte-perdido-cima-orto.webp",
-  "ortoM": "nudillo-del-monte-perdido-cima-orto-m.webp"
+  "ortoM": "nudillo-del-monte-perdido-cima-orto-m.webp",
+  "ancla": {
+   "x": -6472.85,
+   "z": 10756.55,
+   "giro": 2.749
+  }
  },
  "pico-oriental-de-la-cascada": {
   "x0": -8459.39,
@@ -1409,7 +1654,12 @@
   "pieza": "marbore",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-oriental-de-la-cascada-cima-orto.webp",
-  "ortoM": "pico-oriental-de-la-cascada-cima-orto-m.webp"
+  "ortoM": "pico-oriental-de-la-cascada-cima-orto-m.webp",
+  "ancla": {
+   "x": -8339.39,
+   "z": 9629.12,
+   "giro": 0.0
+  }
  },
  "pico-central-de-la-cascada": {
   "x0": -8713.59,
@@ -1421,7 +1671,12 @@
   "pieza": "marbore",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-central-de-la-cascada-cima-orto.webp",
-  "ortoM": "pico-central-de-la-cascada-cima-orto-m.webp"
+  "ortoM": "pico-central-de-la-cascada-cima-orto-m.webp",
+  "ancla": {
+   "x": -8619.59,
+   "z": 9743.7,
+   "giro": 4.32
+  }
  },
  "tuqueta-de-marbore": {
   "x0": -7553.72,
@@ -1433,7 +1688,12 @@
   "pieza": "cilindro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuqueta-de-marbore-cima-orto.webp",
-  "ortoM": "tuqueta-de-marbore-cima-orto-m.webp"
+  "ortoM": "tuqueta-de-marbore-cima-orto-m.webp",
+  "ancla": {
+   "x": -7460.72,
+   "z": 10107.32,
+   "giro": 5.498
+  }
  },
  "espalda-esparets": {
   "x0": -5579.12,
@@ -1445,7 +1705,12 @@
   "pieza": "perdido",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "espalda-esparets-cima-orto.webp",
-  "ortoM": "espalda-esparets-cima-orto-m.webp"
+  "ortoM": "espalda-esparets-cima-orto-m.webp",
+  "ancla": {
+   "x": -5481.12,
+   "z": 11036.16,
+   "giro": 3.927
+  }
  },
  "pico-baudrimont-no": {
   "x0": -5234.06,
@@ -1457,7 +1722,12 @@
   "pieza": "soum",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-baudrimont-no-cima-orto.webp",
-  "ortoM": "pico-baudrimont-no-cima-orto-m.webp"
+  "ortoM": "pico-baudrimont-no-cima-orto-m.webp",
+  "ancla": {
+   "x": -5144.06,
+   "z": 11473.47,
+   "giro": 3.927
+  }
  },
  "punta-de-las-escaleras": {
   "x0": -6657.2,
@@ -1469,7 +1739,12 @@
   "pieza": "perdido",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-de-las-escaleras-cima-orto.webp",
-  "ortoM": "punta-de-las-escaleras-cima-orto-m.webp"
+  "ortoM": "punta-de-las-escaleras-cima-orto-m.webp",
+  "ancla": {
+   "x": -6552.2,
+   "z": 11869.43,
+   "giro": 2.749
+  }
  },
  "pequena-munia": {
   "x0": 1863.33,
@@ -1481,7 +1756,12 @@
   "pieza": "munia",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pequena-munia-cima-orto.webp",
-  "ortoM": "pequena-munia-cima-orto-m.webp"
+  "ortoM": "pequena-munia-cima-orto-m.webp",
+  "ancla": {
+   "x": 1943.33,
+   "z": 6725.35,
+   "giro": 2.356
+  }
  },
  "pico-de-sierra-morena": {
   "x0": 1954.11,
@@ -1493,7 +1773,12 @@
   "pieza": "munia",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-sierra-morena-cima-orto.webp",
-  "ortoM": "pico-de-sierra-morena-cima-orto-m.webp"
+  "ortoM": "pico-de-sierra-morena-cima-orto-m.webp",
+  "ancla": {
+   "x": 2048.11,
+   "z": 6206.81,
+   "giro": 3.927
+  }
  },
  "punta-ledormeur": {
   "x0": 23196.37,
@@ -1505,7 +1790,12 @@
   "pieza": "bachimala",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-ledormeur-cima-orto.webp",
-  "ortoM": "punta-ledormeur-cima-orto-m.webp"
+  "ortoM": "punta-ledormeur-cima-orto-m.webp",
+  "ancla": {
+   "x": 23300.37,
+   "z": 8503.13,
+   "giro": 4.32
+  }
  },
  "punta-del-ibon": {
   "x0": 23187.3,
@@ -1517,7 +1807,12 @@
   "pieza": "bachimala",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-del-ibon-cima-orto.webp",
-  "ortoM": "punta-del-ibon-cima-orto-m.webp"
+  "ortoM": "punta-del-ibon-cima-orto-m.webp",
+  "ancla": {
+   "x": 23291.3,
+   "z": 8160.29,
+   "giro": 1.963
+  }
  },
  "culfreda-ne": {
   "x0": 18636.47,
@@ -1529,7 +1824,12 @@
   "pieza": "culfreda",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "culfreda-ne-cima-orto.webp",
-  "ortoM": "culfreda-ne-cima-orto-m.webp"
+  "ortoM": "culfreda-ne-cima-orto-m.webp",
+  "ancla": {
+   "x": 18734.47,
+   "z": 7344.02,
+   "giro": 3.534
+  }
  },
  "culfreda-central": {
   "x0": 18532.13,
@@ -1541,7 +1841,12 @@
   "pieza": "culfreda",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "culfreda-central-cima-orto.webp",
-  "ortoM": "culfreda-central-cima-orto-m.webp"
+  "ortoM": "culfreda-central-cima-orto-m.webp",
+  "ancla": {
+   "x": 18632.13,
+   "z": 7394.48,
+   "giro": 3.534
+  }
  },
  "espades-so": {
   "x0": 25663.51,
@@ -1553,7 +1858,12 @@
   "pieza": "espadas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "espades-so-cima-orto.webp",
-  "ortoM": "espades-so-cima-orto-m.webp"
+  "ortoM": "espades-so-cima-orto-m.webp",
+  "ancla": {
+   "x": 25761.51,
+   "z": 14116.96,
+   "giro": 4.32
+  }
  },
  "tuca-llardaneta-suroeste": {
   "x0": 25954.07,
@@ -1565,7 +1875,12 @@
   "pieza": "llardaneta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuca-llardaneta-suroeste-cima-orto.webp",
-  "ortoM": "tuca-llardaneta-suroeste-cima-orto-m.webp"
+  "ortoM": "tuca-llardaneta-suroeste-cima-orto-m.webp",
+  "ancla": {
+   "x": 26070.07,
+   "z": 13868.36,
+   "giro": 3.927
+  }
  },
  "tuqueta-roya": {
   "x0": 26260.49,
@@ -1577,7 +1892,12 @@
   "pieza": "llardaneta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuqueta-roya-cima-orto.webp",
-  "ortoM": "tuqueta-roya-cima-orto-m.webp"
+  "ortoM": "tuqueta-roya-cima-orto-m.webp",
+  "ancla": {
+   "x": 26370.49,
+   "z": 13714.78,
+   "giro": 4.32
+  }
  },
  "cima-234-sin-nombre": {
   "x0": 25606.81,
@@ -1589,7 +1909,12 @@
   "pieza": "espadas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "cima-234-sin-nombre-cima-orto.webp",
-  "ortoM": "cima-234-sin-nombre-cima-orto-m.webp"
+  "ortoM": "cima-234-sin-nombre-cima-orto-m.webp",
+  "ancla": {
+   "x": 25704.81,
+   "z": 14352.89,
+   "giro": 5.105
+  }
  },
  "pico-de-los-gemelos-ravier": {
   "x0": 26457.98,
@@ -1601,7 +1926,12 @@
   "pieza": "veteranos",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-los-gemelos-ravier-cima-orto.webp",
-  "ortoM": "pico-de-los-gemelos-ravier-cima-orto-m.webp"
+  "ortoM": "pico-de-los-gemelos-ravier-cima-orto-m.webp",
+  "ancla": {
+   "x": 26561.98,
+   "z": 12789.6,
+   "giro": 0.785
+  }
  },
  "tuca-forau-de-la-neu": {
   "x0": 25865.58,
@@ -1613,7 +1943,12 @@
   "pieza": "pavots",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuca-forau-de-la-neu-cima-orto.webp",
-  "ortoM": "tuca-forau-de-la-neu-cima-orto-m.webp"
+  "ortoM": "tuca-forau-de-la-neu-cima-orto-m.webp",
+  "ancla": {
+   "x": 25975.58,
+   "z": 14727.08,
+   "giro": 5.89
+  }
  },
  "pico-inferior-de-la-paul": {
   "x0": 27134.29,
@@ -1625,7 +1960,12 @@
   "pieza": "paul",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-inferior-de-la-paul-cima-orto.webp",
-  "ortoM": "pico-inferior-de-la-paul-cima-orto-m.webp"
+  "ortoM": "pico-inferior-de-la-paul-cima-orto-m.webp",
+  "ancla": {
+   "x": 27244.29,
+   "z": 13103.55,
+   "giro": 3.534
+  }
  },
  "pico-de-eriste-sur": {
   "x0": 24322.17,
@@ -1637,7 +1977,12 @@
   "pieza": "gran-eriste",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-eriste-sur-cima-orto.webp",
-  "ortoM": "pico-de-eriste-sur-cima-orto-m.webp"
+  "ortoM": "pico-de-eriste-sur-cima-orto-m.webp",
+  "ancla": {
+   "x": 24441.17,
+   "z": 17033.07,
+   "giro": 1.571
+  }
  },
  "diente-royo": {
   "x0": 25878.41,
@@ -1649,7 +1994,12 @@
   "pieza": "pavots",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "diente-royo-cima-orto.webp",
-  "ortoM": "diente-royo-cima-orto-m.webp"
+  "ortoM": "diente-royo-cima-orto-m.webp",
+  "ancla": {
+   "x": 25988.41,
+   "z": 15611.35,
+   "giro": 1.571
+  }
  },
  "pico-de-la-forqueta": {
   "x0": 25686.23,
@@ -1661,7 +2011,12 @@
   "pieza": "forqueta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-la-forqueta-cima-orto.webp",
-  "ortoM": "pico-de-la-forqueta-cima-orto-m.webp"
+  "ortoM": "pico-de-la-forqueta-cima-orto-m.webp",
+  "ancla": {
+   "x": 25790.23,
+   "z": 16106.0,
+   "giro": 5.498
+  }
  },
  "hito-occidental-del-perdiguero": {
   "x0": 32994.76,
@@ -1673,7 +2028,12 @@
   "pieza": "perdiguero",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "hito-occidental-del-perdiguero-cima-orto.webp",
-  "ortoM": "hito-occidental-del-perdiguero-cima-orto-m.webp"
+  "ortoM": "hito-occidental-del-perdiguero-cima-orto-m.webp",
+  "ancla": {
+   "x": 33108.76,
+   "z": 9459.98,
+   "giro": 0.0
+  }
  },
  "hito-oriental-de-perdiguero": {
   "x0": 33784.57,
@@ -1685,7 +2045,12 @@
   "pieza": "perdiguero",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "hito-oriental-de-perdiguero-cima-orto.webp",
-  "ortoM": "hito-oriental-de-perdiguero-cima-orto-m.webp"
+  "ortoM": "hito-oriental-de-perdiguero-cima-orto-m.webp",
+  "ancla": {
+   "x": 33864.57,
+   "z": 9578.11,
+   "giro": 2.356
+  }
  },
  "pico-royo": {
   "x0": 33462.3,
@@ -1697,7 +2062,12 @@
   "pieza": "lliterola",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-royo-cima-orto.webp",
-  "ortoM": "pico-royo-cima-orto-m.webp"
+  "ortoM": "pico-royo-cima-orto-m.webp",
+  "ancla": {
+   "x": 33561.3,
+   "z": 8766.07,
+   "giro": 3.927
+  }
  },
  "torre-armengaud": {
   "x0": 29828.26,
@@ -1709,7 +2079,12 @@
   "pieza": "gorgs",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "torre-armengaud-cima-orto.webp",
-  "ortoM": "torre-armengaud-cima-orto-m.webp"
+  "ortoM": "torre-armengaud-cima-orto-m.webp",
+  "ancla": {
+   "x": 29928.26,
+   "z": 8510.91,
+   "giro": 3.534
+  }
  },
  "pico-oriental-de-los-crabioules": {
   "x0": 34184.05,
@@ -1721,7 +2096,12 @@
   "pieza": "lliterola",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-oriental-de-los-crabioules-cima-orto.webp",
-  "ortoM": "pico-oriental-de-los-crabioules-cima-orto-m.webp"
+  "ortoM": "pico-oriental-de-los-crabioules-cima-orto-m.webp",
+  "ancla": {
+   "x": 34302.05,
+   "z": 8209.41,
+   "giro": 0.0
+  }
  },
  "punta-lourde-rocheblave": {
   "x0": 29653.73,
@@ -1733,7 +2113,12 @@
   "pieza": "gorgs",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-lourde-rocheblave-cima-orto.webp",
-  "ortoM": "punta-lourde-rocheblave-cima-orto-m.webp"
+  "ortoM": "punta-lourde-rocheblave-cima-orto-m.webp",
+  "ancla": {
+   "x": 29733.73,
+   "z": 8462.9,
+   "giro": 2.356
+  }
  },
  "pico-occidental-de-los-crabioules": {
   "x0": 33932.14,
@@ -1745,7 +2130,12 @@
   "pieza": "lliterola",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-occidental-de-los-crabioules-cima-orto.webp",
-  "ortoM": "pico-occidental-de-los-crabioules-cima-orto-m.webp"
+  "ortoM": "pico-occidental-de-los-crabioules-cima-orto-m.webp",
+  "ancla": {
+   "x": 34018.14,
+   "z": 8203.52,
+   "giro": 2.749
+  }
  },
  "tuca-de-lliterola": {
   "x0": 33487.23,
@@ -1757,7 +2147,12 @@
   "pieza": "perdiguero",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuca-de-lliterola-cima-orto.webp",
-  "ortoM": "tuca-de-lliterola-cima-orto-m.webp"
+  "ortoM": "tuca-de-lliterola-cima-orto-m.webp",
+  "ancla": {
+   "x": 33583.23,
+   "z": 9017.11,
+   "giro": 1.571
+  }
  },
  "pico-jean-arlaud": {
   "x0": 30214.34,
@@ -1769,7 +2164,12 @@
   "pieza": "gorgs",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-jean-arlaud-cima-orto.webp",
-  "ortoM": "pico-jean-arlaud-cima-orto-m.webp"
+  "ortoM": "pico-jean-arlaud-cima-orto-m.webp",
+  "ancla": {
+   "x": 30313.34,
+   "z": 8547.8,
+   "giro": 3.534
+  }
  },
  "aguja-de-lliterola": {
   "x0": 33895.28,
@@ -1781,7 +2181,12 @@
   "pieza": "lliterola",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-de-lliterola-cima-orto.webp",
-  "ortoM": "aguja-de-lliterola-cima-orto-m.webp"
+  "ortoM": "aguja-de-lliterola-cima-orto-m.webp",
+  "ancla": {
+   "x": 33975.28,
+   "z": 8469.56,
+   "giro": 0.785
+  }
  },
  "aguja-daviu": {
   "x0": 44470.98,
@@ -1793,7 +2198,12 @@
   "pieza": "aneto",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-daviu-cima-orto.webp",
-  "ortoM": "aguja-daviu-cima-orto-m.webp"
+  "ortoM": "aguja-daviu-cima-orto-m.webp",
+  "ancla": {
+   "x": 44571.98,
+   "z": 16240.25,
+   "giro": 3.534
+  }
  },
  "aguja-escudier": {
   "x0": 44395.48,
@@ -1805,7 +2215,12 @@
   "pieza": "aneto",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-escudier-cima-orto.webp",
-  "ortoM": "aguja-escudier-cima-orto-m.webp"
+  "ortoM": "aguja-escudier-cima-orto-m.webp",
+  "ancla": {
+   "x": 44495.48,
+   "z": 16255.25,
+   "giro": 2.356
+  }
  },
  "aguja-schmidt-endell": {
   "x0": 43273.03,
@@ -1817,7 +2232,12 @@
   "pieza": "maldito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-schmidt-endell-cima-orto.webp",
-  "ortoM": "aguja-schmidt-endell-cima-orto-m.webp"
+  "ortoM": "aguja-schmidt-endell-cima-orto-m.webp",
+  "ancla": {
+   "x": 43393.03,
+   "z": 15205.27,
+   "giro": 5.498
+  }
  },
  "punta-oliveras-arenas": {
   "x0": 44379.63,
@@ -1829,7 +2249,12 @@
   "pieza": "aneto",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-oliveras-arenas-cima-orto.webp",
-  "ortoM": "punta-oliveras-arenas-cima-orto-m.webp"
+  "ortoM": "punta-oliveras-arenas-cima-orto-m.webp",
+  "ancla": {
+   "x": 44478.63,
+   "z": 15867.4,
+   "giro": 5.498
+  }
  },
  "tuca-de-collado-de-coronas": {
   "x0": 44095.93,
@@ -1841,7 +2266,12 @@
   "pieza": "coronas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuca-de-collado-de-coronas-cima-orto.webp",
-  "ortoM": "tuca-de-collado-de-coronas-cima-orto-m.webp"
+  "ortoM": "tuca-de-collado-de-coronas-cima-orto-m.webp",
+  "ancla": {
+   "x": 44197.93,
+   "z": 15638.47,
+   "giro": 2.356
+  }
  },
  "punta-brecha-de-tempestades": {
   "x0": 44958.38,
@@ -1853,7 +2283,12 @@
   "pieza": "tempestades",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-brecha-de-tempestades-cima-orto.webp",
-  "ortoM": "punta-brecha-de-tempestades-cima-orto-m.webp"
+  "ortoM": "punta-brecha-de-tempestades-cima-orto-m.webp",
+  "ancla": {
+   "x": 45071.38,
+   "z": 16608.76,
+   "giro": 2.356
+  }
  },
  "tuqueta-roya-de-creguena": {
   "x0": 43069.99,
@@ -1865,7 +2300,12 @@
   "pieza": "abadias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tuqueta-roya-de-creguena-cima-orto.webp",
-  "ortoM": "tuqueta-roya-de-creguena-cima-orto-m.webp"
+  "ortoM": "tuqueta-roya-de-creguena-cima-orto-m.webp",
+  "ancla": {
+   "x": 43189.99,
+   "z": 14884.0,
+   "giro": 5.498
+  }
  },
  "pico-cordier": {
   "x0": 42740.86,
@@ -1877,7 +2317,12 @@
   "pieza": "maladeta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-cordier-cima-orto.webp",
-  "ortoM": "pico-cordier-cima-orto-m.webp"
+  "ortoM": "pico-cordier-cima-orto-m.webp",
+  "ancla": {
+   "x": 42820.86,
+   "z": 14166.86,
+   "giro": 2.356
+  }
  },
  "pico-collado-de-la-rimaya": {
   "x0": 42949.71,
@@ -1889,7 +2334,12 @@
   "pieza": "maladeta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-collado-de-la-rimaya-cima-orto.webp",
-  "ortoM": "pico-collado-de-la-rimaya-cima-orto-m.webp"
+  "ortoM": "pico-collado-de-la-rimaya-cima-orto-m.webp",
+  "ancla": {
+   "x": 43046.71,
+   "z": 14315.56,
+   "giro": 2.356
+  }
  },
  "maladeta-noreste": {
   "x0": 43371.17,
@@ -1901,7 +2351,12 @@
   "pieza": "maladeta",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "maladeta-noreste-cima-orto.webp",
-  "ortoM": "maladeta-noreste-cima-orto-m.webp"
+  "ortoM": "maladeta-noreste-cima-orto-m.webp",
+  "ancla": {
+   "x": 43451.17,
+   "z": 14350.11,
+   "giro": 3.927
+  }
  },
  "aguja-del-collado-de-coronas": {
   "x0": 44216.21,
@@ -1913,7 +2368,12 @@
   "pieza": "coronas",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-del-collado-de-coronas-cima-orto.webp",
-  "ortoM": "aguja-del-collado-de-coronas-cima-orto-m.webp"
+  "ortoM": "aguja-del-collado-de-coronas-cima-orto-m.webp",
+  "ancla": {
+   "x": 44307.21,
+   "z": 15792.39,
+   "giro": 5.498
+  }
  },
  "pico-sayo": {
   "x0": 42343.67,
@@ -1925,7 +2385,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-sayo-cima-orto.webp",
-  "ortoM": "pico-sayo-cima-orto-m.webp"
+  "ortoM": "pico-sayo-cima-orto-m.webp",
+  "ancla": {
+   "x": 42444.67,
+   "z": 13866.58,
+   "giro": 2.749
+  }
  },
  "antecima-sureste-russell": {
   "x0": 45802.61,
@@ -1937,7 +2402,12 @@
   "pieza": "russell",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "antecima-sureste-russell-cima-orto.webp",
-  "ortoM": "antecima-sureste-russell-cima-orto-m.webp"
+  "ortoM": "antecima-sureste-russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 45891.61,
+   "z": 17684.63,
+   "giro": 5.498
+  }
  },
  "punta-brecha-russell": {
   "x0": 45437.28,
@@ -1949,7 +2419,12 @@
   "pieza": "margalida",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-brecha-russell-cima-orto.webp",
-  "ortoM": "punta-brecha-russell-cima-orto-m.webp"
+  "ortoM": "punta-brecha-russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 45537.28,
+   "z": 17185.2,
+   "giro": 2.356
+  }
  },
  "pico-mir": {
   "x0": 42275.6,
@@ -1961,7 +2436,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-mir-cima-orto.webp",
-  "ortoM": "pico-mir-cima-orto-m.webp"
+  "ortoM": "pico-mir-cima-orto-m.webp",
+  "ancla": {
+   "x": 42371.6,
+   "z": 13720.22,
+   "giro": 1.963
+  }
  },
  "punta-delmas": {
   "x0": 42251.74,
@@ -1973,7 +2453,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-delmas-cima-orto.webp",
-  "ortoM": "punta-delmas-cima-orto-m.webp"
+  "ortoM": "punta-delmas-cima-orto-m.webp",
+  "ancla": {
+   "x": 42362.74,
+   "z": 13635.65,
+   "giro": 1.571
+  }
  },
  "pico-le-bondidier": {
   "x0": 42171.18,
@@ -1985,7 +2470,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-le-bondidier-cima-orto.webp",
-  "ortoM": "pico-le-bondidier-cima-orto-m.webp"
+  "ortoM": "pico-le-bondidier-cima-orto-m.webp",
+  "ancla": {
+   "x": 42270.18,
+   "z": 14279.44,
+   "giro": 1.571
+  }
  },
  "pico-le-bondidier-norte": {
   "x0": 42200.68,
@@ -1997,7 +2487,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-le-bondidier-norte-cima-orto.webp",
-  "ortoM": "pico-le-bondidier-norte-cima-orto-m.webp"
+  "ortoM": "pico-le-bondidier-norte-cima-orto-m.webp",
+  "ancla": {
+   "x": 42297.68,
+   "z": 14206.2,
+   "giro": 3.927
+  }
  },
  "segundo-resalte-de-salenques": {
   "x0": 45437.53,
@@ -2009,7 +2504,12 @@
   "pieza": "margalida",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "segundo-resalte-de-salenques-cima-orto.webp",
-  "ortoM": "segundo-resalte-de-salenques-cima-orto-m.webp"
+  "ortoM": "segundo-resalte-de-salenques-cima-orto-m.webp",
+  "ancla": {
+   "x": 45521.53,
+   "z": 16820.02,
+   "giro": 0.785
+  }
  },
  "aguja-sur-russell": {
   "x0": 45849.75,
@@ -2021,7 +2521,12 @@
   "pieza": "russell",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-sur-russell-cima-orto.webp",
-  "ortoM": "aguja-sur-russell-cima-orto-m.webp"
+  "ortoM": "aguja-sur-russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 45964.75,
+   "z": 17819.44,
+   "giro": 0.0
+  }
  },
  "primer-resalte-de-salenques": {
   "x0": 45523.57,
@@ -2033,7 +2538,12 @@
   "pieza": "margalida",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "primer-resalte-de-salenques-cima-orto.webp",
-  "ortoM": "primer-resalte-de-salenques-cima-orto-m.webp"
+  "ortoM": "primer-resalte-de-salenques-cima-orto-m.webp",
+  "ancla": {
+   "x": 45618.57,
+   "z": 16797.58,
+   "giro": 0.785
+  }
  },
  "torre-de-salenques": {
   "x0": 45557.64,
@@ -2045,7 +2555,12 @@
   "pieza": "margalida",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "torre-de-salenques-cima-orto.webp",
-  "ortoM": "torre-de-salenques-cima-orto-m.webp"
+  "ortoM": "torre-de-salenques-cima-orto-m.webp",
+  "ancla": {
+   "x": 45637.64,
+   "z": 16790.47,
+   "giro": 0.393
+  }
  },
  "punta-de-la-brecha-superior-de-llosas": {
   "x0": 44011.94,
@@ -2057,7 +2572,12 @@
   "pieza": "aneto",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-de-la-brecha-superior-de-llosas-cima-orto.webp",
-  "ortoM": "punta-de-la-brecha-superior-de-llosas-cima-orto-m.webp"
+  "ortoM": "punta-de-la-brecha-superior-de-llosas-cima-orto-m.webp",
+  "ancla": {
+   "x": 44094.94,
+   "z": 16506.97,
+   "giro": 3.927
+  }
  },
  "colmillo-de-alba-oriental": {
   "x0": 41844.34,
@@ -2069,7 +2589,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "colmillo-de-alba-oriental-cima-orto.webp",
-  "ortoM": "colmillo-de-alba-oriental-cima-orto-m.webp"
+  "ortoM": "colmillo-de-alba-oriental-cima-orto-m.webp",
+  "ancla": {
+   "x": 41964.34,
+   "z": 13601.97,
+   "giro": 3.142
+  }
  },
  "aguja-suroeste-del-pico-abadias": {
   "x0": 42938.11,
@@ -2081,7 +2606,12 @@
   "pieza": "abadias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-suroeste-del-pico-abadias-cima-orto.webp",
-  "ortoM": "aguja-suroeste-del-pico-abadias-cima-orto-m.webp"
+  "ortoM": "aguja-suroeste-del-pico-abadias-cima-orto-m.webp",
+  "ancla": {
+   "x": 43058.11,
+   "z": 14955.23,
+   "giro": 4.712
+  }
  },
  "aguja-haurillon": {
   "x0": 42947.42,
@@ -2093,7 +2623,12 @@
   "pieza": "astorg",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-haurillon-cima-orto.webp",
-  "ortoM": "aguja-haurillon-cima-orto-m.webp"
+  "ortoM": "aguja-haurillon-cima-orto-m.webp",
+  "ancla": {
+   "x": 43067.42,
+   "z": 15680.48,
+   "giro": 3.927
+  }
  },
  "aguja-de-alba": {
   "x0": 41451.32,
@@ -2105,7 +2640,12 @@
   "pieza": "alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-de-alba-cima-orto.webp",
-  "ortoM": "aguja-de-alba-cima-orto-m.webp"
+  "ortoM": "aguja-de-alba-cima-orto-m.webp",
+  "ancla": {
+   "x": 41571.32,
+   "z": 13418.72,
+   "giro": 0.0
+  }
  },
  "torre-cordier": {
   "x0": 42692.65,
@@ -2117,7 +2657,12 @@
   "pieza": "diente-alba",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "torre-cordier-cima-orto.webp",
-  "ortoM": "torre-cordier-cima-orto-m.webp"
+  "ortoM": "torre-cordier-cima-orto-m.webp",
+  "ancla": {
+   "x": 42796.65,
+   "z": 13714.44,
+   "giro": 4.32
+  }
  },
  "punta-oriental-russell": {
   "x0": 46220.39,
@@ -2129,7 +2674,12 @@
   "pieza": "russell",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "punta-oriental-russell-cima-orto.webp",
-  "ortoM": "punta-oriental-russell-cima-orto-m.webp"
+  "ortoM": "punta-oriental-russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 46319.39,
+   "z": 17770.98,
+   "giro": 0.0
+  }
  },
  "aguja-de-creguena": {
   "x0": 42558.56,
@@ -2141,7 +2691,12 @@
   "pieza": "araguells",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-de-creguena-cima-orto.webp",
-  "ortoM": "aguja-de-creguena-cima-orto-m.webp"
+  "ortoM": "aguja-de-creguena-cima-orto-m.webp",
+  "ancla": {
+   "x": 42670.56,
+   "z": 15908.85,
+   "giro": 3.927
+  }
  },
  "aguja-suroeste-russell": {
   "x0": 45453.71,
@@ -2153,7 +2708,12 @@
   "pieza": "russell",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-suroeste-russell-cima-orto.webp",
-  "ortoM": "aguja-suroeste-russell-cima-orto-m.webp"
+  "ortoM": "aguja-suroeste-russell-cima-orto-m.webp",
+  "ancla": {
+   "x": 45573.71,
+   "z": 17714.53,
+   "giro": 3.927
+  }
  },
  "aguja-juncadella": {
   "x0": 42643.3,
@@ -2165,7 +2725,12 @@
   "pieza": "araguells",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-juncadella-cima-orto.webp",
-  "ortoM": "aguja-juncadella-cima-orto-m.webp"
+  "ortoM": "aguja-juncadella-cima-orto-m.webp",
+  "ancla": {
+   "x": 42726.3,
+   "z": 15875.63,
+   "giro": 3.534
+  }
  },
  "forca-estasen": {
   "x0": 45934.4,
@@ -2177,7 +2742,12 @@
   "pieza": "margalida",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "forca-estasen-cima-orto.webp",
-  "ortoM": "forca-estasen-cima-orto-m.webp"
+  "ortoM": "forca-estasen-cima-orto-m.webp",
+  "ancla": {
+   "x": 46014.4,
+   "z": 16810.36,
+   "giro": 0.393
+  }
  },
  "pico-occidental-de-la-cascada": {
   "x0": -8906.51,
@@ -2188,7 +2758,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-occidental-de-la-cascada-cima-orto.webp",
-  "ortoM": "pico-occidental-de-la-cascada-cima-orto-m.webp"
+  "ortoM": "pico-occidental-de-la-cascada-cima-orto-m.webp",
+  "ancla": {
+   "x": -8793.51,
+   "z": 9985.41,
+   "giro": 3.534
+  }
  },
  "espalda-del-marbore": {
   "x0": -9072.22,
@@ -2200,7 +2775,12 @@
   "pieza": "pico-occidental-de-la-cascada",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "espalda-del-marbore-cima-orto.webp",
-  "ortoM": "espalda-del-marbore-cima-orto-m.webp"
+  "ortoM": "espalda-del-marbore-cima-orto-m.webp",
+  "ancla": {
+   "x": -8972.22,
+   "z": 10134.66,
+   "giro": 3.927
+  }
  },
  "gran-astazu": {
   "x0": -7145.17,
@@ -2211,7 +2791,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gran-astazu-cima-orto.webp",
-  "ortoM": "gran-astazu-cima-orto-m.webp"
+  "ortoM": "gran-astazu-cima-orto-m.webp",
+  "ancla": {
+   "x": -7055.17,
+   "z": 8227.85,
+   "giro": 3.534
+  }
  },
  "gabieto-occidental": {
   "x0": -14428.7,
@@ -2223,7 +2808,12 @@
   "pieza": "gabieto-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gabieto-occidental-cima-orto.webp",
-  "ortoM": "gabieto-occidental-cima-orto-m.webp"
+  "ortoM": "gabieto-occidental-cima-orto-m.webp",
+  "ancla": {
+   "x": -14328.7,
+   "z": 9290.94,
+   "giro": 3.142
+  }
  },
  "gabieto-oriental": {
   "x0": -14176.79,
@@ -2234,7 +2824,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gabieto-oriental-cima-orto.webp",
-  "ortoM": "gabieto-oriental-cima-orto-m.webp"
+  "ortoM": "gabieto-oriental-cima-orto-m.webp",
+  "ancla": {
+   "x": -14080.79,
+   "z": 9108.69,
+   "giro": 3.142
+  }
  },
  "pico-baudrimont-se": {
   "x0": -4841.45,
@@ -2245,7 +2840,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-baudrimont-se-cima-orto.webp",
-  "ortoM": "pico-baudrimont-se-cima-orto-m.webp"
+  "ortoM": "pico-baudrimont-se-cima-orto-m.webp",
+  "ancla": {
+   "x": -4722.45,
+   "z": 11885.76,
+   "giro": 3.142
+  }
  },
  "cabieto-dero-baziero": {
   "x0": -14251.72,
@@ -2257,7 +2857,12 @@
   "pieza": "gabieto-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "cabieto-dero-baziero-cima-orto.webp",
-  "ortoM": "cabieto-dero-baziero-cima-orto-m.webp"
+  "ortoM": "cabieto-dero-baziero-cima-orto-m.webp",
+  "ancla": {
+   "x": -14153.72,
+   "z": 9186.92,
+   "giro": 4.32
+  }
  },
  "pequeno-astazu": {
   "x0": -7826.14,
@@ -2269,7 +2874,12 @@
   "pieza": "gran-astazu",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pequeno-astazu-cima-orto.webp",
-  "ortoM": "pequeno-astazu-cima-orto-m.webp"
+  "ortoM": "pequeno-astazu-cima-orto-m.webp",
+  "ancla": {
+   "x": -7742.14,
+   "z": 8306.09,
+   "giro": 3.142
+  }
  },
  "torre-del-marbore": {
   "x0": -10495.27,
@@ -2280,7 +2890,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "torre-del-marbore-cima-orto.webp",
-  "ortoM": "torre-del-marbore-cima-orto-m.webp"
+  "ortoM": "torre-del-marbore-cima-orto-m.webp",
+  "ancla": {
+   "x": -10406.27,
+   "z": 10082.32,
+   "giro": 2.356
+  }
  },
  "pico-de-troumouse": {
   "x0": 2072.1,
@@ -2291,7 +2906,12 @@
   "roca": "caliza",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-troumouse-cima-orto.webp",
-  "ortoM": "pico-de-troumouse-cima-orto-m.webp"
+  "ortoM": "pico-de-troumouse-cima-orto-m.webp",
+  "ancla": {
+   "x": 2166.1,
+   "z": 6011.44,
+   "giro": 3.927
+  }
  },
  "pico-marcos-feliu": {
   "x0": 23089.66,
@@ -2302,7 +2922,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-marcos-feliu-cima-orto.webp",
-  "ortoM": "pico-marcos-feliu-cima-orto-m.webp"
+  "ortoM": "pico-marcos-feliu-cima-orto-m.webp",
+  "ancla": {
+   "x": 23191.66,
+   "z": 7398.59,
+   "giro": 0.393
+  }
  },
  "pequeno-bachimala": {
   "x0": 23046.59,
@@ -2314,7 +2939,12 @@
   "pieza": "pico-marcos-feliu",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pequeno-bachimala-cima-orto.webp",
-  "ortoM": "pequeno-bachimala-cima-orto-m.webp"
+  "ortoM": "pequeno-bachimala-cima-orto-m.webp",
+  "ancla": {
+   "x": 23144.59,
+   "z": 7660.97,
+   "giro": 1.571
+  }
  },
  "pequeno-bachimala-s": {
   "x0": 23051.09,
@@ -2326,7 +2956,12 @@
   "pieza": "pico-marcos-feliu",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pequeno-bachimala-s-cima-orto.webp",
-  "ortoM": "pequeno-bachimala-s-cima-orto-m.webp"
+  "ortoM": "pequeno-bachimala-s-cima-orto-m.webp",
+  "ancla": {
+   "x": 23150.09,
+   "z": 7795.66,
+   "giro": 1.963
+  }
  },
  "pic-de-l-abeille": {
   "x0": 22994.38,
@@ -2338,7 +2973,12 @@
   "pieza": "pico-marcos-feliu",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pic-de-l-abeille-cima-orto.webp",
-  "ortoM": "pic-de-l-abeille-cima-orto-m.webp"
+  "ortoM": "pic-de-l-abeille-cima-orto-m.webp",
+  "ancla": {
+   "x": 23099.38,
+   "z": 7036.3,
+   "giro": 3.927
+  }
  },
  "pico-puerto-la-pez": {
   "x0": 22356.55,
@@ -2349,7 +2989,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-puerto-la-pez-cima-orto.webp",
-  "ortoM": "pico-puerto-la-pez-cima-orto-m.webp"
+  "ortoM": "pico-puerto-la-pez-cima-orto-m.webp",
+  "ancla": {
+   "x": 22458.55,
+   "z": 7274.01,
+   "giro": 1.571
+  }
  },
  "pico-de-la-pez": {
   "x0": 22333.84,
@@ -2361,7 +3006,12 @@
   "pieza": "pico-puerto-la-pez",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-la-pez-cima-orto.webp",
-  "ortoM": "pico-de-la-pez-cima-orto-m.webp"
+  "ortoM": "pico-de-la-pez-cima-orto-m.webp",
+  "ancla": {
+   "x": 22432.84,
+   "z": 7318.24,
+   "giro": 0.0
+  }
  },
  "pico-de-maupas": {
   "x0": 35473.26,
@@ -2373,7 +3023,12 @@
   "pieza": "pico-navarro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-maupas-cima-orto.webp",
-  "ortoM": "pico-de-maupas-cima-orto-m.webp"
+  "ortoM": "pico-de-maupas-cima-orto-m.webp",
+  "ancla": {
+   "x": 35578.26,
+   "z": 8350.43,
+   "giro": 3.534
+  }
  },
  "pico-seil-dera-baquo": {
   "x0": 31446.77,
@@ -2385,7 +3040,12 @@
   "pieza": "cap-dera-baquo-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-seil-dera-baquo-cima-orto.webp",
-  "ortoM": "pico-seil-dera-baquo-cima-orto-m.webp"
+  "ortoM": "pico-seil-dera-baquo-cima-orto-m.webp",
+  "ancla": {
+   "x": 31545.77,
+   "z": 9350.62,
+   "giro": 5.89
+  }
  },
  "cap-dera-baquo-oriental": {
   "x0": 31183.5,
@@ -2396,7 +3056,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "cap-dera-baquo-oriental-cima-orto.webp",
-  "ortoM": "cap-dera-baquo-oriental-cima-orto-m.webp"
+  "ortoM": "cap-dera-baquo-oriental-cima-orto-m.webp",
+  "ancla": {
+   "x": 31284.5,
+   "z": 9281.72,
+   "giro": 5.89
+  }
  },
  "pico-sellam-de-la-baca-occidental": {
   "x0": 31108.57,
@@ -2408,7 +3073,12 @@
   "pieza": "cap-dera-baquo-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-sellam-de-la-baca-occidental-cima-orto.webp",
-  "ortoM": "pico-sellam-de-la-baca-occidental-cima-orto-m.webp"
+  "ortoM": "pico-sellam-de-la-baca-occidental-cima-orto-m.webp",
+  "ancla": {
+   "x": 31224.57,
+   "z": 9132.02,
+   "giro": 1.963
+  }
  },
  "cap-dera-baquo-occidental": {
   "x0": 31063.22,
@@ -2420,7 +3090,12 @@
   "pieza": "cap-dera-baquo-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "cap-dera-baquo-occidental-cima-orto.webp",
-  "ortoM": "cap-dera-baquo-occidental-cima-orto-m.webp"
+  "ortoM": "cap-dera-baquo-occidental-cima-orto-m.webp",
+  "ancla": {
+   "x": 31162.22,
+   "z": 9034.67,
+   "giro": 1.963
+  }
  },
  "pico-audoubert": {
   "x0": 30881.17,
@@ -2432,7 +3107,12 @@
   "pieza": "cap-dera-baquo-oriental",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-audoubert-cima-orto.webp",
-  "ortoM": "pico-audoubert-cima-orto-m.webp"
+  "ortoM": "pico-audoubert-cima-orto-m.webp",
+  "ancla": {
+   "x": 30979.17,
+   "z": 8931.99,
+   "giro": 2.356
+  }
  },
  "pico-del-portillon-de-oo": {
   "x0": 32370.58,
@@ -2443,7 +3123,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-del-portillon-de-oo-cima-orto.webp",
-  "ortoM": "pico-del-portillon-de-oo-cima-orto-m.webp"
+  "ortoM": "pico-del-portillon-de-oo-cima-orto-m.webp",
+  "ancla": {
+   "x": 32480.58,
+   "z": 9318.62,
+   "giro": 2.749
+  }
  },
  "pico-navarro": {
   "x0": 34993.38,
@@ -2454,7 +3139,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-navarro-cima-orto.webp",
-  "ortoM": "pico-navarro-cima-orto-m.webp"
+  "ortoM": "pico-navarro-cima-orto-m.webp",
+  "ancla": {
+   "x": 35099.38,
+   "z": 8481.79,
+   "giro": 0.0
+  }
  },
  "tusse-de-remune": {
   "x0": 34674.31,
@@ -2466,7 +3156,12 @@
   "pieza": "pico-navarro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "tusse-de-remune-cima-orto.webp",
-  "ortoM": "tusse-de-remune-cima-orto-m.webp"
+  "ortoM": "tusse-de-remune-cima-orto-m.webp",
+  "ancla": {
+   "x": 34761.31,
+   "z": 8533.24,
+   "giro": 0.785
+  }
  },
  "pico-rabada": {
   "x0": 34758.3,
@@ -2478,7 +3173,12 @@
   "pieza": "pico-navarro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-rabada-cima-orto.webp",
-  "ortoM": "pico-rabada-cima-orto-m.webp"
+  "ortoM": "pico-rabada-cima-orto-m.webp",
+  "ancla": {
+   "x": 34874.3,
+   "z": 8493.79,
+   "giro": 3.142
+  }
  },
  "pico-de-clarabide": {
   "x0": 29099.9,
@@ -2490,7 +3190,12 @@
   "pieza": "pico-de-gias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-clarabide-cima-orto.webp",
-  "ortoM": "pico-de-clarabide-cima-orto-m.webp"
+  "ortoM": "pico-de-clarabide-cima-orto-m.webp",
+  "ancla": {
+   "x": 29202.9,
+   "z": 9078.9,
+   "giro": 2.749
+  }
  },
  "pico-de-clarabide-oriental": {
   "x0": 29192.97,
@@ -2502,7 +3207,12 @@
   "pieza": "pico-de-gias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-clarabide-oriental-cima-orto.webp",
-  "ortoM": "pico-de-clarabide-oriental-cima-orto-m.webp"
+  "ortoM": "pico-de-clarabide-oriental-cima-orto-m.webp",
+  "ancla": {
+   "x": 29298.97,
+   "z": 8896.87,
+   "giro": 4.712
+  }
  },
  "aguja-jean-garnier": {
   "x0": 34352.04,
@@ -2514,7 +3224,12 @@
   "pieza": "pico-navarro",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-jean-garnier-cima-orto.webp",
-  "ortoM": "aguja-jean-garnier-cima-orto-m.webp"
+  "ortoM": "aguja-jean-garnier-cima-orto-m.webp",
+  "ancla": {
+   "x": 34432.04,
+   "z": 8276.64,
+   "giro": 2.356
+  }
  },
  "pico-de-gias": {
   "x0": 29324.6,
@@ -2525,7 +3240,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-gias-cima-orto.webp",
-  "ortoM": "pico-de-gias-cima-orto-m.webp"
+  "ortoM": "pico-de-gias-cima-orto-m.webp",
+  "ancla": {
+   "x": 29418.6,
+   "z": 9236.38,
+   "giro": 3.142
+  }
  },
  "pico-de-clarabide-occidental": {
   "x0": 28989.76,
@@ -2537,7 +3257,12 @@
   "pieza": "pico-de-gias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-clarabide-occidental-cima-orto.webp",
-  "ortoM": "pico-de-clarabide-occidental-cima-orto-m.webp"
+  "ortoM": "pico-de-clarabide-occidental-cima-orto-m.webp",
+  "ancla": {
+   "x": 29097.76,
+   "z": 9120.13,
+   "giro": 5.498
+  }
  },
  "pico-de-boum": {
   "x0": 36456.07,
@@ -2548,7 +3273,12 @@
   "roca": "neutra",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "pico-de-boum-cima-orto.webp",
-  "ortoM": "pico-de-boum-cima-orto-m.webp"
+  "ortoM": "pico-de-boum-cima-orto-m.webp",
+  "ancla": {
+   "x": 36543.07,
+   "z": 8575.59,
+   "giro": 0.0
+  }
  },
  "gias-inferior": {
   "x0": 29401.41,
@@ -2560,7 +3290,12 @@
   "pieza": "pico-de-gias",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "gias-inferior-cima-orto.webp",
-  "ortoM": "gias-inferior-cima-orto-m.webp"
+  "ortoM": "gias-inferior-cima-orto-m.webp",
+  "ancla": {
+   "x": 29512.41,
+   "z": 9247.71,
+   "giro": 2.749
+  }
  },
  "aguja-franqueville": {
   "x0": 43750.96,
@@ -2572,7 +3307,12 @@
   "pieza": "aguja-argarot",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-franqueville-cima-orto.webp",
-  "ortoM": "aguja-franqueville-cima-orto-m.webp"
+  "ortoM": "aguja-franqueville-cima-orto-m.webp",
+  "ancla": {
+   "x": 43851.96,
+   "z": 16828.14,
+   "giro": 0.785
+  }
  },
  "aguja-tchihatcheff": {
   "x0": 43653.31,
@@ -2584,7 +3324,12 @@
   "pieza": "aguja-argarot",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-tchihatcheff-cima-orto.webp",
-  "ortoM": "aguja-tchihatcheff-cima-orto-m.webp"
+  "ortoM": "aguja-tchihatcheff-cima-orto-m.webp",
+  "ancla": {
+   "x": 43762.31,
+   "z": 16858.48,
+   "giro": 0.785
+  }
  },
  "aguja-argarot": {
   "x0": 43585.25,
@@ -2595,7 +3340,12 @@
   "roca": "granito",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "aguja-argarot-cima-orto.webp",
-  "ortoM": "aguja-argarot-cima-orto-m.webp"
+  "ortoM": "aguja-argarot-cima-orto-m.webp",
+  "ancla": {
+   "x": 43694.25,
+   "z": 16916.6,
+   "giro": 1.571
+  }
  },
  "argarot-sur": {
   "x0": 43580.67,
@@ -2607,6 +3357,11 @@
   "pieza": "aguja-argarot",
   "ref": "Coordenada de la ficha; MDT05 del IGN a 1 m. Rocas: js/rocas.js (biblioteca con texturas escaneadas).",
   "orto": "argarot-sur-cima-orto.webp",
-  "ortoM": "argarot-sur-cima-orto-m.webp"
+  "ortoM": "argarot-sur-cima-orto-m.webp",
+  "ancla": {
+   "x": 43681.67,
+   "z": 16980.72,
+   "giro": 1.571
+  }
  }
 }

@@ -10,7 +10,7 @@ data/subidas/<id>.json) con piezas de 1 × 1 km alineadas a la rejilla de la web
     francesa allí donde existe (Francia y la franja de la frontera, con las sombras más suaves), fundida con la del PNOA.
 Salida: data/paquetes/<cumbre>/ con index.json {cumbre, lado, piezas: [{id, x0, z0, n, paso, orto}]}.
 Uso: python3 tools/build_paquete.py balaitus [subidas a incluir, p. ej. 1 2] [--rehacer]   (sin subidas: la ruta de ejemplo y la primera subida)"""
-import gzip, json, math, os, subprocess, sys, tempfile
+import gzip, json, math, os, subprocess, sys, tempfile, time
 import numpy as np, rasterio
 from rasterio.warp import transform
 from scipy.ndimage import map_coordinates
@@ -37,9 +37,13 @@ def aplana_sombras(im, fuerza=0.5, sigma=80):   # como tools/build_orto.py: las 
     return Image.fromarray((np.clip(a * f[..., None], 0, 1) * 255).astype(np.uint8))
 
 def curl(url, out, minimo):
-    for _ in range(4):
+    for k in range(6):
+        if k: time.sleep(15 * k)   # el WMS del PNOA falla a rachas: esperar antes de reintentar
         r = subprocess.run(['curl', '-s', '-m', '300', '-o', out, '-w', '%{http_code}', url], capture_output=True, text=True)
-        if r.stdout == '200' and os.path.exists(out) and os.path.getsize(out) > minimo: return True
+        if r.stdout == '200' and os.path.exists(out) and os.path.getsize(out) > minimo:
+            if not any(f in url.lower() for f in ('image/jpeg', 'image/png', 'image%2fjpeg', 'image%2fpng')): return True
+            try: Image.open(out).load(); return True   # el WMS a veces manda la imagen cortada con un 200
+            except Exception: pass
     return False
 
 def bbox_rejilla(x0, z0, n, paso):   # recuadro lon/lat cuyos centros de píxel caen en los puntos de la rejilla (con medio píxel de margen)
@@ -83,7 +87,10 @@ def relieve(x0, z0, cobertura=None):   # cobertura: dónde hay datos franceses d
     usoL = 0.0
     if LIDAR is not None:
         from scipy.ndimage import distance_transform_edt
-        Lz, Lt = LIDAR; colL = (ux - Lt.c) / Lt.a - 0.5; rowL = (uy - Lt.f) / Lt.e - 0.5
+        Lz, Lt, Lcrs = LIDAR; lx, ly = (ux, uy)
+        if Lcrs != 'EPSG:25830':   # el LiDAR va en el huso de sus archivos (Aneto: 31)
+            lx, ly = transform('EPSG:4326', Lcrs, lon.ravel().tolist(), lat.ravel().tolist()); lx = np.array(lx).reshape(N, N); ly = np.array(ly).reshape(N, N)
+        colL = (lx - Lt.c) / Lt.a - 0.5; rowL = (ly - Lt.f) / Lt.e - 0.5
         okL = (colL >= 0) & (rowL >= 0) & (colL <= Lz.shape[1] - 1) & (rowL <= Lz.shape[0] - 1)
         zl = map_coordinates(np.nan_to_num(Lz, nan=-9999), [rowL, colL], order=1, mode='nearest')
         okL &= zl > 0
@@ -142,7 +149,7 @@ for L in lineas:
             for dz in (-MARGEN, 0, MARGEN): celdas.add((math.floor((x + dx) / LADO), math.floor((z + dz) / LADO)))
 fL = os.path.expanduser(f'~/tresmiles-fuentes/lidar/{cumbre}_mdt1m.tif')
 if os.path.exists(fL):
-    with rasterio.open(fL) as ds: LIDAR = (ds.read(1), ds.transform)
+    with rasterio.open(fL) as ds: LIDAR = (ds.read(1), ds.transform, ds.crs.to_string())
     print('LiDAR', fL, LIDAR[0].shape, flush=True)
 OUT = os.path.join(ROOT, 'data/paquetes', cumbre); os.makedirs(OUT, exist_ok=True)
 I = os.path.join(OUT, 'index.json'); idx = json.load(open(I)) if os.path.exists(I) else {'cumbre': cumbre, 'lado': LADO, 'piezas': []}

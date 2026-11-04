@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=28';
+import { Terrain, NCALOR } from './terrain.js?v=30';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=49';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
-import { crearTiempo, tipoTiempo } from './tiempo.js?v=4';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=5';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
@@ -18,7 +18,7 @@ import { crearSeguridad } from './seguridad.js?v=5';
 import { crearPaquete } from './paquete.js?v=6';
 import { crearRealidad } from './realidad.js?v=4';
 import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=19';
+import { t, EN_INGLES } from './i18n.js?v=20';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -646,7 +646,16 @@ async function boot() {
   }
   // ?tiempo=llovizna|lluvia|diluvio|aguanieve|nieve|nevada|tormenta|niebla|nubes|sol: fuerza ese tiempo en la cumbre abierta, para probarlo sin esperar a que llueva de verdad
   const FORZADO = { llovizna: [51, 8, 100, 0.3], lluvia: [63, 8, 100, 3], diluvio: [65, 8, 100, 12], nieve: [73, -4, 100, 2, 2000], aguanieve: [63, 2, 100, 4, 2600], nevada: [75, -6, 100, 8, 1700], tormenta: [95, 9, 100, 10], niebla: [45, 2, 100, 0], nubes: [3, 5, 100, 0], sol: [0, 5, 0, 0] }[params.get('tiempo')];
-  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], precipitation: FORZADO[3], isocero: FORZADO[4], wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
+  const forzar = (d) => !FORZADO || !d ? d : { ...d, current: { ...d.current, weather_code: FORZADO[0], temperature_2m: FORZADO[1], apparent_temperature: FORZADO[1] - 4, cloud_cover: FORZADO[2], precipitation: FORZADO[3], isocero: FORZADO[4], nieveCm: FORZADO[4] ? 30 : 0, wind_speed_10m: 25, wind_gusts_10m: 45, wind_direction_10m: 315 } };
+  // nieve en el suelo en la cumbre (cm) el día «fecha»: la mayor entre el espesor del modelo y un balance propio de los últimos 14 días
+  // (lo que nieva se suma; cada día con máxima sobre 0 °C funde ~0,8 cm por grado, y 0,2 cm de sublimación). Sin datos → null (se pinta como antes)
+  function nieveSuelo(n, fecha) {
+    const d = n?.daily, h = n?.hourly; if (!d?.time) return null;
+    let b = 0;
+    for (let i = 0; i < d.time.length && d.time[i] <= fecha; i++) b = Math.max(0, b - Math.max(0, d.temperature_2m_max[i] ?? 0) * 0.8 - 0.2) + (d.snowfall_sum[i] ?? 0);
+    const j = h?.time?.indexOf(fecha + 'T12:00'), sd = j >= 0 ? (h.snow_depth[j] ?? 0) * 100 : 0;
+    return Math.round(Math.max(b, sd));
+  }
   function aplicaTiempo(p, d) {
     const on = !!d && tiempoEnMapa() && S.active === p?.id;
     tiempo.set(on ? d : null, p); banderines.setViento(on ? d.current.wind_gusts_10m ?? 0 : 0);
@@ -664,17 +673,23 @@ async function boot() {
     let m = meteoCache.get(p.id);
     if (!m || Date.now() - m.t > 30 * 60e3) {
       const u = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&current=temperature_2m,precipitation,apparent_temperature,weather_code,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=freezing_level_height&daily=weather_code,cloud_cover_mean,wind_direction_10m_dominant,temperature_2m_max,temperature_2m_min,wind_gusts_10m_max,precipitation_sum&timezone=Europe%2FMadrid&forecast_days=4`;
-      try { const r = await fetch(u); if (!r.ok) throw new Error(r.status); m = { t: Date.now(), d: await r.json() }; meteoCache.set(p.id, m); }
+      const un = `https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.altitud}&hourly=snow_depth&daily=snowfall_sum,temperature_2m_max&past_days=14&forecast_days=4&timezone=Europe%2FMadrid`;
+      try {
+        const [r, rn] = await Promise.all([fetch(u), fetch(un).catch(() => null)]); if (!r.ok) throw new Error(r.status);
+        m = { t: Date.now(), d: await r.json(), n: rn?.ok ? await rn.json().catch(() => null) : null }; meteoCache.set(p.id, m);
+      }
       catch { if (fichaBody.contains(caja)) caja.innerHTML = `<p class="ruta-credito">${t('No se ha podido cargar la previsión (hace falta conexión).')}</p>`; aplicaTiempo(p, null); return; }
     }
     if (!fichaBody.contains(caja) || S.active !== p.id) return;
     if (diaSel.id !== p.id) diaSel = { id: p.id, i: 0 };
-    const dat = forzar(m.d), vis = vistaDia(dat, diaSel.i); aplicaTiempo(p, vis);
+    const dat = forzar(m.d), vis0 = vistaDia(dat, diaSel.i);
+    const nCm = vis0.current.nieveCm ?? nieveSuelo(m.n, (vis0.current.time ?? '').slice(0, 10));
+    const vis = { ...vis0, current: { ...vis0.current, nieveCm: nCm } }; aplicaTiempo(p, vis);
     const { current: c, daily: d, hourly: h } = dat, cielo = (k) => CIELO[k] ?? ['·', ''];
     const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
     const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? (EN_INGLES ? 'Tomorrow' : 'Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
     const r0 = (v) => Math.round(v);
-    caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento del {d}, {v} km/h, rachas de {r}', { d: rumbo(c.wind_direction_10m), v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span></div></div>
+    caja.innerHTML = `<div class="meteo-ahora"><span class="meteo-ic" aria-hidden="true">${cielo(c.weather_code)[0]}</span><div><b>${r0(c.temperature_2m)} °C</b><span>${t(cielo(c.weather_code)[1])} · ${t('sensación {n} °C', { n: r0(c.apparent_temperature) })}</span><span>${t('Viento del {d}, {v} km/h, rachas de {r}', { d: rumbo(c.wind_direction_10m), v: r0(c.wind_speed_10m), r: r0(c.wind_gusts_10m) })}</span>${nCm != null ? `<span>${nCm >= 1 ? t('Nieve en el suelo (estimada): {n} cm', { n: nCm }) : t('Sin nieve en el suelo (estimada)')}</span>` : ''}</div></div>
       <label class="meteo-mapa"><input type="checkbox" data-act="tiempo-mapa"${tiempoEnMapa() ? ' checked' : ''}><span>${t('Ver este tiempo en el mapa')}</span></label><p class="meteo-nota">${notaMapa(vis.current, diaSel.i ? (diaSel.i === 1 ? dia(d.time[1], 1).toLowerCase() : new Date(d.time[diaSel.i] + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'long' })) : null)}</p>
       <ol class="meteo-dias">${d.time.map((s, i) => `<li><button type="button" class="meteo-dia" data-dia="${i}" aria-pressed="${i === diaSel.i}" title="${t('Ver ese día en el mapa')}"><span>${dia(s, i)}</span><i aria-hidden="true">${cielo(d.weather_code[i])[0]}</i><b>${r0(d.temperature_2m_max[i])}° <small>${r0(d.temperature_2m_min[i])}°</small></b><span title="${t('Rachas máximas')}">💨 ${r0(d.wind_gusts_10m_max[i])}</span>${d.precipitation_sum[i] >= 0.5 ? `<span>💧 ${r0(d.precipitation_sum[i])} mm</span>` : ''}${iso(s) != null ? `<span title="${t('Cota de nieve aproximada: isocero a mediodía')}">${t('isocero')} ${fmt(iso(s))} m</span>` : ''}</button></li>`).join('')}</ol>
       <p class="ruta-credito">${t('Previsión de')} <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0) ${t('para el punto de la cumbre, con la temperatura calculada a {a} m. Viento en km/h; la «isocero» es la altura a la que el aire está a 0 °C a mediodía. Es orientativa: en montaña el tiempo cambia rápido; consulta también la predicción de montaña de AEMET.', { a: fmt(p.altitud) })}</p>`;
@@ -859,7 +874,7 @@ async function boot() {
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
-      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${cumbres.ficha()?.[p.id]?.modelo ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
+      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
       <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
       ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
       ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
@@ -1185,7 +1200,7 @@ async function boot() {
   // vista de cerca de una cima con modelo de Blender (vértice, torre de piedras…): la cámara baja a unas decenas de metros, de frente al modelo, y el usuario conserva el control
   async function vistaCima(id) {
     if (!id) return;
-    await cumbres.carga(id); const d = cumbres.ficha()?.[id], e = d?.elementos?.find((x) => x.ancla) ?? d?.elementos?.[0]; if (!e) return;
+    await cumbres.carga(id); const d = cumbres.ficha()?.[id], e = d?.elementos?.find((x) => x.ancla) ?? d?.elementos?.[0] ?? d?.ancla; if (!e) return;   // sin modelo de Blender: el punto más alto del relieve fino (detalles.json «ancla»)
     pararVuelo(false); if (!S.plegada) plegar(true, { fly: false });
     S.detalle = true; controls.minDistance = 20;
     if (S.sun !== 1) setSun(1);   // luz de mediodía: neutra y alta, deja ver el color de la roca (la de mañana y tarde la tiñe de naranja)

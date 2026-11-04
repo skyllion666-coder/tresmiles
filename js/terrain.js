@@ -52,6 +52,10 @@ if (distance(vWPos, cameraPosition) < 15000.) {
     vec3 det = uOrto > .5 ? (texture2D(map, vMapUv).rgb - bl) * uOB * ofk : c - bl;   // con ortofoto, solo su propio detalle y nada en el fundido (si no, el borde de la pieza sale como una raya oscura)
     c = max(c + det * (.5 + 1.3 * fc) * (1. - sl * .5) * (1. - .4 * ofk), 0.); }
 #endif
+  // roca clara (granito, morrenas, pedreras): en las imágenes de verano (ortofoto y satélite) sale crema y muy brillante y se confunde con nieve → gris piedra y algo más oscura.
+  // Solo los tonos claros y cálidos (r > b): el hielo y la nieve de verdad, blancos o azulados, no se tocan
+  { float lo = dot(c, LW), kq = smoothstep(.36, .68, lo) * smoothstep(.015, .08, c.r - c.b);
+    c = mix(c, vec3(lo) * vec3(1.01, 1., .98), .6 * kq) * (1. - .18 * kq); }
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
   steep0 = max(steep0, vR * .95);
@@ -122,7 +126,8 @@ if (distance(vWPos, cameraPosition) < 15000.) {
 if (uCotaK + uAcum + uMoj > .001) {
   float slc = 1. - normalize(vWNrm).y, plano = 1. - smoothstep(.38, .66, slc);
   float rd = vn(vWPos * .0035) * 160. + vn(vWPos * .03) * 40.;
-  float sc = smoothstep(uCota - 80., uCota + 160., vWPos.y + rd - 100.) * uCotaK;
+  // uCotaK = cuánta nieve hay en el suelo: con poca solo quedan manchas sueltas (donde el ruido es alto); con 20 cm o más, todo blanco
+  float sc = smoothstep(uCota - 80., uCota + 160., vWPos.y + rd - 100.) * clamp(uCotaK * 1.6 - (1. - vn(vWPos * .008)) * (1. - uCotaK) * 1.2, 0., 1.);
   float loc = 1. - smoothstep(uCliR * .55, uCliR, distance(vWPos.xz, uCliC.xz));
   float sa = loc * uAcum * smoothstep(uCliC.y - 2200., uCliC.y - 900., vWPos.y + rd);
   float sn = clamp(max(sc, sa) * plano * (.75 + .5 * vn(vWPos * .02)), 0., 1.);
