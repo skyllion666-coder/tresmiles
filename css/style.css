@@ -707,3 +707,6 @@ body.selector-abierto #intro { z-index: 31; }
 .zona-btn.zona-bajar { background: var(--spruce); color: var(--cream); }
 .zona-btn.zona-borrar { border-color: #b0362c; color: #b0362c; }
 .zona-barra { height: 8px; background: #e6e0cf; border-radius: 4px; overflow: hidden; } .zona-barra i { display: block; height: 100%; background: var(--spruce); transition: width .3s; }
+
+/* pantalla completa: el icono cambia a «salir» mientras está activa */
+#btn-pantalla .pc-cerrar { display: none; } #btn-pantalla.is-on .pc-abrir { display: none; } #btn-pantalla.is-on .pc-cerrar { display: inline; }

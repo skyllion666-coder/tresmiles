@@ -1,0 +1,18 @@
+{
+ "name": "Tresmiles del Pirineo aragonés",
+ "short_name": "Tresmiles",
+ "description": "Explorador 3D de los tresmiles del Pirineo aragonés",
+ "lang": "es",
+ "start_url": "./?directo",
+ "scope": "./",
+ "display": "fullscreen",
+ "display_override": ["fullscreen", "standalone"],
+ "orientation": "any",
+ "background_color": "#2d4a43",
+ "theme_color": "#2d4a43",
+ "icons": [
+  {"src": "img/icono-192.png", "sizes": "192x192", "type": "image/png"},
+  {"src": "img/icono-512.png", "sizes": "512x512", "type": "image/png"},
+  {"src": "img/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+ ]
+}

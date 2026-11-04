@@ -3,8 +3,8 @@
 // Botón: 1.º toque, «Norte arriba» (te sigue con el norte arriba); 2.º, «El mapa gira contigo» (lo que tienes delante en el móvil es lo que tienes delante);
 // 3.º, apagar. Mover el mapa con el dedo deja de seguir sin cambiar de modo; el siguiente toque vuelve a seguir.
 import * as THREE from 'three';
-import { leeOrientacion } from './panorama.js?v=9';
-import { t, EN_INGLES } from './i18n.js?v=20';
+import { leeOrientacion } from './panorama.js?v=10';
+import { t, EN_INGLES } from './i18n.js?v=21';
 
 const RAD = Math.PI / 180;
 const km = (lat1, lon1, lat2, lon2) => {   // distancia en línea recta sobre la Tierra (km)

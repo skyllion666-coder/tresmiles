@@ -52,7 +52,7 @@ const EN = {
   'Próximamente': 'Coming soon', '{n}: próximamente': '{n}: coming soon', '{n}, {a} metros. Abrir ficha': '{n}, {a} metres. Open the info', '{n}, {a} metros. Próximamente': '{n}, {a} metres. Coming soon',
   'altitud sin datos': 'no altitude data', 'Frontera Aragón–Francia': 'Aragon–France border', 'Clase': 'Type', 'Cima discutida': 'Disputed summit', 'Cima secundaria': 'Secondary summit',
   'Pueblo más cercano': 'Nearest village', 'Valle o pueblo de acceso': 'Access valley or village', 'Mejor época': 'Best season', 'Otras cifras': 'Other figures',
-  'Ver la cima de cerca': 'See the summit up close', 'Ruta normal': 'Normal route', 'En una ruta de Wikiloc': 'On a Wikiloc route', 'Información': 'Information',
+  'Ver la cima de cerca': 'See the summit up close', 'Pantalla completa': 'Full screen', 'Salir de pantalla completa': 'Exit full screen', 'Ruta normal': 'Normal route', 'En una ruta de Wikiloc': 'On a Wikiloc route', 'Información': 'Information',
   'Mostrar la ruta en el mapa': 'Show the route on the map', 'Ocultar la ruta del mapa': 'Hide the route from the map', 'Inicio del recorrido': 'Start of the route',
   'Paso de Mahoma': 'Mahoma Pass', 'Dominio público': 'Public domain',
   'Altitud': 'Altitude', 'Desnivel': 'Elevation gain', 'Acceso': 'Access', 'Grado': 'Grade', 'Época': 'Season',

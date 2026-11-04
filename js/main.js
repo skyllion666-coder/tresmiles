@@ -11,14 +11,14 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=55';
-import { crearPanorama } from './panorama.js?v=9';
-import { crearUbicacion } from './ubicacion.js?v=8';
-import { crearSeguridad } from './seguridad.js?v=5';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=56';
+import { crearPanorama } from './panorama.js?v=10';
+import { crearUbicacion } from './ubicacion.js?v=9';
+import { crearSeguridad } from './seguridad.js?v=6';
 import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=4';
-import { crearSelector } from './selector.js?v=6';
-import { t, EN_INGLES } from './i18n.js?v=20';
+import { crearRealidad } from './realidad.js?v=5';
+import { crearSelector } from './selector.js?v=7';
+import { t, EN_INGLES } from './i18n.js?v=21';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1439,6 +1439,18 @@ async function boot() {
   }
 
   // — sonido (activo desde el inicio; si el navegador lo bloquea, arranca con el primer toque) —
+  // — pantalla completa (navegadores que la permiten; no en la APK, que ya va a pantalla completa, ni abierta desde la pantalla de inicio) —
+  { const b = $('#btn-pantalla'), d = document, el = d.documentElement;
+    const pide = el.requestFullscreen ? (o) => el.requestFullscreen(o) : el.webkitRequestFullscreen ? () => el.webkitRequestFullscreen() : null;
+    const sale = d.exitFullscreen ? () => d.exitFullscreen() : d.webkitExitFullscreen ? () => d.webkitExitFullscreen() : null;
+    const activa = () => !!(d.fullscreenElement || d.webkitFullscreenElement);
+    const instalada = matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches || navigator.standalone;
+    if (b && pide && sale && (d.fullscreenEnabled || d.webkitFullscreenEnabled) && !EN_APP && !instalada) {
+      b.hidden = false;
+      const pinta = () => { const on = activa(); b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Salir de pantalla completa' : 'Pantalla completa'); };
+      b.addEventListener('click', () => { try { const r = activa() ? sale() : pide({ navigationUI: 'hide' }); r?.catch?.(() => {}); } catch (e) {} });
+      d.addEventListener('fullscreenchange', pinta); d.addEventListener('webkitfullscreenchange', pinta); pinta();
+    } }
   const btnSound = $('#btn-sound');
   const pintaSonido = () => { btnSound.setAttribute('aria-pressed', sonido.on); btnSound.setAttribute('aria-label', sonido.on ? 'Silenciar el sonido y los efectos' : 'Activar el sonido y los efectos'); btnSound.classList.toggle('is-on', sonido.on); };
   btnSound.addEventListener('click', async () => { if (sonido.on) sonido.fx('desactivar'); await sonido.set(!sonido.on); if (sonido.on) setTimeout(() => sonido.fx('activar'), 250); store.set('sonido', sonido.on ? '1' : '0'); pintaSonido(); });
