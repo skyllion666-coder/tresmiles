@@ -289,30 +289,30 @@
   "cumbre": "vignemale",
   "nombre": "Gran Vignemale",
   "detalle": "Desde Valle de Bujaruelo (Torla) o valle de Ossoue (Francia). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 67,
-  "version": 1,
+  "mb": 86,
+  "version": 2,
   "caja": [
    -22000.0,
    -1000.0,
-   -17000.0,
+   -16000.0,
    3000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-vignemale-1/vignemale.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-vignemale-2/vignemale.zip"
  },
  {
   "id": "hito-occidental-del-perdiguero",
   "cumbre": "hito-occidental-del-perdiguero",
   "nombre": "Hito Occidental del Perdiguero",
   "detalle": "Desde Parking de Literola (Benasque). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 197,
-  "version": 1,
+  "mb": 209,
+  "version": 2,
   "caja": [
    32000.0,
-   8000.0,
+   7000.0,
    41000.0,
    13000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-hito-occidental-del-perdiguero-1/hito-occidental-del-perdiguero.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-hito-occidental-del-perdiguero-2/hito-occidental-del-perdiguero.zip"
  },
  {
   "id": "infierno-occidental",
@@ -394,15 +394,15 @@
   "cumbre": "pequeno-bachimala",
   "nombre": "Pequeño Bachimala",
   "detalle": "Desde Ruta en Gistaín. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 63,
-  "version": 1,
+  "mb": 84,
+  "version": 2,
   "caja": [
    21000.0,
    6000.0,
    25000.0,
    10000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pequeno-bachimala-1/pequeno-bachimala.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pequeno-bachimala-2/pequeno-bachimala.zip"
  },
  {
   "id": "perdiguero",
@@ -529,15 +529,15 @@
   "cumbre": "montferrat",
   "nombre": "Pico Montferrat",
   "detalle": "Desde Valle de Ossoue (Francia) · presa de Ossoue. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 73,
-  "version": 1,
+  "mb": 100,
+  "version": 2,
   "caja": [
    -22000.0,
    -1000.0,
-   -17000.0,
+   -15000.0,
    3000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-montferrat-1/montferrat.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-montferrat-2/montferrat.zip"
  },
  {
   "id": "pico-occidental-de-la-cascada",
@@ -649,15 +649,15 @@
   "cumbre": "pico-de-boum",
   "nombre": "Pico de Boum",
   "detalle": "Desde Refugio de Maupas (por Port Biello). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 54,
-  "version": 1,
+  "mb": 78,
+  "version": 2,
   "caja": [
    34000.0,
-   8000.0,
+   7000.0,
    38000.0,
    10000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-1/pico-de-boum.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-2/pico-de-boum.zip"
  },
  {
   "id": "culfreda",
@@ -799,15 +799,15 @@
   "cumbre": "pico-del-clot-de-la-hount",
   "nombre": "Pico del Clot de la Hount",
   "detalle": "Desde Refugio de Baysellance (Gavarnie, Francia). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 73,
-  "version": 1,
+  "mb": 100,
+  "version": 2,
   "caja": [
    -22000.0,
    -1000.0,
-   -17000.0,
+   -15000.0,
    3000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-del-clot-de-la-hount-1/pico-del-clot-de-la-hount.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-del-clot-de-la-hount-2/pico-del-clot-de-la-hount.zip"
  },
  {
   "id": "infiernos",
@@ -949,15 +949,15 @@
   "cumbre": "gorgs",
   "nombre": "Tuca de Gorgs Blancs",
   "detalle": "Desde Benasque · valle de Estós (parking de Estós). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 173,
-  "version": 1,
+  "mb": 190,
+  "version": 2,
   "caja": [
    28000.0,
-   8000.0,
+   7000.0,
    36000.0,
    17000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gorgs-1/gorgs.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gorgs-2/gorgs.zip"
  },
  {
   "id": "tuqueta-de-marbore",
