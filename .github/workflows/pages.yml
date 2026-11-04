@@ -19,8 +19,11 @@ jobs:
       url: ${{ steps.despliegue.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - run: rm -rf .git .github tools README.md   # solo lo que usa la web
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
       - id: despliegue
         uses: actions/deploy-pages@v4
+        with:
+          timeout: 3600000   # la web pesa ~530 MB: el despliegue tarda más de los 10 min por defecto
