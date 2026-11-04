@@ -165,6 +165,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-espalda-del-marbore-1/espalda-del-marbore.zip"
  },
  {
+  "id": "forca-estasen",
+  "cumbre": "forca-estasen",
+  "nombre": "Forca Estasen",
+  "detalle": "Desde Benasque · valle de Llauset/Remuñe · puente de Coronas. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 116,
+  "version": 1,
+  "caja": [
+   44000.0,
+   15000.0,
+   48000.0,
+   19000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-forca-estasen-1/forca-estasen.zip"
+ },
+ {
   "id": "frondella",
   "cumbre": "frondella",
   "nombre": "Frondella",
@@ -193,6 +208,21 @@
    -1000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-frondiellas-1/frondiellas.zip"
+ },
+ {
+  "id": "gabieto-occidental",
+  "cumbre": "gabieto-occidental",
+  "nombre": "Gabieto Occidental",
+  "detalle": "Desde Pradera de Ordesa (Torla). De julio a septiembre el acceso es en autobús lanzadera desde Torla. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 47,
+  "version": 1,
+  "caja": [
+   -16000.0,
+   8000.0,
+   -13000.0,
+   11000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gabieto-occidental-1/gabieto-occidental.zip"
  },
  {
   "id": "garmo",
@@ -358,6 +388,21 @@
    14000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-perdido-1/perdido.zip"
+ },
+ {
+  "id": "pequeno-bachimala",
+  "cumbre": "pequeno-bachimala",
+  "nombre": "Pequeño Bachimala",
+  "detalle": "Desde Ruta en Gistaín. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 63,
+  "version": 1,
+  "caja": [
+   21000.0,
+   6000.0,
+   25000.0,
+   10000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pequeno-bachimala-1/pequeno-bachimala.zip"
  },
  {
   "id": "perdiguero",
@@ -598,6 +643,21 @@
    19000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-araguells-1/araguells.zip"
+ },
+ {
+  "id": "pico-de-boum",
+  "cumbre": "pico-de-boum",
+  "nombre": "Pico de Boum",
+  "detalle": "Desde Refugio de Maupas (por Port Biello). Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 54,
+  "version": 1,
+  "caja": [
+   34000.0,
+   8000.0,
+   38000.0,
+   10000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-1/pico-de-boum.zip"
  },
  {
   "id": "culfreda",
