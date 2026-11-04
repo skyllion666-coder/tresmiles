@@ -1479,6 +1479,7 @@ async function boot() {
       if (!giro.sostenido) { giro.resta = 1.5 * Math.PI / 180; sonido.fx('toque'); } else giro.dir = 0;   // toque corto: 1,5°
       giro.sostenido = false;
     };
+    b.addEventListener('contextmenu', (e) => e.preventDefault());   // tablets: la pulsación larga abría el menú del navegador (Volver, Descargar…) y cortaba el giro
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
     b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 180; } });
   }
