@@ -109,7 +109,7 @@ def orto(x0, z0, dest):
             tmp = tempfile.mktemp(suffix='.jpg')
             url = ('https://www.ign.es/wms-inspire/pnoa-ma?service=WMS&version=1.3.0&request=GetMap&layers=OI.OrthoimageCoverage&styles=&crs=CRS:84'
                    f'&bbox={la0},{ta0},{la1},{ta1}&width=2048&height=2048&format=image/jpeg')
-            if not curl(url, tmp, 30000): return False, None
+            if not curl(url, tmp, 1000): return False, None   # en Francia el PNOA devuelve blanco liso (JPEG de ~25 KB): vale, lo tapa la ortofoto francesa
             im.paste(Image.open(tmp).convert('RGB'), (a * 2048, c * 2048)); os.remove(tmp)
     # ortofoto francesa (PNG con transparencia donde no hay foto): manda donde existe, con el borde fundido unos 10 m
     fr = Image.new('RGBA', (4096, 4096), (0, 0, 0, 0)); hay = False
@@ -135,12 +135,21 @@ def orto(x0, z0, dest):
     aplana_sombras(im).save(dest, quality=94, method=6)   # máxima calidad: el paquete es para una excursión (se descarga y se borra)
     return ('fr' if hay else True), (np.asarray(m.resize((N, N), Image.BILINEAR), np.float32) / 255 if hay else None)
 
+def solo_cima(picos, pico):   # cumbre sin ruta: recuadro de ~2,5 km alrededor de ella y de las cimas sin ruta a menos de 1,5 km (forman un solo paquete)
+    import math, os
+    R = os.path.expanduser('~/tresmiles')
+    sin = lambda q: not q.get('rutas') and not os.path.exists(f"{R}/data/subidas/{q['id']}.json")
+    la0, lo0 = float(pico['lat']), float(pico['lon']); k = math.cos(math.radians(la0))
+    grupo = [q for q in picos if sin(q) and math.hypot((float(q['lat']) - la0) * 111, (float(q['lon']) - lo0) * 111 * k) < 1.5] or [pico]
+    return [[[float(q['lon']) + dx * 0.0075, float(q['lat']) + dz * 0.0055] for q in grupo for dx in (-1, 0, 1) for dz in (-1, 0, 1)]]
+
 REHACER = '--rehacer' in sys.argv; args = [a for a in sys.argv[1:] if a != '--rehacer']
 cumbre = args[0]; elegidas = [int(a) for a in args[1:]] or [1]
-pico = next(p for p in json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos'] if p['id'] == cumbre)
+PICOS = json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos']; pico = next(p for p in PICOS if p['id'] == cumbre)
 lineas = [json.load(open(os.path.join(ROOT, 'data/rutas', f'{r}.json')))['puntos'] for r in pico.get('rutas') or []]
 sub = os.path.join(ROOT, 'data/subidas', f'{cumbre}.json')
 if os.path.exists(sub): lineas += [s['puntos'] for s in json.load(open(sub))['subidas'] if int(s['id'].rsplit('-', 1)[1]) in elegidas]
+if not lineas: lineas = solo_cima(PICOS, pico); print(cumbre, 'sin ruta: solo la cima y sus vecinas', flush=True)
 celdas = set()
 for L in lineas:
     for p in L:
