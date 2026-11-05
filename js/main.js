@@ -1495,6 +1495,15 @@ async function boot() {
     b.addEventListener('pointerup', suelta); b.addEventListener('pointercancel', suelta); b.addEventListener('lostpointercapture', suelta);
     b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giro.dir = dir; giro.resta = Math.PI / 180; } });
   }
+  // las flechas nunca encima de la columna de botones: con la ficha plegada en el móvil (y más botones en la app) la columna sube hasta ellas;
+  // --giro-max es la altura máxima del centro de las flechas (las dos a la misma, para que sigan simétricas)
+  const ajustaGiro = () => {
+    const t = $('#tools').getBoundingClientRect(); if (!t.height) return;
+    document.documentElement.style.setProperty('--giro-max', `${Math.max(60, Math.round(t.top - 32))}px`);
+  };
+  new ResizeObserver(ajustaGiro).observe($('#tools')); addEventListener('resize', ajustaGiro);
+  $('#tools').addEventListener('transitionend', ajustaGiro); new MutationObserver(ajustaGiro).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  ajustaGiro();
   const _ejeY = new THREE.Vector3(0, 1, 0), _off = new THREE.Vector3();
   function aplicaGiro(dt) {
     if (!giro.dir) return;
