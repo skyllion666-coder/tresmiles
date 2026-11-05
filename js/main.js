@@ -11,15 +11,15 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=59';
-import { crearPanorama } from './panorama.js?v=13';
-import { crearUbicacion } from './ubicacion.js?v=12';
-import { crearSeguridad } from './seguridad.js?v=9';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=60';
+import { crearPanorama } from './panorama.js?v=14';
+import { crearUbicacion } from './ubicacion.js?v=13';
+import { crearSeguridad } from './seguridad.js?v=10';
 import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=8';
-import { crearSelector } from './selector.js?v=10';
+import { crearRealidad } from './realidad.js?v=9';
+import { crearSelector } from './selector.js?v=11';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=24';
+import { t, EN_INGLES } from './i18n.js?v=25';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -94,6 +94,8 @@ async function boot() {
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
   const glaciares = crearGlaciares({ scene, geo });   // «El glaciar en el tiempo» (más abajo, pintaGlaciar)
   let glaciarSel = null, glaciarAnio = null, glaciarT = null;
+  // datos que cambian cada día (nieve, aludes): en la app, los de la web (los de dentro de la APK se quedan viejos): Cloudflare, si no GitHub Pages, y si no (sin cobertura) los de la APK
+  const NIEVE_BASES = EN_APP ? ['https://tresmiles.pages.dev/', 'https://skyllion666-coder.github.io/tresmiles/', ''] : [''];
   const nieveSat = { meta: null, img: null, carga: null, on: false };   // «Nieve ahora» (data/nieve): datos del satélite, cargados al abrir una ficha o encender la capa
   const glaciarFecha = Object.assign(document.createElement('div'), { className: 'glaciar-fecha' }); glaciarFecha.setAttribute('aria-hidden', 'true'); document.body.append(glaciarFecha);   // el año en grande sobre el 3D mientras corre ▶
   const banderines = crearBanderines({ scene, geo });
@@ -620,9 +622,39 @@ async function boot() {
   function aludesHTML(p) {
     if (p.altitud < 2000) return '';
     const mes = new Date().getMonth(), temporada = mes >= 11 || mes <= 4;
-    return `<h3>${t('Peligro de aludes')}</h3><p>${t(temporada ? 'Con nieve, consulta antes de salir el boletín de peligro de aludes de AEMET para el Pirineo navarro y aragonés, que se publica cada día en temporada.' : 'Fuera de temporada (AEMET publica el boletín de diciembre a mayo). Si hay nieve, el peligro de aludes existe igualmente.')}</p>
+    return `<h3>${t('Peligro de aludes')}</h3><div class="aludes-hoy" data-macizo="${macizoAEMET(p) ?? ''}"></div><p>${t(temporada ? 'Con nieve, consulta antes de salir el boletín de peligro de aludes de AEMET para el Pirineo navarro y aragonés, que se publica cada día en temporada.' : 'Fuera de temporada (AEMET publica el boletín de diciembre a mayo). Si hay nieve, el peligro de aludes existe igualmente.')}</p>
       <p class="enlace-ruta"><a href="https://www.aemet.es/documentos/es/eltiempo/prediccion/montana/boletin_peligro_aludes/BPA_Pirineo_Nav_Ara.pdf" target="_blank" rel="noopener">${t('Boletín de peligro de aludes (AEMET)')} ↗</a></p>
       <p class="ruta-credito"><a href="https://www.aemet.es/es/conocermas/montana/detalles/escala_peligro_aludes" target="_blank" rel="noopener">${t('Escala europea de peligro de aludes')}</a>: ${t('1 débil, 2 limitado, 3 notable, 4 fuerte, 5 muy fuerte.')}</p>`;
+  }
+  // zona del boletín de AEMET de cada cumbre (Jacetania, Gállego, Sobrarbe, Ribagorza); las sierras exteriores y Guara no tienen boletín
+  function macizoAEMET(p) {
+    const m = p.macizo;
+    if (['z-guara', 'z-exteriores'].includes(m)) return null;
+    if (m === 'z-anayet') return p.lon < -0.44 ? 'Jacetania' : 'Gállego';
+    if (['bal', 'z-tendenera'].includes(m)) return 'Gállego';
+    if (['vig', 'per', 'z-sobrarbe', 'z-chistau', 'bac'].includes(m)) return 'Sobrarbe';
+    if (['pos', 'prd', 'ane', 'z-cerler'].includes(m)) return 'Ribagorza';
+    return p.lon < -0.44 ? 'Jacetania' : p.lon < -0.13 ? 'Gállego' : p.lon < 0.4 ? 'Sobrarbe' : 'Ribagorza';
+  }
+  // el nivel de hoy, de data/aludes.json (tools/aludes.py lee cada día el PDF de AEMET); en la app, el de la web
+  let aludesCarga = null;
+  const cargaAludes = () => (aludesCarga ??= (async () => {
+    for (const b of NIEVE_BASES) {
+      try { const r = await fetch(`${b}data/aludes.json?dv=${window.DATOS_V || 0}`, { cache: 'no-cache', signal: AbortSignal.timeout?.(6000) }); if (r.ok) return await r.json(); } catch {}
+    }
+    return null;
+  })());
+  const COLOR_ALUD = ['', '#c8e66e', '#ffe14d', '#ff9f2e', '#e8402f', '#7a1f1a'];
+  async function pintaAludes(p) {
+    const h = fichaBody.querySelector('.aludes-hoy'); if (!h || !h.dataset.macizo) return;
+    const d = await cargaAludes(); if (!d?.temporada || S.active !== p.id) return;
+    const z = d.macizos?.[h.dataset.macizo]; if (!z) return;
+    const hoy = new Date().toISOString().slice(0, 10), vale = d.valido ?? d.fecha;
+    if (vale < hoy) return;   // boletín caducado: queda solo el enlace
+    const nombre = ['', 'Débil', 'Limitado', 'Notable', 'Fuerte', 'Muy fuerte'][z.nivel];
+    h.innerHTML = `<div class="alud-nivel" style="--c:${COLOR_ALUD[z.nivel]}"><b>${z.nivel}</b><span>${t(nombre)}<small>${t('{m}, para el {f}', { m: h.dataset.macizo, f: fechaCorta(vale) })}</small></span></div>
+      ${z.problemas.length ? `<p>${t('Problemas')}: ${z.problemas.map((x) => t(x).toLowerCase()).join(', ')}.</p>` : ''}
+      ${d.situacion ? `<p>${esc(d.situacion)}${d.iso0 ? ' ' + t('Isoterma de 0 °C a {h} m.', { h: d.iso0.toLocaleString(EN_INGLES ? 'en' : 'es') }) : ''}</p>` : ''}`;
   }
   function refugiosCerca(p) {
     const d = (r) => Math.hypot((r.lon - p.lon) * geo.mLon, (r.lat - p.lat) * geo.mLat);
@@ -1162,7 +1194,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1371,8 +1403,6 @@ async function boot() {
   }).catch(() => {});
 
   // — «Nieve ahora»: dónde hay nieve según el satélite Sentinel-2 (tools/nieve_ahora.py, cada día): capa sobre el relieve y sección en la ficha —
-  // en la app, la de la web (cambia cada día; la que va dentro de la APK se queda vieja): Cloudflare, si no GitHub Pages, y si no (sin cobertura) la de la APK
-  const NIEVE_BASES = EN_APP ? ['https://tresmiles.pages.dev/', 'https://skyllion666-coder.github.io/tresmiles/', ''] : [''];
   const nieveJson = async () => {
     for (const b of NIEVE_BASES) {
       try { const r = await fetch(`${b}data/nieve/nieve.json?dv=${window.DATOS_V || 0}`, { cache: 'no-cache', signal: AbortSignal.timeout?.(6000) }); if (r.ok) return { base: b, m: await r.json() }; } catch {}
