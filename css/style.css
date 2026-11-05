@@ -724,3 +724,4 @@ body.selector-abierto #intro { z-index: 31; }
 .glaciar-fecha b { font: 600 3.2rem/1 var(--serif); letter-spacing: .02em; border-bottom: 4px solid var(--c, #fff); padding: 0 .1em .05em; }
 .glaciar-fecha span { font: 500 .8rem/1.8 var(--cond); letter-spacing: .2em; text-transform: uppercase; }
 @media (max-width: 720px) { .glaciar-fecha { top: calc(max(12px, var(--sa-top, env(safe-area-inset-top))) + 62px); } .glaciar-fecha b { font-size: 2.6rem; } }
+.glaciar-anio.sat { border-bottom-style: dashed; }

@@ -55,6 +55,21 @@ aneto = next(b for b in base if b['nombre'] == 'Aneto')
 for anio, f in ((1981, 'Area1981'), (2011, 'Aneto2011'), (2020, 'Aneto2020'), (2021, 'Aneto2021'), (2022, 'Aneto2022')):
     aneto['g'][anio] = unary_union(lee_shp(f'{G}/aneto/Areas/{f}.shp'))
 
+# 2023–2026: estimación propia con Sentinel-2 (tools/glaciares_s2.py). Solo los tres grandes (más de 15 ha en 2020): en los pequeños el error de un año a otro
+# es mayor que lo que menguan. Comprobación: Aneto 2025 sale 30,9 ha y el IPE-CSIC midió unas 30 ha con dron. Un año que sale mayor que el anterior es nieve
+# del invierno que no se fundió (2024 fue muy nivoso), no hielo: se omite.
+FIABLES = {'aneto', 'maladeta-e', 'monte-perdido-lower'}
+EST = json.load(open(f'{G}/s2/estimas.json')) if os.path.exists(f'{G}/s2/estimas.json') else {}
+idde = lambda n: n.lower().replace(' ', '-').replace("'", '')
+for b in base:
+    b['sat'] = {}
+    if idde(b['nombre']) not in FIABLES: continue
+    for anio, r in sorted(EST.get(idde(b['nombre']), {}).items()):
+        if int(anio) < 2023 or not r.get('geom_ll'): continue
+        g = transform(lambda x, y, z=None: U31.transform(x, y), shape(r['geom_ll']))
+        if g.is_empty or g.area >= b['g'][max(b['g'])].area: continue
+        b['g'][int(anio)] = g; b['sat'][anio] = r['fecha']
+
 A_LL = Transformer.from_crs(25831, 4326, always_xy=True)
 def anillos(g):
     g = g.simplify(1.5, preserve_topology=True)
@@ -75,12 +90,14 @@ for b in base:
     epocas = {a: v for a, v in epocas.items() if v}
     res.append({'id': b['nombre'].lower().replace(' ', '-').replace("'", ''), 'nombre': b['nombre'], 'lon': round(lon, 5), 'lat': round(lat, 5),
                 'ha': {a: round(b['g'][int(a)].area / 1e4, 1) for a in epocas},
-                'cumbres': [i for d, i in cum if d < 2500], 'epocas': epocas})
+                'cumbres': [i for d, i in cum if d < 2500], 'epocas': epocas, **({'sat': {a: f for a, f in b['sat'].items() if a in epocas}} if b['sat'] else {})})
     print(f"{b['nombre']:20s}", ' '.join(f'{a}:{h}' for a, h in res[-1]['ha'].items()), '·', len(res[-1]['cumbres']), 'cumbres')
 fuentes = [
     {'epoca': '2000', 'texto': 'GLIMS (análisis del Instituto Pirenaico de Ecología, IPE-CSIC)', 'url': 'https://www.glims.org/'},
     {'epoca': '2011 y 2020', 'texto': 'Vidaller et al. (2021), Geophysical Research Letters, CC BY 4.0', 'url': 'https://doi.org/10.5281/zenodo.4756351'},
     {'epoca': 'Aneto 1981–2022', 'texto': 'Vidaller et al. (2023), The Cryosphere, CC BY 4.0', 'url': 'https://doi.org/10.5281/zenodo.7472185'},
 ]
+if any(b['sat'] for b in base):
+    fuentes.append({'epoca': '2023–2026 (≈)', 'texto': 'estimación propia con imágenes Sentinel-2 de final de verano (Copernicus); error de un ±10 %', 'url': 'https://dataspace.copernicus.eu/'})
 json.dump({'fuentes': fuentes, 'glaciares': res}, open(os.path.join(ROOT, 'data/glaciares.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 print(len(res), 'glaciares;', os.path.getsize(os.path.join(ROOT, 'data/glaciares.json')) // 1024, 'KB')

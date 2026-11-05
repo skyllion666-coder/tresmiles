@@ -11,15 +11,15 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=57';
-import { crearPanorama } from './panorama.js?v=11';
-import { crearUbicacion } from './ubicacion.js?v=10';
-import { crearSeguridad } from './seguridad.js?v=7';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=58';
+import { crearPanorama } from './panorama.js?v=12';
+import { crearUbicacion } from './ubicacion.js?v=11';
+import { crearSeguridad } from './seguridad.js?v=8';
 import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=6';
-import { crearSelector } from './selector.js?v=8';
-import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=1';
-import { t, EN_INGLES } from './i18n.js?v=22';
+import { crearRealidad } from './realidad.js?v=7';
+import { crearSelector } from './selector.js?v=9';
+import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
+import { t, EN_INGLES } from './i18n.js?v=23';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1440,9 +1440,10 @@ async function boot() {
     hueco.innerHTML = `<h3>${t('El glaciar en el tiempo')}</h3>
       <p class="ruta-credito">${t('Cómo ha menguado el hielo: elige un glaciar y una época. El relleno blanco es el hielo de ese año; las líneas de colores, el borde en los demás años.')}</p>
       <div class="ruta-acciones glaciar-lista">${cerca.map((g) => `<button type="button" class="btn-ruta btn-suave" data-act="glaciar" data-id="${g.id}" aria-pressed="${g.id === glaciarSel}">${t('Glaciar {n}', { n: esc(g.nombre) })}</button>`).join(' ')}</div>
-      ${gl ? `<div class="glaciar-anios" role="group" aria-label="${t('Época')}">${anios.map((a) => `<button type="button" class="glaciar-anio" data-act="glaciar" data-id="${gl.id}" data-anio="${a}" aria-pressed="${a === glaciarAnio}" style="--c:${COLOR_EPOCA[a] ?? '#fff'}">${a}<small>${fmtHa(gl.ha[a])} ha</small></button>`).join('')}
+      ${gl ? `<div class="glaciar-anios" role="group" aria-label="${t('Época')}">${anios.map((a) => `<button type="button" class="glaciar-anio${gl.sat?.[a] ? ' sat' : ''}" data-act="glaciar" data-id="${gl.id}" data-anio="${a}" aria-pressed="${a === glaciarAnio}" style="--c:${COLOR_EPOCA[a] ?? '#fff'}"${gl.sat?.[a] ? ` title="${t('Estimación por satélite (Sentinel-2, {f})', { f: gl.sat[a] })}"` : ''}>${a}<small>${gl.sat?.[a] ? '≈ ' : ''}${fmtHa(gl.ha[a])} ha</small></button>`).join('')}
         <button type="button" class="glaciar-anio glaciar-play" data-act="glaciar-play" aria-pressed="${!!glaciarT}" aria-label="${t('Ver la secuencia')}">▶</button></div>
-        <p class="glaciar-resumen">${t('De {a0} a {a1} ha perdido el {pc} % de su superficie: de {h0} a {h1} hectáreas.', { a0, a1, pc: Math.round((1 - gl.ha[a1] / gl.ha[a0]) * 100), h0: fmtHa(gl.ha[a0]), h1: fmtHa(gl.ha[a1]) })}</p>` : ''}
+        <p class="glaciar-resumen">${t('De {a0} a {a1} ha perdido el {pc} % de su superficie: de {h0} a {h1} hectáreas.', { a0, a1, pc: Math.round((1 - gl.ha[a1] / gl.ha[a0]) * 100), h0: fmtHa(gl.ha[a0]), h1: (gl.sat?.[a1] ? '≈ ' : '') + fmtHa(gl.ha[a1]) })}</p>
+        ${gl.sat ? `<p class="ruta-credito">${t('Los años con ≈ ({a}) son una estimación propia con imágenes del satélite Sentinel-2 de final de verano: aún no hay contornos científicos publicados. Comprobada con los contornos de 2020 y con la medición del IPE-CSIC de 2025, el error es de un ±10 %. Los veranos que acabaron con nieve del invierno sobre el hielo (2024) no se pueden medir así y no salen.', { a: Object.keys(gl.sat).join(', ') })}</p>` : ''}` : ''}
       <p class="ruta-credito">${t('Contornos')}: ${d.fuentes.map((f) => `${esc(f.epoca)}, <a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.texto)}</a>`).join('; ')}.</p>`;
   }
   async function eligeGlaciar(id, anio) {
@@ -1471,7 +1472,7 @@ async function boot() {
     const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === glaciarSel); if (!gl) return;
     const anios = Object.keys(gl.epocas); let i = 0;
     const paso = () => { glaciarAnio = anios[i]; glaciares.mostrar(gl, glaciarAnio);
-      glaciarFecha.style.setProperty('--c', COLOR_EPOCA[glaciarAnio] ?? '#fff'); glaciarFecha.innerHTML = `<b>${glaciarAnio}</b><span>${esc(gl.nombre)} · ${fmtHa(gl.ha[glaciarAnio])} ha</span>`; glaciarFecha.classList.add('on');
+      glaciarFecha.style.setProperty('--c', COLOR_EPOCA[glaciarAnio] ?? '#fff'); glaciarFecha.innerHTML = `<b>${glaciarAnio}</b><span>${esc(gl.nombre)} · ${gl.sat?.[glaciarAnio] ? '≈ ' : ''}${fmtHa(gl.ha[glaciarAnio])} ha${gl.sat?.[glaciarAnio] ? ` · ${t('satélite')}` : ''}</span>`; glaciarFecha.classList.add('on');
       if (S.active) pintaGlaciar(byId[S.active]); i = (i + 1) % anios.length; };
     glaciarT = setInterval(paso, 1400); paso();
   }

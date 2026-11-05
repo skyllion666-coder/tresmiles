@@ -3,7 +3,7 @@ import * as THREE from 'three';
 // «El glaciar en el tiempo»: el hielo de una época (relleno translúcido pegado al relieve) y el contorno de las demás (líneas de colores).
 // Datos: data/glaciares.json (tools/build_glaciares.py): contornos en lon/lat por año; los anillos van mezclados (exteriores y huecos):
 // un punto está dentro si cruza un número impar de anillos (par-impar), así los huecos salen solos.
-export const COLOR_EPOCA = { 1981: '#7b5cff', 2000: '#3d8bff', 2011: '#21c4d8', 2020: '#7ee0a0', 2021: '#d6e86a', 2022: '#ffd166' };
+export const COLOR_EPOCA = { 1981: '#7b5cff', 2000: '#3d8bff', 2011: '#21c4d8', 2020: '#7ee0a0', 2021: '#d6e86a', 2022: '#ffd166', 2023: '#ffa94d', 2024: '#ff7f50', 2025: '#ff5c6c', 2026: '#ff3d9a' };
 
 export function crearGlaciares({ scene, geo }) {
   let datos = null;
@@ -43,7 +43,7 @@ export function crearGlaciares({ scene, geo }) {
   }
   // contorno pegado al relieve, con un punto cada ~3 m
   function contorno(rs, color, opacidad) {
-    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: opacidad, depthWrite: false, fog: true });
+    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: opacidad, depthWrite: false, fog: true });   // (las épocas de satélite van con el mismo trazo: la ficha las marca con ≈)
     const g = new THREE.Group();
     for (const r of rs) {
       const p = [];
