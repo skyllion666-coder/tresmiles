@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
-import { makeGeo } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=30';
+import { makeGeo, EXAG } from './geo.js?v=3';
+import { Terrain, NCALOR } from './terrain.js?v=31';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=49';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
@@ -11,15 +11,15 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=58';
-import { crearPanorama } from './panorama.js?v=12';
-import { crearUbicacion } from './ubicacion.js?v=11';
-import { crearSeguridad } from './seguridad.js?v=8';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=59';
+import { crearPanorama } from './panorama.js?v=13';
+import { crearUbicacion } from './ubicacion.js?v=12';
+import { crearSeguridad } from './seguridad.js?v=9';
 import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=7';
-import { crearSelector } from './selector.js?v=9';
+import { crearRealidad } from './realidad.js?v=8';
+import { crearSelector } from './selector.js?v=10';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=23';
+import { t, EN_INGLES } from './i18n.js?v=24';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -94,6 +94,7 @@ async function boot() {
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
   const glaciares = crearGlaciares({ scene, geo });   // «El glaciar en el tiempo» (más abajo, pintaGlaciar)
   let glaciarSel = null, glaciarAnio = null, glaciarT = null;
+  const nieveSat = { meta: null, img: null, carga: null, on: false };   // «Nieve ahora» (data/nieve): datos del satélite, cargados al abrir una ficha o encender la capa
   const glaciarFecha = Object.assign(document.createElement('div'), { className: 'glaciar-fecha' }); glaciarFecha.setAttribute('aria-hidden', 'true'); document.body.append(glaciarFecha);   // el año en grande sobre el 3D mientras corre ▶
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
@@ -889,6 +890,7 @@ async function boot() {
       <div class="subidas-hueco"></div>
       <div class="zona-hueco"></div>
       <div class="glaciar-hueco"></div>
+      <div class="nieve-hueco"></div>
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
@@ -1004,6 +1006,7 @@ async function boot() {
     pintaRuta(S.active);
   });
   fichaBody.addEventListener('change', (e) => {
+    if (e.target.dataset?.act === 'nieve-mapa') { sonido.fx('toque'); nieveSat.pon?.(e.target.checked); return; }
     if (e.target.dataset?.act !== 'tiempo-mapa') return;
     store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
     const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, vistaDia(forzar(m?.d), diaSel.i) ?? null);
@@ -1159,7 +1162,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1366,6 +1369,102 @@ async function boot() {
     b.addEventListener('click', () => { sonido.fx('toque'); pon(!on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
     if (store.get('tresmiles-calor') === '1') pon(true);
   }).catch(() => {});
+
+  // — «Nieve ahora»: dónde hay nieve según el satélite Sentinel-2 (tools/nieve_ahora.py, cada día): capa sobre el relieve y sección en la ficha —
+  // en la app, la de la web (cambia cada día; la que va dentro de la APK se queda vieja): Cloudflare, si no GitHub Pages, y si no (sin cobertura) la de la APK
+  const NIEVE_BASES = EN_APP ? ['https://tresmiles.pages.dev/', 'https://skyllion666-coder.github.io/tresmiles/', ''] : [''];
+  const nieveJson = async () => {
+    for (const b of NIEVE_BASES) {
+      try { const r = await fetch(`${b}data/nieve/nieve.json?dv=${window.DATOS_V || 0}`, { cache: 'no-cache', signal: AbortSignal.timeout?.(6000) }); if (r.ok) return { base: b, m: await r.json() }; } catch {}
+    }
+    return null;
+  };
+  const cargaNieve = () => (nieveSat.carga ??= nieveJson().then((o) => new Promise((res) => {
+    if (!o) return res(null);
+    const { base, m } = o;
+    const img = new Image(); img.crossOrigin = 'anonymous'; img.onload = () => {
+      nieveSat.meta = m; nieveSat.img = img;
+      const tx = new THREE.Texture(img); tx.colorSpace = THREE.NoColorSpace; tx.flipY = false; tx.generateMipmaps = false; tx.minFilter = THREE.LinearFilter; tx.needsUpdate = true;
+      const [w, sur, e, n] = m.caja, a = geo.toXZ(w, n), c = geo.toXZ(e, sur);
+      terrain.clima.uNieve.value = tx; terrain.clima.uNieveB.value.set(a.x, a.z, c.x, c.z); res(m);
+    };
+    img.onerror = () => res(null); img.src = `${base}data/nieve/nieve.png?f=${m.ultima}`;   // la imagen cambia con la fecha (la caché no la repite)
+  })).catch(() => null));
+  {
+    const b = $('#btn-nieve'); let tf = null;
+    const fundido = (to) => { cancelAnimationFrame(tf); const K = terrain.clima.uNieveK, v0 = K.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 700); K.value = v0 + (to - v0) * k; if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
+    nieveSat.pon = async (v) => {
+      nieveSat.on = v; b.setAttribute('aria-pressed', v); store.set('tresmiles-nieve', v ? '1' : '0');
+      if (v && !(await cargaNieve())) { nieveSat.on = false; b.setAttribute('aria-pressed', false); return; }
+      if (nieveSat.on !== v) return;
+      $('#nieve-tip').textContent = v && nieveSat.meta ? t('Nieve ahora · satélite del {f}', { f: fechaCorta(nieveSat.meta.fecha) }) : t('Nieve ahora (satélite)');
+      fundido(v ? 1 : 0);
+      fichaBody.querySelectorAll('[data-act="nieve-mapa"]').forEach((c) => { c.checked = v; });
+    };
+    b.addEventListener('click', () => { sonido.fx('toque'); nieveSat.pon(!nieveSat.on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 2200); });
+    fetch(`data/nieve/nieve.json?dv=${window.DATOS_V || 0}`, { method: 'HEAD', cache: 'no-cache' }).then((r) => { if (r.ok || EN_APP) { b.hidden = false; if (store.get('tresmiles-nieve') === '1') nieveSat.pon(true); } }).catch(() => { if (EN_APP) b.hidden = false; });
+  }
+  function fechaCorta(f) { return new Date(f + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { day: 'numeric', month: 'long' }); }
+  // lee la máscara alrededor de un punto: [{x, z, r (fracción de nieve 0–1), visto, edad (días)}] cada ~35-45 m dentro de «radio» metros
+  const lienzoNieve = document.createElement('canvas'), cxNieve = lienzoNieve.getContext('2d', { willReadFrequently: true });
+  function nieveAlrededor(lon, lat, radio) {
+    const m = nieveSat.meta, img = nieveSat.img; if (!m || !img) return null;
+    const [w, sur, e, n] = m.caja, dLon = radio / (111320 * Math.cos((lat * Math.PI) / 180)), dLat = radio / 111132;
+    const u0 = Math.floor(((lon - dLon - w) / (e - w)) * m.ancho), u1 = Math.ceil(((lon + dLon - w) / (e - w)) * m.ancho);
+    const v0 = Math.floor(((n - lat - dLat) / (n - sur)) * m.alto), v1 = Math.ceil(((n - lat + dLat) / (n - sur)) * m.alto);
+    if (u1 < 0 || v1 < 0 || u0 >= m.ancho || v0 >= m.alto) return null;
+    const W = u1 - u0 + 1, H = v1 - v0 + 1; lienzoNieve.width = W; lienzoNieve.height = H;
+    cxNieve.clearRect(0, 0, W, H); cxNieve.drawImage(img, u0, v0, W, H, 0, 0, W, H);
+    const d = cxNieve.getImageData(0, 0, W, H).data, out = [];
+    for (let j = 0; j < H; j++) for (let i = 0; i < W; i++) {
+      const lo = w + ((u0 + i + 0.5) / m.ancho) * (e - w), la = n - ((v0 + j + 0.5) / m.alto) * (n - sur);
+      const k = (j * W + i) * 4, q = geo.toXZ(lo, la), c = geo.toXZ(lon, lat);
+      if (Math.hypot(q.x - c.x, q.z - c.z) > radio) continue;
+      out.push({ x: q.x, z: q.z, r: d[k] / 250, visto: d[k + 1] > 127, edad: d[k + 2] });
+    }
+    return out;
+  }
+  // lector directo de la máscara en un recuadro lon/lat: (lon, lat) → {r, visto, edad} del píxel
+  function nieveCaja(w0, s0, e0, n0) {
+    const m = nieveSat.meta, img = nieveSat.img; if (!m || !img) return null;
+    const [w, sur, e, n] = m.caja, px = (lon) => Math.floor(((lon - w) / (e - w)) * m.ancho), py = (lat) => Math.floor(((n - lat) / (n - sur)) * m.alto);
+    const u0 = Math.max(0, px(w0) - 1), u1 = Math.min(m.ancho - 1, px(e0) + 1), v0 = Math.max(0, py(n0) - 1), v1 = Math.min(m.alto - 1, py(s0) + 1);
+    if (u1 < u0 || v1 < v0) return null;
+    const W = u1 - u0 + 1, H = v1 - v0 + 1; lienzoNieve.width = W; lienzoNieve.height = H; cxNieve.drawImage(img, u0, v0, W, H, 0, 0, W, H);
+    const d = cxNieve.getImageData(0, 0, W, H).data;
+    return (lon, lat) => { const i = px(lon) - u0, j = py(lat) - v0; if (i < 0 || j < 0 || i >= W || j >= H) return null; const k = (j * W + i) * 4; return { r: d[k] / 250, visto: d[k + 1] > 127, edad: d[k + 2] }; };
+  }
+  async function pintaNieve(p) {
+    const hueco = fichaBody.querySelector('.nieve-hueco'); if (!hueco || !p) return;
+    const m = await cargaNieve(); if (!m || S.active !== p.id) { hueco.innerHTML = ''; return; }
+    const cima = nieveAlrededor(p.lon, p.lat, 90), zona = nieveAlrededor(p.lon, p.lat, 2500);
+    if (!cima?.length || !zona?.length) { hueco.innerHTML = ''; return; }
+    const vistos = cima.filter((c) => c.visto);
+    let txt;
+    if (!vistos.length) txt = t('Las nubes no han dejado ver la cumbre en los últimos {d} días.', { d: 20 });
+    else {
+      const f = vistos.reduce((a, c) => a + c.r, 0) / vistos.length, edad = Math.min(...vistos.map((c) => c.edad));
+      txt = t(f > 0.5 ? 'La cumbre tiene nieve.' : f > 0.12 ? 'Hay manchas de nieve en la cumbre.' : 'La cumbre está sin nieve.') + ' ' +
+        t(edad <= 1 ? '(visto ayer u hoy)' : '(visto hace {d} días)', { d: edad });
+      // desde qué altitud hay nieve alrededor (2,5 km): el 10 % más bajo de los puntos con nieve, por encima de las manchas sueltas
+      const alt = zona.filter((c) => c.visto && c.r > 0.5).map((c) => geo.heightAt(c.x, c.z) / EXAG).sort((a, b) => a - b);
+      if (alt.length > 6) txt += ' ' + t('Alrededor hay nieve desde unos {h} m (en las caras norte suele bajar más).', { h: Math.round(alt[Math.floor(alt.length * 0.1)] / 50) * 50 });
+      else if (f <= 0.12) txt += ' ' + t('Tampoco hay nieve alrededor.');
+    }
+    // por la ruta: el primer punto de la subida con nieve
+    const ruta = rutasDe(p.id)[0]?.ruta?.puntos;
+    if (ruta?.length && vistos.length) {
+      let top = 0; ruta.forEach((q, i) => { if (q[2] > ruta[top][2]) top = i; });
+      const sube = ruta.slice(0, top + 1), lect = nieveCaja(Math.min(...sube.map((q) => q[0])), Math.min(...sube.map((q) => q[1])), Math.max(...sube.map((q) => q[0])), Math.max(...sube.map((q) => q[1])));
+      if (lect) for (let i = 0; i <= top; i += Math.max(1, Math.floor(top / 600))) {
+        const c = lect(ruta[i][0], ruta[i][1]);
+        if (c?.visto && c.r > 0.5) { txt += ' ' + t('La ruta pisa nieve desde unos {h} m, a {k} km del inicio.', { h: Math.round(ruta[i][2] / 50) * 50, k: (ruta[i][3] / 1000).toLocaleString(EN_INGLES ? 'en' : 'es', { maximumFractionDigits: 1 }) }); break; }
+      }
+    }
+    hueco.innerHTML = `<h3>${t('Nieve ahora')}</h3><p>${txt}</p>
+      <label class="meteo-mapa"><input type="checkbox" data-act="nieve-mapa"${nieveSat.on ? ' checked' : ''}><span>${t('Ver la nieve en el mapa')}</span></label>
+      <p class="ruta-credito">${t('Satélite Sentinel-2 de Copernicus: para cada punto, la última imagen sin nubes (la más reciente, del {f}). Ve si hay nieve, no cómo está: puede estar dura o helada; con nieve, crampones y piolet.', { f: fechaCorta(m.ultima) })}</p>`;
+  }
 
   if (!SIN_APK) $('#descarga-app').hidden = false;   // enlace de la portada para bajar la app
 

@@ -19,6 +19,7 @@ uniform float uOrto; uniform sampler2D uSat; uniform vec4 uPb; uniform vec3 uOA,
 uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
 uniform sampler2D uGran; uniform float uGranK; uniform float uGranM;   // granito escaneado en la malla fina de las cimas de granito (uGranK = 1), uGranM: su luminancia media
 uniform float uCota, uCotaK, uAcum, uMoj, uCliR; uniform vec3 uCliC;   // tiempo real (js/tiempo.js): cota de nieve en todo el mapa, nieve que cuaja y suelo mojado alrededor de la cumbre abierta
+uniform sampler2D uNieve; uniform vec4 uNieveB; uniform float uNieveK;   // «Nieve ahora» (data/nieve, tools/nieve_ahora.py): R = fracción de nieve vista por el satélite, G = suelo visto; su recuadro en x/z; intensidad de la capa
 uniform sampler2D uCalor[NCALOR]; uniform vec4 uCalorB[NCALOR]; uniform float uCalorK;   // «Por dónde pasa la gente»: por zona, densidad de trazas GPS públicas de OSM y tipo de vía (data/calor), su recuadro en x/z; y la intensidad de la capa
 varying float vRoca; varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vCUv;
 float h31(vec3 p){ p=fract(p*0.3183099+.1); p*=17.; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
@@ -137,6 +138,16 @@ if (uCotaK + uAcum + uMoj > .001) {
   c2 = mix(c2, c2 * vec3(.66, .70, .74), mj * .55);
   diffuseColor.rgb = c2;
 }
+// «Nieve ahora»: la nieve que ve el satélite (la última pasada sin nubes de cada punto); en las laderas muy empinadas se ve algo menos (la roca asoma)
+if (uNieveK > .001) {
+  vec2 nu = (vWPos.xz - uNieveB.xy) / (uNieveB.zw - uNieveB.xy);
+  if (nu.x > 0. && nu.x < 1. && nu.y > 0. && nu.y < 1.) {
+    vec2 nt = texture2D(uNieve, nu).rg;
+    float slc = 1. - normalize(vWNrm).y;
+    float sn = smoothstep(.22, .62, nt.r + (vn(vWPos * .05) - .5) * .18) * step(.5, nt.g) * (1. - .35 * smoothstep(.55, .85, slc)) * uNieveK;
+    diffuseColor.rgb = mix(diffuseColor.rgb, vec3(.92, .95, .99) * (.93 + .07 * vn(vWPos * .4)), sn * .9);
+  }
+}
 // capa de calor: cuantas más trazas pasan por un punto, más brillo (naranja tenue con pocas → amarillo con muchas); carreteras en azul grisáceo y pistas en arena
 // (se dicen, no se quitan); de lejos solo queda el núcleo de los caminos más pisados; también brilla un poco de noche
 if (uCalorK > .001) {
@@ -171,7 +182,7 @@ if (uBump > .5) {
 export class Terrain {
   constructor({ scene, meta, store, geo, renderer, base, movil = false }) {
     this.movil = movil; this.coberturas = new Map();
-    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() }, uCalor: { value: Array(NCALOR).fill(null) }, uCalorB: { value: Array.from({ length: NCALOR }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uCalorK: { value: 0 } };   // compartidos por todos los materiales del relieve
+    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() }, uCalor: { value: Array(NCALOR).fill(null) }, uCalorB: { value: Array.from({ length: NCALOR }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uCalorK: { value: 0 }, uNieve: { value: null }, uNieveB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) }, uNieveK: { value: 0 } };   // compartidos por todos los materiales del relieve
     this.holes = { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) };
     this.paq = { uPaq: { value: null }, uPaqB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) } };   // máscara del paquete de zona (js/paquete.js)
     this.meta = meta; this.store = store; this.geo = geo; this.base = base;
