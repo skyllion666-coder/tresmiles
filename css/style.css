@@ -710,3 +710,11 @@ body.selector-abierto #intro { z-index: 31; }
 
 /* pantalla completa: el icono cambia a «salir» mientras está activa */
 #btn-pantalla .pc-cerrar { display: none; } #btn-pantalla.is-on .pc-abrir { display: none; } #btn-pantalla.is-on .pc-cerrar { display: inline; }
+/* «El glaciar en el tiempo»: botones de época con el color de su contorno en el mapa */
+.glaciar-lista { flex-wrap: wrap; }
+.glaciar-anios { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 6px; }
+.glaciar-anio { display: grid; justify-items: center; min-width: 58px; padding: 6px 8px 5px; border-radius: 10px; border: 1px solid rgba(0,0,0,.14); border-bottom: 4px solid var(--c, #fff); background: rgba(255,255,255,.55); font: 600 .9rem var(--cond); letter-spacing: .04em; color: var(--spruce); cursor: pointer; }
+.glaciar-anio small { font: 400 .68rem var(--cond); opacity: .75; }
+.glaciar-anio[aria-pressed="true"] { background: var(--spruce); color: var(--cream); }
+.glaciar-play { min-width: 44px; align-content: center; border-bottom-color: var(--spruce); }
+.glaciar-resumen { font-weight: 600; }

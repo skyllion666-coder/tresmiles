@@ -11,14 +11,15 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=56';
-import { crearPanorama } from './panorama.js?v=10';
-import { crearUbicacion } from './ubicacion.js?v=9';
-import { crearSeguridad } from './seguridad.js?v=6';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=57';
+import { crearPanorama } from './panorama.js?v=11';
+import { crearUbicacion } from './ubicacion.js?v=10';
+import { crearSeguridad } from './seguridad.js?v=7';
 import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=5';
-import { crearSelector } from './selector.js?v=7';
-import { t, EN_INGLES } from './i18n.js?v=21';
+import { crearRealidad } from './realidad.js?v=6';
+import { crearSelector } from './selector.js?v=8';
+import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=1';
+import { t, EN_INGLES } from './i18n.js?v=22';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -91,6 +92,8 @@ async function boot() {
 
   const geo = makeGeo(meta, relieve);
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
+  const glaciares = crearGlaciares({ scene, geo });   // «El glaciar en el tiempo» (más abajo, pintaGlaciar)
+  let glaciarSel = null, glaciarAnio = null, glaciarT = null;
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
   let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
@@ -884,6 +887,7 @@ async function boot() {
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
       <div class="subidas-hueco"></div>
       <div class="zona-hueco"></div>
+      <div class="glaciar-hueco"></div>
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
@@ -986,6 +990,8 @@ async function boot() {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'zonas') { abreZonas(); return; }
+    if (act?.dataset.act === 'glaciar') { eligeGlaciar(act.dataset.id, act.dataset.anio); return; }
+    if (act?.dataset.act === 'glaciar-play') { reproduceGlaciar(); return; }
     if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
@@ -1152,7 +1158,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p); pintaZona(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1230,7 +1236,7 @@ async function boot() {
     subidaSel(null);
     if (!S.active) return;
     S.detalle = false; controls.minDistance = 500;
-    const was = S.active; sonido.fx('cerrar'); tiempo.set(null); banderines.setViento(0); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
+    const was = S.active; glaciarStop(); glaciarSel = null; glaciares.quitar(); sonido.fx('cerrar'); tiempo.set(null); banderines.setViento(0); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
     history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
@@ -1262,7 +1268,7 @@ async function boot() {
     else if (!abierto && guarda && history.state?.tresmiles) { guarda = false; ignoraPop = true; history.back(); }   // se cerró con el dedo: se quita la guarda
   }, 300);
   $('#filters-cerrar').addEventListener('click', () => { sonido.fx('cerrar'); cierraFiltros(); });
-  const goHome = () => { tiempo.set(null); banderines.setViento(0); S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
+  const goHome = () => { glaciarStop(); glaciarSel = null; glaciares.quitar(); tiempo.set(null); banderines.setViento(0); S.detalle = false; controls.minDistance = 500; pararVuelo(false); S.active = null; if (pDef) fauna?.setCentro(pDef.w.x, pDef.w.z); pintaRuta(null); btnVuelo.hidden = true; refreshLists(); return flyTo(HOME, { shift: { x: 0, y: 0 } }); };
   $('#btn-home').addEventListener('click', () => { if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
   $('#brand').addEventListener('click', (e) => { e.preventDefault(); if (S.mode === 'explore') { sonido.fx('inicio'); closeFicha(); goHome(); } });
 
@@ -1416,6 +1422,47 @@ async function boot() {
     if (zonasDlg.open && (estado !== 'descargando' || pct % 2 === 0)) pintaZonas();
     if (S.active) pintaZona(byId[S.active]);
   };
+  // — «El glaciar en el tiempo» (js/glaciar.js, data/glaciares.json): en la ficha de las cumbres a menos de 2,5 km de un glaciar —
+  const fmtHa = (h) => h.toLocaleString(EN_INGLES ? 'en' : 'es', { maximumFractionDigits: 1 });
+  function glaciarStop() { clearInterval(glaciarT); glaciarT = null; fichaBody.querySelector('[data-act="glaciar-play"]')?.setAttribute('aria-pressed', 'false'); }
+  const escLon = (dlon) => dlon * Math.cos(42.7 * Math.PI / 180);
+  const sinAcento = (x) => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const mismoNombre = (g, p) => sinAcento(p.nombre).includes(sinAcento(g.nombre).replace(/ (e|w|upper|lower|central)$/, '').replace(/^monte perdido$/, 'perdido')) || (g.id.startsWith('monte-perdido') && /perdido/i.test(p.nombre));
+  async function pintaGlaciar(p) {
+    const hueco = fichaBody.querySelector('.glaciar-hueco'); if (!hueco || !p) return;
+    const d = await glaciares.cargar(); if (!d || S.active !== p.id) return;
+    const cerca = d.glaciares.filter((g) => g.cumbres.includes(p.id) && Object.keys(g.epocas).length > 1)
+      .map((g) => ({ g, k: Math.hypot(escLon(g.lon - p.lon), g.lat - p.lat) - (mismoNombre(g, p) ? 1 : 0) })).sort((x, y) => x.k - y.k).map((x) => x.g).slice(0, 4);   // el que lleva el nombre de la cumbre, primero
+    const gl = cerca.find((g) => g.id === glaciarSel) ?? null;
+    if (!cerca.length) { hueco.innerHTML = ''; return; }
+    const anios = gl ? Object.keys(gl.epocas) : [], a0 = anios[0], a1 = anios[anios.length - 1];
+    hueco.innerHTML = `<h3>${t('El glaciar en el tiempo')}</h3>
+      <p class="ruta-credito">${t('Cómo ha menguado el hielo: elige un glaciar y una época. El relleno blanco es el hielo de ese año; las líneas de colores, el borde en los demás años.')}</p>
+      <div class="ruta-acciones glaciar-lista">${cerca.map((g) => `<button type="button" class="btn-ruta btn-suave" data-act="glaciar" data-id="${g.id}" aria-pressed="${g.id === glaciarSel}">${t('Glaciar {n}', { n: esc(g.nombre) })}</button>`).join(' ')}</div>
+      ${gl ? `<div class="glaciar-anios" role="group" aria-label="${t('Época')}">${anios.map((a) => `<button type="button" class="glaciar-anio" data-act="glaciar" data-id="${gl.id}" data-anio="${a}" aria-pressed="${a === glaciarAnio}" style="--c:${COLOR_EPOCA[a] ?? '#fff'}">${a}<small>${fmtHa(gl.ha[a])} ha</small></button>`).join('')}
+        <button type="button" class="glaciar-anio glaciar-play" data-act="glaciar-play" aria-pressed="${!!glaciarT}" aria-label="${t('Ver la secuencia')}">▶</button></div>
+        <p class="glaciar-resumen">${t('De {a0} a {a1} ha perdido el {pc} % de su superficie: de {h0} a {h1} hectáreas.', { a0, a1, pc: Math.round((1 - gl.ha[a1] / gl.ha[a0]) * 100), h0: fmtHa(gl.ha[a0]), h1: fmtHa(gl.ha[a1]) })}</p>` : ''}
+      <p class="ruta-credito">${t('Contornos')}: ${d.fuentes.map((f) => `${esc(f.epoca)}, <a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.texto)}</a>`).join('; ')}.</p>`;
+  }
+  async function eligeGlaciar(id, anio) {
+    const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === id); if (!gl) return;
+    const nuevo = glaciarSel !== id; glaciarSel = id;
+    if (!anio) { glaciarStop(); anio = Object.keys(gl.epocas).at(-1); }
+    glaciarAnio = String(anio); glaciares.mostrar(gl, glaciarAnio); sonido.fx('toque');
+    if (nuevo) {   // acercar la cámara al glaciar, mirándolo desde el sur un poco en alto
+      // la cámara, del lado del glaciar mirando hacia la cumbre: así se ve la ladera helada de frente (casi todos están en la cara norte)
+      const c = glaciares.caja(gl), pk = byId[S.active]?.w, dx = pk ? c.x - pk.x : 0, dz = pk ? c.z - pk.z : 1;
+      flyTo({ t: new THREE.Vector3(c.x, c.y - 40, c.z), theta: Math.hypot(dx, dz) > 50 ? Math.atan2(dx, dz) : camState().theta, phi: 0.9, r: clamp(c.r * 4.2, 1600, 5200) }, { shift: viewShift() });
+    }
+    if (S.active) pintaGlaciar(byId[S.active]);
+  }
+  async function reproduceGlaciar() {
+    if (glaciarT) { glaciarStop(); return; }
+    const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === glaciarSel); if (!gl) return;
+    const anios = Object.keys(gl.epocas); let i = 0;
+    const paso = () => { glaciarAnio = anios[i]; glaciares.mostrar(gl, glaciarAnio); if (S.active) pintaGlaciar(byId[S.active]); i = (i + 1) % anios.length; };
+    glaciarT = setInterval(paso, 1400); paso();
+  }
   // en la ficha de una cumbre con paquete: botón a «Mis zonas»
   async function pintaZona(p) {
     const hueco = fichaBody.querySelector('.zona-hueco'); if (!hueco || !p || !APP_PAQ) return;
