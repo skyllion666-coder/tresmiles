@@ -94,6 +94,7 @@ async function boot() {
   const terrain = new Terrain({ scene, meta, store: relieve, geo, renderer, base: 'data/terrain', movil: EN_APP ? !CALIDAD_ALTA : isMobile() || matchMedia('(pointer: coarse)').matches });
   const glaciares = crearGlaciares({ scene, geo });   // «El glaciar en el tiempo» (más abajo, pintaGlaciar)
   let glaciarSel = null, glaciarAnio = null, glaciarT = null;
+  const glaciarFecha = Object.assign(document.createElement('div'), { className: 'glaciar-fecha' }); glaciarFecha.setAttribute('aria-hidden', 'true'); document.body.append(glaciarFecha);   // el año en grande sobre el 3D mientras corre ▶
   const banderines = crearBanderines({ scene, geo });
   const veg = crearVegetacion({ scene, geo, meta, terrain, movil: terrain.movil });
   let reajustaRutas = null;   // se define cuando ya existen las rutas (más abajo): una zona puede cargarse antes
@@ -1022,7 +1023,7 @@ async function boot() {
     tab.hidden = !v || isMobile(); $('#ficha-tab-name').textContent = p.nombre;
     foldBtn.setAttribute('aria-label', v ? 'Abrir la ficha' : 'Recoger la ficha para ver el recorrido');
     fichaEl.setAttribute('aria-hidden', 'false'); aplicaAltura();
-    if (fly) flyTo(peakState(p), { shift: viewShift() });
+    if (fly && !glaciarSel) flyTo(peakState(p), { shift: viewShift() });   // con un glaciar elegido la cámara se queda en él
     else S.shiftTo = viewShift();
   }
   foldBtn.addEventListener('click', () => { sonido.fx(S.plegada ? 'abrir' : 'cerrar'); plegar(!S.plegada); });
@@ -1424,7 +1425,7 @@ async function boot() {
   };
   // — «El glaciar en el tiempo» (js/glaciar.js, data/glaciares.json): en la ficha de las cumbres a menos de 2,5 km de un glaciar —
   const fmtHa = (h) => h.toLocaleString(EN_INGLES ? 'en' : 'es', { maximumFractionDigits: 1 });
-  function glaciarStop() { clearInterval(glaciarT); glaciarT = null; fichaBody.querySelector('[data-act="glaciar-play"]')?.setAttribute('aria-pressed', 'false'); }
+  function glaciarStop() { clearInterval(glaciarT); glaciarT = null; glaciarFecha.classList.remove('on'); fichaBody.querySelector('[data-act="glaciar-play"]')?.setAttribute('aria-pressed', 'false'); }
   const escLon = (dlon) => dlon * Math.cos(42.7 * Math.PI / 180);
   const sinAcento = (x) => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const mismoNombre = (g, p) => sinAcento(p.nombre).includes(sinAcento(g.nombre).replace(/ (e|w|upper|lower|central)$/, '').replace(/^monte perdido$/, 'perdido')) || (g.id.startsWith('monte-perdido') && /perdido/i.test(p.nombre));
@@ -1447,7 +1448,8 @@ async function boot() {
   async function eligeGlaciar(id, anio) {
     const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === id); if (!gl) return;
     const nuevo = glaciarSel !== id || !anio; glaciarSel = id;   // tocar el nombre del glaciar siempre lleva la cámara a él (aunque ya estuviera elegido)
-    if (!anio) { glaciarStop(); anio = Object.keys(gl.epocas).at(-1); }
+    glaciarStop();   // elegir un año a mano para la secuencia (y quita el año grande)
+    if (!anio) anio = Object.keys(gl.epocas).at(-1);
     glaciarAnio = String(anio); glaciares.mostrar(gl, glaciarAnio); sonido.fx('toque');
     if (nuevo) {   // acercar la cámara al glaciar
       // en el móvil la hoja baja al 40 % de la pantalla (si estaba más alta o plegada): el glaciar queda a la vista arriba y los años, a mano en la hoja
@@ -1468,7 +1470,9 @@ async function boot() {
     if (glaciarT) { glaciarStop(); return; }
     const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === glaciarSel); if (!gl) return;
     const anios = Object.keys(gl.epocas); let i = 0;
-    const paso = () => { glaciarAnio = anios[i]; glaciares.mostrar(gl, glaciarAnio); if (S.active) pintaGlaciar(byId[S.active]); i = (i + 1) % anios.length; };
+    const paso = () => { glaciarAnio = anios[i]; glaciares.mostrar(gl, glaciarAnio);
+      glaciarFecha.style.setProperty('--c', COLOR_EPOCA[glaciarAnio] ?? '#fff'); glaciarFecha.innerHTML = `<b>${glaciarAnio}</b><span>${esc(gl.nombre)} · ${fmtHa(gl.ha[glaciarAnio])} ha</span>`; glaciarFecha.classList.add('on');
+      if (S.active) pintaGlaciar(byId[S.active]); i = (i + 1) % anios.length; };
     glaciarT = setInterval(paso, 1400); paso();
   }
   // en la ficha de una cumbre con paquete: botón a «Mis zonas»

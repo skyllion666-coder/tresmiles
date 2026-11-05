@@ -718,3 +718,9 @@ body.selector-abierto #intro { z-index: 31; }
 .glaciar-anio[aria-pressed="true"] { background: var(--spruce); color: var(--cream); }
 .glaciar-play { min-width: 44px; align-content: center; border-bottom-color: var(--spruce); }
 .glaciar-resumen { font-weight: 600; }
+/* año del glaciar sobre el 3D mientras corre la secuencia ▶ (se ve también con la ficha plegada) */
+.glaciar-fecha { position: fixed; left: 50%; top: calc(max(14px, var(--sa-top, env(safe-area-inset-top))) + 74px); transform: translateX(-50%); z-index: 6; pointer-events: none; display: grid; justify-items: center; color: var(--cream); text-shadow: 0 2px 14px rgba(0,0,0,.6), 0 0 3px rgba(0,0,0,.5); opacity: 0; transition: opacity .35s; }
+.glaciar-fecha.on { opacity: 1; }
+.glaciar-fecha b { font: 600 3.2rem/1 var(--serif); letter-spacing: .02em; border-bottom: 4px solid var(--c, #fff); padding: 0 .1em .05em; }
+.glaciar-fecha span { font: 500 .8rem/1.8 var(--cond); letter-spacing: .2em; text-transform: uppercase; }
+@media (max-width: 720px) { .glaciar-fecha { top: calc(max(12px, var(--sa-top, env(safe-area-inset-top))) + 62px); } .glaciar-fecha b { font-size: 2.6rem; } }
