@@ -1446,10 +1446,18 @@ async function boot() {
   }
   async function eligeGlaciar(id, anio) {
     const d = await glaciares.cargar(), gl = d?.glaciares.find((g) => g.id === id); if (!gl) return;
-    const nuevo = glaciarSel !== id; glaciarSel = id;
+    const nuevo = glaciarSel !== id || !anio; glaciarSel = id;   // tocar el nombre del glaciar siempre lleva la cámara a él (aunque ya estuviera elegido)
     if (!anio) { glaciarStop(); anio = Object.keys(gl.epocas).at(-1); }
     glaciarAnio = String(anio); glaciares.mostrar(gl, glaciarAnio); sonido.fx('toque');
-    if (nuevo) {   // acercar la cámara al glaciar, mirándolo desde el sur un poco en alto
+    if (nuevo) {   // acercar la cámara al glaciar
+      // en el móvil la hoja baja al 40 % de la pantalla (si estaba más alta o plegada): el glaciar queda a la vista arriba y los años, a mano en la hoja
+      if (isMobile()) {
+        const h = innerHeight * 0.4;
+        if (S.plegada) plegar(false, { fly: false });
+        if (sheetH() > h + 1) { S.sheetH = h; aplicaAltura(); }
+        S.shiftTo = viewShift();
+        requestAnimationFrame(() => fichaBody.querySelector('.glaciar-hueco')?.scrollIntoView({ block: 'start', behavior: 'smooth' }));
+      }
       // la cámara, del lado del glaciar mirando hacia la cumbre: así se ve la ladera helada de frente (casi todos están en la cara norte)
       const c = glaciares.caja(gl), pk = byId[S.active]?.w, dx = pk ? c.x - pk.x : 0, dz = pk ? c.z - pk.z : 1;
       flyTo({ t: new THREE.Vector3(c.x, c.y - 40, c.z), theta: Math.hypot(dx, dz) > 50 ? Math.atan2(dx, dz) : camState().theta, phi: 0.9, r: clamp(c.r * 4.2, 1600, 5200) }, { shift: viewShift() });
