@@ -145,10 +145,13 @@ def solo_cima(picos, pico):   # cumbre sin ruta: recuadro de ~2,5 km alrededor d
 
 REHACER = '--rehacer' in sys.argv; args = [a for a in sys.argv[1:] if a != '--rehacer']
 cumbre = args[0]; elegidas = [int(a) for a in args[1:]] or [1]
-PICOS = json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos']; pico = next(p for p in PICOS if p['id'] == cumbre)
+PICOS = json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos']; MEN = json.load(open(os.path.join(ROOT, 'data/menores.json')))['picos']
+pico = next(p for p in PICOS + MEN if p['id'] == cumbre)
 lineas = [json.load(open(os.path.join(ROOT, 'data/rutas', f'{r}.json')))['puntos'] for r in pico.get('rutas') or []]
 sub = os.path.join(ROOT, 'data/subidas', f'{cumbre}.json')
 if os.path.exists(sub): lineas += [s['puntos'] for s in json.load(open(sub))['subidas'] if int(s['id'].rsplit('-', 1)[1]) in elegidas]
+PAS = os.path.expanduser(f'~/tresmiles-fuentes/lidar/{cumbre}_pasillo.json')   # cumbres populares: pasillo de las trazas GPS de OSM
+if not lineas and os.path.exists(PAS): lineas = json.load(open(PAS)); print(cumbre, 'pasillo de', len(lineas), 'trazas GPS', flush=True)
 if not lineas: lineas = solo_cima(PICOS, pico); print(cumbre, 'sin ruta: solo la cima y sus vecinas', flush=True)
 celdas = set()
 for L in lineas:
