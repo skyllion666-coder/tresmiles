@@ -3057,7 +3057,10 @@
     "texto": "Ruta de Furgoxo en Wikiloc: Gabieto Occidental y Oriental desde la Pradera de Ordesa"
    },
    "ruta": "Desde la Pradera de Ordesa se vuelve unos cientos de metros por la carretera hasta Casa Olivan y se toma la senda del Circo de Carriata, que sube por el bosque en zigzag. El circo se supera por la Fajeta, un paso sencillo con algo de cadena, o por las Clavijas, y se sigue hasta el Cuello de los Gabietos. Para las dos cimas se sube por una diagonal al Gabieto Occidental, se sigue por la cresta al Oriental y se baja por el Cuello. El tramo final no tiene pasos complicados ni gran sensación de vacío, pero es alta montaña y pide precaución.",
-   "curiosidad": "El Gabieto Occidental (3.035 m) supera en solo 4 m al Oriental (3.031 m); se unen por una cresta corta y se suelen hacer juntos."
+   "curiosidad": "El Gabieto Occidental (3.035 m) supera en solo 4 m al Oriental (3.031 m); se unen por una cresta corta y se suelen hacer juntos.",
+   "rutas": [
+    "gabietos-carriata"
+   ]
   },
   {
    "id": "gabieto-oriental",
@@ -3087,7 +3090,10 @@
     "texto": "Ruta de Furgoxo en Wikiloc: Gabieto Occidental y Oriental desde la Pradera de Ordesa"
    },
    "ruta": "Desde la Pradera de Ordesa se vuelve unos cientos de metros por la carretera hasta Casa Olivan y se toma la senda del Circo de Carriata, que sube por el bosque en zigzag. El circo se supera por la Fajeta, un paso sencillo con algo de cadena, o por las Clavijas, y se sigue hasta el Cuello de los Gabietos. Para las dos cimas se sube por una diagonal al Gabieto Occidental, se sigue por la cresta al Oriental y se baja por el Cuello. El tramo final no tiene pasos complicados ni gran sensación de vacío, pero es alta montaña y pide precaución.",
-   "curiosidad": "El Gabieto Oriental (3.031 m) está a solo 4 m del Occidental (3.035 m); se unen por una cresta corta y se suelen hacer juntos."
+   "curiosidad": "El Gabieto Oriental (3.031 m) está a solo 4 m del Occidental (3.035 m); se unen por una cresta corta y se suelen hacer juntos.",
+   "rutas": [
+    "gabietos-carriata"
+   ]
   },
   {
    "id": "pico-baudrimont-se",
@@ -3174,7 +3180,15 @@
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Tallón, a unos 960 m",
    "epoca": "Julio – septiembre",
-   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz"
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz",
+   "rutas": [
+    "gabietos-carriata"
+   ],
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/gabieto-occidental3-035m-y-gabieto-oriental3-031m-los-gabietos-por-carriata-desde-pradera-de-ordesa-18390813",
+    "texto": "Ruta de Furgoxo en Wikiloc: Gabieto Occidental y Oriental desde la Pradera de Ordesa"
+   },
+   "ruta": "Está en la cresta de los Gabietos, entre el Occidental y el Oriental: la ruta de Furgoxo por Carriata pasa por su cima."
   },
   {
    "id": "pequeno-astazu",
@@ -3355,7 +3369,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 160 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "punta-del-ibon",
@@ -3384,7 +3401,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 500 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "pico-marcos-feliu",
@@ -3413,7 +3433,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.260 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "pequeno-bachimala",
@@ -3442,7 +3465,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.000 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "pequeno-bachimala-s",
@@ -3471,7 +3497,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 870 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "culfreda-ne",
@@ -3562,7 +3591,10 @@
    "acceso": "Ruta en Gistaín",
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Gran Bachimala, a unos 1.630 m",
-   "epoca": "Julio – septiembre"
+   "epoca": "Julio – septiembre",
+   "rutas": [
+    "pequeno-bachimala-tabernes"
+   ]
   },
   {
    "id": "pico-puerto-la-pez",
@@ -4719,7 +4751,10 @@
    "grado": "Cresta con trepadas, en una ruta de dos días",
    "ruta": "Desde Port Biello se llega al refugio de Maupas, pasando por los lagos Célinda, Charles y Bleu y por encima del lago d'Enfer. Se sube al Pico de Maupas, se gira hacia el Boum y se sigue por la cresta hasta el valle de Remuñe.",
    "curiosidad": "La ruta de yivatosal enlaza Maupas, Boum y Remuñe en dos días (27 y 28 de agosto de 2021).",
-   "epoca": "Finales de verano (la ruta se hizo el 27 y 28 de agosto de 2021)"
+   "epoca": "Finales de verano (la ruta se hizo el 27 y 28 de agosto de 2021)",
+   "rutas": [
+    "maupas-boum-port-biello"
+   ]
   },
   {
    "id": "gias-inferior",

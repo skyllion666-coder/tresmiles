@@ -1375,7 +1375,10 @@ async function boot() {
   if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
   // — «Mis zonas» (solo en la app): catálogo de paquetes de zona (data/paquetes.json, tools/publicar_paquete.py), descargar con wifi, ver y borrar —
-  const catalogoZonas = json('data/paquetes.json').catch(() => []);
+  // en la app el catálogo de dentro de la APK se queda viejo: con conexión se lee el de la web (Cloudflare y, si falla —fútbol—, GitHub Pages; las dos dan CORS *)
+  const catRemoto = (u) => fetch(u, { cache: 'no-cache', signal: AbortSignal.timeout?.(6000) }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).then((d) => (Array.isArray(d) && d.length ? d : Promise.reject('vacío')));
+  const catalogoZonas = (EN_APP ? catRemoto('https://tresmiles.pages.dev/data/paquetes.json').catch(() => catRemoto('https://skyllion666-coder.github.io/tresmiles/data/paquetes.json')) : Promise.reject())
+    .catch(() => json('data/paquetes.json')).catch(() => []);
   const zonasDlg = document.createElement('dialog'); zonasDlg.id = 'zonas'; document.body.appendChild(zonasDlg);
   const avance = {};   // id -> { pct, estado }
   async function pintaZonas() {
