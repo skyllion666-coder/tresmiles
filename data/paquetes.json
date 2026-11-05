@@ -258,16 +258,16 @@
   "id": "gabieto-occidental",
   "cumbre": "gabieto-occidental",
   "nombre": "Gabieto Occidental",
-  "detalle": "Desde Pradera de Ordesa (Torla). De julio a septiembre el acceso es en autobús lanzadera desde Torla. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 47,
-  "version": 1,
+  "detalle": "Desde la Pradera de Ordesa por el circo de Carriata (Torla). De julio a septiembre el acceso es en autobús lanzadera desde Torla. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 91,
+  "version": 2,
   "caja": [
    -16000.0,
    8000.0,
    -13000.0,
-   11000.0
+   15000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gabieto-occidental-1/gabieto-occidental.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gabieto-occidental-2/gabieto-occidental.zip"
  },
  {
   "id": "garmo",
@@ -453,16 +453,16 @@
   "id": "pequeno-bachimala",
   "cumbre": "pequeno-bachimala",
   "nombre": "Pequeño Bachimala",
-  "detalle": "Desde Ruta en Gistaín. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 84,
-  "version": 2,
+  "detalle": "Desde el refugio de Tabernés (valle de Chistau): Ledormeur, Punta del Ibón, Pequeño Bachimala, Marcos Feliu y Abeille. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 115,
+  "version": 3,
   "caja": [
-   21000.0,
+   19000.0,
    6000.0,
-   25000.0,
-   10000.0
+   24000.0,
+   13000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pequeno-bachimala-2/pequeno-bachimala.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pequeno-bachimala-3/pequeno-bachimala.zip"
  },
  {
   "id": "perdiguero",
@@ -948,16 +948,16 @@
   "id": "pico-de-boum",
   "cumbre": "pico-de-boum",
   "nombre": "Pico de Boum",
-  "detalle": "Desde Refugio de Maupas (por Port Biello). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 78,
-  "version": 2,
+  "detalle": "Desde el refugio de Maupas por Port Biello: Maupas y Boum. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 162,
+  "version": 3,
   "caja": [
-   34000.0,
-   7000.0,
-   38000.0,
-   10000.0
+   35000.0,
+   6000.0,
+   41000.0,
+   11000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-2/pico-de-boum.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-3/pico-de-boum.zip"
  },
  {
   "id": "pico-de-castanesa",
