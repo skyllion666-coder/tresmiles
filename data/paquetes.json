@@ -782,7 +782,7 @@
  {
   "id": "pena-foratata",
   "cumbre": "pena-foratata",
-  "nombre": "Peña Foratata",
+  "nombre": "Peña Foratata · 2.321 m, cerca de Sallent de Gállego",
   "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
   "mb": 49,
   "version": 1,
@@ -797,7 +797,7 @@
  {
   "id": "pena-mediodia-3",
   "cumbre": "pena-mediodia-3",
-  "nombre": "Peña Mediodía",
+  "nombre": "Peña Mediodía · 1.418 m, cerca de San Julián de Banzo",
   "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
   "mb": 76,
   "version": 1,
@@ -842,7 +842,7 @@
  {
   "id": "pena-roya-2",
   "cumbre": "pena-roya-2",
-  "nombre": "Peña Roya",
+  "nombre": "Peña Roya · 2.053 m, cerca de Plan",
   "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
   "mb": 92,
   "version": 1,
@@ -1832,7 +1832,7 @@
  {
   "id": "punta-gallinero-2",
   "cumbre": "punta-gallinero-2",
-  "nombre": "Punta Gallinero",
+  "nombre": "Punta Gallinero · 2.728 m, cerca de Castejón de Sos",
   "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
   "mb": 59,
   "version": 1,

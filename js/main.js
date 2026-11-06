@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo, EXAG } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=31';
+import { Terrain, NCALOR } from './terrain.js?v=32';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=49';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
@@ -133,7 +133,7 @@ async function boot() {
       if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: `data/paquetes/${mejor}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
     } finally { paqCambiando = false; }
   }
-  leePaquetes().then(() => setInterval(eligePaquete, 1500));
+  leePaquetes().then(() => setInterval(() => eligePaquete().catch(() => {}), 1500));   // (las primeras vueltas pueden llegar antes de que existan los controles de la cámara)
   const clouds = new Clouds(scene, geo);
   const lagos = await crearLagos({ scene, geo, url: 'data/lagos.json', meta }).catch((e) => { console.warn('lagos', e); return null; });
   window.Carga?.paso(3);

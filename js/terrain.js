@@ -155,13 +155,13 @@ if (uCalorK > .001) {
   CALOR_ZONAS
   if (ct.x > .01) {
     float dc = distance(vWPos, cameraPosition), lo = mix(.03, .3, smoothstep(2500., 22000., dc));
-    float centro = mix(smoothstep(.02, .14, ct.z), 1., smoothstep(2500., 6000., dc));   // de cerca, solo el centro del camino (más fino)
+    float centro = mix(smoothstep(.07, .26, ct.z), 1., smoothstep(2500., 6000., dc));   // de cerca, solo el centro del camino (fino, para que no tape el relieve ni la ruta)
     float ac = smoothstep(lo, lo + .3, ct.x) * centro * mix(.72, 1., smoothstep(.2, .7, ct.x)) * mix(1., .65, smoothstep(6000., 28000., dc)) * uCalorK;
     vec3 cc = mix(vec3(1., .40, .08), vec3(1., .92, .5), smoothstep(.45, .95, ct.x));
     cc = mix(cc, vec3(.93, .80, .56), step(.3, ct.y) * (1. - step(.75, ct.y)));   // pista
     cc = mix(cc, vec3(.60, .70, .90), step(.75, ct.y));   // carretera o calle
-    diffuseColor.rgb = mix(diffuseColor.rgb, cc, min(ac * .95, .92));
-    totalEmissiveRadiance += cc * ac * .3;
+    diffuseColor.rgb = mix(diffuseColor.rgb, cc, min(ac * .7, .6));   // translúcido: se sigue viendo la roca y la hierba debajo
+    totalEmissiveRadiance += cc * ac * .14;
   }
 }
 `;
