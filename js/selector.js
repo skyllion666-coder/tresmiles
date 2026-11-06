@@ -1,6 +1,6 @@
 // Selector de cumbres (el del inicio y el del mapa): buscador sin tildes que mira también los nombres alternativos,
 // macizos plegados de oeste a este con su número, principales primero y secundarias plegadas dentro de cada macizo.
-import { t as tr, EN_INGLES } from './i18n.js?v=27';   // «tr»: aquí «t» es nombre de variable en muchas funciones
+import { t as tr, EN_INGLES } from './i18n.js?v=28';   // «tr»: aquí «t» es nombre de variable en muchas funciones
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);
 
@@ -69,6 +69,9 @@ const ATAJOS = [['subidos', 'Mis subidos'], ['pend', 'Pendientes'], ['cerca', 'C
 
 export function crearSelector(root, { picos, macizos, activa = () => null, hecho = () => false, pasa = () => true, filtrado = () => false, quitarFiltros = null, capa = null, cercania = null, elegir }) {
   const nombreMacizo = Object.fromEntries(macizos.map((m) => [m.id, m.nombre]));
+  // cumbres que se llaman igual (dos «Punta Sur» en Guara): bajo el nombre, además de la zona, el pueblo cercano
+  const cuentaNombre = {}; for (const p of picos) cuentaNombre[p.nombre] = (cuentaNombre[p.nombre] ?? 0) + 1;
+  const zonaDe = (p) => esc(nombreMacizo[p.macizo]) + (cuentaNombre[p.nombre] > 1 && p.cerca ? ` · ${tr('cerca de {p}', { p: esc(String(p.cerca).split(' (')[0]) })}` : '');
   // índice de búsqueda por cumbre: nombre, otros nombres y macizo
   const idx = new Map(picos.map((p) => {
     const otros = [...String(p.alias ?? '').split('·'), ...String(p.nombres ?? '').split('·')].map((s) => s.trim()).filter(Boolean);
@@ -136,12 +139,12 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
       if (tot >= 0) par.push({ p, d: tot });
     }
     par.sort((a, b) => a.d - b.d || (esPrincipal(b.p) - esPrincipal(a.p)) || b.p.altitud - a.p.altitud);
-    const parHTML = par.length ? `<p class="sel-cuenta sel-parecidas">${tr('Parecidas')}</p>` + par.slice(0, 30).map(({ p }) => fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}</small>`, marcaParecida(p.nombre, qf))).join('') : '';
+    const parHTML = par.length ? `<p class="sel-cuenta sel-parecidas">${tr('Parecidas')}</p>` + par.slice(0, 30).map(({ p }) => fila(p, `${etiqueta(p)}<small class="sel-mz">${zonaDe(p)}</small>`, marcaParecida(p.nombre, qf))).join('') : '';
     if (!res.length && par.length) return parHTML;
     if (!res.length) return `<p class="sel-vacio">${tr('Ninguna cumbre coincide con «{q}».', { q: esc(q.value.trim()) })}${filtrado() ? tr(' Prueba a quitar los filtros.') : ''}</p>`;
     return `<p class="sel-cuenta">${res.length === 1 ? '1 cumbre' : `${res.length} cumbres`}</p>` + res.map(({ p, via }) => {
       const otro = via ? `<small class="sel-via">${tr('también «{n}»', { n: marca(via, f) })}</small>` : '';
-      return fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}</small>${otro}`, marca(p.nombre, f));
+      return fila(p, `${etiqueta(p)}<small class="sel-mz">${zonaDe(p)}</small>${otro}`, marca(p.nombre, f));
     }).join('') + parHTML;
   }
 
@@ -156,7 +159,7 @@ export function crearSelector(root, { picos, macizos, activa = () => null, hecho
     else if (atajo === 'altas') { ps = ps.filter((p) => esPrincipal(p)).sort((a, b) => b.altitud - a.altitud).slice(0, 25); }
     const titulo = { subidos: 'Mis subidos', pend: 'Pendientes', cerca: 'Las más cercanas al centro del mapa', altas: 'Las más altas' }[atajo];
     if (!ps.length) return `<p class="sel-vacio">${atajo === 'subidos' ? 'Todavía no has marcado ninguna cumbre como subida.' : 'No hay cumbres que mostrar con la capa y los filtros actuales.'}</p>`;
-    return `<p class="sel-cuenta">${titulo}: ${ps.length}</p>` + ps.map((p) => fila(p, `${etiqueta(p)}<small class="sel-mz">${esc(nombreMacizo[p.macizo])}${nota(p)}</small>`)).join('');
+    return `<p class="sel-cuenta">${titulo}: ${ps.length}</p>` + ps.map((p) => fila(p, `${etiqueta(p)}<small class="sel-mz">${zonaDe(p)}${nota(p)}</small>`)).join('');
   }
 
   let tPinta = 0;
