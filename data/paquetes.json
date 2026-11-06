@@ -180,6 +180,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-cilindro-1/cilindro.zip"
  },
  {
+  "id": "comadelo",
+  "cumbre": "comadelo",
+  "nombre": "Comadelo",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 72,
+  "version": 1,
+  "caja": [
+   44000.0,
+   28000.0,
+   48000.0,
+   32000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-comadelo-1/comadelo.zip"
+ },
+ {
   "id": "corona-de-los-farallones",
   "cumbre": "corona-de-los-farallones",
   "nombre": "Corona de los Farallones",
@@ -615,6 +630,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-monte-sarase-1/monte-sarase.zip"
  },
  {
+  "id": "o-porte",
+  "cumbre": "o-porte",
+  "nombre": "O Porté",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 65,
+  "version": 1,
+  "caja": [
+   -52000.0,
+   0.0,
+   -47000.0,
+   2000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-o-porte-1/o-porte.zip"
+ },
+ {
   "id": "o-pui-acuto",
   "cumbre": "o-pui-acuto",
   "nombre": "O Pui Acuto",
@@ -823,6 +853,21 @@
    36000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-montanesa-o-picon-de-libro-1/pena-montanesa-o-picon-de-libro.zip"
+ },
+ {
+  "id": "pena-petruso",
+  "cumbre": "pena-petruso",
+  "nombre": "Peña Petruso",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 107,
+  "version": 1,
+  "caja": [
+   -42000.0,
+   11000.0,
+   -37000.0,
+   17000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-petruso-1/pena-petruso.zip"
  },
  {
   "id": "pena-picarda",

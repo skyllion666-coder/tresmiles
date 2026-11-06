@@ -11,16 +11,16 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=61';
-import { crearPanorama } from './panorama.js?v=15';
-import { crearUbicacion } from './ubicacion.js?v=14';
-import { crearSeguridad } from './seguridad.js?v=11';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=62';
+import { crearPanorama } from './panorama.js?v=16';
+import { crearUbicacion } from './ubicacion.js?v=15';
+import { crearSeguridad } from './seguridad.js?v=12';
 import { crearPaquete } from './paquete.js?v=7';
 import { zonasWebPosible, listaWeb, bajaWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=1';
-import { crearRealidad } from './realidad.js?v=10';
-import { crearSelector } from './selector.js?v=12';
+import { crearRealidad } from './realidad.js?v=11';
+import { crearSelector } from './selector.js?v=13';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=26';
+import { t, EN_INGLES } from './i18n.js?v=27';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1631,22 +1631,25 @@ async function boot() {
     }
     function repinta() { if (S.active) pintaZona(byId[S.active]); }
   }
+  // el paquete de la cumbre o, si no tiene, el de otra cumbre cuyo recuadro la cubre (Peña Roya de Tendeñera → Peña Sabocos)
+  const zonaDe = (p, cat) => cat.find((c) => c.cumbre === p.id) ?? ((q) => (q ? cat.find((c) => c.caja && q.x >= c.caja[0] && q.x < c.caja[2] && q.z >= c.caja[1] && q.z < c.caja[3]) : null))(p.w ?? p.q);
+  const otraZona = (p, z) => (z.cumbre !== p.id ? `<p class="ruta-credito">${t('Esta cumbre está dentro de la zona de {n}.', { n: esc(z.nombre) })}</p>` : '');
   async function pintaZona(p) {
     const hueco = fichaBody.querySelector('.zona-hueco'); if (!hueco || !p) return;
     if (!APP_PAQ) {
       if (EN_APP || !zonasWebPosible()) return;
-      const z = (await catalogoZonas).find((c) => c.cumbre === p.id); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
+      const z = zonaDe(p, await catalogoZonas); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
       const tiene = paqInstalados.includes(z.id), a = avWeb[z.id], vieja = tiene && listaWeb()[z.id] < z.version;
-      hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>
+      hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>${otraZona(p, z)}
         <p class="ruta-credito">${tiene ? t('Tienes esta zona guardada en el navegador: el relieve LiDAR de 1 m y la ortofoto de 25 cm se cargan solos al acercarte.') : t('Relieve LiDAR de 1 m y ortofoto de 25 cm a lo largo de las rutas, para ver la zona como es antes de subir ({m} MB; se guarda en el navegador).', { m: z.mb })}</p>
         <div class="ruta-acciones">${a?.ctl ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.pct >= 99 ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="cancelar" data-id="${z.id}">${t('Cancelar')}</button>`
           : tiene ? `${vieja ? `<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Actualizar')}</button> ` : ''}<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="borrar" data-id="${z.id}">${t('Borrar')}</button>`
           : `${a?.error ? `<small class="zona-error">${esc(a.error)}</small> ` : ''}<button type="button" class="btn-ruta" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Ver la zona en alta calidad · {m} MB', { m: z.mb })}</button>`}</div>`;
       return;
     }
-    const z = (await catalogoZonas).find((c) => c.cumbre === p.id); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
+    const z = zonaDe(p, await catalogoZonas); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
     const tiene = paqInstalados.includes(z.id);
-    hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3><p class="ruta-credito">${tiene ? t('Tienes descargado el paquete de esta zona: se carga solo al acercarte.') : t('Hay un paquete de esta zona con ortofoto de 25 cm y relieve fino para llevar sin cobertura ({m} MB).', { m: z.mb })}</p>
+    hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>${otraZona(p, z)}<p class="ruta-credito">${tiene ? t('Tienes descargado el paquete de esta zona: se carga solo al acercarte.') : t('Hay un paquete de esta zona con ortofoto de 25 cm y relieve fino para llevar sin cobertura ({m} MB).', { m: z.mb })}</p>
       <div class="ruta-acciones"><button type="button" class="btn-ruta btn-suave" data-act="zonas">${t(tiene ? 'Mis zonas' : 'Descargar la zona en alta calidad')}</button></div>`;
   }
 
