@@ -150,6 +150,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-castiello-mayor-1/castiello-mayor.zip"
  },
  {
+  "id": "cerro-chinestruso",
+  "cumbre": "cerro-chinestruso",
+  "nombre": "Cerro Chinestruso",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 27,
+  "version": 1,
+  "caja": [
+   -14000.0,
+   55000.0,
+   -12000.0,
+   57000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-cerro-chinestruso-1/cerro-chinestruso.zip"
+ },
+ {
   "id": "cerro-de-las-canales",
   "cumbre": "cerro-de-las-canales",
   "nombre": "Cerro de las Canales",
@@ -328,6 +343,21 @@
    17000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-espalda-del-marbore-1/espalda-del-marbore.zip"
+ },
+ {
+  "id": "fajalato",
+  "cumbre": "fajalato",
+  "nombre": "Fajalato",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 76,
+  "version": 1,
+  "caja": [
+   -34000.0,
+   13000.0,
+   -31000.0,
+   18000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-fajalato-1/fajalato.zip"
  },
  {
   "id": "forca-estasen",
@@ -570,6 +600,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-espadas-1/espadas.zip"
  },
  {
+  "id": "lopina",
+  "cumbre": "lopina",
+  "nombre": "Lopina",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 74,
+  "version": 1,
+  "caja": [
+   -42000.0,
+   46000.0,
+   -37000.0,
+   49000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-lopina-1/lopina.zip"
+ },
+ {
   "id": "mediodia",
   "cumbre": "mediodia",
   "nombre": "Mediodía",
@@ -628,6 +673,21 @@
    17000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-monte-sarase-1/monte-sarase.zip"
+ },
+ {
+  "id": "o-fronton",
+  "cumbre": "o-fronton",
+  "nombre": "O Frontón",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 23,
+  "version": 1,
+  "caja": [
+   -52000.0,
+   47000.0,
+   -50000.0,
+   49000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-o-fronton-1/o-fronton.zip"
  },
  {
   "id": "o-porte",
@@ -808,6 +868,21 @@
    49000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-espluga-1/pena-espluga.zip"
+ },
+ {
+  "id": "pena-foratata-3",
+  "cumbre": "pena-foratata-3",
+  "nombre": "Peña Foratata · 1.136 m, cerca de San Julián de Banzo",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 77,
+  "version": 1,
+  "caja": [
+   -36000.0,
+   57000.0,
+   -31000.0,
+   61000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-foratata-3-1/pena-foratata-3.zip"
  },
  {
   "id": "pena-foratata",
@@ -1185,6 +1260,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-bazias-1/pico-bazias.zip"
  },
  {
+  "id": "pico-benou",
+  "cumbre": "pico-benou",
+  "nombre": "Pico Bénou",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 50,
+  "version": 1,
+  "caja": [
+   -52000.0,
+   -6000.0,
+   -49000.0,
+   -3000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-benou-1/pico-benou.zip"
+ },
+ {
   "id": "pico-central",
   "cumbre": "pico-central",
   "nombre": "Pico Central",
@@ -1290,6 +1380,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-oriental-de-la-cascada-1/pico-oriental-de-la-cascada.zip"
  },
  {
+  "id": "pico-porron",
+  "cumbre": "pico-porron",
+  "nombre": "Pico Porrón",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 80,
+  "version": 1,
+  "caja": [
+   -45000.0,
+   -1000.0,
+   -42000.0,
+   5000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-porron-1/pico-porron.zip"
+ },
+ {
   "id": "robinera",
   "cumbre": "robinera",
   "nombre": "Pico Robiñera",
@@ -1333,6 +1438,21 @@
    12000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-salvaguardia-1/pico-salvaguardia.zip"
+ },
+ {
+  "id": "pico-san-julian",
+  "cumbre": "pico-san-julian",
+  "nombre": "Pico San Julián",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 69,
+  "version": 1,
+  "caja": [
+   -47000.0,
+   50000.0,
+   -44000.0,
+   55000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-san-julian-1/pico-san-julian.zip"
  },
  {
   "id": "pico-sarlle",
@@ -1755,6 +1875,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-el-forato-1/pico-el-forato.zip"
  },
  {
+  "id": "pico-la-tira",
+  "cumbre": "pico-la-tira",
+  "nombre": "Pico la Tira",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 68,
+  "version": 1,
+  "caja": [
+   30000.0,
+   23000.0,
+   35000.0,
+   26000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-la-tira-1/pico-la-tira.zip"
+ },
+ {
   "id": "infiernos",
   "cumbre": "infiernos",
   "nombre": "Picos del Infierno",
@@ -1783,6 +1918,21 @@
    19000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-posets-1/posets.zip"
+ },
+ {
+  "id": "presin",
+  "cumbre": "presin",
+  "nombre": "Presín",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 47,
+  "version": 1,
+  "caja": [
+   -52000.0,
+   47000.0,
+   -48000.0,
+   49000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-presin-1/presin.zip"
  },
  {
   "id": "punda-baldairan",
@@ -1905,6 +2055,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-malacara-1/punta-malacara.zip"
  },
  {
+  "id": "punta-manchoya",
+  "cumbre": "punta-manchoya",
+  "nombre": "Punta Manchoya",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 136,
+  "version": 1,
+  "caja": [
+   -26000.0,
+   17000.0,
+   -21000.0,
+   24000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-manchoya-1/punta-manchoya.zip"
+ },
+ {
   "id": "punta-piniecho",
   "cumbre": "punta-piniecho",
   "nombre": "Punta Piniecho",
@@ -1920,6 +2085,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-piniecho-1/punta-piniecho.zip"
  },
  {
+  "id": "punta-plletil-viello",
+  "cumbre": "punta-plletil-viello",
+  "nombre": "Punta Plletil Viello",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 76,
+  "version": 1,
+  "caja": [
+   24000.0,
+   23000.0,
+   28000.0,
+   27000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-plletil-viello-1/punta-plletil-viello.zip"
+ },
+ {
   "id": "punta-sorpena",
   "cumbre": "punta-sorpena",
   "nombre": "Punta Sorpena",
@@ -1933,6 +2113,36 @@
    4000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-sorpena-1/punta-sorpena.zip"
+ },
+ {
+  "id": "punta-sur-2",
+  "cumbre": "punta-sur-2",
+  "nombre": "Punta Sur · 1.507 m, cerca de San Julián de Banzo",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 94,
+  "version": 1,
+  "caja": [
+   -36000.0,
+   57000.0,
+   -31000.0,
+   61000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-sur-2-1/punta-sur-2.zip"
+ },
+ {
+  "id": "punta-sur",
+  "cumbre": "punta-sur",
+  "nombre": "Punta Sur · 1.639 m, cerca de Lúsera",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 86,
+  "version": 1,
+  "caja": [
+   -36000.0,
+   50000.0,
+   -31000.0,
+   55000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-sur-1/punta-sur.zip"
  },
  {
   "id": "punta-vinaza",
@@ -2040,6 +2250,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-olas-1/olas.zip"
  },
  {
+  "id": "punta-del-regal-de-la-neu",
+  "cumbre": "punta-del-regal-de-la-neu",
+  "nombre": "Punta del Regal de la Neu",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 89,
+  "version": 1,
+  "caja": [
+   24000.0,
+   23000.0,
+   28000.0,
+   28000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-del-regal-de-la-neu-1/punta-del-regal-de-la-neu.zip"
+ },
+ {
   "id": "sabre",
   "cumbre": "sabre",
   "nombre": "Punta del Sabre",
@@ -2053,6 +2278,21 @@
    14000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-sabre-1/sabre.zip"
+ },
+ {
+  "id": "punta-el-cuezo",
+  "cumbre": "punta-el-cuezo",
+  "nombre": "Punta el Cuezo",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 60,
+  "version": 1,
+  "caja": [
+   5000.0,
+   13000.0,
+   9000.0,
+   17000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-el-cuezo-1/punta-el-cuezo.zip"
  },
  {
   "id": "puntal-de-chia",
@@ -2190,6 +2430,51 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-torre-del-marbore-1/torre-del-marbore.zip"
  },
  {
+  "id": "tozal-d-a-cana",
+  "cumbre": "tozal-d-a-cana",
+  "nombre": "Tozal d'a Caña",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 60,
+  "version": 1,
+  "caja": [
+   -15000.0,
+   13000.0,
+   -12000.0,
+   18000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-d-a-cana-1/tozal-d-a-cana.zip"
+ },
+ {
+  "id": "tozal-de-basones",
+  "cumbre": "tozal-de-basones",
+  "nombre": "Tozal de Basones",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 113,
+  "version": 1,
+  "caja": [
+   -8000.0,
+   17000.0,
+   2000.0,
+   19000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-de-basones-1/tozal-de-basones.zip"
+ },
+ {
+  "id": "tozal-de-gratal",
+  "cumbre": "tozal-de-gratal",
+  "nombre": "Tozal de Gratal",
+  "detalle": "Desde Arguis. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 99,
+  "version": 1,
+  "caja": [
+   -49000.0,
+   50000.0,
+   -44000.0,
+   56000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-de-gratal-1/tozal-de-gratal.zip"
+ },
+ {
   "id": "tozal-de-guara",
   "cumbre": "tozal-de-guara",
   "nombre": "Tozal de Guara",
@@ -2235,6 +2520,66 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-de-paco-tiesto-1/tozal-de-paco-tiesto.zip"
  },
  {
+  "id": "tozal-de-san-vicenda",
+  "cumbre": "tozal-de-san-vicenda",
+  "nombre": "Tozal de San Vicenda",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 170,
+  "version": 1,
+  "caja": [
+   -8000.0,
+   14000.0,
+   1000.0,
+   18000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-de-san-vicenda-1/tozal-de-san-vicenda.zip"
+ },
+ {
+  "id": "tozal-del-cagicar",
+  "cumbre": "tozal-del-cagicar",
+  "nombre": "Tozal del Cagicar",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 46,
+  "version": 1,
+  "caja": [
+   -30000.0,
+   48000.0,
+   -27000.0,
+   51000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-del-cagicar-1/tozal-del-cagicar.zip"
+ },
+ {
+  "id": "tozal-del-sarronal",
+  "cumbre": "tozal-del-sarronal",
+  "nombre": "Tozal del Sarronal",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 102,
+  "version": 1,
+  "caja": [
+   -4000.0,
+   11000.0,
+   0.0,
+   16000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-del-sarronal-1/tozal-del-sarronal.zip"
+ },
+ {
+  "id": "tozal-del-siso",
+  "cumbre": "tozal-del-siso",
+  "nombre": "Tozal del Siso",
+  "detalle": "Desde Ruta en Revilla. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 165,
+  "version": 1,
+  "caja": [
+   -2000.0,
+   13000.0,
+   8000.0,
+   18000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-del-siso-1/tozal-del-siso.zip"
+ },
+ {
   "id": "mulleres",
   "cumbre": "mulleres",
   "nombre": "Tuc de Mulleres",
@@ -2250,6 +2595,36 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-mulleres-1/mulleres.zip"
  },
  {
+  "id": "tuca-roya",
+  "cumbre": "tuca-roya",
+  "nombre": "Tuca Roya",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 85,
+  "version": 1,
+  "caja": [
+   -7000.0,
+   8000.0,
+   -1000.0,
+   12000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tuca-roya-1/tuca-roya.zip"
+ },
+ {
+  "id": "tuca-d-el-dalliu",
+  "cumbre": "tuca-d-el-dalliu",
+  "nombre": "Tuca d'el Dalliu",
+  "detalle": "Desde Ruta en Benasque. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 87,
+  "version": 1,
+  "caja": [
+   33000.0,
+   12000.0,
+   37000.0,
+   17000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tuca-d-el-dalliu-1/tuca-d-el-dalliu.zip"
+ },
+ {
   "id": "gorgs",
   "cumbre": "gorgs",
   "nombre": "Tuca de Gorgs Blancs",
@@ -2263,6 +2638,21 @@
    17000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gorgs-2/gorgs.zip"
+ },
+ {
+  "id": "tuca-de-roques-trencades",
+  "cumbre": "tuca-de-roques-trencades",
+  "nombre": "Tuca de Roques Trencades",
+  "detalle": "Desde Ruta en Cerler. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 103,
+  "version": 1,
+  "caja": [
+   37000.0,
+   20000.0,
+   42000.0,
+   26000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tuca-de-roques-trencades-1/tuca-de-roques-trencades.zip"
  },
  {
   "id": "tuca-del-mon",
@@ -2308,5 +2698,20 @@
    11000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-turonet-de-gorgutes-1/turonet-de-gorgutes.zip"
+ },
+ {
+  "id": "zerro-san-miguel",
+  "cumbre": "zerro-san-miguel",
+  "nombre": "Zerro San Miguel",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 86,
+  "version": 1,
+  "caja": [
+   -42000.0,
+   46000.0,
+   -36000.0,
+   49000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-zerro-san-miguel-1/zerro-san-miguel.zip"
  }
 ]
