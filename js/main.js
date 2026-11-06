@@ -11,15 +11,16 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=60';
-import { crearPanorama } from './panorama.js?v=14';
-import { crearUbicacion } from './ubicacion.js?v=13';
-import { crearSeguridad } from './seguridad.js?v=10';
-import { crearPaquete } from './paquete.js?v=6';
-import { crearRealidad } from './realidad.js?v=9';
-import { crearSelector } from './selector.js?v=11';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=61';
+import { crearPanorama } from './panorama.js?v=15';
+import { crearUbicacion } from './ubicacion.js?v=14';
+import { crearSeguridad } from './seguridad.js?v=11';
+import { crearPaquete } from './paquete.js?v=7';
+import { zonasWebPosible, listaWeb, bajaWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=1';
+import { crearRealidad } from './realidad.js?v=10';
+import { crearSelector } from './selector.js?v=12';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=25';
+import { t, EN_INGLES } from './i18n.js?v=26';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -109,14 +110,16 @@ async function boot() {
   const APP_PAQ = EN_APP ? window.TresmilesApp ?? null : null;
   let paquete = null, paqActivo = null, paqCambiando = false, paqInstalados = [];
   const paqCajas = new Map();   // id -> recuadro (de su index.json)
+  const paqWeb = (id) => (!EN_APP && listaWeb()[id] != null ? fuenteWeb(id) : null);
   async function leePaquetes() {
     let l = [];
     const forzado = new URLSearchParams(location.search).get('paquete');
     if (forzado) l = [forzado.replace(/[^a-z0-9-]/g, '')];
     else if (APP_PAQ) { try { l = JSON.parse(APP_PAQ.instalados()); } catch { l = []; } }
     if (!forzado && EN_APP) l = [...new Set([...l, ...(await fetch('data/paquetes/instalados.json').then((r) => (r.ok ? r.json() : [])).catch(() => []))])];
+    if (!forzado && !EN_APP && zonasWebPosible()) l = Object.keys(listaWeb());   // en la web: los bajados desde la ficha (js/zonasweb.js)
     for (const id of l) if (!paqCajas.has(id)) {
-      const ix = await fetch(`data/paquetes/${id}/index.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      const ix = await (paqWeb(id) ? paqWeb(id)('index.json') : fetch(`data/paquetes/${id}/index.json`, { cache: 'no-cache' })).then((r) => (r.ok ? r.json() : null)).catch(() => null);
       if (ix?.piezas?.length) paqCajas.set(id, ix.caja ?? [Math.min(...ix.piezas.map((q) => q.x0)), Math.min(...ix.piezas.map((q) => q.z0)), Math.max(...ix.piezas.map((q) => q.x0)) + ix.lado, Math.max(...ix.piezas.map((q) => q.z0)) + ix.lado]);
     }
     paqInstalados = l.filter((id) => paqCajas.has(id));
@@ -130,7 +133,8 @@ async function boot() {
     try {
       if (paquete) { paquete.quitar(); paquete = null; }
       paqActivo = mejor;
-      if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: `data/paquetes/${mejor}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
+      (window.tresmilesDiag ??= []).push({ paqueteActivo: mejor });
+      if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: paqWeb(mejor) ?? `data/paquetes/${mejor}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
     } finally { paqCambiando = false; }
   }
   leePaquetes().then(() => setInterval(() => eligePaquete().catch(() => {}), 1500));   // (las primeras vueltas pueden llegar antes de que existan los controles de la cámara)
@@ -1025,6 +1029,7 @@ async function boot() {
     const act = e.target.closest('[data-act]');
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'zonas') { abreZonas(); return; }
+    if (act?.dataset.act === 'zona-web') { zonaWeb(act.dataset.z, act.dataset.id); return; }
     if (act?.dataset.act === 'glaciar') { eligeGlaciar(act.dataset.id, act.dataset.anio); return; }
     if (act?.dataset.act === 'glaciar-play') { reproduceGlaciar(); return; }
     if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
@@ -1606,8 +1611,39 @@ async function boot() {
     glaciarT = setInterval(paso, 1400); paso();
   }
   // en la ficha de una cumbre con paquete: botón a «Mis zonas»
+  // en la web (sin la app): bajar el paquete de la zona aquí mismo, se guarda en el navegador y se carga solo al acercarse
+  const avWeb = {};   // id -> { pct, ctl } mientras baja, o { error }
+  async function zonaWeb(accion, id) {
+    const z = (await catalogoZonas).find((c) => c.id === id); if (!z) return;
+    if (accion === 'bajar') {
+      if (avWeb[id]?.ctl) return;
+      const conx = navigator.connection; if (conx?.type === 'cellular' && !confirm(t('No estás conectado por wifi. ¿Descargar {m} MB con los datos del móvil?', { m: z.mb }))) return;
+      const ctl = new AbortController(); avWeb[id] = { pct: 0, ctl }; repinta();
+      try {
+        await bajaWeb(z, (pct) => { avWeb[id].pct = pct; if (pct % 2 === 0) repinta(); }, ctl.signal);
+        delete avWeb[id]; paqCajas.delete(id); await leePaquetes(); sonido.fx('activar'); eligePaquete().catch(() => {});
+      } catch (e) { avWeb[id] = ctl.signal.aborted ? undefined : { error: t('No se ha podido descargar: {e}', { e: String(e.message || e) }) }; if (!avWeb[id]) delete avWeb[id]; }
+      repinta();
+    } else if (accion === 'cancelar') avWeb[id]?.ctl?.abort();
+    else if (accion === 'borrar' && confirm(t('¿Borrar el paquete {n}? Se libera su espacio ({m} MB); lo puedes volver a descargar cuando quieras.', { n: z.nombre, m: z.mb }))) {
+      if (paqActivo === id) { paquete?.quitar(); paquete = null; paqActivo = null; }
+      await borraWeb(id); paqCajas.delete(id); await leePaquetes(); repinta();
+    }
+    function repinta() { if (S.active) pintaZona(byId[S.active]); }
+  }
   async function pintaZona(p) {
-    const hueco = fichaBody.querySelector('.zona-hueco'); if (!hueco || !p || !APP_PAQ) return;
+    const hueco = fichaBody.querySelector('.zona-hueco'); if (!hueco || !p) return;
+    if (!APP_PAQ) {
+      if (EN_APP || !zonasWebPosible()) return;
+      const z = (await catalogoZonas).find((c) => c.cumbre === p.id); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
+      const tiene = paqInstalados.includes(z.id), a = avWeb[z.id], vieja = tiene && listaWeb()[z.id] < z.version;
+      hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>
+        <p class="ruta-credito">${tiene ? t('Tienes esta zona guardada en el navegador: el relieve LiDAR de 1 m y la ortofoto de 25 cm se cargan solos al acercarte.') : t('Relieve LiDAR de 1 m y ortofoto de 25 cm a lo largo de las rutas, para ver la zona como es antes de subir ({m} MB; se guarda en el navegador).', { m: z.mb })}</p>
+        <div class="ruta-acciones">${a?.ctl ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.pct >= 99 ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="cancelar" data-id="${z.id}">${t('Cancelar')}</button>`
+          : tiene ? `${vieja ? `<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Actualizar')}</button> ` : ''}<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="borrar" data-id="${z.id}">${t('Borrar')}</button>`
+          : `${a?.error ? `<small class="zona-error">${esc(a.error)}</small> ` : ''}<button type="button" class="btn-ruta" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Ver la zona en alta calidad · {m} MB', { m: z.mb })}</button>`}</div>`;
+      return;
+    }
     const z = (await catalogoZonas).find((c) => c.cumbre === p.id); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
     const tiene = paqInstalados.includes(z.id);
     hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3><p class="ruta-credito">${tiene ? t('Tienes descargado el paquete de esta zona: se carga solo al acercarte.') : t('Hay un paquete de esta zona con ortofoto de 25 cm y relieve fino para llevar sin cobertura ({m} MB).', { m: z.mb })}</p>

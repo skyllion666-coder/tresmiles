@@ -6,8 +6,14 @@ import * as THREE from 'three';
 
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
+// base: carpeta del paquete (app) o función abre(nombre) → Response (paquetes bajados en la web, js/zonasweb.js)
 export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, movil, alRelieve }) {
-  const idx = await fetch(`${base}/index.json`, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  const abre = typeof base === 'function' ? base : (n, o) => fetch(`${base}/${n}`, o);
+  const cargaOrto = (n, listo) => {   // la ortofoto: por su dirección o, si viene de la caché de la web, como blob
+    if (typeof base !== 'function') { new THREE.TextureLoader().load(`${base}/${n}`, listo); return; }
+    abre(n).then((r) => (r.ok ? r.blob() : null)).then((b) => { if (!b) return; const u = URL.createObjectURL(b); new THREE.TextureLoader().load(u, (t) => { URL.revokeObjectURL(u); listo(t); }, undefined, () => URL.revokeObjectURL(u)); }).catch(() => {});
+  };
+  const idx = await abre('index.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (!idx?.piezas?.length) return null;
   const L = idx.lado, MAX = movil ? 8 : 14, CARGA = movil ? 2200 : 3200, DESCARGA = CARGA + 1200, FUNDE = 90;
   const porCelda = new Map(idx.piezas.map((d) => [`${Math.round(d.x0 / L)}_${Math.round(d.z0 / L)}`, d]));
@@ -78,7 +84,7 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
   async function carga(d) {
     cargando.add(d.id);
     try {
-      const r = await fetch(`${base}/${d.id}.bin.gz`); if (!r.ok) return;
+      const r = await abre(`${d.id}.bin.gz`); if (!r.ok) return;
       const raw = new Uint16Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
       const ch = terrain.chunkEn(d.x0 + L / 2, d.z0 + L / 2); if (!ch || raw.length !== d.n * d.n) return;
       const { n, paso, x0, z0 } = d, H = new Float32Array(n * n), hs = geo.hs;
@@ -96,7 +102,7 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
       if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
       scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
       alRelieve?.({ x0, z0, x1: x0 + L, z1: z0 + L });
-      if (d.orto) new THREE.TextureLoader().load(`${base}/${d.orto}`, (tex) => {
+      if (d.orto) cargaOrto(d.orto, (tex) => {
         if (piezas.get(d.id) !== p) { tex.dispose(); return; }
         tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(16, terrain.aniso ?? 8); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
         tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - x0) / L, (L - (ch.z0 - z0) - cd) / L);
