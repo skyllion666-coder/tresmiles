@@ -165,6 +165,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-castiello-mayor-1/castiello-mayor.zip"
  },
  {
+  "id": "castiello-d-os-santos-a-creu",
+  "cumbre": "castiello-d-os-santos-a-creu",
+  "nombre": "Castiello d'os Santos / A Creu",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 38,
+  "version": 1,
+  "caja": [
+   -12000.0,
+   59000.0,
+   -10000.0,
+   62000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-castiello-d-os-santos-a-creu-1/castiello-d-os-santos-a-creu.zip"
+ },
+ {
   "id": "cerro-chinestruso",
   "cumbre": "cerro-chinestruso",
   "nombre": "Cerro Chinestruso",
@@ -2340,6 +2355,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-sabre-1/sabre.zip"
  },
  {
+  "id": "punta-del-paco",
+  "cumbre": "punta-del-paco",
+  "nombre": "Punta del paco",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 82,
+  "version": 1,
+  "caja": [
+   -11000.0,
+   50000.0,
+   -7000.0,
+   55000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-del-paco-1/punta-del-paco.zip"
+ },
+ {
   "id": "punta-el-cuezo",
   "cumbre": "punta-el-cuezo",
   "nombre": "Punta el Cuezo",
@@ -2533,6 +2563,21 @@
    14000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-torre-del-marbore-1/torre-del-marbore.zip"
+ },
+ {
+  "id": "tozal-mamur",
+  "cumbre": "tozal-mamur",
+  "nombre": "Tozal Mamur",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 51,
+  "version": 1,
+  "caja": [
+   -10000.0,
+   50000.0,
+   -7000.0,
+   53000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tozal-mamur-1/tozal-mamur.zip"
  },
  {
   "id": "tozal-d-a-cana",
