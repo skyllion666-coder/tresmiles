@@ -120,6 +120,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-balaitus-2/balaitus.zip"
  },
  {
+  "id": "baziero-oriental",
+  "cumbre": "baziero-oriental",
+  "nombre": "Baziero Oriental",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 110,
+  "version": 1,
+  "caja": [
+   28000.0,
+   33000.0,
+   34000.0,
+   36000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-baziero-oriental-1/baziero-oriental.zip"
+ },
+ {
   "id": "casco",
   "cumbre": "casco",
   "nombre": "Casco de Marboré",
@@ -1860,6 +1875,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-del-aguila-1/pico-del-aguila.zip"
  },
  {
+  "id": "pico-dero-sarrato",
+  "cumbre": "pico-dero-sarrato",
+  "nombre": "Pico dero Sarrato",
+  "detalle": "Desde Ruta en Baños de Panticosa. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 32,
+  "version": 1,
+  "caja": [
+   -27000.0,
+   -1000.0,
+   -25000.0,
+   1000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-dero-sarrato-1/pico-dero-sarrato.zip"
+ },
+ {
   "id": "pico-el-forato",
   "cumbre": "pico-el-forato",
   "nombre": "Pico el Forato",
@@ -1888,6 +1918,21 @@
    26000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-la-tira-1/pico-la-tira.zip"
+ },
+ {
+  "id": "picos-de-espelunz",
+  "cumbre": "picos-de-espelunz",
+  "nombre": "Picos de Espelunz",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 10,
+  "version": 1,
+  "caja": [
+   -24000.0,
+   5000.0,
+   -22000.0,
+   6000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-picos-de-espelunz-1/picos-de-espelunz.zip"
  },
  {
   "id": "infiernos",
@@ -2205,6 +2250,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-de-burrambalo-1/punta-de-burrambalo.zip"
  },
  {
+  "id": "punta-de-mallarruego",
+  "cumbre": "punta-de-mallarruego",
+  "nombre": "Punta de Mallarruego",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 26,
+  "version": 1,
+  "caja": [
+   -26000.0,
+   7000.0,
+   -24000.0,
+   9000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-de-mallarruego-1/punta-de-mallarruego.zip"
+ },
+ {
   "id": "punta-de-salcorz",
   "cumbre": "punta-de-salcorz",
   "nombre": "Punta de Salcorz",
@@ -2295,6 +2355,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-el-cuezo-1/punta-el-cuezo.zip"
  },
  {
+  "id": "punta-las-cometas",
+  "cumbre": "punta-las-cometas",
+  "nombre": "Punta las Cometas",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 103,
+  "version": 1,
+  "caja": [
+   24000.0,
+   23000.0,
+   28000.0,
+   29000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-las-cometas-1/punta-las-cometas.zip"
+ },
+ {
   "id": "puntal-de-chia",
   "cumbre": "puntal-de-chia",
   "nombre": "Puntal de Chía",
@@ -2308,6 +2383,21 @@
    26000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-puntal-de-chia-1/puntal-de-chia.zip"
+ },
+ {
+  "id": "puntons-del-ibonet",
+  "cumbre": "puntons-del-ibonet",
+  "nombre": "Puntons del Ibonet",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 25,
+  "version": 1,
+  "caja": [
+   15000.0,
+   26000.0,
+   17000.0,
+   28000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-puntons-del-ibonet-1/puntons-del-ibonet.zip"
  },
  {
   "id": "punton-de-andrebod",
@@ -2338,6 +2428,21 @@
    56000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-puyal-de-otin-1/puyal-de-otin.zip"
+ },
+ {
+  "id": "san-anton",
+  "cumbre": "san-anton",
+  "nombre": "San Antón",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 35,
+  "version": 1,
+  "caja": [
+   -52000.0,
+   46000.0,
+   -50000.0,
+   49000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-san-anton-1/san-anton.zip"
  },
  {
   "id": "sestral-baxo",
