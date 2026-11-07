@@ -11,7 +11,7 @@ from rasterio.transform import from_origin
 from scipy.ndimage import distance_transform_edt
 
 carpeta, salida = sys.argv[1], sys.argv[2]
-archivos = sorted(glob.glob(os.path.join(carpeta, '*.laz')))
+archivos = sorted([f for f in glob.glob(os.path.join(carpeta, '*')) if f.lower().endswith('.laz')])
 huso = lambda f: 'EPSG:25830' if '_H30_' in f else 'EPSG:25831' if '_H31_' in f else 'EPSG:25829'   # huso del nombre del archivo (H30…)
 todas = [(int(m.group(1)), int(m.group(2)), f) for f in archivos if (m := re.search(r'_(\d{3})-(\d{4})_', os.path.basename(f)))]   # km x (oeste) y km y (norte)
 husos = [huso(t[2]) for t in todas]; crs = max(set(husos), key=husos.count)   # zonas en la raya de dos husos: salida en el más frecuente
