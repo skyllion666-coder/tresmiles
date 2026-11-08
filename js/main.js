@@ -2031,6 +2031,7 @@ async function boot() {
 
   // — bucle —
   let last = performance.now(), orbit = 0;
+  let zoomTxt = ''; const zoomInd = $('#zoom-ind') ?? document.createElement('span');
   function frame(now) {
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     { // colores del cielo, la niebla y la luz ambiente hacia los de la luz elegida (el primer fotograma, de golpe)
@@ -2050,12 +2051,18 @@ async function boot() {
     else if (S.mode === 'intro') {
       if (!reduced) { orbit += dt * 0.03; const s = introState(focusPeak); s.theta += orbit; applyState(s); }
     } else {
+      // dentro de un paquete de zona (relieve de 1 m y foto de 25 cm) la cámara puede bajar hasta unas decenas de metros; fuera, lo de siempre (500 m)
+      const tg = controls.target, enHD = !!paquete?.idx?.piezas?.some((d) => tg.x > d.x0 - 300 && tg.x < d.x0 + paquete.idx.lado + 300 && tg.z > d.z0 - 300 && tg.z < d.z0 + paquete.idx.lado + 300);
+      if (!S.detalle) controls.minDistance = enHD ? 30 : 500;
       controls.update();
       const t = controls.target, mx = geo.W / 2 - 3000;
       t.x = clamp(t.x, -mx, mx); t.z = clamp(t.z, geo.zmin + 3000, geo.zmax - 3000);
       t.y += (geo.heightAt(t.x, t.z) - t.y) * 0.08;
-      const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle ? 18 : 120);
+      const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle || enHD ? 15 : 120);
       if (camera.position.y < g) camera.position.y = g;
+      // cuánto se acerca el mapa: la distancia de la cámara al punto que se mira, en la cabecera (semitransparente)
+      const dz = camera.position.distanceTo(t), txt = (dz < 1000 ? `${Math.round(dz / 10) * 10} m` : `${(dz / 1000).toFixed(dz < 10000 ? 1 : 0).replace('.', ',')} km`) + (enHD ? ' · HD' : '');
+      if (txt !== zoomTxt) { zoomTxt = txt; zoomInd.textContent = txt; }
     }
     // desplazamiento del encuadre para que la cumbre quede a la vista junto a la ficha
     const k = 1 - Math.exp(-dt * 6);

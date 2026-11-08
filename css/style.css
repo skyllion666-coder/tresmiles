@@ -32,6 +32,7 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .brand { text-shadow: 0 1px 12px rgba(0,0,0,.5), 0 0 3px rgba(0,0,0,.4); }
 .brand .b1 { font: 600 1.55rem/1 var(--serif); letter-spacing: .02em; }
 .brand .b2 { font: 500 .62rem/1.6 var(--cond); letter-spacing: .3em; text-transform: uppercase; opacity: .9; }
+.brand .b3 { font: 500 .6rem/1.4 var(--cond); letter-spacing: .14em; opacity: .5; min-height: 1.4em; }   /* cuánto se acerca el mapa (distancia de la cámara al punto que se mira) */
 .textbtn { font: 500 .78rem var(--cond); letter-spacing: .16em; text-transform: uppercase; color: var(--cream); padding: 6px 2px; text-shadow: 0 1px 10px rgba(0,0,0,.5); border-bottom: 1px solid transparent; }
 .textbtn:hover { border-color: currentColor; }
 .textbtn.dark { color: var(--spruce); text-shadow: none; }

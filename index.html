@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 405;
+  window.WEB_V = 406;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tresmiles">
-  <link rel="stylesheet" href="css/style.css?v=92">
+  <link rel="stylesheet" href="css/style.css?v=93">
   <link rel="stylesheet" href="css/cine.css?v=6">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
@@ -47,7 +47,7 @@
   <header class="top">
     <a class="brand" href="#" id="brand" aria-label="Tresmiles, volver al inicio">
       <svg viewBox="0 0 48 32" width="34" height="23" aria-hidden="true"><path d="M2 30 16 6l7 11 5-8 18 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m16 6 4 7-4 3-4-3z" fill="currentColor"/></svg>
-      <span class="b1">Tresmiles</span><span class="b2">Pirineo aragonés</span>
+      <span class="b1">Tresmiles</span><span class="b2">Pirineo aragonés</span><span class="b3" id="zoom-ind" aria-hidden="true"></span>
     </a>
     <button class="textbtn" id="btn-about" type="button">Acerca de</button>
     <span id="visitas" hidden></span>
@@ -141,7 +141,7 @@
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 239;</script>
   <script type="module" src="js/i18n.js?v=34"></script>
-  <script type="module" src="js/main.js?v=405"></script>
+  <script type="module" src="js/main.js?v=406"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>
