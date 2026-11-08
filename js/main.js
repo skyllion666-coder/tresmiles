@@ -11,16 +11,16 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=63';
-import { crearPanorama } from './panorama.js?v=17';
-import { crearUbicacion } from './ubicacion.js?v=16';
-import { crearSeguridad } from './seguridad.js?v=13';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=64';
+import { crearPanorama } from './panorama.js?v=18';
+import { crearUbicacion } from './ubicacion.js?v=17';
+import { crearSeguridad } from './seguridad.js?v=14';
 import { crearPaquete } from './paquete.js?v=7';
 import { zonasWebPosible, listaWeb, bajaWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=1';
-import { crearRealidad } from './realidad.js?v=12';
-import { crearSelector } from './selector.js?v=14';
+import { crearRealidad } from './realidad.js?v=13';
+import { crearSelector } from './selector.js?v=15';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=28';
+import { t, EN_INGLES } from './i18n.js?v=29';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1030,6 +1030,7 @@ async function boot() {
     if (act?.dataset.act === 'plegar') { plegar(true); return; }
     if (act?.dataset.act === 'zonas') { abreZonas(); return; }
     if (act?.dataset.act === 'zona-web') { zonaWeb(act.dataset.z, act.dataset.id); return; }
+    if (act?.dataset.act === 'zona-app') { zonaApp(act.dataset.z, act.dataset.id); return; }
     if (act?.dataset.act === 'glaciar') { eligeGlaciar(act.dataset.id, act.dataset.anio); return; }
     if (act?.dataset.act === 'glaciar-play') { reproduceGlaciar(); return; }
     if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
@@ -1522,20 +1523,50 @@ async function boot() {
     .catch(() => json('data/paquetes.json')).catch(() => []);
   const zonasDlg = document.createElement('dialog'); zonasDlg.id = 'zonas'; document.body.appendChild(zonasDlg);
   const avance = {};   // id -> { pct, estado }
+  // la lista sale ordenada desde donde se mira: primero la zona de la cumbre abierta, luego las más cercanas al centro del mapa; con buscador por nombre
+  const sinTildes = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  let zonasFiltro = '';
+  function filtraZonas() {
+    const q = sinTildes(zonasFiltro.trim()); let n = 0;
+    for (const li of zonasDlg.querySelectorAll('.zonas-lista li')) { const si = !q || li.dataset.n.includes(q); li.hidden = !si; n += si; }
+    const v = zonasDlg.querySelector('.zonas-vacio'); if (v) v.hidden = n > 0;
+  }
   async function pintaZonas() {
     const cat = await catalogoZonas, inst = APP_PAQ ? JSON.parse(APP_PAQ.instalados()) : [], libre = APP_PAQ ? APP_PAQ.libreMB() : 0;
+    const ref = S.active ? byId[S.active] : null, aqui = ref ? zonaDe(ref, cat) : null, tg = controls.target;
+    const dist = (z) => (z.caja ? Math.hypot(Math.max(z.caja[0] - tg.x, 0, tg.x - z.caja[2]), Math.max(z.caja[1] - tg.z, 0, tg.z - z.caja[3])) : 1e12);
+    const orden = cat.map((z) => ({ z, d: dist(z) })).sort((a, b) => (b.z === aqui) - (a.z === aqui) || a.d - b.d);
+    const donde = ({ z, d }) => (z === aqui ? t('La de la cumbre que estás mirando') : d < 500 ? t('Donde estás mirando') : d < 1e11 ? t('A {k} km de donde miras', { k: Math.round(d / 1000) }) : '');
+    const caja = zonasDlg.querySelector('.zonas-caja'), scroll = caja?.scrollTop ?? 0;
     zonasDlg.innerHTML = `<div class="zonas-caja"><button type="button" class="seg-cerrar" data-z="cerrar" aria-label="${t('Cerrar')}">×</button>
       <h2>${t('Mis zonas')}</h2>
       <p class="zonas-intro">${t('Paquetes de alta calidad para llevar sin cobertura: ortofoto de 25 cm y relieve fino a lo largo de las rutas. Descárgalos con wifi antes de la excursión y bórralos al volver.')}</p>
-      <ul class="zonas-lista">${cat.map((z) => {
+      <input type="search" class="zonas-buscar" placeholder="${t('Buscar una zona…')}" value="${esc(zonasFiltro)}" aria-label="${t('Buscar una zona…')}">
+      <p class="zonas-vacio" hidden>${t('Ninguna zona con ese nombre.')}</p>
+      <ul class="zonas-lista">${orden.map((o) => { const z = o.z;
         const a = avance[z.id], tiene = inst.includes(z.id), v = tiene ? APP_PAQ.version(z.id) : 0;
         const estado = a && /^(descargando|descomprimiendo)/.test(a.estado) ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.estado === 'descomprimiendo' ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="zona-btn" data-z="cancelar">${t('Cancelar')}</button>`
           : tiene ? `<small class="zona-ok">✓ ${t('Descargado')}${v && v < z.version ? ` · ${t('hay una versión nueva')}` : ''}</small> <button type="button" class="zona-btn" data-z="ver" data-id="${z.id}">${t('Ver en el mapa')}</button> ${v && v < z.version ? `<button type="button" class="zona-btn" data-z="bajar" data-id="${z.id}">${t('Actualizar')}</button> ` : ''}<button type="button" class="zona-btn zona-borrar" data-z="borrar" data-id="${z.id}">${t('Borrar')}</button>`
           : `${a?.estado?.startsWith('error') ? `<small class="zona-error">${esc(a.estado)}</small> ` : ''}<button type="button" class="zona-btn zona-bajar" data-z="bajar" data-id="${z.id}">${t('Descargar · {m} MB', { m: z.mb })}</button>`;
-        return `<li><b>${esc(z.nombre)}</b><span>${esc(z.detalle)}</span>${estado}</li>`; }).join('')}</ul>
+        const dd = donde(o);
+        return `<li data-n="${esc(sinTildes(z.nombre))}"${z === aqui ? ' class="zona-aqui"' : ''}><b>${esc(z.nombre)}</b>${dd ? `<small class="zona-dist">${dd}</small>` : ''}<span>${esc(z.detalle)}</span>${estado}</li>`; }).join('')}</ul>
       ${APP_PAQ ? `<p class="seg-nota">${t('Espacio libre en el móvil: {m} MB.', { m: new Intl.NumberFormat('es-ES').format(libre) })}</p>` : ''}</div>`;
+    filtraZonas(); const c2 = zonasDlg.querySelector('.zonas-caja'); if (c2) c2.scrollTop = scroll;
   }
-  const abreZonas = async () => { await pintaZonas(); if (!zonasDlg.open) zonasDlg.showModal(); };
+  const abreZonas = async () => { zonasFiltro = ''; await pintaZonas(); const c = zonasDlg.querySelector('.zonas-caja'); if (c) c.scrollTop = 0; if (!zonasDlg.open) zonasDlg.showModal(); };
+  zonasDlg.addEventListener('input', (e) => { if (e.target.classList.contains('zonas-buscar')) { zonasFiltro = e.target.value; filtraZonas(); } });
+  // descarga en la app (desde «Mis zonas» o directamente desde la ficha de la cumbre)
+  function bajarApp(z) {
+    if (!z || !APP_PAQ) return false;
+    if (APP_PAQ.libreMB() < z.mb * 2 + 50) { alert(t('No hay espacio suficiente en el móvil para este paquete.')); return false; }
+    if (!APP_PAQ.wifi() && !confirm(t('No estás conectado por wifi. ¿Descargar {m} MB con los datos del móvil?', { m: z.mb }))) return false;
+    avance[z.id] = { pct: 0, estado: 'descargando' }; APP_PAQ.descarga(z.id, z.url, z.version); return true;
+  }
+  async function zonaApp(accion, id) {
+    const z = (await catalogoZonas).find((c) => c.id === id);
+    if (accion === 'bajar') bajarApp(z); else if (accion === 'cancelar') APP_PAQ?.cancela();
+    if (S.active) pintaZona(byId[S.active]);
+  }
   zonasDlg.addEventListener('click', async (e) => {
     if (e.target === zonasDlg) { zonasDlg.close(); return; }
     const b = e.target.closest('[data-z]'); if (!b) return;
@@ -1546,9 +1577,7 @@ async function boot() {
       if (paqActivo === z.id) { paquete?.quitar(); paquete = null; paqActivo = null; }
       APP_PAQ.borra(z.id); paqCajas.delete(z.id); await leePaquetes(); pintaZonas();
     } else if (b.dataset.z === 'bajar' && z && APP_PAQ) {
-      if (APP_PAQ.libreMB() < z.mb * 2 + 50) { alert(t('No hay espacio suficiente en el móvil para este paquete.')); return; }
-      if (!APP_PAQ.wifi() && !confirm(t('No estás conectado por wifi. ¿Descargar {m} MB con los datos del móvil?', { m: z.mb }))) return;
-      avance[z.id] = { pct: 0, estado: 'descargando' }; APP_PAQ.descarga(z.id, z.url, z.version); pintaZonas();
+      if (bajarApp(z)) pintaZonas();
     } else if (b.dataset.z === 'ver' && z) { zonasDlg.close(); openPeak(z.cumbre); }
   });
   window.tresmilesPaqProgreso = async (id, pct, estado) => {
@@ -1648,9 +1677,11 @@ async function boot() {
       return;
     }
     const z = zonaDe(p, await catalogoZonas); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
-    const tiene = paqInstalados.includes(z.id);
+    const tiene = paqInstalados.includes(z.id), a = avance[z.id], baja = a && /^(descargando|descomprimiendo)/.test(a.estado);
     hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>${otraZona(p, z)}<p class="ruta-credito">${tiene ? t('Tienes descargado el paquete de esta zona: se carga solo al acercarte.') : t('Hay un paquete de esta zona con ortofoto de 25 cm y relieve fino para llevar sin cobertura ({m} MB).', { m: z.mb })}</p>
-      <div class="ruta-acciones"><button type="button" class="btn-ruta btn-suave" data-act="zonas">${t(tiene ? 'Mis zonas' : 'Descargar la zona en alta calidad')}</button></div>`;
+      <div class="ruta-acciones">${baja ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.estado === 'descomprimiendo' ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="btn-ruta btn-suave" data-act="zona-app" data-z="cancelar" data-id="${z.id}">${t('Cancelar')}</button>`
+        : tiene ? `<button type="button" class="btn-ruta btn-suave" data-act="zonas">${t('Mis zonas')}</button>`
+        : `${a?.estado?.startsWith('error') ? `<small class="zona-error">${esc(a.estado)}</small> ` : ''}<button type="button" class="btn-ruta" data-act="zona-app" data-z="bajar" data-id="${z.id}">${t('Descargar la zona en alta calidad · {m} MB', { m: z.mb })}</button> <button type="button" class="btn-ruta btn-suave" data-act="zonas">${t('Mis zonas')}</button>`}</div>`;
   }
 
   // — «Seguridad» (solo en la app): enviar mi posición y si llego antes de que anochezca (js/seguridad.js) —
