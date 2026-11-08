@@ -1113,16 +1113,16 @@
   "id": "perdido",
   "cumbre": "perdido",
   "nombre": "Monte Perdido",
-  "detalle": "Desde Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 75,
-  "version": 1,
+  "detalle": "Desde la Pradera de Ordesa por el refugio de Góriz. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 182,
+  "version": 2,
   "caja": [
-   -9000.0,
+   -15000.0,
    10000.0,
    -5000.0,
-   14000.0
+   17000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-perdido-1/perdido.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-perdido-2/perdido.zip"
  },
  {
   "id": "monte-sarase",
