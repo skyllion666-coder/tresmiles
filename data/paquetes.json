@@ -1365,6 +1365,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-blanca-6-1/pena-blanca-6.zip"
  },
  {
+  "id": "pena-cagico",
+  "cumbre": "pena-cagico",
+  "nombre": "Peña Cagico",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 14,
+  "version": 1,
+  "caja": [
+   -41000.0,
+   44000.0,
+   -39000.0,
+   45000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pena-cagico-1/pena-cagico.zip"
+ },
+ {
   "id": "pena-castech",
   "cumbre": "pena-castech",
   "nombre": "Peña Castech",
@@ -3150,6 +3165,21 @@
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-maristas-1/punta-maristas.zip"
  },
  {
+  "id": "punta-matosa",
+  "cumbre": "punta-matosa",
+  "nombre": "Punta Matosa",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 12,
+  "version": 1,
+  "caja": [
+   -35000.0,
+   56000.0,
+   -33000.0,
+   57000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-matosa-1/punta-matosa.zip"
+ },
+ {
   "id": "punta-mondinero",
   "cumbre": "punta-mondinero",
   "nombre": "Punta Mondiñero",
@@ -3178,6 +3208,21 @@
    30000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-napinal-1/punta-napinal.zip"
+ },
+ {
+  "id": "punta-pindolero",
+  "cumbre": "punta-pindolero",
+  "nombre": "Punta Pindolero",
+  "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 27,
+  "version": 1,
+  "caja": [
+   -45000.0,
+   42000.0,
+   -43000.0,
+   44000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-punta-pindolero-1/punta-pindolero.zip"
  },
  {
   "id": "punta-piniecho",
