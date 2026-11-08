@@ -7,11 +7,21 @@ import * as THREE from 'three';
 const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
 
 // base: carpeta del paquete (app) o función abre(nombre) → Response (paquetes bajados en la web, js/zonasweb.js)
-export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, movil, alRelieve }) {
+export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, movil, telefono = movil, alRelieve }) {   // telefono: aunque vaya en calidad alta (app completa), la memoria gráfica es la de un móvil
   const abre = typeof base === 'function' ? base : (n, o) => fetch(`${base}/${n}`, o);
-  const cargaOrto = (n, listo) => {   // la ortofoto: por su dirección o, si viene de la caché de la web, como blob
-    if (typeof base !== 'function') { new THREE.TextureLoader().load(`${base}/${n}`, listo); return; }
-    abre(n).then((r) => (r.ok ? r.blob() : null)).then((b) => { if (!b) return; const u = URL.createObjectURL(b); new THREE.TextureLoader().load(u, (t) => { URL.revokeObjectURL(u); listo(t); }, undefined, () => URL.revokeObjectURL(u)); }).catch(() => {});
+  // la ortofoto: por su dirección o, si viene de la caché de la web, como blob. tam: lado en píxeles (0 = la original, 4096);
+  // en el móvil las piezas que no están delante se reducen a 2048 o 1024 px (cada foto de 4096 ocupa ~85 MB de memoria gráfica con sus mipmaps)
+  const cargaOrto = (n, tam, listo) => {
+    if (!tam && typeof base !== 'function') { new THREE.TextureLoader().load(`${base}/${n}`, listo); return; }
+    abre(n).then((r) => (r.ok ? r.blob() : null)).then(async (b) => {
+      if (!b) return;
+      if (tam) {   // reducida: se decodifica ya al tamaño pedido y se pasa a un lienzo (así la textura se voltea como las demás)
+        const bm = await createImageBitmap(b, { resizeWidth: tam, resizeHeight: tam, resizeQuality: 'high' });
+        const cv = document.createElement('canvas'); cv.width = cv.height = tam; cv.getContext('2d').drawImage(bm, 0, 0); bm.close?.();
+        listo(new THREE.CanvasTexture(cv)); return;
+      }
+      const u = URL.createObjectURL(b); new THREE.TextureLoader().load(u, (t) => { URL.revokeObjectURL(u); listo(t); }, undefined, () => URL.revokeObjectURL(u));
+    }).catch(() => {});
   };
   const idx = await abre('index.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
   if (!idx?.piezas?.length) return null;
@@ -81,6 +91,27 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
     const metros = dist < 250 ? (movil ? 2 : 1) : dist < 1400 ? 2 : 4;
     return Math.max(1, Math.round(metros / d.paso));
   };
+  // tamaño de la ortofoto según la distancia (solo en el móvil): la de delante entera, las vecinas a 2048 px, las lejanas a 1024 px
+  const tamPara = (d) => {
+    const c = objetivoUlt; if (!telefono) return 0; if (!c) return 1024;
+    const dist = Math.hypot(Math.max(d.x0 - c.x, 0, c.x - d.x0 - L), Math.max(d.z0 - c.z, 0, c.z - d.z0 - L));
+    return dist < 300 ? 0 : dist < 1200 ? 2048 : 1024;
+  };
+  function ponOrto(p, tex) {
+    const { mat, ch, x0, z0, lados } = p, cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
+    tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(16, terrain.aniso ?? 8); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - x0) / L, (L - (ch.z0 - z0) - cd) / L);
+    const viejo = p.orto; mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true;
+    const u = mat.userData; u.orto.value = 1; u.sat.value = ch.mat.map; u.pbW.value = 350;
+    if (idx.og) idx.og.forEach((v, i) => u.og[i].value.set(v[0], v[1], v[2]));   // un solo ajuste de color para todo el paquete (tools/build_paquete.py)
+    // el fundido con el satélite solo en los lados sin vecina: los demás lados se llevan lejos
+    u.pb.value.set(lados[0] ? x0 : -1e7, lados[2] ? z0 : -1e7, lados[1] ? x0 + L : 1e7, lados[3] ? z0 + L : 1e7);
+    p.orto = tex; if (viejo && viejo !== tex) viejo.dispose();
+  }
+  function pideOrto(p, tam) {   // carga (o cambia de tamaño) la ortofoto de una pieza; la anterior se queda hasta que llega la nueva
+    p.tam = tam; p.pidiendo = true;
+    cargaOrto(p.d.orto, tam, (tex) => { p.pidiendo = false; if (piezas.get(p.d.id) !== p || p.tam !== tam) { tex.dispose(); return; } ponOrto(p, tex); });
+  }
   async function carga(d) {
     cargando.add(d.id);
     try {
@@ -102,17 +133,7 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
       if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
       scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
       alRelieve?.({ x0, z0, x1: x0 + L, z1: z0 + L });
-      if (d.orto) cargaOrto(d.orto, (tex) => {
-        if (piezas.get(d.id) !== p) { tex.dispose(); return; }
-        tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = Math.min(16, terrain.aniso ?? 8); tex.generateMipmaps = true; tex.minFilter = THREE.LinearMipmapLinearFilter;
-        tex.repeat.set(cw / L, cd / L); tex.offset.set((ch.x0 - x0) / L, (L - (ch.z0 - z0) - cd) / L);
-        mat.map = tex; mat.color.set(0xffffff); mat.needsUpdate = true;
-        const u = mat.userData; u.orto.value = 1; u.sat.value = ch.mat.map; u.pbW.value = 350;
-        if (idx.og) idx.og.forEach((v, i) => u.og[i].value.set(v[0], v[1], v[2]));   // un solo ajuste de color para todo el paquete (tools/build_paquete.py)
-        // el fundido con el satélite solo en los lados sin vecina: los demás lados se llevan lejos
-        u.pb.value.set(lados[0] ? x0 : -1e7, lados[2] ? z0 : -1e7, lados[1] ? x0 + L : 1e7, lados[3] ? z0 + L : 1e7);
-        p.orto = tex;
-      });
+      if (d.orto) pideOrto(p, tamPara(d));
     } catch (e) { console.warn('paquete', d.id, e); (window.tresmilesDiag ??= []).push({ paquete: d.id, error: String(e) }); } finally { cargando.delete(d.id); }
   }
   function quita(id) {
@@ -139,6 +160,12 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
         const m = pasoPara(p.d); if (m === p.m) continue;
         const g = malla(p, m), viejo = p.mesh.geometry; p.mesh.geometry = g; viejo.dispose(); p.m = m;
         break;   // una por vuelta: rehacer la malla de 1 m cuesta unas décimas de segundo
+      }
+      if (telefono && ![...piezas.values()].some((p) => p.pidiendo)) {   // ortofoto al tamaño que toca, de una en una (primero la que se ve mejor)
+        // primero las que bajan de tamaño (liberan memoria), luego las que suben, la más grande antes
+        const px = (t) => t || 4096, baja = (p) => px(p.tam) > px(tamPara(p.d));
+        const lista = [...piezas.values()].filter((p) => p.d.orto && tamPara(p.d) !== p.tam).sort((a, b) => (baja(b) - baja(a)) || (px(tamPara(b.d)) - px(tamPara(a.d))));
+        if (lista.length) pideOrto(lista[0], tamPara(lista[0].d));
       }
       for (const d of idx.piezas) {   // cerca del punto que se mira o de la cámara (lo que queda delante de ella se ve grande)
         const dist = Math.min(Math.hypot(d.x0 + L / 2 - c.x, d.z0 + L / 2 - c.z), Math.hypot(d.x0 + L / 2 - cam.position.x, d.z0 + L / 2 - cam.position.z) + 300);

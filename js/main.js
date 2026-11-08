@@ -15,7 +15,7 @@ import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=65';
 import { crearPanorama } from './panorama.js?v=19';
 import { crearUbicacion } from './ubicacion.js?v=18';
 import { crearSeguridad } from './seguridad.js?v=15';
-import { crearPaquete } from './paquete.js?v=7';
+import { crearPaquete } from './paquete.js?v=8';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
 import { crearRealidad } from './realidad.js?v=14';
 import { crearSelector } from './selector.js?v=16';
@@ -134,7 +134,7 @@ async function boot() {
       if (paquete) { paquete.quitar(); paquete = null; }
       paqActivo = mejor;
       (window.tresmilesDiag ??= []).push({ paqueteActivo: mejor });
-      if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: paqWeb(mejor) ?? `data/paquetes/${mejor}`, movil: terrain.movil, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
+      if (mejor) paquete = await crearPaquete({ scene, geo, terrain, cumbres, veg, base: paqWeb(mejor) ?? `data/paquetes/${mejor}`, movil: terrain.movil, telefono: EN_APP || isMobile() || matchMedia('(pointer: coarse)').matches, alRelieve: (z) => { veg.refrescar(z); reajustaRutas?.(z); lagos?.rehacerZona(z); } });
     } finally { paqCambiando = false; }
   }
   leePaquetes().then(() => setInterval(() => eligePaquete().catch(() => {}), 1500));   // (las primeras vueltas pueden llegar antes de que existan los controles de la cámara)
