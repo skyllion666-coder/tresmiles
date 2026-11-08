@@ -43,13 +43,27 @@ export async function bajaWeb(z, avance, senal) {
     const pct = Math.min(99, Math.floor((llevo / total) * 100)); if (pct !== ult) { ult = pct; avance(pct); }
   }
   const buf = new Uint8Array(llevo); let o = 0; for (const c of partes) { buf.set(c, o); o += c.length; } partes.length = 0;
-  const c = await caches.open(CACHE), arch = abreZip(buf.buffer);
+  await guarda(z, buf.buffer); avance(100);
+}
+
+// el .zip ya descargado a mano (p. ej. desde la Release de GitHub cuando tresmiles.pages.dev no responde): se elige en el móvil y se guarda igual
+export async function abreArchivoWeb(z, archivo) {
+  try { await navigator.storage?.persist?.(); } catch {}
+  await guarda(z, await archivo.arrayBuffer());
+}
+
+async function guarda(z, buffer) {
+  const arch = abreZip(buffer), ind = arch.find((a) => a.nombre === 'index.json');
+  if (!ind) throw new Error('el archivo no es un paquete de zona');
+  let cumbre; try { cumbre = JSON.parse(new TextDecoder().decode(ind.datos)).cumbre; } catch { throw new Error('el archivo no es un paquete de zona'); }
+  if (cumbre !== z.cumbre) throw new Error(`ese .zip es de otra zona (${cumbre})`);
+  const c = await caches.open(CACHE);
   arch.sort((a, b) => (a.nombre === 'index.json') - (b.nombre === 'index.json'));   // el índice, el último: si se corta a medias, el paquete no cuenta
   for (const { nombre, datos } of arch) {
     if (nombre.endsWith('/')) continue;
     await c.put(clave(z.id, nombre), new Response(datos.slice(), { headers: { 'content-type': TIPO[nombre.split('.').pop()] ?? 'application/octet-stream' } }));
   }
-  const l = listaWeb(); l[z.id] = z.version; guardaLista(l); avance(100);
+  const l = listaWeb(); l[z.id] = z.version; guardaLista(l);
 }
 
 export async function borraWeb(id) {

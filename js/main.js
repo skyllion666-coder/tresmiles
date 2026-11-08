@@ -11,16 +11,16 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=64';
-import { crearPanorama } from './panorama.js?v=18';
-import { crearUbicacion } from './ubicacion.js?v=17';
-import { crearSeguridad } from './seguridad.js?v=14';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=65';
+import { crearPanorama } from './panorama.js?v=19';
+import { crearUbicacion } from './ubicacion.js?v=18';
+import { crearSeguridad } from './seguridad.js?v=15';
 import { crearPaquete } from './paquete.js?v=7';
-import { zonasWebPosible, listaWeb, bajaWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=2';
-import { crearRealidad } from './realidad.js?v=13';
-import { crearSelector } from './selector.js?v=15';
+import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
+import { crearRealidad } from './realidad.js?v=14';
+import { crearSelector } from './selector.js?v=16';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=29';
+import { t, EN_INGLES } from './i18n.js?v=30';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1653,6 +1653,17 @@ async function boot() {
         delete avWeb[id]; paqCajas.delete(id); await leePaquetes(); sonido.fx('activar'); eligePaquete().catch(() => {});
       } catch (e) { avWeb[id] = ctl.signal.aborted ? undefined : { error: t('No se ha podido descargar: {e}', { e: String(e.message || e) }) }; if (!avWeb[id]) delete avWeb[id]; }
       repinta();
+    } else if (accion === 'archivo') {   // el .zip bajado a mano desde GitHub: se elige y se guarda en el navegador
+      if (avWeb[id]?.ctl) return;
+      const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.zip,application/zip';
+      inp.addEventListener('change', async () => {
+        const f = inp.files?.[0]; if (!f) return;
+        avWeb[id] = { pct: 99, ctl: new AbortController() }; repinta();
+        try { await abreArchivoWeb(z, f); delete avWeb[id]; paqCajas.delete(id); await leePaquetes(); sonido.fx('activar'); eligePaquete().catch(() => {}); }
+        catch (e) { avWeb[id] = { error: t('No se ha podido abrir el archivo: {e}', { e: String(e.message || e) }) }; }
+        repinta();
+      });
+      inp.click();
     } else if (accion === 'cancelar') avWeb[id]?.ctl?.abort();
     else if (accion === 'borrar' && confirm(t('¿Borrar el paquete {n}? Se libera su espacio ({m} MB); lo puedes volver a descargar cuando quieras.', { n: z.nombre, m: z.mb }))) {
       if (paqActivo === id) { paquete?.quitar(); paquete = null; paqActivo = null; }
@@ -1673,7 +1684,8 @@ async function boot() {
         <p class="ruta-credito">${tiene ? t('Tienes esta zona guardada en el navegador: el relieve LiDAR de 1 m y la ortofoto de 25 cm se cargan solos al acercarte.') : t('Relieve LiDAR de 1 m y ortofoto de 25 cm a lo largo de las rutas, para ver la zona como es antes de subir ({m} MB; se guarda en el navegador).', { m: z.mb })}</p>
         <div class="ruta-acciones">${a?.ctl ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.pct >= 99 ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="cancelar" data-id="${z.id}">${t('Cancelar')}</button>`
           : tiene ? `${vieja ? `<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Actualizar')}</button> ` : ''}<button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="borrar" data-id="${z.id}">${t('Borrar')}</button>`
-          : `${a?.error ? `<small class="zona-error">${esc(a.error)}</small> ` : ''}<button type="button" class="btn-ruta" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Ver la zona en alta calidad · {m} MB', { m: z.mb })}</button>`}</div>`;
+          : `${a?.error ? `<small class="zona-error">${esc(a.error)}</small> ` : ''}<button type="button" class="btn-ruta" data-act="zona-web" data-z="bajar" data-id="${z.id}">${t('Ver la zona en alta calidad · {m} MB', { m: z.mb })}</button>`}</div>
+        ${!tiene && !a?.ctl ? `<p class="ruta-credito zona-manual">${t('¿No se descarga? Baja el archivo {a} y luego ábrelo aquí:', { a: `<a href="${esc(z.url)}" download>${esc(z.id)}.zip</a>` })} <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="archivo" data-id="${z.id}">${t('Abrir el .zip descargado')}</button></p>` : ''}`;
       return;
     }
     const z = zonaDe(p, await catalogoZonas); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
