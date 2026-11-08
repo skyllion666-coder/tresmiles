@@ -96,6 +96,7 @@ body.is-ready #compass { opacity: .95; pointer-events: auto; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip { border: 1px solid var(--line); padding: 6px 11px; font: 500 .78rem var(--cond); letter-spacing: .08em; color: var(--ink); background: transparent; }
 #btn-nieve[aria-pressed="true"] { background: #e9f4ff; border-color: #e9f4ff; color: #1f3550; }   /* capa «Nieve ahora» encendida */
+#btn-sendas[aria-pressed="true"] { background: #f3e6c4; border-color: #f3e6c4; color: #1f1a14; }   /* capa «Sendas y pistas» encendida */
 #btn-calor[aria-pressed="true"] { background: #e8833a; border-color: #e8833a; color: #1f1a14; }   /* capa «Por dónde pasa la gente» encendida */
 #btn-calidad[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }   /* calidad alta activada (solo en la app) */
 .chip[aria-pressed="true"] { background: var(--spruce); color: var(--cream); border-color: var(--spruce); }

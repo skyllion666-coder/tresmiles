@@ -11,17 +11,18 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=69';
-import { crearPanorama } from './panorama.js?v=22';
-import { crearUbicacion } from './ubicacion.js?v=21';
-import { crearSeguridad } from './seguridad.js?v=18';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=70';
+import { crearPanorama } from './panorama.js?v=23';
+import { crearUbicacion } from './ubicacion.js?v=22';
+import { crearSeguridad } from './seguridad.js?v=19';
 import { crearPaquete } from './paquete.js?v=8';
 import { datoJson } from './datos.js?v=2';
+import { crearSendas } from './sendas.js?v=1';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=17';
-import { crearSelector } from './selector.js?v=19';
+import { crearRealidad } from './realidad.js?v=18';
+import { crearSelector } from './selector.js?v=20';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=33';
+import { t, EN_INGLES } from './i18n.js?v=34';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -179,7 +180,15 @@ async function boot() {
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
-  reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); };
+  reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); sendas.reajusta(z); };
+  // — «Sendas y pistas»: todos los caminos de OpenStreetMap sobre el relieve (js/sendas.js); botón que la pone y la quita —
+  const sendas = crearSendas({ scene, geo });
+  {
+    const b = $('#btn-sendas');
+    const pon = (v) => { sendas.poner(v); b.setAttribute('aria-pressed', v); store.set('tresmiles-sendas', v ? '1' : '0'); };
+    b.addEventListener('click', () => { sonido.fx('toque'); pon(!sendas.activa); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
+    if (store.get('tresmiles-sendas') === '1') pon(true);
+  }
   const leeRutas = async (p) => { for (const rid of p.rutas ?? []) {
     try {
       const ruta = await cargarRuta(rid);
@@ -2064,6 +2073,7 @@ async function boot() {
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
+    sendas.update(controls.target, camera);
     etiquetas.length = 0;
     const cerca = updateLagos(); updateHitos(); updateRefugios(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
