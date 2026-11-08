@@ -29,7 +29,11 @@ function abreZip(buf) {
 // baja el paquete z (del catálogo) con avance(pct); al acabar queda en la lista
 export async function bajaWeb(z, avance, senal) {
   try { await navigator.storage?.persist?.(); } catch {}
-  const r = await fetch(`paquete/${z.id}?v=${z.version}`, { signal: senal });
+  // la función /paquete/ solo existe en tresmiles.pages.dev (Cloudflare Pages); desde la copia de GitHub Pages se pide allí
+  const base = /\.pages\.dev$|^localhost$|^127\./.test(location.hostname) ? '' : 'https://tresmiles.pages.dev/';
+  let r;
+  try { r = await fetch(`${base}paquete/${z.id}?v=${z.version}`, { signal: senal }); }
+  catch (e) { if (senal?.aborted) throw e; throw new Error('tresmiles.pages.dev no responde (en España, durante el fútbol las operadoras bloquean Cloudflare). Prueba más tarde'); }
   if (!r.ok) throw new Error(`HTTP ${r.status}`);
   const total = +r.headers.get('content-length') || z.mb * 1e6, partes = []; let llevo = 0, ult = -1;
   const lector = r.body.getReader();
