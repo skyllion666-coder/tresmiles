@@ -3,7 +3,7 @@
 // y, si no hay nada, lo que trae la APK. Así una ruta o subida nueva llega a la app sin instalar otra versión. En la web, lo de siempre.
 const EN_APP = /[?&]app=1\b/.test(location.search);
 const BASES = ['https://tresmiles.pages.dev/', 'https://skyllion666-coder.github.io/tresmiles/'];
-const REMOTO = /^data\/(subidas\/|rutas\/[^/]+\.json$|fuentes\.json$)/;
+const REMOTO = /^data\/(subidas\/|rutas\/[^/]+\.json$|fuentes\.json$|hitos\.json$)/;
 const CACHE = 'tresmiles-datos';
 const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);
 let buena = null;   // la base que respondió la última vez (durante el fútbol, la de Cloudflare no contesta: no esperarla en cada archivo)

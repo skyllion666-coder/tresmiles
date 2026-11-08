@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
 import { t as tr } from './i18n.js?v=32';
-import { datoJson } from './datos.js?v=1';
+import { datoJson } from './datos.js?v=2';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 // color de la línea de ruta, compartido por todas: naranja; pasa a verde vivo con la capa «Por dónde pasa la gente» (naranja) para no confundirse con ella
@@ -38,24 +38,23 @@ export function crearRuta({ scene, geo, ruta }) {
   const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
   mat.onBeforeCompile = (sh) => {
     sh.uniforms.uT = UT;
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aS;\nvarying float vS;').replace('#include <begin_vertex>', `#include <begin_vertex>
-      vS = aS;
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aS;\nuniform float uT;\nvarying float vCab;').replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0;
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
       float Rn = clamp(dd * 0.0013, 0.22, 11.0);
       float lift = clamp(dd * 0.0035, 5.0, 24.0);
+      // sentido de la marcha: un abultamiento brillante que avanza desde el inicio (cabeza delante, cola que se apaga detrás);
+      // separados según la distancia a la cámara para que se vean igual de cerca que de lejos
+      float sp = clamp(dd * 0.12, 60.0, 2000.0), fl = fract(aS / sp - uT * 0.35);
+      float cab = smoothstep(0.35, 0.95, fl) * (1.0 - smoothstep(0.95, 0.995, fl));
+      Rn *= 1.0 + 2.6 * cab; vCab = cab;
       transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd;`).replace('#include <common>', '#include <common>\nvarying float vDd;');
-    // sentido de la marcha: destellos que avanzan desde el inicio hacia el final (cabeza brillante delante, cola que se apaga detrás),
-    // separados según la distancia a la cámara para que se vean igual de cerca que de lejos
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float uT;\nvarying float vS;').replace('#include <opaque_fragment>', `float sp = clamp(vDd * 0.05, 25.0, 900.0);
-      float fl = fract(vS / sp - uT * 0.55);
-      float cab = smoothstep(0.3, 0.9, fl) * (1.0 - smoothstep(0.9, 0.97, fl));
-      diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.98, 0.9), cab * 0.8);
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCab;').replace('#include <opaque_fragment>', `outgoingLight = mix(outgoingLight, vec3(1.0, 0.98, 0.85), vCab * 0.85);
       #include <opaque_fragment>`);
     // muy cerca, la línea se aclara para no competir con la cuerda y los montañeros
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd;').replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
   };
-  mat.customProgramCacheKey = () => 'ruta-fina-sentido';
+  mat.customProgramCacheKey = () => 'ruta-fina-sentido2';
   mat.color = COLOR_RUTA.actual;   // el mismo objeto en todas las rutas: cambiarlo cambia todas
   const mesh = new THREE.Mesh(geom, mat);
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
