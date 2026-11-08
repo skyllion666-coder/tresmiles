@@ -11,16 +11,17 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=65';
-import { crearPanorama } from './panorama.js?v=19';
-import { crearUbicacion } from './ubicacion.js?v=18';
-import { crearSeguridad } from './seguridad.js?v=15';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=66';
+import { crearPanorama } from './panorama.js?v=20';
+import { crearUbicacion } from './ubicacion.js?v=19';
+import { crearSeguridad } from './seguridad.js?v=16';
 import { crearPaquete } from './paquete.js?v=8';
+import { datoJson } from './datos.js?v=1';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=14';
-import { crearSelector } from './selector.js?v=16';
+import { crearRealidad } from './realidad.js?v=15';
+import { crearSelector } from './selector.js?v=17';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=30';
+import { t, EN_INGLES } from './i18n.js?v=31';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -28,7 +29,7 @@ const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 const fmt = (n) => new Intl.NumberFormat(document.documentElement.lang === 'en' ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);   // (lang lo pone js/i18n.js, que carga antes)
 const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
 const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);   // sube DATOS_V en index.html al cambiar datos
-const json = (u) => fetch(conV(u), { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(u + ' ' + r.status); return r.json(); });
+const json = (u) => datoJson(u);   // rutas, subidas y fuentes: en la app, de la web si hay conexión (js/datos.js)
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -600,6 +601,47 @@ async function boot() {
     $('#pins').appendChild(el);
     refugios.push({ r, el, x: q.x, z: q.z, lim: { guardado: 20000, libre: 8000, cabana: 5000 }[tipoRef(r)], limNombre: { guardado: 16000, libre: 4000, cabana: 2500 }[tipoRef(r)] });
   }
+  // — fuentes y manantiales de OpenStreetMap (data/fuentes.json, tools/fetch_fuentes.py): gota azul (la de manantial, más clara), hasta 3 km; el nombre, a menos de 1,2 km —
+  const fuentesDatos = await json('data/fuentes.json').catch(() => []);
+  const GOTA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="gota" d="M12 2.5C9 7 5.5 10.6 5.5 14.6a6.5 6.5 0 0 0 13 0C18.5 10.6 15 7 12 2.5z"/><path class="brillo" d="M9.2 14.2a3 3 0 0 0 2.4 3.3"/></svg>`;
+  const textoFuente = (f) => [t(f.tipo === 'manantial' ? 'Manantial' : 'Fuente'), `${fmt(f.alt)} m`, f.potable === true ? t('agua potable') : f.potable === false ? t('no potable') : '', f.temporal ? t('se puede secar') : ''].filter(Boolean).join(' · ');
+  for (const f of fuentesDatos) {
+    const q = geo.toXZ(f.lon, f.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
+    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm refugio-fuente${f.tipo === 'manantial' ? ' fuente-manantial' : ''}${f.potable === false ? ' fuente-no' : ''} is-hidden`;
+    const nom = f.nombre || t(f.tipo === 'manantial' ? 'Manantial' : 'Fuente');
+    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(nom)}">${GOTA}</button><span class="ref-nombre">${esc(f.nombre || '')}</span><b>${esc(nom)}<em>${textoFuente(f)}</em><small>${t('Según OpenStreetMap: puede estar seca o no ser potable; si dudas, potabiliza el agua.')}</small></b>`;
+    el.querySelector('.hito-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const abrir = !el.classList.contains('is-open');
+      closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
+    });
+    $('#pins').appendChild(el);
+    refugios.push({ r: f, el, x: q.x, z: q.z, lim: 3000, limNombre: f.nombre ? 1200 : 0 });
+  }
+  // agua para la ficha: las fuentes a menos de 150 m de la ruta de ejemplo, con el km y la altitud (y cuál es la última antes de la cima);
+  // sin ruta, las 4 más cercanas a la cumbre a menos de 3 km
+  function aguaCerca(p) {
+    const r = rutasDe(p.id)[0]?.ruta, dm = (f, lon, lat) => Math.hypot((f.lon - lon) * geo.mLon, (f.lat - lat) * geo.mLat);
+    if (r?.puntos?.length) {
+      const P = r.puntos; let im = 0; P.forEach((q, i) => { if (q[2] > P[im][2]) im = i; });
+      const lon0 = Math.min(...P.map((q) => q[0])) - 0.003, lon1 = Math.max(...P.map((q) => q[0])) + 0.003, lat0 = Math.min(...P.map((q) => q[1])) - 0.002, lat1 = Math.max(...P.map((q) => q[1])) + 0.002;
+      const l = [];
+      for (const f of fuentesDatos) {
+        if (f.lon < lon0 || f.lon > lon1 || f.lat < lat0 || f.lat > lat1 || f.potable === false) continue;
+        let best = 1e9, k = 0; P.forEach((q, i) => { const d = dm(f, q[0], q[1]); if (d < best) { best = d; k = i; } });
+        if (best < 150 && k <= im) l.push({ f, km: P[k][3] / 1000, d: best });
+      }
+      if (!l.length) return `<h3>${t('Agua')}</h3><p class="ruta-credito">${t('En OpenStreetMap no hay ninguna fuente junto a la subida: lleva toda el agua desde el inicio.')}</p>`;
+      l.sort((a, b) => a.km - b.km);
+      const ult = l[l.length - 1];
+      return `<h3>${t('Agua en la subida')}</h3><ul class="refugios fuentes">${l.slice(-6).map((o) => `<li><b>${esc(o.f.nombre || t(o.f.tipo === 'manantial' ? 'Manantial' : 'Fuente'))}</b><span>${t('km {k}', { k: o.km.toFixed(1).replace('.', ',') })} · ${textoFuente(o.f)}${o.d > 40 ? ` · ${t('a {m} m del camino', { m: Math.round(o.d / 10) * 10 })}` : ''}</span></li>`).join('')}</ul>
+        <p class="ruta-credito">${t('Última fuente antes de la cima: {n}, a {a} m (quedan {d} m de desnivel).', { n: esc(ult.f.nombre || t(ult.f.tipo === 'manantial' ? 'Manantial' : 'Fuente').toLowerCase()), a: fmt(ult.f.alt), d: fmt(Math.max(0, P[im][2] - ult.f.alt)) })} ${t('Según OpenStreetMap: puede estar seca o no ser potable; si dudas, potabiliza el agua.')}</p>`;
+    }
+    const l = fuentesDatos.filter((f) => f.potable !== false).map((f) => ({ f, d: dm(f, p.lon, p.lat) })).filter((o) => o.d < 3000).sort((a, b) => a.d - b.d).slice(0, 4);
+    if (!l.length) return '';
+    return `<h3>${t('Agua cerca')}</h3><ul class="refugios fuentes">${l.map((o) => `<li><b>${esc(o.f.nombre || t(o.f.tipo === 'manantial' ? 'Manantial' : 'Fuente'))}</b><span>${textoFuente(o.f)} · ${t('a {d} km en línea recta', { d: km(o.d) })}</span></li>`).join('')}</ul>
+      <p class="ruta-credito">${t('Según OpenStreetMap: puede estar seca o no ser potable; si dudas, potabiliza el agua.')}</p>`;
+  }
   function updateRefugios() {
     const W = innerWidth, H = innerHeight;
     const deRuta = hitos.filter((o) => o.h.tipo === 'refugio' && !o.el.classList.contains('is-hidden'));   // el hito de la ruta ya lo enseña (con su foto)
@@ -930,6 +972,7 @@ async function boot() {
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
+      ${aguaCerca(p)}
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   // tiempos de marcha (método MIDE: 4 km/h en llano, 400 m/h subiendo, 600 m/h bajando; el mayor más la mitad del menor), sin paradas

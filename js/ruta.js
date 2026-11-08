@@ -1,16 +1,13 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=30';
+import { t as tr } from './i18n.js?v=31';
+import { datoJson } from './datos.js?v=1';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 // color de la línea de ruta, compartido por todas: naranja; pasa a verde vivo con la capa «Por dónde pasa la gente» (naranja) para no confundirse con ella
 export const COLOR_RUTA = { naranja: new THREE.Color('#ffa930'), verde: new THREE.Color('#5be36f'), actual: new THREE.Color('#ffa930') };
 
-export async function cargarRuta(id) {
-  const r = await fetch(`data/rutas/${id}.json?dv=${window.DATOS_V || 0}`, { cache: 'no-cache' });
-  if (!r.ok) throw new Error(`ruta ${id} ${r.status}`);
-  return r.json();
-}
+export const cargarRuta = (id) => datoJson(`data/rutas/${id}.json`);   // en la app, la de la web si hay conexión (js/datos.js)
 
 const PW = 300, PH = 92, PL = 34, PR = 4, PT = 6, PB = 16; // medidas del perfil (viewBox)
 

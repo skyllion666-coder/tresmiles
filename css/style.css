@@ -615,6 +615,14 @@ body.selector-abierto #intro { z-index: 31; }
 .refugio-osm.refugio-cabana svg { width: 16px; height: 16px; }
 .refugio-osm.refugio-cabana svg .tejado { fill: #8a6a45; }   /* cabaña o abrigo de pastores */
 .refugio-osm.is-open b { pointer-events: auto; }
+/* fuentes y manantiales (OpenStreetMap): gota azul; el manantial, más clara; la no potable, gris */
+.refugio-osm.refugio-fuente .hito-btn { width: 24px; height: 24px; }
+.refugio-osm.refugio-fuente svg { width: 15px; height: 15px; }
+.refugio-osm.refugio-fuente svg .gota { fill: #2f8fd8; stroke: #fffbe7; stroke-width: 1.6; stroke-linejoin: round; }
+.refugio-osm.refugio-fuente svg .brillo { fill: none; stroke: #e6f4ff; stroke-width: 1.4; stroke-linecap: round; }
+.refugio-osm.fuente-manantial svg .gota { fill: #5ab8e8; }
+.refugio-osm.fuente-no svg .gota { fill: #8a9196; }
+.refugio-osm.refugio-fuente .ref-nombre { font-weight: 500; color: #dcefff; }
 .refugio-osm b small { padding: 3px 0 0; }
 .refugios { list-style: none; margin: 0 0 8px; padding: 0; }
 .refugios li { padding: 8px 0; border-bottom: 1px solid rgba(36,48,44,.12); font-size: .85rem; line-height: 1.4; }
