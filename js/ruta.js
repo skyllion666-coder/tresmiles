@@ -1,11 +1,17 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=32';
+import { t as tr } from './i18n.js?v=33';
 import { datoJson } from './datos.js?v=2';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
 // color de la línea de ruta, compartido por todas: naranja; pasa a verde vivo con la capa «Por dónde pasa la gente» (naranja) para no confundirse con ella
-const UT = { value: 0 };   // reloj de las flechas de luz (compartido por todas las rutas)
+// flecha del sentido de la marcha: punta de dardo plana, blanca con borde oscuro, tumbada sobre el terreno (apunta a +x)
+const FLECHA = (() => {
+  const forma = (e) => new THREE.Shape([[0.62, 0], [-0.5, 0.56], [-0.22, 0], [-0.5, -0.56]].map(([x, y]) => new THREE.Vector2(x * e, y * e)));
+  const g = (e) => new THREE.ShapeGeometry(forma(e)).rotateX(-Math.PI / 2);
+  const m = (c, o) => new THREE.MeshBasicMaterial({ color: c, fog: false, transparent: true, opacity: o, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 });
+  return { borde: g(1.3), cara: g(1), mBorde: m('#2b2416', 0.75), mCara: m('#fffbe7', 1) };
+})();
 export const COLOR_RUTA = { naranja: new THREE.Color('#ffa930'), verde: new THREE.Color('#5be36f'), actual: new THREE.Color('#ffa930') };
 
 export const cargarRuta = (id) => datoJson(`data/rutas/${id}.json`);   // en la app, la de la web si hay conexión (js/datos.js)
@@ -28,37 +34,43 @@ export function crearRuta({ scene, geo, ruta }) {
   const fCima = dist[im] / (dist[dist.length - 1] || 1), hayBajada = dist[dist.length - 1] - dist[im] > 400;
   const tono = (g) => {
     const n = g.attributes.position.count, c = new Float32Array(n * 3);
-    const sa = new Float32Array(n), largo = dist[dist.length - 1] || 1;   // aS: metros desde el inicio (para las flechas de luz que marcan el sentido)
-    for (let v = 0; v < n; v++) { const anillo = Math.floor(v / (rad + 1)), k = hayBajada && anillo / tub > fCima + 0.002 ? 0.55 : 1; c[v * 3] = c[v * 3 + 1] = c[v * 3 + 2] = k; sa[v] = Math.min(1, anillo / tub) * largo; }
-    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); g.setAttribute('aS', new THREE.BufferAttribute(sa, 1)); return g;
+    for (let v = 0; v < n; v++) { const anillo = Math.floor(v / (rad + 1)), k = hayBajada && anillo / tub > fCima + 0.002 ? 0.55 : 1; c[v * 3] = c[v * 3 + 1] = c[v * 3 + 2] = k; }
+    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g;
   };
   let geom = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false));
   // la línea se adelgaza al acercarse: el radio (0,5–11 m) y la altura sobre el relieve (7–24 m) crecen con la distancia a la cámara, calculados por vértice en el shader.
   // La geometría guarda el radio de 11 m; el centro del tubo es posición − normal × 11, así que no hace falta otra línea ni más vértices.
   const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
   mat.onBeforeCompile = (sh) => {
-    sh.uniforms.uT = UT;
-    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aS;\nuniform float uT;\nvarying float vCab;').replace('#include <begin_vertex>', `#include <begin_vertex>
+    sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0;
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
       float Rn = clamp(dd * 0.0013, 0.22, 11.0);
       float lift = clamp(dd * 0.0035, 5.0, 24.0);
-      // sentido de la marcha: un abultamiento brillante que avanza desde el inicio (cabeza delante, cola que se apaga detrás);
-      // separados según la distancia a la cámara para que se vean igual de cerca que de lejos
-      float sp = clamp(dd * 0.12, 60.0, 2000.0), fl = fract(aS / sp - uT * 0.35);
-      float cab = smoothstep(0.35, 0.95, fl) * (1.0 - smoothstep(0.95, 0.995, fl));
-      Rn *= 1.0 + 2.6 * cab; vCab = cab;
       transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd;`).replace('#include <common>', '#include <common>\nvarying float vDd;');
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vCab;').replace('#include <opaque_fragment>', `outgoingLight = mix(outgoingLight, vec3(1.0, 0.98, 0.85), vCab * 0.85);
-      #include <opaque_fragment>`);
     // muy cerca, la línea se aclara para no competir con la cuerda y los montañeros
     sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd;').replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
   };
-  mat.customProgramCacheKey = () => 'ruta-fina-sentido2';
+  mat.customProgramCacheKey = () => 'ruta-fina';
   mat.color = COLOR_RUTA.actual;   // el mismo objeto en todas las rutas: cambiarlo cambia todas
   const mesh = new THREE.Mesh(geom, mat);
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
   scene.add(mesh);
+  // sentido de la marcha: unas pocas flechas repartidas por el recorrido (3 a 6 según lo largo), del tamaño justo para verlas desde donde se mira
+  const flechas = new THREE.Group(); flechas.visible = false; scene.add(flechas);
+  const nF = Math.min(6, Math.max(3, Math.round((dist[dist.length - 1] || 0) / 1800)));
+  for (let i = 0; i < nF; i++) {
+    const d = (dist[dist.length - 1] || 0) * (i + 0.5) / nF, a = en(d - 15).pos, b = en(d + 15).pos, c = en(d).pos;
+    const f = new THREE.Group(); f.position.copy(c); f.rotation.y = Math.atan2(-(b.z - a.z), b.x - a.x);
+    const mb = new THREE.Mesh(FLECHA.borde, FLECHA.mBorde), mc = new THREE.Mesh(FLECHA.cara, FLECHA.mCara); mc.position.y = 0.02;
+    mb.renderOrder = 4; mc.renderOrder = 5; f.add(mb, mc);
+    f.userData.d = d;
+    mb.onBeforeRender = (r, s, cam) => {   // tamaño y altura según la distancia a la cámara, como la línea (que sube de 5 a 24 m)
+      const dd = cam.position.distanceTo(f.position), e = Math.min(600, Math.max(8, dd * 0.036));
+      f.scale.setScalar(e); f.position.y = en(f.userData.d).pos.y - 24 + Math.min(24, Math.max(5, dd * 0.0035)) + 2; f.updateMatrixWorld(true);
+    };
+    flechas.add(f);
+  }
 
   // montañeros: uno que sigue a la cámara en el vuelo o al dedo en el perfil, y un grupo de tres que recorre la ruta.
   // Escala fija del muñeco (mide ~1,8 → ~21 m en el modelo, igual a lo largo de todo el recorrido y a cualquier distancia de la cámara).
@@ -250,14 +262,14 @@ export function crearRuta({ scene, geo, ruta }) {
   return {
     ruta, centro, extension, en, cercano, pasos, reajusta,
     mostrar(v, { animar = true } = {}) {
-      activo = v; mesh.visible = v; ver();
+      activo = v; mesh.visible = v; flechas.visible = v; ver();
       if (v) { k = animar ? 0 : 1; t0 = performance.now(); set(); resetEquipo(); }
     },
     get visible() { return activo; },
     update(dt = 0.016) {
       if (activo && k < 1) { k = Math.min(1, (performance.now() - t0) / 4500); set(); }
       if (!activo) return;
-      const tt = performance.now() / 1000; if (!reducido) UT.value = tt % 1000;
+      const tt = performance.now() / 1000;
       if (cursorOn) {
         const anda = performance.now() - ultimoCursor < 250; const pp = postura(dCursor, 0, tt);
         if (anda) solo.fase += dt * 11 * (1 - 0.7 * pp.n); colocar(solo, dCursor, 0, anda, pp, 1 - 0.7 * pp.n, 3.4 * (1 - 0.7 * pp.n));
