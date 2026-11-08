@@ -11,17 +11,17 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=66';
-import { crearPanorama } from './panorama.js?v=20';
-import { crearUbicacion } from './ubicacion.js?v=19';
-import { crearSeguridad } from './seguridad.js?v=16';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=67';
+import { crearPanorama } from './panorama.js?v=21';
+import { crearUbicacion } from './ubicacion.js?v=20';
+import { crearSeguridad } from './seguridad.js?v=17';
 import { crearPaquete } from './paquete.js?v=8';
 import { datoJson } from './datos.js?v=1';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=15';
-import { crearSelector } from './selector.js?v=17';
+import { crearRealidad } from './realidad.js?v=16';
+import { crearSelector } from './selector.js?v=18';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=31';
+import { t, EN_INGLES } from './i18n.js?v=32';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -1007,7 +1007,7 @@ async function boot() {
     return `<h3>Recorrido en el mapa</h3>
       <p class="ruta-nombre">${esc(r.nombre)}</p>
       <div class="ruta-datos"><span><b>${km(r.distancia)} km</b>distancia</span><span><b>+${fmt(r.desnivel)} m</b>desnivel acumulado</span><span><b>${fmt(r.max)} m</b>punto más alto</span></div>
-      ${(() => { const tm = tiemposRuta(r); return `<div class="ruta-datos ruta-tiempos"><span><b>≈ ${horas(tm.subida)}</b>${t('subida')}</span><span><b>≈ ${horas(tm.bajada)}</b>${t('bajada')}</span><span><b>≈ ${horas(tm.subida + tm.bajada)}</b>${t('en total, sin paradas')}</span></div><p class="ruta-credito">${t('Tiempos estimados con el método MIDE (4 km/h en llano, 400 m/h de subida y 600 m/h de bajada). Varían mucho con la forma física, la nieve y el tiempo.')}</p>`; })()}
+      ${(() => { const tm = tiemposRuta(r); return `<div class="ruta-datos ruta-tiempos"><span><b>≈ ${horas(tm.subida)}</b>${t('subida')}</span><span><b>≈ ${horas(tm.bajada)}</b>${t('bajada')}</span><span><b>≈ ${horas(tm.subida + tm.bajada)}</b>${t('en total, sin paradas')}</span></div><p class="ruta-credito">${t('Tiempos estimados con el método MIDE (4 km/h en llano, 400 m/h de subida y 600 m/h de bajada). Varían mucho con la forma física, la nieve y el tiempo.')}</p><p class="ruta-sentido">${t(tm.bajada && r.distancia - r.puntos.reduce((m, q) => (q[2] > m[2] ? q : m))[3] > 400 ? 'Sentido de la marcha: los destellos de la línea avanzan desde el inicio; la subida va en el color vivo y la bajada, más oscura.' : 'Sentido de la marcha: los destellos de la línea avanzan desde el inicio hacia la cima (se baja por el mismo camino).')}</p>`; })()}
       <details class="perfil-det" ${store.get('perfil-oculto') === '1' ? '' : 'open'}><summary>Perfil de altura</summary>${rutasDe(p.id)[0].perfil()}</details>
       <div class="ruta-acciones">
         <button type="button" class="btn-ruta" data-act="plegar">Ver el recorrido a pantalla completa</button>
