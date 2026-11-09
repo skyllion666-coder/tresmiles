@@ -753,16 +753,16 @@
   "id": "bachimala",
   "cumbre": "bachimala",
   "nombre": "Gran Bachimala",
-  "detalle": "Desde Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 88,
-  "version": 1,
+  "detalle": "Desde Refugio de Marradetas. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 298,
+  "version": 2,
   "caja": [
-   21000.0,
+   18000.0,
    8000.0,
    24000.0,
-   14000.0
+   25000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-bachimala-1/bachimala.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-bachimala-2/bachimala.zip"
  },
  {
   "id": "gran-facha",
