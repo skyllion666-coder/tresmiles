@@ -1308,16 +1308,16 @@
   "id": "perdiguero",
   "cumbre": "perdiguero",
   "nombre": "Perdiguero",
-  "detalle": "Desde Benasque · Llanos del Hospital (valles de Remuñé y Literola). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 196,
-  "version": 1,
+  "detalle": "Desde Cabaña de Santa Ana. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 278,
+  "version": 2,
   "caja": [
    32000.0,
    8000.0,
    42000.0,
-   13000.0
+   15000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-perdiguero-1/perdiguero.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-perdiguero-2/perdiguero.zip"
  },
  {
   "id": "petit-pic-des-moines",
