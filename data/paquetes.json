@@ -3423,16 +3423,16 @@
   "id": "astorg",
   "cumbre": "astorg",
   "nombre": "Punta de Astorg",
-  "detalle": "Desde Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 112,
-  "version": 1,
+  "detalle": "Desde Abrigo de la Besurta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 175,
+  "version": 2,
   "caja": [
    41000.0,
-   14000.0,
+   10000.0,
    45000.0,
    19000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-astorg-1/astorg.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-astorg-2/astorg.zip"
  },
  {
   "id": "punta-de-burrambalo",
