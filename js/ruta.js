@@ -34,8 +34,30 @@ export function crearRuta({ scene, geo, ruta }) {
   const fCima = dist[im] / (dist[dist.length - 1] || 1), hayBajada = dist[dist.length - 1] - dist[im] > 400;
   // subida continua y bajada a rayas (antes, la bajada en un naranja más oscuro: sobre la foto apenas se distinguía y en los cruces confundía);
   // las rayas se miden a lo largo del tubo (uv.x de TubeGeometry) y crecen con la distancia a la cámara para verse igual de cerca y de lejos
-  const tono = (g) => g;
-  let geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
+  // donde la bajada vuelve por el mismo camino que la subida (a menos de 15 m), la bajada no se pinta: si no, dos líneas montadas temblaban una sobre otra
+  const rej = new Map(), C = 30, sub = pts.slice(0, im + 1);
+  sub.forEach((p, i) => { const k = `${Math.floor(p.x / C)},${Math.floor(p.z / C)}`; if (!rej.has(k)) rej.set(k, []); rej.get(k).push(i); });
+  const cercaSubida = (x, z) => {
+    const i0 = Math.floor(x / C), j0 = Math.floor(z / C);
+    for (let i = i0 - 1; i <= i0 + 1; i++) for (let j = j0 - 1; j <= j0 + 1; j++) for (const k of rej.get(`${i},${j}`) ?? []) {
+      const a = sub[k], b = sub[Math.min(k + 1, sub.length - 1)], dx = b.x - a.x, dz = b.z - a.z, l2 = dx * dx + dz * dz || 1, t = Math.max(0, Math.min(1, ((x - a.x) * dx + (z - a.z) * dz) / l2));
+      if (Math.hypot(x - a.x - dx * t, z - a.z - dz * t) < 15) return true;
+    }
+    return false;
+  };
+  const tono = (g) => {
+    const n = g.attributes.position.count, sol = new Float32Array(n);
+    if (hayBajada) {
+      const q = new THREE.Vector3();
+      for (let i = 0; i <= tub; i++) {
+        if (i / tub <= fCima + 0.002) continue;
+        curve.getPointAt(i / tub, q); const v = cercaSubida(q.x, q.z) ? 1 : 0;
+        for (let j = 0; j <= rad; j++) sol[i * (rad + 1) + j] = v;
+      }
+    }
+    g.setAttribute('aSolapa', new THREE.BufferAttribute(sol, 1)); return g;
+  };
+  let geom = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false));
   const uCima = { value: hayBajada ? fCima + 0.002 : 2 }, uLen = { value: curve.getLength() };
   // borde: el mismo tubo, más gordo, oscuro y por detrás, para que la línea resalte sobre la roca clara
   const material = (borde) => {
@@ -48,9 +70,10 @@ export function crearRuta({ scene, geo, ruta }) {
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
       float Rn = clamp(dd * 0.0013, 0.22, 11.0) * ${borde ? '1.7' : '1.0'};
       float lift = clamp(dd * 0.0035, 5.0, 24.0);
-      transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd; vU = uv.x;`).replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU;');
-      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU; uniform float uCima; uniform float uLen;')
+      transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd; vU = uv.x; vSol = aSolapa;`).replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU; varying float vSol; attribute float aSolapa;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU; varying float vSol; uniform float uCima; uniform float uLen;')
         .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+      if (vU > uCima && vSol > 0.5) discard;
       if (vU > uCima) { float per = clamp(vDd * 0.035, 10.0, 900.0); if (fract(vU * uLen / per) > 0.58) discard; }`)
         .replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
     };
@@ -68,6 +91,7 @@ export function crearRuta({ scene, geo, ruta }) {
   const nF = Math.min(10, Math.max(5, Math.round((dist[dist.length - 1] || 0) / 1000)));
   for (let i = 0; i < nF; i++) {
     const d = (dist[dist.length - 1] || 0) * (i + 0.5) / nF, a = en(d - 15).pos, b = en(d + 15).pos, c = en(d).pos;
+    if (hayBajada && d > dist[im] && cercaSubida(c.x, c.z)) continue;   // en el tramo compartido solo cuentan las flechas de subida
     const f = new THREE.Group(); f.position.copy(c); f.rotation.y = Math.atan2(-(b.z - a.z), b.x - a.x);
     const mb = new THREE.Mesh(FLECHA.borde, FLECHA.mBorde), mc = new THREE.Mesh(FLECHA.cara, FLECHA.mCara); mc.position.y = 0.02;
     mb.renderOrder = 4; mc.renderOrder = 5; f.add(mb, mc);
@@ -262,7 +286,7 @@ export function crearRuta({ scene, geo, ruta }) {
     for (const p of pts) if (p.x >= x0 && p.x <= x1 && p.z >= z0 && p.z <= z1) { const y = geo.heightAt(p.x, p.z) + 24; cambio = Math.max(cambio, Math.abs(y - p.y)); p.y = y; }
     if (cambio < 1) return;
     curve.updateArcLengths();
-    const g = new THREE.TubeGeometry(curve, tub, 11, rad, false); g.setDrawRange(geom.drawRange.start, geom.drawRange.count); uLen.value = curve.getLength();
+    const g = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false)); g.setDrawRange(geom.drawRange.start, geom.drawRange.count); uLen.value = curve.getLength();
     mesh.geometry = g; borde.geometry = g; geom.dispose(); geom = g;
   }
 
