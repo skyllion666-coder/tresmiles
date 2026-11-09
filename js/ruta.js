@@ -58,7 +58,7 @@ export function crearRuta({ scene, geo, ruta }) {
   scene.add(mesh);
   // sentido de la marcha: unas pocas flechas repartidas por el recorrido (3 a 6 según lo largo), del tamaño justo para verlas desde donde se mira
   const flechas = new THREE.Group(); flechas.visible = false; scene.add(flechas);
-  const nF = Math.min(6, Math.max(3, Math.round((dist[dist.length - 1] || 0) / 1800)));
+  const nF = Math.min(10, Math.max(5, Math.round((dist[dist.length - 1] || 0) / 1000)));
   for (let i = 0; i < nF; i++) {
     const d = (dist[dist.length - 1] || 0) * (i + 0.5) / nF, a = en(d - 15).pos, b = en(d + 15).pos, c = en(d).pos;
     const f = new THREE.Group(); f.position.copy(c); f.rotation.y = Math.atan2(-(b.z - a.z), b.x - a.x);
@@ -66,7 +66,7 @@ export function crearRuta({ scene, geo, ruta }) {
     mb.renderOrder = 4; mc.renderOrder = 5; f.add(mb, mc);
     f.userData.d = d;
     mb.onBeforeRender = (r, s, cam) => {   // tamaño y altura según la distancia a la cámara, como la línea (que sube de 5 a 24 m)
-      const dd = cam.position.distanceTo(f.position), e = Math.min(600, Math.max(8, dd * 0.036));
+      const dd = cam.position.distanceTo(f.position), e = Math.min(200, Math.max(2.7, dd * 0.012));
       f.scale.setScalar(e); f.position.y = en(f.userData.d).pos.y - 24 + Math.min(24, Math.max(5, dd * 0.0035)) + 2; f.updateMatrixWorld(true);
     };
     flechas.add(f);
