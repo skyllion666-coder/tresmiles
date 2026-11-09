@@ -13,7 +13,7 @@ export function crearVivacs({ scene, geo, puntos }) {
     grupo.clear();
     puntos.forEach((p, i) => {
       const m = modelo.clone(); m.scale.setScalar(ESCALA); m.rotation.y = (i * 2.399) % (2 * Math.PI);
-      m.position.set(p.x, geo.heightAt(p.x, p.z) - 0.1, p.z); grupo.add(m);
+      m.position.set(p.x, geo.heightAt(p.x, p.z), p.z); grupo.add(m);
     });
   };
   return {
@@ -23,7 +23,7 @@ export function crearVivacs({ scene, geo, puntos }) {
       grupo.visible = cerca;
       if (cerca && !modelo && !pidiendo) {
         pidiendo = true;
-        new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('models/vivac.glb?v=1', (g) => {
+        new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('models/vivac.glb?v=2', (g) => {
           modelo = g.scene; modelo.traverse((o) => { if (o.isMesh) { o.material.roughness = 1; o.material.metalness = 0; } }); pon();
         }, undefined, () => {});
       }

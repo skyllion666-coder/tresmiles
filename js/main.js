@@ -18,7 +18,7 @@ import { crearSeguridad } from './seguridad.js?v=20';
 import { crearPaquete } from './paquete.js?v=8';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
-import { crearVivacs } from './vivacs.js?v=1';
+import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
 import { crearRealidad } from './realidad.js?v=19';
 import { crearSelector } from './selector.js?v=21';
@@ -663,7 +663,7 @@ async function boot() {
     const nombres = [];
     for (const o of refugios) {
       let show = S.mode === 'explore' && Math.hypot(camera.position.x - o.x, camera.position.z - o.z) < o.lim;
-      if (show) { hitoTmp.set(o.x, geo.heightAt(o.x, o.z) + 12, o.z); show = camera.position.distanceTo(hitoTmp) < o.lim && !deRuta.some((h) => Math.hypot(h.x - o.x, h.z - o.z) < 250); }
+      if (show) { hitoTmp.set(o.x, geo.heightAt(o.x, o.z) + (o.vivac && camera.position.distanceTo(controls.target) < 1500 ? 3 : 12), o.z); show = camera.position.distanceTo(hitoTmp) < o.lim && !deRuta.some((h) => Math.hypot(h.x - o.x, h.z - o.z) < 250); }
       if (show) { hitoTmp.project(camera); show = hitoTmp.z < 1 && Math.abs(hitoTmp.x) < 1.05 && Math.abs(hitoTmp.y) < 1.05 && !occluded({ x: o.x, y: geo.heightAt(o.x, o.z) + 22, z: o.z }); }
       if (show && pinAct && Math.hypot((hitoTmp.x * 0.5 + 0.5) * W - pinAct.px, (-hitoTmp.y * 0.5 + 0.5) * H - pinAct.py) < 44) show = false;
       o.el.classList.toggle('is-hidden', !show);
@@ -2075,7 +2075,7 @@ async function boot() {
     S.shift.x += (S.shiftTo.x - S.shift.x) * k; S.shift.y += (S.shiftTo.y - S.shift.y) * k;
     if (Math.abs(S.shift.x) + Math.abs(S.shift.y) > 0.5) camera.setViewOffset(innerWidth, innerHeight, S.shift.x, S.shift.y, innerWidth, innerHeight);
     else if (camera.view?.enabled) camera.clearViewOffset();
-    { const cerca = S.detalle ? 8 : 60; if (camera.near !== cerca) { camera.near = cerca; camera.updateProjectionMatrix(); } }   // en las vistas de cerca (cima, Paso de Mahoma) el recorte cercano de 60 m cortaba los modelos
+    { const sobre = camera.position.y - geo.heightAt(camera.position.x, camera.position.z), cerca = S.detalle ? 8 : sobre < 150 ? Math.max(3, Math.min(60, Math.round(sobre * 0.4))) : 60; if (camera.near !== cerca) { camera.near = cerca; camera.updateProjectionMatrix(); } }   // en las vistas de cerca (cima, Paso de Mahoma) el recorte cercano de 60 m cortaba los modelos; con la cámara baja (paquete, hasta 15 m del suelo), el recorte baja con ella: si no, se comía el suelo de delante y se veía el cielo
     camera.updateMatrixWorld();
     sky.position.copy(camera.position); estrellas.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     { const m = estrellas.material, ob = S.noche ? 0.85 * (1 - tiempo.cubierto) : 0; m.opacity += (ob - m.opacity) * Math.min(1, dt * 0.8); estrellas.visible = m.opacity > 0.01; }
