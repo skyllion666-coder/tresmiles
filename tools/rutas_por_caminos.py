@@ -120,12 +120,13 @@ def rehace(puntos, pts, ady, rej, nombre):
     out.append(T[-1])
     # quitar duplicados seguidos y simplificar a 1 m
     lim = [out[0]] + [p for a, p in zip(out, out[1:]) if math.dist(a[:2], p[:2]) > 0.3]
-    def pico(a, b, c):   # ida y vuelta en la junta entre dos trozos
+    zmax = max(p[2] for p in lim)
+    def pico(a, b, c):   # ida y vuelta corta en la junta entre dos trozos (no la vuelta de verdad en una cima o un mirador: tramos de más de 40 m, o el punto más alto)
         u = (b[0] - a[0], b[1] - a[1]); v = (c[0] - b[0], c[1] - b[1]); lu, lv = math.hypot(*u), math.hypot(*v)
-        return lu > 0.5 and lv > 0.5 and (u[0] * v[0] + u[1] * v[1]) / (lu * lv) < -0.7
-    cambio = True
-    while cambio:
-        cambio = False; k = 1
+        return 0.5 < lu < 40 and 0.5 < lv < 40 and b[2] < zmax and (u[0] * v[0] + u[1] * v[1]) / (lu * lv) < -0.7
+    cambio, vueltas = True, 0
+    while cambio and vueltas < 3:
+        cambio = False; k = 1; vueltas += 1
         while k < len(lim) - 1:
             if pico(lim[k - 1], lim[k], lim[k + 1]): del lim[k]; cambio = True
             else: k += 1
@@ -139,18 +140,28 @@ def rehace(puntos, pts, ady, rej, nombre):
     return nuevos
 
 PS_IDX = None
+def seguro(orig, nueva):   # la nueva cubre todo el track (ningún tramo a más de 80 m) y llega a la cima (no pierde más de 10 m de altitud)
+    ln = Linea([xy(p[0], p[1]) for p in nueva])
+    return max(ln.d(xy(p[0], p[1]), 500) for p in orig) <= 80 and max(p[2] for p in orig) - max(p[2] for p in nueva) <= 10
 def main():
     global PS_IDX
     args = [a for a in sys.argv[1:] if not a.startswith('--')]; prueba = '--prueba' in sys.argv
+    if '--todas' in sys.argv: args += sorted(f[:-5] for f in os.listdir(os.path.join(ROOT, 'data/rutas')) if f.endswith('.json'))
+    if '--subidas' in sys.argv: args += sorted(f[:-5] for f in os.listdir(os.path.join(ROOT, 'data/subidas')) if f.endswith('.json') and f != 'index.json')
+    hechas = set() if '--rehacer' in sys.argv else {a for a in args if any(json.load(open(os.path.join(ROOT, 'data', c, a + '.json'))).get('por_caminos') for c in ('rutas', 'subidas') if os.path.exists(os.path.join(ROOT, 'data', c, a + '.json')))}
+    manual = {a for a in args if os.path.exists(os.path.join(ROOT, 'data/rutas', a + '.json')) and json.load(open(os.path.join(ROOT, 'data/rutas', a + '.json'))).get('arreglo_manual')}
+    args = [a for a in dict.fromkeys(args) if (a not in hechas or a in sys.argv[1:]) and a not in manual]   # las arregladas a mano no se rehacen
     pts, ady, rej = red(); PS_IDX = PS.indice(); print(len(pts), 'nodos de camino', flush=True)
     for a in args:
         if os.path.exists(os.path.join(ROOT, 'data/rutas', a + '.json')):
             d = PS.original(f'rutas/{a}.json'); n = rehace(d['puntos'], pts, ady, rej, 'ruta ' + a)
+            if not seguro(d['puntos'], n): print(f'  ruta {a}: se aparta del track o pierde la cima; se queda como estaba', flush=True); continue
             if not prueba: d['puntos'] = n; d['distancia'] = n[-1][3]; d['por_caminos'] = True; json.dump(d, open(os.path.join(ROOT, 'data/rutas', a + '.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
         if os.path.exists(os.path.join(ROOT, 'data/subidas', a + '.json')):
             d = PS.original(f'subidas/{a}.json')
             for s in d['subidas']:
                 n = rehace(s['puntos'], pts, ady, rej, 'subida ' + s['id'])
+                if not seguro(s['puntos'], n): print(f'  subida {s["id"]}: se aparta del track o pierde la cima; se queda pegada', flush=True); n = PS.pega(s['puntos'], *PS_IDX)[0]
                 if not prueba: s['puntos'] = n; s['distancia'] = n[-1][3]
             if not prueba: d['por_caminos'] = True; json.dump(d, open(os.path.join(ROOT, 'data/subidas', a + '.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 
