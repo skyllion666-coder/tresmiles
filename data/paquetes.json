@@ -3798,16 +3798,16 @@
   "id": "soum",
   "cumbre": "soum",
   "nombre": "Soum de Ramond",
-  "detalle": "Desde Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 127,
-  "version": 1,
+  "detalle": "Desde la carretera. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 234,
+  "version": 2,
   "caja": [
-   -9000.0,
+   -15000.0,
    9000.0,
    -3000.0,
-   14000.0
+   17000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-soum-1/soum.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-soum-2/soum.zip"
  },
  {
   "id": "susana-mondarruego",
