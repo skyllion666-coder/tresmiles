@@ -2628,16 +2628,16 @@
   "id": "maladeta",
   "cumbre": "maladeta",
   "nombre": "Pico de la Maladeta",
-  "detalle": "Desde Benasque · La Besurta / refugio de La Renclusa. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 71,
-  "version": 1,
+  "detalle": "Desde Abrigo de la Besurta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 85,
+  "version": 2,
   "caja": [
    42000.0,
-   11000.0,
+   10000.0,
    45000.0,
    15000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-maladeta-1/maladeta.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-maladeta-2/maladeta.zip"
  },
  {
   "id": "paul",
