@@ -2583,16 +2583,16 @@
   "id": "tempestades",
   "cumbre": "tempestades",
   "nombre": "Pico de Tempestades",
-  "detalle": "Desde Benasque · Plan de Senarta / Puente de Coronas (valle de Vallibierna). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 95,
-  "version": 1,
+  "detalle": "Desde Abrigo de la Besurta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 191,
+  "version": 2,
   "caja": [
    41000.0,
-   16000.0,
+   10000.0,
    46000.0,
    20000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tempestades-1/tempestades.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tempestades-2/tempestades.zip"
  },
  {
   "id": "pico-de-yesero",
