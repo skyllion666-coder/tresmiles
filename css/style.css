@@ -655,12 +655,12 @@ body.selector-abierto #intro { z-index: 31; }
 
 /* «Otras subidas» (variantes sacadas del mapa de calor) */
 .subidas { list-style: none; margin: .4rem 0 .6rem; padding: 0; display: grid; gap: .45rem; }
-.subida { display: grid; gap: .15rem; width: 100%; text-align: left; padding: .6rem .75rem; border: 1px solid rgba(45,74,67,.25); border-left: 4px solid #b98cff; background: rgba(255,255,255,.45); color: var(--ink); font: inherit; cursor: pointer; }
+.subida { display: grid; gap: .15rem; width: 100%; text-align: left; padding: .6rem .75rem; border: 1px solid rgba(45,74,67,.25); border-left: 4px solid var(--c, #b98cff); background: rgba(255,255,255,.45); color: var(--ink); font: inherit; cursor: pointer; }
 .subida b { font: 600 .8rem/1.3 var(--cond); letter-spacing: .08em; text-transform: uppercase; }
 .subida small { font-size: .88rem; opacity: .85; }
 .subida-datos { font: 500 .82rem/1.35 var(--cond); opacity: .8; }
 .subida-aviso { font: 500 .8rem/1.35 var(--cond); color: #8a4b12; }
-.subida[aria-pressed="true"] { background: #efe6ff; border-color: #b98cff; }
+.subida[aria-pressed="true"] { background: #f1eee6; border-color: var(--c, #b98cff); box-shadow: inset 0 0 0 1px var(--c, #b98cff); }
 .subida:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 
 /* fichas en el móvil: más legibles sin agrandar la letra — trazo algo más grueso, tinta más oscura, textos pequeños sin gris claro ni transparencias
@@ -750,3 +750,15 @@ body.selector-abierto #intro { z-index: 31; }
 .ruta-sentido::before { content: "➜ "; color: #e8901c; font-weight: 700; }
 .refugio-osm.refugio-vivac svg { width: 15px; height: 15px; }
 .refugio-osm.refugio-vivac svg .piedras { fill: #b9b3a6; stroke: #3d3a34; stroke-width: 1.1; }   /* vivac: corro de piedras sin techo */
+
+/* leyenda de las líneas: subida continua, bajada a rayas, otra subida en su color */
+.leyenda-lineas { position: fixed; left: 12px; top: calc(env(safe-area-inset-top, 0px) + 84px); z-index: 6; display: flex; flex-direction: column; gap: 3px; padding: 5px 8px; border-radius: 6px;
+  background: rgba(20, 30, 27, .55); color: #f4efe2; font: 500 .66rem/1.3 var(--cond); letter-spacing: .06em; pointer-events: none; transition: opacity .3s; max-width: 46vw; }
+.leyenda-lineas.is-hidden { opacity: 0; }
+.leyenda-lineas span { display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.leyenda-lineas i { flex: none; width: 22px; height: 4px; border-radius: 2px; background: #ffa930; box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+.leyenda-lineas i.l-baj { background: repeating-linear-gradient(90deg, #ffa930 0 6px, transparent 6px 10px); box-shadow: none; }
+.leyenda-lineas i.l-otra { background: var(--c); height: 3px; }
+.linea-etq { position: fixed; left: 0; top: 0; z-index: 5; pointer-events: none; margin: -11px 0 0 0; padding: 2px 7px; border-radius: 4px; translate: -50% 0;
+  background: rgba(20, 30, 27, .7); color: #fff; border-left: 3px solid var(--c); font: 500 .68rem/1.4 var(--cond); letter-spacing: .05em; white-space: nowrap; transition: opacity .2s; }
+.linea-etq.is-hidden { opacity: 0; }

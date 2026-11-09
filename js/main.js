@@ -11,19 +11,19 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=72';
-import { crearPanorama } from './panorama.js?v=24';
-import { crearUbicacion } from './ubicacion.js?v=23';
-import { crearSeguridad } from './seguridad.js?v=20';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=73';
+import { crearPanorama } from './panorama.js?v=25';
+import { crearUbicacion } from './ubicacion.js?v=24';
+import { crearSeguridad } from './seguridad.js?v=21';
 import { crearPaquete } from './paquete.js?v=8';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=19';
-import { crearSelector } from './selector.js?v=21';
+import { crearRealidad } from './realidad.js?v=20';
+import { crearSelector } from './selector.js?v=22';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=35';
+import { t, EN_INGLES } from './i18n.js?v=36';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -185,6 +185,22 @@ async function boot() {
   // — «Sendas y pistas»: todos los caminos de OpenStreetMap sobre el relieve (js/sendas.js); botón que la pone y la quita —
   const sendas = crearSendas({ scene, geo });
   let vivacs3d = null;
+  // leyenda de las líneas (abajo a la izquierda) y nombre de la otra subida sobre su línea
+  const leyenda = document.createElement('div'); leyenda.className = 'leyenda-lineas is-hidden'; leyenda.setAttribute('aria-hidden', 'true'); document.body.appendChild(leyenda);
+  const etqSub = document.createElement('span'); etqSub.className = 'linea-etq is-hidden'; document.body.appendChild(etqSub);
+  let leyendaTxt = '', leyendaT = 0; const vEtq = new THREE.Vector3();
+  function leyendaLineas() {
+    const conRuta = S.mode === 'explore' && Object.values(rutas).some((l) => l.some((r) => r.visible)), et = subidaMesh?.userData.etq;
+    if (et) {
+      vEtq.set(et.x, geo.heightAt(et.x, et.z) + 30, et.z).project(camera);
+      const ok = vEtq.z < 1 && Math.abs(vEtq.x) < 0.95 && Math.abs(vEtq.y) < 0.95;
+      etqSub.classList.toggle('is-hidden', !ok);
+      if (ok) { etqSub.textContent = et.texto; etqSub.style.setProperty('--c', et.color); etqSub.style.transform = `translate3d(${((vEtq.x * 0.5 + 0.5) * innerWidth).toFixed(1)}px, ${((-vEtq.y * 0.5 + 0.5) * innerHeight).toFixed(1)}px, 0)`; }
+    } else etqSub.classList.add('is-hidden');
+    const now = performance.now(); if (now - leyendaT < 300) return; leyendaT = now;
+    const txt = (conRuta ? `<span><i class="l-sub"></i>${t('subida')}</span><span><i class="l-baj"></i>${t('bajada')}</span>` : '') + (et ? `<span><i class="l-otra" style="--c:${et.color}"></i>${esc(et.texto)}</span>` : '');
+    if (txt !== leyendaTxt) { leyendaTxt = txt; leyenda.innerHTML = txt; leyenda.classList.toggle('is-hidden', !txt); }
+  }
   {
     const b = $('#btn-sendas');
     const pon = (v) => { sendas.poner(v); b.setAttribute('aria-pressed', v); store.set('tresmiles-sendas', v ? '1' : '0'); };
@@ -1039,13 +1055,14 @@ async function boot() {
   // al tocar una se dibuja en el mapa en morado (una cada vez); son orientativas: la dificultad real hay que mirarla en una guía
   let subidasIdx = null, subidaMesh = null, subidaAct = null;
   const NIVEL_SUBIDA = ['Muy poco frecuentada', 'Poco frecuentada', 'Frecuentada', 'Muy frecuentada'];
-  function lineaSubida(puntos) {
+  const COLORES_SUB = ['#5aa9ff', '#b98cff', '#3fd1c0', '#ff7fb0'];   // nunca naranja: el naranja es solo de la ruta principal
+  function lineaSubida(puntos, color) {
     const pts = puntos.map(([lon, lat]) => { const q = geo.toXZ(lon, lat); return new THREE.Vector3(q.x, geo.heightAt(q.x, q.z) + 18, q.z); });
     const geom = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'centripetal'), Math.min(1500, pts.length * 6), 11, 5, false);
-    const mat = new THREE.MeshBasicMaterial({ color: '#b98cff', fog: true, transparent: true, opacity: 0.95, depthWrite: false });
+    const mat = new THREE.MeshBasicMaterial({ color, fog: true, transparent: true, opacity: 0.85, depthWrite: false });
     mat.onBeforeCompile = (sh) => { sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0; float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
-      transformed = ctr + normal * clamp(dd * 0.0013, 0.22, 11.0); transformed.y += clamp(dd * 0.0035, 5.0, 24.0) - 18.0;`); };   // fina de cerca y visible de lejos, como la ruta
+      transformed = ctr + normal * clamp(dd * 0.0013, 0.22, 11.0) * 0.75; transformed.y += clamp(dd * 0.0035, 5.0, 24.0) - 18.0;`); };   // fina de cerca y visible de lejos, como la ruta
     mat.customProgramCacheKey = () => 'subida-fina';
     const m = new THREE.Mesh(geom, mat); m.renderOrder = 3; m.frustumCulled = false; return m;
   }
@@ -1054,7 +1071,9 @@ async function boot() {
     subidaAct = sub?.id ?? null;
     for (const b of fichaBody.querySelectorAll('.subida[data-id]')) b.setAttribute('aria-pressed', b.dataset.id === subidaAct);
     if (!sub) return;
-    subidaMesh = lineaSubida(sub.puntos); scene.add(subidaMesh);
+    const ix = Math.max(0, pintaSubidas.datos?.subidas.indexOf(sub) ?? 0), color = COLORES_SUB[ix % COLORES_SUB.length];
+    subidaMesh = lineaSubida(sub.puntos, color); scene.add(subidaMesh);
+    { const m = sub.puntos[Math.floor(sub.puntos.length * 0.45)], q = geo.toXZ(m[0], m[1]); subidaMesh.userData.etq = { x: q.x, z: q.z, texto: t('Desde {d}', { d: sub.desde }), color }; }
     // la cámara enseña la subida entera
     const xs = sub.puntos.map(([lon, lat]) => geo.toXZ(lon, lat)), x0 = Math.min(...xs.map((q) => q.x)), x1 = Math.max(...xs.map((q) => q.x)), z0 = Math.min(...xs.map((q) => q.z)), z1 = Math.max(...xs.map((q) => q.z));
     const c = new THREE.Vector3((x0 + x1) / 2, 0, (z0 + z1) / 2); c.y = geo.heightAt(c.x, c.z);
@@ -1072,7 +1091,7 @@ async function boot() {
       <p class="ruta-credito">${t('Por dónde sube la gente, según las trazas GPS públicas de OpenStreetMap. Toca una para verla en el mapa.')}</p>
       <ul class="subidas">${d.subidas.map((s) => {
         const ej = r0 && Math.hypot((s.puntos[0][0] - r0[0]) * geo.mLon, (s.puntos[0][1] - r0[1]) * geo.mLat) < 800;
-        return `<li><button type="button" class="subida" data-act="subida" data-id="${s.id}" aria-pressed="false">
+        return `<li><button type="button" class="subida" data-act="subida" data-id="${s.id}" aria-pressed="false" style="--c:${COLORES_SUB[d.subidas.indexOf(s) % COLORES_SUB.length]}">
           <b>${t('Desde {d}', { d: esc(s.desde) })}</b>${s.por.length ? `<small>${t('por {l}', { l: s.por.map(esc).join(', ') })}</small>` : ''}
           <span class="subida-datos">${km(s.distancia)} km · +${fmt(s.desnivel)} m · ≈ ${horas(tramoMIDE(s.puntos))} ${t('de subida')} · ${t(NIVEL_SUBIDA[s.nivel])}${ej ? ` · ${t('como la ruta de ejemplo')}` : ''}</span>
           ${s.hielo.length ? `<span class="subida-aviso">❄ ${t('Pasa por hielo o nieve: crampones y piolet')}</span>` : ''}
@@ -2086,7 +2105,7 @@ async function boot() {
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
-    sendas.update(controls.target, camera); vivacs3d?.update(controls.target, camera);
+    sendas.update(controls.target, camera); vivacs3d?.update(controls.target, camera); leyendaLineas();
     etiquetas.length = 0;
     const cerca = updateLagos(); updateHitos(); updateRefugios(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre

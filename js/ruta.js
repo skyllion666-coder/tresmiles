@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=35';
+import { t as tr } from './i18n.js?v=36';
 import { datoJson } from './datos.js?v=2';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
@@ -32,29 +32,36 @@ export function crearRuta({ scene, geo, ruta }) {
   // color por vértice según el tramo (la geometría del tubo recorre la curva por longitud de arco, anillo a anillo)
   let im = 0; ruta.puntos.forEach((p, i) => { if (p[2] > ruta.puntos[im][2]) im = i; });
   const fCima = dist[im] / (dist[dist.length - 1] || 1), hayBajada = dist[dist.length - 1] - dist[im] > 400;
-  const tono = (g) => {
-    const n = g.attributes.position.count, c = new Float32Array(n * 3);
-    for (let v = 0; v < n; v++) { const anillo = Math.floor(v / (rad + 1)), k = hayBajada && anillo / tub > fCima + 0.002 ? 0.55 : 1; c[v * 3] = c[v * 3 + 1] = c[v * 3 + 2] = k; }
-    g.setAttribute('color', new THREE.BufferAttribute(c, 3)); return g;
-  };
-  let geom = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false));
-  // la línea se adelgaza al acercarse: el radio (0,5–11 m) y la altura sobre el relieve (7–24 m) crecen con la distancia a la cámara, calculados por vértice en el shader.
-  // La geometría guarda el radio de 11 m; el centro del tubo es posición − normal × 11, así que no hace falta otra línea ni más vértices.
-  const mat = new THREE.MeshBasicMaterial({ vertexColors: true, fog: true, transparent: true, opacity: 0.92, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
-  mat.onBeforeCompile = (sh) => {
-    sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+  // subida continua y bajada a rayas (antes, la bajada en un naranja más oscuro: sobre la foto apenas se distinguía y en los cruces confundía);
+  // las rayas se miden a lo largo del tubo (uv.x de TubeGeometry) y crecen con la distancia a la cámara para verse igual de cerca y de lejos
+  const tono = (g) => g;
+  let geom = new THREE.TubeGeometry(curve, tub, 11, rad, false);
+  const uCima = { value: hayBajada ? fCima + 0.002 : 2 }, uLen = { value: curve.getLength() };
+  // borde: el mismo tubo, más gordo, oscuro y por detrás, para que la línea resalte sobre la roca clara
+  const material = (borde) => {
+    const m = new THREE.MeshBasicMaterial({ color: borde ? '#1e1910' : 0xffffff, fog: true, transparent: true, opacity: borde ? 0.55 : 0.95, depthWrite: false, side: borde ? THREE.BackSide : THREE.FrontSide,
+      polygonOffset: true, polygonOffsetFactor: borde ? -1 : -2, polygonOffsetUnits: borde ? -1 : -2 });
+    m.onBeforeCompile = (sh) => {
+      sh.uniforms.uCima = uCima; sh.uniforms.uLen = uLen;
+      sh.vertexShader = sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
       vec3 ctr = position - normal * 11.0;
       float dd = distance((modelMatrix * vec4(ctr, 1.0)).xyz, cameraPosition);
-      float Rn = clamp(dd * 0.0013, 0.22, 11.0);
+      float Rn = clamp(dd * 0.0013, 0.22, 11.0) * ${borde ? '1.7' : '1.0'};
       float lift = clamp(dd * 0.0035, 5.0, 24.0);
-      transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd;`).replace('#include <common>', '#include <common>\nvarying float vDd;');
-    // muy cerca, la línea se aclara para no competir con la cuerda y los montañeros
-    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd;').replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
+      transformed = ctr + normal * Rn; transformed.y += lift - 24.0; vDd = dd; vU = uv.x;`).replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU;');
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vDd; varying float vU; uniform float uCima; uniform float uLen;')
+        .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+      if (vU > uCima) { float per = clamp(vDd * 0.035, 10.0, 900.0); if (fract(vU * uLen / per) > 0.58) discard; }`)
+        .replace('#include <opaque_fragment>', 'diffuseColor.a *= mix(0.35, 1.0, smoothstep(120.0, 700.0, vDd));\n#include <opaque_fragment>');
+    };
+    m.customProgramCacheKey = () => (borde ? 'ruta-borde' : 'ruta-fina2');
+    return m;
   };
-  mat.customProgramCacheKey = () => 'ruta-fina';
+  const mat = material(false);
   mat.color = COLOR_RUTA.actual;   // el mismo objeto en todas las rutas: cambiarlo cambia todas
   const mesh = new THREE.Mesh(geom, mat);
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
+  const borde = new THREE.Mesh(geom, material(true)); borde.frustumCulled = false; borde.renderOrder = 1; mesh.add(borde);
   scene.add(mesh);
   // sentido de la marcha: unas pocas flechas repartidas por el recorrido (3 a 6 según lo largo), del tamaño justo para verlas desde donde se mira
   const flechas = new THREE.Group(); flechas.visible = false; scene.add(flechas);
@@ -255,8 +262,8 @@ export function crearRuta({ scene, geo, ruta }) {
     for (const p of pts) if (p.x >= x0 && p.x <= x1 && p.z >= z0 && p.z <= z1) { const y = geo.heightAt(p.x, p.z) + 24; cambio = Math.max(cambio, Math.abs(y - p.y)); p.y = y; }
     if (cambio < 1) return;
     curve.updateArcLengths();
-    const g = tono(new THREE.TubeGeometry(curve, tub, 11, rad, false)); g.setDrawRange(geom.drawRange.start, geom.drawRange.count);
-    mesh.geometry = g; geom.dispose(); geom = g;
+    const g = new THREE.TubeGeometry(curve, tub, 11, rad, false); g.setDrawRange(geom.drawRange.start, geom.drawRange.count); uLen.value = curve.getLength();
+    mesh.geometry = g; borde.geometry = g; geom.dispose(); geom = g;
   }
 
   return {
@@ -297,7 +304,7 @@ export function crearRuta({ scene, geo, ruta }) {
       }
     },
     // en la vista de detalle (cámara a pocas decenas de metros) el tubo de 11 m de radio taparía la pantalla: se vuelve translúcido
-    delgada(v) { mesh.material.opacity = v ? 0.5 : 0.92; },
+    delgada(v) { mesh.material.opacity = v ? 0.5 : 0.95; borde.visible = !v; },
     // tamaño fijo (ESC_M) a cualquier distancia, igual que los modelos de las cimas, para que guarden la proporción
     escalar() { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M); },
     setPaso, setPasosHito, setTrepadas, caer, _est: est, _auto: () => auto,

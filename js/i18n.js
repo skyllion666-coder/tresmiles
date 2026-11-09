@@ -69,7 +69,7 @@ const EN = {
   'Despejado': 'Clear', 'Casi despejado': 'Mostly clear', 'Nubes y claros': 'Partly cloudy', 'Cubierto': 'Overcast', 'Niebla': 'Fog', 'Niebla con escarcha': 'Freezing fog', 'Llovizna': 'Drizzle', 'Llovizna intensa': 'Heavy drizzle',
   'Llovizna helada': 'Freezing drizzle', 'Lluvia débil': 'Light rain', 'Lluvia': 'Rain', 'Lluvia fuerte': 'Heavy rain', 'Lluvia helada': 'Freezing rain', 'Nieve débil': 'Light snow', 'Nieve': 'Snow', 'Nieve fuerte': 'Heavy snow',
   'Granizo menudo': 'Snow grains', 'Chubascos': 'Showers', 'Chubascos fuertes': 'Heavy showers', 'Chubascos de nieve': 'Snow showers', 'Chubascos de nieve fuertes': 'Heavy snow showers', 'Tormenta': 'Thunderstorm', 'Tormenta con granizo': 'Thunderstorm with hail',
-  'Refugio': 'Hut', 'Paso': 'Pass', 'Vivac': 'Bivouac', 'Cima': 'Summit', 'Ibón': 'Tarn', 'Barranco': 'Gorge', 'Lugar': 'Place',
+  'Refugio': 'Hut', 'Paso': 'Pass', 'Vivac': 'Bivouac', 'subida': 'way up', 'bajada': 'way down', 'Cima': 'Summit', 'Ibón': 'Tarn', 'Barranco': 'Gorge', 'Lugar': 'Place',
   'Valle de Tena · Balaitús–Infiernos': 'Tena Valley · Balaitús–Infiernos', 'Valle de Chistau': 'Chistau Valley', 'Monte Perdido–Taillón': 'Monte Perdido–Taillón',
   'Foto:': 'Photo:', 'vía': 'via', 'su ficha de Wikiloc': 'their Wikiloc page', ' y ': ' and ', ' · km {k} del recorrido': ' · km {k} of the route',
   'Zona': 'Area', 'Situación': 'Location', 'Aragón': 'Aragon', 'Curiosidad': 'Did you know', 'Ver el panorama desde la cima': 'See the panorama from the summit',
