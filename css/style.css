@@ -748,3 +748,5 @@ body.selector-abierto #intro { z-index: 31; }
 
 .ruta-sentido { margin: 2px 0 10px; font-size: .78rem; color: var(--ink-2); }
 .ruta-sentido::before { content: "➜ "; color: #e8901c; font-weight: 700; }
+.refugio-osm.refugio-vivac svg { width: 15px; height: 15px; }
+.refugio-osm.refugio-vivac svg .piedras { fill: #b9b3a6; stroke: #3d3a34; stroke-width: 1.1; }   /* vivac: corro de piedras sin techo */

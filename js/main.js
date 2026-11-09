@@ -11,18 +11,19 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=71';
-import { crearPanorama } from './panorama.js?v=23';
-import { crearUbicacion } from './ubicacion.js?v=22';
-import { crearSeguridad } from './seguridad.js?v=19';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=72';
+import { crearPanorama } from './panorama.js?v=24';
+import { crearUbicacion } from './ubicacion.js?v=23';
+import { crearSeguridad } from './seguridad.js?v=20';
 import { crearPaquete } from './paquete.js?v=8';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
+import { crearVivacs } from './vivacs.js?v=1';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=18';
-import { crearSelector } from './selector.js?v=20';
+import { crearRealidad } from './realidad.js?v=19';
+import { crearSelector } from './selector.js?v=21';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=34';
+import { t, EN_INGLES } from './i18n.js?v=35';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
@@ -180,9 +181,10 @@ async function boot() {
 
   // recorridos: los datos se leen al arrancar; el dibujo sobre el relieve se crea al abrir el pico, cuando ya hay alturas finas
   const rutas = {}, rutaDatos = {};
-  reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); sendas.reajusta(z); };
+  reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); sendas.reajusta(z); vivacs3d?.reajusta(); };
   // — «Sendas y pistas»: todos los caminos de OpenStreetMap sobre el relieve (js/sendas.js); botón que la pone y la quita —
   const sendas = crearSendas({ scene, geo });
+  let vivacs3d = null;
   {
     const b = $('#btn-sendas');
     const pon = (v) => { sendas.poner(v); b.setAttribute('aria-pressed', v); store.set('tresmiles-sendas', v ? '1' : '0'); };
@@ -533,6 +535,7 @@ async function boot() {
   };
   window.Carga?.paso(4);
   const hitos = [], refugios = [];
+  const PIEDRAS = `<svg viewBox="0 0 24 24" aria-hidden="true"><g class="piedras"><ellipse cx="12" cy="4.6" rx="3" ry="2.2"/><ellipse cx="18.2" cy="7.6" rx="2.6" ry="2.2"/><ellipse cx="19.6" cy="14" rx="2.4" ry="2.4"/><ellipse cx="16.4" cy="19.4" rx="2.8" ry="2.1"/><ellipse cx="7.4" cy="19.2" rx="2.6" ry="2.2"/><ellipse cx="4.4" cy="13.4" rx="2.4" ry="2.5"/><ellipse cx="5.9" cy="7.4" rx="2.6" ry="2.1"/></g></svg>`;
   const CASITA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="pared" d="M5.5 11v9h13v-9"/><path class="tejado" d="M2.5 12 12 3.5l9.5 8.5-2 2L12 7.6 4.5 14z"/><path class="puerta" d="M10.4 20v-4.6h3.2V20"/></svg>`;
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
@@ -600,16 +603,19 @@ async function boot() {
   const ORDEN_REF = { guardado: 0, libre: 1, cabana: 2 }, tipoRef = (r) => r.tipo ?? (r.guardado ? 'guardado' : 'libre');
   for (const r of [...refugiosDatos].sort((a, b) => ORDEN_REF[tipoRef(a)] - ORDEN_REF[tipoRef(b)])) {
     const q = geo.toXZ(r.lon, r.lat); if (!geo.dentro(q.x, q.z, 300)) continue;
-    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'}${tipoRef(r) === 'cabana' ? ' refugio-cabana' : ''} is-hidden`;
-    el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}">${CASITA}</button><span class="ref-nombre">${esc(/^(Refugio guardado|Refugio libre|Cabaña o abrigo)$/.test(r.nombre) ? t(r.nombre) : r.nombre.replace(/^(Refugio|Refugi|Refuge|Cabaña|Abrigo|Borda|Caseta) (de |del |d'|dera |deth |de la |de los |de las )?/i, ''))}</span><b>${esc(r.nombre)}<em>${t({ guardado: 'Refugio guardado', libre: 'Refugio libre', cabana: 'Cabaña o abrigo' }[tipoRef(r)])} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
+    const vivac = /^viva[cq]$/i.test(r.nombre.trim());   // parapeto de piedras sin techo (OSM los marca como refugio)
+    const el = document.createElement('span'); el.className = `hito hito-refugio refugio-osm${r.guardado ? '' : ' refugio-libre'}${tipoRef(r) === 'cabana' ? ' refugio-cabana' : ''}${vivac ? ' refugio-vivac' : ''} is-hidden`;
+    el.innerHTML = vivac ? `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${t('Vivac')}">${PIEDRAS}</button><span class="ref-nombre">${t('Vivac')}</span><b>${t('Vivac')}<em>${t('Parapeto de piedras, sin techo')} · ${fmt(r.alt)} m</em></b>`
+      : `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(r.nombre)}">${CASITA}</button><span class="ref-nombre">${esc(/^(Refugio guardado|Refugio libre|Cabaña o abrigo)$/.test(r.nombre) ? t(r.nombre) : r.nombre.replace(/^(Refugio|Refugi|Refuge|Cabaña|Abrigo|Borda|Caseta) (de |del |d'|dera |deth |de la |de los |de las )?/i, ''))}</span><b>${esc(r.nombre)}<em>${t({ guardado: 'Refugio guardado', libre: 'Refugio libre', cabana: 'Cabaña o abrigo' }[tipoRef(r)])} · ${fmt(r.alt)} m</em>${datoRef(r)}</b>`;
     el.querySelector('.hito-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       const abrir = !el.classList.contains('is-open');
       closeHitos(); if (abrir) { el.classList.add('is-open'); e.currentTarget.setAttribute('aria-expanded', 'true'); }
     });
     $('#pins').appendChild(el);
-    refugios.push({ r, el, x: q.x, z: q.z, lim: { guardado: 20000, libre: 8000, cabana: 5000 }[tipoRef(r)], limNombre: { guardado: 16000, libre: 4000, cabana: 2500 }[tipoRef(r)] });
+    refugios.push({ r, el, vivac, x: q.x, z: q.z, lim: { guardado: 20000, libre: 8000, cabana: 5000 }[tipoRef(r)], limNombre: { guardado: 16000, libre: 4000, cabana: 2500 }[tipoRef(r)] });
   }
+  vivacs3d = crearVivacs({ scene, geo, puntos: refugios.filter((o) => o.vivac) });
   // — fuentes y manantiales de OpenStreetMap (data/fuentes.json, tools/fetch_fuentes.py): gota azul (la de manantial, más clara), hasta 3 km; el nombre, a menos de 1,2 km —
   const fuentesDatos = await json('data/fuentes.json').catch(() => []);
   const GOTA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="gota" d="M12 2.5C9 7 5.5 10.6 5.5 14.6a6.5 6.5 0 0 0 13 0C18.5 10.6 15 7 12 2.5z"/><path class="brillo" d="M9.2 14.2a3 3 0 0 0 2.4 3.3"/></svg>`;
@@ -2080,7 +2086,7 @@ async function boot() {
     const tt = now / 1000;
     lagos?.update(tt); aves?.update(tt); fauna?.update(tt, dt);
     for (const l of Object.values(rutas)) for (const r of l) { r.update(dt); r.escalar(camera.position); }
-    sendas.update(controls.target, camera);
+    sendas.update(controls.target, camera); vivacs3d?.update(controls.target, camera);
     etiquetas.length = 0;
     const cerca = updateLagos(); updateHitos(); updateRefugios(); updatePueblos(); colocaEtiquetaActiva(dt); agrupaPines(); etiquetasPicos(); distribuyeEtiquetas(dt);
     if (S.detalle && !S.flight && controls.target.distanceTo(camera.position) > 700) { S.detalle = false; controls.minDistance = 500; }   // el usuario se ha alejado: vuelven los límites de siempre
