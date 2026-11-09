@@ -348,16 +348,16 @@
   "id": "cilindro",
   "cumbre": "cilindro",
   "nombre": "Cilindro de Marboré",
-  "detalle": "Desde Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 85,
-  "version": 1,
+  "detalle": "Desde la carretera. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 198,
+  "version": 2,
   "caja": [
-   -9000.0,
+   -15000.0,
    8000.0,
    -6000.0,
-   14000.0
+   17000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-cilindro-1/cilindro.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-cilindro-2/cilindro.zip"
  },
  {
   "id": "comadelo",
