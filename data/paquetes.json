@@ -3528,16 +3528,16 @@
   "id": "olas",
   "cumbre": "olas",
   "nombre": "Punta de las Olas",
-  "detalle": "Desde Parque Nacional de Ordesa y Monte Perdido · refugio de Góriz. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 77,
-  "version": 1,
+  "detalle": "Desde Refugio de la Larri. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 153,
+  "version": 2,
   "caja": [
    -9000.0,
-   12000.0,
-   -3000.0,
+   10000.0,
+   0.0,
    14000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-olas-1/olas.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-olas-2/olas.zip"
  },
  {
   "id": "punta-del-puerto-viejo",
