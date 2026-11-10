@@ -903,16 +903,16 @@
   "id": "munia",
   "cumbre": "munia",
   "nombre": "La Munia",
-  "detalle": "Desde Bielsa · valle de Pineta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 115,
-  "version": 1,
+  "detalle": "Desde La Sarra. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 227,
+  "version": 2,
   "caja": [
    -3000.0,
    6000.0,
    3000.0,
-   12000.0
+   15000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-munia-1/munia.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-munia-2/munia.zip"
  },
  {
   "id": "la-pala-el-millar",
