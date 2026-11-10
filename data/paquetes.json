@@ -2103,16 +2103,16 @@
   "id": "margalida",
   "cumbre": "margalida",
   "nombre": "Pico Margalida",
-  "detalle": "Desde Benasque · valle de Llauset/Remuñe · puente de Coronas. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 117,
-  "version": 1,
+  "detalle": "Desde Abrigo de la Besurta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 207,
+  "version": 2,
   "caja": [
    41000.0,
-   16000.0,
+   10000.0,
    46000.0,
    20000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-margalida-1/margalida.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-margalida-2/margalida.zip"
  },
  {
   "id": "pico-mener",
