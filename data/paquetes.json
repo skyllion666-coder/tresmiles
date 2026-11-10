@@ -783,16 +783,16 @@
   "id": "gran-eriste",
   "cumbre": "gran-eriste",
   "nombre": "Gran Pico de Eriste",
-  "detalle": "Desde Valle de Chistau · San Juan de Plan (collado de Sahún, sendero de Barbarisa). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 140,
-  "version": 1,
+  "detalle": "Desde Plleta de l'Estallo. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 272,
+  "version": 2,
   "caja": [
    23000.0,
-   16000.0,
-   26000.0,
+   14000.0,
+   31000.0,
    24000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gran-eriste-1/gran-eriste.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gran-eriste-2/gran-eriste.zip"
  },
  {
   "id": "vignemale",
