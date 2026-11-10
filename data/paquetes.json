@@ -2058,16 +2058,16 @@
   "id": "pico-central",
   "cumbre": "pico-central",
   "nombre": "Pico Central",
-  "detalle": "Desde Refugio de Baysellance (Gavarnie, Francia). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 151,
-  "version": 1,
+  "detalle": "Desde Barrage d'Ossoue. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 210,
+  "version": 2,
   "caja": [
    -23000.0,
    -1000.0,
-   -17000.0,
+   -16000.0,
    10000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-central-1/pico-central.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-central-2/pico-central.zip"
  },
  {
   "id": "pico-central-de-la-cascada",
