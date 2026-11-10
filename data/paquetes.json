@@ -2223,16 +2223,16 @@
   "id": "robinera",
   "cumbre": "robinera",
   "nombre": "Pico Robiñera",
-  "detalle": "Desde Valle de Barrosa · Bielsa · Parzán. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 71,
-  "version": 1,
+  "detalle": "Desde Refugio de la Larri. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 128,
+  "version": 2,
   "caja": [
-   0.0,
+   -3000.0,
    7000.0,
    3000.0,
-   11000.0
+   12000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-robinera-1/robinera.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-robinera-2/robinera.zip"
  },
  {
   "id": "russell",
