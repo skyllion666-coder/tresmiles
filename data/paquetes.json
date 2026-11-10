@@ -2463,16 +2463,16 @@
   "id": "pico-de-eriste-sur",
   "cumbre": "pico-de-eriste-sur",
   "nombre": "Pico de Eriste Sur",
-  "detalle": "Desde Ruta en Sahún. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 122,
-  "version": 1,
+  "detalle": "Desde Plleta de l'Estallo. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 225,
+  "version": 2,
   "caja": [
    21000.0,
    12000.0,
-   27000.0,
-   18000.0
+   31000.0,
+   19000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-eriste-sur-1/pico-de-eriste-sur.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-eriste-sur-2/pico-de-eriste-sur.zip"
  },
  {
   "id": "pico-de-guerreys-ou-de-bacou",
