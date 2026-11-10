@@ -2388,16 +2388,16 @@
   "id": "pico-de-boum",
   "cumbre": "pico-de-boum",
   "nombre": "Pico de Boum",
-  "detalle": "Desde el refugio de Maupas por Port Biello: Maupas y Boum. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 162,
-  "version": 3,
+  "detalle": "Desde Abrigo de la Besurta. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 220,
+  "version": 4,
   "caja": [
    35000.0,
    6000.0,
-   41000.0,
-   11000.0
+   45000.0,
+   12000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-3/pico-de-boum.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-pico-de-boum-4/pico-de-boum.zip"
  },
  {
   "id": "pico-de-cambales",
