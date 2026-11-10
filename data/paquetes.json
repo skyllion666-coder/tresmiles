@@ -2718,16 +2718,16 @@
   "id": "veteranos",
   "cumbre": "veteranos",
   "nombre": "Pico de los Veteranos",
-  "detalle": "Desde Benasque · refugio de Estós. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 93,
-  "version": 1,
+  "detalle": "Desde Plleta de l'Estallo. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 217,
+  "version": 2,
   "caja": [
    26000.0,
    10000.0,
    32000.0,
-   13000.0
+   19000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-veteranos-1/veteranos.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-veteranos-2/veteranos.zip"
  },
  {
   "id": "pico-del-clot-de-la-hount",
