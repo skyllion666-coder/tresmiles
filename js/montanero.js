@@ -6,7 +6,6 @@ import * as THREE from 'three';
 // Mide ~1,8 unidades; mira hacia +Z. `pose(fase, k, inc, c)` anima el paso y las posturas de arista.
 const M = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.78, metalness: 0, ...o });
 const mesh = (g, m) => new THREE.Mesh(g, m);
-const cap = (r, l, mat) => mesh(new THREE.CapsuleGeometry(r, l, 6, 14), mat);
 const cono = (r1, r2, h, mat, seg = 14) => mesh(new THREE.CylinderGeometry(r2, r1, h, seg, 1), mat);   // r1 abajo, r2 arriba
 // caja con esquinas redondeadas (sin dependencias): se proyectan los vértices de una caja subdividida sobre una caja «inflada»
 function rbox(w, h, d, r, seg = 3) {
@@ -132,7 +131,7 @@ export function crearMontanero({ chaqueta = '#b8392e', pantalon = '#2c333b', moc
     // brazos: con bastones al andar; con las manos libres (apoyadas en la roca, alternando) en la arista
     const al = 0.5 + 0.38 * Math.sin(fase * 0.5), ar = 0.5 + 0.38 * Math.sin(fase * 0.5 + Math.PI);
     const libre = (sh, el, alc, lado) => { sh.rotation.x = -(p + alc * (0.7 + 0.5 * cu)); sh.rotation.z = lado * 0.12; el.rotation.x = -0.2 - 0.25 * (1 - alc); };
-    const arm = (b, bast, sg, sw) => {
+    const arm = (b, bast, sg) => {
       if (mn > 0.02) {
         const nor = { x: 0, el: 0 };
         if (bast) { nor.x = sg * s * 0.28 * k - 0.35; nor.el = -0.65; } else { nor.x = sg * s * 0.5 * k; nor.el = -0.35 - 0.25 * k; }
@@ -144,7 +143,7 @@ export function crearMontanero({ chaqueta = '#b8392e', pantalon = '#2c333b', moc
     else { bI.sh.rotation.x = s * 0.5 * k; bI.el.rotation.x = -0.35 - 0.25 * k; }
     if (bastonD) { bD.sh.rotation.x = -s * 0.28 * k - 0.35; bD.el.rotation.x = -0.65; bastonD.rotation.x = -0.42 + s * 0.14 * k - (bD.sh.rotation.x + bD.el.rotation.x); }
     else { bD.sh.rotation.x = -s * 0.5 * k; bD.el.rotation.x = -0.35 - 0.25 * k; }
-    arm(bI, bastonI, 1, 1); arm(bD, bastonD, -1, -1);
+    arm(bI, bastonI, 1); arm(bD, bastonD, -1);
     if (br > 0.02) {   // funambulista: brazos abiertos a los lados (algo adelantados y con el codo flexionado) para guardar el equilibrio en la arista
       for (const [b, sg] of [[bI, 1], [bD, -1]]) { b.sh.rotation.z = -sg * (0.12 + 1.15 * br) + b.sh.rotation.z * (1 - br); b.sh.rotation.x = b.sh.rotation.x * (1 - br) - 0.12 * br; b.el.rotation.x = b.el.rotation.x * (1 - br) - 0.18 * br; }
     }

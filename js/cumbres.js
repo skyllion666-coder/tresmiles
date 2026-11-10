@@ -321,13 +321,16 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
           }
         }
       }
-      Object.assign(detalles.get(id), { mesh, mat, insts, cruz, extras, pieza: pz, slot });
+      const hecho = { mesh, mat, insts, cruz, extras, pieza: pz, slot };
+      // la cima se descargó mientras llegaba su modelo de Blender: quitaDetalle no tenía aún nada que quitar, así que se recoge ahora lo que ya está en la escena (malla, cruz, hueco de la pieza)
+      if (detalles.get(id) !== registro) { Object.assign(registro, hecho); if (!detalles.has(id)) { detalles.set(id, registro); quitaDetalle(id); } return; }
+      Object.assign(registro, hecho);
     } catch (e) { console.warn('detalle', id, e); detalles.delete(id); } finally { detCarga.delete(id); }
   }
   function quitaDetalle(id) {
     const d = detalles.get(id); if (!d) { detalles.delete(id); return; }
     for (const o of [d.mesh, ...(d.insts ?? []), d.cruz, ...(d.extras ?? [])]) { if (!o) continue; scene.remove(o); o.geometry?.dispose?.(); o.material?.dispose?.(); o.traverse?.((c) => { c.geometry?.dispose?.(); }); }
-    d.mat?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); api.quitaHuecoExterno?.(id); rocasCima.quitar(d.rocas); detalles.delete(id);
+    d.mat?.dispose(); d.ortoCima?.dispose(); if (d.slot >= 0) d.pieza?.mat.userData.holes.value[d.slot].set(1e9, 1e9, 1e9, 1e9); api.quitaHuecoExterno?.(id); rocasCima.quitar(d.rocas); detalles.delete(id);
     alRelieve?.({ x0: d.x0, z0: d.z0, x1: d.x0 + (d.n - 1) * d.paso, z1: d.z0 + (d.n - 1) * d.paso });
   }
 
@@ -370,7 +373,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
       for (const [id, d] of Object.entries(indice)) {
         const dist = Math.hypot(d.x0 + (d.n * d.paso) / 2 - cam.position.x, d.z0 + (d.n * d.paso) / 2 - cam.position.z);
         const fuera = api.excluye?.(d.x0 + (d.n * d.paso) / 2, d.z0 + (d.n * d.paso) / 2);   // dentro de un paquete de zona cargado: manda el paquete
-        if (piezas.has(id)) { if ((dist > DESCARGA || fuera) && id !== fijo?.()) quita(id); else if (fuera) quita(id); } else if (dist < CARGA && !fuera) cerca.push([dist, id]);
+        if (piezas.has(id)) { if (fuera || (dist > DESCARGA && id !== fijo?.())) quita(id); } else if (dist < CARGA && !fuera) cerca.push([dist, id]);
       }
       cerca.sort((a, b) => a[0] - b[0]);
       let n = piezas.size + cargando.size;

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=7';
-import { t as tr } from './i18n.js?v=36';
+import { crearMontaneroAnim as crearMontanero } from './montanero_anim.js?v=8';
+import { t as tr } from './i18n.js?v=37';
 import { datoJson } from './datos.js?v=2';
 
 // Recorrido (track GPX simplificado) dibujado sobre el relieve, con perfil de altura interactivo y vuelo.
@@ -86,7 +86,7 @@ export function crearRuta({ scene, geo, ruta }) {
   mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false;
   const borde = new THREE.Mesh(geom, material(true)); borde.frustumCulled = false; borde.renderOrder = 1; mesh.add(borde);
   scene.add(mesh);
-  // sentido de la marcha: unas pocas flechas repartidas por el recorrido (3 a 6 según lo largo), del tamaño justo para verlas desde donde se mira
+  // sentido de la marcha: unas pocas flechas repartidas por el recorrido (5 a 10 según lo largo), del tamaño justo para verlas desde donde se mira
   const flechas = new THREE.Group(); flechas.visible = false; scene.add(flechas);
   const nF = Math.min(10, Math.max(5, Math.round((dist[dist.length - 1] || 0) / 1000)));
   for (let i = 0; i < nF; i++) {
@@ -125,9 +125,9 @@ export function crearRuta({ scene, geo, ruta }) {
     return Math.min(0.85, 0.15 + 0.7 * Math.min(1, Math.max(0, (g - 0.2) / 0.8)));
   }
   const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
-  let cursorOn = false, dEquipo = 0, dCursor = 0, ultimoCursor = -1e9;
+  let cursorOn = false, dCursor = 0, ultimoCursor = -1e9;
   const est = equipo.map(() => ({ d: 0, cd: 2, pausa: 0 }));   // distancia recorrida por cada uno, cuenta atrás hasta su próxima pausa y pausa en curso
-  const resetEquipo = () => { est.forEach((q, i) => { q.d = -i * 110; q.cd = 1.5 + i * 0.9; q.pausa = 0; }); dEquipo = 0; };
+  const resetEquipo = () => { est.forEach((q, i) => { q.d = -i * 110; q.cd = 1.5 + i * 0.9; q.pausa = 0; }); };
   resetEquipo();
 
   // tramo especial (Paso de Mahoma): se define con la geografía (eje de la arista) y se mide sobre el recorrido, no con la cámara
@@ -215,7 +215,7 @@ export function crearRuta({ scene, geo, ruta }) {
     const l = lat * (pos ? 1 - pos.n : 1), x = a.pos.x + dz * l, z = a.pos.z - dx * l;
     p.h.position.set(x, geo.heightAt(x, z) + 1.2, z);   // los pies sobre el relieve (la línea de la ruta queda aparte, por encima)
     const yaw = Math.atan2(dx, dz); p.yaw = p.yaw == null ? yaw : p.yaw + Math.atan2(Math.sin(yaw - p.yaw), Math.cos(yaw - p.yaw)) * 0.2; p.h.rotation.y = p.yaw;   // mira hacia donde avanza el recorrido
-    if (pos?.c?.trepa) { const b2 = en(d + 25), c2 = en(d - 25); pos.c.pend = Math.atan2(b2.pos.y - c2.pos.y, Math.hypot(b2.pos.x - c2.pos.x, b2.pos.z - c2.pos.z) || 1); }   // pendiente del tramo (±25 m): el que trepa se tumba hacia la roca lo que haga falta; si baja, destrepa
+    if (pos?.c?.trepa || pos?.c?.manos) { const b2 = en(d + 25), c2 = en(d - 25); pos.c.pend = Math.atan2(b2.pos.y - c2.pos.y, Math.hypot(b2.pos.x - c2.pos.x, b2.pos.z - c2.pos.z) || 1); }   // pendiente del tramo (±25 m): el que trepa se tumba hacia la roca lo que haga falta (y si baja, destrepa); el que pasa a cuatro apoyos pone las manos en el suelo
     p.alt = p.m.pose(p.fase, andando ? Math.min(1, 0.35 + 0.65 * vrel) : 0, Math.max(-0.6, Math.min(0.8, (b.pos.y - c.pos.y) / (L * 1.0))) * 0.4, pos?.c, andando ? vel : 0, hi);
   }
   // cuerda entre montañeros consecutivos: tubo fino de 4 caras que se rehace cada fotograma a partir de sus cinturas (curva con holgura, sin física)
@@ -226,16 +226,16 @@ export function crearRuta({ scene, geo, ruta }) {
     g.setAttribute('position', new THREE.BufferAttribute(v, 3)); g.setIndex(id);
     const m = new THREE.Mesh(g, cuerdaMat.clone()); m.frustumCulled = false; m.visible = false; m.renderOrder = 3; scene.add(m); return m;
   });
-  const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _p = new THREE.Vector3(), _t = new THREE.Vector3(), _h = new THREE.Vector3(), _v = new THREE.Vector3();
+  const _a = new THREE.Vector3(), _b = new THREE.Vector3(), _p = new THREE.Vector3(), _t = new THREE.Vector3(), _h = new THREE.Vector3(), _v = new THREE.Vector3(), _arriba = new THREE.Vector3(0, 1, 0);
   function cuerda(m, p1, p2, op, tt, i) {
     if (op < 0.03) { m.visible = false; return; }
     _a.copy(p1.h.position); _a.y += p1.alt * ESC_M * 0.98; _b.copy(p2.h.position); _b.y += p2.alt * ESC_M * 0.98;
     const dd = _a.distanceTo(_b), Lr = Math.max(dd + 4, 30) * (1 + 0.04 * Math.sin(tt * 0.9 + i * 1.9)), sag = Math.min(10, Math.sqrt(0.375 * Lr * Math.max(0, Lr - dd))), r = 0.28 * Math.max(0.35, op);
     const pos = m.geometry.attributes.position.array;
+    _t.subVectors(_b, _a).normalize(); _h.crossVectors(_t, _arriba).normalize(); _v.crossVectors(_h, _t).normalize();   // ejes de la sección del tubo: los mismos en toda la cuerda
     for (let j = 0; j <= NS; j++) {
       const u = j / NS; _p.lerpVectors(_a, _b, u); _p.y -= sag * 4 * u * (1 - u);
       const g = geo.heightAt(_p.x, _p.z) + 0.8; if (_p.y < g) _p.y = g;   // no atraviesa el terreno
-      _t.subVectors(_b, _a).normalize(); _h.crossVectors(_t, new THREE.Vector3(0, 1, 0)).normalize(); _v.crossVectors(_h, _t).normalize();
       pos.set([_p.x + _h.x * r, _p.y + _h.y * r, _p.z + _h.z * r, _p.x + _v.x * r, _p.y + _v.y * r, _p.z + _v.z * r, _p.x - _h.x * r, _p.y - _h.y * r, _p.z - _h.z * r, _p.x - _v.x * r, _p.y - _v.y * r, _p.z - _v.z * r], j * 12);
     }
     m.geometry.attributes.position.needsUpdate = true; m.geometry.computeBoundingSphere(); m.material.opacity = sstep(0.1, 0.8, op); m.visible = true;
@@ -308,7 +308,6 @@ export function crearRuta({ scene, geo, ruta }) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
         est.forEach((q, i) => {
           const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.62 * nivelHielo(q.d));   // sobre el hielo, con crampones y piolet, bastante más despacio
-         
           const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
           if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
@@ -331,7 +330,7 @@ export function crearRuta({ scene, geo, ruta }) {
     delgada(v) { mesh.material.opacity = v ? 0.5 : 0.95; borde.visible = !v; },
     // tamaño fijo (ESC_M) a cualquier distancia, igual que los modelos de las cimas, para que guarden la proporción
     escalar() { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M); },
-    setPaso, setPasosHito, setTrepadas, caer, _est: est, _auto: () => auto,
+    setPaso, setPasosHito, setTrepadas, caer, _est: est, _auto: () => auto, _paso: () => paso,
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }

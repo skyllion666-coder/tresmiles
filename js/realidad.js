@@ -2,7 +2,7 @@
 // de las cumbres calculados por el panorama desde tu posición (res = { sil, vis } de panorama.js). Hacia dónde y cuánto inclinas el móvil sale
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
-import { leeOrientacion } from './panorama.js?v=25';
+import { leeOrientacion } from './panorama.js?v=26';
 
 const RAD = Math.PI / 180, AZ_PASO = 0.25;
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* nada */ } } };
@@ -11,7 +11,7 @@ const fmtM = (n) => new Intl.NumberFormat('es-ES').format(n) + ' m';
 const dif = (a, b) => ((a - b + 540) % 360) - 180;   // diferencia de rumbos en (−180, 180]
 
 export function crearRealidad({ esc, abrirFicha }) {
-  let el = null, res = null, stream = null, raf = 0;
+  let el = null, res = null, stream = null, raf = 0, vez = 0;
   // FOV_LARGO: ángulo de visión del lado largo de la imagen de la cámara (24 mm equivalentes, 4:3 ≈ 69°)
   const st = { rumbo: null, elev: null, abs: false, offAz: 0, offEl: 0, fov: Number(store.get('tresmiles-ra-fov')) || 69, cajas: [] };
 
@@ -108,13 +108,17 @@ export function crearRealidad({ esc, abrirFicha }) {
     if (!el) crea();
     res = resultado; st.offAz = 0; st.offEl = 0; st.rumbo = null; st.elev = null; st.abs = false;
     el.hidden = false; document.body.classList.add('ra-abierto');
+    const turno = ++vez, fuera = () => turno !== vez || el.hidden;   // se cerró (o se volvió a abrir) mientras se esperaba el permiso o la cámara
     try { if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') await DeviceOrientationEvent.requestPermission(); } catch { /* sin permiso: no habrá rumbo */ }
+    if (fuera()) return;
     addEventListener('deviceorientationabsolute', alOrientar, true); addEventListener('deviceorientation', alOrientar, true);
     const ayuda = el.querySelector('#ra-ayuda');
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
-      const v = el.querySelector('#ra-video'); v.srcObject = stream; await v.play().catch(() => {});
+      const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
+      if (fuera()) { s.getTracks().forEach((t) => t.stop()); return; }   // ya no hace falta: la cámara se apaga en vez de quedarse encendida
+      stream = s; const v = el.querySelector('#ra-video'); v.srcObject = stream; await v.play().catch(() => {});
     } catch { ayuda.textContent = 'No se puede abrir la cámara (¿falta el permiso?). La silueta y los nombres siguen funcionando con la brújula.'; }
+    if (fuera()) return;
     if (!raf) dibuja();
     setTimeout(() => { if (!el.hidden && st.rumbo == null) ayuda.textContent = 'Este móvil no da la brújula: no se puede saber hacia dónde apuntas.'; }, 3000);
   }

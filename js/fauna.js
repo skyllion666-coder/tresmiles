@@ -242,7 +242,7 @@ export function crearFauna({ scene, geo, centro, camera, sol, lagos = null }) {
       r.g.quaternion.copy(_q).multiply(_qy);
       r.mixer.update(dt);
       // sombra: bajo el animal, alineada con su cuerpo, apoyada en la pendiente y desplazada un poco al contrario del sol
-      const sm = r.sombra, k = esc * (r.cria ? 1 : 1);
+      const sm = r.sombra, k = esc;
       const sx = sol ? -sol.x : 0, sz = sol ? -sol.z : 0, sl = Math.hypot(sx, sz) || 1;
       const ox = r.x + (sx / sl) * 0.12 * esc, oz = r.z + (sz / sl) * 0.12 * esc;
       sm.position.set(ox, geo.heightAt(ox, oz) + 2.5, oz);

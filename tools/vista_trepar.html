@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Vista trepada</title>
+<script>{ let s = 12345; Math.random = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648; }   // azar fijo: los clips empiezan siempre en el mismo punto y las capturas se pueden comparar</script>
+<script type="importmap">{ "imports": { "three": "../vendor/three/three.module.js", "three/addons/": "../vendor/three/" } }</script>
+<style>body{margin:0;background:#9fb3c4;overflow:hidden}.r{position:absolute;font:13px sans-serif;color:#102030;background:#ffffffb0;padding:1px 6px;border-radius:3px;transform:translateX(-50%);white-space:nowrap}</style></head><body>
+<script type="module">
+// Herramienta de desarrollo: montañeros trepando (clip «trepar», tools/modelos/trepar.py) por losas de distinta pendiente, subiendo y destrepando,
+// con la misma llamada que hace js/ruta.js: pose(fase, k, inc, { trepa, giro, pend }, vel, hielo).
+// ?vista=lado (de perfil; por defecto) | detras (los que destrepan se giran con su losa, para verlos todos de espaldas) · ?t=segundos · ?vel=m/s (0,3) · ?foco=n (acerca la cámara al n)
+// ?modo=gatear: en vez de trepar, pasan a cuatro apoyos (clip «gatear», el del Paso de Mahoma) por losas casi llanas, con c = { agach, manos, pend }
+// ?glb=carpeta: carga los GLB de otra carpeta (para comparar con una versión anterior), p. ej. ?glb=tools/_antes
+import * as THREE from 'three';
+const Q = new URLSearchParams(location.search), vista = Q.get('vista') ?? 'lado', vel = +(Q.get('vel') ?? 0.3), t = +(Q.get('t') ?? 4);
+if (Q.get('glb')) { const f0 = window.fetch; window.fetch = (u, o) => f0(String(u.url ?? u).replace(/\/models\/(montaner[ao]-anim\.glb)/, `/${Q.get('glb')}/$1`), o); }
+const { crearMontaneroAnim } = await import('../js/montanero_anim.js');
+const AN = innerWidth, AL = innerHeight;
+const r = new THREE.WebGLRenderer({ antialias: true }); r.setSize(AN, AL); document.body.appendChild(r.domElement);
+const sc = new THREE.Scene(); sc.background = new THREE.Color('#9fb3c4');
+sc.add(new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 2.4)); const s = new THREE.DirectionalLight(0xffffff, 2.0); s.position.set(4, 5, -3); sc.add(s);
+const rojo = { chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'media', palos: 2 }, azul = { chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 };
+const chica = { chica: true, chaqueta: '#1aa6a0', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 };
+const gatea = Q.get('modo') === 'gatear';
+const defs = gatea ? [[rojo, 0, 1], [azul, 15, 1], [chica, 25, 1], [rojo, 10, -1], [chica, 0, 1], [azul, 20, -1]] : [   // [opciones, pendiente de la losa en grados, sube (1) o baja/destrepa (-1)]
+  [rojo, 60, 1], [azul, 45, 1], [chica, 35, 1], [rojo, 60, -1], [chica, 45, -1], [azul, 35, -1],
+];
+const SEP = vista === 'lado' ? 2.9 : 1.9, LARGO = 4.4;
+const ms = defs.map(([o, grados, dir], i) => {
+  const g = new THREE.Group(), m = crearMontaneroAnim(o), a = grados * Math.PI / 180;
+  // la losa pasa por los pies y sube hacia delante (+Z) si se sube, o hacia atrás si se destrepa (el avance es siempre hacia +Z)
+  const losa = new THREE.Mesh(new THREE.PlaneGeometry(1.5, LARGO), new THREE.MeshStandardMaterial({ color: '#8a8478', side: THREE.DoubleSide })); losa.rotation.x = dir * (Math.PI / 2 - a); losa.position.set(0, 0, 0.05 * dir);
+  g.add(losa, m.group);
+  if (vista === 'lado') g.position.z = -i * SEP; else { g.position.x = i * SEP; if (dir < 0) g.rotation.y = Math.PI; }
+  sc.add(g); return { m, g, c: gatea ? { agach: 0.8, manos: 1, giro: 0, pend: dir * a } : { trepa: 1, giro: 0, pend: dir * a }, rot: `${dir > 0 ? 'sube' : gatea ? 'baja' : 'destrepa'} ${grados}°${o.chica ? ' (chica)' : ''}` };
+});
+const n = defs.length, foco = Q.get('foco'), cam = new THREE.PerspectiveCamera(18, AN / AL, 0.1, 200);
+if (vista === 'lado') { const zc = foco !== null ? -foco * SEP : -(n - 1) * SEP / 2, d = foco !== null ? 9 : (n * SEP / (AN / AL)) / (2 * Math.tan(9 * Math.PI / 180)) * 1.02; cam.position.set(d, 0.95, zc); cam.lookAt(0, 0.95, zc); }
+else { const xc = foco !== null ? foco * SEP : (n - 1) * SEP / 2, d = foco !== null ? 9 : (n * SEP / (AN / AL)) / (2 * Math.tan(9 * Math.PI / 180)) * 1.05; cam.position.set(xc + d * 0.42, 0.95 + d * 0.32, -d * 0.85); cam.lookAt(xc, 0.95, 0); }
+// reloj simulado (30 pasos/s) para que la imagen sea reproducible
+await new Promise((r) => setTimeout(r, 4000));   // espera a que el GLB esté cargado
+let T = performance.now() / 1000 + 1; performance.now = () => T * 1000;
+for (let i = 0; i < Math.round(t * 30); i++) { T += 1 / 30; for (const { m, c } of ms) m.pose(0, 1, 0, c, vel, 0); }
+r.render(sc, cam);
+for (const { g, rot } of ms) { const p = g.position.clone().setY(-0.25).project(cam), e = document.createElement('div'); e.className = 'r'; e.textContent = rot; e.style.left = `${(p.x + 1) / 2 * AN}px`; e.style.top = `${AL - 24}px`; document.body.appendChild(e); }
+window.ms = ms; window.THREE = THREE; document.title = 'ok';
+</script></body></html>

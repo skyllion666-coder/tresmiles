@@ -109,7 +109,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     for (const m of rayoG.children) m.geometry.dispose(); rayoG.clear();
     // a un lado de la cumbre visto desde la cámara (nunca delante de ella), a 0,8–2,5 km
     const lado = new THREE.Vector3().subVectors(est.c, cam.position).setY(0).normalize(), perp = new THREE.Vector3(-lado.z, 0, lado.x);
-    const d = al(800, 2500), x = est.c.x + perp.x * d * (Math.random() < 0.5 ? -1 : 1) + lado.x * al(500, 2500), z = est.c.z + perp.z * d * (Math.random() < 0.5 ? -1 : 1) + lado.z * al(500, 2500);
+    const d = al(800, 2500) * (Math.random() < 0.5 ? -1 : 1), f = al(500, 2500), x = est.c.x + perp.x * d + lado.x * f, z = est.c.z + perp.z * d + lado.z * f;
     const E = new THREE.Vector3(x, geo.heightAt(x, z), z), S = new THREE.Vector3(x + al(-500, 500), est.c.y + al(900, 1400), z + al(-500, 500));
     const pts = [S.clone()]; zigzag(S, E, 6, 0.18, pts);
     const g = Math.max(1, cam.position.distanceTo(E) / 6000);   // más grueso de lejos para que se vea
@@ -121,7 +121,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     return cam.position.distanceTo(E);
   }
   const est = { activo: false, c: null, w: { lluvia: 0, nieve: 0, tormenta: 0, niebla: 0 }, viento: new THREE.Vector2(), cubierto: 0, cubObj: 0, destello: 0, prox: 0, rayo: [], k: 0 };
-  const tmp = new THREE.Vector3(), aCum = new THREE.Vector3(), aNub = new THREE.Vector3();
+  const aCum = new THREE.Vector3(), aNub = new THREE.Vector3();
 
   function colocaNubes(cobertura, w) {
     const nN = Math.min(7, Math.round(cobertura / 100 * 5) + (w.lluvia || w.nieve ? 2 : 0)), nB = w.niebla ? 7 : 0;

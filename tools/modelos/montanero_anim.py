@@ -32,10 +32,11 @@ for a in list(bpy.data.actions):
     a.name = CLIPS[a.name]; a.use_fake_user = True
 # trepada (no la trae la librería): IK sobre una pared virtual, horneada (tools/modelos/trepar.py)
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import trepar
-tr = trepar.hacer(arm)
-for fc in list(tr.fcurves):
-    dp = fc.data_path; hueso = dp.split('"')[1] if '"' in dp else ''
-    if 'f_' in hueso or 'thumb' in hueso or dp.endswith('scale') or (dp.endswith('location') and hueso not in ('root', 'DEF-hips')): tr.fcurves.remove(fc)
+for nombre in trepar.CLIPS:   # «trepar» (pared) y «gatear» (crestas y pasos casi llanos, a cuatro apoyos)
+    tr = trepar.hacer(arm, nombre)
+    for fc in list(tr.fcurves):
+        dp = fc.data_path; hueso = dp.split('"')[1] if '"' in dp else ''
+        if 'f_' in hueso or 'thumb' in hueso or dp.endswith('scale') or (dp.endswith('location') and hueso not in ('root', 'DEF-hips')): tr.fcurves.remove(fc)
 walk = bpy.data.actions['walk']; arm.animation_data_create(); arm.animation_data.action = walk
 def mat(nombre, col, rough=0.8, metal=0.0):
     m = bpy.data.materials.new(nombre); m.use_nodes = True; m.diffuse_color = (*col, 1)

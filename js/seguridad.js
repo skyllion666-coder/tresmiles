@@ -3,7 +3,7 @@
 //    por WhatsApp o SMS, copiar o dictar al 112 (el SMS suele salir con muy poca señal).
 // 2. ¿Llego antes de que anochezca?: hora de la puesta de sol y del fin del crepúsculo en tu posición, y el tiempo de bajada (método MIDE) hasta el inicio
 //    de la ruta abierta (siguiendo la ruta, si estás sobre ella) o, si no, hasta el pueblo más cercano en línea recta (orientativo).
-import { t, EN_INGLES } from './i18n.js?v=36';
+import { t, EN_INGLES } from './i18n.js?v=37';
 import { EXAG } from './geo.js';
 
 const RAD = Math.PI / 180;
@@ -103,8 +103,9 @@ export function crearSeguridad({ geo, boton, solAhora, tramoMIDE, lugares, rutaA
       <p class="seg-nota">${t('Tiempos del método MIDE sin paradas; con nieve, cansancio o mal tiempo, más. La luz del crepúsculo depende de las nubes y de si estás en una ladera en sombra.')}</p></div>`;
     panel.querySelector('.seg-cerrar').onclick = cierra;
     panel.querySelector('[data-copiar]').onclick = async (e) => {
+      const b = e.currentTarget;   // tras el await ya no hay currentTarget
       try { await navigator.clipboard.writeText(msg); } catch { const ta = document.createElement('textarea'); ta.value = msg; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
-      e.currentTarget.textContent = t('Copiado');
+      b.textContent = t('Copiado');
     };
   }
   boton.hidden = false;

@@ -127,10 +127,10 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
         H[j * n + i] = v ? b + (v * hs - b) * sstep(0, FUNDE, borde) : b;
       }
       const p = { d, H, x0, z0, n, paso, ch, lados, m: pasoPara(d) };
-      const g = malla(p, p.m), cw = terrain.meta.chunk * geo.dx, cd = terrain.meta.chunk * geo.dz;
+      const g = malla(p, p.m);
       const mat = terrain.crearMaterialPieza(ch, 'granito'); mat.side = THREE.DoubleSide; const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       Object.assign(p, { mesh, mat });
-      if (piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }
+      if (!vivo || piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }   // sin sitio, o el paquete se quitó mientras llegaba la pieza
       scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
       alRelieve?.({ x0, z0, x1: x0 + L, z1: z0 + L });
       if (d.orto) pideOrto(p, tamPara(d));
@@ -141,10 +141,11 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
     scene.remove(p.mesh); p.mesh.geometry.dispose(); p.mat.dispose(); p.orto?.dispose(); piezas.delete(id); marca(p.d, false);
     alRelieve?.({ x0: p.x0, z0: p.z0, x1: p.x0 + L, z1: p.z0 + L });
   }
-  let cuenta = 0;
+  let cuenta = 0, vivo = true;
   return {
     // quitar el paquete entero (al alejarse de su zona o al borrarlo): vuelven el relieve general, las piezas de cumbre y los árboles
     quitar() {
+      vivo = false;
       for (const id of [...piezas.keys()]) quita(id);
       terrain.paq.uPaqB.value.set(1e9, 1e9, 1e9, 1e9); terrain.paq.uPaq.value = null; texM.dispose();
       geo.setPaquete(null); Object.assign(cumbres, { excluye: null, piezaExterna: null, huecoExterno: null, quitaHuecoExterno: null });

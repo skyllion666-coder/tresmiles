@@ -4,7 +4,7 @@
 (() => {
   const D = window.CARGA_DATOS, cv = document.getElementById('load-maqueta'), pctEl = document.getElementById('load-pct'), txt = document.getElementById('load-text'), aviso = document.getElementById('load-aviso');
   const HITOS = [0, 8, 24, 38, 52, 92, 100];   // % al llegar a cada paso (0: inicio; 1: datos; 2: relieve general; 3: lagos; 4: fichas; 5: relieve de detalle; 6: listo)
-  let paso = 0, mostrado = 0, ultimo = performance.now(), terminado = false, resolverFin = null, anim = 0, fps = 0;
+  let paso = 0, mostrado = 0, ultimo = performance.now(), terminado = false, resolverFin = null, fps = 0;
   const reducido = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ctx = cv && cv.getContext && cv.getContext('2d');
 
@@ -74,9 +74,9 @@
       pinta();
     }
     if (t - fps >= 33) { fps = t; dibuja(t, cuantil(1 - mostrado / 100)); }   // ≈30 imágenes por segundo
-    if (document.body.classList.contains('is-loading') || performance.now() < parar) anim = requestAnimationFrame(bucle);
+    if (document.body.classList.contains('is-loading') || performance.now() < parar) requestAnimationFrame(bucle);
   }
   let parar = 0;
   new MutationObserver(() => { if (!document.body.classList.contains('is-loading')) parar = performance.now() + 1000; }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
-  anim = requestAnimationFrame(bucle);
+  requestAnimationFrame(bucle);
 })();

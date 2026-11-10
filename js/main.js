@@ -3,34 +3,33 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo, EXAG } from './geo.js?v=3';
 import { Terrain, NCALOR } from './terrain.js?v=32';
 import { crearVegetacion } from './vegetacion.js?v=9';
-import { crearCumbres } from './cumbres.js?v=49';
+import { crearCumbres } from './cumbres.js?v=50';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
-import { crearTiempo, tipoTiempo } from './tiempo.js?v=5';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=6';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
-import { crearFauna } from './fauna.js?v=15';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=74';
-import { crearPanorama } from './panorama.js?v=25';
-import { crearUbicacion } from './ubicacion.js?v=24';
-import { crearSeguridad } from './seguridad.js?v=21';
-import { crearPaquete } from './paquete.js?v=8';
+import { crearFauna } from './fauna.js?v=16';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=75';
+import { crearPanorama } from './panorama.js?v=26';
+import { crearUbicacion } from './ubicacion.js?v=25';
+import { crearSeguridad } from './seguridad.js?v=22';
+import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=20';
-import { crearSelector } from './selector.js?v=22';
+import { crearRealidad } from './realidad.js?v=21';
+import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=36';
+import { t, EN_INGLES } from './i18n.js?v=37';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat(document.documentElement.lang === 'en' ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);   // (lang lo pone js/i18n.js, que carga antes)
 const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
-const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);   // sube DATOS_V en index.html al cambiar datos
 const json = (u) => datoJson(u);   // rutas, subidas y fuentes: en la app, de la web si hay conexión (js/datos.js)
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -798,7 +797,7 @@ async function boot() {
     if (diaSel.id !== p.id) diaSel = { id: p.id, i: 0 };
     const dat = forzar(m.d), vis0 = vistaDia(dat, diaSel.i);
     const nCm = vis0.current.nieveCm ?? nieveSuelo(m.n, (vis0.current.time ?? '').slice(0, 10));
-    const vis = { ...vis0, current: { ...vis0.current, nieveCm: nCm } }; aplicaTiempo(p, vis);
+    const vis = { ...vis0, current: { ...vis0.current, nieveCm: nCm } }; m.vis = vis; aplicaTiempo(p, vis);   // m.vis: lo que se ve en el mapa (para la casilla «Ver este tiempo en el mapa»)
     const { current: c, daily: d, hourly: h } = dat, cielo = (k) => CIELO[k] ?? ['·', ''];
     const iso = (dia) => { const v = h.time.map((x, i) => [x, h.freezing_level_height[i]]).filter(([x]) => x.startsWith(dia) && +x.slice(11, 13) >= 10 && +x.slice(11, 13) <= 16).map(([, v]) => v); return v.length ? Math.round(v.reduce((a, b) => a + b) / v.length / 50) * 50 : null; };
     const dia = (s, i) => i === 0 ? t('Hoy') : i === 1 ? (EN_INGLES ? 'Tomorrow' : 'Mañana') : new Date(s + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { weekday: 'short' }).replace('.', '');
@@ -1124,7 +1123,7 @@ async function boot() {
     if (e.target.dataset?.act === 'nieve-mapa') { sonido.fx('toque'); nieveSat.pon?.(e.target.checked); return; }
     if (e.target.dataset?.act !== 'tiempo-mapa') return;
     store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
-    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, vistaDia(forzar(m?.d), diaSel.i) ?? null);
+    const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, m?.vis ?? null);   // el mismo tiempo que pintó la ficha, con su nieve en el suelo
   });
   fichaBody.addEventListener('click', (e) => {   // tocar un día de la previsión: el mapa muestra ese día
     const b = e.target.closest('[data-dia]'), p = byId[S.active]; if (!b || !p) return;
@@ -1350,7 +1349,6 @@ async function boot() {
     const o = c.clone().sub(t), r = o.length();
     flyTo({ t, r, phi: Math.min(1.35, Math.acos(clamp(o.y / r, -1, 1))), theta: Math.atan2(o.x, o.z) }, { dur: 3.2, shift: { x: 0, y: 0 } });
   }
-  const sueltaDetalle = () => { if (S.detalle) { S.detalle = false; if (!S.flight) controls.minDistance = 500; } };
   function closeFicha({ fly = false } = {}) {
     subidaSel(null);
     if (!S.active) return;
@@ -1358,7 +1356,8 @@ async function boot() {
     const was = S.active; glaciarStop(); glaciarSel = null; glaciares.quitar(); sonido.fx('cerrar'); tiempo.set(null); banderines.setViento(0); callaHasta = performance.now() + 8000; pararVuelo(false); S.active = null; pintaRuta(null);
     S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; btnVuelo.hidden = true; aplicaAltura();
     fichaEl.classList.remove('is-open'); fichaEl.setAttribute('aria-hidden', 'true'); document.body.classList.remove('ficha-open');
-    history.replaceState(null, '', location.pathname + location.search); S.shiftTo = { x: 0, y: 0 }; refreshLists();
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);   // solo si hay #cumbre que quitar (?directo): si no, se borraba el estado de la entrada «de guarda» y el primer «atrás» después de cerrar con la X no hacía nada
+    S.shiftTo = { x: 0, y: 0 }; refreshLists();
     pinEls.get(was)?.focus({ preventScroll: true, focusVisible: false });   // el foco vuelve al marcador sin aro ni nombre para quien usa ratón o dedo
     if (fly) goHome();
   }
