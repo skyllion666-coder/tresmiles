@@ -3573,16 +3573,16 @@
   "id": "sabre",
   "cumbre": "sabre",
   "nombre": "Punta del Sabre",
-  "detalle": "Desde Valle de Chistau · Plan y Gistaín (valle de Cinqueta, refugio de Biadós). Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 125,
-  "version": 1,
+  "detalle": "Desde Cabaña de Lisier. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 181,
+  "version": 2,
   "caja": [
-   21000.0,
+   18000.0,
    8000.0,
    25000.0,
-   14000.0
+   16000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-sabre-1/sabre.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-sabre-2/sabre.zip"
  },
  {
   "id": "punta-del-paco",
