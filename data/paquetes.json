@@ -708,16 +708,16 @@
   "id": "gabieto-occidental",
   "cumbre": "gabieto-occidental",
   "nombre": "Gabieto Occidental",
-  "detalle": "Desde la Pradera de Ordesa por el circo de Carriata (Torla). De julio a septiembre el acceso es en autobús lanzadera desde Torla. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 91,
-  "version": 2,
+  "detalle": "Desde Aparcamiento de Bujaruelo. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 155,
+  "version": 3,
   "caja": [
-   -16000.0,
-   8000.0,
+   -19000.0,
+   7000.0,
    -13000.0,
    15000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gabieto-occidental-2/gabieto-occidental.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-gabieto-occidental-3/gabieto-occidental.zip"
  },
  {
   "id": "garmo",
