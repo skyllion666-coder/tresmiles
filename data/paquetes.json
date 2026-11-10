@@ -2448,16 +2448,16 @@
   "id": "culfreda",
   "cumbre": "culfreda",
   "nombre": "Pico de Culfreda",
-  "detalle": "Desde Valle de Chistau · Tabernés. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 91,
-  "version": 1,
+  "detalle": "Desde la carretera. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 204,
+  "version": 2,
   "caja": [
    17000.0,
    6000.0,
-   21000.0,
-   12000.0
+   22000.0,
+   19000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-culfreda-1/culfreda.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-culfreda-2/culfreda.zip"
  },
  {
   "id": "pico-de-eriste-sur",
