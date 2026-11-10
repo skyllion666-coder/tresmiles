@@ -3828,16 +3828,16 @@
   "id": "tallon",
   "cumbre": "tallon",
   "nombre": "Tallón",
-  "detalle": "Desde Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) · refugio de Góriz. Relieve LiDAR de 1 m y ortofoto de 25 cm",
-  "mb": 107,
-  "version": 1,
+  "detalle": "Desde Parking Panoramique. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 161,
+  "version": 2,
   "caja": [
    -14000.0,
-   8000.0,
+   4000.0,
    -7000.0,
    14000.0
   ],
-  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tallon-1/tallon.zip"
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-tallon-2/tallon.zip"
  },
  {
   "id": "torre-del-marbore",
