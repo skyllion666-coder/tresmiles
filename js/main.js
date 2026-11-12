@@ -1003,7 +1003,23 @@ async function boot() {
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
       ${aguaCerca(p)}
+      ${colaboraHTML(p)}
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
+  }
+  // colaborar: abre el correo con el asunto y una plantilla ya puestos (foto, comentario, nombre con el que sale y permiso para publicar).
+  // La dirección se arma aquí para que no esté entera en el código; los textos en inglés van aquí mismo para no tocar i18n.js (y todos sus importadores).
+  const CORREO = ['tresmilespirineo', 'gmail.com'].join('@');
+  function colaboraHTML(p) {
+    const en = EN_INGLES, nom = `${p.nombre}${p.altitud ? ` (${p.altitud} m)` : ''}`;
+    const asunto = `${en ? 'Photo or comment' : 'Foto o comentario'}: ${p.nombre} [${p.id}]`;
+    const cuerpo = en
+      ? `Summit: ${nom}\n\nName or nickname to show on the website:\nIs the photo yours? (yes/no):\nDate of the photo or the climb:\nComment about the summit (optional):\n\n— Attach the photo as a file, the original if possible: it keeps the GPS position (WhatsApp removes it).\n— No people's faces, please.\n— By sending it you agree that it is published on the Tresmiles website with your name or nickname. If you ever want it removed, write to us and it will be removed.`
+      : `Cima: ${nom}\n\nNombre o apodo con el que quieres salir en la web:\n¿La foto es tuya? (sí/no):\nFecha de la foto o de la subida:\nComentario sobre la cima (opcional):\n\n— Adjunta la foto como archivo, mejor la original: así conserva la posición GPS (WhatsApp la borra).\n— Sin caras de personas, por favor.\n— Al enviarla aceptas que se publique en la web Tresmiles con tu nombre o apodo. Si algún día quieres que la quitemos, escríbenos y se quita.`;
+    const url = `mailto:${CORREO}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    return `<h3>${en ? 'Contribute' : 'Colabora'}</h3>
+      <p>${en ? 'Do you have a photo of this summit, or something to tell about the climb? Send it to us by email: we review it and publish it with your name.' : '¿Tienes una foto de esta cima o algo que contar de la subida? Mándanoslo por correo: lo revisamos y lo publicamos con tu nombre.'}</p>
+      <p class="enlace-ruta colabora"><a href="${esc(url)}">${en ? 'Send a photo or comment' : 'Mandar foto o comentario'} ✉</a></p>
+      <p class="ruta-credito">${en ? 'Better the original photo, with its GPS position. No faces. If you ask us to remove it, it is removed.' : 'Mejor la foto original, con su posición GPS. Sin caras. Si nos pides que la quitemos, se quita.'} · ${CORREO}</p>`;
   }
   // tiempos de marcha (método MIDE: 4 km/h en llano, 400 m/h subiendo, 600 m/h bajando; el mayor más la mitad del menor), sin paradas
   function tramoMIDE(pts) {
