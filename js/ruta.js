@@ -127,7 +127,11 @@ export function crearRuta({ scene, geo, ruta }) {
   const sstep = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
   let cursorOn = false, dCursor = 0, ultimoCursor = -1e9;
   const est = equipo.map(() => ({ d: 0, cd: 2, pausa: 0 }));   // distancia recorrida por cada uno, cuenta atrás hasta su próxima pausa y pausa en curso
-  const resetEquipo = () => { est.forEach((q, i) => { q.d = -i * 110; q.cd = 1.5 + i * 0.9; q.pausa = 0; }); };
+  // en la cima se esperan: el primero se para arriba y los demás llegan detrás; descansan un rato y luego bajan en fila.
+  // Si la bajada vuelve por el mismo camino, se dan la vuelta donde están y baja primero el último en llegar (así nadie se cruza con el que aún sube)
+  const dCima = dist[im], DESCANSO = 6;   // la cima: el punto más alto del recorrido (im, arriba); hayBajada: si después baja más de 400 m de recorrido
+  let fase = 'subiendo', tCima = 0, orden = [0, 1, 2];   // orden de marcha: cada uno sigue al anterior de la lista
+  const resetEquipo = () => { est.forEach((q, i) => { q.d = -i * 110; q.cd = 1.5 + i * 0.9; q.pausa = 0; }); fase = 'subiendo'; orden = [0, 1, 2]; };
   resetEquipo();
 
   // tramo especial (Paso de Mahoma): se define con la geografía (eje de la arista) y se mide sobre el recorrido, no con la cámara
@@ -306,18 +310,26 @@ export function crearRuta({ scene, geo, ruta }) {
         if (anda) solo.fase += dt * 11 * (1 - 0.7 * pp.n); colocar(solo, dCursor, 0, anda, pp, 1 - 0.7 * pp.n, 3.4 * (1 - 0.7 * pp.n));
       } else if (!reducido) {
         // cada uno avanza a su ritmo: lento en el tramo especial (con pausas), sin adelantar al de delante y manteniendo al menos GAP_MIN m
-        est.forEach((q, i) => {
-          const n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.62 * nivelHielo(q.d));   // sobre el hielo, con crampones y piolet, bastante más despacio
+        orden.forEach((i, o) => {
+          const q = est[i], n = nivelEn(q.d); let v = V0 * (1 - 0.94 * n) * (1 - 0.62 * nivelHielo(q.d));   // sobre el hielo, con crampones y piolet, bastante más despacio
           const au = n < 0.01 ? nivelAuto(q.d) : { n: 0, fun: false }, na = au.n; v *= au.fun ? 1 - 0.92 * na : 1 - 1.25 * na;   // aristas (≈25 % del ritmo) y pasos difíciles (≈8 %): muy despacio y con pausas
           if (q.pausa > 0 && n <= 0.7 && na <= 0.7) { q.pausa -= dt; v = 0; }
           if (n > 0.7 || na > 0.7) { q.cd -= dt; if (q.pausa > 0) { q.pausa -= dt; v = 0; } else if (q.cd <= 0) { q.pausa = 0.7 + Math.random() * 0.8; q.cd = 2.5 + Math.random() * 2.5; } }
           // caídas: solo en aristas y pasos difíciles, de vez en cuando; el que cae y los demás (la cuerda) se paran mientras dura
           q.cdc = (q.cdc ?? 6 + Math.random() * 14) - dt;
           if (q.cdc <= 0 && q.pausa <= 0 && Math.max(n, na) > 0.4 && Math.random() < dt * 0.09 * Math.max(n, na)) caer(i, Math.random() < pVoltereta(q.d) ? 'voltereta' : 'tropiezo');   // en pendiente fuerte, más volteretas; en suave, tropiezos
-          q.d += v * dt; q.v = v;
-          if (i > 0) { const lim = est[i - 1].d - GAP_MIN; if (q.d > lim) { q.d = lim; q.v = est[i - 1].v ?? v; } }
+          if (fase === 'cima') v = 0;
+          const prev = q.d; q.d += v * dt; q.v = v;
+          if (fase === 'subiendo' && hayBajada && q.d > dCima) { q.d = dCima; q.v = 0; }   // el primero espera arriba
+          if (o > 0) { const j = orden[o - 1], lim = est[j].d - GAP_MIN; if (q.d > lim) { q.d = Math.max(lim, Math.min(prev, q.d)); q.v = est[j].v ?? v; } }   // nunca hacia atrás (tras la media vuelta, el de detrás espera su turno)
         });
-        if (est[0].d > ruta.distancia + 500) resetEquipo();
+        if (hayBajada && fase === 'subiendo' && orden.every((i, o) => est[i].d >= dCima - o * GAP_MIN - 1)) { fase = 'cima'; tCima = DESCANSO; }   // ya están todos arriba
+        else if (fase === 'cima' && (tCima -= dt) <= 0) {
+          fase = 'bajando';
+          const a = en(dCima - 2 * GAP_MIN).pos, b = en(dCima + 2 * GAP_MIN).pos;
+          if (Math.hypot(a.x - b.x, a.z - b.z) < 40) { for (const q of est) q.d = 2 * dCima - q.d; orden = [...orden].reverse(); }   // mismo camino: media vuelta (el punto «espejo» de la bajada es el mismo sitio)
+        }
+        if (est[orden[0]].d > ruta.distancia + 500) resetEquipo();
         const pp = [];
         equipo.forEach((p, i) => {
           const d = est[i].d, dc = Math.max(0, Math.min(ruta.distancia, d)), po = postura(dc, i, tt), vr = (est[i].v ?? V0) / V0; pp.push({ po, dc });
@@ -331,6 +343,7 @@ export function crearRuta({ scene, geo, ruta }) {
     // tamaño fijo (ESC_M) a cualquier distancia, igual que los modelos de las cimas, para que guarden la proporción
     escalar() { for (const p of [...equipo, solo]) if (p.h.visible) p.h.scale.setScalar(ESC_M); },
     setPaso, setPasosHito, setTrepadas, caer, _est: est, _auto: () => auto, _paso: () => paso,
+    estadoEquipo: () => ({ fase, orden: [...orden], d: est.map((q) => Math.round(q.d)), dCima: Math.round(dCima), hayBajada }),   // para pruebas
     posiciones: () => ({ solo: solo.h.position.clone(), equipo: equipo.map((p) => p.h.position.clone()) }),
     cursor(d) {
       if (d == null || !activo) { cursorOn = false; ver(); return; }
