@@ -537,9 +537,18 @@ async function boot() {
 
   // hitos de la ruta y refugios (coordenadas de OpenStreetMap)
   const TIPO_HITO = Object.fromEntries(Object.entries({ refugio: 'Refugio', paso: 'Paso', vivac: 'Vivac', cima: 'Cima', ibon: 'Ibón', barranco: 'Barranco', lugar: 'Lugar' }).map(([k, v]) => [k, t(v)]));
+  TIPO_HITO.foto = EN_INGLES ? 'Photo' : 'Foto';   // foto mandada por la gente (aquí y no en i18n.js, para no subir la versión de todos sus importadores)
   const fotosHitos = await json('data/fotos_hitos.json').catch(() => ({}));
   let hitoTimer = 0;
   const hitosDatos = await json('data/hitos.json').catch(() => []);
+  // aportaciones de la gente (apartado «Colabora», tools/aportacion.py): fotos y comentarios para la ficha; las fotos con GPS salen además
+  // en el mapa 3D de su cima como hito «Foto» (icono de cámara), con la foto al pulsarlo
+  const aportes = await json('data/aportaciones.json').catch(() => ({}));
+  const aportesFotos = aportes.fotos ?? [], aportesComent = aportes.comentarios ?? [];
+  for (const a of aportesFotos) {
+    fotosHitos[a.id] = { autor: a.autor, w: a.w, h: a.h, ruta: `img/aportes/${a.id}.jpg`, titulo: `${byId[a.cima]?.nombre ?? a.cima}: ${EN_INGLES ? 'photo from a climber' : 'foto de montañero'}` };
+    if (a.lat != null) hitosDatos.push({ tipo: 'foto', nombre: a.autor, lat: a.lat, lon: a.lon, picos: [a.cima], foto: a.id, pie: a.pie, nota: a.pie });
+  }
   // textos de los hitos en inglés (solo al mostrarlos: el nombre en español se usa para reconocer pasos y cimas); la coletilla de la altitud del GPS va aparte
   const trH = (s) => {
     if (!EN_INGLES || typeof s !== 'string') return s;
@@ -552,6 +561,7 @@ async function boot() {
   const hitos = [], refugios = [];
   const PIEDRAS = `<svg viewBox="0 0 24 24" aria-hidden="true"><g class="piedras"><ellipse cx="12" cy="4.6" rx="3" ry="2.2"/><ellipse cx="18.2" cy="7.6" rx="2.6" ry="2.2"/><ellipse cx="19.6" cy="14" rx="2.4" ry="2.4"/><ellipse cx="16.4" cy="19.4" rx="2.8" ry="2.1"/><ellipse cx="7.4" cy="19.2" rx="2.6" ry="2.2"/><ellipse cx="4.4" cy="13.4" rx="2.4" ry="2.5"/><ellipse cx="5.9" cy="7.4" rx="2.6" ry="2.1"/></g></svg>`;
   const CASITA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="pared" d="M5.5 11v9h13v-9"/><path class="tejado" d="M2.5 12 12 3.5l9.5 8.5-2 2L12 7.6 4.5 14z"/><path class="puerta" d="M10.4 20v-4.6h3.2V20"/></svg>`;
+  const CAMARA = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="cuerpo" d="M3 8.2h4.2l1.6-2.6h6.4l1.6 2.6H21v11H3z"/><circle class="lente" cx="12" cy="13.6" r="3.6"/></svg>`;
   const kmTexto = (o, id) => { const R = rutasDe(id)[0], ps = R ? R.pasos(o.x, o.z) : []; return ps.length ? t(' · km {k} del recorrido', { k: ps.map((c) => km(c.dist)).join(t(' y ')) }) : ''; };
   // los hitos de un pico se crean al abrirlo (cuando ya hay alturas finas bajo ellos)
   const normNombre = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\(.*?\)/g, '').replace(/\b(cima|del|de|la|las|los|el|pico|pic|punta|tuca|gran|pequeno)\b/g, '').replace(/[^a-z0-9]/g, '');
@@ -564,7 +574,7 @@ async function boot() {
       h._hecho = true;
       const casita = h.tipo === 'refugio';   // un refugio de la ruta se dibuja con la misma casita que los refugios del mapa (si no, al abrir la ruta la casita «desaparecía» detrás del rombo)
       const el = document.createElement('span'); el.className = `hito hito-${h.tipo}${h.inicio ? ' hito-inicio' : ''}${casita ? ' refugio-osm' : ''} is-hidden`;
-      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(trH(h.nombre))}">${casita ? CASITA : '<i></i>'}</button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
+      el.innerHTML = `<button type="button" class="hito-btn" aria-expanded="false" aria-label="${esc(h.tipo === 'foto' ? `${TIPO_HITO.foto}: ${h.nombre}` : trH(h.nombre))}">${casita ? CASITA : h.tipo === 'foto' ? CAMARA : '<i></i>'}</button><b>${esc(trH(h.nombre))}<em>${esc(TIPO_HITO[h.tipo] ?? '')}</em>${fotoHito(h)}</b>`;
       if (h.foto && fotosHitos[h.foto]) { el.classList.add('con-foto'); if (fotosHitos[h.foto].w / fotosHitos[h.foto].h > 2.5) el.classList.add('pano'); }
       el.title = trH(h.nota); $('#pins').appendChild(el);
       el.querySelector('.hito-btn').addEventListener('click', (e) => {
@@ -580,11 +590,11 @@ async function boot() {
   }
   function figCima(p) {
     const c = p.fotoCima, f = c && fotosHitos[c.foto]; if (!f) return '';
-    return `<figure class="fig-cima"><img src="img/hitos/${esc(c.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} ${t('Foto:')} ${esc(f.autor)}.</figcaption></figure>`;
+    return `<figure class="fig-cima"><img src="${esc(f.ruta ?? `img/hitos/${c.foto}.jpg`)}" width="${f.w}" height="${f.h}" alt="${esc(c.pie)}" loading="lazy"><figcaption>${esc(c.pie)} ${t('Foto:')} ${esc(f.autor)}.</figcaption></figure>`;
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="img/hitos/${esc(h.foto)}.jpg" width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="${esc(f.ruta ?? `img/hitos/${h.foto}.jpg`)}" width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of [...hitos, ...refugios]) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
@@ -1003,12 +1013,25 @@ async function boot() {
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
       ${aguaCerca(p)}
+      ${aportesHTML(p)}
       ${colaboraHTML(p)}
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   // colaborar: abre el correo con el asunto y una plantilla ya puestos (foto, comentario, nombre con el que sale y permiso para publicar).
   // La dirección se arma aquí para que no esté entera en el código; los textos en inglés van aquí mismo para no tocar i18n.js (y todos sus importadores).
   const CORREO = ['tresmilespirineo', 'gmail.com'].join('@');
+  // lo que ha mandado la gente para esta cima (data/aportaciones.json): sus fotos y «Lo que dicen los montañeros», del más reciente al más antiguo y siempre con la fecha
+  const fechaAporte = (s) => { const [a, m] = s.split('-').map(Number); return m ? new Date(a, m - 1, 15).toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { month: 'long', year: 'numeric' }) : String(a); };
+  const trA = (s) => (EN_INGLES && window.tresmilesTextos?.[s]) || s;
+  function aportesHTML(p) {
+    const en = EN_INGLES, fs = aportesFotos.filter((a) => a.cima === p.id), cs = aportesComent.filter((c) => c.cima === p.id).sort((a, b) => b.fecha.localeCompare(a.fecha));
+    let h = '';
+    if (fs.length) h += `<h3>${en ? 'Photos from climbers' : 'Fotos de montañeros'}</h3>${fs.map((a) => `<figure class="fig-cima fig-aporte"><img src="img/aportes/${esc(a.id)}.jpg" width="${a.w}" height="${a.h}" alt="${esc(trA(a.pie))}" loading="lazy">
+      <figcaption>${esc(trA(a.pie))} ${t('Foto:')} ${esc(a.autor)}, ${fechaAporte(a.fecha)}.${a.lat != null ? ` ${en ? 'It has its GPS position: on the map it is the camera icon.' : 'Lleva su posición GPS: en el mapa es el icono de la cámara.'}` : ''}</figcaption></figure>`).join('')}`;
+    if (cs.length) h += `<h3>${en ? 'What climbers say' : 'Lo que dicen los montañeros'}</h3><ul class="comentarios">${cs.map((c) => `<li><p>${esc(trA(c.texto))}</p><small>${esc(c.autor)} · ${fechaAporte(c.fecha)}</small></li>`).join('')}</ul>
+      <p class="ruta-credito">${en ? 'Mountains change: check the date of each comment. Comments are translated from Spanish; they are reviewed before being published.' : 'La montaña cambia: mira la fecha de cada comentario. Se revisan antes de publicarlos.'}</p>`;
+    return h;
+  }
   function colaboraHTML(p) {
     const en = EN_INGLES, nom = `${p.nombre}${p.altitud ? ` (${p.altitud} m)` : ''}`;
     const asunto = `${en ? 'Photo or comment' : 'Foto o comentario'}: ${p.nombre} [${p.id}]`;
@@ -1940,7 +1963,7 @@ async function boot() {
       <ul>${Object.values(rutaDatos).flat().map((r) => r.osm ? `<li>${esc(r.nombre)}: route traced on the paths of <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">© OpenStreetMap contributors</a> (ODbL).</li>` : `<li>${esc(r.nombre)}: a guidance preview of the track by <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> on Wikiloc; the original, to download, is on <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">its page</a>.</li>`).join('')}
       <li>The route waypoints come from the points marked on their authors’ tracks (Wikiloc).</li></ul>
       <h3>Waypoint photographs</h3>
-      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Summit: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, via <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}.</li>`).join('')}</ul>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(f.titulo ?? hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Summit: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia)}</a>` : ''}${f.pagina ? `, via <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}.</li>`).join('')}</ul>
       <h3>3D models and animations</h3>
       <ul><li>Hiker animations (walking, jogging, running, crouching, tripping and rolling): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> by Quaternius, CC0 (public domain). The mannequin was dressed and equipped in Blender (our own clothes, backpack, helmet and poles); the woman hiker is our own variant of the same mannequin.</li>
       <li>All other models (summits, wildlife, birds, huts and objects): modelled in Blender for this website from reference photographs.</li></ul>
@@ -1982,7 +2005,7 @@ async function boot() {
       <ul>${Object.values(rutaDatos).flat().map((r) => r.osm ? `<li>${esc(r.nombre)}: recorrido trazado por los senderos de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">© colaboradores de OpenStreetMap</a> (ODbL).</li>` : `<li>${esc(r.nombre)}: vista previa orientativa del track de <a href="${esc(r.autorUrl)}" target="_blank" rel="noopener">${esc(r.autor)}</a> en Wikiloc; el original, para descargar, está en <a href="${esc(r.fuenteUrl)}" target="_blank" rel="noopener">su ficha</a>.</li>`).join('')}
       <li>Los hitos del recorrido salen de los puntos marcados en los tracks de sus autores (Wikiloc).</li></ul>
       <h3>Fotografías de los hitos</h3>
-      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
+      <ul>${Object.entries(fotosHitos).map(([k, f]) => `<li>${esc(f.titulo ?? hitosDatos.find((h) => h.foto === k)?.nombre ?? (peaks.find((p) => p.fotoCima?.foto === k) ? `Cima: ${peaks.find((p) => p.fotoCima?.foto === k).nombre}` : k))}: ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', 'Dominio público'))}</a>` : ''}${f.pagina ? `, vía <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(f.fuente || 'Wikimedia Commons')}</a>` : ''}.</li>`).join('')}</ul>
       <h3>Modelos 3D y animaciones</h3>
       <ul><li>Animaciones de los montañeros (andar, trotar, correr, agacharse, tropezar y rodar): <a href="https://quaternius.com" target="_blank" rel="noopener">Universal Animation Library</a> de Quaternius, CC0 (dominio público). El maniquí se ha vestido y equipado en Blender (ropa, mochila, casco y bastones propios); la montañera es una variante propia del mismo maniquí, con otra silueta, pelo y coleta.</li>
       <li>Resto de modelos (cimas, fauna, aves, refugios y objetos): modelados en Blender para esta web a partir de fotografías de referencia.</li></ul>
