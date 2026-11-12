@@ -111,7 +111,7 @@ export function crearRuta({ scene, geo, ruta }) {
   const solo = mk({});
   const equipo = [   // cada uno con su ropa, su mochila y sus bastones (2, 0 y 1); el de en medio es una chica
     mk({ chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'grande', palos: 2 }),
-    mk({ chica: true, chaqueta: '#1aa6a0', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 }),   // la montañera (coleta)
+    mk({ chica: true, chaqueta: '#e8689c', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 }),   // la montañera (coleta)
     mk({ chaqueta: '#c9962a', mochila: '#5a4a7a', pantalon: '#2f3a33', mochilaTipo: 'media', palos: 1 }),
   ];
   // un montañero se cae (tipo: 'tropiezo' | 'voltereta'): sale su animación y todo el grupo se detiene lo que dure

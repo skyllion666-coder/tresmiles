@@ -17,7 +17,7 @@ const r = new THREE.WebGLRenderer({ antialias: true }); r.setSize(AN, AL); docum
 const sc = new THREE.Scene(); sc.background = new THREE.Color('#9fb3c4');
 sc.add(new THREE.HemisphereLight(0xe6eef6, 0x6d7466, 2.4)); const s = new THREE.DirectionalLight(0xffffff, 2.0); s.position.set(4, 5, -3); sc.add(s);
 const rojo = { chaqueta: '#b8392e', mochila: '#d9822b', mochilaTipo: 'media', palos: 2 }, azul = { chaqueta: '#2d5f8f', mochila: '#3b7a55', pantalon: '#363a42', mochilaTipo: 'pequena', palos: 0 };
-const chica = { chica: true, chaqueta: '#1aa6a0', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 };
+const chica = { chica: true, chaqueta: '#e8689c', mochila: '#e3b341', pantalon: '#2b2f3a', mochilaTipo: 'pequena', palos: 0 };
 const gatea = Q.get('modo') === 'gatear';
 const defs = gatea ? [[rojo, 0, 1], [azul, 15, 1], [chica, 25, 1], [rojo, 10, -1], [chica, 0, 1], [azul, 20, -1]] : [   // [opciones, pendiente de la losa en grados, sube (1) o baja/destrepa (-1)]
   [rojo, 60, 1], [azul, 45, 1], [chica, 35, 1], [rojo, 60, -1], [chica, 45, -1], [azul, 35, -1],
