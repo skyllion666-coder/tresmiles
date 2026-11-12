@@ -2667,7 +2667,14 @@
    "dificultad": "alta",
    "grado": "Orientativa, por la ruta de Soum de Ramond, a unos 270 m",
    "epoca": "Julio – septiembre",
-   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)"
+   "acceso": "Parque Nacional de Ordesa y Monte Perdido · Torla (Ordesa) / Bielsa (Pineta)",
+   "foto": "punta-dera-cuniestra",
+   "pie": "El Monte Perdido desde el Soum de Ramond; delante, en el centro, el resalte rocoso oscuro es la Punta dera Cuniestra.",
+   "enlace": {
+    "url": "https://www.wikiloc.com/mountaineering-trails/ascension-a-soum-de-ramon-braudimon-punta-de-las-olas-y-punta-dera-cuniestra-218763479",
+    "texto": "Ruta de Carlos_cumbres en Wikiloc"
+   },
+   "ruta": "Esta cima aparece en la ruta «Ascensión a Soum de Ramón , Braudimón, Punta de las Olas y Punta dera Cuniestra» de Carlos_cumbres en Wikiloc."
   },
   {
    "id": "piton-so-del-cilindro",
@@ -3188,7 +3195,9 @@
     "url": "https://www.wikiloc.com/mountaineering-trails/gabieto-occidental3-035m-y-gabieto-oriental3-031m-los-gabietos-por-carriata-desde-pradera-de-ordesa-18390813",
     "texto": "Ruta de Furgoxo en Wikiloc: Gabieto Occidental y Oriental desde la Pradera de Ordesa"
    },
-   "ruta": "Está en la cresta de los Gabietos, entre el Occidental y el Oriental: la ruta de Furgoxo por Carriata pasa por su cima."
+   "ruta": "Está en la cresta de los Gabietos, entre el Occidental y el Oriental: la ruta de Furgoxo por Carriata pasa por su cima.",
+   "foto": "cabieto-dero-baziero",
+   "pie": "Los Gabietos desde el Taillón: el Cabieto dero Baziero es la punta del medio de la cresta, entre el Occidental (a la izquierda, el más alto) y el Oriental (a la derecha)."
   },
   {
    "id": "pequeno-astazu",

@@ -4,7 +4,7 @@ Uso: python3 tools/foto_wikiloc.py <id-cumbre> <fuente.html> <id-foto> "<pie>"
   fuente.html = código fuente de la ficha de la ruta (ctrl+U, ctrl+A, ctrl+C en la ventana de Firefox del usuario); id-foto = `photos[].id` de un waypoint.
 Baja la foto (Master.jpg con Referer de Wikiloc), la reduce a 1100 px de ancho (JPG progresivo), la guarda en img/peaks/<id>.jpg y actualiza
 data/fotos.json y data/peaks.json (foto, pie, enlace, ruta). Después: python3 tools/build_minis.py (miniatura del marcador) y subir DATOS_V."""
-import json, os, re, subprocess, sys
+import html, json, os, re, subprocess, sys
 from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'); D = lambda *p: os.path.join(ROOT, *p)
 pid, src, fid, pie = sys.argv[1:5]
@@ -14,7 +14,7 @@ if not m: sys.exit('no encuentro esa foto en el código fuente')
 url, ruta_path = m.group(1), m.group(2)
 ruta_url = 'https://www.wikiloc.com' + ruta_path
 autor = re.search(r'title="([^"]+)" class="author__user-image"', s).group(1).strip()
-titulo = re.search(r'<title>(?:Wikiloc \| )?(.*?)(?: Trail)?</title>', s).group(1).strip()
+titulo = html.unescape(re.search(r'<title>(?:Wikiloc \| )?(.*?)(?: Trail)?</title>', s).group(1).strip())   # el título viene con entidades HTML (&oacute;…)
 tmp = f'/tmp/wl_{pid}.jpg'
 subprocess.run(['curl', '-s', '-e', 'https://www.wikiloc.com/', '-o', tmp, url.replace('.jpg', 'Master.jpg')], check=True)
 im = Image.open(tmp).convert('RGB')

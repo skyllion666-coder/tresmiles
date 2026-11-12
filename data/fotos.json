@@ -1737,5 +1737,24 @@
   "fuente": "aportada por el usuario",
   "w": 1100,
   "h": 1100
+ },
+ "punta-dera-cuniestra": {
+  "archivo": "foto de la ruta de Wikiloc",
+  "autor": "Carlos_cumbres",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "https://www.wikiloc.com/mountaineering-trails/ascension-a-soum-de-ramon-braudimon-punta-de-las-olas-y-punta-dera-cuniestra-218763479",
+  "fuente": "Wikiloc",
+  "w": 1100,
+  "h": 619
+ },
+ "cabieto-dero-baziero": {
+  "archivo": "Gabietos Pyrenees 20060820a.jpg",
+  "autor": "Tigerente",
+  "licencia": "CC BY-SA 4.0",
+  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Gabietos_Pyrenees_20060820a.jpg",
+  "w": 1400,
+  "h": 1050
  }
 }
