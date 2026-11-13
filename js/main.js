@@ -419,7 +419,10 @@ async function boot() {
       el.classList.toggle('is-hidden', !show);
       if (!show) continue;
       const det = dist < 450 && cumbres.detalle.includes(p.id);
-      if (det) { cimaCerca = p.w; if (!p._wDet) p._wDet = geo.summitNear(p.w.x, p.w.z, 70); } else if (p._wDet && dist > 600) p._wDet = null;
+      // de cerca, el punto va al ancla de la cima (el vértice o la torre del modelo de Blender; sin modelo, el máximo del relieve fino) y su altura se lee cada vez:
+      // si luego se carga un relieve más fino (paquete de zona, HD), el punto no se queda flotando en el aire (desde abajo parecía señalar la cresta de detrás)
+      if (det) { cimaCerca = p.w; if (!p._wDet) { const fi = cumbres.ficha()?.[p.id], e = fi?.elementos?.find((x) => x.ancla) ?? fi?.elementos?.[0] ?? fi?.ancla; p._wDet = e ? { x: e.x, y: 0, z: e.z } : geo.summitNear(p.w.x, p.w.z, 70); } p._wDet.y = geo.heightAt(p._wDet.x, p._wDet.z); } else if (p._wDet && dist > 600) p._wDet = null;
+      if (dist < 3000) p.w.y = geo.heightAt(p.w.x, p.w.z);   // lo mismo con el punto de siempre al acercarse
       // el círculo se eleva poco a poco al acercarse (de 34/38 px a 2.250 u hasta el máximo a 450 u): con la cámara cerca deja ver la cima, y de lejos no se pega al relieve
       const base = isMobile() ? 38 : 34, tope = cumbres.ficha()?.[p.id] ? (isMobile() ? 160 : 140) : (isMobile() ? 76 : 66);
       const otra = !!S.active && S.active !== p.id;   // con una cumbre abierta, solo ella sube del todo: las demás se quedan a ras para no llenar el cielo de globos
