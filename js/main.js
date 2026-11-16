@@ -25,7 +25,7 @@ import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
 import { t, EN_INGLES } from './i18n.js?v=37';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
-import { crearGlosario } from './glosario.js?v=3';
+import { crearGlosario } from './glosario.js?v=4';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

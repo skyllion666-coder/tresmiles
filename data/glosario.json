@@ -639,17 +639,23 @@
   },
   {
    "id": "foz",
-   "t": "Foz",
-   "te": "Foz (limestone gorge)",
+   "t": "Hoz o foz",
+   "te": "Hoz / foz (gorge)",
    "es": [
+    "hoz",
     "foz",
+    "hoces",
     "foces"
    ],
    "en": [
+    "hoz",
     "foz"
    ],
-   "d": "Palabra aragonesa para un valle estrecho y profundo que un río ha abierto en la roca, sobre todo en caliza. En castellano, «hoz».",
-   "de": "Aragonese word for a narrow, deep valley cut by a river through rock, mostly limestone."
+   "d": "Garganta o estrechamiento del terreno, normalmente excavado por un río entre paredes de roca. «Foz» es la forma aragonesa: Foz de Biniés.",
+   "de": "A gorge or narrowing of the land, usually cut by a river between rock walls. «Foz» is the Aragonese form: Foz de Biniés.",
+   "no": [
+    "Hoz de Jaca"
+   ]
   },
   {
    "id": "valle-glaciar",

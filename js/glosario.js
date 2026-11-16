@@ -24,7 +24,7 @@ export function crearGlosario({ url = 'data/glosario.json', enIngles = false, ce
       for (const n of nodos) {
         const s = n.nodeValue; re.lastIndex = 0; let m, ult = 0, frag = null;
         while ((m = re.exec(s))) {
-          const g = busca(m[1]); if (!g || vistos.has(g.id)) continue;
+          const g = busca(m[1]); if (!g || vistos.has(g.id) || g.no?.some((x) => s.startsWith(x, m.index))) continue;   // «no»: nombres propios que no son el término (Hoz de Jaca es un pueblo)
           vistos.add(g.id); frag ??= document.createDocumentFragment();
           frag.append(s.slice(ult, m.index));
           const b = document.createElement('span'); b.className = 'gl'; b.dataset.gl = g.id; b.tabIndex = 0; b.setAttribute('role', 'button'); b.textContent = m[1];
