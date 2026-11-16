@@ -23,7 +23,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=21';
 import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=38';
+import { t, EN_INGLES } from './i18n.js?v=39';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1023,6 +1023,7 @@ async function boot() {
       ${p.curiosidad ? `<h3>Curiosidad</h3><p class="gl-txt">${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
+      <div class="terreno-hueco"></div>
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
       <div class="subidas-hueco"></div>
@@ -1335,7 +1336,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p); pintaTerreno(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1722,6 +1723,47 @@ async function boot() {
     if (zonasDlg.open && (estado !== 'descargando' || pct % 2 === 0)) pintaZonas();
     if (S.active) pintaZona(byId[S.active]);
   };
+  // — «El terreno» (data/terreno.json, tools/prominencia.py + tools/ficha_terreno.py): prominencia, collado clave, cima madre, caras y la ruta normal —
+  const RUMBO8 = ['norte', 'noreste', 'este', 'sureste', 'sur', 'suroeste', 'oeste', 'noroeste'];
+  const rumbo8 = (az) => t(RUMBO8[Math.round(az / 45) % 8]);
+  const mayus = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+  let terrenoDatos;
+  const cargaTerreno = () => (terrenoDatos ??= fetch(`data/terreno.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  const enlaceCima = (id, nombre) => (id && byId[id] ? `<button type="button" class="enlace-cima" data-go="${id}">${esc(byId[id].nombre)}</button>` : esc(nombre ?? ''));
+  async function pintaTerreno(p) {
+    const hueco = fichaBody.querySelector('.terreno-hueco'); if (!hueco || !p || p.menor) return;
+    const d = await cargaTerreno(); if (!d || S.active !== p.id) return;
+    const o = d.cumbres[p.id]; if (!o) { hueco.innerHTML = ''; return; }
+    const filas = [];
+    const ref = o.ref ? ` <small>${t('(otra fuente: {m} m)', { m: fmt(o.ref.prom) })}</small>` : '';
+    if (o.masAlta) filas.push([t('Prominencia'), `${t('Es la cima más alta de los Pirineos: no hay terreno más alto al que bajar.')}${o.ref ? ` <small>${t('Prominencia publicada: {m} m, contando hasta el collado que la separa de montañas más altas, muy lejos de aquí.', { m: fmt(o.ref.prom) })}</small>` : ''}`]);
+    else if (o.fiable === 'no') filas.push([t('Prominencia'), `${t('Sobresale poco: con nuestro relieve de 30 m no se distingue de {c}.', { c: enlaceCima(o.con) })}${o.ref ? ` <small>${t('Otra fuente le da {m} m.', { m: fmt(o.ref.prom) })}</small>` : ''}`]);
+    else if (o.prom != null) {
+      filas.push([t('Prominencia'), o.fiable === 'baja' ? `${t('Pequeña: unos {m} m (cifra poco precisa)', { m: fmt(o.prom) })}${ref}` : o.fiable === 'media' ? `${t('Unos {m} m', { m: fmt(Math.round(o.prom / 5) * 5) })}${ref}` : `≈ ${fmt(Math.round(o.prom / 5) * 5)} m${ref}`]);
+      filas.push([t('Collado clave'), o.colNombre ? `${esc(o.colNombre)}, ${fmt(o.colOsm ?? o.col)} m` : t('Sin nombre en el mapa, a unos {m} m', { m: fmt(Math.round(o.col / 5) * 5) })]);
+      if (o.madre || o.madreNombre) filas.push([t('Cima más alta a la que lleva'), `${enlaceCima(o.madre, o.madreNombre)}${o.madreAlt ? `, ${fmt(o.madreAlt)} m` : ''}${o.madreKm ? ` · ${t('a {d} km', { d: km(o.madreKm * 1000) })}` : ''}`]);
+    }
+    if (o.dependen?.length) filas.push([t('Cimas que dependen de esta'), o.dependen.slice(0, 10).map((id) => enlaceCima(id)).join(' · ')]);
+    const cs = [...(o.caras ?? [])].sort((a, b) => b.caida - a.caida);
+    if (cs.length) {
+      const ab = cs[0], te = cs[cs.length - 1];
+      filas.push([t('Cara más abrupta'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(ab.az)), c: fmt(ab.caida), g: ab.grados })]);
+      filas.push([t('Cara más tendida'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(te.az)), c: fmt(Math.max(0, te.caida)), g: Math.max(0, te.grados) })]);
+    }
+    const rn = o.rutaNormal;
+    if (rn) {
+      const partes = [t('Llega a la cima por el lado {r}.', { r: rumbo8(rn.llega) })];
+      if (rn.umbria >= 5 && rn.solana >= 5) partes.push(t('El {u} % de la subida va por laderas que miran al norte (umbría: la nieve y el hielo aguantan más) y el {s} % por laderas que miran al sur (solana).', { u: rn.umbria, s: rn.solana }));
+      else if (rn.umbria >= 5) partes.push(t('El {u} % de la subida va por laderas que miran al norte (umbría: la nieve y el hielo aguantan más).', { u: rn.umbria }));
+      else if (rn.solana >= 5) partes.push(t('Casi no pisa umbría: el {s} % de la subida va por laderas que miran al sur (solana).', { s: rn.solana }));
+      if (rn.collados?.length) partes.push(t('Pasa por: {l}.', { l: rn.collados.map((c) => `${esc(c.nombre)}${c.ele ? ` (${fmt(c.ele)} m)` : ''}`).join(' · ') }));
+      filas.push([t('La ruta de ejemplo'), partes.join(' ')]);
+    }
+    hueco.innerHTML = `<h3>${t('El terreno')}</h3>
+      <dl class="stats terreno">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
+      <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}</p>`;
+  }
+
   // — «El glaciar en el tiempo» (js/glaciar.js, data/glaciares.json): en la ficha de las cumbres a menos de 2,5 km de un glaciar —
   const fmtHa = (h) => h.toLocaleString(EN_INGLES ? 'en' : 'es', { maximumFractionDigits: 1 });
   function glaciarStop() { clearInterval(glaciarT); glaciarT = null; glaciarFecha.classList.remove('on'); fichaBody.querySelector('[data-act="glaciar-play"]')?.setAttribute('aria-pressed', 'false'); }
