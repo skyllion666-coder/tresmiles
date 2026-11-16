@@ -773,3 +773,13 @@ body.selector-abierto #intro { z-index: 31; }
 .linea-etq { position: fixed; left: 0; top: 0; z-index: 5; pointer-events: none; margin: -11px 0 0 0; padding: 2px 7px; border-radius: 4px; translate: -50% 0;
   background: rgba(20, 30, 27, .7); color: #fff; border-left: 3px solid var(--c); font: 500 .68rem/1.4 var(--cond); letter-spacing: .05em; white-space: nowrap; transition: opacity .2s; }
 .linea-etq.is-hidden { opacity: 0; }
+
+/* — glosario de las fichas (js/glosario.js): palabra de montaña subrayada y su tarjeta debajo del párrafo — */
+.gl { cursor: help; text-decoration: underline dotted rgba(45, 74, 67, .55); text-decoration-thickness: 1.5px; text-underline-offset: 3px; border-radius: 2px; }
+.gl:hover, .gl.is-open { text-decoration-color: var(--ochre); text-decoration-style: solid; color: var(--spruce-d); }
+.gl-card { position: relative; margin: 10px 0 4px; padding: 10px 34px 11px 14px; background: var(--cream-2); border-left: 3px solid var(--ochre); font: 400 .86rem/1.5 var(--sans); color: var(--ink); animation: gl-in .2s ease-out; }
+.gl-card b { display: block; margin-bottom: 3px; font: 600 .7rem var(--cond); letter-spacing: .2em; text-transform: uppercase; color: var(--spruce); }
+.ficha-body .gl-card p { margin: 0; font: 400 .9rem/1.5 var(--sans); color: var(--ink); }
+.gl-x { position: absolute; top: 2px; right: 2px; width: 32px; height: 32px; font-size: 1.2rem; line-height: 1; color: var(--ink-2); }
+@keyframes gl-in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { .gl-card { animation: none; } }

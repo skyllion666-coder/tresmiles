@@ -25,6 +25,7 @@ import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
 import { t, EN_INGLES } from './i18n.js?v=37';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
+import { crearGlosario } from './glosario.js?v=3';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -975,6 +976,7 @@ async function boot() {
 
   // — ficha —
   const fichaEl = $('#ficha'), fichaBody = $('#ficha-body');
+  const glosario = crearGlosario({ enIngles: EN_INGLES, cerrar: EN_INGLES ? 'Close' : 'Cerrar' }); glosario.escucha(fichaBody);   // palabras de montaña con su definición al tocarlas
   function fichaHTML(p) {
     const f = fotos[p.foto], n = difN[p.dificultad];
     const vis = visiblePeaks(), i = vis.findIndex((x) => x.id === p.id);
@@ -989,7 +991,7 @@ async function boot() {
       <h2>${esc(p.nombre)}</h2>${p.alias ? `<p class="alias">${esc(p.alias)}</p>` : ''}
       <div class="alt"><strong>${fmt(p.altitud)}</strong><span>m</span></div>${p.otras ? `<p class="otras">${/^otras/i.test(p.otras) ? '' : '<b>Otras cifras</b> '}${esc(p.otras)}</p>` : ''}
       ${p.activo ? `<div class="hecho-box"><button type="button" class="btn-hecho" data-act="hecho" aria-pressed="${hechos.has(p.id)}">${hechos.has(p.id) ? '<i aria-hidden="true"></i>Subido · banderín puesto' : `<i aria-hidden="true"></i>${textoSubir(p)}`}</button><span class="hecho-cuenta">${resumenHechos(p)}</span></div>` : ''}
-      <p class="lede">${esc(p.descripcion)}</p>
+      <p class="lede gl-txt">${esc(p.descripcion)}</p>
       <dl class="stats">
         <div><dt>${p.menor ? 'Zona' : 'Macizo'}</dt><dd>${esc(macizoName[p.macizo])}</dd></div>
         <div><dt>Situación</dt><dd>${p.situacion ? esc(p.situacion) : p.frontera ? 'Frontera Aragón–Francia' : 'Aragón'}</dd></div>
@@ -1002,9 +1004,9 @@ async function boot() {
       </dl>
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
       <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
-      ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta">${esc(p.ruta)}</p>` : ''}
-      ${p.curiosidad ? `<h3>Curiosidad</h3><p>${esc(p.curiosidad)}</p>` : ''}
-      ${p.info ? `<h3>Información</h3><p>${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
+      ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta gl-txt">${esc(p.ruta)}</p>` : ''}
+      ${p.curiosidad ? `<h3>Curiosidad</h3><p class="gl-txt">${esc(p.curiosidad)}</p>` : ''}
+      ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
@@ -1316,7 +1318,7 @@ async function boot() {
     S.active = id; fauna?.setCentro(p.w.x, p.w.z, p.w.y);
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
-    fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0;
+    fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
     tiempo.set(null); pintaMeteo(p);
     subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
