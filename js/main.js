@@ -23,7 +23,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=21';
 import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=39';
+import { t, EN_INGLES } from './i18n.js?v=40';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1750,6 +1750,13 @@ async function boot() {
       filas.push([t('Cara más abrupta'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(ab.az)), c: fmt(ab.caida), g: ab.grados })]);
       filas.push([t('Cara más tendida'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(te.az)), c: fmt(Math.max(0, te.caida)), g: Math.max(0, te.grados) })]);
     }
+    const gc = o.geo;
+    if (gc) {
+      const desc = EN_INGLES ? (gc.descEn ?? gc.desc) : gc.desc;
+      const donde = gc.m ? (gc.cubierta ? t('En la cima el mapa marca {c}; la roca más cercana, a {m} m:', { c: esc(EN_INGLES ? (gc.cubiertaEn ?? gc.cubierta) : gc.cubierta.toLowerCase()), m: gc.m }) : t('A {m} m de la cima, en el lado aragonés (el mapa del IGME no cubre Francia):', { m: gc.m })) : '';
+      filas.push([t('Roca de la cima'), `${donde ? `<small class="antes">${donde}</small>` : ''}<span class="gl-txt">${esc(desc)}</span>${gc.edad ? `<small>${esc(EN_INGLES ? gc.edad.en : gc.edad.es)}</small>` : ''}`]);
+    }
+    if (o.geoRuta?.length) filas.push([t('Rocas que pisa la subida'), `<span class="gl-txt">${o.geoRuta.map((r) => `${esc(mayus(EN_INGLES ? r.en : r.es))} ${r.pc} %`).join(' · ')}</span>`]);
     const rn = o.rutaNormal;
     if (rn) {
       const partes = [t('Llega a la cima por el lado {r}.', { r: rumbo8(rn.llega) })];
@@ -1761,7 +1768,8 @@ async function boot() {
     }
     hueco.innerHTML = `<h3>${t('El terreno')}</h3>
       <dl class="stats terreno">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
-      <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}</p>`;
+      <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}${gc ? ` ${t('Geología: {f}, en el punto de la cima; la subida, un punto cada 400 m.', { f: gc.fuente === 'magna' ? `<a href="${esc(d.fuentes.magna.url.replace('{h}', gc.hoja))}" target="_blank" rel="noopener">${esc(d.fuentes.magna.texto.replace('{h}', gc.hoja))}</a>` : `<a href="${esc(d.fuentes.geode.url)}" target="_blank" rel="noopener">${esc(d.fuentes.geode.texto)}</a>` })}` : ''}</p>`;
+    glosario.marca(hueco);
   }
 
   // — «El glaciar en el tiempo» (js/glaciar.js, data/glaciares.json): en la ficha de las cumbres a menos de 2,5 km de un glaciar —

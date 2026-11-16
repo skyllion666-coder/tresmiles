@@ -7,10 +7,15 @@
 - Caras: desnivel a 500 m de la cima en 8 direcciones, con el relieve de 30 m (~/Tresmiles/web/data/near_h.bin).
 - Ruta normal (la primera de p.rutas): por qué lado llega a la cima, qué parte de la subida va por laderas que miran al norte (umbría)
   y los collados de OSM por los que pasa (a menos de 100 m del track).
-Uso: python3 tools/fetch_collados.py (una vez) → python3 tools/prominencia.py → python3 tools/ficha_terreno.py
+- Geología (IGME): roca de la cima y rocas que pisa la subida, de tools/datos/geologia.json (tools/geologia.py [--ruta]); edades y
+  traducciones en tools/datos/geologia_textos.py.
+Uso: python3 tools/fetch_collados.py (una vez) → python3 tools/prominencia.py → python3 tools/geologia.py --ruta → python3 tools/ficha_terreno.py
 """
 import json, math, os
 import numpy as np
+import re, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'datos'))
+from geologia_textos import EDADES, ERAS, EN as GEO_EN, TIPOS
 
 AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.join(AQUI, '..')
 SRC = os.path.expanduser('~/Tresmiles/web/data')
@@ -126,6 +131,63 @@ def nombre_collado(x):
     return dict(nombre=mejor[1]['nombre'], ele=mejor[1]['ele'], m=round(mejor[0])) if mejor else None
 
 
+f_geo = os.path.join(AQUI, 'datos', 'geologia.json')
+GEO = json.load(open(f_geo)) if os.path.exists(f_geo) else {}
+faltan_en = set()
+
+
+def normaliza(t):
+    t = t.strip().rstrip('.').strip()
+    if t.isupper(): t = t[0] + t[1:].lower()
+    t = t.replace('Hielo. (Glaciar)', 'Hielo (glaciar)').replace('2 micas', 'dos micas').replace('silex', 'sílex').replace('Graniodiorita', 'Granodiorita').replace('Fm Salarons', 'Fm. Salarons')
+    t = t.replace('negras, ocasionalmente arenosa', 'negras, ocasionalmente arenosas')
+    t = re.sub(r'"([^"]+)"', r'«\1»', t).replace('.».', '»').replace('».', '»')
+    return t
+
+
+def tipo(desc):
+    d = desc.lower()
+    return next(((es, en) for k, es, en in TIPOS if k in d), None)
+
+
+def edad(inf, sup):
+    a, b = EDADES.get(inf), EDADES.get(sup)
+    if not a or not b: return None
+    nom_es = a[0] if inf == sup else f'{a[0]}–{b[0]}'; nom_en = a[1] if inf == sup else f'{a[1]}–{b[1]}'
+    ep_es = a[2] if a[2] == b[2] else f'{a[2]} a {b[2].split(" ", 1)[1]}' if a[2].split()[0] == b[2].split()[0] and ' ' in b[2] else f'{a[2]} a {b[2]}'
+    ep_en = a[3] if a[3] == b[3] else f'{a[3].split()[0]} to {b[3]}' if a[3].split()[-1] == b[3].split()[-1] and ' ' in a[3] else f'{a[3]} to {b[3]}'
+    m0, m1 = round(a[4]), round(b[5])
+    return dict(es=f'{nom_es} ({ep_es}), hace unos {m0}–{m1} millones de años', en=f'{nom_en} ({ep_en}), about {m0}–{m1} million years ago', ma0=m0, ma1=m1)
+
+
+def geo_cima(g):
+    c = (g or {}).get('cima')
+    if not c or not c.get('desc'): return None
+    d = normaliza(c['desc']); en = GEO_EN.get(d)
+    if not en: faltan_en.add(d)
+    o = dict(desc=d, descEn=en, fuente=c['fuente'], m=c.get('m', 0))
+    if c.get('cubierta'): o['cubierta'] = normaliza(c['cubierta']); o['cubiertaEn'] = GEO_EN.get(o['cubierta'])
+    if c['fuente'] == 'magna': o['hoja'] = c.get('hoja')
+    e = edad(c.get('edadInf'), c.get('edadSup')) if c['fuente'] == 'geode' else None
+    if e: o['edad'] = e
+    return o
+
+
+def geo_ruta(g):
+    r = (g or {}).get('ruta')
+    if not r: return None
+    cuenta = {}
+    for x in r:
+        u = x.get('u')
+        if not u or not u.get('desc'): continue
+        tp = tipo(u['desc'])
+        if tp: cuenta[tp] = cuenta.get(tp, 0) + 1
+    n = sum(cuenta.values())
+    if n < 3: return None
+    l = sorted(cuenta.items(), key=lambda kv: -kv[1])
+    return [dict(es=k[0], en=k[1], pc=round(100 * v / n)) for k, v in l if round(100 * v / n) >= 5][:5]
+
+
 sal = {}
 for p in picos:
     x = prom.get(p['id'], {}); o = {}
@@ -144,6 +206,10 @@ for p in picos:
     o['caras'] = caras(p)
     rn = ruta_normal(p)
     if rn: o['rutaNormal'] = rn
+    gc = geo_cima(GEO.get(p['id']))
+    if gc: o['geo'] = gc
+    gr = geo_ruta(GEO.get(p['id']))
+    if gr: o['geoRuta'] = gr
     sal[p['id']] = o
 # cimas que dependen de cada una (su cima madre es esta, o no se distinguen de ella)
 for pid, o in sal.items():
@@ -152,8 +218,12 @@ for pid, o in sal.items():
 json.dump(dict(fuentes=dict(
     relieve='Copernicus GLO-30 con el MDT05 del IGN en las cumbres (malla de 1″ ≈ 30 m)',
     collados='© OpenStreetMap (ODbL)',
+    geode=dict(texto='IGME, GEODE: Mapa Geológico Digital continuo de España 1:50.000', url='https://info.igme.es/cartografiadigital/geologica/Geode.aspx'),
+    magna=dict(texto='IGME, MAGNA 50: Mapa Geológico de España 1:50.000, hoja {h}', url='https://info.igme.es/cartografiadigital/geologica/Magna50Hoja.aspx?language=es&id={h}'),
     ref=dict(texto='Clem Clements, «Spain – The 3000m Peaks» (Viewfinder Panoramas)', url='https://www.viewfinderpanoramas.org/reascent/Spanish_3000m_Peaks.doc')),
     cumbres=sal), open(os.path.join(RAIZ, 'data', 'terreno.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 n = len(sal)
 print(n, 'cumbres ·', sum('prom' in o for o in sal.values()), 'con prominencia ·', sum('colNombre' in o for o in sal.values()), 'collado con nombre ·',
       sum('rutaNormal' in o for o in sal.values()), 'con ruta ·', len(collados), 'collados OSM')
+print(sum('geo' in o for o in sal.values()), 'con geología ·', sum('geoRuta' in o for o in sal.values()), 'con rocas de la subida')
+if faltan_en: print('SIN TRADUCIR:', sorted(faltan_en))
