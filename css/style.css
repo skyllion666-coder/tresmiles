@@ -812,3 +812,5 @@ body.selector-abierto #intro { z-index: 31; }
 #palabras .about-close { z-index: 3; width: 40px; height: 40px; top: 6px; right: 8px; border-radius: 50%; background: var(--cream); }
 #palabras .pal-filtros { padding-right: 56px; }
 @media (max-width: 600px) { #palabras .pal-filtros { padding-right: 52px; } }
+.pal-fu { margin-top: 4px !important; font-size: .72rem; line-height: 1.4; color: var(--ink-2); }
+.pal-fu a { color: var(--ink-2); }

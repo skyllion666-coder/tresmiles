@@ -6,7 +6,7 @@ export function crearGlosario({ url = 'data/glosario.json', enIngles = false, ce
   const carga = fetch(`${url}?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((d) => {
     terminos = d?.terminos ?? [];
     const forma = new Map();   // palabra en minúsculas → término
-    for (const g of terminos) for (const w of (enIngles ? [...g.en, ...g.es] : g.es)) forma.set(w.toLowerCase(), g);
+    for (const g of terminos) if (g.ficha !== false) for (const w of (enIngles ? [...g.en, ...g.es] : g.es)) forma.set(w.toLowerCase(), g);
     const alt = [...forma.keys()].sort((a, b) => b.length - a.length).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(?:e?s)?');
     re = alt.length ? new RegExp(`(?<![\\p{L}\\p{N}])(${alt.join('|')})(?![\\p{L}\\p{N}])`, 'giu') : null;
     busca = (w) => { w = w.toLowerCase(); return forma.get(w) ?? forma.get(w.replace(/e?s$/, '')) ?? forma.get(w.replace(/s$/, '')); };

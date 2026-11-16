@@ -1,5 +1,5 @@
 {
- "nota": "Glosario de las fichas (js/glosario.js): al tocar una de estas palabras en el texto de una ficha sale su definición. «es»/«en»: formas que se buscan en el texto (el código añade el plural en -s/-es; los plurales con tilde distinta van escritos). Criterio (texto del usuario): no tratar como sinónimos formas distintas, no inventar etimologías, mejor diez bien que veinte inventadas. Definiciones redactadas para Tresmiles y revisadas: cortas, y solo lo seguro. «cat»: familia (categorias). «pir»: palabra propia del Pirineo / de Aragón (sale con la marca «Pirineo» en la página Palabras de la montaña). «no»: nombres propios que no se marcan.",
+ "nota": "Glosario de las fichas (js/glosario.js): al tocar una de estas palabras en el texto de una ficha sale su definición. «es»/«en»: formas que se buscan en el texto (el código añade el plural en -s/-es; los plurales con tilde distinta van escritos). Criterio (texto del usuario): no tratar como sinónimos formas distintas, no inventar etimologías, mejor diez bien que veinte inventadas. Definiciones redactadas para Tresmiles y revisadas: cortas, y solo lo seguro. «cat»: familia (categorias). «pir»: palabra propia del Pirineo / de Aragón (sale con la marca «Pirineo» en la página Palabras de la montaña). «no»: nombres propios que no se marcan. «fuentes»: [{n, u}] comprobadas (Aragonario, Wikcionario, Wikipedia). «fiab»: documentada (con fuente) / probable / revisada (definición general revisada, aún sin fuente enlazada). «ficha»: false = solo en la página, no se subraya en las fichas (palabras demasiado corrientes).",
  "categorias": [
   {
    "id": "elevaciones",
@@ -70,7 +70,8 @@
    ],
    "d": "Línea alta y alargada del relieve que une varias cimas, con agujas, dientes y collados entre ellas. Puede ser larga y muy accidentada. Una cresta puede tener varias aristas.",
    "de": "A long, high line of terrain linking several summits, with needles, teeth and cols between them. It can be long and very broken. A ridge can contain several arêtes.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "arista",
@@ -85,7 +86,8 @@
    ],
    "d": "Filo donde se juntan dos vertientes de una montaña. Suele ser estrecha, con caída a los dos lados. Es más corta y definida que una cresta.",
    "de": "The edge where two sides of a mountain meet. It is usually narrow, with a drop on both sides. Shorter and sharper than a ridge.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "collado",
@@ -100,7 +102,8 @@
    ],
    "d": "Punto bajo entre dos elevaciones por el que se pasa de una vertiente a otra. En el Pirineo aragonés también se llama «cuello» o «puerto».",
    "de": "The low point between two heights, used to cross from one side to the other. In the Aragonese Pyrenees it is also called «cuello» or «puerto».",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "cuello",
@@ -115,7 +118,14 @@
    "d": "Nombre aragonés del collado: un paso bajo entre dos elevaciones. Es frecuente en la toponimia: Cuello de…",
    "de": "Aragonese word for a col: a low pass between two heights. Common in place names: Cuello de…",
    "cat": "pasos",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «cuello»",
+     "u": "https://aragonario.aragon.es/search/?q=cuello&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "portillo",
@@ -132,7 +142,8 @@
    ],
    "d": "Paso estrecho y localizado en una cresta o una barrera de roca. Es más angosto que un collado y a veces hay que trepar para llegar.",
    "de": "A narrow, well-defined gap in a ridge or a rock barrier. Narrower than a col; sometimes reached by scrambling.",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "brecha",
@@ -148,7 +159,8 @@
    ],
    "d": "Corte estrecho y profundo en una cresta, como una muesca entre paredes. La más conocida es la Brecha de Rolando.",
    "de": "A narrow, deep cut in a ridge, like a notch between walls. The best known is the Brèche de Roland (Brecha de Rolando).",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "puerto",
@@ -163,7 +175,18 @@
    "d": "En el Pirineo, paso de montaña entre dos valles, a menudo con Francia (Puerto de Benasque, de la Picada). También se llaman «puertos» los pastos altos de verano.",
    "de": "In the Pyrenees, a mountain pass between two valleys, often into France (Puerto de Benasque, de la Picada). The high summer pastures are also called «puertos».",
    "cat": "pasos",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «puerto»",
+     "u": "https://aragonario.aragon.es/search/?q=puerto&l=ar-es"
+    },
+    {
+     "n": "Wikcionario, «puerto»",
+     "u": "https://es.wiktionary.org/wiki/puerto"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "tuca",
@@ -180,7 +203,14 @@
    "d": "Palabra del Pirineo para cima o pico, muy usada en el valle de Benasque y la Ribagorza: Tuca de…",
    "de": "Pyrenean word for a summit or peak, very common in the Benasque valley and Ribagorza: Tuca de…",
    "cat": "elevaciones",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «tuca»",
+     "u": "https://aragonario.aragon.es/search/?q=tuca&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "aguja",
@@ -195,7 +225,8 @@
    ],
    "d": "Pico de roca alto, estrecho y puntiagudo que sobresale del relieve que lo rodea.",
    "de": "A tall, narrow, pointed rock peak that stands out from the terrain around it.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "antecima",
@@ -210,7 +241,8 @@
    ],
    "d": "Elevación antes de la cima principal, en la misma cresta o ladera. Desde abajo se confunde a menudo con la cima.",
    "de": "A high point before the main summit, on the same ridge or slope. From below it is often mistaken for the summit.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "pala",
@@ -224,7 +256,8 @@
    ],
    "d": "Ladera ancha, uniforme y empinada, de nieve o de hierba. Con nieve puede ser terreno de aludes.",
    "de": "A broad, even, steep slope of snow or grass. When snow-covered it can be avalanche terrain.",
-   "cat": "laderas"
+   "cat": "laderas",
+   "fiab": "revisada"
   },
   {
    "id": "canal",
@@ -239,7 +272,14 @@
    ],
    "d": "Hendidura alargada y estrecha que baja por una pared o una ladera. Acumula nieve, hielo o piedras sueltas, y por ella caen piedras.",
    "de": "A long, narrow groove running down a wall or a slope. It collects snow, ice or loose stones, and stones fall down it.",
-   "cat": "valles"
+   "cat": "valles",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «canal»",
+     "u": "https://aragonario.aragon.es/search/?q=canal&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "corredor",
@@ -253,7 +293,8 @@
    ],
    "d": "Canal ancha y larga entre paredes de roca. Se sube sobre todo en invierno, con nieve o hielo.",
    "de": "A wide, long gully between rock walls. Mostly climbed in winter, on snow or ice.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "chimenea",
@@ -268,7 +309,8 @@
    ],
    "d": "Grieta vertical en la roca, lo bastante ancha para meter el cuerpo. Se sube apoyándose en las dos paredes.",
    "de": "A vertical crack in the rock wide enough to fit your body in. You climb it by pushing against both walls.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "glera",
@@ -286,10 +328,21 @@
     "screes",
     "talus"
    ],
-   "d": "Ladera de piedras sueltas al pie de las paredes de las que se han desprendido. «Glera» es la palabra aragonesa; tartera, pedrera y canchal son casi lo mismo. Se mueve al pisar, y puede soltar piedras hacia quien va debajo.",
-   "de": "A slope of loose stones at the foot of the walls they fell from. «Glera» is the Aragonese word (tartera, pedrera and canchal mean much the same). It shifts underfoot and can send stones onto people below.",
+   "d": "Pedregal de piedras sueltas: la ladera de piedras al pie de las paredes de las que se han desprendido, y en aragonés también el pedregal del lecho de un río. Tartera, pedrera y canchal son casi lo mismo. Se mueve al pisar, y puede soltar piedras hacia quien va debajo.",
+   "de": "A spread of loose stones: the scree slope at the foot of the walls they fell from, and in Aragonese also the stony bed of a river. Tartera, pedrera and canchal mean much the same. It shifts underfoot and can send stones onto people below.",
    "cat": "terreno",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «glera»",
+     "u": "https://aragonario.aragon.es/search/?q=glera&l=ar-es"
+    },
+    {
+     "n": "Wikcionario, «canchal»",
+     "u": "https://es.wiktionary.org/wiki/canchal"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "faja",
@@ -303,7 +356,8 @@
    ],
    "d": "Franja casi horizontal que cruza una ladera empinada o una pared, de hierba, tierra o roca, y permite pasar de un lado a otro. En Ordesa, la Faja de las Flores o la de Pelay. A menudo es expuesta.",
    "de": "An almost horizontal band crossing a steep slope or a wall, of grass, earth or rock, that lets you traverse from one side to the other. In Ordesa, the Faja de las Flores or the Faja de Pelay. Often exposed.",
-   "cat": "laderas"
+   "cat": "laderas",
+   "fiab": "revisada"
   },
   {
    "id": "vira",
@@ -317,7 +371,8 @@
    ],
    "d": "Repisa estrecha en una pared de roca que permite avanzar en horizontal o en diagonal. Es más corta y localizada que una faja.",
    "de": "A narrow shelf on a rock wall that lets you move sideways or diagonally. Shorter and more local than a faja.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "espolon",
@@ -332,7 +387,8 @@
    ],
    "d": "Saliente de roca o de montaña que baja desde una zona alta y separa dos vertientes o dos canales.",
    "de": "A rib of rock or mountain that runs down from higher ground and separates two slopes or two gullies.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "hombro",
@@ -347,7 +403,8 @@
    ],
    "d": "Rellano o cambio de pendiente en una ladera o una arista, que le da forma de hombro.",
    "de": "A flatter step or change of angle on a slope or an arête, shaped like a shoulder.",
-   "cat": "laderas"
+   "cat": "laderas",
+   "fiab": "revisada"
   },
   {
    "id": "ibon",
@@ -365,7 +422,18 @@
    "d": "Lago de montaña de origen glaciar, en el Pirineo aragonés. «Ibón» es la palabra aragonesa; en Cataluña se dice estany, y en Francia, lac.",
    "de": "A mountain lake of glacial origin, in the Aragonese Pyrenees. «Ibón» is the Aragonese word (estany in Catalonia, lac in France).",
    "cat": "agua",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «ibón»",
+     "u": "https://aragonario.aragon.es/search/?q=ib%C3%B3n&l=ar-es"
+    },
+    {
+     "n": "Wikcionario, «ibón»",
+     "u": "https://es.wiktionary.org/wiki/ib%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "nevero",
@@ -380,7 +448,8 @@
    ],
    "d": "Mancha de nieve que dura gran parte del año, a veces todo el verano. A primera hora puede estar dura como el hielo.",
    "de": "A patch of snow that lasts much of the year, sometimes all summer. Early in the day it can be as hard as ice.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "glaciar",
@@ -395,7 +464,8 @@
    ],
    "d": "Masa de hielo que se mueve despacio ladera abajo. En el Pirineo quedan pocos y menguan cada año. Tienen grietas, a veces tapadas por la nieve.",
    "de": "A mass of ice that slowly flows downhill. Few remain in the Pyrenees and they shrink every year. They have crevasses, sometimes hidden under snow.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "rimaya",
@@ -409,7 +479,8 @@
    ],
    "d": "Grieta grande en la parte alta de un glaciar, donde el hielo se separa de la roca o del hielo fijo de arriba. Puede estar tapada por un puente de nieve.",
    "de": "A large crevasse at the top of a glacier, where the moving ice pulls away from the rock or fixed ice above. It can be hidden by a snow bridge.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "morrena",
@@ -423,7 +494,8 @@
    ],
    "d": "Montón de piedras y tierra que arrastró y dejó un glaciar. Las morrenas marcan hasta dónde llegó el hielo.",
    "de": "A heap of stones and earth carried and left by a glacier. Moraines show how far the ice once reached.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "circo",
@@ -437,7 +509,8 @@
    ],
    "d": "Gran hondonada en forma de anfiteatro, excavada por un glaciar en la cabecera de un valle.",
    "de": "A large amphitheatre-shaped hollow carved by a glacier at the head of a valley.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "barranco",
@@ -452,7 +525,14 @@
    ],
    "d": "Hendidura profunda del terreno hecha por el agua, que puede llevarla todo el año o solo a ratos. En Aragón también se llama así al torrente que la recorre.",
    "de": "A deep cut in the ground made by water, which may flow all year or only at times. In Aragon the stream itself is also called a barranco.",
-   "cat": "valles"
+   "cat": "valles",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «barranco»",
+     "u": "https://aragonario.aragon.es/search/?q=barranco&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "congosto",
@@ -468,7 +548,18 @@
    "d": "Tramo de valle muy estrecho, encajonado entre paredes de roca altas, casi siempre excavado por un río. «Congosto» es palabra muy usada en Aragón; desfiladero es casi lo mismo. Es más corto que un cañón.",
    "de": "A very narrow stretch of valley boxed in by high rock walls, almost always cut by a river. «Congosto» is the usual word in Aragon. Shorter than a canyon.",
    "cat": "valles",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Wikcionario, «congosto»",
+     "u": "https://es.wiktionary.org/wiki/congosto"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «foz»",
+     "u": "https://aragonario.aragon.es/search/?q=foz&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "trepada",
@@ -484,7 +575,8 @@
    ],
    "d": "Paso en el que hay que ayudarse de las manos, sin llegar a escalar con cuerda. Bajarlo es «destrepar», y suele costar más que subirlo.",
    "de": "A section where you need your hands but not a rope. Going down it («destrepar») is usually harder than going up.",
-   "cat": "progresion"
+   "cat": "progresion",
+   "fiab": "revisada"
   },
   {
    "id": "destrepe",
@@ -500,7 +592,8 @@
    ],
    "d": "Bajar un paso de trepada, a menudo de cara a la roca. Suele ser más difícil que subirlo, porque no ves bien dónde pones los pies.",
    "de": "Climbing down a scrambling section, often facing the rock. Usually harder than going up, because you can't see your footholds well.",
-   "cat": "progresion"
+   "cat": "progresion",
+   "fiab": "revisada"
   },
   {
    "id": "lomo",
@@ -513,7 +606,8 @@
    "en": [],
    "d": "Elevación alargada y redondeada, de pendientes suaves, que separa dos vertientes.",
    "de": "A long, rounded rise with gentle slopes that separates two sides.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "muga",
@@ -528,7 +622,18 @@
    "d": "Palabra aragonesa para el límite o mojón entre términos, valles o países. En el Pirineo, a menudo la frontera con Francia.",
    "de": "Aragonese word for a boundary or boundary stone between villages, valleys or countries. In the Pyrenees, often the border with France.",
    "cat": "usos",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «muga»",
+     "u": "https://aragonario.aragon.es/search/?q=muga&l=ar-es"
+    },
+    {
+     "n": "Wikcionario, «muga»",
+     "u": "https://es.wiktionary.org/wiki/muga"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "lapiaz",
@@ -540,12 +645,19 @@
     "lenar"
    ],
    "en": [
-    "karst",
-    "lapiaz"
+    "lapiaz",
+    "limestone pavement"
    ],
    "d": "Roca caliza llena de surcos, agujeros y filos cortantes, que deja el agua al disolverla. Es frecuente en los macizos calizos; se camina despacio y con cuidado.",
    "de": "Limestone full of grooves, holes and sharp edges, left by water dissolving the rock. Common in limestone massifs; walk slowly and carefully.",
-   "cat": "geologia"
+   "cat": "geologia",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Lapiaz»",
+     "u": "https://es.wikipedia.org/wiki/Lapiaz"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "vertice",
@@ -562,7 +674,8 @@
    ],
    "d": "Pilar de hormigón del Instituto Geográfico Nacional que marca un punto medido con precisión. Muchas cimas lo tienen.",
    "de": "A concrete pillar of Spain's National Geographic Institute marking a precisely surveyed point. Many summits have one.",
-   "cat": "usos"
+   "cat": "usos",
+   "fiab": "revisada"
   },
   {
    "id": "punta",
@@ -576,14 +689,16 @@
    ],
    "d": "Cima, a menudo aguda o secundaria, en una cresta o junto a una cumbre mayor: Punta Oliveras, junto al Aneto.",
    "de": "A summit, often sharp or secondary, on a ridge or next to a higher top: Punta Oliveras, next to Aneto.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "tozal",
    "t": "Tozal",
    "te": "Tozal (hill)",
    "es": [
-    "tozal"
+    "tozal",
+    "tossal"
    ],
    "en": [
     "tozal"
@@ -591,7 +706,14 @@
    "d": "Palabra aragonesa para un cerro o una altura destacada del terreno. Es muy frecuente en los nombres: Tozal del Mallo, en Ordesa.",
    "de": "Aragonese word for a hill or prominent height. Very common in place names: Tozal del Mallo, in Ordesa.",
    "cat": "elevaciones",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «tozal»",
+     "u": "https://aragonario.aragon.es/search/?q=tozal&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "mallo",
@@ -606,7 +728,14 @@
    "d": "Gran peñasco aislado de paredes casi verticales. Los más conocidos son los Mallos de Riglos, de conglomerado.",
    "de": "A large, isolated rock tower with almost vertical walls. The best known are the Mallos de Riglos, made of conglomerate.",
    "cat": "elevaciones",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «mallo»",
+     "u": "https://aragonario.aragon.es/search/?q=mallo&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "pena",
@@ -620,7 +749,8 @@
    ],
    "d": "Roca grande, o monte rocoso. Aparece en muchos nombres de montañas: Peña Montañesa, Peña Telera.",
    "de": "A big rock, or a rocky mountain. It appears in many mountain names: Peña Montañesa, Peña Telera.",
-   "cat": "elevaciones"
+   "cat": "elevaciones",
+   "fiab": "revisada"
   },
   {
    "id": "pueyo",
@@ -635,7 +765,14 @@
    "d": "Palabra aragonesa para un cerro o una colina, a menudo aislada. Da nombre a muchos pueblos y lugares.",
    "de": "Aragonese word for a hill or knoll, often isolated. It gives its name to many villages and places.",
    "cat": "elevaciones",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «pueyo»",
+     "u": "https://aragonario.aragon.es/search/?q=pueyo&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "turon",
@@ -652,7 +789,8 @@
    "d": "Cerro o cima redondeada. Palabra pirenaica cuyo uso cambia según el valle.",
    "de": "A hill or rounded summit. A Pyrenean word whose use varies from valley to valley.",
    "cat": "elevaciones",
-   "pir": true
+   "pir": true,
+   "fiab": "revisada"
   },
   {
    "id": "contrafuerte",
@@ -666,7 +804,8 @@
    ],
    "d": "Gran saliente que se apoya en una montaña como un pilar, más ancho y macizo que un espolón.",
    "de": "A large projection propping up a mountain like a pillar, broader and bulkier than a spur.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "divisoria",
@@ -680,7 +819,8 @@
    ],
    "d": "Línea del relieve que separa dos cuencas: el agua que cae a cada lado va a un río distinto. En el Pirineo central, la principal coincide en gran parte con la frontera.",
    "de": "The line of terrain separating two drainage basins: rain on each side ends in a different river. In the central Pyrenees the main one largely follows the border.",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "repisa",
@@ -694,7 +834,8 @@
    ],
    "d": "Rellano pequeño en una pared de roca, donde se puede parar o apoyar los pies. Si sigue en horizontal y permite avanzar, es una vira.",
    "de": "A small flat spot on a rock wall where you can stop or stand. If it continues sideways and lets you move along, it is a vira (ledge).",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "cornisa",
@@ -708,7 +849,8 @@
    ],
    "d": "Voladizo de nieve que el viento forma en el borde de una cresta, sobre el vacío. Puede romperse con el peso de una persona: no hay que pisar cerca del borde.",
    "de": "An overhang of snow built by the wind on the edge of a ridge, over the drop. It can break under a person's weight: keep well back from the edge.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "terraza",
@@ -722,7 +864,8 @@
    ],
    "d": "Superficie casi llana en una ladera o un valle, entre pendientes más fuertes.",
    "de": "An almost flat area on a slope or in a valley, between steeper ground.",
-   "cat": "laderas"
+   "cat": "laderas",
+   "fiab": "revisada"
   },
   {
    "id": "garganta",
@@ -734,7 +877,8 @@
    "en": [],
    "d": "Paso estrecho y profundo entre montañas, por el que suele correr un río.",
    "de": "A narrow, deep passage between mountains, usually with a river running through it.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "canon",
@@ -749,7 +893,8 @@
    ],
    "d": "Valle largo y profundo, de paredes muy verticales, excavado por un río: el Cañón de Añisclo, en Ordesa.",
    "de": "A long, deep valley with very steep walls, cut by a river: the Añisclo Canyon, in Ordesa.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "foz",
@@ -771,7 +916,14 @@
     "Hoz de Jaca"
    ],
    "cat": "valles",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «foz»",
+     "u": "https://aragonario.aragon.es/search/?q=foz&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "valle-glaciar",
@@ -788,7 +940,8 @@
    ],
    "d": "Valle que excavó un glaciar: tiene el fondo ancho y las laderas empinadas, en forma de U. Los de los ríos son en V.",
    "de": "A valley carved by a glacier: wide floor and steep sides, U-shaped. River valleys are V-shaped.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "valle-colgado",
@@ -805,7 +958,8 @@
    ],
    "d": "Valle lateral cuyo fondo queda muy por encima del valle principal, porque el glaciar grande excavó más. Suelen bajar de ellos cascadas.",
    "de": "A side valley whose floor sits well above the main valley, because the main glacier dug deeper. Waterfalls often drop from them.",
-   "cat": "valles"
+   "cat": "valles",
+   "fiab": "revisada"
   },
   {
    "id": "cubeta",
@@ -817,7 +971,8 @@
    "en": [],
    "d": "Hondonada excavada por el hielo en un circo o en un valle glaciar. Muchas tienen un ibón dentro.",
    "de": "A hollow scooped out by ice in a cirque or a glacial valley. Many hold an ibón (tarn).",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "hoya",
@@ -831,7 +986,8 @@
    ],
    "d": "Hondonada del terreno, redonda o alargada, rodeada de laderas. Es frecuente en los nombres de lugares del Pirineo.",
    "de": "A round or elongated hollow surrounded by slopes. Common in Pyrenean place names.",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "umbral",
@@ -845,7 +1001,8 @@
    ],
    "d": "Escalón de roca que cierra un circo o separa dos tramos de un valle glaciar. El sendero suele subirlo en zigzag, a menudo junto a una cascada.",
    "de": "A rock step closing off a cirque or separating two stretches of a glacial valley. The path usually zigzags up it, often beside a waterfall.",
-   "cat": "pasos"
+   "cat": "pasos",
+   "fiab": "revisada"
   },
   {
    "id": "caos",
@@ -860,7 +1017,8 @@
    ],
    "d": "Amontonamiento de bloques de roca grandes, caídos o dejados por el hielo. Se avanza saltando de bloque en bloque, despacio.",
    "de": "A jumble of large boulders, fallen or left by ice. You cross it hopping from block to block, slowly.",
-   "cat": "terreno"
+   "cat": "terreno",
+   "fiab": "revisada"
   },
   {
    "id": "escarpe",
@@ -874,7 +1032,8 @@
    ],
    "d": "Corte brusco y muy empinado del terreno, donde la pendiente pasa de golpe a casi vertical.",
    "de": "A sudden, very steep break in the ground, where the slope turns almost vertical.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "farallon",
@@ -889,7 +1048,8 @@
    ],
    "d": "Gran peñasco o pared de roca que sobresale en una ladera o una cresta.",
    "de": "A large rock or rock face standing out on a slope or ridge.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "bastion",
@@ -904,7 +1064,8 @@
    ],
    "d": "Mole de roca de paredes verticales, con aspecto de fortaleza.",
    "de": "A massive block of rock with vertical walls that looks like a fortress.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "diedro",
@@ -918,7 +1079,8 @@
    ],
    "d": "Dos planos de roca que se juntan formando un ángulo, como un libro abierto. Es una forma típica de escalada.",
    "de": "Two planes of rock meeting at an angle, like an open book. A typical climbing feature.",
-   "cat": "rocas"
+   "cat": "rocas",
+   "fiab": "revisada"
   },
   {
    "id": "ventisquero",
@@ -932,7 +1094,8 @@
    ],
    "d": "Sitio donde el viento acumula la nieve, y esa misma nieve amontonada. Puede tener mucho más espesor que alrededor.",
    "de": "A place where the wind piles up snow, and the drift itself. It can be much deeper than the snow around it.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "serac",
@@ -948,7 +1111,8 @@
    ],
    "d": "Bloque o torre de hielo que se forma donde el glaciar se rompe al pasar por una pendiente fuerte. Puede caer sin aviso.",
    "de": "A block or tower of ice formed where a glacier breaks up over a steep step. It can fall without warning.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "grieta",
@@ -963,7 +1127,8 @@
    ],
    "d": "En un glaciar, abertura en el hielo que puede ser muy profunda y estar tapada por un puente de nieve. Por eso por glaciar se va encordado.",
    "de": "In a glacier, a crack in the ice that can be very deep and hidden by a snow bridge. That is why people rope up on glaciers.",
-   "cat": "glaciares"
+   "cat": "glaciares",
+   "fiab": "revisada"
   },
   {
    "id": "sima",
@@ -977,22 +1142,32 @@
    ],
    "d": "Cavidad natural que se hunde en vertical en la roca, típica de los macizos calizos.",
    "de": "A natural cavity that drops vertically into the rock, typical of limestone massifs.",
-   "cat": "geologia"
+   "cat": "geologia",
+   "fiab": "revisada"
   },
   {
-   "id": "estiba",
-   "t": "Estiba",
-   "te": "Estiba (summer pasture)",
+   "id": "estiva",
+   "t": "Estiva",
+   "te": "Estiva (summer pasture)",
    "es": [
+    "estiva",
     "estiba"
    ],
    "en": [
+    "estiva",
     "estiba"
    ],
-   "d": "Palabra aragonesa para el pasto alto donde sube el ganado en verano. Da nombre a muchos lugares.",
-   "de": "Aragonese word for the high pasture where livestock graze in summer. It names many places.",
+   "d": "Palabra aragonesa para el pastizal de alta montaña donde sube el ganado en verano. Da nombre a muchos lugares.",
+   "de": "Aragonese word for the high-mountain pasture where livestock graze in summer. It names many places.",
    "cat": "usos",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «estiva»",
+     "u": "https://aragonario.aragon.es/search/?q=estiva&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "basa",
@@ -1007,7 +1182,14 @@
    "d": "Palabra aragonesa para una balsa o un lago pequeño: la Basa de la Mora es el ibón de Plan.",
    "de": "Aragonese word for a pool or small lake: the Basa de la Mora is the Ibón de Plan.",
    "cat": "agua",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «basa»",
+     "u": "https://aragonario.aragon.es/search/?q=basa&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "selva",
@@ -1022,7 +1204,14 @@
    "d": "En la toponimia del Pirineo aragonés, bosque: la Selva de Oza, en el valle de Hecho.",
    "de": "In Aragonese Pyrenean place names, a forest: the Selva de Oza, in the Hecho valley.",
    "cat": "usos",
-   "pir": true
+   "pir": true,
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «selva»",
+     "u": "https://aragonario.aragon.es/search/?q=selva&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "artiga",
@@ -1036,7 +1225,14 @@
    ],
    "d": "Terreno ganado al bosque, rozado o quemado para hacer pasto o cultivo. Queda en muchos nombres de lugar.",
    "de": "Land cleared from the forest, cut or burned for pasture or crops. It survives in many place names.",
-   "cat": "usos"
+   "cat": "usos",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «artiga»",
+     "u": "https://aragonario.aragon.es/search/?q=artiga&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "exposicion",
@@ -1055,7 +1251,8 @@
    ],
    "d": "Un paso expuesto o aéreo tiene mucho vacío al lado: una caída sería grave aunque el paso sea fácil. Dificultad técnica y exposición son cosas distintas.",
    "de": "An exposed section has a big drop beside it: a fall would be serious even if the moves are easy. Technical difficulty and exposure are different things.",
-   "cat": "progresion"
+   "cat": "progresion",
+   "fiab": "revisada"
   },
   {
    "id": "descompuesto",
@@ -1071,7 +1268,8 @@
    ],
    "d": "Roca rota y suelta, que se mueve o se desprende al agarrarla o pisarla. Hay que probar cada apoyo y cuidar no tirar piedras.",
    "de": "Broken, loose rock that shifts or comes away when you hold or stand on it. Test every hold and take care not to knock stones down.",
-   "cat": "terreno"
+   "cat": "terreno",
+   "fiab": "revisada"
   },
   {
    "id": "equipado",
@@ -1088,7 +1286,1090 @@
    ],
    "d": "Paso con cadenas, clavijas o cables fijos para ayudarse. El equipo puede estar en mal estado o tapado por la nieve.",
    "de": "A section with fixed chains, pegs or cables to help. The gear can be in poor condition or buried under snow.",
-   "cat": "progresion"
+   "cat": "progresion",
+   "fiab": "revisada"
+  },
+  {
+   "id": "pico",
+   "t": "Pico",
+   "te": "Peak",
+   "es": [
+    "pico"
+   ],
+   "en": [
+    "peak"
+   ],
+   "cat": "elevaciones",
+   "d": "Cima aguda de una montaña, y por extensión la montaña entera. Es la palabra más usada en los nombres de las cumbres.",
+   "de": "The pointed top of a mountain, and by extension the whole mountain. The most common word in summit names.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «pico»",
+     "u": "https://es.wiktionary.org/wiki/pico"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "cima",
+   "t": "Cima o cumbre",
+   "te": "Summit",
+   "es": [
+    "cima",
+    "cumbre"
+   ],
+   "en": [
+    "summit"
+   ],
+   "cat": "elevaciones",
+   "d": "El punto más alto de una montaña. «Cumbre» se usa también para toda la parte alta; en el habla montañera son sinónimos.",
+   "de": "The highest point of a mountain. «Cumbre» can also mean the whole upper part; climbers use both as synonyms.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "cerro",
+   "t": "Cerro",
+   "te": "Hill",
+   "es": [
+    "cerro",
+    "zerro"
+   ],
+   "en": [
+    "cerro",
+    "zerro"
+   ],
+   "cat": "elevaciones",
+   "d": "Elevación de terreno aislada y de poca altura. En los nombres del Pirineo aparece también escrito «Zerro».",
+   "de": "An isolated, fairly low rise of ground. In Pyrenean names it also appears spelled «Zerro».",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «cerro»",
+     "u": "https://es.wiktionary.org/wiki/cerro"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "puntal",
+   "t": "Puntal",
+   "te": "Puntal (spur top)",
+   "es": [
+    "puntal"
+   ],
+   "en": [
+    "puntal"
+   ],
+   "cat": "elevaciones",
+   "d": "Elevación del terreno que forma punta. En aragonés también un cerro o un llano en alto.",
+   "de": "A rise of ground that ends in a point. In Aragonese also a hill or a high flat.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «puntal»",
+     "u": "https://es.wiktionary.org/wiki/puntal"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «puntal»",
+     "u": "https://aragonario.aragon.es/search/?q=puntal&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "macizo",
+   "t": "Macizo",
+   "te": "Massif",
+   "es": [
+    "macizo"
+   ],
+   "en": [
+    "massif"
+   ],
+   "cat": "elevaciones",
+   "d": "Conjunto de montañas agrupadas alrededor de una cumbre principal: el macizo de la Maladeta, el de Monte Perdido.",
+   "de": "A group of mountains gathered around a main summit: the Maladeta massif, the Monte Perdido massif.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «macizo»",
+     "u": "https://es.wiktionary.org/wiki/macizo"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "sierra",
+   "t": "Sierra",
+   "te": "Range",
+   "es": [
+    "sierra",
+    "sarrato",
+    "sarrau"
+   ],
+   "en": [
+    "range"
+   ],
+   "cat": "elevaciones",
+   "d": "Cordillera de montañas de perfil dentado, como los dientes de una sierra. En aragonés, «sarrato» o «sarrau» es una loma o un cerro alargado.",
+   "de": "A chain of mountains with a jagged outline, like the teeth of a saw. In Aragonese, «sarrato» or «sarrau» is a ridge or an elongated hill.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «sierra»",
+     "u": "https://aragonario.aragon.es/search/?q=sierra&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «sarrato»",
+     "u": "https://aragonario.aragon.es/search/?q=sarrato&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «sarrau»",
+     "u": "https://aragonario.aragon.es/search/?q=sarrau&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "gendarme",
+   "t": "Gendarme",
+   "te": "Gendarme",
+   "es": [
+    "gendarme"
+   ],
+   "en": [
+    "gendarme"
+   ],
+   "cat": "rocas",
+   "d": "Torre o pilar de roca que se levanta en una arista y corta el paso: hay que superarlo o rodearlo.",
+   "de": "A rock tower or pillar standing on an arête and blocking the way: you have to climb over it or go round it.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Gendarme (montañismo)»",
+     "u": "https://es.wikipedia.org/wiki/Gendarme_%28monta%C3%B1ismo%29"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pinaculo",
+   "t": "Pináculo",
+   "te": "Pinnacle",
+   "es": [
+    "pináculo",
+    "pináculos"
+   ],
+   "en": [
+    "pinnacle"
+   ],
+   "cat": "rocas",
+   "d": "Columna de roca aislada y esbelta, con forma de aguja o de torre.",
+   "de": "An isolated, slender column of rock shaped like a needle or a tower.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Pináculo (geología)»",
+     "u": "https://es.wikipedia.org/wiki/Pin%C3%A1culo_%28geolog%C3%ADa%29"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "diente",
+   "t": "Diente",
+   "te": "Tooth",
+   "es": [
+    "diente"
+   ],
+   "en": [
+    "tooth"
+   ],
+   "cat": "rocas",
+   "d": "Punta de roca pequeña en una cresta, una entre varias, como los dientes de un peine.",
+   "de": "A small rock point on a ridge, one of several, like the teeth of a comb.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "vertiente",
+   "t": "Vertiente",
+   "te": "Side (slope)",
+   "es": [
+    "vertiente"
+   ],
+   "en": [],
+   "cat": "laderas",
+   "d": "Cada uno de los lados de una montaña o de una cordillera, por donde baja el agua hacia un valle.",
+   "de": "Each of the sides of a mountain or a range, down which water flows to a valley.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "solana",
+   "t": "Solana",
+   "te": "Sunny side",
+   "es": [
+    "solana",
+    "carasol",
+    "solano"
+   ],
+   "en": [
+    "sunny side"
+   ],
+   "cat": "laderas",
+   "d": "Ladera orientada al sur, donde más calienta el sol. Se queda antes sin nieve. En aragonés también «carasol» o «solano».",
+   "de": "A south-facing slope, where the sun is warmest. It loses its snow sooner. In Aragonese also «carasol» or «solano».",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «solana»",
+     "u": "https://es.wiktionary.org/wiki/solana"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «solana»",
+     "u": "https://aragonario.aragon.es/search/?q=solana&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «carasol»",
+     "u": "https://aragonario.aragon.es/search/?q=carasol&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «solano»",
+     "u": "https://aragonario.aragon.es/search/?q=solano&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "umbria",
+   "t": "Umbría",
+   "te": "Shady side",
+   "es": [
+    "umbría",
+    "paco",
+    "paquera"
+   ],
+   "en": [
+    "shady side"
+   ],
+   "cat": "laderas",
+   "d": "Ladera orientada al norte, que pasa casi siempre a la sombra. Guarda la nieve y el hielo más tiempo. En aragonés, «paco» o «paquera».",
+   "de": "A north-facing slope, almost always in shade. It keeps snow and ice longer. In Aragonese, «paco» or «paquera».",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «umbría»",
+     "u": "https://es.wiktionary.org/wiki/umbr%C3%ADa"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «paco»",
+     "u": "https://aragonario.aragon.es/search/?q=paco&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «paquera»",
+     "u": "https://aragonario.aragon.es/search/?q=paquera&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "no": [
+    "Paco"
+   ]
+  },
+  {
+   "id": "resalte",
+   "t": "Resalte",
+   "te": "Rock step",
+   "es": [
+    "resalte"
+   ],
+   "en": [],
+   "cat": "laderas",
+   "d": "Escalón de roca que corta una ladera, una canal o una arista y obliga a trepar un poco.",
+   "de": "A step of rock interrupting a slope, gully or arête, which forces a short scramble.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "laja",
+   "t": "Laja o losa",
+   "te": "Slab",
+   "es": [
+    "laja",
+    "losa",
+    "lastra"
+   ],
+   "en": [
+    "slab"
+   ],
+   "cat": "rocas",
+   "d": "Piedra plana y lisa, o una superficie de roca así. En aragonés, «lastra» es laja, losa y también repisa de roca. Las losas mojadas o heladas resbalan mucho.",
+   "de": "A flat, smooth stone, or a rock surface like that. In Aragonese, «lastra» means slab and also a rock ledge. Wet or icy slabs are very slippery.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «laja»",
+     "u": "https://es.wiktionary.org/wiki/laja"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «lastra»",
+     "u": "https://aragonario.aragon.es/search/?q=lastra&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "placa",
+   "t": "Placa",
+   "te": "Slab (climbing)",
+   "es": [
+    "placa"
+   ],
+   "en": [],
+   "cat": "rocas",
+   "d": "En escalada, pared de roca lisa y poco inclinada, con pocos agarres, en la que se sube sobre todo con los pies.",
+   "de": "In climbing, a smooth rock face at a moderate angle, with few holds, climbed mostly on your feet.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "horcada",
+   "t": "Horcada",
+   "te": "Notch (col)",
+   "es": [
+    "horcada",
+    "forqueta"
+   ],
+   "en": [
+    "horcada",
+    "forqueta"
+   ],
+   "cat": "pasos",
+   "d": "Collado estrecho entre dos puntas, en forma de horquilla. En aragonés, «forqueta» es horquilla, y da nombre a varios pasos del Pirineo.",
+   "de": "A narrow col between two points, shaped like a fork. In Aragonese, «forqueta» means fork, and it names several Pyrenean passes.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «forqueta»",
+     "u": "https://aragonario.aragon.es/search/?q=forqueta&l=ar-es"
+    }
+   ],
+   "fiab": "probable"
+  },
+  {
+   "id": "clot",
+   "t": "Clot",
+   "te": "Clot (hollow)",
+   "es": [
+    "clot"
+   ],
+   "en": [
+    "clot"
+   ],
+   "cat": "pasos",
+   "d": "Palabra del Pirineo para un hoyo o una hondonada del terreno. Es frecuente en los nombres del valle de Benasque.",
+   "de": "Pyrenean word for a hole or hollow in the ground. Common in Benasque valley place names.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «clot»",
+     "u": "https://aragonario.aragon.es/search/?q=clot&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "coma",
+   "t": "Coma",
+   "te": "Coma (open hollow)",
+   "es": [
+    "coma"
+   ],
+   "en": [
+    "coma"
+   ],
+   "cat": "pasos",
+   "d": "Hondonada o claro abierto en el monte, sin árboles. Es frecuente en los nombres de lugar.",
+   "de": "An open hollow or treeless clearing in the mountains. Common in place names.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «coma»",
+     "u": "https://aragonario.aragon.es/search/?q=coma&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "plana",
+   "t": "Plana o llano",
+   "te": "Flat",
+   "es": [
+    "plana",
+    "planiello"
+   ],
+   "en": [],
+   "cat": "laderas",
+   "d": "Terreno llano, a menudo en alto. En aragonés, «plan», «plana» y «planiello» son llano, llanura o rellano: el Plan de Senarta.",
+   "de": "Flat ground, often up high. In Aragonese, «plan», «plana» and «planiello» mean a flat or plain: the Plan de Senarta.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «plana»",
+     "u": "https://es.wiktionary.org/wiki/plana"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «plan»",
+     "u": "https://aragonario.aragon.es/search/?q=plan&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «planiello»",
+     "u": "https://aragonario.aragon.es/search/?q=planiello&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "dolina",
+   "t": "Dolina",
+   "te": "Doline (sinkhole)",
+   "es": [
+    "dolina",
+    "torca"
+   ],
+   "en": [
+    "doline",
+    "sinkhole"
+   ],
+   "cat": "geologia",
+   "d": "Hundimiento redondeado del terreno en zonas calizas, causado por el agua que disuelve la roca. También se llama torca.",
+   "de": "A rounded hollow in limestone ground, caused by water dissolving the rock. Also called a «torca».",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «dolina»",
+     "u": "https://es.wiktionary.org/wiki/dolina"
+    },
+    {
+     "n": "Wikipedia, «Dolina»",
+     "u": "https://es.wikipedia.org/wiki/Dolina"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "karst",
+   "t": "Karst",
+   "te": "Karst",
+   "es": [
+    "karst",
+    "kárstico",
+    "kárstica"
+   ],
+   "en": [
+    "karst",
+    "karstic"
+   ],
+   "cat": "geologia",
+   "d": "Relieve que forma el agua al disolver rocas como la caliza: lapiaces, dolinas, simas, cuevas y ríos que desaparecen bajo tierra.",
+   "de": "Terrain shaped by water dissolving rocks such as limestone: limestone pavement, dolines, shafts, caves and rivers that vanish underground.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «karst»",
+     "u": "https://es.wiktionary.org/wiki/karst"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "forau",
+   "t": "Forau",
+   "te": "Forau (hole)",
+   "es": [
+    "forau"
+   ],
+   "en": [
+    "forau"
+   ],
+   "cat": "geologia",
+   "d": "Palabra aragonesa para un agujero o una cueva. El Forau de Aigualluts es el sumidero donde se pierde el agua del Aneto.",
+   "de": "Aragonese word for a hole or a cave. The Forau de Aigualluts is the sinkhole where Aneto's meltwater disappears.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «forau»",
+     "u": "https://aragonario.aragon.es/search/?q=forau&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "espluga",
+   "t": "Espluga",
+   "te": "Espluga (cave)",
+   "es": [
+    "espluga",
+    "espelunga"
+   ],
+   "en": [
+    "espluga"
+   ],
+   "cat": "geologia",
+   "d": "Palabra aragonesa para una cueva o un abrigo de roca; «espelunga» también es cueva o caverna. Da nombre a muchos lugares.",
+   "de": "Aragonese word for a cave or rock shelter; «espelunga» also means cave. It names many places.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «espluga»",
+     "u": "https://aragonario.aragon.es/search/?q=espluga&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «espelunga»",
+     "u": "https://aragonario.aragon.es/search/?q=espelunga&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "surgencia",
+   "t": "Surgencia",
+   "te": "Karst spring",
+   "es": [
+    "surgencia"
+   ],
+   "en": [
+    "resurgence"
+   ],
+   "cat": "agua",
+   "d": "Lugar donde sale a la superficie el agua que corría bajo tierra, típico de las zonas calizas.",
+   "de": "A place where water that was flowing underground comes back to the surface, typical of limestone areas.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "bloque-erratico",
+   "t": "Bloque errático",
+   "te": "Glacial erratic",
+   "es": [
+    "bloque errático",
+    "bloques erráticos"
+   ],
+   "en": [
+    "erratic"
+   ],
+   "cat": "glaciares",
+   "d": "Roca grande que un glaciar arrastró y dejó lejos de su sitio, encima de otra roca distinta.",
+   "de": "A large rock carried by a glacier and left far from where it came from, on a different kind of rock.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Bloque errático»",
+     "u": "https://es.wikipedia.org/wiki/Bloque_err%C3%A1tico"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "roca-aborregada",
+   "t": "Roca aborregada",
+   "te": "Roche moutonnée",
+   "es": [
+    "roca aborregada",
+    "rocas aborregadas"
+   ],
+   "en": [
+    "roche moutonnée"
+   ],
+   "cat": "glaciares",
+   "d": "Roca pulida y redondeada por el paso de un glaciar, con forma de lomo de oveja: suave por donde llegaba el hielo y rota por el otro lado.",
+   "de": "Rock smoothed and rounded by a passing glacier, shaped like a sheep's back: smooth where the ice came from and broken on the other side.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "glaciar-rocoso",
+   "t": "Glaciar rocoso",
+   "te": "Rock glacier",
+   "es": [
+    "glaciar rocoso",
+    "glaciares rocosos"
+   ],
+   "en": [
+    "rock glacier"
+   ],
+   "cat": "glaciares",
+   "d": "Lengua de piedras con hielo dentro que se mueve despacio ladera abajo. Desde fuera parece una glera, pero con forma de colada.",
+   "de": "A tongue of rocks with ice inside that creeps slowly downhill. From outside it looks like scree, but shaped like a lava flow.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Glaciar de roca»",
+     "u": "https://es.wikipedia.org/wiki/Glaciar_de_roca"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "paul",
+   "t": "Paúl",
+   "te": "Paúl (marsh)",
+   "es": [
+    "paúl",
+    "paules"
+   ],
+   "en": [
+    "paúl"
+   ],
+   "cat": "agua",
+   "d": "Terreno encharcado y pantanoso, cubierto de hierba. Es frecuente en los nombres de lugar (La Paúl).",
+   "de": "Waterlogged, marshy ground covered in grass. Common in place names (La Paúl).",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «paúl»",
+     "u": "https://aragonario.aragon.es/search/?q=pa%C3%BAl&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "fuen",
+   "t": "Fuen",
+   "te": "Fuen (spring)",
+   "es": [
+    "fuen"
+   ],
+   "en": [
+    "fuen"
+   ],
+   "cat": "agua",
+   "d": "Palabra aragonesa para una fuente o un manantial. Aparece en muchos nombres: Fuen de…",
+   "de": "Aragonese word for a spring. It appears in many names: Fuen de…",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «fuen»",
+     "u": "https://aragonario.aragon.es/search/?q=fuen&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "torrente",
+   "t": "Torrente",
+   "te": "Torrent",
+   "es": [
+    "torrente"
+   ],
+   "en": [
+    "torrent"
+   ],
+   "cat": "agua",
+   "d": "Corriente de agua rápida y con mucha pendiente, que crece de golpe con las tormentas y el deshielo. Cruzarlo puede ser peligroso.",
+   "de": "A fast, steep stream that rises suddenly with storms and snowmelt. Crossing it can be dangerous.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "cascada",
+   "t": "Cascada o salto",
+   "te": "Waterfall",
+   "es": [
+    "cascada",
+    "salto de agua"
+   ],
+   "en": [
+    "waterfall"
+   ],
+   "cat": "agua",
+   "d": "Caída de agua por un escalón del terreno. En el Pirineo suelen bajar de los umbrales glaciares y de los valles colgados.",
+   "de": "Water falling over a step in the ground. In the Pyrenees they usually drop from glacial rock steps and hanging valleys.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "granito",
+   "t": "Granito",
+   "te": "Granite",
+   "es": [
+    "granito"
+   ],
+   "en": [
+    "granite"
+   ],
+   "cat": "geologia",
+   "d": "Roca dura y granulada, formada al enfriarse el magma bajo tierra. Es la roca del Aneto y la Maladeta: buena adherencia y grandes bloques.",
+   "de": "A hard, grainy rock formed when magma cools underground. It is the rock of Aneto and Maladeta: good grip and big blocks.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "caliza",
+   "t": "Caliza",
+   "te": "Limestone",
+   "es": [
+    "caliza",
+    "calizo",
+    "calcáreo",
+    "calcárea"
+   ],
+   "en": [
+    "limestone"
+   ],
+   "cat": "geologia",
+   "d": "Roca sedimentaria que el agua disuelve poco a poco: de ella salen el lapiaz, las simas y las cuevas. Es la roca de Monte Perdido y de Ordesa.",
+   "de": "A sedimentary rock that water slowly dissolves: it creates limestone pavement, shafts and caves. It is the rock of Monte Perdido and Ordesa.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "conglomerado",
+   "t": "Conglomerado",
+   "te": "Conglomerate",
+   "es": [
+    "conglomerado"
+   ],
+   "en": [
+    "conglomerate"
+   ],
+   "cat": "geologia",
+   "d": "Roca hecha de cantos rodados cementados entre sí. Los Mallos de Riglos son de conglomerado.",
+   "de": "A rock made of rounded pebbles cemented together. The Mallos de Riglos are made of conglomerate.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Conglomerado (geología)»",
+     "u": "https://es.wikipedia.org/wiki/Conglomerado_%28geolog%C3%ADa%29"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "mallata",
+   "t": "Mallata",
+   "te": "Mallata (fold)",
+   "es": [
+    "mallata"
+   ],
+   "en": [
+    "mallata"
+   ],
+   "cat": "usos",
+   "d": "Palabra aragonesa para la majada: el lugar donde se recoge el ganado y sestean o duermen los pastores.",
+   "de": "Aragonese word for a sheepfold: the place where livestock gather and shepherds rest or sleep.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «mallata»",
+     "u": "https://aragonario.aragon.es/search/?q=mallata&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "majada",
+   "t": "Majada",
+   "te": "Fold",
+   "es": [
+    "majada"
+   ],
+   "en": [
+    "sheepfold"
+   ],
+   "cat": "usos",
+   "d": "Lugar donde se recogen de noche el ganado y los pastores. En aragonés, mallata o pleta.",
+   "de": "A place where livestock and shepherds gather for the night. In Aragonese, mallata or pleta.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «majada»",
+     "u": "https://es.wiktionary.org/wiki/majada"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pleta",
+   "t": "Pleta",
+   "te": "Pleta (pen)",
+   "es": [
+    "pleta"
+   ],
+   "en": [
+    "pleta"
+   ],
+   "cat": "usos",
+   "d": "Palabra del Pirineo para el cercado o aprisco donde se encierra el ganado.",
+   "de": "Pyrenean word for the enclosure or pen where livestock are kept.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «pleta»",
+     "u": "https://aragonario.aragon.es/search/?q=pleta&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "borda",
+   "t": "Borda",
+   "te": "Borda (barn)",
+   "es": [
+    "borda"
+   ],
+   "en": [
+    "borda"
+   ],
+   "cat": "usos",
+   "d": "Edificio de piedra típico de los valles pirenaicos, fuera del pueblo, para guardar el ganado y la hierba; a veces también para vivir los pastores.",
+   "de": "A stone building typical of Pyrenean valleys, outside the village, for keeping livestock and hay; sometimes also lived in by shepherds.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «borda»",
+     "u": "https://aragonario.aragon.es/search/?q=borda&l=ar-es"
+    },
+    {
+     "n": "Wikcionario, «borda»",
+     "u": "https://es.wiktionary.org/wiki/borda"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "pardina",
+   "t": "Pardina",
+   "te": "Pardina (farmstead)",
+   "es": [
+    "pardina"
+   ],
+   "en": [
+    "pardina"
+   ],
+   "cat": "usos",
+   "d": "Palabra aragonesa para una finca con casa y corral en el monte, a menudo hoy despoblada, o un pastizal junto a la majada.",
+   "de": "Aragonese word for a mountain estate with a house and pen, often now abandoned, or a pasture by the fold.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «pardina»",
+     "u": "https://aragonario.aragon.es/search/?q=pardina&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "cubilar",
+   "t": "Cubilar",
+   "te": "Cubilar (shelter)",
+   "es": [
+    "cubilar"
+   ],
+   "en": [
+    "cubilar"
+   ],
+   "cat": "usos",
+   "d": "Palabra aragonesa para el refugio o corral del monte donde se recoge el ganado a dormir.",
+   "de": "Aragonese word for the mountain shelter or pen where livestock are kept at night.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «cubilar»",
+     "u": "https://aragonario.aragon.es/search/?q=cubilar&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "cabanera",
+   "t": "Cabañera",
+   "te": "Drove road",
+   "es": [
+    "cabañera"
+   ],
+   "en": [
+    "cabañera"
+   ],
+   "cat": "usos",
+   "d": "Camino del ganado trashumante, la cañada de Aragón. Muchas sendas de montaña siguen viejas cabañeras.",
+   "de": "A drove road for transhumant livestock, Aragon's cañada. Many mountain paths follow old cabañeras.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «cabañera»",
+     "u": "https://aragonario.aragon.es/search/?q=caba%C3%B1era&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "tasca",
+   "t": "Tasca",
+   "te": "Tasca (turf)",
+   "es": [
+    "tasca"
+   ],
+   "en": [
+    "tasca"
+   ],
+   "cat": "usos",
+   "d": "Palabra aragonesa para la hierba corta, el césped o el pasto, y el tepe o terrón con hierba.",
+   "de": "Aragonese word for short grass, turf or pasture, and a sod of earth with grass.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «tasca»",
+     "u": "https://aragonario.aragon.es/search/?q=tasca&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "cleta",
+   "t": "Cleta",
+   "te": "Cleta (gate)",
+   "es": [
+    "cleta"
+   ],
+   "en": [
+    "cleta"
+   ],
+   "cat": "usos",
+   "d": "Palabra aragonesa para la cerca, valla o cancilla de madera. Si al pasar está cerrada, déjala cerrada.",
+   "de": "Aragonese word for a wooden fence, gate or hurdle. If it is closed when you pass, leave it closed.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «cleta»",
+     "u": "https://aragonario.aragon.es/search/?q=cleta&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "refugio",
+   "t": "Refugio",
+   "te": "Mountain hut",
+   "es": [
+    "refugio"
+   ],
+   "en": [
+    "hut"
+   ],
+   "cat": "progresion",
+   "d": "Edificio de montaña para dormir y resguardarse. Los guardados tienen guarda en temporada; los libres están abiertos, sin servicio.",
+   "de": "A mountain building for sleeping and shelter. Staffed huts have a warden in season; unstaffed ones are open, with no service.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "cabana",
+   "t": "Cabaña",
+   "te": "Cabin",
+   "es": [
+    "cabaña",
+    "cabane"
+   ],
+   "en": [
+    "cabin"
+   ],
+   "cat": "usos",
+   "d": "Construcción pequeña del monte, de pastores o de forestales. Algunas sirven de refugio libre.",
+   "de": "A small mountain building used by shepherds or foresters. Some serve as unstaffed shelters.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "abrigo",
+   "t": "Abrigo",
+   "te": "Rock shelter",
+   "es": [
+    "abrigo"
+   ],
+   "en": [
+    "rock shelter"
+   ],
+   "cat": "progresion",
+   "d": "Hueco bajo una roca o una pared que protege de la lluvia y el viento. Algunos están cerrados con un muro de piedra.",
+   "de": "A hollow under a rock or wall that protects from rain and wind. Some are closed off with a stone wall.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "vivac",
+   "t": "Vivac",
+   "te": "Bivouac",
+   "es": [
+    "vivac",
+    "vivaque"
+   ],
+   "en": [
+    "bivouac"
+   ],
+   "cat": "progresion",
+   "d": "Pasar la noche al raso en la montaña, sin tienda o con muy poco. En los parques nacionales tiene normas y horarios.",
+   "de": "Spending the night in the open in the mountains, with no tent or very little. In national parks it has rules and set hours.",
+   "fuentes": [
+    {
+     "n": "Wikcionario, «vivac»",
+     "u": "https://es.wiktionary.org/wiki/vivac"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "cencellada",
+   "t": "Cencellada",
+   "te": "Rime",
+   "es": [
+    "cencellada"
+   ],
+   "en": [
+    "rime"
+   ],
+   "cat": "glaciares",
+   "d": "Hielo que se forma sobre las rocas, la hierba o los árboles cuando se congelan las gotitas de una niebla muy fría. Lo cubre todo de blanco y hace resbalar.",
+   "de": "Ice that forms on rocks, grass or trees when droplets from a very cold fog freeze. It turns everything white and makes it slippery.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cencellada»",
+     "u": "https://es.wikipedia.org/wiki/Cencellada"
+    },
+    {
+     "n": "Wikcionario, «cencellada»",
+     "u": "https://es.wiktionary.org/wiki/cencellada"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "isocero",
+   "t": "Isocero",
+   "te": "Freezing level",
+   "es": [
+    "isocero",
+    "isoterma cero",
+    "cota de nieve"
+   ],
+   "en": [
+    "freezing level"
+   ],
+   "cat": "glaciares",
+   "d": "Altura a la que el aire está a 0 °C. Por encima, la lluvia cae como nieve y el agua se hiela. En las fichas sale en la previsión del tiempo.",
+   "de": "The height at which the air is at 0 °C. Above it, rain falls as snow and water freezes. It appears in the weather forecast on the summit pages.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "cordal",
+   "t": "Cordal",
+   "te": "Ridge line",
+   "es": [
+    "cordal"
+   ],
+   "en": [],
+   "cat": "elevaciones",
+   "d": "Línea de cumbres seguidas de una sierra o de una cresta larga.",
+   "de": "A line of consecutive summits along a range or a long ridge.",
+   "fuentes": [],
+   "fiab": "revisada"
   }
  ]
 }

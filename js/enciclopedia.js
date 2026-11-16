@@ -9,13 +9,13 @@ export function crearEnciclopedia({ enIngles = false, cumbres = () => [], lugare
   const T = enIngles ? {
     tit: 'Mountain words', cerrar: 'Close', buscar: 'Search a word…', todas: 'All', pir: 'Pyrenees', pirT: 'Word of the Pyrenees or of Aragon',
     intro: 'The words used to describe the terrain of the Aragonese Pyrenees, with their meaning. Those marked «Pyrenees» are local words that are kept in place names. In the summit pages these words are underlined: tap them to see what they mean.',
-    ej: 'On the map:', nada: 'No word matches the search.',
-    pie: 'Definitions written for Tresmiles and reviewed. The dictionary is being expanded with documented sources; if you see a mistake, tell us (Contribute, in any summit page).',
+    ej: 'On the map:', fuente: 'Source:', pend: 'Reviewed definition; source pending.', prob: 'Probable: still to be confirmed.', nada: 'No word matches the search.',
+    pie: 'Definitions written for Tresmiles from the sources linked under each word (mostly Aragonario, the Spanish–Aragonese dictionary of the Government of Aragon). The dictionary is being expanded with documented sources; if you see a mistake, tell us (Contribute, in any summit page).',
   } : {
     tit: 'Palabras de la montaña', cerrar: 'Cerrar', buscar: 'Busca una palabra…', todas: 'Todas', pir: 'Pirineo', pirT: 'Palabra del Pirineo o de Aragón',
     intro: 'Las palabras con las que se describe el terreno del Pirineo aragonés, con lo que significan. Las marcadas «Pirineo» son palabras de aquí, que se conservan en los nombres de los lugares. En las fichas de las cumbres estas palabras salen subrayadas: tócalas para ver qué significan.',
-    ej: 'En el mapa:', nada: 'Ninguna palabra coincide con la búsqueda.',
-    pie: 'Definiciones redactadas para Tresmiles y revisadas. El diccionario se está ampliando con fuentes documentadas; si ves un error, dínoslo (Colabora, en cualquier ficha).',
+    ej: 'En el mapa:', fuente: 'Fuente:', pend: 'Definición revisada; fuente pendiente.', prob: 'Probable: falta confirmarlo.', nada: 'Ninguna palabra coincide con la búsqueda.',
+    pie: 'Definiciones redactadas para Tresmiles a partir de las fuentes enlazadas en cada palabra (sobre todo Aragonario, el diccionario castellano–aragonés del Gobierno de Aragón). El diccionario se está ampliando con fuentes documentadas; si ves un error, dínoslo (Colabora, en cualquier ficha).',
   };
 
   // ejemplos reales: nombres del mapa que contienen la palabra (como palabra entera); primero los que empiezan por ella
@@ -27,7 +27,7 @@ export function crearEnciclopedia({ enIngles = false, cumbres = () => [], lugare
     const cands = [
       ...cumbres().map((p) => ({ tipo: 'c', id: p.id, nombre: p.nombre, alt: p.altitud ?? 0, r: vale(p.nombre) })),
       ...lugares().map(([nombre, lon, lat]) => ({ tipo: 'l', nombre, lon, lat, alt: 0, r: vale(nombre) })),
-    ].filter((x) => x.r >= 0).sort((a, b) => a.r - b.r || (a.tipo === 'l') - (b.tipo === 'l') || b.alt - a.alt);
+    ].filter((x) => x.r >= 0 && !/\d|sin nombre/i.test(x.nombre))   // fuera nombres de relleno de OSM («Cima 234», «Cima Sin Nombre»).sort((a, b) => a.r - b.r || (a.tipo === 'l') - (b.tipo === 'l') || b.alt - a.alt);
     for (const x of cands) { const k = quitaTildes(x.nombre); if (vistos.has(k)) continue; vistos.add(k); out.push(x); if (out.length >= 4) break; }
     return out;
   }
@@ -45,6 +45,7 @@ export function crearEnciclopedia({ enIngles = false, cumbres = () => [], lugare
         return `<article class="pal" id="pal-${g.id}" data-q="${escH(quitaTildes([g.t, g.te, ...g.es, ...g.en, g.d, g.de].join(' ')))}">
           <h4>${escH(enIngles ? (g.te.includes('(') || g.te === g.t ? g.te : `${g.te} · ${g.t}`) : g.t)}${g.pir ? ` <span class="pal-pir" title="${T.pirT}">${T.pir}</span>` : ''}</h4>
           <p>${escH(enIngles ? g.de : g.d)}</p>
+          ${g.fuentes?.length ? `<p class="pal-fu">${T.fuente} ${g.fuentes.map((x) => `<a href="${escH(x.u)}" target="_blank" rel="noopener">${escH(x.n)}</a>`).join(' · ')}${g.fiab === 'probable' ? ` · ${T.prob}` : ''}</p>` : `<p class="pal-fu">${g.fiab === 'probable' ? T.prob : T.pend}</p>`}
           ${ej.length ? `<p class="pal-ej">${T.ej} ${ej.map((x) => x.tipo === 'c' ? `<button type="button" data-cumbre="${escH(x.id)}">${escH(x.nombre)}</button>` : `<button type="button" data-lon="${x.lon}" data-lat="${x.lat}">${escH(x.nombre)}</button>`).join(' · ')}</p>` : ''}
         </article>`;
       }).join('')}</section>`).join('')}
