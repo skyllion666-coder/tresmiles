@@ -26,7 +26,7 @@ import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
 import { t, EN_INGLES } from './i18n.js?v=37';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
-import { crearEnciclopedia } from './enciclopedia.js?v=5';
+import { crearEnciclopedia } from './enciclopedia.js?v=6';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -983,7 +983,7 @@ async function boot() {
   // «Palabras de la montaña» (js/enciclopedia.js): todo el glosario, con ejemplos del mapa que llevan a la cumbre o al lugar
   const aExplorar = () => { if (S.mode !== 'explore') { S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out'); } };
   const palabras = crearEnciclopedia({
-    enIngles: EN_INGLES, cumbres: () => peaks.filter((p) => p.activo), lugares: () => lugaresLista,
+    enIngles: EN_INGLES, cumbres: () => peaks.filter((p) => p.activo).map((p) => ({ id: p.id, nombre: p.nombre, altitud: p.altitud, zona: macizoName[p.macizo] })), lugares: () => lugaresLista,
     abrirCumbre: (id) => { aExplorar(); openPeak(id); },
     verLugar: (lon, lat, nombre) => {
       aExplorar(); closeFicha(); const q = geo.toXZ(lon, lat);

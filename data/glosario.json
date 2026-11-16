@@ -111,19 +111,25 @@
    "te": "Col",
    "es": [
     "collado",
-    "collada"
+    "collada",
+    "coll"
    ],
    "en": [
-    "col"
+    "col",
+    "coll"
    ],
-   "d": "Punto bajo entre dos elevaciones por el que se pasa de una vertiente a otra. En el Pirineo aragonés también se llama «cuello» o «puerto».",
-   "de": "The low point between two heights, used to cross from one side to the other. In the Aragonese Pyrenees it is also called «cuello» or «puerto».",
+   "d": "Punto bajo entre dos elevaciones por el que se pasa de una vertiente a otra. En el Pirineo aragonés también se llama «cuello» o «puerto». En catalán, «coll».",
+   "de": "The low point between two heights, used to cross from one side to the other. In the Aragonese Pyrenees it is also called «cuello» or «puerto». In Catalan, «coll».",
    "cat": "pasos",
    "fiab": "documentada",
    "fuentes": [
     {
      "n": "Wikipedia, «Collado»",
      "u": "https://es.wikipedia.org/wiki/Collado"
+    },
+    {
+     "n": "Viccionari (catalán), «coll»",
+     "u": "https://ca.wiktionary.org/wiki/coll"
     }
    ]
   },
@@ -189,13 +195,15 @@
    "t": "Puerto",
    "te": "Puerto (pass)",
    "es": [
-    "puerto"
+    "puerto",
+    "port"
    ],
    "en": [
-    "puerto"
+    "puerto",
+    "port"
    ],
-   "d": "En el Pirineo, paso de montaña entre dos valles, a menudo con Francia (Puerto de Benasque, de la Picada). También se llaman «puertos» los pastos altos de verano.",
-   "de": "In the Pyrenees, a mountain pass between two valleys, often into France (Puerto de Benasque, de la Picada). The high summer pastures are also called «puertos».",
+   "d": "En el Pirineo, paso de montaña entre dos valles, a menudo con Francia (Puerto de Benasque, de la Picada). También se llaman «puertos» los pastos altos de verano. En catalán y en francés, «port».",
+   "de": "In the Pyrenees, a mountain pass between two valleys, often into France (Puerto de Benasque, de la Picada). The high summer pastures are also called «puertos». In Catalan and French, «port».",
    "cat": "pasos",
    "pir": true,
    "fuentes": [
@@ -206,6 +214,10 @@
     {
      "n": "Wikcionario, «puerto»",
      "u": "https://es.wiktionary.org/wiki/puerto"
+    },
+    {
+     "n": "Viccionari (catalán), «port»",
+     "u": "https://ca.wiktionary.org/wiki/port"
     }
    ],
    "fiab": "documentada"
@@ -216,20 +228,36 @@
    "te": "Tuca (summit)",
    "es": [
     "tuca",
-    "tuqueta"
+    "tuqueta",
+    "tuc",
+    "tucón"
    ],
    "en": [
     "tuca",
-    "tuqueta"
+    "tuqueta",
+    "tuc",
+    "tucón"
    ],
-   "d": "Palabra del Pirineo para cima o pico, muy usada en el valle de Benasque y la Ribagorza: Tuca de…",
-   "de": "Pyrenean word for a summit or peak, very common in the Benasque valley and Ribagorza: Tuca de…",
+   "d": "Palabra del Pirineo para cima o pico, muy usada en el valle de Benasque y la Ribagorza: Tuca de… En Arán y en catalán, «tuc»; un «tucón» es una cima poco elevada o un peñón.",
+   "de": "Pyrenean word for a summit or peak, very common in the Benasque valley and Ribagorza: Tuca de… In Aran and Catalan, «tuc»; a «tucón» is a low summit or a crag.",
    "cat": "elevaciones",
    "pir": true,
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «tuca»",
      "u": "https://aragonario.aragon.es/search/?q=tuca&l=ar-es"
+    },
+    {
+     "n": "Wiktionnaire (occitano), «tuc»",
+     "u": "https://fr.wiktionary.org/wiki/tuc"
+    },
+    {
+     "n": "Viccionari (catalán), «tuc»",
+     "u": "https://ca.wiktionary.org/wiki/tuc"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «tucón»",
+     "u": "https://aragonario.aragon.es/search/?q=tuc%C3%B3n&l=ar-es"
     }
    ],
    "fiab": "documentada"
@@ -243,12 +271,19 @@
     "agulla"
    ],
    "en": [
-    "needle"
+    "needle",
+    "agulla"
    ],
-   "d": "Pico de roca alto, estrecho y puntiagudo que sobresale del relieve que lo rodea.",
-   "de": "A tall, narrow, pointed rock peak that stands out from the terrain around it.",
+   "d": "Pico de roca alto, estrecho y puntiagudo que sobresale del relieve que lo rodea. En aragonés y catalán, «agulla».",
+   "de": "A tall, narrow, pointed rock peak that stands out from the terrain around it. In Aragonese and Catalan, «agulla».",
    "cat": "elevaciones",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «agulla»",
+     "u": "https://aragonario.aragon.es/search/?q=agulla&l=ar-es"
+    }
+   ]
   },
   {
    "id": "antecima",
@@ -575,19 +610,25 @@
    "t": "Barranco",
    "te": "Barranco (ravine)",
    "es": [
-    "barranco"
+    "barranco",
+    "barranquera"
    ],
    "en": [
     "ravine",
-    "barranco"
+    "barranco",
+    "barranquera"
    ],
-   "d": "Hendidura profunda del terreno hecha por el agua, que puede llevarla todo el año o solo a ratos. En Aragón también se llama así al torrente que la recorre.",
-   "de": "A deep cut in the ground made by water, which may flow all year or only at times. In Aragon the stream itself is also called a barranco.",
+   "d": "Hendidura profunda del terreno hecha por el agua, que puede llevarla todo el año o solo a ratos. En Aragón también se llama así al torrente que la recorre. Una «barranquera» es un torrente o torrentera.",
+   "de": "A deep cut in the ground made by water, which may flow all year or only at times. In Aragon the stream itself is also called a barranco. A «barranquera» is a torrent or gully stream.",
    "cat": "valles",
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «barranco»",
      "u": "https://aragonario.aragon.es/search/?q=barranco&l=ar-es"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «barranquera»",
+     "u": "https://aragonario.aragon.es/search/?q=barranquera&l=ar-es"
     }
    ],
    "fiab": "documentada"
@@ -752,15 +793,23 @@
    "t": "Punta",
    "te": "Punta (point)",
    "es": [
-    "punta"
+    "punta",
+    "punda"
    ],
    "en": [
-    "punta"
+    "punta",
+    "punda"
    ],
-   "d": "Cima, a menudo aguda o secundaria, en una cresta o junto a una cumbre mayor: Punta Oliveras, junto al Aneto.",
-   "de": "A summit, often sharp or secondary, on a ridge or next to a higher top: Punta Oliveras, next to Aneto.",
+   "d": "Cima, a menudo aguda o secundaria, en una cresta o junto a una cumbre mayor: Punta Oliveras, junto al Aneto. En aragonés, «punda».",
+   "de": "A summit, often sharp or secondary, on a ridge or next to a higher top: Punta Oliveras, next to Aneto. In Aragonese, «punda».",
    "cat": "elevaciones",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «punda»",
+     "u": "https://aragonario.aragon.es/search/?q=punda&l=ar-es"
+    }
+   ]
   },
   {
    "id": "tozal",
@@ -773,14 +822,18 @@
    "en": [
     "tozal"
    ],
-   "d": "Palabra aragonesa para un cerro o una altura destacada del terreno. Es muy frecuente en los nombres: Tozal del Mallo, en Ordesa.",
-   "de": "Aragonese word for a hill or prominent height. Very common in place names: Tozal del Mallo, in Ordesa.",
+   "d": "Palabra aragonesa para un cerro o una altura destacada del terreno. Es muy frecuente en los nombres: Tozal del Mallo, en Ordesa. En catalán y ribagorzano, «tossal»: cima destacada no muy alta.",
+   "de": "Aragonese word for a hill or prominent height. Very common in place names: Tozal del Mallo, in Ordesa. In Catalan and Ribagorzan, «tossal»: a prominent, not very high summit.",
    "cat": "elevaciones",
    "pir": true,
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «tozal»",
      "u": "https://aragonario.aragon.es/search/?q=tozal&l=ar-es"
+    },
+    {
+     "n": "Viccionari (catalán), «tossal»",
+     "u": "https://ca.wiktionary.org/wiki/tossal"
     }
    ],
    "fiab": "documentada"
@@ -790,19 +843,31 @@
    "t": "Mallo",
    "te": "Mallo (rock tower)",
    "es": [
-    "mallo"
+    "mallo",
+    "mall",
+    "malh"
    ],
    "en": [
-    "mallo"
+    "mallo",
+    "mall",
+    "malh"
    ],
-   "d": "Gran peñasco aislado de paredes casi verticales. Los más conocidos son los Mallos de Riglos, de conglomerado.",
-   "de": "A large, isolated rock tower with almost vertical walls. The best known are the Mallos de Riglos, made of conglomerate.",
+   "d": "Gran peñasco aislado de paredes casi verticales. Los más conocidos son los Mallos de Riglos, de conglomerado. En ribagorzano y catalán, «mall»; en aranés, «malh»: peña o montaña.",
+   "de": "A large, isolated rock tower with almost vertical walls. The best known are the Mallos de Riglos, made of conglomerate. In Ribagorzan and Catalan, «mall»; in Aranese, «malh»: crag or mountain.",
    "cat": "elevaciones",
    "pir": true,
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «mallo»",
      "u": "https://aragonario.aragon.es/search/?q=mallo&l=ar-es"
+    },
+    {
+     "n": "Viccionari (catalán), «mall»",
+     "u": "https://ca.wiktionary.org/wiki/mall"
+    },
+    {
+     "n": "Wiktionnaire (occitano), «malh»",
+     "u": "https://fr.wiktionary.org/wiki/malh"
     }
    ],
    "fiab": "documentada"
@@ -812,15 +877,18 @@
    "t": "Peña",
    "te": "Peña (crag)",
    "es": [
-    "peña"
+    "peña",
+    "pène"
    ],
    "en": [
-    "peña"
+    "peña",
+    "pène"
    ],
-   "d": "Roca grande, o monte rocoso. Aparece en muchos nombres de montañas: Peña Montañesa, Peña Telera.",
-   "de": "A big rock, or a rocky mountain. It appears in many mountain names: Peña Montañesa, Peña Telera.",
+   "d": "Roca grande, o monte rocoso. Aparece en muchos nombres de montañas: Peña Montañesa, Peña Telera. En los nombres franceses, «pène».",
+   "de": "A big rock, or a rocky mountain. It appears in many mountain names: Peña Montañesa, Peña Telera. In French place names, «pène».",
    "cat": "elevaciones",
-   "fiab": "revisada"
+   "fiab": "revisada",
+   "fuentes": []
   },
   {
    "id": "pueyo",
@@ -1412,18 +1480,24 @@
    "t": "Pico",
    "te": "Peak",
    "es": [
-    "pico"
+    "pico",
+    "pic"
    ],
    "en": [
-    "peak"
+    "peak",
+    "pic"
    ],
    "cat": "elevaciones",
-   "d": "Cima aguda de una montaña, y por extensión la montaña entera. Es la palabra más usada en los nombres de las cumbres.",
-   "de": "The pointed top of a mountain, and by extension the whole mountain. The most common word in summit names.",
+   "d": "Cima aguda de una montaña, y por extensión la montaña entera. Es la palabra más usada en los nombres de las cumbres. En francés, catalán y occitano, «pic».",
+   "de": "The pointed top of a mountain, and by extension the whole mountain. The most common word in summit names. In French, Catalan and Occitan, «pic».",
    "fuentes": [
     {
      "n": "Wikcionario, «pico»",
      "u": "https://es.wiktionary.org/wiki/pico"
+    },
+    {
+     "n": "Wiktionnaire (occitano), «pic»",
+     "u": "https://fr.wiktionary.org/wiki/pic"
     }
    ],
    "fiab": "documentada",
@@ -1524,14 +1598,16 @@
    "es": [
     "sierra",
     "sarrato",
-    "sarrau"
+    "sarrau",
+    "serra"
    ],
    "en": [
-    "range"
+    "range",
+    "serra"
    ],
    "cat": "elevaciones",
-   "d": "Cordillera de montañas de perfil dentado, como los dientes de una sierra. En aragonés, «sarrato» o «sarrau» es una loma o un cerro alargado.",
-   "de": "A chain of mountains with a jagged outline, like the teeth of a saw. In Aragonese, «sarrato» or «sarrau» is a ridge or an elongated hill.",
+   "d": "Cordillera de montañas de perfil dentado, como los dientes de una sierra. En aragonés, «sarrato» o «sarrau» es una loma o un cerro alargado. En catalán, «serra».",
+   "de": "A chain of mountains with a jagged outline, like the teeth of a saw. In Aragonese, «sarrato» or «sarrau» is a ridge or an elongated hill. In Catalan, «serra».",
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «sierra»",
@@ -1548,6 +1624,10 @@
     {
      "n": "Wikipedia, «Sierra (geografía)»",
      "u": "https://es.wikipedia.org/wiki/Sierra_%28geograf%C3%ADa%29"
+    },
+    {
+     "n": "Viccionari (catalán), «serra»",
+     "u": "https://ca.wiktionary.org/wiki/serra"
     }
    ],
    "fiab": "documentada",
@@ -1758,15 +1838,17 @@
    "te": "Notch (col)",
    "es": [
     "horcada",
-    "forqueta"
+    "forqueta",
+    "hourquette"
    ],
    "en": [
     "horcada",
-    "forqueta"
+    "forqueta",
+    "hourquette"
    ],
    "cat": "pasos",
-   "d": "Collado estrecho entre dos puntas, en forma de horquilla. En aragonés, «forqueta» es horquilla, y da nombre a varios pasos del Pirineo.",
-   "de": "A narrow col between two points, shaped like a fork. In Aragonese, «forqueta» means fork, and it names several Pyrenean passes.",
+   "d": "Collado estrecho entre dos puntas, en forma de horquilla. En aragonés, «forqueta» es horquilla, y da nombre a varios pasos del Pirineo. En los nombres franceses, «hourquette».",
+   "de": "A narrow col between two points, shaped like a fork. In Aragonese, «forqueta» means fork, and it names several Pyrenean passes. In French place names, «hourquette».",
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «forqueta»",
@@ -1792,6 +1874,10 @@
     {
      "n": "Aragonario (Gobierno de Aragón), «clot»",
      "u": "https://aragonario.aragon.es/search/?q=clot&l=ar-es"
+    },
+    {
+     "n": "Viccionari (catalán), «clot»",
+     "u": "https://ca.wiktionary.org/wiki/clot"
     }
    ],
    "fiab": "documentada",
@@ -1802,14 +1888,16 @@
    "t": "Coma",
    "te": "Coma (open hollow)",
    "es": [
-    "coma"
+    "coma",
+    "coume"
    ],
    "en": [
-    "coma"
+    "coma",
+    "coume"
    ],
    "cat": "pasos",
-   "d": "Hondonada o claro abierto en el monte, sin árboles. Es frecuente en los nombres de lugar.",
-   "de": "An open hollow or treeless clearing in the mountains. Common in place names.",
+   "d": "Hondonada o claro abierto en el monte, sin árboles. Es frecuente en los nombres de lugar. En los nombres franceses, «coume».",
+   "de": "An open hollow or treeless clearing in the mountains. Common in place names. In French place names, «coume».",
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «coma»",
@@ -1950,19 +2038,28 @@
   },
   {
    "id": "surgencia",
-   "t": "Surgencia",
-   "te": "Karst spring",
+   "t": "Manantial o surgencia",
+   "te": "Spring",
    "es": [
-    "surgencia"
+    "surgencia",
+    "manantial",
+    "venero"
    ],
    "en": [
-    "resurgence"
+    "resurgence",
+    "manantial",
+    "venero"
    ],
    "cat": "agua",
-   "d": "Lugar donde sale a la superficie el agua que corría bajo tierra, típico de las zonas calizas.",
-   "de": "A place where water that was flowing underground comes back to the surface, typical of limestone areas.",
-   "fuentes": [],
-   "fiab": "revisada"
+   "d": "Lugar donde sale a la superficie el agua que corre bajo tierra. Cuando sale de golpe en una zona caliza, después de correr por cuevas, se suele llamar surgencia.",
+   "de": "A place where underground water comes to the surface. When it gushes out in limestone country after flowing through caves, it is called a resurgence.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Manantial»",
+     "u": "https://es.wikipedia.org/wiki/Manantial"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "bloque-erratico",
@@ -2053,14 +2150,16 @@
    "t": "Fuen",
    "te": "Fuen (spring)",
    "es": [
-    "fuen"
+    "fuen",
+    "hount"
    ],
    "en": [
-    "fuen"
+    "fuen",
+    "hount"
    ],
    "cat": "agua",
-   "d": "Palabra aragonesa para una fuente o un manantial. Aparece en muchos nombres: Fuen de…",
-   "de": "Aragonese word for a spring. It appears in many names: Fuen de…",
+   "d": "Palabra aragonesa para una fuente o un manantial. Aparece en muchos nombres: Fuen de… En gascón, en los nombres franceses, «hount».",
+   "de": "Aragonese word for a spring. It appears in many names: Fuen de… In Gascon, in French place names, «hount».",
    "fuentes": [
     {
      "n": "Aragonario (Gobierno de Aragón), «fuen»",
@@ -2235,6 +2334,10 @@
     {
      "n": "Aragonario (Gobierno de Aragón), «pleta»",
      "u": "https://aragonario.aragon.es/search/?q=pleta&l=ar-es"
+    },
+    {
+     "n": "Viccionari (catalán), «pleta»",
+     "u": "https://ca.wiktionary.org/wiki/pleta"
     }
    ],
    "fiab": "documentada",
@@ -3589,6 +3692,495 @@
     {
      "n": "Wikipedia, «Modelo digital del terreno»",
      "u": "https://es.wikipedia.org/wiki/Modelo_digital_del_terreno"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "soum",
+   "t": "Soum",
+   "te": "Soum (rounded summit)",
+   "es": [
+    "soum"
+   ],
+   "en": [
+    "soum"
+   ],
+   "cat": "elevaciones",
+   "d": "En gascón, en los nombres del lado francés, cima redondeada o cumbre de pasto.",
+   "de": "In Gascon, in place names on the French side, a rounded summit or grassy top.",
+   "fuentes": [],
+   "fiab": "probable"
+  },
+  {
+   "id": "lago",
+   "t": "Lago, estany o lac",
+   "te": "Lake",
+   "es": [
+    "lago",
+    "estany",
+    "lac"
+   ],
+   "en": [
+    "lake"
+   ],
+   "cat": "agua",
+   "d": "Masa de agua en una hondonada. En el Pirineo aragonés se dice «ibón»; en Cataluña, «estany»; en Francia, «lac».",
+   "de": "A body of water in a hollow. In the Aragonese Pyrenees it is called «ibón»; in Catalonia, «estany»; in France, «lac».",
+   "fuentes": [
+    {
+     "n": "Viccionari (catalán), «estany»",
+     "u": "https://ca.wiktionary.org/wiki/estany"
+    },
+    {
+     "n": "Wiktionnaire (occitano), «lac»",
+     "u": "https://fr.wiktionary.org/wiki/lac"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "ibonet",
+   "t": "Ibonet",
+   "te": "Ibonet (small tarn)",
+   "es": [
+    "ibonet"
+   ],
+   "en": [
+    "ibonet"
+   ],
+   "cat": "agua",
+   "d": "Ibón pequeño. La terminación «-et» es un diminutivo frecuente en los nombres del Pirineo.",
+   "de": "A small ibón (tarn). The ending «-et» is a common diminutive in Pyrenean names.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "pir": true
+  },
+  {
+   "id": "badina",
+   "t": "Badina",
+   "te": "Badina (pool)",
+   "es": [
+    "badina"
+   ],
+   "en": [
+    "badina"
+   ],
+   "cat": "agua",
+   "d": "Palabra aragonesa para una poza, un remanso o una charca, a menudo en un río o barranco.",
+   "de": "Aragonese word for a pool, backwater or pond, often in a river or ravine.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «badina»",
+     "u": "https://aragonario.aragon.es/search/?q=badina&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "arroyo",
+   "t": "Arroyo",
+   "te": "Stream",
+   "es": [
+    "arroyo"
+   ],
+   "en": [
+    "stream"
+   ],
+   "cat": "agua",
+   "d": "Corriente de agua pequeña, de poco caudal, que suele llevar agua todo el año.",
+   "de": "A small stream with little flow, usually running all year.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Arroyo»",
+     "u": "https://es.wikipedia.org/wiki/Arroyo"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "meandro",
+   "t": "Meandro",
+   "te": "Meander",
+   "es": [
+    "meandro"
+   ],
+   "en": [
+    "meander"
+   ],
+   "cat": "agua",
+   "d": "Curva muy pronunciada de un río. En los llanos de fondo de valle, el río suele serpentear así.",
+   "de": "A tight bend in a river. On flat valley floors the river often winds like this.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Meandro»",
+     "u": "https://es.wikipedia.org/wiki/Meandro"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "escorrentia",
+   "t": "Escorrentía",
+   "te": "Runoff",
+   "es": [
+    "escorrentía"
+   ],
+   "en": [
+    "runoff"
+   ],
+   "cat": "agua",
+   "d": "Agua de lluvia o de deshielo que corre por la superficie del terreno, sin filtrarse.",
+   "de": "Rain or meltwater flowing over the ground surface without soaking in.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Escorrentía»",
+     "u": "https://es.wikipedia.org/wiki/Escorrent%C3%ADa"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "carcava",
+   "t": "Cárcava",
+   "te": "Gully (erosion)",
+   "es": [
+    "cárcava"
+   ],
+   "en": [],
+   "cat": "valles",
+   "d": "Surco o socavón que abre el agua de lluvia en suelos y rocas blandas con pendiente.",
+   "de": "A groove or gash cut by rainwater in soft soils and rocks on a slope.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cárcava»",
+     "u": "https://es.wikipedia.org/wiki/C%C3%A1rcava"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "interfluvio",
+   "t": "Interfluvio",
+   "te": "Interfluve",
+   "es": [
+    "interfluvio"
+   ],
+   "en": [
+    "interfluve"
+   ],
+   "cat": "valles",
+   "d": "Terreno alto entre dos ríos o dos valles vecinos.",
+   "de": "The higher ground between two neighbouring rivers or valleys.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Interfluvio»",
+     "u": "https://es.wikipedia.org/wiki/Interfluvio"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "cuenca",
+   "t": "Cuenca",
+   "te": "Drainage basin",
+   "es": [
+    "cuenca"
+   ],
+   "en": [
+    "basin"
+   ],
+   "cat": "agua",
+   "d": "Todo el terreno cuyas aguas van a parar a un mismo río. La separan de las vecinas las divisorias.",
+   "de": "All the land draining into the same river. Watersheds separate it from its neighbours.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «cuenca»",
+     "u": "https://aragonario.aragon.es/search/?q=cuenca&l=ar-es"
+    },
+    {
+     "n": "Wikipedia, «Divisoria de aguas»",
+     "u": "https://es.wikipedia.org/wiki/Divisoria_de_aguas"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "ribera",
+   "t": "Ribera",
+   "te": "Riverbank",
+   "es": [
+    "ribera"
+   ],
+   "en": [
+    "riverbank"
+   ],
+   "cat": "agua",
+   "d": "Tierra junto a un río, con su orilla y su vega.",
+   "de": "The land along a river, with its bank and its meadows.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «ribera»",
+     "u": "https://aragonario.aragon.es/search/?q=ribera&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "turbera",
+   "t": "Turbera",
+   "te": "Peat bog",
+   "es": [
+    "turbera"
+   ],
+   "en": [
+    "peat bog",
+    "bog"
+   ],
+   "cat": "agua",
+   "d": "Zona encharcada donde se acumulan restos de plantas que no se pudren del todo. Son delicadas: mejor no pisarlas.",
+   "de": "Waterlogged ground where plant remains pile up without fully rotting. They are fragile: best not to walk on them.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Turbera»",
+     "u": "https://es.wikipedia.org/wiki/Turbera"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "hayedo",
+   "t": "Hayedo o fayar",
+   "te": "Beech forest",
+   "es": [
+    "hayedo",
+    "fayar"
+   ],
+   "en": [
+    "beech forest",
+    "beechwood"
+   ],
+   "cat": "usos",
+   "d": "Bosque de hayas, de las laderas húmedas y umbrías del Pirineo medio. En aragonés, «fayar».",
+   "de": "A beech forest, on the damp, shady slopes of the middle Pyrenees. In Aragonese, «fayar».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Fagus»",
+     "u": "https://es.wikipedia.org/wiki/Fagus"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «fayar»",
+     "u": "https://aragonario.aragon.es/search/?q=fayar&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "abetal",
+   "t": "Abetal o abetar",
+   "te": "Fir forest",
+   "es": [
+    "abetal",
+    "abetar"
+   ],
+   "en": [
+    "fir forest"
+   ],
+   "cat": "usos",
+   "d": "Bosque de abetos, en umbrías frescas, a menudo mezclado con hayas. En aragonés, «abetar».",
+   "de": "A fir forest, on cool shady slopes, often mixed with beech. In Aragonese, «abetar».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Abies»",
+     "u": "https://es.wikipedia.org/wiki/Abies"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «abetar»",
+     "u": "https://aragonario.aragon.es/search/?q=abetar&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pino-negro",
+   "t": "Pino negro",
+   "te": "Mountain pine",
+   "es": [
+    "pino negro",
+    "pinos negros"
+   ],
+   "en": [
+    "mountain pine"
+   ],
+   "cat": "usos",
+   "d": "El pino de la alta montaña pirenaica (Pinus uncinata). Es el árbol que más alto sube: marca el límite del bosque.",
+   "de": "The pine of the high Pyrenees (Pinus uncinata). It is the tree that grows highest: it marks the treeline.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Pinus uncinata»",
+     "u": "https://es.wikipedia.org/wiki/Pinus_uncinata"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "limite-bosque",
+   "t": "Límite del bosque",
+   "te": "Treeline",
+   "es": [
+    "límite del bosque",
+    "límite forestal"
+   ],
+   "en": [
+    "treeline"
+   ],
+   "cat": "usos",
+   "d": "Altura por encima de la cual ya no crecen árboles; en el Pirineo central, más o menos entre 2.200 y 2.400 m.",
+   "de": "The height above which trees no longer grow; in the central Pyrenees, roughly between 2,200 and 2,400 m.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "pisos",
+   "t": "Pisos de vegetación",
+   "te": "Vegetation belts",
+   "es": [
+    "piso subalpino",
+    "piso alpino",
+    "piso nival",
+    "pisos de vegetación"
+   ],
+   "en": [
+    "subalpine",
+    "alpine belt",
+    "nival belt"
+   ],
+   "cat": "usos",
+   "d": "Franjas de altura con vegetación distinta: montano (bosques), subalpino (pino negro y pastos), alpino (solo pastos y plantas bajas) y nival (roca y nieve, casi sin plantas).",
+   "de": "Height bands with different vegetation: montane (forests), subalpine (mountain pine and pastures), alpine (only grass and low plants) and nival (rock and snow, almost no plants).",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Zonación altitudinal»",
+     "u": "https://es.wikipedia.org/wiki/Zonaci%C3%B3n_altitudinal"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pradera-alpina",
+   "t": "Pradera alpina",
+   "te": "Alpine meadow",
+   "es": [
+    "pradera alpina",
+    "praderas alpinas"
+   ],
+   "en": [
+    "alpine meadow"
+   ],
+   "cat": "usos",
+   "d": "Pasto de hierbas y flores por encima del límite del bosque.",
+   "de": "A meadow of grasses and flowers above the treeline.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Pradera alpina»",
+     "u": "https://es.wikipedia.org/wiki/Pradera_alpina"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pastizal",
+   "t": "Pastizal",
+   "te": "Pasture",
+   "es": [
+    "pastizal"
+   ],
+   "en": [
+    "pasture"
+   ],
+   "cat": "usos",
+   "d": "Terreno de hierba donde pasta el ganado. En la alta montaña, los pastos de verano son los «puertos» o la «estiva».",
+   "de": "Grassland where livestock graze. In the high mountains the summer pastures are the «puertos» or «estiva».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Herbazal»",
+     "u": "https://es.wikipedia.org/wiki/Herbazal"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "trashumancia",
+   "t": "Trashumancia",
+   "te": "Transhumance",
+   "es": [
+    "trashumancia"
+   ],
+   "en": [
+    "transhumance"
+   ],
+   "cat": "usos",
+   "d": "Mover el ganado entre los pastos de invierno, en el llano, y los de verano, en la montaña, por las cabañeras.",
+   "de": "Moving livestock between winter pastures in the lowlands and summer pastures in the mountains, along drove roads.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Trashumancia»",
+     "u": "https://es.wikipedia.org/wiki/Trashumancia"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "enebro",
+   "t": "Enebro o chinebro",
+   "te": "Juniper",
+   "es": [
+    "enebro",
+    "chinebro"
+   ],
+   "en": [
+    "juniper"
+   ],
+   "cat": "usos",
+   "d": "Arbusto de hojas en aguja que pinchan, muy común en las laderas secas y en la alta montaña. En aragonés, «chinebro».",
+   "de": "A shrub with prickly needle leaves, very common on dry slopes and in the high mountains. In Aragonese, «chinebro».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Juniperus communis»",
+     "u": "https://es.wikipedia.org/wiki/Juniperus_communis"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «chinebro»",
+     "u": "https://aragonario.aragon.es/search/?q=chinebro&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "rododendro",
+   "t": "Rododendro o azalea de montaña",
+   "te": "Alpenrose",
+   "es": [
+    "rododendro",
+    "azalea de montaña"
+   ],
+   "en": [
+    "alpenrose",
+    "rhododendron"
+   ],
+   "cat": "usos",
+   "d": "Arbusto de flores rosas del piso subalpino (Rhododendron ferrugineum). Cubre las umbrías bajo el pino negro.",
+   "de": "A shrub with pink flowers from the subalpine belt (Rhododendron ferrugineum). It covers shady slopes under the mountain pine.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Rhododendron ferrugineum»",
+     "u": "https://es.wikipedia.org/wiki/Rhododendron_ferrugineum"
     }
    ],
    "fiab": "documentada"

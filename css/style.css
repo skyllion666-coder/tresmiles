@@ -814,3 +814,4 @@ body.selector-abierto #intro { z-index: 31; }
 @media (max-width: 600px) { #palabras .pal-filtros { padding-right: 52px; } }
 .pal-fu { margin-top: 4px !important; font-size: .72rem; line-height: 1.4; color: var(--ink-2); }
 .pal-fu a { color: var(--ink-2); }
+.pal-zonas { margin-top: 3px !important; font-size: .74rem; line-height: 1.4; color: var(--ink-2); }
