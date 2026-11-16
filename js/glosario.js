@@ -1,7 +1,7 @@
 // Glosario de las fichas: las palabras de montaña del texto (glera, faja, collado, rimaya…) salen subrayadas y, al tocarlas,
 // se abre debajo del párrafo una tarjeta con lo que significan (data/glosario.json). Solo la primera vez que sale cada término en la ficha,
 // y nunca dentro de un enlace. En inglés busca las palabras inglesas y los nombres locales que se quedan (ibón, tuca, faja…).
-export function crearGlosario({ url = 'data/glosario.json', enIngles = false, cerrar = 'Cerrar' } = {}) {
+export function crearGlosario({ url = 'data/glosario.json', enIngles = false, cerrar = 'Cerrar', todas = null } = {}) {
   let terminos = null, re = null, busca = null, pendiente = null;
   const carga = fetch(`${url}?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((d) => {
     terminos = d?.terminos ?? [];
@@ -44,7 +44,8 @@ export function crearGlosario({ url = 'data/glosario.json', enIngles = false, ce
     if (abierta?.dataset.gl === g.id) return;
     const c = document.createElement('div'); c.className = 'gl-card'; c.dataset.gl = g.id; c.setAttribute('role', 'note');
     const tit = enIngles ? (g.te.includes('(') || g.te === g.t ? g.te : `${g.te} · ${g.t}`) : g.t;   // en inglés, también la palabra de aquí
-    c.innerHTML = `<button type="button" class="gl-x" aria-label="${cerrar}">×</button><b></b><p></p>`;
+    c.innerHTML = `<button type="button" class="gl-x" aria-label="${cerrar}">×</button><b></b><p></p>${todas ? `<button type="button" class="gl-todas">${enIngles ? 'All mountain words' : 'Todas las palabras de la montaña'} →</button>` : ''}`;
+    c.querySelector('.gl-todas')?.addEventListener('click', () => todas(g.id));   // «Palabras de la montaña» (js/enciclopedia.js), con esta palabra señalada
     c.querySelector('b').textContent = tit; c.querySelector('p').textContent = enIngles ? g.de : g.d;
     raiz.after(c); b.classList.add('is-open'); b.setAttribute('aria-expanded', 'true');
     c.querySelector('.gl-x').addEventListener('click', () => { c.remove(); b.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false'); b.focus({ preventScroll: true }); });

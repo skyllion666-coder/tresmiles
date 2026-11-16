@@ -25,7 +25,8 @@ import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
 import { t, EN_INGLES } from './i18n.js?v=37';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
-import { crearGlosario } from './glosario.js?v=4';
+import { crearGlosario } from './glosario.js?v=5';
+import { crearEnciclopedia } from './enciclopedia.js?v=1';
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -234,8 +235,10 @@ async function boot() {
       puebloEls.push({ x: q.x, z: q.z, lim: grande ? 42000 : tipo === 'hamlet' ? 9000 : 22000, el });
     }
   }).catch(() => {});
+  let lugaresLista = [];
   // nombres de barrancos, gargantas y otros lugares conocidos (data/lugares.json, sin ficha; hoy solo la Sierra de Guara): se ven de cerca
   json('data/lugares.json').then((lista) => {
+    lugaresLista = lista;
     for (const [nombre, lon, lat] of lista) {
       const q = geo.toXZ(lon, lat);
       if (!geo.dentro(q.x, q.z)) continue;
@@ -976,7 +979,18 @@ async function boot() {
 
   // — ficha —
   const fichaEl = $('#ficha'), fichaBody = $('#ficha-body');
-  const glosario = crearGlosario({ enIngles: EN_INGLES, cerrar: EN_INGLES ? 'Close' : 'Cerrar' }); glosario.escucha(fichaBody);   // palabras de montaña con su definición al tocarlas
+  const glosario = crearGlosario({ enIngles: EN_INGLES, cerrar: EN_INGLES ? 'Close' : 'Cerrar', todas: (id) => palabras.abrir(id) }); glosario.escucha(fichaBody);   // palabras de montaña con su definición al tocarlas
+  // «Palabras de la montaña» (js/enciclopedia.js): todo el glosario, con ejemplos del mapa que llevan a la cumbre o al lugar
+  const aExplorar = () => { if (S.mode !== 'explore') { S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out'); } };
+  const palabras = crearEnciclopedia({
+    enIngles: EN_INGLES, cumbres: () => peaks.filter((p) => p.activo), lugares: () => lugaresLista,
+    abrirCumbre: (id) => { aExplorar(); openPeak(id); },
+    verLugar: (lon, lat, nombre) => {
+      aExplorar(); closeFicha(); const q = geo.toXZ(lon, lat);
+      flyTo({ t: new THREE.Vector3(q.x, geo.heightAt(q.x, q.z), q.z), theta: -0.45, phi: 1.0, r: 6000 }, { shift: { x: 0, y: 0 } });
+      avisoCarga(nombre); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
+    },
+  });
   function fichaHTML(p) {
     const f = fotos[p.foto], n = difN[p.dificultad];
     const vis = visiblePeaks(), i = vis.findIndex((x) => x.id === p.id);
@@ -1409,9 +1423,10 @@ async function boot() {
   $('#ficha-close').addEventListener('click', () => closeFicha());
   // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
   const segPanel = () => document.getElementById('seg-panel');
-  const algoAbierto = () => $('#about').open || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
+  const algoAbierto = () => $('#about').open || palabras.abierto() || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
   function cierraUno() {
     if (document.getElementById('zonas')?.open) { document.getElementById('zonas').close(); return true; }
+    if (palabras.abierto()) { palabras.cerrar(); return true; }
     if ($('#about').open) { $('#about').close(); return true; }
     if (segPanel() && !segPanel().hidden) { segPanel().querySelector('.seg-cerrar')?.click(); return true; }
     if (S.vuelo) { pararVuelo(true); return true; }
@@ -1927,7 +1942,8 @@ async function boot() {
 
   // — acerca de —
   const about = $('#about');
-  about.addEventListener('click', (e) => { if (e.target.closest('#abre-zonas')) { about.close(); abreZonas(); } });
+  about.addEventListener('click', (e) => { if (e.target.closest('#abre-zonas')) { about.close(); abreZonas(); } if (e.target.closest('#abre-palabras')) { about.close(); palabras.abrir(); } });
+  const botonPalabras = () => `<p><button type="button" class="btn-ruta btn-suave" id="abre-palabras">${EN_INGLES ? 'Mountain words' : 'Palabras de la montaña'}</button> <small>${EN_INGLES ? 'What glera, faja, tozal or rimaya mean, with examples on the map' : 'Qué es una glera, una faja, un tozal o una rimaya, con ejemplos en el mapa'}</small></p>`;
   function buildAbout() {
     const todas = peaks.map((p) => ({ p, f: fotos[p.foto] })).filter((u) => u.f), usadas = todas.filter((u) => !u.p.menor), menoresUsadas = todas.filter((u) => u.p.menor);
     const credFoto = (nombre, f) => {
@@ -1944,6 +1960,7 @@ async function boot() {
       $('#about-body').innerHTML = `
       <h2>The 3,000ers of the Aragonese Pyrenees</h2>
       <p class="firma">Created by SKYLLION (FRANK)</p>
+      ${botonPalabras()}
       ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">My areas</button> <small>High-quality packs to carry without coverage</small></p>` : ''}
       ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 525 MB), with features only the app has: <b>Where am I</b> (GPS and compass, with north up or the map turning with you), <b>SOS</b> (send your position by WhatsApp or SMS or to 112, and whether you will get down before dark), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a>. When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
       <p>A 3D explorer of the summits above 3,000 metres in the Aragonese Pyrenees and along its border with France. It already includes ${totalActivas()} 3,000ers: about ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} with an example route, waypoints and photographs, and the rest with basic info (name, altitude, massif and location). It also has ${totalActivas(true)} summits between 2,000 and 3,000 m with simple info (name, altitude and position from OpenStreetMap, no route), shown by choosing “Below 3,000” or “All” in the selector.</p>
@@ -1987,6 +2004,7 @@ async function boot() {
     $('#about-body').innerHTML = `
       <h2>Tresmiles del Pirineo aragonés</h2>
       <p class="firma">Creado por SKYLLION (FRANK)</p>
+      ${botonPalabras()}
       ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">${t('Mis zonas')}</button> <small>${t('Paquetes de alta calidad para llevar sin cobertura')}</small></p>` : ''}
       ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 525 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula, con el norte arriba o con el mapa girando contigo), <b>SOS</b> (enviar tu posición por WhatsApp o SMS o al 112, y si llegas abajo antes de que anochezca), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a>. Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
