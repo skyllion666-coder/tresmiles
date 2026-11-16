@@ -2828,7 +2828,7 @@
   {
    "id": "cierzo",
    "t": "Cierzo",
-   "te": "Cierzo (NW wind)",
+   "te": "Cierzo (north-west wind)",
    "es": [
     "cierzo",
     "zierzo"
@@ -2837,12 +2837,16 @@
     "cierzo"
    ],
    "cat": "tiempo",
-   "d": "Viento del noroeste, frío y seco, típico del valle del Ebro y de Aragón. En aragonés, «zierzo».",
-   "de": "A cold, dry north-westerly wind typical of the Ebro valley and Aragon. In Aragonese, «zierzo».",
+   "d": "El viento de Aragón: sopla del noroeste por todo el valle del Ebro cuando hay un anticiclón en el golfo de Vizcaya y una borrasca en el Mediterráneo. Es fuerte y muy seco, frío en invierno y fresco en verano, y puede soplar en cualquier mes; en Zaragoza pasa a menudo de 100 km/h en rachas. Con cierzo el cielo suele quedar limpio, pero la sensación de frío es mucho mayor que lo que marca el termómetro. En aragonés, «zierzo»; el «zierzo fino» es el cierzo suave. Su contrario es el bochorno, del sureste.",
+   "de": "Aragon's wind: it blows from the north-west down the whole Ebro valley when there is high pressure over the Bay of Biscay and low pressure over the Mediterranean. It is strong and very dry, cold in winter and cool in summer, and can blow in any month; in Zaragoza gusts often exceed 100 km/h. With cierzo the sky is usually clear, but it feels much colder than the thermometer says. In Aragonese, «zierzo»; «zierzo fino» is a gentle cierzo. Its opposite is the bochorno, from the south-east.",
    "fuentes": [
     {
      "n": "Wikipedia, «Cierzo»",
      "u": "https://es.wikipedia.org/wiki/Cierzo"
+    },
+    {
+     "n": "Wikipedia, «Clima de Aragón»",
+     "u": "https://es.wikipedia.org/wiki/Clima_de_Arag%C3%B3n"
     },
     {
      "n": "Aragonario (Gobierno de Aragón), «zierzo»",
@@ -4181,6 +4185,32 @@
     {
      "n": "Wikipedia, «Rhododendron ferrugineum»",
      "u": "https://es.wikipedia.org/wiki/Rhododendron_ferrugineum"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "bochorno",
+   "t": "Bochorno",
+   "te": "Bochorno (south-east wind)",
+   "es": [
+    "bochorno"
+   ],
+   "en": [
+    "bochorno"
+   ],
+   "cat": "tiempo",
+   "pir": true,
+   "d": "En Aragón, el viento del sureste, el contrario del cierzo: templado y húmedo en invierno y primavera, y muy seco y caluroso en verano, cuando hace bajar de golpe la humedad del aire.",
+   "de": "In Aragon, the south-east wind, the opposite of the cierzo: mild and damp in winter and spring, and very dry and hot in summer, when it makes the air's humidity drop suddenly.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Clima de Aragón»",
+     "u": "https://es.wikipedia.org/wiki/Clima_de_Arag%C3%B3n"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «bochorno»",
+     "u": "https://aragonario.aragon.es/search/?q=bochorno&l=ar-es"
     }
    ],
    "fiab": "documentada"
