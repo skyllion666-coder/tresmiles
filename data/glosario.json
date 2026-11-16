@@ -37,6 +37,11 @@
    "te": "Glaciers, snow and ice"
   },
   {
+   "id": "tiempo",
+   "t": "Tiempo, nieve y aludes",
+   "te": "Weather, snow and avalanches"
+  },
+  {
    "id": "terreno",
    "t": "Materiales y terreno",
    "te": "Ground and loose rock"
@@ -55,6 +60,11 @@
    "id": "progresion",
    "t": "Progresión y seguridad",
    "te": "Moving and safety"
+  },
+  {
+   "id": "mapas",
+   "t": "Mapas y orientación",
+   "te": "Maps and navigation"
   }
  ],
  "terminos": [
@@ -87,7 +97,13 @@
    "d": "Filo donde se juntan dos vertientes de una montaña. Suele ser estrecha, con caída a los dos lados. Es más corta y definida que una cresta.",
    "de": "The edge where two sides of a mountain meet. It is usually narrow, with a drop on both sides. Shorter and sharper than a ridge.",
    "cat": "rocas",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Arista (geomorfología)»",
+     "u": "https://es.wikipedia.org/wiki/Arista_%28geomorfolog%C3%ADa%29"
+    }
+   ]
   },
   {
    "id": "collado",
@@ -103,7 +119,13 @@
    "d": "Punto bajo entre dos elevaciones por el que se pasa de una vertiente a otra. En el Pirineo aragonés también se llama «cuello» o «puerto».",
    "de": "The low point between two heights, used to cross from one side to the other. In the Aragonese Pyrenees it is also called «cuello» or «puerto».",
    "cat": "pasos",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Collado»",
+     "u": "https://es.wikipedia.org/wiki/Collado"
+    }
+   ]
   },
   {
    "id": "cuello",
@@ -242,7 +264,13 @@
    "d": "Elevación antes de la cima principal, en la misma cresta o ladera. Desde abajo se confunde a menudo con la cima.",
    "de": "A high point before the main summit, on the same ridge or slope. From below it is often mistaken for the summit.",
    "cat": "elevaciones",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Antecima»",
+     "u": "https://es.wikipedia.org/wiki/Antecima"
+    }
+   ]
   },
   {
    "id": "pala",
@@ -449,7 +477,13 @@
    "d": "Mancha de nieve que dura gran parte del año, a veces todo el verano. A primera hora puede estar dura como el hielo.",
    "de": "A patch of snow that lasts much of the year, sometimes all summer. Early in the day it can be as hard as ice.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Nevero»",
+     "u": "https://es.wikipedia.org/wiki/Nevero"
+    }
+   ]
   },
   {
    "id": "glaciar",
@@ -465,7 +499,13 @@
    "d": "Masa de hielo que se mueve despacio ladera abajo. En el Pirineo quedan pocos y menguan cada año. Tienen grietas, a veces tapadas por la nieve.",
    "de": "A mass of ice that slowly flows downhill. Few remain in the Pyrenees and they shrink every year. They have crevasses, sometimes hidden under snow.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Glaciar»",
+     "u": "https://es.wikipedia.org/wiki/Glaciar"
+    }
+   ]
   },
   {
    "id": "rimaya",
@@ -480,7 +520,13 @@
    "d": "Grieta grande en la parte alta de un glaciar, donde el hielo se separa de la roca o del hielo fijo de arriba. Puede estar tapada por un puente de nieve.",
    "de": "A large crevasse at the top of a glacier, where the moving ice pulls away from the rock or fixed ice above. It can be hidden by a snow bridge.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Rimaya»",
+     "u": "https://es.wikipedia.org/wiki/Rimaya"
+    }
+   ]
   },
   {
    "id": "morrena",
@@ -495,7 +541,13 @@
    "d": "Montón de piedras y tierra que arrastró y dejó un glaciar. Las morrenas marcan hasta dónde llegó el hielo.",
    "de": "A heap of stones and earth carried and left by a glacier. Moraines show how far the ice once reached.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Morrena»",
+     "u": "https://es.wikipedia.org/wiki/Morrena"
+    }
+   ]
   },
   {
    "id": "circo",
@@ -510,7 +562,13 @@
    "d": "Gran hondonada en forma de anfiteatro, excavada por un glaciar en la cabecera de un valle.",
    "de": "A large amphitheatre-shaped hollow carved by a glacier at the head of a valley.",
    "cat": "valles",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Circo glaciar»",
+     "u": "https://es.wikipedia.org/wiki/Circo_glaciar"
+    }
+   ]
   },
   {
    "id": "barranco",
@@ -607,7 +665,13 @@
    "d": "Elevación alargada y redondeada, de pendientes suaves, que separa dos vertientes.",
    "de": "A long, rounded rise with gentle slopes that separates two sides.",
    "cat": "elevaciones",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Loma»",
+     "u": "https://es.wikipedia.org/wiki/Loma"
+    }
+   ]
   },
   {
    "id": "muga",
@@ -675,7 +739,13 @@
    "d": "Pilar de hormigón del Instituto Geográfico Nacional que marca un punto medido con precisión. Muchas cimas lo tienen.",
    "de": "A concrete pillar of Spain's National Geographic Institute marking a precisely surveyed point. Many summits have one.",
    "cat": "usos",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Vértice geodésico»",
+     "u": "https://es.wikipedia.org/wiki/V%C3%A9rtice_geod%C3%A9sico"
+    }
+   ]
   },
   {
    "id": "punta",
@@ -820,7 +890,13 @@
    "d": "Línea del relieve que separa dos cuencas: el agua que cae a cada lado va a un río distinto. En el Pirineo central, la principal coincide en gran parte con la frontera.",
    "de": "The line of terrain separating two drainage basins: rain on each side ends in a different river. In the central Pyrenees the main one largely follows the border.",
    "cat": "pasos",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Divisoria de aguas»",
+     "u": "https://es.wikipedia.org/wiki/Divisoria_de_aguas"
+    }
+   ]
   },
   {
    "id": "repisa",
@@ -849,8 +925,14 @@
    ],
    "d": "Voladizo de nieve que el viento forma en el borde de una cresta, sobre el vacío. Puede romperse con el peso de una persona: no hay que pisar cerca del borde.",
    "de": "An overhang of snow built by the wind on the edge of a ridge, over the drop. It can break under a person's weight: keep well back from the edge.",
-   "cat": "glaciares",
-   "fiab": "revisada"
+   "cat": "tiempo",
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cornisa de nieve»",
+     "u": "https://es.wikipedia.org/wiki/Cornisa_de_nieve"
+    }
+   ]
   },
   {
    "id": "terraza",
@@ -894,7 +976,13 @@
    "d": "Valle largo y profundo, de paredes muy verticales, excavado por un río: el Cañón de Añisclo, en Ordesa.",
    "de": "A long, deep valley with very steep walls, cut by a river: the Añisclo Canyon, in Ordesa.",
    "cat": "valles",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cañón (geomorfología)»",
+     "u": "https://es.wikipedia.org/wiki/Ca%C3%B1%C3%B3n_%28geomorfolog%C3%ADa%29"
+    }
+   ]
   },
   {
    "id": "foz",
@@ -941,7 +1029,13 @@
    "d": "Valle que excavó un glaciar: tiene el fondo ancho y las laderas empinadas, en forma de U. Los de los ríos son en V.",
    "de": "A valley carved by a glacier: wide floor and steep sides, U-shaped. River valleys are V-shaped.",
    "cat": "valles",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Valle glaciar»",
+     "u": "https://es.wikipedia.org/wiki/Valle_glaciar"
+    }
+   ]
   },
   {
    "id": "valle-colgado",
@@ -1015,10 +1109,16 @@
    "en": [
     "boulder field"
    ],
-   "d": "Amontonamiento de bloques de roca grandes, caídos o dejados por el hielo. Se avanza saltando de bloque en bloque, despacio.",
-   "de": "A jumble of large boulders, fallen or left by ice. You cross it hopping from block to block, slowly.",
+   "d": "Amontonamiento de grandes bloques de roca. En el Pirineo suelen ser bloques caídos de las paredes o dejados por el hielo; en el granito también se forman al partirse la roca en bolas. Se avanza saltando de bloque en bloque, despacio.",
+   "de": "A jumble of large boulders. In the Pyrenees they are usually blocks fallen from the walls or left by ice; in granite they also form as the rock splits into rounded blocks. You cross it hopping from block to block, slowly.",
    "cat": "terreno",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Caos de bloques»",
+     "u": "https://es.wikipedia.org/wiki/Caos_de_bloques"
+    }
+   ]
   },
   {
    "id": "escarpe",
@@ -1033,7 +1133,13 @@
    "d": "Corte brusco y muy empinado del terreno, donde la pendiente pasa de golpe a casi vertical.",
    "de": "A sudden, very steep break in the ground, where the slope turns almost vertical.",
    "cat": "rocas",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Escarpe»",
+     "u": "https://es.wikipedia.org/wiki/Escarpe"
+    }
+   ]
   },
   {
    "id": "farallon",
@@ -1092,10 +1198,16 @@
    "en": [
     "snowdrift"
    ],
-   "d": "Sitio donde el viento acumula la nieve, y esa misma nieve amontonada. Puede tener mucho más espesor que alrededor.",
-   "de": "A place where the wind piles up snow, and the drift itself. It can be much deeper than the snow around it.",
+   "d": "Sitio donde el viento acumula la nieve, y esa misma nieve amontonada; también se llama así al nevero. Puede tener mucho más espesor que alrededor.",
+   "de": "A place where the wind piles up snow, and the drift itself; the word is also used for a lasting snow patch. It can be much deeper than the snow around it.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Nevero»",
+     "u": "https://es.wikipedia.org/wiki/Nevero"
+    }
+   ]
   },
   {
    "id": "serac",
@@ -1112,7 +1224,13 @@
    "d": "Bloque o torre de hielo que se forma donde el glaciar se rompe al pasar por una pendiente fuerte. Puede caer sin aviso.",
    "de": "A block or tower of ice formed where a glacier breaks up over a steep step. It can fall without warning.",
    "cat": "glaciares",
-   "fiab": "revisada"
+   "fiab": "documentada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Serac»",
+     "u": "https://es.wikipedia.org/wiki/Serac"
+    }
+   ]
   },
   {
    "id": "grieta",
@@ -1426,6 +1544,10 @@
     {
      "n": "Aragonario (Gobierno de Aragón), «sarrau»",
      "u": "https://aragonario.aragon.es/search/?q=sarrau&l=ar-es"
+    },
+    {
+     "n": "Wikipedia, «Sierra (geografía)»",
+     "u": "https://es.wikipedia.org/wiki/Sierra_%28geograf%C3%ADa%29"
     }
    ],
    "fiab": "documentada",
@@ -1978,8 +2100,13 @@
    "cat": "agua",
    "d": "Caída de agua por un escalón del terreno. En el Pirineo suelen bajar de los umbrales glaciares y de los valles colgados.",
    "de": "Water falling over a step in the ground. In the Pyrenees they usually drop from glacial rock steps and hanging valleys.",
-   "fuentes": [],
-   "fiab": "revisada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cascada»",
+     "u": "https://es.wikipedia.org/wiki/Cascada"
+    }
+   ],
+   "fiab": "documentada",
    "ficha": false
   },
   {
@@ -1995,8 +2122,13 @@
    "cat": "geologia",
    "d": "Roca dura y granulada, formada al enfriarse el magma bajo tierra. Es la roca del Aneto y la Maladeta: buena adherencia y grandes bloques.",
    "de": "A hard, grainy rock formed when magma cools underground. It is the rock of Aneto and Maladeta: good grip and big blocks.",
-   "fuentes": [],
-   "fiab": "revisada"
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Granito»",
+     "u": "https://es.wikipedia.org/wiki/Granito"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "caliza",
@@ -2014,8 +2146,13 @@
    "cat": "geologia",
    "d": "Roca sedimentaria que el agua disuelve poco a poco: de ella salen el lapiaz, las simas y las cuevas. Es la roca de Monte Perdido y de Ordesa.",
    "de": "A sedimentary rock that water slowly dissolves: it creates limestone pavement, shafts and caves. It is the rock of Monte Perdido and Ordesa.",
-   "fuentes": [],
-   "fiab": "revisada"
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Caliza»",
+     "u": "https://es.wikipedia.org/wiki/Caliza"
+    }
+   ],
+   "fiab": "documentada"
   },
   {
    "id": "conglomerado",
@@ -2252,8 +2389,13 @@
    "cat": "progresion",
    "d": "Edificio de montaña para dormir y resguardarse. Los guardados tienen guarda en temporada; los libres están abiertos, sin servicio.",
    "de": "A mountain building for sleeping and shelter. Staffed huts have a warden in season; unstaffed ones are open, with no service.",
-   "fuentes": [],
-   "fiab": "revisada",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Refugio de montaña»",
+     "u": "https://es.wikipedia.org/wiki/Refugio_de_monta%C3%B1a"
+    }
+   ],
+   "fiab": "documentada",
    "ficha": false
   },
   {
@@ -2309,6 +2451,10 @@
     {
      "n": "Wikcionario, «vivac»",
      "u": "https://es.wiktionary.org/wiki/vivac"
+    },
+    {
+     "n": "Wikipedia, «Vivac»",
+     "u": "https://es.wikipedia.org/wiki/Vivac"
     }
    ],
    "fiab": "documentada"
@@ -2323,7 +2469,7 @@
    "en": [
     "rime"
    ],
-   "cat": "glaciares",
+   "cat": "tiempo",
    "d": "Hielo que se forma sobre las rocas, la hierba o los árboles cuando se congelan las gotitas de una niebla muy fría. Lo cubre todo de blanco y hace resbalar.",
    "de": "Ice that forms on rocks, grass or trees when droplets from a very cold fog freeze. It turns everything white and makes it slippery.",
    "fuentes": [
@@ -2350,7 +2496,7 @@
    "en": [
     "freezing level"
    ],
-   "cat": "glaciares",
+   "cat": "tiempo",
    "d": "Altura a la que el aire está a 0 °C. Por encima, la lluvia cae como nieve y el agua se hiela. En las fichas sale en la previsión del tiempo.",
    "de": "The height at which the air is at 0 °C. Above it, rain falls as snow and water freezes. It appears in the weather forecast on the summit pages.",
    "fuentes": [],
@@ -2370,6 +2516,1082 @@
    "de": "A line of consecutive summits along a range or a long ridge.",
    "fuentes": [],
    "fiab": "revisada"
+  },
+  {
+   "id": "foehn",
+   "t": "Efecto foehn",
+   "te": "Foehn wind",
+   "es": [
+    "foehn",
+    "föhn"
+   ],
+   "en": [
+    "foehn",
+    "föhn"
+   ],
+   "cat": "tiempo",
+   "d": "Viento cálido y seco que baja por la ladera contraria a la que llueve, después de cruzar la cordillera. En el Pirineo puede subir mucho la temperatura y derretir la nieve deprisa.",
+   "de": "A warm, dry wind that comes down the lee side after crossing a range. In the Pyrenees it can raise the temperature sharply and melt snow quickly.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Viento foehn»",
+     "u": "https://es.wikipedia.org/wiki/Viento_foehn"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "inversion",
+   "t": "Inversión térmica",
+   "te": "Temperature inversion",
+   "es": [
+    "inversión térmica"
+   ],
+   "en": [
+    "temperature inversion",
+    "inversion"
+   ],
+   "cat": "tiempo",
+   "d": "Cuando hace más frío abajo, en el valle, que más arriba: el aire frío se queda en el fondo, a menudo con niebla, y en las cumbres luce el sol.",
+   "de": "When it is colder down in the valley than higher up: cold air stays at the bottom, often with fog, while the summits are sunny.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Inversión térmica»",
+     "u": "https://es.wikipedia.org/wiki/Inversi%C3%B3n_t%C3%A9rmica"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "catabatico",
+   "t": "Viento catabático",
+   "te": "Katabatic wind",
+   "es": [
+    "catabático",
+    "catabáticos"
+   ],
+   "en": [
+    "katabatic"
+   ],
+   "cat": "tiempo",
+   "d": "Viento de aire frío que baja por las laderas hacia el valle, sobre todo de noche y de madrugada.",
+   "de": "A wind of cold air flowing down the slopes into the valley, mostly at night and early in the morning.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Viento catabático»",
+     "u": "https://es.wikipedia.org/wiki/Viento_catab%C3%A1tico"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "anabatico",
+   "t": "Viento anabático",
+   "te": "Anabatic wind",
+   "es": [
+    "anabático",
+    "anabáticos"
+   ],
+   "en": [
+    "anabatic"
+   ],
+   "cat": "tiempo",
+   "d": "Brisa que sube por las laderas cuando el sol las calienta, durante el día. Ayuda a formar las nubes y las tormentas de la tarde.",
+   "de": "A breeze blowing up the slopes when the sun warms them during the day. It helps build the afternoon clouds and storms.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Viento anabático»",
+     "u": "https://es.wikipedia.org/wiki/Viento_anab%C3%A1tico"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "sotavento",
+   "t": "Barlovento y sotavento",
+   "te": "Windward and leeward",
+   "es": [
+    "barlovento",
+    "sotavento"
+   ],
+   "en": [
+    "windward",
+    "leeward"
+   ],
+   "cat": "tiempo",
+   "d": "Barlovento es la ladera de donde viene el viento; sotavento, la ladera resguardada. A sotavento se acumula la nieve que arrastra el viento: ahí se forman placas y cornisas.",
+   "de": "Windward is the side the wind comes from; leeward, the sheltered side. Wind-blown snow piles up on the lee side: that is where slabs and cornices form.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Sotavento»",
+     "u": "https://es.wikipedia.org/wiki/Sotavento"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "escarcha",
+   "t": "Escarcha",
+   "te": "Hoarfrost",
+   "es": [
+    "escarcha"
+   ],
+   "en": [
+    "hoarfrost"
+   ],
+   "cat": "tiempo",
+   "d": "Hielo fino que se forma de noche sobre la hierba y las rocas al helarse el rocío. En aragonés, «rosada». Por la mañana hace resbalar.",
+   "de": "Fine ice that forms overnight on grass and rocks when dew freezes. In Aragonese, «rosada». It is slippery in the morning.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Helada»",
+     "u": "https://es.wikipedia.org/wiki/Helada"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «rosada»",
+     "u": "https://aragonario.aragon.es/search/?q=rosada&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "helada",
+   "t": "Helada",
+   "te": "Frost",
+   "es": [
+    "helada",
+    "chelada"
+   ],
+   "en": [
+    "frost"
+   ],
+   "cat": "tiempo",
+   "d": "Cuando la temperatura baja de 0 °C y el agua se hiela. En aragonés, «chelada»; «neu chelada» es nieve helada.",
+   "de": "When the temperature drops below 0 °C and water freezes. In Aragonese, «chelada»; «neu chelada» is frozen snow.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Helada»",
+     "u": "https://es.wikipedia.org/wiki/Helada"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «chelada»",
+     "u": "https://aragonario.aragon.es/search/?q=chelada&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "albedo",
+   "t": "Albedo",
+   "te": "Albedo",
+   "es": [
+    "albedo"
+   ],
+   "en": [
+    "albedo"
+   ],
+   "cat": "tiempo",
+   "d": "La parte de la luz del sol que refleja una superficie. La nieve refleja muchísimo: por eso quema la piel y los ojos, aunque haga frío.",
+   "de": "The share of sunlight a surface reflects. Snow reflects a great deal: that is why it burns skin and eyes even in the cold.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Albedo»",
+     "u": "https://es.wikipedia.org/wiki/Albedo"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "mar-de-nubes",
+   "t": "Mar de nubes",
+   "te": "Sea of clouds",
+   "es": [
+    "mar de nubes"
+   ],
+   "en": [
+    "sea of clouds"
+   ],
+   "cat": "tiempo",
+   "d": "Capa de nubes vista desde arriba, desde una cumbre al sol, que tapa los valles como un mar. Suele ir con inversión térmica.",
+   "de": "A layer of cloud seen from above, from a sunny summit, covering the valleys like a sea. It usually comes with a temperature inversion.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Mar de nubes»",
+     "u": "https://es.wikipedia.org/wiki/Mar_de_nubes"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "cierzo",
+   "t": "Cierzo",
+   "te": "Cierzo (NW wind)",
+   "es": [
+    "cierzo",
+    "zierzo"
+   ],
+   "en": [
+    "cierzo"
+   ],
+   "cat": "tiempo",
+   "d": "Viento del noroeste, frío y seco, típico del valle del Ebro y de Aragón. En aragonés, «zierzo».",
+   "de": "A cold, dry north-westerly wind typical of the Ebro valley and Aragon. In Aragonese, «zierzo».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cierzo»",
+     "u": "https://es.wikipedia.org/wiki/Cierzo"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «zierzo»",
+     "u": "https://aragonario.aragon.es/search/?q=zierzo&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "boira",
+   "t": "Boira",
+   "te": "Boira (fog)",
+   "es": [
+    "boira"
+   ],
+   "en": [
+    "boira"
+   ],
+   "cat": "tiempo",
+   "d": "Palabra aragonesa para la niebla o la nube. Con boira cuesta mucho orientarse en la montaña.",
+   "de": "Aragonese word for fog or cloud. In boira it is very hard to find your way in the mountains.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «boira»",
+     "u": "https://aragonario.aragon.es/search/?q=boira&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "tronada",
+   "t": "Tronada",
+   "te": "Tronada (thunderstorm)",
+   "es": [
+    "tronada"
+   ],
+   "en": [
+    "tronada"
+   ],
+   "cat": "tiempo",
+   "d": "Palabra aragonesa para la tormenta con truenos. En verano suelen llegar por la tarde: conviene estar bajando antes.",
+   "de": "Aragonese word for a thunderstorm. In summer they tend to come in the afternoon: better to be on the way down before then.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «tronada»",
+     "u": "https://aragonario.aragon.es/search/?q=tronada&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "tormenta",
+   "t": "Tormenta",
+   "te": "Thunderstorm",
+   "es": [
+    "tormenta"
+   ],
+   "en": [
+    "thunderstorm"
+   ],
+   "cat": "tiempo",
+   "d": "Nubes de gran desarrollo con rayos, lluvia o granizo y rachas de viento. En una cresta o una cumbre el rayo es un peligro grave: hay que bajar y alejarse de lo más alto.",
+   "de": "Towering clouds with lightning, rain or hail and gusts. On a ridge or a summit lightning is a serious danger: get down and away from the highest points.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Tormenta»",
+     "u": "https://es.wikipedia.org/wiki/Tormenta"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "ventisca",
+   "t": "Ventisca",
+   "te": "Blizzard",
+   "es": [
+    "ventisca"
+   ],
+   "en": [
+    "blizzard"
+   ],
+   "cat": "tiempo",
+   "d": "Temporal de nieve con viento fuerte, que arrastra la nieve y deja muy poca visibilidad.",
+   "de": "A snowstorm with strong wind that blows the snow around and leaves very poor visibility.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Ventisca»",
+     "u": "https://es.wikipedia.org/wiki/Ventisca"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "alud",
+   "t": "Alud",
+   "te": "Avalanche",
+   "es": [
+    "alud",
+    "aludes",
+    "avalancha",
+    "lurte"
+   ],
+   "en": [
+    "avalanche"
+   ],
+   "cat": "tiempo",
+   "d": "Masa de nieve que se suelta y baja por una ladera, a veces arrastrando piedras. En aragonés, «lurte». La web muestra el boletín de peligro de aludes de cada zona.",
+   "de": "A mass of snow that breaks loose and slides down a slope, sometimes carrying rocks. In Aragonese, «lurte». The website shows the avalanche danger bulletin for each area.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Alud»",
+     "u": "https://es.wikipedia.org/wiki/Alud"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «lurte»",
+     "u": "https://aragonario.aragon.es/search/?q=lurte&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "placa-viento",
+   "t": "Placa de viento",
+   "te": "Wind slab",
+   "es": [
+    "placa de viento",
+    "placas de viento"
+   ],
+   "en": [
+    "wind slab"
+   ],
+   "cat": "tiempo",
+   "d": "Capa de nieve compactada por el viento, apoyada sobre nieve más floja. Se forma a sotavento y puede romperse de golpe al pisarla: es la causa de muchos aludes.",
+   "de": "A layer of snow packed by the wind, resting on weaker snow. It forms on lee slopes and can break suddenly when stepped on: it causes many avalanches.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "aire-puerto",
+   "t": "Aire de puerto",
+   "te": "Aire de puerto (N wind)",
+   "es": [
+    "aire puerto",
+    "aire de puerto"
+   ],
+   "en": [
+    "aire puerto"
+   ],
+   "cat": "tiempo",
+   "d": "En aragonés, el viento del norte, el que baja de los puertos.",
+   "de": "In Aragonese, the north wind, the one coming down from the high passes.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «puerto»",
+     "u": "https://aragonario.aragon.es/search/?q=puerto&l=ar-es"
+    }
+   ],
+   "fiab": "documentada",
+   "pir": true
+  },
+  {
+   "id": "estrato",
+   "t": "Estrato",
+   "te": "Stratum",
+   "es": [
+    "estrato"
+   ],
+   "en": [
+    "stratum",
+    "strata"
+   ],
+   "cat": "geologia",
+   "d": "Cada una de las capas en que se apilan las rocas sedimentarias. En muchas paredes del Pirineo se ven como franjas; las fajas y viras suelen seguirlas.",
+   "de": "Each of the layers in which sedimentary rocks are stacked. On many Pyrenean walls they show as bands; fajas and ledges often follow them.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Estrato»",
+     "u": "https://es.wikipedia.org/wiki/Estrato"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pliegue",
+   "t": "Pliegue",
+   "te": "Fold",
+   "es": [
+    "pliegue"
+   ],
+   "en": [],
+   "cat": "geologia",
+   "d": "Capas de roca dobladas por los empujes que levantaron la cordillera. En el Pirineo se ven pliegues enormes en las paredes de Ordesa.",
+   "de": "Rock layers bent by the forces that raised the range. Huge folds can be seen in the walls of Ordesa.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "falla",
+   "t": "Falla",
+   "te": "Fault",
+   "es": [
+    "falla"
+   ],
+   "en": [
+    "fault"
+   ],
+   "cat": "geologia",
+   "d": "Fractura del terreno en la que los dos lados se han movido el uno respecto al otro. A lo largo de ellas la roca suele estar más rota.",
+   "de": "A fracture in the ground along which the two sides have moved relative to each other. The rock along them is usually more broken.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Falla»",
+     "u": "https://es.wikipedia.org/wiki/Falla"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "diaclasa",
+   "t": "Diaclasa",
+   "te": "Joint",
+   "es": [
+    "diaclasa"
+   ],
+   "en": [
+    "joint"
+   ],
+   "cat": "geologia",
+   "d": "Grieta natural de la roca en la que los dos lados apenas se han movido. Por ellas entra el hielo y parte la roca en bloques.",
+   "de": "A natural crack in rock where the two sides have hardly moved. Ice gets into them and splits the rock into blocks.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Diaclasa»",
+     "u": "https://es.wikipedia.org/wiki/Diaclasa"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "pizarra",
+   "t": "Pizarra",
+   "te": "Slate",
+   "es": [
+    "pizarra"
+   ],
+   "en": [
+    "slate"
+   ],
+   "cat": "geologia",
+   "d": "Roca oscura que se parte en láminas finas. Se ha usado mucho para los tejados de los pueblos del Pirineo. Mojada resbala.",
+   "de": "A dark rock that splits into thin sheets. Widely used for roofs in Pyrenean villages. It is slippery when wet.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "esquisto",
+   "t": "Esquisto",
+   "te": "Schist",
+   "es": [
+    "esquisto"
+   ],
+   "en": [
+    "schist"
+   ],
+   "cat": "geologia",
+   "d": "Roca metamórfica de minerales en láminas, que se rompe en capas finas y suele dar terreno descompuesto.",
+   "de": "A metamorphic rock made of platy minerals that breaks into thin layers and often makes loose ground.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Esquisto»",
+     "u": "https://es.wikipedia.org/wiki/Esquisto"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "cuarcita",
+   "t": "Cuarcita",
+   "te": "Quartzite",
+   "es": [
+    "cuarcita"
+   ],
+   "en": [
+    "quartzite"
+   ],
+   "cat": "geologia",
+   "d": "Roca metamórfica muy dura, hecha casi solo de cuarzo.",
+   "de": "A very hard metamorphic rock made almost entirely of quartz.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cuarcita»",
+     "u": "https://es.wikipedia.org/wiki/Cuarcita"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "dolomia",
+   "t": "Dolomía",
+   "te": "Dolomite",
+   "es": [
+    "dolomía"
+   ],
+   "en": [
+    "dolomite"
+   ],
+   "cat": "geologia",
+   "d": "Roca parecida a la caliza, con magnesio. También forma relieves kársticos.",
+   "de": "A rock similar to limestone, containing magnesium. It also forms karst landscapes.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Dolomía»",
+     "u": "https://es.wikipedia.org/wiki/Dolom%C3%ADa"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "flysch",
+   "t": "Flysch",
+   "te": "Flysch",
+   "es": [
+    "flysch"
+   ],
+   "en": [
+    "flysch"
+   ],
+   "cat": "geologia",
+   "d": "Roca hecha de capas finas que alternan, duras y blandas, como las hojas de un libro. Es frecuente en el Pirineo occidental y central.",
+   "de": "Rock made of thin alternating hard and soft layers, like the pages of a book. Common in the western and central Pyrenees.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Flysch»",
+     "u": "https://es.wikipedia.org/wiki/Flysch"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "gelifraccion",
+   "t": "Gelifracción",
+   "te": "Frost shattering",
+   "es": [
+    "gelifracción",
+    "crioclastia"
+   ],
+   "en": [
+    "frost shattering"
+   ],
+   "cat": "terreno",
+   "d": "Rotura de la roca por el hielo: el agua entra en las grietas, se hiela, crece y parte la roca. Así se forman las gleras al pie de las paredes.",
+   "de": "Rock broken by ice: water gets into cracks, freezes, expands and splits the rock. This is how scree builds up at the foot of walls.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Gelifracción»",
+     "u": "https://es.wikipedia.org/wiki/Gelifracci%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "meteorizacion",
+   "t": "Meteorización",
+   "te": "Weathering",
+   "es": [
+    "meteorización"
+   ],
+   "en": [
+    "weathering"
+   ],
+   "cat": "terreno",
+   "d": "Descomposición de las rocas en la superficie por el agua, el hielo, el aire y los seres vivos.",
+   "de": "The breakdown of rocks at the surface by water, ice, air and living things.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Meteorización»",
+     "u": "https://es.wikipedia.org/wiki/Meteorizaci%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "solifluxion",
+   "t": "Solifluxión",
+   "te": "Solifluction",
+   "es": [
+    "solifluxión"
+   ],
+   "en": [
+    "solifluction"
+   ],
+   "cat": "terreno",
+   "d": "Movimiento lento ladera abajo del suelo empapado, sobre todo al deshelar. Deja laderas con arrugas y lóbulos de hierba.",
+   "de": "Slow downhill creep of waterlogged soil, mostly during thaw. It leaves slopes with wrinkles and grassy lobes.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Solifluxión»",
+     "u": "https://es.wikipedia.org/wiki/Solifluxi%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "desprendimiento",
+   "t": "Desprendimiento",
+   "te": "Rockfall",
+   "es": [
+    "desprendimiento",
+    "desprendimientos"
+   ],
+   "en": [
+    "rockfall"
+   ],
+   "cat": "terreno",
+   "d": "Caída de piedras o bloques desde una pared. Es más frecuente con el deshielo, después de lluvias y cuando el sol calienta por la mañana.",
+   "de": "Stones or blocks falling from a wall. More frequent during thaw, after rain and when the morning sun warms the face.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Desprendimiento»",
+     "u": "https://es.wikipedia.org/wiki/Desprendimiento"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "deslizamiento",
+   "t": "Deslizamiento",
+   "te": "Landslide",
+   "es": [
+    "deslizamiento",
+    "corrimiento"
+   ],
+   "en": [
+    "landslide"
+   ],
+   "cat": "terreno",
+   "d": "Masa de tierra o roca que se desliza ladera abajo. En aragonés también se llama «lurte».",
+   "de": "A mass of earth or rock sliding down a slope. In Aragonese it is also called «lurte».",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Deslizamiento de tierra»",
+     "u": "https://es.wikipedia.org/wiki/Deslizamiento_de_tierra"
+    },
+    {
+     "n": "Aragonario (Gobierno de Aragón), «lurte»",
+     "u": "https://aragonario.aragon.es/search/?q=lurte&l=ar-es"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "derrubio",
+   "t": "Derrubio",
+   "te": "Debris",
+   "es": [
+    "derrubio",
+    "derrubios"
+   ],
+   "en": [
+    "debris"
+   ],
+   "cat": "terreno",
+   "d": "Fragmentos de roca sueltos que se acumulan al pie de las laderas o los cauces. Un «cono de derrubios» es el montón en abanico que forman.",
+   "de": "Loose rock fragments that pile up at the foot of slopes or in channels. A debris cone is the fan-shaped heap they form.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "cono-deyeccion",
+   "t": "Cono de deyección",
+   "te": "Alluvial fan",
+   "es": [
+    "cono de deyección",
+    "conos de deyección"
+   ],
+   "en": [
+    "alluvial fan"
+   ],
+   "cat": "agua",
+   "d": "Abanico de piedras y tierra que deja un torrente donde sale a un valle más llano.",
+   "de": "A fan of stones and earth left by a torrent where it comes out into a flatter valley.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Cono de deyección»",
+     "u": "https://es.wikipedia.org/wiki/Cono_de_deyecci%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "lengua-glaciar",
+   "t": "Lengua glaciar",
+   "te": "Glacier tongue",
+   "es": [
+    "lengua glaciar",
+    "lengua del glaciar"
+   ],
+   "en": [
+    "glacier tongue"
+   ],
+   "cat": "glaciares",
+   "d": "La parte del glaciar que baja por el valle desde el circo hasta donde se funde.",
+   "de": "The part of a glacier that flows down the valley from the cirque to where it melts.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Lengua glaciar»",
+     "u": "https://es.wikipedia.org/wiki/Lengua_glaciar"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "flanqueo",
+   "t": "Flanqueo",
+   "te": "Traverse (across a slope)",
+   "es": [
+    "flanqueo",
+    "flanquear"
+   ],
+   "en": [],
+   "cat": "progresion",
+   "d": "Avanzar en horizontal o en diagonal por una ladera, sin subir ni bajar mucho. Con nieve dura es delicado: un resbalón no se para solo.",
+   "de": "Moving sideways or diagonally across a slope without much climbing or descending. On hard snow it is delicate: a slip will not stop by itself.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "travesia",
+   "t": "Travesía",
+   "te": "Traverse",
+   "es": [
+    "travesía"
+   ],
+   "en": [
+    "traverse"
+   ],
+   "cat": "progresion",
+   "d": "Recorrido que va de un sitio a otro sin volver por el mismo camino, o que encadena varias cimas por una cresta.",
+   "de": "A route from one place to another without returning the same way, or linking several summits along a ridge.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "aproximacion",
+   "t": "Aproximación",
+   "te": "Approach",
+   "es": [
+    "aproximación"
+   ],
+   "en": [
+    "approach"
+   ],
+   "cat": "progresion",
+   "d": "Camino desde el coche o el refugio hasta el pie de la parte difícil o de la montaña.",
+   "de": "The walk from the car or hut to the foot of the difficult section or the mountain.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "hito",
+   "t": "Hito o fito",
+   "te": "Cairn",
+   "es": [
+    "fito",
+    "mojón",
+    "mojones"
+   ],
+   "en": [
+    "cairn"
+   ],
+   "cat": "progresion",
+   "d": "Montón de piedras que marca el camino o un punto. En aragonés, «fito». Con niebla son muy útiles, pero a veces hay hitos que llevan a otro sitio.",
+   "de": "A pile of stones marking the way or a point. In Aragonese, «fito». Very useful in fog, but some cairns lead somewhere else.",
+   "fuentes": [
+    {
+     "n": "Aragonario (Gobierno de Aragón), «fito»",
+     "u": "https://aragonario.aragon.es/search/?q=fito&l=ar-es"
+    },
+    {
+     "n": "Wikipedia, «Mojón»",
+     "u": "https://es.wikipedia.org/wiki/Moj%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "paso-clave",
+   "t": "Paso clave",
+   "te": "Crux",
+   "es": [
+    "paso clave"
+   ],
+   "en": [
+    "crux"
+   ],
+   "cat": "progresion",
+   "d": "El tramo más difícil de una ruta, el que marca su dificultad: el Paso de Mahoma en el Aneto, por ejemplo.",
+   "de": "The hardest section of a route, the one that sets its grade: the Paso de Mahoma on Aneto, for example.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "rapel",
+   "t": "Rápel",
+   "te": "Abseil",
+   "es": [
+    "rápel",
+    "rapel",
+    "rápeles"
+   ],
+   "en": [
+    "abseil",
+    "rappel"
+   ],
+   "cat": "progresion",
+   "d": "Bajar por una cuerda sujeta arriba, frenando con un aparato. Hace falta material y saber hacerlo.",
+   "de": "Descending a rope anchored above, braking with a device. It needs gear and training.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Rápel»",
+     "u": "https://es.wikipedia.org/wiki/R%C3%A1pel"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "crampones",
+   "t": "Crampones",
+   "te": "Crampons",
+   "es": [
+    "crampón",
+    "crampones"
+   ],
+   "en": [
+    "crampon",
+    "crampons"
+   ],
+   "cat": "progresion",
+   "d": "Puntas de metal que se sujetan a las botas para andar por nieve dura o hielo.",
+   "de": "Metal spikes fixed to the boots for walking on hard snow or ice.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Crampón»",
+     "u": "https://es.wikipedia.org/wiki/Cramp%C3%B3n"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "piolet",
+   "t": "Piolet",
+   "te": "Ice axe",
+   "es": [
+    "piolet",
+    "piolets"
+   ],
+   "en": [
+    "ice axe"
+   ],
+   "cat": "progresion",
+   "d": "Herramienta para la nieve y el hielo: apoyo al andar, para tallar y para frenar un resbalón. Hay que saber usarlo antes de necesitarlo.",
+   "de": "A tool for snow and ice: support while walking, for cutting steps and for stopping a slip. Learn to use it before you need it.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Piolet»",
+     "u": "https://es.wikipedia.org/wiki/Piolet"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "grado",
+   "t": "Grado de dificultad",
+   "te": "Grade",
+   "es": [
+    "grado"
+   ],
+   "en": [
+    "grade"
+   ],
+   "cat": "progresion",
+   "d": "Escala que dice lo difícil que es una ruta o un paso. En alpinismo: F (fácil), PD (poco difícil), AD (algo difícil), D (difícil)…; en escalada, números del I al IX.",
+   "de": "A scale saying how hard a route or a move is. In mountaineering: F (easy), PD, AD, D…; in climbing, numbers from I to IX.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "mide",
+   "t": "MIDE",
+   "te": "MIDE",
+   "es": [
+    "MIDE"
+   ],
+   "en": [
+    "MIDE"
+   ],
+   "cat": "progresion",
+   "d": "Método para informar de excursiones: valora del 1 al 5 el medio, el itinerario, el desplazamiento y el esfuerzo. Los tiempos de marcha de la web se calculan con su regla.",
+   "de": "A system for rating hikes: it scores environment, route-finding, terrain and effort from 1 to 5. The walking times on this website use its rule.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "curva-nivel",
+   "t": "Curva de nivel",
+   "te": "Contour line",
+   "es": [
+    "curva de nivel",
+    "curvas de nivel"
+   ],
+   "en": [
+    "contour line"
+   ],
+   "cat": "mapas",
+   "d": "Línea del mapa que une los puntos de la misma altura. Cuanto más juntas, más empinado es el terreno.",
+   "de": "A line on a map joining points of the same height. The closer together, the steeper the ground.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Curva de nivel»",
+     "u": "https://es.wikipedia.org/wiki/Curva_de_nivel"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "equidistancia",
+   "t": "Equidistancia",
+   "te": "Contour interval",
+   "es": [
+    "equidistancia"
+   ],
+   "en": [
+    "contour interval"
+   ],
+   "cat": "mapas",
+   "d": "Diferencia de altura entre dos curvas de nivel seguidas de un mapa: en los mapas de montaña suele ser de 10 o 20 m.",
+   "de": "The height difference between two consecutive contour lines: usually 10 or 20 m on mountain maps.",
+   "fuentes": [],
+   "fiab": "revisada"
+  },
+  {
+   "id": "cota",
+   "t": "Cota",
+   "te": "Spot height",
+   "es": [
+    "cota"
+   ],
+   "en": [
+    "spot height"
+   ],
+   "cat": "mapas",
+   "d": "Altura de un punto marcada en el mapa. A una cumbre sin nombre se la llama a veces por su cota.",
+   "de": "The height of a point marked on a map. An unnamed summit is sometimes called by its height.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "rumbo",
+   "t": "Rumbo o acimut",
+   "te": "Bearing",
+   "es": [
+    "rumbo",
+    "acimut",
+    "azimut"
+   ],
+   "en": [
+    "bearing",
+    "azimuth"
+   ],
+   "cat": "mapas",
+   "d": "Dirección hacia la que vas, medida en grados desde el norte (0° norte, 90° este…). Con niebla, seguir un rumbo con brújula puede sacarte del lío.",
+   "de": "The direction you are heading, measured in degrees from north (0° north, 90° east…). In fog, following a compass bearing can get you out of trouble.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Acimut»",
+     "u": "https://es.wikipedia.org/wiki/Acimut"
+    },
+    {
+     "n": "Wikipedia, «Rumbo»",
+     "u": "https://es.wikipedia.org/wiki/Rumbo"
+    }
+   ],
+   "fiab": "documentada",
+   "ficha": false
+  },
+  {
+   "id": "prominencia",
+   "t": "Prominencia",
+   "te": "Prominence",
+   "es": [
+    "prominencia"
+   ],
+   "en": [
+    "prominence"
+   ],
+   "cat": "mapas",
+   "d": "Lo que sobresale una cumbre por encima del collado más alto que la une a otra cumbre mayor. Sirve para distinguir montañas de simples puntas.",
+   "de": "How far a summit rises above the highest col linking it to a higher summit. It helps tell mountains from mere points.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Prominencia»",
+     "u": "https://es.wikipedia.org/wiki/Prominencia"
+    }
+   ],
+   "fiab": "documentada"
+  },
+  {
+   "id": "desnivel",
+   "t": "Desnivel",
+   "te": "Elevation gain",
+   "es": [
+    "desnivel"
+   ],
+   "en": [
+    "elevation gain"
+   ],
+   "cat": "mapas",
+   "d": "Metros que se suben (o se bajan) en una ruta. Cuenta más que la distancia para saber el esfuerzo.",
+   "de": "The metres climbed (or descended) on a route. It matters more than distance for judging the effort.",
+   "fuentes": [],
+   "fiab": "revisada",
+   "ficha": false
+  },
+  {
+   "id": "mdt",
+   "t": "Modelo digital del terreno",
+   "te": "Digital terrain model",
+   "es": [
+    "modelo digital del terreno",
+    "MDT"
+   ],
+   "en": [
+    "digital terrain model",
+    "DTM"
+   ],
+   "cat": "mapas",
+   "d": "El relieve guardado como una rejilla de alturas. El mapa 3D de esta web está hecho con el MDT del Instituto Geográfico Nacional.",
+   "de": "Terrain stored as a grid of heights. The 3D map on this website is built from the Spanish National Geographic Institute's terrain model.",
+   "fuentes": [
+    {
+     "n": "Wikipedia, «Modelo digital del terreno»",
+     "u": "https://es.wikipedia.org/wiki/Modelo_digital_del_terreno"
+    }
+   ],
+   "fiab": "documentada"
   }
  ]
 }

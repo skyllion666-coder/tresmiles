@@ -8,12 +8,12 @@ export function crearEnciclopedia({ enIngles = false, cumbres = () => [], lugare
   let dlg = null, datos = null;
   const T = enIngles ? {
     tit: 'Mountain words', cerrar: 'Close', buscar: 'Search a word…', todas: 'All', pir: 'Pyrenees', pirT: 'Word of the Pyrenees or of Aragon',
-    intro: 'The words used to describe the terrain of the Aragonese Pyrenees, with their meaning. Those marked «Pyrenees» are local words that are kept in place names. In the summit pages these words are underlined: tap them to see what they mean.',
+    intro: 'The words used to describe the terrain, weather and ways of the Aragonese Pyrenees, with their meaning. Those marked «Pyrenees» are local words that are kept in place names. In the summit pages these words are underlined: tap them to see what they mean.',
     ej: 'On the map:', fuente: 'Source:', pend: 'Reviewed definition; source pending.', prob: 'Probable: still to be confirmed.', nada: 'No word matches the search.',
     pie: 'Definitions written for Tresmiles from the sources linked under each word (mostly Aragonario, the Spanish–Aragonese dictionary of the Government of Aragon). The dictionary is being expanded with documented sources; if you see a mistake, tell us (Contribute, in any summit page).',
   } : {
     tit: 'Palabras de la montaña', cerrar: 'Cerrar', buscar: 'Busca una palabra…', todas: 'Todas', pir: 'Pirineo', pirT: 'Palabra del Pirineo o de Aragón',
-    intro: 'Las palabras con las que se describe el terreno del Pirineo aragonés, con lo que significan. Las marcadas «Pirineo» son palabras de aquí, que se conservan en los nombres de los lugares. En las fichas de las cumbres estas palabras salen subrayadas: tócalas para ver qué significan.',
+    intro: 'Las palabras con las que se describen el terreno, el tiempo y los usos del Pirineo aragonés, con lo que significan. Las marcadas «Pirineo» son palabras de aquí, que se conservan en los nombres de los lugares. En las fichas de las cumbres estas palabras salen subrayadas: tócalas para ver qué significan.',
     ej: 'En el mapa:', fuente: 'Fuente:', pend: 'Definición revisada; fuente pendiente.', prob: 'Probable: falta confirmarlo.', nada: 'Ninguna palabra coincide con la búsqueda.',
     pie: 'Definiciones redactadas para Tresmiles a partir de las fuentes enlazadas en cada palabra (sobre todo Aragonario, el diccionario castellano–aragonés del Gobierno de Aragón). El diccionario se está ampliando con fuentes documentadas; si ves un error, dínoslo (Colabora, en cualquier ficha).',
   };
