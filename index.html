@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 427;
+  window.WEB_V = 428;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -22,7 +22,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Tresmiles">
-  <link rel="stylesheet" href="css/style.css?v=103">
+  <link rel="stylesheet" href="css/style.css?v=104">
   <link rel="stylesheet" href="css/cine.css?v=6">
   <script>
     // introducción: solo la primera vez (o con ?intro / «Ver introducción»); nunca con ?directo ni, salvo que se pida, con
@@ -65,7 +65,8 @@
       <button class="cta cta-2" id="btn-start" type="button">Explorar todo el mapa</button>
     </div>
     <p class="firma">Creado por SKYLLION (FRANK)</p>
-    <a class="descarga-app" id="descarga-app" href="https://github.com/skyllion666-coder/tresmiles/releases/latest/download/tresmiles.apk" hidden>Descargar la app para Android <small>sin conexión · 525 MB</small></a>
+    <a class="descarga-app" id="descarga-app" href="https://github.com/skyllion666-coder/tresmiles/releases/latest/download/tresmiles.apk" hidden>Descargar la app para Android <small>sin conexión · 540 MB</small></a>
+    <a class="descarga-minima" id="descarga-minima" href="https://github.com/skyllion666-coder/tresmiles/releases/latest/download/tresmiles-minima.apk" hidden>Versión ligera para móviles con poco espacio <small>238 MB</small></a>
   </section>
 
   <div id="zona-carga" role="status" hidden></div>
@@ -140,8 +141,8 @@
   <script>window.goatcounter = { path: () => '/tresmiles' };</script>
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script>window.DATOS_V = 254;</script>
-  <script type="module" src="js/i18n.js?v=37"></script>
-  <script type="module" src="js/main.js?v=427"></script>
+  <script type="module" src="js/i18n.js?v=38"></script>
+  <script type="module" src="js/main.js?v=428"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>
