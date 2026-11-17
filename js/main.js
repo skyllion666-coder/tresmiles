@@ -12,7 +12,7 @@ import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=77';
-import { crearPanorama } from './panorama.js?v=26';
+import { crearPanorama } from './panorama.js?v=27';
 import { crearUbicacion } from './ubicacion.js?v=25';
 import { crearSeguridad } from './seguridad.js?v=22';
 import { crearPaquete } from './paquete.js?v=9';
@@ -20,10 +20,10 @@ import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=21';
+import { crearRealidad } from './realidad.js?v=22';
 import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=40';
+import { t, EN_INGLES } from './i18n.js?v=41';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -2233,7 +2233,7 @@ async function boot() {
   requestAnimationFrame(frame);
   await window.Carga?.fin();   // el 100 % se ve un instante antes de abrir el mapa
   document.body.classList.remove('is-loading');
-  window.tresmiles = { tiempo, scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas };
+  window.tresmiles = { tiempo, scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas, panorama };
 }
 
 boot().catch((err) => {

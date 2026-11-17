@@ -597,6 +597,8 @@ body.selector-abierto #intro { z-index: 31; }
 #ra video { object-fit: cover; }
 #ra header { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: flex-start; gap: 10px; padding: calc(10px + var(--sa-top, env(safe-area-inset-top))) 12px 10px 16px; background: linear-gradient(rgba(10,16,15,.6), rgba(10,16,15,0)); pointer-events: none; }
 #ra-ayuda { flex: 1; margin: 6px 0 0; font: 500 .78rem/1.35 var(--cond); color: #f7f2e4; text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+#ra-encajar { pointer-events: auto; align-self: flex-start; margin: 2px 8px 0 0; height: 44px; padding: 0 16px; border-radius: 22px; border: 1px solid rgba(247,242,228,.6); background: rgba(36,48,44,.8); color: #f7f2e4; font: 600 .78rem var(--cond); letter-spacing: .08em; text-transform: uppercase; }
+#ra-encajar:disabled { opacity: .7; }
 #ra-cerrar { pointer-events: auto; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(36,48,44,.8); color: #f7f2e4; font-size: 1.6rem; line-height: 1; }
 #ra-apunta { position: absolute; left: 50%; bottom: calc(26px + var(--sa-bottom, env(safe-area-inset-bottom))); transform: translateX(-50%); padding: 8px 16px; border-radius: 12px; background: rgba(36,48,44,.88); color: #f7f2e4; text-align: center; pointer-events: none; }
 #ra-apunta[hidden] { display: none; }

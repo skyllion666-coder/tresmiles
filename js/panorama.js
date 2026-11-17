@@ -2,7 +2,7 @@
 // Cálculo propio con el relieve de 120 m (nivel 4 de los bloques, ~1 MB, se pide la primera vez); no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=40';
+import { t, EN_INGLES } from './i18n.js?v=41';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const COLORES = ['#2f4c45', '#4a6a60', '#6d8b85', '#93a9ac', '#b8c7ce'];   // de cerca a lejos (más lejos = más claro, como la bruma)
@@ -33,12 +33,32 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   function cargaN4() {
     return (n4 ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/h/c_${k % meta.nci}_${Math.floor(k / meta.nci)}_4.bin`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b ? new Uint16Array(b) : null)).catch(() => null))));
   }
-  function sampler(bloques) {
+  // relieve de 30 m (nivel 1) de los bloques a menos de FINO m de (x0, z0): lo cercano a quien mira (y su propia altura) decide la silueta
+  const FINO = 4000, dim1 = CH + 3;
+  async function cargaFino(x0, z0) {
+    const fino = new Map(), pide = [];
+    for (const [dx, dz] of [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, 0]]) {
+      const fc = (x0 + dx * FINO + geo.W / 2) / geo.dx, fr = (z0 + dz * FINO + geo.oz) / geo.dz;
+      const i = Math.floor(fc / CH), j = Math.floor(fr / CH), k = j * meta.nci + i;
+      if (i < 0 || j < 0 || i >= meta.nci || j >= meta.ncj || fino.has(k)) continue;
+      fino.set(k, null);
+      pide.push(fetch(`${store.base}/h/c_${i}_${j}_1.bin${store.vdesde != null && j >= store.vdesde ? `?v=${store.v}` : ''}`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => { if (b && b.byteLength === dim1 * dim1 * 2) fino.set(k, new Uint16Array(b)); }).catch(() => {}));
+    }
+    await Promise.all(pide);
+    return fino;
+  }
+  function sampler(bloques, fino = null, ox = 0, oz = 0) {
     const maxC = meta.nci * CH, maxR = meta.ncj * CH;
     return (x, z) => {
       let fc = (x + geo.W / 2) / geo.dx, fr = (z + geo.oz) / geo.dz;
       fc = fc < 0 ? 0 : fc > maxC ? maxC : fc; fr = fr < 0 ? 0 : fr > maxR ? maxR : fr;
-      const i = Math.min(meta.nci - 1, Math.floor(fc / CH)), j = Math.min(meta.ncj - 1, Math.floor(fr / CH)), a = bloques[j * meta.nci + i];
+      const i = Math.min(meta.nci - 1, Math.floor(fc / CH)), j = Math.min(meta.ncj - 1, Math.floor(fr / CH));
+      const f1 = fino && Math.abs(x - ox) < FINO && Math.abs(z - oz) < FINO ? fino.get(j * meta.nci + i) : null;
+      if (f1) {
+        const lx = fc - i * CH + 1, ly = fr - j * CH + 1, x1 = Math.min(dim1 - 2, Math.floor(lx)), y1 = Math.min(dim1 - 2, Math.floor(ly)), tx = lx - x1, ty = ly - y1, k = y1 * dim1 + x1;
+        return ((f1[k] * (1 - tx) + f1[k + 1] * tx) * (1 - ty) + (f1[k + dim1] * (1 - tx) + f1[k + dim1 + 1] * tx) * ty) * meta.hscale;
+      }
+      const a = bloques[j * meta.nci + i];
       if (!a) return store.sample(fc, fr) * meta.hscale;
       const lx = (fc - i * CH) / 4 + 1, ly = (fr - j * CH) / 4 + 1, x0 = Math.min(dim4 - 2, Math.floor(lx)), y0 = Math.min(dim4 - 2, Math.floor(ly)), tx = lx - x0, ty = ly - y0, k = y0 * dim4 + x0;
       return ((a[k] * (1 - tx) + a[k + 1] * tx) * (1 - ty) + (a[k + dim4] * (1 - tx) + a[k + dim4 + 1] * tx) * ty) * meta.hscale;
@@ -227,11 +247,12 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     cv.width = 1;
     const bloques = await cargaN4(); if (tok !== token) return;
     await new Promise((r) => setTimeout(r, 30)); if (tok !== token) return;
-    const alt = sampler(bloques), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
+    const fino = op.desdeAqui ? await cargaFino(p.q.x, p.q.z) : null; if (tok !== token) return;
+    const alt = sampler(bloques, fino, p.q.x, p.q.z), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
     if (tok !== token) return;
     const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520); ctxP = { p, res, g };
     el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
-    el.querySelector('#pan-nota').textContent = t('Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
+    el.querySelector('#pan-nota').textContent = t(op.desdeAqui ? 'Orientativo: calculado con el relieve de 30 m alrededor de ti y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.' : 'Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
     centraEn(sc, g, res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }

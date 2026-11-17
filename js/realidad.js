@@ -2,7 +2,8 @@
 // de las cumbres calculados por el panorama desde tu posición (res = { sil, vis } de panorama.js). Hacia dónde y cuánto inclinas el móvil sale
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
-import { leeOrientacion } from './panorama.js?v=26';
+import { leeOrientacion } from './panorama.js?v=27';
+import { t } from './i18n.js?v=41';
 
 const RAD = Math.PI / 180, AZ_PASO = 0.25;
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* nada */ } } };
@@ -13,15 +14,18 @@ const dif = (a, b) => ((a - b + 540) % 360) - 180;   // diferencia de rumbos en 
 export function crearRealidad({ esc, abrirFicha }) {
   let el = null, res = null, stream = null, raf = 0, vez = 0;
   // FOV_LARGO: ángulo de visión del lado largo de la imagen de la cámara (24 mm equivalentes, 4:3 ≈ 69°)
-  const st = { rumbo: null, elev: null, abs: false, offAz: 0, offEl: 0, fov: Number(store.get('tresmiles-ra-fov')) || 69, cajas: [] };
+  // fov: el que ajustó el usuario pellizcando; si no, el de la cámara del móvil (la app lo lee de Android); si no, 69°
+  const fovApp = () => { try { return Number(window.TresmilesApp?.camaraFov?.()) || 0; } catch { return 0; } };
+  const st = { rumbo: null, elev: null, giro: 0, abs: false, offAz: 0, offEl: 0, fov: Number(store.get('tresmiles-ra-fov2')) || fovApp() || 69, cajas: [] };
 
   function crea() {
-    el = document.createElement('div'); el.id = 'ra'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Montañas por la cámara'); el.hidden = true;
+    el = document.createElement('div'); el.id = 'ra'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', t('Montañas por la cámara')); el.hidden = true;
     el.innerHTML = `<video id="ra-video" playsinline muted autoplay></video><canvas id="ra-canvas"></canvas>
-      <header><p id="ra-ayuda">Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.</p><button type="button" id="ra-cerrar" aria-label="Cerrar la cámara">×</button></header>
+      <header><p id="ra-ayuda"${t('Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.')}</p><button type="button" id="ra-encajar"${t('Encajar')}</button><button type="button" id="ra-cerrar" aria-label="${t('Cerrar la cámara')}">×</button></header>
       <div id="ra-apunta" hidden><b></b><span></span></div>`;
     document.body.appendChild(el);
     el.querySelector('#ra-cerrar').addEventListener('click', cerrar);
+    el.querySelector('#ra-encajar').addEventListener('click', encajar);
     const cv = el.querySelector('#ra-canvas');
     // arrastrar: desplaza la silueta (corrige el error de la brújula); pellizcar: ángulo de visión; tocar un nombre: su ficha
     const dedos = new Map(); let ini = null;
@@ -29,15 +33,19 @@ export function crearRealidad({ esc, abrirFicha }) {
     cv.addEventListener('pointermove', (e) => {
       if (!dedos.has(e.pointerId) || !ini) return; dedos.set(e.pointerId, { x: e.clientX, y: e.clientY });
       const f = focal();
-      if (dedos.size >= 2) { const d = distDedos(); if (ini.d && d) { st.fov = Math.min(110, Math.max(25, ini.fov * ini.d / d)); ini.movido = true; } return; }
+      if (dedos.size >= 2) { const d = distDedos(); if (ini.d && d) { st.fov = Math.min(110, Math.max(25, ini.fov * ini.d / d)); ini.movido = true; ini.zoom = true; } return; }
       const dx = e.clientX - ini.x, dy = e.clientY - ini.y; if (Math.hypot(dx, dy) > 6) ini.movido = true;
       st.offAz = ini.offAz - Math.atan(dx / f) / RAD; st.offEl = ini.offEl + Math.atan(dy / f) / RAD;
     });
     const suelta = (e) => {
       dedos.delete(e.pointerId);
       if (!dedos.size && ini) {
-        store.set('tresmiles-ra-fov', st.fov.toFixed(1));
-        if (!ini.movido) { const c = st.cajas.find((c) => e.clientX >= c.x && e.clientX <= c.x + c.w && e.clientY >= c.y && e.clientY <= c.y + c.h); if (c) { cerrar(); abrirFicha(c.id); } }
+        if (ini.zoom) store.set('tresmiles-ra-fov2', st.fov.toFixed(1));
+        if (!ini.movido) {   // el toque, al marco sin girar en el que están las cajas de los nombres
+          const W = innerWidth, H = innerHeight, c0 = Math.cos(-st.giro), s0 = Math.sin(-st.giro), dx = e.clientX - W / 2, dy = e.clientY - H / 2;
+          const tx = W / 2 + dx * c0 - dy * s0, ty = H / 2 + dx * s0 + dy * c0;
+          const c = st.cajas.find((c) => tx >= c.x && tx <= c.x + c.w && ty >= c.y && ty <= c.y + c.h); if (c) { cerrar(); abrirFicha(c.id); }
+        }
         ini = null;
       } else if (ini) ini.d = distDedos();
     };
@@ -60,6 +68,10 @@ export function crearRealidad({ esc, abrirFicha }) {
     if (e.beta != null) {   // elevación del eje de la cámara trasera (−Z del móvil): asin(−cos β · cos γ)
       const el2 = Math.asin(Math.max(-1, Math.min(1, -Math.cos(e.beta * RAD) * Math.cos((e.gamma ?? 0) * RAD)))) / RAD;
       st.elev = st.elev == null ? el2 : st.elev + (el2 - st.elev) * 0.25;
+      // giro lateral: hacia dónde queda «arriba» en la pantalla (vector vertical del mundo en ejes del móvil: −cos β · sen γ, sen β)
+      const b = e.beta * RAD, g = (e.gamma ?? 0) * RAD, ux = -Math.cos(b) * Math.sin(g), uy = Math.sin(b);
+      if (Math.hypot(ux, uy) > 0.3) { const gi = Math.atan2(ux, uy) - (screen.orientation?.angle ?? 0) * RAD;   // en horizontal, la pantalla va girada respecto al móvil
+        st.giro += Math.atan2(Math.sin(gi - st.giro), Math.cos(gi - st.giro)) * 0.25; }
     }
   }
 
@@ -69,14 +81,15 @@ export function crearRealidad({ esc, abrirFicha }) {
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     const x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H); st.cajas = [];
     if (!res || st.rumbo == null) return;
+    x.translate(W / 2, H / 2); x.rotate(st.giro); x.translate(-W / 2, -H / 2);   // el horizonte sigue nivelado aunque ladees el móvil
     const f = focal(), rumbo = st.rumbo + st.offAz, elev = (st.elev ?? 0) + st.offEl, NA = res.sil[0].length;
     const aY = (ang, daz) => H / 2 - f * Math.tan((ang - elev) * RAD) / Math.cos(daz * RAD);   // proyección (aprox. para el ángulo vertical)
     // silueta: el horizonte (lo más alto de todas las capas) en cada columna de la pantalla
     x.lineWidth = 2.2; x.lineJoin = 'round'; x.strokeStyle = 'rgba(255,255,255,.9)'; x.shadowColor = 'rgba(0,0,0,.55)'; x.shadowBlur = 4; x.beginPath();
-    for (let px = 0; px <= W; px += 3) {
+    for (let px = -Math.round(W * 0.4); px <= W * 1.4; px += 3) {
       const daz = Math.atan((px - W / 2) / f) / RAD, i = ((Math.round((rumbo + daz) / AZ_PASO) % NA) + NA) % NA;
       let a = -90; for (const b of res.sil) if (b[i] > a) a = b[i];
-      const py = aY(a, daz); if (px === 0) x.moveTo(px, py); else x.lineTo(px, py);
+      const py = aY(a, daz); if (px === -Math.round(W * 0.4)) x.moveTo(px, py); else x.lineTo(px, py);
     }
     x.stroke(); x.shadowBlur = 0;
     // nombres: de más a menos importante, sin pisarse; una línea fina baja hasta la cumbre
@@ -104,6 +117,52 @@ export function crearRealidad({ esc, abrirFicha }) {
     if (mejor) { ap.querySelector('b').textContent = mejor.p.nombre; ap.querySelector('span').textContent = `${fmtM(mejor.p.altitud)} · ${fmtKm(mejor.d)}`; }
   }
 
+  // — «Encajar»: busca en la imagen de la cámara dónde acaba el cielo y desplaza la silueta (rumbo y altura) hasta que case con él —
+  const lienzo = document.createElement('canvas');
+  const horizonteEn = (az) => { const NA = res.sil[0].length, i = ((Math.round(az / AZ_PASO) % NA) + NA) % NA; let a = -90; for (const b of res.sil) if (b[i] > a) a = b[i]; return a; };
+  function bordeCielo() {   // [{ daz, rel, rumbo, elev }]: en cada columna, el ángulo (respecto al centro) donde la imagen pasa de cielo a montaña
+    const v = el.querySelector('#ra-video'); if (!v.videoWidth || st.rumbo == null || st.elev == null) return [];
+    const W = innerWidth, H = innerHeight, cw = 120, ch = Math.round(cw * H / W), f = focal();
+    lienzo.width = cw; lienzo.height = ch; const x = lienzo.getContext('2d', { willReadFrequently: true });
+    const s = Math.max(cw / v.videoWidth, ch / v.videoHeight); x.drawImage(v, (cw - v.videoWidth * s) / 2, (ch - v.videoHeight * s) / 2, v.videoWidth * s, v.videoHeight * s);
+    const px = x.getImageData(0, 0, cw, ch).data, out = [], val = new Float32Array(ch);
+    for (let c = 0; c < cw; c++) {
+      let tot = 0;
+      for (let r = 0; r < ch; r++) { const k = (r * cw + c) * 4; val[r] = 0.3 * px[k] + 0.6 * px[k + 1] + 0.1 * px[k + 2] + 0.6 * (px[k + 2] - px[k]); tot += val[r]; }   // brillo + azul: el cielo, arriba
+      let arriba = 0, mejor = 0, rm = -1;
+      for (let r = 1; r < ch - 2; r++) {
+        arriba += val[r - 1]; const n1 = r, n2 = ch - r, d = arriba / n1 - (tot - arriba) / n2, sc = d * Math.sqrt(n1 * n2 / ch);
+        if (sc > mejor) { mejor = sc; rm = r; }
+      }
+      if (rm < 2 || mejor < 40 * Math.sqrt(ch / 4)) continue;   // sin un salto claro de cielo a montaña
+      const pxs = (c + 0.5) * W / cw, pys = rm * H / ch, daz = Math.atan((pxs - W / 2) / f) / RAD;
+      out.push({ daz, rel: Math.atan((H / 2 - pys) * Math.cos(daz * RAD) / f) / RAD, rumbo: st.rumbo, elev: st.elev });
+    }
+    return out;
+  }
+  async function encajar() {
+    const b = el.querySelector('#ra-encajar'), ayuda = el.querySelector('#ra-ayuda'); if (b.disabled || !res) return;
+    if (Math.abs(st.giro) > 0.12) { ayuda.textContent = t('Sujeta el móvil recto (sin ladearlo) y apunta a un horizonte de montañas con cielo detrás.'); return; }
+    b.disabled = true; b.textContent = t('Buscando…');
+    const m = [];
+    for (let k = 0; k < 5; k++) { m.push(...bordeCielo()); await new Promise((r) => setTimeout(r, 160)); }
+    let mejor = null;
+    if (m.length >= 40) {
+      const prueba = (dAz) => {
+        const r = m.map((o) => o.elev + o.rel - horizonteEn(o.rumbo + dAz + o.daz)).sort((a, c) => a - c), med = r[r.length >> 1];
+        let coste = 0, bien = 0; for (const v of r) { const e = Math.abs(v - med); coste += Math.min(e, 3); if (e < 0.8) bien++; }
+        return { dAz, med, coste: coste / r.length, bien: bien / r.length };
+      };
+      for (let d = -30; d <= 30; d += 0.5) { const p = prueba(d); if (!mejor || p.coste < mejor.coste) mejor = p; }
+      for (let d = mejor.dAz - 0.5; d <= mejor.dAz + 0.5; d += 0.1) { const p = prueba(d); if (p.coste < mejor.coste) mejor = p; }
+    }
+    if (mejor && mejor.bien >= 0.45) {
+      st.offAz = mejor.dAz; st.offEl = -mejor.med;
+      ayuda.textContent = t('Encajado: la brújula se desviaba {g}°. Si aún no casa, arrastra la línea con el dedo.', { g: Math.abs(mejor.dAz).toFixed(0) });
+    } else ayuda.textContent = t('No he podido encajar la silueta: apunta a montañas con el cielo despejado detrás, o arrastra la línea con el dedo.');
+    b.disabled = false; b.textContent = t('Encajar');
+  }
+
   async function abrir(resultado) {
     if (!el) crea();
     res = resultado; st.offAz = 0; st.offEl = 0; st.rumbo = null; st.elev = null; st.abs = false;
@@ -117,10 +176,10 @@ export function crearRealidad({ esc, abrirFicha }) {
       const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
       if (fuera()) { s.getTracks().forEach((t) => t.stop()); return; }   // ya no hace falta: la cámara se apaga en vez de quedarse encendida
       stream = s; const v = el.querySelector('#ra-video'); v.srcObject = stream; await v.play().catch(() => {});
-    } catch { ayuda.textContent = 'No se puede abrir la cámara (¿falta el permiso?). La silueta y los nombres siguen funcionando con la brújula.'; }
+    } catch { ayuda.textContent = t('No se puede abrir la cámara (¿falta el permiso?). La silueta y los nombres siguen funcionando con la brújula.'); }
     if (fuera()) return;
     if (!raf) dibuja();
-    setTimeout(() => { if (!el.hidden && st.rumbo == null) ayuda.textContent = 'Este móvil no da la brújula: no se puede saber hacia dónde apuntas.'; }, 3000);
+    setTimeout(() => { if (!el.hidden && st.rumbo == null) ayuda.textContent = t('Este móvil no da la brújula: no se puede saber hacia dónde apuntas.'); }, 3000);
   }
 
   function cerrar() {
