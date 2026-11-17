@@ -23,7 +23,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=22';
 import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=42';
+import { t, EN_INGLES } from './i18n.js?v=43';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -992,6 +992,16 @@ async function boot() {
       avisoCarga(nombre); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
     },
   });
+  // pestañas de la ficha (no en las fichas sencillas): se recuerda la elegida al pasar a otra cumbre
+  const FICHA_TABS = [['resumen', 'Resumen'], ['rutas', 'Rutas'], ['terreno', 'Terreno'], ['naturaleza', 'Naturaleza'], ['historia', 'Historia']];
+  let fichaTab = 'resumen';
+  function muestraTab(k) {
+    const b = fichaBody.querySelector(`[data-ftab="${k}"]`); if (b?.hidden) k = 'resumen';
+    fichaTab = k;
+    fichaBody.querySelectorAll('[data-ftab]').forEach((x) => x.setAttribute('aria-selected', x.dataset.ftab === k));
+    const conTabs = !!fichaBody.querySelector('.ficha-tabs');
+    fichaBody.querySelectorAll('.ft').forEach((x) => x.classList.toggle('on', !conTabs || x.dataset.tab === k));
+  }
   function fichaHTML(p) {
     const f = fotos[p.foto], n = difN[p.dificultad];
     const vis = visiblePeaks(), i = vis.findIndex((x) => x.id === p.id);
@@ -1018,25 +1028,37 @@ async function boot() {
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
+      ${p.menor ? '' : `<nav class="ficha-tabs" role="tablist">${FICHA_TABS.map(([k, n]) => `<button type="button" role="tab" data-ftab="${k}" aria-selected="${k === fichaTab}"${k === 'historia' && !p.curiosidad && !p.info ? ' hidden' : ''}>${t(n)}</button>`).join('')}</nav>`}
+      <section class="ft" data-tab="resumen">
       <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
-      ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta gl-txt">${esc(p.ruta)}</p>` : ''}
-      ${p.curiosidad ? `<h3>Curiosidad</h3><p class="gl-txt">${esc(p.curiosidad)}</p>` : ''}
-      ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
-      <div class="terreno-hueco"></div>
-      <div class="natura-hueco"></div>
+      ${aportesHTML(p)}
+      ${colaboraHTML(p)}
+      </section>
+      <section class="ft" data-tab="rutas">
+      ${p.ruta ? `<h3>${/^(Esta (cima|cumbre) aparece en la ruta|This summit appears on the route)/.test(p.ruta) ? 'En una ruta de Wikiloc' : 'Ruta normal'}</h3><p class="ruta gl-txt">${esc(p.ruta)}</p>` : ''}
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
       <div class="subidas-hueco"></div>
       <div class="zona-hueco"></div>
-      <div class="glaciar-hueco"></div>
       <div class="nieve-hueco"></div>
       ${p.menor && !p.altitud ? '' : aludesHTML(p)}
       ${p.enlace && !rutasDe(p.id).some((r) => r.ruta.fuenteUrl === p.enlace.url) ? `<p class="enlace-ruta"><a href="${esc(p.enlace.url)}" target="_blank" rel="noopener">${esc(p.enlace.texto)} ↗</a></p>` : ''}
       ${refugiosCerca(p)}
       ${aguaCerca(p)}
-      ${aportesHTML(p)}
-      ${colaboraHTML(p)}
+      </section>
+      <section class="ft" data-tab="terreno">
+      <div class="terreno-hueco"></div>
+      <div class="glaciar-hueco"></div>
+      </section>
+      <section class="ft" data-tab="naturaleza">
+      <div class="natura-hueco"></div>
+      </section>
+      <section class="ft" data-tab="historia">
+      <div class="historia-hueco"></div>
+      ${p.curiosidad ? `<h3>Curiosidad</h3><p class="gl-txt">${esc(p.curiosidad)}</p>` : ''}
+      ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
+      </section>
       ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   // colaborar: abre el correo con el asunto y una plantilla ya puestos (foto, comentario, nombre con el que sale y permiso para publicar).
@@ -1335,7 +1357,7 @@ async function boot() {
     S.active = id; fauna?.setCentro(p.w.x, p.w.z, p.w.y);
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
-    fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
+    fichaBody.innerHTML = fichaHTML(p); muestraTab(fichaTab); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
     tiempo.set(null); pintaMeteo(p);
     subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p); pintaTerreno(p); pintaNaturaleza(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
@@ -1423,6 +1445,7 @@ async function boot() {
     if (fly) goHome();
   }
   fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) openPeak(b.dataset.go); });
+  fichaBody.addEventListener('click', (e) => { const b = e.target.closest('[data-ftab]'); if (!b) return; muestraTab(b.dataset.ftab); const nav = fichaBody.querySelector('.ficha-tabs'); if (nav && fichaBody.scrollTop > nav.offsetTop) fichaBody.scrollTop = nav.offsetTop; });
   $('#ficha-close').addEventListener('click', () => closeFicha());
   // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
   const segPanel = () => document.getElementById('seg-panel');
@@ -1778,6 +1801,15 @@ async function boot() {
   const cargaNatura = () => (naturaDatos ??= fetch(`data/naturaleza.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
   const COBERTURA = { bosque: 'Bosque', matorral: 'Matorral', pasto: 'Pasto', roca: 'Roca y pedregal', nieve: 'Nieve y hielo', agua: 'Agua' };
   const GRUPOS_NAT = [['aves', 'Aves'], ['mamiferos', 'Mamíferos'], ['mariposas', 'Mariposas y polillas'], ['reptiles', 'Reptiles'], ['anfibios', 'Anfibios'], ['plantas', 'Plantas']];
+  const LENGUA_WP = { es: 'castellano', en: 'inglés', fr: 'francés' };
+  function pintaHistoria(h) {
+    const hueco = fichaBody.querySelector('.historia-hueco'); if (!hueco) return;
+    if (!h) { hueco.innerHTML = ''; return; }
+    const orden = EN_INGLES ? ['en', 'fr', 'es'] : ['es', 'fr', 'en'];
+    hueco.innerHTML = `<h3>${t('Primera ascensión')}</h3><ul class="historia">${orden.filter((l) => h.fuentes[l]).map((l) => `<li><p>${esc(h.fuentes[l].t)}</p><small>${t('Según Wikipedia en {l}', { l: t(LENGUA_WP[l]) })}, «<a href="https://${l}.wikipedia.org/wiki/${encodeURIComponent(h.fuentes[l].art.replace(/ /g, '_'))}" target="_blank" rel="noopener">${esc(h.fuentes[l].art)}</a>»</small></li>`).join('')}</ul>
+      ${h.difieren ? `<p class="ruta-credito">${t('Las fuentes no coinciden: se muestran todas tal como las dan.')}</p>` : ''}`;
+    const b = fichaBody.querySelector('[data-ftab="historia"]'); if (b) b.hidden = false;
+  }
   async function pintaNaturaleza(p) {
     const hueco = fichaBody.querySelector('.natura-hueco'); if (!hueco || !p || p.menor) return;
     const d = await cargaNatura(); if (!d || S.active !== p.id) return;
@@ -1788,6 +1820,7 @@ async function boot() {
       if (!o[k]?.length) continue;
       filas.push([t(nom), o[k].map((x) => { const comun = EN_INGLES ? x.en : x.es; return `<a href="https://www.gbif.org/species/${x.key}" target="_blank" rel="noopener">${comun ? `${esc(comun)} <i>(${esc(x.c)})</i>` : `<i>${esc(x.c)}</i>`}</a>`; }).join(' · ')]);
     }
+    pintaHistoria(o.historia);
     hueco.innerHTML = `<h3>${t('Naturaleza')}</h3>
       <dl class="stats terreno natura">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
       <p class="ruta-credito">${o.total ? t('Especies con más observaciones a menos de unos 2 km de la cima ({n} registros en total), según {g}. Que una especie salga aquí no quiere decir que la vayas a ver: depende de la época, la hora y la suerte.', { n: fmt(o.total), g: `<a href="${esc(d.fuentes.gbif.url)}" target="_blank" rel="noopener">GBIF.org</a>` }) : t('Nadie ha registrado observaciones en GBIF a menos de unos 2 km de esta cima.')}${o.ruta ? ` ${t('Cobertura del suelo: {f}.', { f: `<a href="${esc(d.fuentes.cover.url)}" target="_blank" rel="noopener">${esc(d.fuentes.cover.texto)}</a>` })}` : ''}</p>`;

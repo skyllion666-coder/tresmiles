@@ -61,6 +61,8 @@ def frase(n):
     return ' '.join([w[0][:1].upper() + w[0][1:]] + [x if PROPIOS.match(x) else x.lower() for x in w[1:]])
 
 
+f_h = os.path.join(AQUI, 'datos', 'historia.json')
+HIST = json.load(open(f_h)) if os.path.exists(f_h) else {}   # tools/historia.py: primera ascensión según Wikipedia (es, en, fr)
 sal = {}
 for p in picos:
     g = gbif.get(p['id'])
@@ -72,6 +74,9 @@ for p in picos:
             if l: o[k] = l
     r = ruta(p)
     if r: o['ruta'] = r
+    if p['id'] in HIST:
+        h = HIST[p['id']]; anios = {y for v in h.values() for y in re.findall(r'1[6-9]\d\d|20\d\d', v['t'])}
+        o['historia'] = dict(fuentes=h, difieren=len(anios) > 1)
     sal[p['id']] = o
 json.dump(dict(fuentes=dict(
     gbif=dict(texto='GBIF.org', url='https://www.gbif.org/'),
