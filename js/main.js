@@ -23,7 +23,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=22';
 import { crearSelector } from './selector.js?v=23';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=41';
+import { t, EN_INGLES } from './i18n.js?v=42';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1024,6 +1024,7 @@ async function boot() {
       ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       ${figCima(p)}
       <div class="terreno-hueco"></div>
+      <div class="natura-hueco"></div>
       ${rutaHTML(p)}
       ${rutasDe(p.id)[0] ? accesoRuta(rutasDe(p.id)[0].ruta) : p.acceso ? `<h3>${t('Cómo llegar')}</h3><p><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.acceso + ', Huesca')}" target="_blank" rel="noopener">${t('Cómo llegar en coche a {l}', { l: esc(p.acceso) })} ↗</a></p>` : ''}
       <div class="subidas-hueco"></div>
@@ -1336,7 +1337,7 @@ async function boot() {
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
     fichaBody.innerHTML = fichaHTML(p); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
     tiempo.set(null); pintaMeteo(p);
-    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p); pintaTerreno(p);
+    subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p); pintaTerreno(p); pintaNaturaleza(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
     fichaEl.classList.add('is-open'); fichaEl.setAttribute('aria-hidden', 'false'); document.body.classList.add('ficha-open');
     hideHints(); refreshLists();
@@ -1769,6 +1770,27 @@ async function boot() {
     hueco.innerHTML = `<h3>${t('El terreno')}</h3>
       <dl class="stats terreno">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
       <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}${gc ? ` ${t('Geología: {f}, en el punto de la cima; la subida, un punto cada 400 m.', { f: gc.fuente === 'magna' ? `<a href="${esc(d.fuentes.magna.url.replace('{h}', gc.hoja))}" target="_blank" rel="noopener">${esc(d.fuentes.magna.texto.replace('{h}', gc.hoja))}</a>` : `<a href="${esc(d.fuentes.geode.url)}" target="_blank" rel="noopener">${esc(d.fuentes.geode.texto)}</a>` })}` : ''}</p>`;
+    glosario.marca(hueco);
+  }
+
+  // — «Naturaleza» (data/naturaleza.json, tools/fauna_gbif.py + tools/ficha_naturaleza.py): por dónde pasa la subida (ESA WorldCover) y especies observadas cerca (GBIF) —
+  let naturaDatos;
+  const cargaNatura = () => (naturaDatos ??= fetch(`data/naturaleza.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  const COBERTURA = { bosque: 'Bosque', matorral: 'Matorral', pasto: 'Pasto', roca: 'Roca y pedregal', nieve: 'Nieve y hielo', agua: 'Agua' };
+  const GRUPOS_NAT = [['aves', 'Aves'], ['mamiferos', 'Mamíferos'], ['mariposas', 'Mariposas y polillas'], ['reptiles', 'Reptiles'], ['anfibios', 'Anfibios'], ['plantas', 'Plantas']];
+  async function pintaNaturaleza(p) {
+    const hueco = fichaBody.querySelector('.natura-hueco'); if (!hueco || !p || p.menor) return;
+    const d = await cargaNatura(); if (!d || S.active !== p.id) return;
+    const o = d.cumbres[p.id]; if (!o || (!o.total && !o.ruta)) { hueco.innerHTML = ''; return; }
+    const filas = [];
+    if (o.ruta) filas.push([t('Por dónde pasa la subida'), `<span class="gl-txt">${Object.entries(o.ruta.pc).map(([k, v]) => `${t(COBERTURA[k])} ${v} %`).join(' · ')}</span>${o.ruta.bosqueHasta ? `<small>${t('En esta ruta, el bosque llega hasta unos {a} m.', { a: fmt(Math.round(o.ruta.bosqueHasta / 10) * 10) })}</small>` : ''}`]);
+    for (const [k, nom] of GRUPOS_NAT) {
+      if (!o[k]?.length) continue;
+      filas.push([t(nom), o[k].map((x) => { const comun = EN_INGLES ? x.en : x.es; return `<a href="https://www.gbif.org/species/${x.key}" target="_blank" rel="noopener">${comun ? `${esc(comun)} <i>(${esc(x.c)})</i>` : `<i>${esc(x.c)}</i>`}</a>`; }).join(' · ')]);
+    }
+    hueco.innerHTML = `<h3>${t('Naturaleza')}</h3>
+      <dl class="stats terreno natura">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
+      <p class="ruta-credito">${o.total ? t('Especies con más observaciones a menos de unos 2 km de la cima ({n} registros en total), según {g}. Que una especie salga aquí no quiere decir que la vayas a ver: depende de la época, la hora y la suerte.', { n: fmt(o.total), g: `<a href="${esc(d.fuentes.gbif.url)}" target="_blank" rel="noopener">GBIF.org</a>` }) : t('Nadie ha registrado observaciones en GBIF a menos de unos 2 km de esta cima.')}${o.ruta ? ` ${t('Cobertura del suelo: {f}.', { f: `<a href="${esc(d.fuentes.cover.url)}" target="_blank" rel="noopener">${esc(d.fuentes.cover.texto)}</a>` })}` : ''}</p>`;
     glosario.marca(hueco);
   }
 

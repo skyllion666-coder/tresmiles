@@ -3,7 +3,7 @@
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
 import { leeOrientacion } from './panorama.js?v=27';
-import { t } from './i18n.js?v=41';
+import { t } from './i18n.js?v=42';
 
 const RAD = Math.PI / 180, AZ_PASO = 0.25;
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* nada */ } } };
