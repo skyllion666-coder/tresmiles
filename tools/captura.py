@@ -19,7 +19,7 @@ for _ in range(60):   # espera a que geckodriver responda (a veces tarda más de
     except Exception: time.sleep(0.5)
 try:
     # pageLoadStrategy «none»: los módulos con await en el nivel superior retrasan el evento load
-    s = req('POST', '/session', {'capabilities': {'alwaysMatch': {'pageLoadStrategy': 'none', 'moz:firefoxOptions': {'args': [f'-width={ANCHO}', f'-height={ALTO}'], 'prefs': {'webgl.force-enabled': True}}}}})['sessionId']
+    s = req('POST', '/session', {'capabilities': {'alwaysMatch': {'pageLoadStrategy': 'none', 'moz:firefoxOptions': {'args': [f'-width={ANCHO}', f'-height={ALTO}'], 'prefs': {'webgl.force-enabled': True, **json.loads(os.environ.get('PREFS', '{}'))}}}}})['sessionId']
     req('POST', f'/session/{s}/window/rect', {'width': ANCHO, 'height': ALTO})
     req('POST', f'/session/{s}/timeouts', {'script': 120000})
     for nombre, url in (a.split('=', 1) for a in sys.argv[1:]):

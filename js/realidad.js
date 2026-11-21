@@ -2,8 +2,8 @@
 // de las cumbres calculados por el panorama desde tu posición (res = { sil, cres, vis } de panorama.js), y las crestas de dentro como líneas finas. Hacia dónde y cuánto inclinas el móvil sale
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
-import { leeOrientacion } from './panorama.js?v=30';
-import { t } from './i18n.js?v=46';
+import { leeOrientacion } from './panorama.js?v=31';
+import { t, EN_INGLES } from './i18n.js?v=47';
 
 const RAD = Math.PI / 180, AZ_PASO = 0.25;
 const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* nada */ } } };
@@ -21,11 +21,16 @@ export function crearRealidad({ esc, abrirFicha }) {
   function crea() {
     el = document.createElement('div'); el.id = 'ra'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', t('Montañas por la cámara')); el.hidden = true;
     el.innerHTML = `<video id="ra-video" playsinline muted autoplay></video><canvas id="ra-canvas"></canvas>
-      <header><p id="ra-ayuda"${t('Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.')}</p><button type="button" id="ra-encajar"${t('Encajar')}</button><button type="button" id="ra-cerrar" aria-label="${t('Cerrar la cámara')}">×</button></header>
-      <div id="ra-apunta" hidden><b></b><span></span></div>`;
+      <header><p id="ra-ayuda">${t('Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.')}</p><button type="button" id="ra-encajar">${t('Encajar')}</button><button type="button" id="ra-cerrar" aria-label="${t('Cerrar la cámara')}">×</button></header>
+      <div id="ra-apunta" hidden><b></b><span></span></div>
+      <button type="button" id="ra-foto" hidden aria-label="${t('Hacer una foto con los nombres')}"><span></span></button>
+      <div id="ra-foto-aviso" role="status" hidden><span></span><button type="button">${t('Compartir')}</button></div>`;
     document.body.appendChild(el);
     el.querySelector('#ra-cerrar').addEventListener('click', cerrar);
     el.querySelector('#ra-encajar').addEventListener('click', encajar);
+    el.querySelector('#ra-foto').hidden = !puedeFoto();
+    el.querySelector('#ra-foto').addEventListener('click', foto);
+    el.querySelector('#ra-foto-aviso button').addEventListener('click', () => { if (st.ultimaFoto) try { window.TresmilesApp.comparteFoto(st.ultimaFoto); } catch { /* nada */ } });
     const cv = el.querySelector('#ra-canvas');
     // arrastrar: desplaza la silueta (corrige el error de la brújula); pellizcar: ángulo de visión; tocar un nombre: su ficha
     const dedos = new Map(); let ini = null;
@@ -98,7 +103,13 @@ export function crearRealidad({ esc, abrirFicha }) {
     const cv = el.querySelector('#ra-canvas'), dpr = Math.min(devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
     if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
     const x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, W, H); st.cajas = [];
-    if (!res || st.rumbo == null) return;
+    const mejor = capa(x, W, H, false);
+    const ap = el.querySelector('#ra-apunta'); ap.hidden = !mejor;
+    if (mejor) { ap.querySelector('b').textContent = mejor.p.nombre; ap.querySelector('span').textContent = `${fmtM(mejor.p.altitud)} · ${fmtKm(mejor.d)}`; }
+  }
+  // lo que va encima de la imagen (en px de pantalla W × H): perfil, crestas y nombres; devuelve la cumbre del centro. foto: sin cajas para tocar
+  function capa(x, W, H, foto) {
+    if (!res || st.rumbo == null) return null;
     x.translate(W / 2, H / 2); x.rotate(st.giro); x.translate(-W / 2, -H / 2);   // el horizonte sigue nivelado aunque ladees el móvil
     const f = focal(), rumbo = st.rumbo + st.offAz, elev = (st.elev ?? 0) + st.offEl, NA = res.sil[0].length;
     const aY = (ang, daz) => H / 2 - f * Math.tan((ang - elev) * RAD) / Math.cos(daz * RAD);   // proyección (aprox. para el ángulo vertical)
@@ -142,12 +153,46 @@ export function crearRealidad({ esc, abrirFicha }) {
       x.fillStyle = v.p.altitud >= 3000 ? 'rgba(36,48,44,.88)' : 'rgba(36,48,44,.7)'; x.beginPath(); x.roundRect(bx, by, w, h, 7); x.fill();
       x.fillStyle = '#f7f2e4'; x.font = '600 13px "Barlow Semi Condensed", "Barlow", sans-serif'; x.fillText(txt, bx + 7, by + 11);
       x.fillStyle = 'rgba(247,242,228,.75)'; x.font = '500 11px "Barlow Semi Condensed", "Barlow", sans-serif'; x.fillText(`${sub} · ${fmtKm(v.d)}`, bx + 7, by + 25);
-      st.cajas.push({ x: bx, y: by, w, h, id: v.p.id });
+      if (!foto) st.cajas.push({ x: bx, y: by, w, h, id: v.p.id });
     }
     // la cumbre del centro de la pantalla, abajo
     let mejor = null; for (const v of res.vis) { const d = Math.abs(dif(v.az, rumbo)); if (d < 3 && (!mejor || v.score > mejor.score)) mejor = v; }
-    const ap = el.querySelector('#ra-apunta'); ap.hidden = !mejor;
-    if (mejor) { ap.querySelector('b').textContent = mejor.p.nombre; ap.querySelector('span').textContent = `${fmtM(mejor.p.altitud)} · ${fmtKm(mejor.d)}`; }
+    return mejor;
+  }
+
+  // — «Foto»: la imagen de la cámara (a su resolución, lo mismo que se ve en pantalla) con el perfil y los nombres encima y una franja con
+  // la cumbre del centro, la fecha y el lugar; se guarda en la galería (Imágenes/Tresmiles) junto con la foto sin nombres —
+  const puedeFoto = () => typeof window.TresmilesApp?.guardaFoto === 'function';
+  async function foto() {
+    const v = el.querySelector('#ra-video'), W = innerWidth, H = innerHeight;
+    if (!v.videoWidth || !res || st.rumbo == null) { muestraAviso(t('Espera a que se vea la cámara y la línea del perfil.')); return; }
+    const vw = v.videoWidth, vh = v.videoHeight, s = Math.max(W / vw, H / vh), cw = Math.round(W / s), ch = Math.round(H / s), sx = (vw - cw) / 2, sy = (vh - ch) / 2;
+    const k = 1 / s, banda = Math.round(Math.max(44, ch * 0.045));
+    el.classList.add('ra-flash'); setTimeout(() => el.classList.remove('ra-flash'), 180);
+    const limpia = document.createElement('canvas'); limpia.width = cw; limpia.height = ch; limpia.getContext('2d').drawImage(v, sx, sy, cw, ch, 0, 0, cw, ch);
+    const c = document.createElement('canvas'); c.width = cw; c.height = ch + banda; const x = c.getContext('2d');
+    x.drawImage(limpia, 0, 0);
+    x.save(); x.scale(k, k); const mejor = capa(x, W, H, true); x.restore();
+    // franja de abajo
+    x.fillStyle = '#1f3530'; x.fillRect(0, ch, cw, banda);
+    const o = res.origen, f = new Date(), fecha = f.toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+    const lugar = o ? `${Math.abs(o.lat).toFixed(4)} ${o.lat >= 0 ? 'N' : 'S'} · ${Math.abs(o.lon).toFixed(4)} ${o.lon >= 0 ? 'E' : (EN_INGLES ? 'W' : 'O')} · ${fmtM(Math.round(o.alt))}` : '';
+    const izq = [mejor ? t('Mirando a {n}', { n: mejor.p.nombre }) : '', fecha, lugar].filter(Boolean).join('  ·  ');
+    const fs = Math.round(banda * 0.36); x.textBaseline = 'middle';
+    x.font = `600 ${fs}px "Barlow Semi Condensed", "Barlow", sans-serif`; x.fillStyle = '#f7f2e4'; x.textAlign = 'left'; x.fillText(izq, Math.round(banda * 0.35), ch + banda / 2, cw * 0.72);
+    x.font = `700 ${fs}px "Barlow Semi Condensed", "Barlow", sans-serif`; x.fillStyle = '#d99a45'; x.textAlign = 'right'; x.fillText('Tresmiles', cw - Math.round(banda * 0.35), ch + banda / 2);
+    const marca = `${f.getFullYear()}${String(f.getMonth() + 1).padStart(2, '0')}${String(f.getDate()).padStart(2, '0')}_${String(f.getHours()).padStart(2, '0')}${String(f.getMinutes()).padStart(2, '0')}${String(f.getSeconds()).padStart(2, '0')}`;
+    const b64 = (cv) => cv.toDataURL('image/jpeg', 0.92).split(',')[1];
+    let uri = '';
+    try { uri = window.TresmilesApp.guardaFoto(b64(c), `tresmiles_${marca}.jpg`); window.TresmilesApp.guardaFoto(b64(limpia), `tresmiles_${marca}_sin_nombres.jpg`); } catch { uri = ''; }
+    if (!uri) { muestraAviso(t('No se ha podido guardar la foto (en Android 9 o anterior, haz una captura de pantalla).')); return; }
+    st.ultimaFoto = uri;
+    muestraAviso(t('Foto guardada en la galería (Imágenes › Tresmiles), con y sin nombres.'), true);
+  }
+  let tAviso = 0;
+  function muestraAviso(txt, compartir = false) {
+    const a = el.querySelector('#ra-foto-aviso'); a.hidden = false; a.querySelector('span').textContent = txt; a.querySelector('button').hidden = !compartir;
+    clearTimeout(tAviso); tAviso = setTimeout(() => { a.hidden = true; }, 6000);
   }
 
   // — «Encajar»: busca en la imagen de la cámara dónde acaba el cielo y desplaza la silueta (rumbo y altura) hasta que case con él —

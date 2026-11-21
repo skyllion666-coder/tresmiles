@@ -116,6 +116,10 @@ const EN = {
   'Pellizca o usa la rueda para ampliar; arrastra para moverte.': 'Pinch or use the wheel to zoom; drag to move around.', 'Ampliar': 'Zoom in', 'Reducir': 'Zoom out',
   'Escala real': 'True scale', 'Alturas como en una foto': 'Heights as in a photo',
   // — cámara —
+  'Hacer una foto con los nombres': 'Take a photo with the names', 'Compartir': 'Share', 'Mirando a {n}': 'Looking at {n}',
+  'Espera a que se vea la cámara y la línea del perfil.': 'Wait until the camera image and the skyline appear.',
+  'No se ha podido guardar la foto (en Android 9 o anterior, haz una captura de pantalla).': 'The photo could not be saved (on Android 9 or older, take a screenshot).',
+  'Foto guardada en la galería (Imágenes › Tresmiles), con y sin nombres.': 'Photo saved to the gallery (Pictures › Tresmiles), with and without names.',
   'Montañas por la cámara': 'Mountains through the camera', 'Cerrar la cámara': 'Close the camera',
   'Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.': 'Hold the phone upright and point it at the mountains. If the line does not match, drag it with your finger; pinch to zoom.',
   'No se puede abrir la cámara (¿falta el permiso?). La silueta y los nombres siguen funcionando con la brújula.': 'The camera cannot be opened (missing permission?). The skyline and names still work with the compass.',

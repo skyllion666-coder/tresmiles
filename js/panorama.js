@@ -3,7 +3,7 @@
 // Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=46';
+import { t, EN_INGLES } from './i18n.js?v=47';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const SUELO = [null, [50, 74, 46], [98, 104, 66], [124, 124, 80], [136, 130, 122], [238, 242, 248], [72, 98, 116], null, [118, 120, 86]];   // por tipo de WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, -, musgo
@@ -159,7 +159,8 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       const m = unicos.find((u) => Math.hypot(u.p.q.x - v.p.q.x, u.p.q.z - v.p.q.z) < 130 && Math.abs(u.p.altitud - v.p.altitud) <= 25);
       if (m) m.otros.push(v.p.nombre); else unicos.push(v);
     }
-    return { sil, cols, cres, sector, vis: unicos };
+    const origen = { lon: meta.lon0 + (x0 + geo.W / 2) / geo.mLon, lat: meta.lat0 - (z0 + geo.oz) / geo.mLat, alt: h0 - 2 };   // dónde se está (para la franja de la foto de la cámara)
+    return { sil, cols, cres, sector, origen, vis: unicos };
   }
 
   // — dibujo del panorama: un lienzo del tamaño de la pantalla que pinta lo que se mira (rumbo del centro, zoom y altura) —
