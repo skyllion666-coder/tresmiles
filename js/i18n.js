@@ -31,7 +31,7 @@ const EN = {
   'Navegación del mapa': 'Map navigation', 'Vista general': 'Overview', 'Cumbres': 'Summits', 'Explorar las cumbres': 'Explore the summits', 'Explorar el {n}': 'Explore {n}',
   'Filtros': 'Filters', 'Volar por la ruta': 'Fly along the route', 'Detener': 'Stop', 'Activar el sonido ambiente': 'Turn on the ambient sound',
   'Silenciar el sonido y los efectos': 'Mute the sound and effects', 'Activar el sonido y los efectos': 'Turn on the sound and effects',
-  'Cambiar la luz: {n}': 'Change the light: {n}', 'Cambiar la luz: mañana': 'Change the light: morning', 'Mañana': 'Morning', 'Mediodía': 'Midday', 'Tarde': 'Evening', 'Hora real': 'Real time',
+  'Cambiar la luz: {n}': 'Change the light: {n}', 'Cambiar la luz: mañana': 'Change the light: morning', 'Mañana': 'Morning', 'Mediodía': 'Midday', 'Tarde': 'Evening', 'Hora real': 'Real time', 'Claro': 'Clear',
   'Brújula: pulsa para orientar al norte': 'Compass: tap to face north',
   'Girar la vista a la izquierda (mantén pulsado para girar sin parar)': 'Rotate the view left (hold to keep rotating)',
   'Girar la vista a la derecha (mantén pulsado para girar sin parar)': 'Rotate the view right (hold to keep rotating)',

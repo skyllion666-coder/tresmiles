@@ -45,7 +45,7 @@ export function instalaNiebla() {
   float topeB = ( 1450.0 + 700.0 * kB - 1150.0 * surB + 120.0 * ( nbRuido( vFogXZ * 0.00045 ) - 0.5 ) * 2.0 + 40.0 * ( nbRuido( vFogXZ * 0.0021 ) - 0.5 ) * 2.0 ) * 1.3;
   float capaB = 1.0 - smoothstep( topeB - 340.0, topeB, vFogY );
   float vistaB = smoothstep( 700.0, 7000.0, vFogDepth );
-  float bruma = capaB * vistaB * ( 0.10 + 0.82 * kB ) * ( 1.0 - 0.45 * surB );
+  float bruma = capaB * vistaB * ( 0.10 + 0.82 * kB ) * ( 1.0 - 0.45 * surB ) * smoothstep( 0.0, 0.05, kB );   // kB 0 (luz «Claro»): sin bruma
   vec3 colB = mix( mix( fogColor, vec3( 0.93, 0.95, 0.97 ), 0.55 ), vec3( 1.0, 0.82, 0.62 ), tB * 0.55 );
   gl_FragColor.rgb = mix( gl_FragColor.rgb, colB, clamp( bruma, 0.0, 0.92 ) );
 #endif`;

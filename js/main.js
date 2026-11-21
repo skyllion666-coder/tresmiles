@@ -5,26 +5,26 @@ import { Terrain, NCALOR } from './terrain.js?v=32';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=50';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
-import { crearTiempo, tipoTiempo } from './tiempo.js?v=6';
+import { crearTiempo, tipoTiempo } from './tiempo.js?v=7';
 import { HeightStore } from './heights.js?v=2';
 import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
-import { instalaNiebla } from './niebla.js?v=6';
+import { instalaNiebla } from './niebla.js?v=7';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=85';
-import { crearPanorama } from './panorama.js?v=35';
-import { crearPlano } from './plano.js?v=3';
-import { crearUbicacion } from './ubicacion.js?v=33';
-import { crearSeguridad } from './seguridad.js?v=30';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=86';
+import { crearPanorama } from './panorama.js?v=36';
+import { crearPlano } from './plano.js?v=4';
+import { crearUbicacion } from './ubicacion.js?v=34';
+import { crearSeguridad } from './seguridad.js?v=31';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=31';
-import { crearSelector } from './selector.js?v=31';
+import { crearRealidad } from './realidad.js?v=32';
+import { crearSelector } from './selector.js?v=32';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=51';
+import { t, EN_INGLES } from './i18n.js?v=52';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -54,14 +54,16 @@ const LOOK = [
   { top: '#3a6a9e', mid: '#97b8d2', hor: '#d6dde0', fog: '#d6dde0', hemiC: '#f1eee6', hemiG: '#767060', hemiK: 0.70, glow: '#fff4d6', glowK: 0.12, nube: '#ffffff' },
   { top: '#434a82', mid: '#c49aa0', hor: '#f2b88e', fog: '#e0bba6', hemiC: '#ffd8bf', hemiG: '#6a5f5e', hemiK: 0.74, glow: '#ff9a5c', glowK: 0.42, nube: '#ffd3bc' },
   { top: '#08122a', mid: '#16233f', hor: '#2c3a58', fog: '#26314a', hemiC: '#8ea2c8', hemiG: '#1c2130', hemiK: 0.36, glow: '#a8b8ff', glowK: 0.04, nube: '#5a6680' },   // noche
+  { top: '#2c6cb8', mid: '#86b8e0', hor: '#dce8f0', fog: '#dce8f0', hemiC: '#ffffff', hemiG: '#8c877a', hemiK: 0.86, glow: '#ffffff', glowK: 0, nube: '#ffffff' },   // «Claro»: cielo limpio, más luz ambiente (sombras suaves)
 ].map((l) => Object.fromEntries(Object.entries(l).map(([k, v]) => [k, typeof v === 'string' ? new THREE.Color(v) : v])));
 const GRIS = { top: new THREE.Color('#7d8a96'), mid: new THREE.Color('#aab3ba'), hor: new THREE.Color('#c3c8cc'), nube: new THREE.Color('#b4bac0'), c: new THREE.Color() };   // cielo cubierto (tiempo real)
-const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }, { k: 0.25, t: 0 }];   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
+const BRUMA = [{ k: 0.80, t: 0.55 }, { k: 0.10, t: 0 }, { k: 0.42, t: 1 }, { k: 0.25, t: 0 }, { k: 0, t: 0, n: 70000, f: 240000 }];   // n, f: la calima lejana (de dónde a dónde; si no, 24 y 100 km); «Claro», casi nada   // fuerza y tinte cálido de la bruma de valle (js/niebla.js) según la luz
 const SUN = [
   { id: 'manana', nombre: 'Mañana', az: 105, el: 20, col: '#ffd7a8', k: 1.0 },
   { id: 'mediodia', nombre: 'Mediodía', az: 180, el: 52, col: '#ffe9c8', k: 1.08 },
   { id: 'tarde', nombre: 'Tarde', az: 252, el: 18, col: '#ffbf86', k: 1.0 },
   { id: 'ahora', nombre: 'Hora real', az: 180, el: 40, col: '#ffe9c8', k: 1.0 },   // el sol donde está ahora mismo en el Pirineo (de noche, luz de luna y estrellas)
+  { id: 'claro', nombre: 'Claro', az: 315, el: 45, col: '#fffaf2', k: 1.0 },   // para estudiar el terreno: luz del noroeste como el mapa plano y los mapas de papel, sin nubes, bruma ni tiempo
 ];
 
 async function boot() {
@@ -279,7 +281,7 @@ async function boot() {
   }
   controls.addEventListener('start', () => { callaHasta = 0; });   // el usuario mueve el mapa: ya pueden salir los nombres cercanos que quepan
 
-  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, look: { to: LOOK[0], hemiK: 0.74, glowK: 1, ini: false }, bruma: { k: 0.8, t: 0.55, to: BRUMA[0] }, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
+  const S = { mode: 'intro', active: null, flight: null, shift: { x: 0, y: 0 }, shiftTo: { x: 0, y: 0 }, sun: 0, look: { to: LOOK[0], hemiK: 0.74, glowK: 1, ini: false }, bruma: { k: 0.8, t: 0.55, n: 24000, f: 100000, to: BRUMA[0] }, plegada: false, sheetH: null, vuelo: null, hovered: null, filters: { macizo: new Set(), dif: new Set(), alt: 3000, hecho: null }, capa: ['tres', 'menos', 'todos'].includes(store.get('capa')) ? store.get('capa') : 'tres' };
   // capa: qué cumbres se ven en el mapa y en los selectores (tresmiles, las de menos de 3.000 o todas)
   const enCapa = (p) => S.capa === 'todos' || (S.capa === 'menos') === !!p.menor;
 
@@ -1527,7 +1529,7 @@ async function boot() {
   }
   function setSun(i) {
     S.sun = i;
-    const vista = i === 3 ? solReal() : i; S.noche = vista === 3;
+    const vista = i === 3 ? solReal() : i; S.noche = vista === 3; S.claro = i === 4; tiempo.despejado = S.claro;
     const s = SUN[i], az = (s.az * Math.PI) / 180, el = (s.el * Math.PI) / 180;
     sun.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), -Math.cos(az) * Math.cos(el)).multiplyScalar(1000);
     lagos?.setSol(sun.position, s.col);
@@ -2269,7 +2271,7 @@ async function boot() {
       if (S.solK) sun.intensity = S.solK * (1 - 0.6 * o) + fl * 2.5;
       clouds?.setTinte(GRIS.c.copy(T.nube).lerp(GRIS.nube, gk), kc);
     }
-    { const b = S.bruma, kk = 1 - Math.exp(-dt * 0.9); b.k += (b.to.k - b.k) * kk; b.t += (b.to.t - b.t) * kk; scene.fog.near = 24000 + Math.min(0.995, b.k); scene.fog.far = 100000 + Math.min(0.995, b.t); }   // la bruma cambia suavemente al cambiar la luz
+    { const b = S.bruma, kk = 1 - Math.exp(-dt * 0.9); b.k += (b.to.k - b.k) * kk; b.t += (b.to.t - b.t) * kk; b.n += ((b.to.n ?? 24000) - b.n) * kk; b.f += ((b.to.f ?? 100000) - b.f) * kk; scene.fog.near = Math.round(b.n) + Math.min(0.995, b.k); scene.fog.far = Math.round(b.f) + Math.min(0.995, b.t); }   // la bruma cambia suavemente al cambiar la luz
     if (S.vuelo) tickVuelo(dt);
     else if (S.flight) tickFlight(dt);
     else if (S.mode === 'intro') {
@@ -2298,7 +2300,7 @@ async function boot() {
     sky.position.copy(camera.position); estrellas.position.copy(camera.position);   // la cúpula del cielo acompaña a la cámara (con el mapa grande, parte quedaba más allá del plano lejano)
     { const m = estrellas.material, ob = S.noche ? 0.85 * (1 - tiempo.cubierto) : 0; m.opacity += (ob - m.opacity) * Math.min(1, dt * 0.8); estrellas.visible = m.opacity > 0.01; }
     terrain.update(camera); cumbres.update(camera); paquete?.update(camera, controls.target); veg.update(camera); banderines.update(camera, now / 1000);
-    clouds.update(dt, camera, !reduced);
+    clouds.update(dt, camera, !reduced && !S.claro);
     tiempo.update(dt, camera, renderer.domElement.height);
     updatePins();
     const tt = now / 1000;

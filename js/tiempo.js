@@ -120,6 +120,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     }
     return cam.position.distanceTo(E);
   }
+  let despejado = false;   // luz «Claro»: sin lluvia, nieve cayendo, nubes, niebla, cielo gris ni relámpagos (la nieve del suelo sí)
   const est = { activo: false, c: null, w: { lluvia: 0, nieve: 0, tormenta: 0, niebla: 0 }, viento: new THREE.Vector2(), cubierto: 0, cubObj: 0, destello: 0, prox: 0, rayo: [], k: 0 };
   const aCum = new THREE.Vector3(), aNub = new THREE.Vector3();
 
@@ -143,7 +144,8 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     get destello() { return est.destello; },
     get cubierto() { return est.cubierto; },
     get activo() { return est.activo; },
-    get _est() { return est; },   // para las pruebas
+    get _est() { return est; },
+    set despejado(v) { despejado = !!v; },   // para las pruebas
     // d: respuesta de Open-Meteo (current con weather_code, temperature_2m, cloud_cover, wind_speed_10m, wind_direction_10m, wind_gusts_10m); p: la cumbre (p.w)
     set(d, p) {
       if (!d || !p?.w) { est.activo = false; est.cubObj = 0; est.cota = null; sonido?.setTiempo?.({ lluvia: 0, viento: 0 }); return; }
@@ -168,10 +170,10 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     update(dt, cam, alturaPx) {
       const t = performance.now();
       est.k += ((est.activo ? 1 : 0) - est.k) * Math.min(1, dt * 0.8);   // aparece y desaparece con suavidad
-      est.cubierto += ((est.activo ? est.cubObj : 0) - est.cubierto) * Math.min(1, dt * 0.6);
+      est.cubierto += ((est.activo && !despejado ? est.cubObj : 0) - est.cubierto) * Math.min(1, dt * 0.6);
       const esc = alturaPx / (2 * Math.tan((cam.fov * Math.PI) / 360));
       for (const [s, w, vx] of [[lluvia, est.w.lluvia, 2.6], [nieve, est.w.nieve, 1.4]]) {
-        const v = w * est.k; s.o.visible = v > 0.01; if (!s.o.visible) continue;
+        const v = despejado ? 0 : w * est.k; s.o.visible = v > 0.01; if (!s.o.visible) continue;
         s.u.uT.value = t / 1000; s.u.uEsc.value = esc; s.u.uOpac.value = (s === lluvia ? 0.7 : 0.95) * Math.min(1, 0.55 + 0.6 * v);
         s.u.uCentro.value.set(est.c.x, est.c.y - 2000, est.c.z); s.u.uViento.value.copy(est.viento).multiplyScalar(vx);
         s.o.geometry.setDrawRange(0, Math.round(s.n * Math.min(1, 0.08 + 0.92 * v)) * s.por);
@@ -181,7 +183,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
         const kk = Math.min(1, dt * 0.5);
         if (est.cota != null && est.activo) clima.uCota.value = est.cota;
         clima.uCotaK.value += ((est.activo && est.cota != null ? est.nieveK ?? 1 : 0) - clima.uCotaK.value) * kk;
-        const ac = est.activo ? est.w.nieve : 0, mj = est.activo ? est.w.lluvia : 0;
+        const ac = est.activo ? est.w.nieve : 0, mj = est.activo && !despejado ? est.w.lluvia : 0;
         clima.uAcum.value = ac ? Math.min(0.5 + 0.5 * ac, clima.uAcum.value + dt * ac / 25) : Math.max(0, clima.uAcum.value - dt / 6);
         clima.uMoj.value = mj ? Math.min(0.5 + 0.5 * mj, clima.uMoj.value + dt / 12) : Math.max(0, clima.uMoj.value - dt / 6);
         if (est.c) { clima.uCliC.value.copy(est.c); clima.uCliR.value = R * 1.35; }
@@ -195,7 +197,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
           const dx = s.position.x - est.c.x, dz = s.position.z - est.c.z, r = Math.hypot(dx, dz), lim = s.userData.niebla ? 1600 : 4600;
           if (r > lim) { s.position.x = est.c.x - dx * 0.9; s.position.z = est.c.z - dz * 0.9; s.userData.op = 0; }   // sale por un lado, vuelve por el otro (sin salto visible: entra transparente)
           aNub.copy(s.position).sub(cam.position); const dN = aNub.length(); aNub.normalize();
-          let obj = s.userData.base * est.k * THREE.MathUtils.smoothstep(dN, 1200, 3500);
+          let obj = (despejado ? 0 : 1) * s.userData.base * est.k * THREE.MathUtils.smoothstep(dN, 1200, 3500);
           if (dN < dCum + 300) {   // delante de la cumbre: si en pantalla la taparía, se aclara (la niebla deja un velo fino)
             const ang = Math.acos(Math.min(1, aNub.dot(aCum))), radio = Math.atan(s.scale.x * 0.42 / dN);
             obj *= Math.max(s.userData.niebla ? 0.38 : 0, Math.min(1, (ang - radio * 0.6) / Math.max(0.02, radio * 0.5)));
@@ -205,7 +207,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
         }
       }
       // relámpagos: dos o tres fogonazos seguidos y el trueno unos segundos después (sin fogonazos si se pide menos movimiento)
-      if (est.activo && est.w.tormenta && t > est.prox) {
+      if (est.activo && !despejado && est.w.tormenta && t > est.prox) {
         est.prox = t + 5000 + Math.random() * 9000;
         let dist = 6000;
         if (!reducido) { est.rayo = [t, t + 120 + Math.random() * 80, t + 330 + Math.random() * 150].slice(0, 2 + (Math.random() < 0.5 ? 1 : 0)); dist = rayo(cam); }
