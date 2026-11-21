@@ -113,7 +113,7 @@ const EN = {
   'Nieve: satélite Sentinel-2 (Copernicus) del {f}.': 'Snow: Sentinel-2 satellite (Copernicus), {f}.',
   'Alturas a escala real, como en una foto.': 'Heights at true scale, as in a photo.', 'Alturas exageradas ×{x} para que se lean.': 'Heights exaggerated ×{x} so they can be read.',
   'Sin nubes. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.': 'No clouds. Distant summits may be missing or extra. The phone compass can be off by 10-20° if it is not calibrated.',
-  'Pellizca o usa la rueda para ampliar; arrastra para moverte.': 'Pinch or use the wheel to zoom; drag to move around.', 'Ampliar': 'Zoom in', 'Reducir': 'Zoom out',
+  'Pellizca o usa la rueda para ampliar; arrastra para moverte.': 'Pinch or use the wheel to zoom; drag to move around.', 'Ampliar': 'Zoom in', 'Reducir': 'Zoom out', 'Pantalla completa': 'Full screen', 'Salir de la pantalla completa': 'Exit full screen',
   'Escala real': 'True scale', 'Alturas como en una foto': 'Heights as in a photo',
   // — cámara —
   'Hacer una foto con los nombres': 'Take a photo with the names', 'Compartir': 'Share', 'Mirando a {n}': 'Looking at {n}',

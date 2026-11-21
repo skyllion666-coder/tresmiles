@@ -3,7 +3,7 @@
 // Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=47';
+import { t, EN_INGLES } from './i18n.js?v=48';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const SUELO = [null, [50, 74, 46], [98, 104, 66], [124, 124, 80], [136, 130, 122], [238, 242, 248], [72, 98, 116], null, [118, 120, 86]];   // por tipo de WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, -, musgo
@@ -388,13 +388,25 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     el.innerHTML = `<header><div><h2 id="pan-titulo"></h2><p id="pan-sub"></p></div><button type="button" id="pan-cerrar" aria-label="Cerrar el panorama">×</button></header>
       <nav id="pan-barra"><div id="pan-tabs" role="tablist"><button type="button" role="tab" data-v="pan" aria-selected="true">Panorama</button><button type="button" role="tab" data-v="lis" aria-selected="false">Lista</button></div>
       <button type="button" id="pan-brujula" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor"/></svg>Brújula</button><button type="button" id="pan-camara" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 8h3l1.6-2.2h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13.2" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Cámara</button></nav>
-      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><button type="button" id="pan-escala" aria-pressed="false" title="Alturas como en una foto">Escala real</button><div id="pan-zoom"><button type="button" id="pan-zoom-mas" aria-label="Ampliar">+</button><button type="button" id="pan-zoom-menos" aria-label="Reducir" disabled>−</button></div><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
+      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><button type="button" id="pan-escala" aria-pressed="false" title="Alturas como en una foto">Escala real</button><div id="pan-zoom"><button type="button" id="pan-zoom-mas" aria-label="Ampliar">+</button><button type="button" id="pan-zoom-menos" aria-label="Reducir" disabled>−</button></div><button type="button" id="pan-completa" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="pan-salir" aria-label="Salir de la pantalla completa" title="Salir de la pantalla completa">×</button><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
       <div id="pan-lista" hidden><div id="pan-orden" role="group" aria-label="Ordenar"><button type="button" data-o="rumbo">Por rumbo</button><button type="button" data-o="distancia">Por distancia</button><button type="button" data-o="altura">Por altura</button></div><ul id="pan-ul"></ul></div>
       <p id="pan-nota"></p>`;
     document.body.appendChild(el);
-    const cerrar = () => { apagaBrujula(); el.hidden = true; document.body.classList.remove('pan-abierto'); token++; };
+    const cerrar = () => { completa(false); apagaBrujula(); el.hidden = true; document.body.classList.remove('pan-abierto'); token++; };
     el.querySelector('#pan-cerrar').addEventListener('click', cerrar);
-    addEventListener('keydown', (e) => { if (e.key === 'Escape' && !el.hidden) cerrar(); });
+    // pantalla completa: fuera la cabecera, la nota y la barra; en el navegador, además, su pantalla completa (la app ya va sin barras del sistema).
+    // Se sale con la ✕, con «atrás» del móvil o con Esc (main.js: cierraUno), o saliendo de la pantalla completa del navegador
+    function completa(on) {
+      if (el.classList.contains('pan-completa') === on) return;
+      el.classList.toggle('pan-completa', on);
+      const nav = !window.TresmilesApp && document.fullscreenEnabled;
+      try { if (on && nav && !document.fullscreenElement) el.requestFullscreen?.().catch(() => {}); else if (!on && document.fullscreenElement === el) document.exitFullscreen?.().catch(() => {}); } catch { /* sin pantalla completa del navegador */ }
+      if (ctxP?.v) { ctxP.fina = null; pinta(ctxP.v.az); }
+    }
+    el.querySelector('#pan-completa').addEventListener('click', () => completa(!el.classList.contains('pan-completa')));
+    el.querySelector('#pan-salir').addEventListener('click', () => completa(false));
+    document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && el.classList.contains('pan-completa')) completa(false); });
+    el._completa = completa;
     el.querySelector('#pan-tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) vista(b.dataset.v); });
     el.querySelector('#pan-brujula').addEventListener('click', activaBrujula);
     el.querySelector('#pan-escala').addEventListener('click', () => {   // cambia entre alturas exageradas y escala real, mirando al mismo sitio
@@ -452,5 +464,6 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     ctxP = { p, res, op, nv }; pinta(res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }
-  return { abrir: abrirPanorama, cerrar: () => el?._cerrar?.() };
+  return { abrir: abrirPanorama, cerrar: () => el?._cerrar?.(), abierto: () => !!el && !el.hidden,
+    enCompleta: () => !!el && !el.hidden && el.classList.contains('pan-completa'), salCompleta: () => el?._completa?.(false) };
 }

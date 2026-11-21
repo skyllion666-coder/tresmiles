@@ -11,19 +11,19 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=81';
-import { crearPanorama } from './panorama.js?v=31';
-import { crearUbicacion } from './ubicacion.js?v=29';
-import { crearSeguridad } from './seguridad.js?v=26';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=82';
+import { crearPanorama } from './panorama.js?v=32';
+import { crearUbicacion } from './ubicacion.js?v=30';
+import { crearSeguridad } from './seguridad.js?v=27';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=27';
-import { crearSelector } from './selector.js?v=27';
+import { crearRealidad } from './realidad.js?v=28';
+import { crearSelector } from './selector.js?v=28';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=47';
+import { t, EN_INGLES } from './i18n.js?v=48';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1450,8 +1450,11 @@ async function boot() {
   $('#ficha-close').addEventListener('click', () => closeFicha());
   // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
   const segPanel = () => document.getElementById('seg-panel');
-  const algoAbierto = () => $('#about').open || palabras.abierto() || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
+  const algoAbierto = () => !!realidad?.abierto() || panorama.abierto() || $('#about').open || palabras.abierto() || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
   function cierraUno() {
+    if (realidad?.abierto()) { realidad.cerrar(); return true; }   // la cámara, encima del panorama
+    if (panorama.enCompleta()) { panorama.salCompleta(); return true; }   // el panorama va encima de todo: primero sale de la pantalla completa, luego se cierra
+    if (panorama.abierto()) { panorama.cerrar(); return true; }
     if (document.getElementById('zonas')?.open) { document.getElementById('zonas').close(); return true; }
     if (palabras.abierto()) { palabras.cerrar(); return true; }
     if ($('#about').open) { $('#about').close(); return true; }
