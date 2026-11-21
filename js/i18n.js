@@ -108,6 +108,12 @@ const EN = {
   '{v} cumbres con nombre a la vista.': '{v} named summits in view.',
   '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.': '{v} named summits in view: the panorama shows the {n} main ones; all of them are in the list.',
   'Orientativo: calculado con el relieve de 30 m hasta 12 km de la cima y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.': 'For guidance only: worked out with 30 m terrain up to 12 km from the summit and 120 m further away, without clouds or forest. Heights exaggerated ×{x} so they can be read. Distant summits may be missing or extra. The phone compass can be off by 10–20° if it is not calibrated.',
+  'Orientativo: relieve de 30 m hasta 12 km de ti y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).': 'Approximate: 30 m terrain up to 12 km from you and 120 m further away; land cover from ESA WorldCover (CC BY 4.0).',
+  'Orientativo: relieve de 30 m hasta 12 km de la cima y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).': 'For guidance only: 30 m terrain up to 12 km from the summit and 120 m further away; land cover from ESA WorldCover (CC BY 4.0).',
+  'Nieve: satélite Sentinel-2 (Copernicus) del {f}.': 'Snow: Sentinel-2 satellite (Copernicus), {f}.',
+  'Alturas a escala real, como en una foto.': 'Heights at true scale, as in a photo.', 'Alturas exageradas ×{x} para que se lean.': 'Heights exaggerated ×{x} so they can be read.',
+  'Sin nubes. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.': 'No clouds. Distant summits may be missing or extra. The phone compass can be off by 10-20° if it is not calibrated.',
+  'Escala real': 'True scale', 'Alturas como en una foto': 'Heights as in a photo',
   // — cámara —
   'Montañas por la cámara': 'Mountains through the camera', 'Cerrar la cámara': 'Close the camera',
   'Sujeta el móvil en vertical y apunta a las montañas. Si la línea no casa, arrástrala con el dedo; pellizca para el zoom.': 'Hold the phone upright and point it at the mountains. If the line does not match, drag it with your finger; pinch to zoom.',

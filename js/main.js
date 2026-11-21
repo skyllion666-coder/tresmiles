@@ -11,19 +11,19 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=78';
-import { crearPanorama } from './panorama.js?v=28';
-import { crearUbicacion } from './ubicacion.js?v=26';
-import { crearSeguridad } from './seguridad.js?v=23';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=79';
+import { crearPanorama } from './panorama.js?v=29';
+import { crearUbicacion } from './ubicacion.js?v=27';
+import { crearSeguridad } from './seguridad.js?v=24';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=23';
-import { crearSelector } from './selector.js?v=24';
+import { crearRealidad } from './realidad.js?v=24';
+import { crearSelector } from './selector.js?v=25';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=44';
+import { t, EN_INGLES } from './i18n.js?v=45';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1260,7 +1260,8 @@ async function boot() {
 
   fichaBody.addEventListener('toggle', (e) => { if (e.target.classList?.contains('perfil-det')) store.set('perfil-oculto', e.target.open ? '0' : '1'); }, true);   // el perfil se puede ocultar y se recuerda
   const realidad = EN_APP ? crearRealidad({ esc, abrirFicha: (id) => { panorama.cerrar(); openPeak(id); } }) : null;   // modo cámara (solo en la app)
-  const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null });
+  const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
+    nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.fecha) } : null; } });   // nieve del satélite para colorear el panorama
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
   let perfilT = 0;
   const sobrePerfil = (e) => {

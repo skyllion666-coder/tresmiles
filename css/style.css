@@ -565,6 +565,8 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-brujula { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .1em; text-transform: uppercase; color: var(--cream, #f7f2e4); }
 #pan-camara { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; margin-left: 8px; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--cream); background: none; }
 #pan-camara[hidden] { display: none; }
+#pan-escala { position: absolute; top: 10px; right: 12px; z-index: 2; padding: 5px 11px; border: 1px solid rgba(31,53,48,.35); border-radius: 999px; background: rgba(247,242,228,.85); font: 600 .72rem var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--spruce-d, #1f3530); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+#pan-escala[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }
 #pan-brujula[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }
 #pan-apunta { position: absolute; top: 0; left: 0; right: 0; z-index: 3; box-shadow: 0 2px 8px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 16px; background: #fbf6e8; color: var(--ink, #24302c); border-bottom: 3px solid #d99a45; }
 #pan-apunta[data-v="0"] { border-bottom-color: rgba(36,48,44,.25); }

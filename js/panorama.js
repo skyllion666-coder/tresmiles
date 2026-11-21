@@ -3,9 +3,10 @@
 // Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=44';
+import { t, EN_INGLES } from './i18n.js?v=45';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
+const SUELO = [null, [50, 74, 46], [98, 104, 66], [124, 124, 80], [136, 130, 122], [238, 242, 248], [72, 98, 116], null, [118, 120, 86]];   // por tipo de WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, -, musgo
 const AZ_PASO = 0.25, ALCANCE = 90000, RAD = Math.PI / 180, DECL = 1.3;   // DECL: declinación magnética del Pirineo (este), para pasar de rumbo magnético a geográfico
 const RUMBOS = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'], RUMBOS16 = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
 const rumbo = (az) => { const r = RUMBOS16[Math.round((((az % 360) + 360) % 360) / 22.5) % 16]; return EN_INGLES ? r.replace(/O/g, 'W') : r; };   // en inglés, oeste = W
@@ -25,7 +26,7 @@ export function leeOrientacion(e) {
   return h == null ? null : (((h + DECL) % 360) + 360) % 360;
 }
 
-export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = null }) {   // camara(res): modo cámara (js/realidad.js), solo en la app y desde tu posición
+export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = null, nieve = null }) {   // nieve(): «Nieve ahora» del satélite ({ img, meta, fecha }) o null   // camara(res): modo cámara (js/realidad.js), solo en la app y desde tu posición
   let n4 = null, el = null, token = 0, cajas = [], ctxP = null;   // ctxP: panorama abierto { p, res, g }
   const CH = meta.chunk, dim4 = CH / 4 + 3;
 
@@ -44,6 +45,50 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     }
     await Promise.all(pide);
     return fino;
+  }
+  // cobertura del suelo (ESA WorldCover, la misma rejilla que el relieve de 30 m; 1,8 MB en total, gzip) de todo el mapa
+  let cob = null;
+  function cargaCobertura() {
+    if (typeof DecompressionStream === 'undefined') return Promise.resolve([]);
+    return (cob ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/cover/c_${k % meta.nci}_${Math.floor(k / meta.nci)}.bin.gz${meta.vcover ? `?v=${meta.vcover}` : ''}`)
+      .then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null)).then((b) => (b && b.byteLength === CH * CH ? new Uint8Array(b) : null)).catch(() => null))));
+  }
+  // nieve del satélite: R = fracción de nieve, G = suelo visto sin nubes (tools/nieve_ahora.py); rejilla 1,5 veces la del relieve
+  let niv = null;
+  function cargaNieve() {
+    return (niv ??= (async () => {
+      const o = nieve && (await nieve()); if (!o?.img) return null;
+      try {
+        const w = o.img.naturalWidth, h = o.img.naturalHeight, c = document.createElement('canvas'); c.width = w; c.height = h;
+        const cx = c.getContext('2d', { willReadFrequently: true }); cx.drawImage(o.img, 0, 0);
+        const d = cx.getImageData(0, 0, w, h).data, r = new Uint8Array(w * h);
+        for (let i = 0; i < w * h; i++) r[i] = d[i * 4 + 1] > 127 ? Math.min(250, d[i * 4]) : 255;   // 255 = no se ha visto (nubes)
+        return { r, w, h, fecha: o.fecha };
+      } catch { return null; }   // imagen de otro origen sin permiso de lectura: sin nieve del día
+    })());
+  }
+  // color del suelo en (x, z) (sin luz ni bruma), media de 5 puntos a r m (lo lejano se ve como mezcla, no a rayas): ESA WorldCover y, encima,
+  // la nieve que ha visto hoy el satélite (la «nieve o hielo» de WorldCover, que es de verano, se cambia por la de hoy si el satélite ve el suelo); sin dato, por altitud
+  function suelo(cobs, nv) {
+    const maxC = meta.nci * CH, maxR = meta.ncj * CH, OFF = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]];
+    return (x, z, h, r) => {
+      let R = 0, G = 0, B = 0;
+      for (const [ox, oz] of OFF) {
+        const fc = (x + ox * r + geo.W / 2) / geo.dx, fr = (z + oz * r + geo.oz) / geo.dz;
+        let tipo = 0, n = -1;
+        if (fc >= 0 && fr >= 0 && fc < maxC && fr < maxR) {
+          const i = Math.floor(fc / CH), j = Math.floor(fr / CH), a = cobs[j * meta.nci + i];
+          if (a) tipo = a[Math.floor(fr - j * CH) * CH + Math.floor(fc - i * CH)];
+        }
+        if (nv) { const px = Math.floor(fc / 1.5), py = Math.floor(fr / 1.5); if (px >= 0 && py >= 0 && px < nv.w && py < nv.h) { const v = nv.r[py * nv.w + px]; if (v !== 255) n = v / 250; } }
+        let c = SUELO[tipo === 5 && n >= 0 ? 4 : tipo];
+        if (!c) { const k = Math.min(1, Math.max(0, (h - 1700) / 900)); c = [74 + 54 * k, 96 + 28 * k, 70 + 48 * k]; }
+        let [r1, g1, b1] = c;
+        if (n >= 0) { const k = Math.min(1, Math.max(0, (n - 0.22) / 0.4)); r1 += (238 - r1) * k; g1 += (242 - g1) * k; b1 += (248 - b1) * k; }
+        R += r1; G += g1; B += b1;
+      }
+      return (Math.round(R / 5) << 16) | (Math.round(G / 5) << 8) | Math.round(B / 5);   // en un número (cabe exacto en un Float32)
+    };
   }
   function sampler(bloques, fino = null, ox = 0, oz = 0) {
     const maxC = meta.nci * CH, maxR = meta.ncj * CH;
@@ -64,9 +109,9 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   }
 
   // silueta por capas y cumbres visibles desde (x0, z0) a la altura h0
-  function calcula(alt, x0, z0, h0, excluye) {
+  function calcula(alt, x0, z0, h0, excluye, sue = () => 0x5a6a50) {
     const NA = Math.round(360 / AZ_PASO), nb = BANDAS.length, sil = Array.from({ length: nb }, () => new Float32Array(NA).fill(-90));
-    // cols[a]: tramos del relieve que se ven en esa columna, de abajo arriba: [ángulo de abajo, de arriba, distancia, altitud, luz] (planos, de 5 en 5);
+    // cols[a]: tramos del relieve que se ven en esa columna, de abajo arriba: [ángulo de abajo, de arriba, distancia, altitud, luz, color del suelo] (planos, de 6 en 6);
     // cres[a]: crestas (borde de un tramo que tapa terreno más lejano): [ángulo, distancia] (de 2 en 2)
     const cols = new Array(NA), cres = new Array(NA);
     const SOL = [Math.sin(215 * RAD) * Math.cos(38 * RAD), Math.sin(38 * RAD), -Math.cos(215 * RAD) * Math.cos(38 * RAD)];   // sol del SO, a 38° (luz de tarde)
@@ -85,7 +130,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
           cresta = null;
           const e = d < FINO ? 30 : 120, gx = (alt(x + e, z) - alt(x - e, z)) / (2 * e), gz = (alt(x, z + e) - alt(x, z - e)) / (2 * e), nn = Math.hypot(gx, 1, gz);
           const luz = (-gx * SOL[0] + SOL[1] - gz * SOL[2]) / nn;
-          tr.push(max, ang, d, h, luz); max = ang; visto = true; dVisto = d;
+          tr.push(max, ang, d, h, luz, sue(x, z, h, Math.max(20, d * 0.006))); max = ang; visto = true; dVisto = d;
         } else if (visto) { cresta = [max, dVisto]; visto = false; }
       }
       cr.push(max, visto ? dVisto : (cresta ? cresta[1] : dVisto));   // la línea del cielo
@@ -114,12 +159,12 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   }
 
   // — dibujo del panorama —
-  function dibuja(canvas, res, vw, vh) {
-    const ppd = Math.max(4, Math.ceil(vw / 110)), pad = vw / ppd + 10, W = Math.round((360 + 2 * pad) * ppd), dpr = Math.min(window.devicePixelRatio || 1, 2), ctx = canvas.getContext('2d');
+  function dibuja(canvas, res, vw, vh, real = false) {   // real: alturas a escala real (como una foto), con más zoom
+    const ppd = real ? Math.min(16, Math.max(Math.ceil(vw / 110), Math.round(vw / 50))) : Math.max(4, Math.ceil(vw / 110)), pad = vw / ppd + 10, W = Math.round((360 + 2 * pad) * ppd), dpr = Math.min(window.devicePixelRatio || 1, 2), ctx = canvas.getContext('2d');
     const TOPE = vh < 520 ? 120 : 150, MAXN = 24;
     let amax = 4; for (const s of res.sil) for (const v of s) if (v > amax) amax = v; for (const v of res.vis) if (v.ang > amax) amax = v.ang;
     const amin = Math.max(-22, Math.min(...res.sil.map((s) => Math.min(...s))));
-    const kv = Math.max(ppd * 1.5, Math.min(ppd * 3.5, (vh - TOPE - 70) / (amax - 0.35 * amin)));   // la escala vertical se ajusta para llenar la pantalla
+    const kv = real ? ppd : Math.max(ppd * 1.5, Math.min(ppd * 3.5, (vh - TOPE - 70) / (amax - 0.35 * amin)));   // la escala vertical se ajusta para llenar la pantalla (en escala real, la misma que la horizontal)
     const H0 = Math.round(TOPE + 16 + amax * kv - amin * kv * 0.35 + 54), oy = Math.max(0, vh - H0) * 0.5, y0 = oy + TOPE + 16 + amax * kv, H = Math.max(H0, Math.round(vh));
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const cielo = ctx.createLinearGradient(0, 0, 0, y0); cielo.addColorStop(0, '#d5e3ec'); cielo.addColorStop(1, '#f6ecd6'); ctx.fillStyle = cielo; ctx.fillRect(0, 0, W, H);
@@ -166,9 +211,8 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   // relieve columna a columna en una imagen (a 1 píxel CSS) y encima las crestas como líneas
   function pintaRelieve(ctx, res, W, H, ppd, pad, y0, kv) {
     const NA = res.cols.length, Wp = Math.ceil(W / (AZ_PASO * ppd)) + 1, img = new ImageData(Wp, H), px = img.data;   // una columna de píxeles por cada paso de rumbo
-    const col = (h, d, luz) => {   // color por altitud (bosque y pasto abajo, roca arriba), con la luz y la bruma de la distancia
-      const r1 = Math.min(1, Math.max(0, (h - 1700) / 900));
-      let r = 74 + (128 - 74) * r1, g = 96 + (124 - 96) * r1, b = 70 + (118 - 70) * r1;
+    const col = (h, d, luz, su) => {   // color del suelo (ya calculado en calcula), con la luz y la bruma de la distancia
+      let r = (su >> 16) & 255, g = (su >> 8) & 255, b = su & 255;
       const l = 0.62 + 0.5 * Math.max(-0.15, luz), cl = 1 + (l - 1) * Math.exp(-d / 40000);   // el contraste de luz se apaga con la distancia
       r *= cl; g *= cl; b *= cl;
       const bru = 1 - Math.exp(-d / 30000);   // bruma: hacia el azul pálido del cielo bajo
@@ -176,10 +220,10 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     };
     for (let x = 0; x < Wp; x++) {
       const az = x * AZ_PASO - pad, k = Math.round((((az % 360) + 360) % 360) / AZ_PASO) % NA, t = res.cols[k];
-      for (let i = 0; i < t.length; i += 5) {
+      for (let i = 0; i < t.length; i += 6) {
         const yA = Math.max(0, Math.round(y0 - t[i + 1] * kv)), yB = t[i] <= -89 ? H : Math.min(H, Math.round(y0 - t[i] * kv));
         if (yB <= yA) continue;
-        const [r, g, b] = col(t[i + 3], t[i + 2], t[i + 4]);
+        const [r, g, b] = col(t[i + 3], t[i + 2], t[i + 4], t[i + 5]);
         for (let y = yA; y < yB; y++) { const o = (y * Wp + x) * 4; px[o] = r; px[o + 1] = g; px[o + 2] = b; px[o + 3] = 255; }
       }
     }
@@ -208,6 +252,22 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       ctx.beginPath(); for (let i = 0; i < l.length; i += 4) { ctx.moveTo(l[i], l[i + 1]); ctx.lineTo(l[i + 2], l[i + 3]); }
       ctx.strokeStyle = ESTILO[g][0]; ctx.lineWidth = ESTILO[g][1]; ctx.stroke();
     }
+  }
+
+  const leeReal = () => { try { return localStorage.getItem('tresmiles-pan-real') === '1'; } catch { return false; } };
+  // dibuja el panorama abierto (con la escala elegida) centrado en el rumbo az, y pone la nota
+  function pinta(az) {
+    const sc = el.querySelector('#pan-scroll'), cv = el.querySelector('#pan-canvas'), real = leeReal(), { res, op, nv } = ctxP;
+    const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520, real); ctxP.g = g;
+    el.querySelector('#pan-escala').setAttribute('aria-pressed', String(real));
+    el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
+    const x = g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',');
+    el.querySelector('#pan-nota').textContent = [
+      t(op.desdeAqui ? 'Orientativo: relieve de 30 m hasta 12 km de ti y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).' : 'Orientativo: relieve de 30 m hasta 12 km de la cima y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).'),
+      nv ? t('Nieve: satélite Sentinel-2 (Copernicus) del {f}.', { f: nv.fecha }) : '',
+      real ? t('Alturas a escala real, como en una foto.') : t('Alturas exageradas ×{x} para que se lean.', { x }),
+      t('Sin nubes. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.')].filter(Boolean).join(' ');
+    centraEn(sc, g, az);
   }
 
   const normaliza = (g, left) => { const L = 360 * g.ppd, lo = 10 * g.ppd; while (left < lo) left += L; while (left >= lo + L) left -= L; return left; };
@@ -268,7 +328,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     el.innerHTML = `<header><div><h2 id="pan-titulo"></h2><p id="pan-sub"></p></div><button type="button" id="pan-cerrar" aria-label="Cerrar el panorama">×</button></header>
       <nav id="pan-barra"><div id="pan-tabs" role="tablist"><button type="button" role="tab" data-v="pan" aria-selected="true">Panorama</button><button type="button" role="tab" data-v="lis" aria-selected="false">Lista</button></div>
       <button type="button" id="pan-brujula" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor"/></svg>Brújula</button><button type="button" id="pan-camara" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 8h3l1.6-2.2h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13.2" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Cámara</button></nav>
-      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
+      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><button type="button" id="pan-escala" aria-pressed="false" title="Alturas como en una foto">Escala real</button><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
       <div id="pan-lista" hidden><div id="pan-orden" role="group" aria-label="Ordenar"><button type="button" data-o="rumbo">Por rumbo</button><button type="button" data-o="distancia">Por distancia</button><button type="button" data-o="altura">Por altura</button></div><ul id="pan-ul"></ul></div>
       <p id="pan-nota"></p>`;
     document.body.appendChild(el);
@@ -277,6 +337,10 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     addEventListener('keydown', (e) => { if (e.key === 'Escape' && !el.hidden) cerrar(); });
     el.querySelector('#pan-tabs').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) vista(b.dataset.v); });
     el.querySelector('#pan-brujula').addEventListener('click', activaBrujula);
+    el.querySelector('#pan-escala').addEventListener('click', () => {   // cambia entre alturas exageradas y escala real, mirando al mismo sitio
+      const real = !(leeReal()); try { localStorage.setItem('tresmiles-pan-real', real ? '1' : '0'); } catch {}
+      if (ctxP?.g) { const g = ctxP.g, az = (sc.scrollLeft + sc.clientWidth / 2) / g.ppd - g.pad; pinta(az); }
+    });
     el.querySelector('#pan-camara').addEventListener('click', () => { if (ctxP && camara) { apagaBrujula(); camara(ctxP.res); } });
     el.querySelector('#pan-orden').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { el.dataset.orden = b.dataset.o; pintaLista(b.dataset.o); } });
     el.querySelector('#pan-ul').addEventListener('click', (e) => { const b = e.target.closest('button[data-id]'); if (b) { cerrar(); abrir(b.dataset.id); } });
@@ -299,15 +363,12 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     el.hidden = false; document.body.classList.add('pan-abierto'); vista('pan');
     el.querySelector('#pan-titulo').textContent = t('Panorama desde {n}', { n: p.nombre }); el.querySelector('#pan-sub').textContent = op.desdeAqui ? 'Calculando lo que se ve desde aquí…' : 'Calculando lo que se ve desde la cima…'; el.querySelector('#pan-nota').textContent = '';
     cv.width = 1;
-    const bloques = await cargaN4(); if (tok !== token) return;
+    const [bloques, cobs, nv] = await Promise.all([cargaN4(), cargaCobertura(), Promise.race([cargaNieve(), new Promise((r) => setTimeout(r, 2500, null))])]);   // la nieve no espera más de 2,5 s (sin conexión, sin ella) if (tok !== token) return;
     await new Promise((r) => setTimeout(r, 30)); if (tok !== token) return;
     const fino = await cargaFino(p.q.x, p.q.z); if (tok !== token) return;
-    const alt = sampler(bloques, fino, p.q.x, p.q.z), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
+    const alt = sampler(bloques, fino, p.q.x, p.q.z), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id, suelo(cobs, nv));
     if (tok !== token) return;
-    const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520); ctxP = { p, res, g };
-    el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
-    el.querySelector('#pan-nota').textContent = t(op.desdeAqui ? 'Orientativo: calculado con el relieve de 30 m hasta 12 km de ti y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.' : 'Orientativo: calculado con el relieve de 30 m hasta 12 km de la cima y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
-    centraEn(sc, g, res.vis[0]?.az ?? 0);
+    ctxP = { p, res, op, nv }; pinta(res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }
   return { abrir: abrirPanorama, cerrar: () => el?._cerrar?.() };
