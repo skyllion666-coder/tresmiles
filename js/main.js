@@ -13,7 +13,7 @@ import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=84';
 import { crearPanorama } from './panorama.js?v=34';
-import { crearPlano } from './plano.js?v=1';
+import { crearPlano } from './plano.js?v=2';
 import { crearUbicacion } from './ubicacion.js?v=32';
 import { crearSeguridad } from './seguridad.js?v=29';
 import { crearPaquete } from './paquete.js?v=9';
@@ -1264,10 +1264,15 @@ async function boot() {
   // mapa plano (2D): caminos, curvas de nivel y pendientes; mientras está abierto, el 3D no se dibuja
   const plano = crearPlano({ geo, meta, store: relieve, peaks, json, refugios: () => refugiosDatos, fuentes: () => fuentesDatos, pueblos: () => pueblosLista,
     abrirFicha: (id) => openPeak(id), alAbrir: () => { S.plano = true; }, alCerrar: () => { S.plano = false; last = performance.now(); } });
+  // el mapa plano se abre en el punto del relieve que hay en el centro de la pantalla, a la misma escala que se ve en 3D (ahí)
   $('#btn-plano').addEventListener('click', () => {
-    const r = camera.position.distanceTo(controls.target), z = Math.max(10, Math.min(16, Math.round((13 + Math.log2(12000 / Math.max(500, r))) * 2) / 2));
-    const p = S.active ? byId[S.active] : null;   // con una cumbre abierta, el mapa plano va a ella (y encuadra su ruta)
-    plano.abrir({ centro: p ? p.q : { x: controls.target.x, z: controls.target.z }, zoom: p ? 14 : z, pico: p });
+    const cx = innerWidth / 2 - S.shift.x, cy = innerHeight / 2 - S.shift.y;   // el centro de lo que se ve (con la ficha abierta, la vista está desplazada)
+    const pt = puntoDelRelieve(cx, cy) ?? { x: controls.target.x, z: controls.target.z };
+    const d = camera.position.distanceTo(new THREE.Vector3(pt.x, geo.heightAt(pt.x, pt.z), pt.z));
+    const mpx = 2 * d * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / innerHeight;   // metros por píxel en ese punto
+    const z = Math.max(10, Math.min(18, Math.round(Math.log2(156543.03 * Math.cos(42.7 * Math.PI / 180) / Math.max(0.3, mpx)) * 2) / 2));
+    const p = S.active ? byId[S.active] : null;   // con una cumbre abierta se dibuja su ruta, pero sin mover el mapa
+    plano.abrir({ centro: pt, zoom: z, pico: p, encuadra: false, pantalla: { x: cx, y: cy } });   // y en el mismo sitio de la pantalla
   });
   const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
     nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.fecha) } : null; } });   // nieve del satélite para colorear el panorama

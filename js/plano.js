@@ -65,6 +65,9 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     return new Capa({ tileSize: 256, minZoom: 8, maxZoom: 18, maxNativeZoom: 17, updateWhenIdle: true, keepBuffer: 1, className: 'plano-capa-' + modo });
   }
 
+  // pesos de Catmull-Rom para las muestras -1, 0, 1, 2 a la distancia t de la 0
+  const cr = (t, m) => { const t2 = t * t, t3 = t2 * t;
+    return m === -1 ? (-t3 + 2 * t2 - t) / 2 : m === 0 ? (3 * t3 - 5 * t2 + 2) / 2 : m === 1 ? (-3 * t3 + 4 * t2 + t) / 2 : (t3 - t2) / 2; };
   async function dibujaTesela(cv, c, R, modo) {
     const z = c.z, N = 256 * 2 ** z, k = 256 / R;
     const lonDe = (px) => ((c.x * 256 + px * k) / N) * 360 - 180;
@@ -86,6 +89,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
         .concat(...Array.from({ length: j1 - j0 + 1 }, (_, a) => Array.from({ length: i1 - i0 + 1 }, (_, b) => [i0 + b, j0 + a])))
         .map(([i, j]) => bloque(Lv, i, j).then((d) => bl.set(j * meta.nci + i, d))));
       H = new Float32Array((R + 2) * (R + 2));
+      const suave = Lv * 30 / mpx > 2;   // cada celda del relieve ocupa más de 2 píxeles
       const maxC = meta.nci * CH - 0.001, maxR = meta.ncj * CH - 0.001;
       for (let y = 0; y < R + 2; y++) {
         const rr = Math.min(maxR, Math.max(0, fr[y])), j = Math.floor(rr / CH), ly = (rr - j * CH) / Lv + 1, y1 = Math.min(dim - 2, Math.floor(ly)), ty = ly - y1;
@@ -94,7 +98,16 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
           const cc = Math.min(maxC, Math.max(0, fc[x])), i = Math.floor(cc / CH), a = bl.get(j * meta.nci + i);
           if (!a || fueraY || fc[x] < 0 || fc[x] > meta.ncols - 1) { H[y * (R + 2) + x] = NaN; continue; }   // fuera de nuestros datos: sin relieve
           const lx = (cc - i * CH) / Lv + 1, x1 = Math.min(dim - 2, Math.floor(lx)), tx = lx - x1, q = y1 * dim + x1;
-          H[y * (R + 2) + x] = ((a[q] * (1 - tx) + a[q + 1] * tx) * (1 - ty) + (a[q + dim] * (1 - tx) + a[q + dim + 1] * tx) * ty) * meta.hscale;
+          if (suave) {   // de cerca: interpolación cúbica (Catmull-Rom), sin los cuadros de 30 m en el sombreado ni picos en las curvas
+            let v = 0;
+            for (let m = -1; m <= 2; m++) {
+              const yy = Math.min(dim - 1, Math.max(0, y1 + m)) * dim, wy = cr(ty, m);
+              let f = 0;
+              for (let n = -1; n <= 2; n++) f += a[yy + Math.min(dim - 1, Math.max(0, x1 + n))] * cr(tx, n);
+              v += f * wy;
+            }
+            H[y * (R + 2) + x] = v * meta.hscale;
+          } else H[y * (R + 2) + x] = ((a[q] * (1 - tx) + a[q + 1] * tx) * (1 - ty) + (a[q + dim] * (1 - tx) + a[q + dim + 1] * tx) * ty) * meta.hscale;
         }
       }
     }
@@ -272,6 +285,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     L.circleMarker(sub[0], { radius: 6, color: '#fff', weight: 2, fillColor: '#2c8a3e', fillOpacity: 1 }).bindTooltip(t('Inicio')).addTo(rutaCapa);
     rutaCapa.addTo(map);
     if (encuadra) map.fitBounds(L.latLngBounds(pts.map((q) => [q[1], q[0]])), { paddingTopLeft: [30, 70], paddingBottomRight: [60, 190], maxZoom: 15 });   // abajo queda el perfil
+    el.querySelector('#pl-perfil').classList.toggle('plegado', !encuadra);   // al venir del 3D, plegado: el mapa se ve igual que allí
     perfil(p, r);
   }
 
@@ -359,10 +373,13 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
         <button type="button" id="pl-gps" aria-pressed="false" aria-label="Dónde estoy"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       </div>
       <div id="pl-leyenda" hidden><span><i style="background:#fad63c"></i>30°</span><span><i style="background:#f59628"></i>35°</span><span><i style="background:#e23c28"></i>40°</span><span><i style="background:#963ca0"></i>45°</span></div>
-      <div id="pl-perfil" hidden><div class="pl-pf-cab"><span class="pl-pf-t"></span><button type="button" class="pl-pf-x" aria-label="Quitar la ruta">×</button></div><canvas></canvas></div>
+      <div id="pl-perfil" hidden><div class="pl-pf-cab"><button type="button" class="pl-pf-t"></button><button type="button" class="pl-pf-x" aria-label="Quitar la ruta">×</button></div><canvas></canvas></div>
       <p id="pl-aviso" role="status" hidden></p>`;
     document.body.appendChild(el);
     el.querySelector('#pl-cerrar').addEventListener('click', () => cerrar());
+    el.querySelector('.pl-pf-t').addEventListener('click', () => {   // tocar el título pliega o despliega el perfil
+      const c = el.querySelector('#pl-perfil'); c.classList.toggle('plegado'); perfil.repinta?.();
+    });
     el.querySelector('#pl-fondos').addEventListener('click', (e) => {
       const b = e.target.closest('button[data-f]'); if (!b) return;
       if (b.dataset.f !== 'propio' && !navigator.onLine) aviso(t('Este fondo necesita conexión. Sin cobertura, usa «Relieve».'));
@@ -374,8 +391,8 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     addEventListener('resize', () => { if (!el.hidden) { map?.invalidateSize(); perfil.repinta?.(); } });
   }
 
-  // centro: { x, z } del mapa 3D; zoom: del mapa plano; pico: la cumbre abierta (se dibuja su ruta)
-  async function abrir({ centro, zoom = 13, pico = null } = {}) {
+  // centro: { x, z } del mapa 3D; zoom: del mapa plano; pico: la cumbre abierta (se dibuja su ruta); encuadra: llevar el mapa a la ruta; pantalla: píxel donde debe quedar el centro
+  async function abrir({ centro, zoom = 13, pico = null, encuadra = true, pantalla = null } = {}) {
     if (!el) crea();
     el.hidden = false; document.body.classList.add('plano-abierto'); alAbrir();
     let L;
@@ -392,8 +409,9 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
       ponFondo(); ponMarcas(L);
       L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
     } else { map.invalidateSize(); map.setView([lat, lon], zoom, { animate: false }); }
+    if (pantalla) { const c = map.getSize(); map.panBy([c.x / 2 - pantalla.x, c.y / 2 - pantalla.y], { animate: false }); }   // el punto queda donde estaba en el 3D
     map.fire('zoomend');
-    if (pico && pico.id !== rutaPico) muestraRuta(pico, true);
+    if (pico && pico.id !== rutaPico) muestraRuta(pico, encuadra);
     else if (!pico && rutaPico) { rutaCapa?.remove(); rutaCapa = null; marcaPerfil?.remove(); el.querySelector('#pl-perfil').hidden = true; rutaPico = null; }
   }
   function cerrar() {
