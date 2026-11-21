@@ -554,9 +554,14 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-cerrar { font-size: 2rem; line-height: 1; color: inherit; padding: 0 4px; }
 #pan-vista { position: relative; flex: 1; min-height: 0; background: #2f4c45; }
 #pan-vista[hidden], #pan-lista[hidden] { display: none; }
-#pan-scroll { position: absolute; inset: 0; overflow-x: auto; overflow-y: hidden; display: flex; align-items: center; -webkit-overflow-scrolling: touch; scrollbar-width: none; touch-action: pan-x; }
+#pan-scroll { position: absolute; inset: 0; overflow: hidden; touch-action: none; }
 #pan-scroll::-webkit-scrollbar { display: none; }
-#pan-canvas { display: block; flex: none; }
+#pan-canvas { display: block; touch-action: none; cursor: grab; }
+#pan-canvas:active { cursor: grabbing; }
+#pan-zoom { position: absolute; top: 46px; right: 12px; z-index: 2; display: flex; flex-direction: column; border: 1px solid rgba(31,53,48,.35); border-radius: 10px; overflow: hidden; background: rgba(247,242,228,.85); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+#pan-zoom button { width: 36px; height: 34px; font: 600 1.25rem/1 var(--cond); color: var(--spruce-d, #1f3530); }
+#pan-zoom button + button { border-top: 1px solid rgba(31,53,48,.2); }
+#pan-zoom button:disabled { opacity: .35; }
 #pan-nota { margin: 0; padding: 8px 16px max(10px, var(--sa-bottom, env(safe-area-inset-bottom))); font: 500 .72rem/1.35 var(--cond, 'Barlow', sans-serif); color: var(--ink-2, #5b6760); }
 #pan-barra { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 16px; background: var(--spruce-d, #1f3530); border-top: 1px solid rgba(247,242,228,.12); }
 #pan-tabs { display: inline-flex; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; overflow: hidden; }
