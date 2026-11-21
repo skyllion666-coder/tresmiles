@@ -1,11 +1,11 @@
-// Panorama de 360° desde un punto (por ahora, la cima de la ficha): silueta del relieve en capas por distancia, nombres de las cumbres que se ven, lista y modo brújula.
-// Cálculo propio con el relieve de 120 m (nivel 4 de los bloques, ~1 MB, se pide la primera vez); no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
+// Panorama de 360° desde un punto (la cima de la ficha o tu posición): el relieve que se ve, pintado columna a columna (color por altitud, luz del sol y bruma por distancia),
+// las crestas dibujadas como líneas, nombres de las cumbres que se ven, lista y modo brújula.
+// Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=43';
+import { t, EN_INGLES } from './i18n.js?v=44';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
-const COLORES = ['#2f4c45', '#4a6a60', '#6d8b85', '#93a9ac', '#b8c7ce'];   // de cerca a lejos (más lejos = más claro, como la bruma)
 const AZ_PASO = 0.25, ALCANCE = 90000, RAD = Math.PI / 180, DECL = 1.3;   // DECL: declinación magnética del Pirineo (este), para pasar de rumbo magnético a geográfico
 const RUMBOS = ['N', 'NE', 'E', 'SE', 'S', 'SO', 'O', 'NO'], RUMBOS16 = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSO', 'SO', 'OSO', 'O', 'ONO', 'NO', 'NNO'];
 const rumbo = (az) => { const r = RUMBOS16[Math.round((((az % 360) + 360) % 360) / 22.5) % 16]; return EN_INGLES ? r.replace(/O/g, 'W') : r; };   // en inglés, oeste = W
@@ -34,15 +34,13 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     return (n4 ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/h/c_${k % meta.nci}_${Math.floor(k / meta.nci)}_4.bin`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b ? new Uint16Array(b) : null)).catch(() => null))));
   }
   // relieve de 30 m (nivel 1) de los bloques a menos de FINO m de (x0, z0): lo cercano a quien mira (y su propia altura) decide la silueta
-  const FINO = 4000, dim1 = CH + 3;
+  const FINO = 12000, dim1 = CH + 3, finos = new Map();   // finos: bloques de 30 m ya pedidos (promesa), para no repetir la descarga
   async function cargaFino(x0, z0) {
-    const fino = new Map(), pide = [];
-    for (const [dx, dz] of [[-1, -1], [1, -1], [-1, 1], [1, 1], [0, 0]]) {
-      const fc = (x0 + dx * FINO + geo.W / 2) / geo.dx, fr = (z0 + dz * FINO + geo.oz) / geo.dz;
-      const i = Math.floor(fc / CH), j = Math.floor(fr / CH), k = j * meta.nci + i;
-      if (i < 0 || j < 0 || i >= meta.nci || j >= meta.ncj || fino.has(k)) continue;
-      fino.set(k, null);
-      pide.push(fetch(`${store.base}/h/c_${i}_${j}_1.bin${store.vdesde != null && j >= store.vdesde ? `?v=${store.v}` : ''}`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => { if (b && b.byteLength === dim1 * dim1 * 2) fino.set(k, new Uint16Array(b)); }).catch(() => {}));
+    const fino = new Map(), pide = [], col = (x) => Math.floor((x + geo.W / 2) / geo.dx / CH), fil = (z) => Math.floor((z + geo.oz) / geo.dz / CH);
+    for (let j = Math.max(0, fil(z0 - FINO)); j <= Math.min(meta.ncj - 1, fil(z0 + FINO)); j++) for (let i = Math.max(0, col(x0 - FINO)); i <= Math.min(meta.nci - 1, col(x0 + FINO)); i++) {
+      const k = j * meta.nci + i;
+      if (!finos.has(k)) finos.set(k, fetch(`${store.base}/h/c_${i}_${j}_1.bin${store.vdesde != null && j >= store.vdesde ? `?v=${store.v}` : ''}`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b && b.byteLength === dim1 * dim1 * 2 ? new Uint16Array(b) : null)).catch(() => null));
+      pide.push(finos.get(k).then((a) => { if (a) fino.set(k, a); }));
     }
     await Promise.all(pide);
     return fino;
@@ -68,14 +66,30 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   // silueta por capas y cumbres visibles desde (x0, z0) a la altura h0
   function calcula(alt, x0, z0, h0, excluye) {
     const NA = Math.round(360 / AZ_PASO), nb = BANDAS.length, sil = Array.from({ length: nb }, () => new Float32Array(NA).fill(-90));
+    // cols[a]: tramos del relieve que se ven en esa columna, de abajo arriba: [ángulo de abajo, de arriba, distancia, altitud, luz] (planos, de 5 en 5);
+    // cres[a]: crestas (borde de un tramo que tapa terreno más lejano): [ángulo, distancia] (de 2 en 2)
+    const cols = new Array(NA), cres = new Array(NA);
+    const SOL = [Math.sin(215 * RAD) * Math.cos(38 * RAD), Math.sin(38 * RAD), -Math.cos(215 * RAD) * Math.cos(38 * RAD)];   // sol del SO, a 38° (luz de tarde)
     for (let a = 0; a < NA; a++) {
       const az = a * AZ_PASO * RAD, sx = Math.sin(az), sz = -Math.cos(az);   // 0° = norte (−z), 90° = este (+x)
-      let b = 0;
-      for (let d = 80; d < ALCANCE; d += 50 + d * 0.012) {
+      let b = 0, max = -90, visto = false, dVisto = 0, cresta = null;
+      const tr = [], cr = [];
+      for (let d = 60; d < ALCANCE; d += (d < FINO ? 25 : 50) + d * 0.009) {
         while (d > BANDAS[b]) b++;
-        const ang = Math.atan2(alt(x0 + sx * d, z0 + sz * d) - h0 - d * d * CURV, d) / RAD;
+        const x = x0 + sx * d, z = z0 + sz * d;
+        if (!geo.dentro(x, z)) break;   // fuera del mapa no hay relieve: ahí se acaba la vista
+        const h = alt(x, z), ang = Math.atan2(h - h0 - d * d * CURV, d) / RAD;
         if (ang > sil[b][a]) sil[b][a] = ang;
+        if (ang > max) {
+          if (cresta && d > cresta[1] * 1.12 + 250) cr.push(cresta[0], cresta[1]);   // lo de detrás de la cresta queda bastante más lejos: es una línea
+          cresta = null;
+          const e = d < FINO ? 30 : 120, gx = (alt(x + e, z) - alt(x - e, z)) / (2 * e), gz = (alt(x, z + e) - alt(x, z - e)) / (2 * e), nn = Math.hypot(gx, 1, gz);
+          const luz = (-gx * SOL[0] + SOL[1] - gz * SOL[2]) / nn;
+          tr.push(max, ang, d, h, luz); max = ang; visto = true; dVisto = d;
+        } else if (visto) { cresta = [max, dVisto]; visto = false; }
       }
+      cr.push(max, visto ? dVisto : (cresta ? cresta[1] : dVisto));   // la línea del cielo
+      cols[a] = Float32Array.from(tr); cres[a] = Float32Array.from(cr);
     }
     const vis = [];
     for (const p of peaks) {
@@ -96,7 +110,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       const m = unicos.find((u) => Math.hypot(u.p.q.x - v.p.q.x, u.p.q.z - v.p.q.z) < 130 && Math.abs(u.p.altitud - v.p.altitud) <= 25);
       if (m) m.otros.push(v.p.nombre); else unicos.push(v);
     }
-    return { sil, vis: unicos };
+    return { sil, cols, cres, vis: unicos };
   }
 
   // — dibujo del panorama —
@@ -110,14 +124,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const cielo = ctx.createLinearGradient(0, 0, 0, y0); cielo.addColorStop(0, '#d5e3ec'); cielo.addColorStop(1, '#f6ecd6'); ctx.fillStyle = cielo; ctx.fillRect(0, 0, W, H);
     const xAz = (az) => (az + pad) * ppd;
-    for (let b = BANDAS.length - 1; b >= 0; b--) {   // de lejos a cerca
-      ctx.beginPath(); ctx.moveTo(0, H);
-      for (let px = 0; px <= W; px += 2) {
-        const az = px / ppd - pad, k = Math.round((((az % 360) + 360) % 360) / AZ_PASO) % res.sil[b].length, ang = res.sil[b][k];
-        ctx.lineTo(px, ang <= -89 ? H : y0 - ang * kv);
-      }
-      ctx.lineTo(W, H); ctx.closePath(); ctx.fillStyle = COLORES[b]; ctx.fill();
-    }
+    pintaRelieve(ctx, res, W, H, ppd, pad, y0, kv);
     const suelo = ctx.createLinearGradient(0, y0 + 10, 0, H); suelo.addColorStop(0, 'rgba(47,76,69,0)'); suelo.addColorStop(1, 'rgba(30,48,43,.55)'); ctx.fillStyle = suelo; ctx.fillRect(0, y0, W, H - y0);
     // brújula: marcas cada 15° y letras en los rumbos
     ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
@@ -154,6 +161,53 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       cajas.push({ x: q.x - 8, y: q.base - q.len, w: 16, h: q.len + 12, id: q.v.p.id });
     }
     return { ppd, pad, W, H, exag: kv / ppd, n, omitidas };
+  }
+
+  // relieve columna a columna en una imagen (a 1 píxel CSS) y encima las crestas como líneas
+  function pintaRelieve(ctx, res, W, H, ppd, pad, y0, kv) {
+    const NA = res.cols.length, Wp = Math.ceil(W / (AZ_PASO * ppd)) + 1, img = new ImageData(Wp, H), px = img.data;   // una columna de píxeles por cada paso de rumbo
+    const col = (h, d, luz) => {   // color por altitud (bosque y pasto abajo, roca arriba), con la luz y la bruma de la distancia
+      const r1 = Math.min(1, Math.max(0, (h - 1700) / 900));
+      let r = 74 + (128 - 74) * r1, g = 96 + (124 - 96) * r1, b = 70 + (118 - 70) * r1;
+      const l = 0.62 + 0.5 * Math.max(-0.15, luz), cl = 1 + (l - 1) * Math.exp(-d / 40000);   // el contraste de luz se apaga con la distancia
+      r *= cl; g *= cl; b *= cl;
+      const bru = 1 - Math.exp(-d / 30000);   // bruma: hacia el azul pálido del cielo bajo
+      return [r + (196 - r) * bru, g + (210 - g) * bru, b + (220 - b) * bru];
+    };
+    for (let x = 0; x < Wp; x++) {
+      const az = x * AZ_PASO - pad, k = Math.round((((az % 360) + 360) % 360) / AZ_PASO) % NA, t = res.cols[k];
+      for (let i = 0; i < t.length; i += 5) {
+        const yA = Math.max(0, Math.round(y0 - t[i + 1] * kv)), yB = t[i] <= -89 ? H : Math.min(H, Math.round(y0 - t[i] * kv));
+        if (yB <= yA) continue;
+        const [r, g, b] = col(t[i + 3], t[i + 2], t[i + 4]);
+        for (let y = yA; y < yB; y++) { const o = (y * Wp + x) * 4; px[o] = r; px[o + 1] = g; px[o + 2] = b; px[o + 3] = 255; }
+      }
+    }
+    const oc = document.createElement('canvas'); oc.width = Wp; oc.height = H; oc.getContext('2d').putImageData(img, 0, 0);
+    ctx.save(); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(oc, 0, 0, Wp, H, -0.5 * AZ_PASO * ppd, 0, Wp * AZ_PASO * ppd, H); ctx.restore();
+    // crestas: se unen con la de la columna de al lado que está a una distancia parecida y casi a la misma altura
+    const tramos = [[], [], []];   // cerca (< 5 km), media (< 25 km), lejos
+    const x0c = (k) => (k * AZ_PASO + pad) * ppd;
+    for (let k = 0; k < NA; k++) {
+      const a = res.cres[k], b = res.cres[(k + 1) % NA];
+      for (let i = 0; i < a.length; i += 2) {
+        let mejor = -1, dm = 1.2;
+        for (let j = 0; j < b.length; j += 2) { const da = Math.abs(b[j] - a[i]); if (da < dm && Math.abs(Math.log(b[j + 1] / a[i + 1])) < 0.12) { dm = da; mejor = j; } }
+        if (mejor < 0) continue;
+        const g = a[i + 1] < 5000 ? 0 : a[i + 1] < 25000 ? 1 : 2;
+        for (const off of [-360, 0, 360]) {
+          const xa = x0c(k) + off * ppd, xb = xa + AZ_PASO * ppd; if (xb < -2 || xa > W + 2) continue;
+          tramos[g].push(xa, y0 - a[i] * kv, xb, y0 - b[mejor] * kv);
+        }
+      }
+    }
+    const ESTILO = [['rgba(28,38,34,.85)', 1.5], ['rgba(40,54,52,.6)', 1.1], ['rgba(70,88,96,.45)', 0.8]];
+    ctx.lineCap = 'round';
+    for (let g = 2; g >= 0; g--) {
+      const l = tramos[g]; if (!l.length) continue;
+      ctx.beginPath(); for (let i = 0; i < l.length; i += 4) { ctx.moveTo(l[i], l[i + 1]); ctx.lineTo(l[i + 2], l[i + 3]); }
+      ctx.strokeStyle = ESTILO[g][0]; ctx.lineWidth = ESTILO[g][1]; ctx.stroke();
+    }
   }
 
   const normaliza = (g, left) => { const L = 360 * g.ppd, lo = 10 * g.ppd; while (left < lo) left += L; while (left >= lo + L) left -= L; return left; };
@@ -247,12 +301,12 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     cv.width = 1;
     const bloques = await cargaN4(); if (tok !== token) return;
     await new Promise((r) => setTimeout(r, 30)); if (tok !== token) return;
-    const fino = op.desdeAqui ? await cargaFino(p.q.x, p.q.z) : null; if (tok !== token) return;
+    const fino = await cargaFino(p.q.x, p.q.z); if (tok !== token) return;
     const alt = sampler(bloques, fino, p.q.x, p.q.z), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id);
     if (tok !== token) return;
     const g = dibuja(cv, res, sc.clientWidth || 360, sc.clientHeight || 520); ctxP = { p, res, g };
     el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
-    el.querySelector('#pan-nota').textContent = t(op.desdeAqui ? 'Orientativo: calculado con el relieve de 30 m alrededor de ti y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.' : 'Orientativo: calculado con el relieve de 120 m, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
+    el.querySelector('#pan-nota').textContent = t(op.desdeAqui ? 'Orientativo: calculado con el relieve de 30 m hasta 12 km de ti y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.' : 'Orientativo: calculado con el relieve de 30 m hasta 12 km de la cima y de 120 m más lejos, sin nubes ni bosque. Alturas exageradas ×{x} para que se lean. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.', { x: g.exag.toFixed(1).replace('.', EN_INGLES ? '.' : ',') });
     centraEn(sc, g, res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }
