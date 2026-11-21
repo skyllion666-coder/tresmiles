@@ -579,6 +579,9 @@ body.selector-abierto #intro { z-index: 31; }
 #pan-camara { display: inline-flex; align-items: center; gap: 7px; padding: 6px 13px; margin-left: 8px; border: 1px solid rgba(247,242,228,.4); border-radius: 999px; font: 600 .76rem var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--cream); background: none; }
 #pan-camara[hidden] { display: none; }
 #pan-escala { position: absolute; top: 10px; right: 12px; z-index: 2; padding: 5px 11px; border: 1px solid rgba(31,53,48,.35); border-radius: 999px; background: rgba(247,242,228,.85); font: 600 .72rem var(--cond); letter-spacing: .08em; text-transform: uppercase; color: var(--spruce-d, #1f3530); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+#pan-sol { position: absolute; top: 10px; left: 12px; z-index: 2; display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px 5px 9px; border: 1px solid rgba(138,79,18,.4); border-radius: 999px; background: rgba(247,242,228,.88); font: 700 .78rem var(--cond); letter-spacing: .04em; color: #8a4f12; box-shadow: 0 1px 4px rgba(0,0,0,.15); }
+#pan-sol::before { content: ''; width: 11px; height: 11px; border-radius: 50%; background: #f2b233; box-shadow: 0 0 0 2px rgba(242,178,51,.35); }
+#panorama.pan-completa #pan-sol { top: max(10px, var(--sa-top, env(safe-area-inset-top))); left: max(12px, var(--sa-left, env(safe-area-inset-left))); }
 #pan-escala[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }
 #pan-brujula[aria-pressed="true"] { background: #d99a45; border-color: #d99a45; color: #1f3530; }
 #pan-apunta { position: absolute; top: 0; left: 0; right: 0; z-index: 3; box-shadow: 0 2px 8px rgba(0,0,0,.25); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 16px; background: #fbf6e8; color: var(--ink, #24302c); border-bottom: 3px solid #d99a45; }

@@ -3,7 +3,7 @@
 // Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=48';
+import { t, EN_INGLES } from './i18n.js?v=49';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const SUELO = [null, [50, 74, 46], [98, 104, 66], [124, 124, 80], [136, 130, 122], [238, 242, 248], [72, 98, 116], null, [118, 120, 86]];   // por tipo de WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, -, musgo
@@ -13,6 +13,24 @@ const rumbo = (az) => { const r = RUMBOS16[Math.round((((az % 360) + 360) % 360)
 const fmtKm = (d) => (d < 10000 ? (d / 1000).toFixed(1).replace('.', EN_INGLES ? '.' : ',') : String(Math.round(d / 1000))) + ' km';
 const fmtM = (n) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES').format(n) + ' m';
 const FUENTE = '"Barlow Condensed", "Barlow", sans-serif';
+
+// posición del sol (fórmulas de la NOAA, error < 0,05°): rumbo desde el norte y elevación verdadera (sin refracción), en grados
+export function solPos(ms, lat, lon) {
+  const jd = ms / 864e5 + 2440587.5, T = (jd - 2451545) / 36525, r = RAD;
+  const L0 = (280.46646 + T * (36000.76983 + T * 0.0003032)) % 360, M = 357.52911 + T * (35999.05029 - 0.0001537 * T);
+  const C = Math.sin(M * r) * (1.914602 - T * (0.004817 + 0.000014 * T)) + Math.sin(2 * M * r) * (0.019993 - 0.000101 * T) + Math.sin(3 * M * r) * 0.000289;
+  const om = 125.04 - 1934.136 * T, lam = (L0 + C - 0.00569 - 0.00478 * Math.sin(om * r)) * r;
+  const eps = (23 + (26 + (21.448 - T * (46.815 + T * (0.00059 - T * 0.001813))) / 60) / 60 + 0.00256 * Math.cos(om * r)) * r;
+  const dec = Math.asin(Math.sin(eps) * Math.sin(lam)), ra = Math.atan2(Math.cos(eps) * Math.sin(lam), Math.cos(lam));
+  const H = ((280.46061837 + 360.98564736629 * (jd - 2451545) + 0.000387933 * T * T + lon) * r - ra), f = lat * r;
+  const el = Math.asin(Math.sin(f) * Math.sin(dec) + Math.cos(f) * Math.cos(dec) * Math.cos(H)) / r;
+  const az = (Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(f) - Math.tan(dec) * Math.cos(f)) / r + 180 + 360) % 360;
+  return { az, el };
+}
+const refraccion = (h) => (h < -2 ? 0 : 1.02 / Math.tan((h + 10.3 / (h + 5.11)) * RAD) / 60);   // refracción media (Bennett), en grados
+const ZONA = 'Europe/Madrid', diaDe = (ms) => new Intl.DateTimeFormat('en-CA', { timeZone: ZONA }).format(ms);   // «2026-11-21» en hora de España
+const fmtHora = (ms) => new Intl.DateTimeFormat(EN_INGLES ? 'en-GB' : 'es-ES', { timeZone: ZONA, hour: 'numeric', minute: '2-digit' }).format(ms);
+const horaDe = (ms) => +new Intl.DateTimeFormat('en-GB', { timeZone: ZONA, hour: 'numeric', hourCycle: 'h23' }).format(ms);
 
 // rumbo geográfico (0–360°, 0 = norte) hacia el que mira la cámara trasera del móvil, a partir de un evento de orientación; null si no lo da
 export function leeOrientacion(e) {
@@ -163,6 +181,65 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     return { sil, cols, cres, sector, origen, vis: unicos };
   }
 
+  // el sol de hoy visto desde el punto del panorama: su camino minuto a minuto (con refracción) y cuándo asoma y se oculta tras el relieve
+  // (el borde de arriba del disco por encima de la línea del cielo de esa columna); también la salida y la puesta con el horizonte despejado
+  function calculaSol(res, ahora = Date.now()) {
+    const { lat, lon, alt } = res.origen, NA = res.cres.length, caida = -0.9 * Math.sqrt(2 * Math.max(0, alt) / RT) / RAD;   // el horizonte del mar se ve algo por debajo de 0° desde lo alto
+    const linea = (i) => { const c = res.cres[((i % NA) + NA) % NA]; return c && c.length ? c[c.length - 2] : -90; };
+    const cielo = (az) => { const f = az / AZ_PASO, i = Math.floor(f), k = f - i; return Math.max(caida, linea(i) * (1 - k) + linea(i + 1) * k); };
+    const hoy = diaDe(ahora), [y, m, d] = hoy.split('-').map(Number), t0 = Date.UTC(y, m - 1, d) - 3 * 36e5, pts = [];
+    for (let ms = t0; ms < t0 + 28 * 36e5; ms += 6e4) {
+      if (diaDe(ms) !== hoy) continue;
+      const { az, el } = solPos(ms, lat, lon), ea = el + refraccion(el);
+      pts.push({ ms, az, el: ea, ve: ea + 0.27 > cielo(az), llano: ea + 0.27 > 0 });
+    }
+    const tramos = []; let ini = null;
+    pts.forEach((q, i) => { if (q.ve && ini == null) ini = q; if ((!q.ve || i === pts.length - 1) && ini) { tramos.push([ini, q.ve ? q : pts[i - 1]]); ini = null; } });
+    const ll = pts.filter((q) => q.llano);
+    return { pts, tramos, llano: ll.length ? [ll[0], ll[ll.length - 1]] : null, ahora: diaDe(ahora) === hoy ? solPos(ahora, lat, lon) : null, msAhora: ahora, cielo };
+  }
+  // camino del sol sobre el panorama: continuo donde se ve, a trazos donde lo tapa el relieve; marcas de cada hora, asoma/se oculta y dónde está ahora
+  function pintaSol(ctx, sol, azX, y0, kv, W, H) {
+    const pts = sol.pts.filter((q, i) => i % 3 === 0 && q.el > -4);
+    ctx.save(); ctx.lineCap = 'round';
+    for (const vis of [false, true]) {
+      ctx.beginPath(); ctx.setLineDash(vis ? [] : [3, 5]); ctx.strokeStyle = vis ? 'rgba(232,150,32,.95)' : 'rgba(214,140,40,.6)'; ctx.lineWidth = vis ? 2.2 : 1.4;
+      for (let i = 1; i < pts.length; i++) {
+        const a = pts[i - 1], b = pts[i]; if (a.ve !== vis && b.ve !== vis) continue;
+        const xa = azX(a.az), xb = azX(b.az); if (Math.abs(xb - xa) > W / 2 || (Math.max(xa, xb) < -10 || Math.min(xa, xb) > W + 10)) continue;
+        ctx.moveTo(xa, y0 - a.el * kv); ctx.lineTo(xb, y0 - b.el * kv);
+      }
+      ctx.stroke();
+    }
+    ctx.setLineDash([]); ctx.textAlign = 'center'; ctx.textBaseline = 'bottom'; ctx.lineJoin = 'round';
+    const rotulo = (txt, x, y, fuerte) => { ctx.font = `${fuerte ? 700 : 600} ${fuerte ? 12 : 11}px ${FUENTE}`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(247,242,228,.9)'; ctx.strokeText(txt, x, y); ctx.fillStyle = fuerte ? '#8a4f12' : '#9a6a2a'; ctx.fillText(txt, x, y); };
+    for (const q of sol.pts) {   // cada hora en punto
+      if (q.ms % 36e5 || q.el < -1) continue;
+      const x = azX(q.az), y = y0 - q.el * kv; if (x < 8 || x > W - 8 || y < 14 || y > H - 44) continue;
+      ctx.fillStyle = q.ve ? '#e39320' : 'rgba(214,140,40,.6)'; ctx.beginPath(); ctx.arc(x, y, 2.6, 0, 6.3); ctx.fill();
+      rotulo(horaDe(q.ms) + 'h', x, y - 5, false);
+    }
+    const marca = (q, txt) => {   // asoma o se oculta
+      const x = azX(q.az), y = y0 - q.el * kv; if (x < -10 || x > W + 10 || y < 30 || y > H - 12) return;
+      ctx.fillStyle = '#f2b233'; ctx.strokeStyle = '#fff8e6'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, 5, 0, 6.3); ctx.fill(); ctx.stroke();
+      ctx.font = `700 12px ${FUENTE}`; const w = ctx.measureText(txt).width + 12;   // en una etiqueta, para que se lea entre los nombres
+      ctx.fillStyle = 'rgba(255,248,230,.95)'; ctx.strokeStyle = 'rgba(181,112,26,.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect(x - w / 2, y - 27, w, 18, 9); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#8a4f12'; ctx.textBaseline = 'middle'; ctx.fillText(txt, x, y - 17.5); ctx.textBaseline = 'bottom';
+    };
+    for (const [a, b] of sol.tramos) { marca(a, '↑ ' + fmtHora(a.ms)); marca(b, '↓ ' + fmtHora(b.ms)); }
+    if (sol.ahora && sol.ahora.el > -2) {   // el sol ahora mismo (si es de noche, no)
+      const el = sol.ahora.el + refraccion(sol.ahora.el), x = azX(sol.ahora.az), fuera = y0 - el * kv < 26, y = fuera ? 26 : y0 - el * kv;   // más alto que la vista: en el borde, con su altura
+      if (x > -12 && x < W + 12) {
+        const g = ctx.createRadialGradient(x, y, 2, x, y, 22); g.addColorStop(0, 'rgba(255,214,110,.75)'); g.addColorStop(1, 'rgba(255,214,110,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 22, 0, 6.3); ctx.fill();
+        ctx.fillStyle = '#ffc94a'; ctx.strokeStyle = '#b5701a'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(x, y, 8, 0, 6.3); ctx.fill(); ctx.stroke();
+        if (fuera) { ctx.textBaseline = 'middle'; ctx.textAlign = x > W / 2 ? 'right' : 'left'; rotulo(`${t('ahora')} ↑ ${Math.round(el)}°`, x + (x > W / 2 ? -13 : 13), y, true); }
+        else rotulo(t('ahora'), x, y - 11, true);
+      }
+    }
+    ctx.restore();
+  }
+
   // — dibujo del panorama: un lienzo del tamaño de la pantalla que pinta lo que se mira (rumbo del centro, zoom y altura) —
   // escala a zoom 1: ppd0 px por grado (en escala real, con más zoom) y ex, la exageración vertical (1 en escala real); y00: dónde va el ángulo 0 a zoom 1
   function escala(res, vw, vh, real) {
@@ -183,7 +260,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     return v;
   }
   const lienzo = document.createElement('canvas');   // imagen del relieve, una columna de píxeles por columna de datos (se reutiliza)
-  function dibuja(canvas, res, vw, vh, e, v, fina) {
+  function dibuja(canvas, res, vw, vh, e, v, fina, sol = null) {
     const dpr = Math.min(window.devicePixelRatio || 1, 2), ctx = canvas.getContext('2d'), W = Math.round(vw), H = Math.round(vh);
     const ppd = e.ppd0 * v.zoom, kv = e.ex * ppd, y0 = v.y0, MAXN = Math.round(24 * v.zoom);
     if (canvas.width !== Math.round(W * dpr) || canvas.height !== Math.round(H * dpr)) { canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr); canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; }
@@ -233,6 +310,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       ctx.restore();
       cajas.push({ x: q.x - 8, y: q.base - q.len, w: 16, h: q.len + 12, id: q.v.p.id });
     }
+    if (sol) pintaSol(ctx, sol, azX, y0, kv, W, H);   // el sol encima de los nombres, para que no tapen dónde asoma
     return { n, omitidas };
   }
 
@@ -289,7 +367,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     if (rafV) return;
     rafV = requestAnimationFrame(() => {
       rafV = 0; if (!ctxP?.v) return;
-      const [vw, vh] = tamVista(), g = dibuja(el.querySelector('#pan-canvas'), ctxP.res, vw, vh, ctxP.e, ctxP.v, ctxP.fina);
+      const [vw, vh] = tamVista(), g = dibuja(el.querySelector('#pan-canvas'), ctxP.res, vw, vh, ctxP.e, ctxP.v, ctxP.fina, ctxP.sol);
       el.querySelector('#pan-zoom-menos').disabled = ctxP.v.zoom <= 1; el.querySelector('#pan-zoom-mas').disabled = ctxP.v.zoom >= 8;
       return g;
     });
@@ -318,16 +396,24 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
 
   // dibuja el panorama abierto (con la escala elegida) centrado en el rumbo az, a zoom 1, y pone la nota
   function pinta(az) {
-    const real = leeReal(), { res, op, nv } = ctxP, [vw, vh] = tamVista();
+    const real = leeReal(), { res, op, nv } = ctxP, [vw, vh] = tamVista(); el._tam?.(vw + 'x' + vh);
     ctxP.e = escala(res, vw, vh, real); ctxP.v = limita({ az, zoom: 1, y0: ctxP.e.y00 }, ctxP.e, vh);
-    const g = dibuja(el.querySelector('#pan-canvas'), res, vw, vh, ctxP.e, ctxP.v, null);
+    const g = dibuja(el.querySelector('#pan-canvas'), res, vw, vh, ctxP.e, ctxP.v, null, ctxP.sol);
     el.querySelector('#pan-zoom-menos').disabled = true; el.querySelector('#pan-zoom-mas').disabled = false;
     el.querySelector('#pan-escala').setAttribute('aria-pressed', String(real));
     el.querySelector('#pan-sub').textContent = res.vis.length ? t(g.omitidas ? '{v} cumbres con nombre a la vista: en el panorama van las {n} principales; todas están en la lista.' : '{v} cumbres con nombre a la vista.', { v: res.vis.length, n: g.n }) : t('Desde aquí no se ve ninguna cumbre de la lista.');
     const x = ctxP.e.ex.toFixed(1).replace('.', EN_INGLES ? '.' : ',');
+    const so = ctxP.sol, tr = so.tramos, bs = el.querySelector('#pan-sol');
+    bs.textContent = tr.length ? `${fmtHora(tr[0][0].ms)} – ${fmtHora(tr[tr.length - 1][1].ms)}` : t('Hoy no da el sol');
+    bs.title = t('El sol de hoy: toca para ver por dónde asoma y por dónde se oculta');
+    const notaSol = [
+      so.llano ? t('Sol de hoy (hora de España): con un horizonte llano saldría a las {a} y se pondría a las {b}.', { a: fmtHora(so.llano[0].ms), b: fmtHora(so.llano[1].ms) }) : '',
+      tr.length ? t(op.desdeAqui ? 'Aquí asoma tras el relieve a las {a} y se oculta a las {b}.' : 'En la cima asoma tras el relieve a las {a} y se oculta a las {b}.', { a: fmtHora(tr[0][0].ms), b: fmtHora(tr[tr.length - 1][1].ms) }) : t('Hoy el sol no llega a asomar por encima del relieve aquí.'),
+      ...tr.slice(1).map((q, i) => t('Tapado por el relieve de {a} a {b}.', { a: fmtHora(tr[i][1].ms), b: fmtHora(q[0].ms) }))].join(' ');
     el.querySelector('#pan-nota').textContent = [
       t(op.desdeAqui ? 'Orientativo: relieve de 30 m hasta 12 km de ti y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).' : 'Orientativo: relieve de 30 m hasta 12 km de la cima y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).'),
       nv ? t('Nieve: satélite Sentinel-2 (Copernicus) del {f}.', { f: nv.fecha }) : '',
+      notaSol,
       real ? t('Alturas a escala real, como en una foto.') : t('Alturas exageradas ×{x} para que se lean.', { x }),
       t('Pellizca o usa la rueda para ampliar; arrastra para moverte.'),
       t('Sin nubes. Las cumbres lejanas pueden faltar o sobrar. La brújula del móvil puede errar 10-20° si no está calibrada.')].filter(Boolean).join(' ');
@@ -388,7 +474,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     el.innerHTML = `<header><div><h2 id="pan-titulo"></h2><p id="pan-sub"></p></div><button type="button" id="pan-cerrar" aria-label="Cerrar el panorama">×</button></header>
       <nav id="pan-barra"><div id="pan-tabs" role="tablist"><button type="button" role="tab" data-v="pan" aria-selected="true">Panorama</button><button type="button" role="tab" data-v="lis" aria-selected="false">Lista</button></div>
       <button type="button" id="pan-brujula" aria-pressed="false"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m15.5 8.5-2 5-5 2 2-5z" fill="currentColor"/></svg>Brújula</button><button type="button" id="pan-camara" hidden><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 8h3l1.6-2.2h6.8L17 8h3v11H4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13.2" r="3.4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Cámara</button></nav>
-      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><button type="button" id="pan-escala" aria-pressed="false" title="Alturas como en una foto">Escala real</button><div id="pan-zoom"><button type="button" id="pan-zoom-mas" aria-label="Ampliar">+</button><button type="button" id="pan-zoom-menos" aria-label="Reducir" disabled>−</button></div><button type="button" id="pan-completa" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="pan-salir" aria-label="Salir de la pantalla completa" title="Salir de la pantalla completa">×</button><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
+      <div id="pan-vista"><div id="pan-apunta" hidden><div><b class="ap-n"></b><span class="ap-d"></span></div><button type="button" class="ap-ficha">Ver ficha</button></div><button type="button" id="pan-sol"></button><button type="button" id="pan-escala" aria-pressed="false" title="Alturas como en una foto">Escala real</button><div id="pan-zoom"><button type="button" id="pan-zoom-mas" aria-label="Ampliar">+</button><button type="button" id="pan-zoom-menos" aria-label="Reducir" disabled>−</button></div><button type="button" id="pan-completa" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><button type="button" id="pan-salir" aria-label="Salir de la pantalla completa" title="Salir de la pantalla completa">×</button><div id="pan-scroll"><canvas id="pan-canvas"></canvas></div><div id="pan-mira" aria-hidden="true"></div></div>
       <div id="pan-lista" hidden><div id="pan-orden" role="group" aria-label="Ordenar"><button type="button" data-o="rumbo">Por rumbo</button><button type="button" data-o="distancia">Por distancia</button><button type="button" data-o="altura">Por altura</button></div><ul id="pan-ul"></ul></div>
       <p id="pan-nota"></p>`;
     document.body.appendChild(el);
@@ -403,6 +489,11 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       try { if (on && nav && !document.fullscreenElement) el.requestFullscreen?.().catch(() => {}); else if (!on && document.fullscreenElement === el) document.exitFullscreen?.().catch(() => {}); } catch { /* sin pantalla completa del navegador */ }
       if (ctxP?.v) { ctxP.fina = null; pinta(ctxP.v.az); }
     }
+    el.querySelector('#pan-sol').addEventListener('click', () => {   // mira a donde asoma el sol; otra vez, a donde se oculta
+      const tr = ctxP?.sol?.tramos; if (!tr?.length) return;
+      const ir = ctxP.solVa = ctxP.solVa === 'sale' ? 'pone' : 'sale', q = ir === 'sale' ? tr[0][0] : tr[tr.length - 1][1];
+      centraEn(q.az);
+    });
     el.querySelector('#pan-completa').addEventListener('click', () => completa(!el.classList.contains('pan-completa')));
     el.querySelector('#pan-salir').addEventListener('click', () => completa(false));
     document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && el.classList.contains('pan-completa')) completa(false); });
@@ -444,7 +535,10 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     const [vw0, vh0] = [() => tamVista()[0] / 2, () => tamVista()[1] / 2];
     el.querySelector('#pan-zoom-mas').addEventListener('click', () => zoomEn(vw0(), vh0(), 2));
     el.querySelector('#pan-zoom-menos').addEventListener('click', () => zoomEn(vw0(), vh0(), 0.5));
-    addEventListener('resize', () => { if (ctxP?.v && !el.hidden) { const { az } = ctxP.v; ctxP.fina = null; pinta(az); } });
+    // si cambia el tamaño de la vista (girar el móvil, pantalla completa, o la nota de abajo que ocupa más líneas), se vuelve a pintar
+    let tamPintado = '';
+    new ResizeObserver(() => { const k = tamVista().join('x'); if (k !== tamPintado && ctxP?.v && !el.hidden) { tamPintado = k; ctxP.fina = null; pinta(ctxP.v.az); } }).observe(el.querySelector('#pan-scroll'));
+    el._tam = (k) => { tamPintado = k; };
     el._cerrar = cerrar;
   }
 
@@ -461,7 +555,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     const fino = await cargaFino(p.q.x, p.q.z); if (tok !== token) return;
     const alt = sampler(bloques, fino, p.q.x, p.q.z), h0 = (op.desdeAqui ? alt(p.q.x, p.q.z) : p.altitud) + 2, res = calcula(alt, p.q.x, p.q.z, h0, p.id, suelo(cobs, nv));
     if (tok !== token) return;
-    ctxP = { p, res, op, nv }; pinta(res.vis[0]?.az ?? 0);
+    ctxP = { p, res, op, nv, sol: calculaSol(res) }; pinta(res.vis[0]?.az ?? 0);
     if (op.brujula && !br.on) activaBrujula();
   }
   return { abrir: abrirPanorama, cerrar: () => el?._cerrar?.(), abierto: () => !!el && !el.hidden,
