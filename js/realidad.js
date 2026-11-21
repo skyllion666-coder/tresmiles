@@ -1,5 +1,5 @@
 // Modo cámara (realidad aumentada, solo en la app): la cámara trasera a pantalla completa y, encima, la silueta del horizonte y los nombres
-// de las cumbres calculados por el panorama desde tu posición (res = { sil, vis } de panorama.js). Hacia dónde y cuánto inclinas el móvil sale
+// de las cumbres calculados por el panorama desde tu posición (res = { sil, cres, vis } de panorama.js), y las crestas de dentro como líneas finas. Hacia dónde y cuánto inclinas el móvil sale
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
 import { leeOrientacion } from './panorama.js?v=29';
@@ -12,7 +12,7 @@ const fmtM = (n) => new Intl.NumberFormat('es-ES').format(n) + ' m';
 const dif = (a, b) => ((a - b + 540) % 360) - 180;   // diferencia de rumbos en (−180, 180]
 
 export function crearRealidad({ esc, abrirFicha }) {
-  let el = null, res = null, stream = null, raf = 0, vez = 0;
+  let el = null, res = null, tramos = null, stream = null, raf = 0, vez = 0;
   // FOV_LARGO: ángulo de visión del lado largo de la imagen de la cámara (24 mm equivalentes, 4:3 ≈ 69°)
   // fov: el que ajustó el usuario pellizcando; si no, el de la cámara del móvil (la app lo lee de Android); si no, 69°
   const fovApp = () => { try { return Number(window.TresmilesApp?.camaraFov?.()) || 0; } catch { return 0; } };
@@ -75,6 +75,24 @@ export function crearRealidad({ esc, abrirFicha }) {
     }
   }
 
+  // crestas de dentro (las que tapan terreno más lejano; sin la del cielo, que va aparte), unidas con la de la columna de al lado si está a una
+  // distancia parecida y casi a la misma altura: tramos[k] = [ángulo en k, ángulo en k+1, distancia, …]. Las de menos de 1 km no (el GPS y el relieve de 30 m no dan para tanto)
+  function uneCrestas(r) {
+    if (!r?.cres) return null;
+    const NA = r.cres.length, out = new Array(NA);
+    for (let k = 0; k < NA; k++) {
+      const a = r.cres[k], b = r.cres[(k + 1) % NA], l = [];
+      for (let i = 0; i < a.length - 2; i += 2) {
+        if (a[i + 1] < 1000) continue;
+        let mejor = -1, dm = 1.2;
+        for (let j = 0; j < b.length - 2; j += 2) { const da = Math.abs(b[j] - a[i]); if (da < dm && Math.abs(Math.log(b[j + 1] / a[i + 1])) < 0.12) { dm = da; mejor = j; } }
+        if (mejor >= 0) l.push(a[i], b[mejor], a[i + 1]);
+      }
+      out[k] = Float32Array.from(l);
+    }
+    return out;
+  }
+
   function dibuja() {
     raf = requestAnimationFrame(dibuja);
     const cv = el.querySelector('#ra-canvas'), dpr = Math.min(devicePixelRatio || 1, 2), W = innerWidth, H = innerHeight;
@@ -92,6 +110,21 @@ export function crearRealidad({ esc, abrirFicha }) {
       const py = aY(a, daz); if (px === -Math.round(W * 0.4)) x.moveTo(px, py); else x.lineTo(px, py);
     }
     x.stroke(); x.shadowBlur = 0;
+    // crestas de dentro: líneas finas, más tenues cuanto más lejos (cerca < 5 km, media < 25 km, lejos)
+    if (tramos) {
+      const mitadAz = Math.atan(W * 0.9 / f) / RAD, k0 = Math.floor((rumbo - mitadAz) / AZ_PASO), k1 = Math.ceil((rumbo + mitadAz) / AZ_PASO);
+      const capas = [new Path2D(), new Path2D(), new Path2D()];
+      for (let kk = k0; kk < k1; kk++) {
+        const k = ((kk % NA) + NA) % NA, l = tramos[k]; if (!l || !l.length) continue;
+        const dA = kk * AZ_PASO - rumbo, dB = dA + AZ_PASO, xA = W / 2 + f * Math.tan(dA * RAD), xB = W / 2 + f * Math.tan(dB * RAD);
+        for (let i = 0; i < l.length; i += 3) { const p = capas[l[i + 2] < 5000 ? 0 : l[i + 2] < 25000 ? 1 : 2]; p.moveTo(xA, aY(l[i], dA)); p.lineTo(xB, aY(l[i + 1], dB)); }
+      }
+      x.lineCap = 'round';
+      for (const [g, ancho, alfa] of [[2, 1, 0.45], [1, 1.3, 0.65], [0, 1.7, 0.85]]) {
+        x.strokeStyle = 'rgba(0,0,0,.3)'; x.lineWidth = ancho + 1.6; x.stroke(capas[g]);   // borde oscuro para que se vea sobre nieve y cielo
+        x.strokeStyle = `rgba(255,255,255,${alfa})`; x.lineWidth = ancho; x.stroke(capas[g]);
+      }
+    }
     // nombres: de más a menos importante, sin pisarse; una línea fina baja hasta la cumbre
     const mitad = Math.atan(W / 2 / f) / RAD + 2, puestos = [];
     x.font = '600 13px "Barlow Semi Condensed", "Barlow", sans-serif'; x.textBaseline = 'middle';
@@ -165,7 +198,7 @@ export function crearRealidad({ esc, abrirFicha }) {
 
   async function abrir(resultado) {
     if (!el) crea();
-    res = resultado; st.offAz = 0; st.offEl = 0; st.rumbo = null; st.elev = null; st.abs = false;
+    res = resultado; tramos = uneCrestas(res); st.offAz = 0; st.offEl = 0; st.rumbo = null; st.elev = null; st.abs = false;
     el.hidden = false; document.body.classList.add('ra-abierto');
     const turno = ++vez, fuera = () => turno !== vez || el.hidden;   // se cerró (o se volvió a abrir) mientras se esperaba el permiso o la cámara
     try { if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') await DeviceOrientationEvent.requestPermission(); } catch { /* sin permiso: no habrá rumbo */ }
