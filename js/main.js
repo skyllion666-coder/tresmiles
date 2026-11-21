@@ -11,19 +11,20 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=83';
-import { crearPanorama } from './panorama.js?v=33';
-import { crearUbicacion } from './ubicacion.js?v=31';
-import { crearSeguridad } from './seguridad.js?v=28';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=84';
+import { crearPanorama } from './panorama.js?v=34';
+import { crearPlano } from './plano.js?v=1';
+import { crearUbicacion } from './ubicacion.js?v=32';
+import { crearSeguridad } from './seguridad.js?v=29';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=29';
-import { crearSelector } from './selector.js?v=29';
+import { crearRealidad } from './realidad.js?v=30';
+import { crearSelector } from './selector.js?v=30';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=49';
+import { t, EN_INGLES } from './i18n.js?v=50';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1260,6 +1261,14 @@ async function boot() {
 
   fichaBody.addEventListener('toggle', (e) => { if (e.target.classList?.contains('perfil-det')) store.set('perfil-oculto', e.target.open ? '0' : '1'); }, true);   // el perfil se puede ocultar y se recuerda
   const realidad = EN_APP ? crearRealidad({ esc, abrirFicha: (id) => { panorama.cerrar(); openPeak(id); } }) : null;   // modo cámara (solo en la app)
+  // mapa plano (2D): caminos, curvas de nivel y pendientes; mientras está abierto, el 3D no se dibuja
+  const plano = crearPlano({ geo, meta, store: relieve, peaks, json, refugios: () => refugiosDatos, fuentes: () => fuentesDatos, pueblos: () => pueblosLista,
+    abrirFicha: (id) => openPeak(id), alAbrir: () => { S.plano = true; }, alCerrar: () => { S.plano = false; last = performance.now(); } });
+  $('#btn-plano').addEventListener('click', () => {
+    const r = camera.position.distanceTo(controls.target), z = Math.max(10, Math.min(16, Math.round((13 + Math.log2(12000 / Math.max(500, r))) * 2) / 2));
+    const p = S.active ? byId[S.active] : null;   // con una cumbre abierta, el mapa plano va a ella (y encuadra su ruta)
+    plano.abrir({ centro: p ? p.q : { x: controls.target.x, z: controls.target.z }, zoom: p ? 14 : z, pico: p });
+  });
   const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
     nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.fecha) } : null; } });   // nieve del satélite para colorear el panorama
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
@@ -1450,11 +1459,12 @@ async function boot() {
   $('#ficha-close').addEventListener('click', () => closeFicha());
   // — cerrar lo que esté abierto, de arriba abajo: Esc en el ordenador y el botón «atrás» del móvil (antes «atrás» sacaba de la web o cerraba la app) —
   const segPanel = () => document.getElementById('seg-panel');
-  const algoAbierto = () => !!realidad?.abierto() || panorama.abierto() || $('#about').open || palabras.abierto() || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
+  const algoAbierto = () => plano.abierto() || !!realidad?.abierto() || panorama.abierto() || $('#about').open || palabras.abierto() || document.getElementById('zonas')?.open || (segPanel() && !segPanel().hidden) || S.vuelo || !listEl.hidden || !$('#filters').hidden || !!S.active;
   function cierraUno() {
     if (realidad?.abierto()) { realidad.cerrar(); return true; }   // la cámara, encima del panorama
     if (panorama.enCompleta()) { panorama.salCompleta(); return true; }   // el panorama va encima de todo: primero sale de la pantalla completa, luego se cierra
     if (panorama.abierto()) { panorama.cerrar(); return true; }
+    if (plano.abierto()) { plano.cerrar(); return true; }   // el mapa plano: «atrás» vuelve al 3D
     if (document.getElementById('zonas')?.open) { document.getElementById('zonas').close(); return true; }
     if (palabras.abierto()) { palabras.cerrar(); return true; }
     if ($('#about').open) { $('#about').close(); return true; }
@@ -2229,6 +2239,7 @@ async function boot() {
   let last = performance.now(), orbit = 0;
   let zoomTxt = ''; const zoomInd = $('#zoom-ind') ?? document.createElement('span');
   function frame(now) {
+    if (S.plano) { last = now; requestAnimationFrame(frame); return; }   // con el mapa plano abierto, el 3D descansa (batería y móviles lentos)
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     { // colores del cielo, la niebla y la luz ambiente hacia los de la luz elegida (el primer fotograma, de golpe)
       const L = S.look, T = L.to, kc = L.ini ? 1 - Math.exp(-dt * 1.1) : 1, u = sky.material.uniforms; L.ini = true;
