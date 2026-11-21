@@ -872,6 +872,18 @@ ul.historia p { margin: 0 0 2px; }
 #plano[hidden] { display: none; }
 body.plano-abierto #tools, body.plano-abierto #dock, body.plano-abierto #compass, body.plano-abierto .giro { visibility: hidden; }
 #pl-mapa { position: absolute; inset: 0; background: #eeecde; font-family: var(--cond, 'Barlow Condensed', sans-serif); }
+#pl-mapa { touch-action: none; cursor: grab; transform-origin: 50% 50%; }
+#pl-mapa.pl-arrastra { cursor: grabbing; }
+/* el mapa puede girar (como el 3D): nombres, ventanas y etiquetas giran al revés para seguir derechos */
+#pl-mapa .pl-r { position: absolute; left: 0; top: 0; width: 0; height: 0; rotate: var(--contra, 0deg); }
+#pl-mapa .leaflet-popup-content-wrapper { rotate: var(--contra, 0deg); transform-origin: 50% calc(100% + 20px); }
+#plano.girado .leaflet-popup-tip-container { display: none; }
+.pl-tt { display: inline-block; rotate: var(--contra, 0deg); }
+/* los controles de Leaflet (zoom, escala, créditos) fuera del mapa girado */
+#plano .pl-ctl { position: absolute; inset: 0; z-index: 450; background: none; overflow: visible; pointer-events: none; outline: 0; }
+#pl-norte { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: rgba(247,242,228,.94); border: 1px solid rgba(31,53,48,.3); color: var(--spruce-d, #1f3530); box-shadow: 0 2px 8px rgba(0,0,0,.15); justify-self: end; }
+#pl-norte[hidden] { display: none; }
+#pl-norte svg { transition: none; }
 #pl-arriba { position: absolute; z-index: 500; top: max(10px, var(--sa-top, env(safe-area-inset-top))); left: max(10px, var(--sa-left, env(safe-area-inset-left))); right: max(10px, var(--sa-right, env(safe-area-inset-right))); display: flex; gap: 8px; align-items: center; pointer-events: none; }
 #pl-arriba > * { pointer-events: auto; }
 #pl-cerrar { display: inline-flex; align-items: center; gap: 4px; height: 38px; padding: 0 13px 0 9px; border-radius: 999px; background: var(--spruce-d, #1f3530); color: var(--cream, #f7f2e4); font: 700 .84rem var(--cond); letter-spacing: .08em; box-shadow: 0 2px 8px rgba(0,0,0,.25); }

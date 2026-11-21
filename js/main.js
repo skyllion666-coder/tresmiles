@@ -11,20 +11,20 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=6';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=84';
-import { crearPanorama } from './panorama.js?v=34';
-import { crearPlano } from './plano.js?v=2';
-import { crearUbicacion } from './ubicacion.js?v=32';
-import { crearSeguridad } from './seguridad.js?v=29';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=85';
+import { crearPanorama } from './panorama.js?v=35';
+import { crearPlano } from './plano.js?v=3';
+import { crearUbicacion } from './ubicacion.js?v=33';
+import { crearSeguridad } from './seguridad.js?v=30';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=30';
-import { crearSelector } from './selector.js?v=30';
+import { crearRealidad } from './realidad.js?v=31';
+import { crearSelector } from './selector.js?v=31';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=50';
+import { t, EN_INGLES } from './i18n.js?v=51';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1263,16 +1263,28 @@ async function boot() {
   const realidad = EN_APP ? crearRealidad({ esc, abrirFicha: (id) => { panorama.cerrar(); openPeak(id); } }) : null;   // modo cámara (solo en la app)
   // mapa plano (2D): caminos, curvas de nivel y pendientes; mientras está abierto, el 3D no se dibuja
   const plano = crearPlano({ geo, meta, store: relieve, peaks, json, refugios: () => refugiosDatos, fuentes: () => fuentesDatos, pueblos: () => pueblosLista,
-    abrirFicha: (id) => openPeak(id), alAbrir: () => { S.plano = true; }, alCerrar: () => { S.plano = false; last = performance.now(); } });
+    abrirFicha: (id) => openPeak(id), alAbrir: () => { S.plano = true; }, alCerrar: (v) => { S.plano = false; last = performance.now(); if (v?.cambiado) vistaDesdePlano(v); } });
+  // al volver del 2D, el 3D queda como el plano: el punto que estaba en el centro de lo que se ve, a la misma escala y con el mismo rumbo (la inclinación, la de antes)
+  function vistaDesdePlano(v) {
+    if (S.vuelo) pararVuelo(false); S.flight = null;
+    const p = geo.toXZ(v.lon, v.lat), s = camState();
+    const mpx = 156543.03 * Math.cos(v.lat * Math.PI / 180) / 2 ** v.zoom;
+    const r = clamp(mpx * innerHeight / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))), 30, controls.maxDistance);
+    const t = new THREE.Vector3(p.x, geo.heightAt(p.x, p.z), p.z), th = -v.rumbo * Math.PI / 180, sp = Math.sin(s.phi);
+    camera.position.set(t.x + r * sp * Math.sin(th), t.y + r * Math.cos(s.phi), t.z + r * sp * Math.cos(th));
+    camera.position.y = Math.max(camera.position.y, geo.heightAt(camera.position.x, camera.position.z) + 15);
+    controls.target.copy(t); camera.lookAt(t); controls.update();
+  }
   // el mapa plano se abre en el punto del relieve que hay en el centro de la pantalla, a la misma escala que se ve en 3D (ahí)
   $('#btn-plano').addEventListener('click', () => {
     const cx = innerWidth / 2 - S.shift.x, cy = innerHeight / 2 - S.shift.y;   // el centro de lo que se ve (con la ficha abierta, la vista está desplazada)
     const pt = puntoDelRelieve(cx, cy) ?? { x: controls.target.x, z: controls.target.z };
     const d = camera.position.distanceTo(new THREE.Vector3(pt.x, geo.heightAt(pt.x, pt.z), pt.z));
     const mpx = 2 * d * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) / innerHeight;   // metros por píxel en ese punto
-    const z = Math.max(10, Math.min(18, Math.round(Math.log2(156543.03 * Math.cos(42.7 * Math.PI / 180) / Math.max(0.3, mpx)) * 2) / 2));
+    const z = Math.max(9, Math.min(20, Math.log2(156543.03 * Math.cos(42.7 * Math.PI / 180) / Math.max(0.01, mpx))));
     const p = S.active ? byId[S.active] : null;   // con una cumbre abierta se dibuja su ruta, pero sin mover el mapa
-    plano.abrir({ centro: pt, zoom: z, pico: p, encuadra: false, pantalla: { x: cx, y: cy } });   // y en el mismo sitio de la pantalla
+    // y en el mismo sitio de la pantalla, girado como el 3D (camState().theta: hacia dónde está la cámara vista desde el punto; el rumbo es el contrario)
+    plano.abrir({ centro: pt, zoom: z, pico: p, encuadra: false, pantalla: { x: cx, y: cy }, rumbo: -camState().theta * 180 / Math.PI });
   });
   const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
     nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.fecha) } : null; } });   // nieve del satélite para colorear el panorama
@@ -2308,7 +2320,7 @@ async function boot() {
   requestAnimationFrame(frame);
   await window.Carga?.fin();   // el 100 % se ve un instante antes de abrir el mapa
   document.body.classList.remove('is-loading');
-  window.tresmiles = { tiempo, scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas, panorama };
+  window.tresmiles = { plano, tiempo, scene, geo, veg, cumbres, nombrePico, puntoDelRelieve, openPeak, startExplore, goHome, camera, controls, terrain, S, peaks, flyTo, closeFicha, aves, fauna, lagos, sonido, rutas, panorama };
 }
 
 boot().catch((err) => {

@@ -3,7 +3,7 @@
 // curvas de nivel (más juntas cuanto más cerca) con su altitud, pendientes en colores (opcional) y sendas y pistas de OpenStreetMap.
 // Fondos con conexión: topográfico del IGN (MTN) y ortofoto PNOA. Encima: cumbres, refugios, fuentes, pueblos, la ruta de la cumbre (subida continua,
 // bajada a rayas) con su perfil, las otras subidas y tu posición. Leaflet (BSD-2) va copiado en vendor/leaflet y se carga la primera vez que se abre.
-import { t, EN_INGLES } from './i18n.js?v=50';
+import { t, EN_INGLES } from './i18n.js?v=51';
 
 const SUELO = { 1: [196, 220, 170], 2: [218, 226, 186], 3: [232, 236, 204], 4: [228, 224, 216], 5: [250, 252, 255], 6: [168, 204, 228], 8: [222, 228, 200] };   // WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, musgo
 const PAPEL = [238, 236, 222];
@@ -24,6 +24,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
   const CH = meta.chunk, ST = meta.step;
   let el = null, map = null, fondo = null, capaPropia = null, capaEncima = null, capaIGN = null, capaOrto = null, marcas = null, rutaCapa = null, gps = null, gpsWatch = null;
   const op = { fondo: 'propio', pend: false };
+  let rumbo = 0, mapEl = null, v0 = null, pantallaV = null;   // rumbo: hacia dónde mira la parte de arriba de la pantalla (grados desde el norte, como el 3D)
   try { Object.assign(op, JSON.parse(localStorage.getItem('tresmiles-plano') || '{}')); } catch { /* sin almacenamiento */ }
   const guarda = () => { try { localStorage.setItem('tresmiles-plano', JSON.stringify(op)); } catch { /* nada */ } };
   const lonLat = (x, z) => [meta.lat0 - (z + geo.oz) / geo.mLat, meta.lon0 + (x + geo.W / 2) / geo.mLon];   // [lat, lon] de un punto del mapa 3D
@@ -62,7 +63,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
         return cv;
       },
     });
-    return new Capa({ tileSize: 256, minZoom: 8, maxZoom: 18, maxNativeZoom: 17, updateWhenIdle: true, keepBuffer: 1, className: 'plano-capa-' + modo });
+    return new Capa({ tileSize: 256, minZoom: 8, maxZoom: 20, maxNativeZoom: 20, updateWhenIdle: true, keepBuffer: 1, className: 'plano-capa-' + modo });
   }
 
   // pesos de Catmull-Rom para las muestras -1, 0, 1, 2 a la distancia t de la 0
@@ -219,7 +220,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
   // — lo de encima: cumbres, refugios, fuentes, pueblos (sus nombres se ven según el zoom, con CSS) —
   // (hay unas 4.000: en el mapa solo están las que tocan a ese zoom y caen cerca de lo que se ve; se crean la primera vez que hacen falta)
   function ponMarcas(L) {
-    const icono = (cls, html) => L.divIcon({ className: 'pl-m ' + cls, html, iconSize: [0, 0] });
+    const icono = (cls, html) => L.divIcon({ className: 'pl-m ' + cls, html: `<b class="pl-r">${html}</b>`, iconSize: [0, 0] });   // .pl-r: los nombres siguen derechos aunque el mapa gire
     const lista = [];
     for (const p of peaks) {
       const [lat, lon] = p.lat != null ? [p.lat, p.lon] : lonLat(p.q.x, p.q.z);
@@ -249,7 +250,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     const conRuta = !!p.rutas?.length;
     const html = `<div class="pl-pop"><b>${escHtml(p.nombre)}</b><span>${fmtM(p.altitud)} m</span>
       <div class="pl-pop-b">${conRuta ? `<button type="button" data-a="ruta">${t('Ver la ruta')}</button>` : ''}<button type="button" data-a="ficha">${t('Abrir la ficha')}</button></div></div>`;
-    const pop = L.popup({ closeButton: true, autoPanPadding: [20, 60] }).setLatLng(ll).setContent(html).openOn(map);
+    const pop = L.popup({ closeButton: true, autoPan: !girado(), autoPanPadding: [20, 60] }).setLatLng(ll).setContent(html).openOn(map);
     pop.getElement()?.addEventListener('click', (e) => {
       const b = e.target.closest('button[data-a]'); if (!b) return;
       if (b.dataset.a === 'ruta') { map.closePopup(); muestraRuta(p, true); }
@@ -274,7 +275,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     (otras?.subidas || []).forEach((s, i) => {
       const ll = s.puntos.map((q) => [q[1], q[0]]);
       L.polyline(ll, { color: '#fff', weight: 5, opacity: 0.7, interactive: false }).addTo(rutaCapa);
-      L.polyline(ll, { color: COLS[i % COLS.length], weight: 2.6, opacity: 0.9 }).bindTooltip(t('Otra subida: desde {d}', { d: s.desde }), { sticky: true }).addTo(rutaCapa);
+      L.polyline(ll, { color: COLS[i % COLS.length], weight: 2.6, opacity: 0.9 }).bindTooltip(`<span class="pl-tt">${escHtml(t('Otra subida: desde {d}', { d: s.desde }))}</span>`).addTo(rutaCapa);
     });
     if (baj.length > 2) {
       L.polyline(baj, { color: '#fff', weight: 6, opacity: 0.75, interactive: false }).addTo(rutaCapa);
@@ -282,8 +283,9 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     }
     L.polyline(sub, { color: '#fff', weight: 7.5, opacity: 0.85, interactive: false }).addTo(rutaCapa);
     L.polyline(sub, { color: '#e8731c', weight: 4.2, opacity: 1, interactive: false }).addTo(rutaCapa);
-    L.circleMarker(sub[0], { radius: 6, color: '#fff', weight: 2, fillColor: '#2c8a3e', fillOpacity: 1 }).bindTooltip(t('Inicio')).addTo(rutaCapa);
+    L.circleMarker(sub[0], { radius: 6, color: '#fff', weight: 2, fillColor: '#2c8a3e', fillOpacity: 1 }).bindTooltip(`<span class="pl-tt">${escHtml(t('Inicio'))}</span>`).addTo(rutaCapa);
     rutaCapa.addTo(map);
+    if (encuadra) ponRumbo(0);
     if (encuadra) map.fitBounds(L.latLngBounds(pts.map((q) => [q[1], q[0]])), { paddingTopLeft: [30, 70], paddingBottomRight: [60, 190], maxZoom: 15 });   // abajo queda el perfil
     el.querySelector('#pl-perfil').classList.toggle('plegado', !encuadra);   // al venir del 3D, plegado: el mapa se ve igual que allí
     perfil(p, r);
@@ -351,8 +353,8 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
   function ponFondo() {
     const L = window.L;
     for (const c of [capaPropia, capaEncima, capaIGN, capaOrto]) c?.remove();
-    if (op.fondo === 'ign') { (capaIGN ??= L.tileLayer('https://www.ign.es/wmts/mapa-raster?service=WMTS&request=GetTile&version=1.0.0&format=image/jpeg&layer=MTN&style=default&tilematrixset=GoogleMapsCompatible&tilematrix={z}&tilerow={y}&tilecol={x}', { maxZoom: 18, maxNativeZoom: 17, attribution: '© <a href="https://www.ign.es" target="_blank" rel="noopener">IGN</a> (CC BY 4.0)' })).addTo(map); }
-    else if (op.fondo === 'orto') { (capaOrto ??= L.tileLayer('https://www.ign.es/wmts/pnoa-ma?service=WMTS&request=GetTile&version=1.0.0&format=image/jpeg&layer=OI.OrthoimageCoverage&style=default&tilematrixset=GoogleMapsCompatible&tilematrix={z}&tilerow={y}&tilecol={x}', { maxZoom: 18, maxNativeZoom: 19, attribution: 'PNOA © <a href="https://www.ign.es" target="_blank" rel="noopener">IGN</a> (CC BY 4.0)' })).addTo(map); }
+    if (op.fondo === 'ign') { (capaIGN ??= L.tileLayer('https://www.ign.es/wmts/mapa-raster?service=WMTS&request=GetTile&version=1.0.0&format=image/jpeg&layer=MTN&style=default&tilematrixset=GoogleMapsCompatible&tilematrix={z}&tilerow={y}&tilecol={x}', { maxZoom: 20, maxNativeZoom: 17, attribution: '© <a href="https://www.ign.es" target="_blank" rel="noopener">IGN</a> (CC BY 4.0)' })).addTo(map); }
+    else if (op.fondo === 'orto') { (capaOrto ??= L.tileLayer('https://www.ign.es/wmts/pnoa-ma?service=WMTS&request=GetTile&version=1.0.0&format=image/jpeg&layer=OI.OrthoimageCoverage&style=default&tilematrixset=GoogleMapsCompatible&tilematrix={z}&tilerow={y}&tilecol={x}', { maxZoom: 20, maxNativeZoom: 19, attribution: 'PNOA © <a href="https://www.ign.es" target="_blank" rel="noopener">IGN</a> (CC BY 4.0)' })).addTo(map); }
     if (op.fondo === 'propio') { capaPropia = hazCapa(L, 'propio'); capaPropia.options.attribution = t('Relieve: Copernicus GLO-30 y MDT05 del IGN · suelo: ESA WorldCover (CC BY 4.0) · caminos: © OpenStreetMap (ODbL)'); capaPropia.addTo(map); }
     else if (op.pend || op.fondo === 'orto') { capaEncima = hazCapa(L, 'encima'); capaEncima.options.attribution = op.fondo === 'orto' ? t('Caminos: © OpenStreetMap (ODbL)') : ''; capaEncima.addTo(map); }
     for (const b of el.querySelectorAll('#pl-fondos button')) b.setAttribute('aria-pressed', String(b.dataset.f === op.fondo));
@@ -369,6 +371,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
         <div id="pl-fondos" role="group" aria-label="Fondo del mapa"><button type="button" data-f="propio">Relieve</button><button type="button" data-f="ign">IGN</button><button type="button" data-f="orto">Foto</button></div>
       </div>
       <div id="pl-botones">
+        <button type="button" id="pl-norte" hidden aria-label="Poner el norte arriba" title="Poner el norte arriba"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3l4 9h-8z" fill="#c4352a"/><path d="M12 21l-4-9h8z" fill="currentColor" opacity=".55"/></svg></button>
         <button type="button" id="pl-pend" aria-pressed="false" title="Pendientes en colores">Pendiente</button>
         <button type="button" id="pl-gps" aria-pressed="false" aria-label="Dónde estoy"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
       </div>
@@ -376,6 +379,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
       <div id="pl-perfil" hidden><div class="pl-pf-cab"><button type="button" class="pl-pf-t"></button><button type="button" class="pl-pf-x" aria-label="Quitar la ruta">×</button></div><canvas></canvas></div>
       <p id="pl-aviso" role="status" hidden></p>`;
     document.body.appendChild(el);
+    mapEl = el.querySelector('#pl-mapa');
     el.querySelector('#pl-cerrar').addEventListener('click', () => cerrar());
     el.querySelector('.pl-pf-t').addEventListener('click', () => {   // tocar el título pliega o despliega el perfil
       const c = el.querySelector('#pl-perfil'); c.classList.toggle('plegado'); perfil.repinta?.();
@@ -388,11 +392,99 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     el.querySelector('#pl-pend').addEventListener('click', () => { op.pend = !op.pend; guarda(); ponFondo(); });
     el.querySelector('#pl-gps').addEventListener('click', (e) => gpsOn(e.currentTarget.getAttribute('aria-pressed') !== 'true'));
     el.querySelector('.pl-pf-x').addEventListener('click', () => { if (rutaCapa) { rutaCapa.remove(); rutaCapa = null; } marcaPerfil?.remove(); el.querySelector('#pl-perfil').hidden = true; rutaPico = null; });
-    addEventListener('resize', () => { if (!el.hidden) { map?.invalidateSize(); perfil.repinta?.(); } });
+    addEventListener('resize', () => { if (!el.hidden) { ponRumbo(rumbo); map?.invalidateSize({ animate: false }); perfil.repinta?.(); } });
+    el.querySelector('#pl-norte').addEventListener('click', () => {   // el norte arriba, girando poco a poco
+      const r0 = rumbo, t0 = performance.now();
+      const paso = (ahora) => { const k = Math.min(1, (ahora - t0) / 350); ponRumbo(r0 * (1 - k * k * (3 - 2 * k))); if (k < 1) requestAnimationFrame(paso); };
+      requestAnimationFrame(paso);
+    });
+    gestos();
+  }
+
+  // — el mapa gira como el 3D —
+  // Leaflet no gira: el contenedor del mapa se gira con CSS (cuadrado, de lado la diagonal de la pantalla, para que no se vean esquinas vacías)
+  // y los gestos (arrastrar, pellizcar, girar con dos dedos, rueda, doble toque) se hacen aquí, pasando de la pantalla al mapa girado
+  const girado = () => Math.abs(rumbo) > 0.05;
+  function ponRumbo(r) {
+    rumbo = ((r % 360) + 540) % 360 - 180; if (Math.abs(rumbo) < 0.05) rumbo = 0;
+    if (!mapEl) return;
+    const W = el.clientWidth, H = el.clientHeight, D = girado() ? Math.ceil(Math.hypot(W, H)) + 2 : 0;
+    const st = mapEl.style, w = D || W, h = D || H, antes = st.width;
+    Object.assign(st, { width: w + 'px', height: h + 'px', left: (W - w) / 2 + 'px', top: (H - h) / 2 + 'px', right: 'auto', bottom: 'auto', transform: rumbo ? `rotate(${-rumbo}deg)` : '' });
+    st.setProperty('--contra', rumbo + 'deg');
+    if (map && antes !== st.width) map.invalidateSize({ animate: false });
+    el.classList.toggle('girado', girado());
+    const b = el.querySelector('#pl-norte'); b.hidden = !girado(); b.querySelector('svg').style.transform = `rotate(${-rumbo}deg)`;
+  }
+  // de un punto de la pantalla al del contenedor del mapa (y al revés)
+  function aMapa(sx, sy) {
+    const sz = map.getSize(), b = rumbo * RAD, c = Math.cos(b), s = Math.sin(b), dx = sx - el.clientWidth / 2, dy = sy - el.clientHeight / 2;
+    return window.L.point(c * dx - s * dy + sz.x / 2, s * dx + c * dy + sz.y / 2);
+  }
+  const llEn = (sx, sy) => map.containerPointToLatLng(aMapa(sx, sy));
+  function ancla(ll, sx, sy) {   // mueve el mapa para que ll quede en ese punto de la pantalla
+    const q = map.latLngToContainerPoint(ll).subtract(aMapa(sx, sy));
+    if (Math.abs(q.x) + Math.abs(q.y) >= 0.5) map.panBy(q, { animate: false });
+  }
+  function gestos() {
+    const ptrs = new Map(); let g = null, movido = false, pend = null, toque = null;
+    const aplica = () => {
+      pend = null; if (!g) return;
+      if (g.n === 1) { const p = [...ptrs.values()][0]; if (p) ancla(g.ll, p.x, p.y); return; }
+      const [a, b] = [...ptrs.values()]; if (!b) return;
+      const cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2, d = Math.hypot(b.x - a.x, b.y - a.y), ang = Math.atan2(b.y - a.y, b.x - a.x);
+      let da = ang - g.a0; da = Math.atan2(Math.sin(da), Math.cos(da));
+      if (!g.gira && Math.abs(da) > 0.2) { g.gira = true; g.a0 = ang; g.r0 = rumbo; da = 0; }   // gira solo si los dedos giran de verdad (no al pellizcar)
+      if (g.gira) ponRumbo(g.r0 - da / RAD);
+      map.setZoom(g.z0 + Math.log2(Math.max(10, d) / g.d0), { animate: false });
+      ancla(g.ll, cx, cy);
+    };
+    const pide = () => { pend ??= requestAnimationFrame(aplica); };
+    const empieza = () => {
+      const v = [...ptrs.values()];
+      if (!v.length) { g = null; return; }
+      if (v.length === 1) { g = { n: 1, ll: llEn(v[0].x, v[0].y), x0: v[0].x, y0: v[0].y }; return; }
+      const [a, b] = v, cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2;
+      g = { n: 2, ll: llEn(cx, cy), z0: map.getZoom(), d0: Math.max(10, Math.hypot(b.x - a.x, b.y - a.y)), a0: Math.atan2(b.y - a.y, b.x - a.x), r0: rumbo, gira: false };
+    };
+    mapEl.addEventListener('pointerdown', (e) => {
+      if (!map || e.target.closest('.leaflet-popup') || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      if (!ptrs.size) movido = false;
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); empieza();
+    });
+    addEventListener('pointermove', (e) => {
+      const p = ptrs.get(e.pointerId); if (!p || !g) return;
+      p.x = e.clientX; p.y = e.clientY;
+      if (!movido && (g.n === 2 || Math.hypot(p.x - g.x0, p.y - g.y0) > 5)) { movido = true; mapEl.classList.add('pl-arrastra'); }
+      if (movido) pide();
+    });
+    const suelta = (e) => {
+      if (!ptrs.has(e.pointerId)) return;
+      ptrs.delete(e.pointerId);
+      if (!ptrs.size) {
+        mapEl.classList.remove('pl-arrastra');
+        if (!movido && e.type === 'pointerup') {   // doble toque: acercar ahí
+          const ahora = performance.now();
+          if (toque && ahora - toque.t < 320 && Math.hypot(e.clientX - toque.x, e.clientY - toque.y) < 30) {
+            const ll = llEn(e.clientX, e.clientY); map.setZoom(map.getZoom() + 1, { animate: false }); ancla(ll, e.clientX, e.clientY); toque = null;
+          } else toque = { t: ahora, x: e.clientX, y: e.clientY };
+        }
+      }
+      empieza();
+    };
+    addEventListener('pointerup', suelta); addEventListener('pointercancel', suelta);
+    mapEl.addEventListener('click', (e) => { if (movido) { e.stopPropagation(); e.preventDefault(); } }, true);   // al soltar tras arrastrar no se abre lo que haya debajo
+    let rueda = null;
+    mapEl.addEventListener('wheel', (e) => {
+      if (!map) return; e.preventDefault();
+      const dz = -Math.max(-120, Math.min(120, e.deltaY * (e.deltaMode === 1 ? 33 : 1))) / 160;
+      if (!rueda) { rueda = { ll: llEn(e.clientX, e.clientY), x: e.clientX, y: e.clientY, dz: 0 }; requestAnimationFrame(() => { const r = rueda; rueda = null; map.setZoom(map.getZoom() + r.dz, { animate: false }); ancla(r.ll, r.x, r.y); }); }
+      rueda.dz += dz;
+    }, { passive: false });
   }
 
   // centro: { x, z } del mapa 3D; zoom: del mapa plano; pico: la cumbre abierta (se dibuja su ruta); encuadra: llevar el mapa a la ruta; pantalla: píxel donde debe quedar el centro
-  async function abrir({ centro, zoom = 13, pico = null, encuadra = true, pantalla = null } = {}) {
+  async function abrir({ centro, zoom = 13, pico = null, encuadra = true, pantalla = null, rumbo: r = 0 } = {}) {
     if (!el) crea();
     el.hidden = false; document.body.classList.add('plano-abierto'); alAbrir();
     let L;
@@ -400,25 +492,40 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     const [lat, lon] = centro ? lonLat(centro.x, centro.z) : [42.65, 0.3];
     if (!map) {
       const sw = lonLat(-geo.W / 2, geo.zmax), ne = lonLat(geo.W / 2, geo.zmin);
-      map = L.map(el.querySelector('#pl-mapa'), { zoomControl: true, minZoom: 9, maxZoom: 18, maxBounds: L.latLngBounds(sw, ne).pad(0.15), maxBoundsViscosity: 0.8, attributionControl: true, zoomSnap: 0.5, wheelPxPerZoomLevel: 90 });
+      ponRumbo(r);
+      map = L.map(mapEl, { zoomControl: true, minZoom: 9, maxZoom: 20, maxBounds: L.latLngBounds(sw, ne).pad(0.15), attributionControl: true, zoomSnap: 0,
+        dragging: false, touchZoom: false, doubleClickZoom: false, scrollWheelZoom: false, boxZoom: false, keyboard: false });   // los gestos los lleva gestos() (el mapa puede estar girado)
+      const ctl = document.createElement('div'); ctl.className = 'leaflet-container pl-ctl'; ctl.appendChild(map._controlContainer); el.insertBefore(ctl, mapEl.nextSibling);   // los controles, fuera del giro
       map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
       map.zoomControl.setPosition('bottomright');
       const nivel = () => { const z = map.getZoom(); for (let k = 10; k <= 16; k++) el.classList.toggle('z' + k, z >= k); };   // qué nombres caben (CSS: .z12 …)
       map.on('zoomend', nivel); nivel();
-      map.setView([lat, lon], zoom);
+      map.setView([lat, lon], zoom, { animate: false });
       ponFondo(); ponMarcas(L);
       L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(map);
-    } else { map.invalidateSize(); map.setView([lat, lon], zoom, { animate: false }); }
-    if (pantalla) { const c = map.getSize(); map.panBy([c.x / 2 - pantalla.x, c.y / 2 - pantalla.y], { animate: false }); }   // el punto queda donde estaba en el 3D
+    } else { ponRumbo(r); map.invalidateSize({ animate: false }); map.setView([lat, lon], zoom, { animate: false }); }
+    if (pantalla) ancla(L.latLng(lat, lon), pantalla.x, pantalla.y);   // el punto queda donde estaba en el 3D
+    pantallaV = pantalla ?? { x: el.clientWidth / 2, y: el.clientHeight / 2 };
+    v0 = { ll: llEn(pantallaV.x, pantallaV.y), z: map.getZoom(), r: rumbo };
     map.fire('zoomend');
     if (pico && pico.id !== rutaPico) muestraRuta(pico, encuadra);
     else if (!pico && rutaPico) { rutaCapa?.remove(); rutaCapa = null; marcaPerfil?.remove(); el.querySelector('#pl-perfil').hidden = true; rutaPico = null; }
   }
   function cerrar() {
     if (!el || el.hidden) return;
-    map?.closePopup(); el.hidden = true; document.body.classList.remove('plano-abierto'); gpsOn(false); alCerrar();
+    let vista = null;
+    if (map && v0) {   // lo que se ve en el 2D, para dejar el 3D igual: el punto en el mismo píxel, la escala y el rumbo
+      const ll = llEn(pantallaV.x, pantallaV.y), q = map.latLngToContainerPoint(v0.ll).distanceTo(aMapa(pantallaV.x, pantallaV.y));
+      vista = { lat: ll.lat, lon: ll.lng, zoom: map.getZoom(), rumbo, cambiado: q > 1.5 || Math.abs(map.getZoom() - v0.z) > 0.01 || Math.abs(rumbo - v0.r) > 0.1 };
+    }
+    map?.closePopup(); el.hidden = true; document.body.classList.remove('plano-abierto'); gpsOn(false); alCerrar(vista);
   }
   // el centro del mapa plano en coordenadas del mapa 3D (para volver al mismo sitio)
   const centro = () => { if (!map) return null; const c = map.getCenter(); return geo.toXZ(c.lng, c.lat); };
-  return { abrir, cerrar, abierto: () => !!el && !el.hidden, centro, zoom: () => map?.getZoom() ?? 13 };
+  // dónde cae en la pantalla un punto (para las pruebas: comparar con el 3D)
+  function pantallaDe(lat, lon) {
+    const q = map.latLngToContainerPoint([lat, lon]), sz = map.getSize(), b = -rumbo * RAD, c = Math.cos(b), s = Math.sin(b), dx = q.x - sz.x / 2, dy = q.y - sz.y / 2;
+    return { x: c * dx - s * dy + el.clientWidth / 2, y: s * dx + c * dy + el.clientHeight / 2 };
+  }
+  return { abrir, cerrar, abierto: () => !!el && !el.hidden, centro, zoom: () => map?.getZoom() ?? 13, pantallaDe };
 }
