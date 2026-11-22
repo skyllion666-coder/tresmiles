@@ -35,9 +35,16 @@ def gps(img):
     fecha = fecha[:10].replace(':', '-') if isinstance(fecha, str) and len(fecha) >= 10 else None
     if not g or 2 not in g or 4 not in g: return None, fecha
     gms = lambda v: float(v[0]) + float(v[1]) / 60 + float(v[2]) / 3600
-    lat, lon = gms(g[2]) * (-1 if g.get(1) == 'S' else 1), gms(g[4]) * (-1 if g.get(3) == 'W' else 1)
-    alt = float(g[6]) * (-1 if g.get(5) == 1 else 1) if 6 in g else None
-    rumbo = float(g[17]) if 17 in g else None
+    try:
+        lat, lon = gms(g[2]) * (-1 if g.get(1) == 'S' else 1), gms(g[4]) * (-1 if g.get(3) == 'W' else 1)
+        if math.isnan(lat) or math.isnan(lon): return None, fecha   # GPS vacío (0/0): algunos móviles lo dejan así
+    except ZeroDivisionError: return None, fecha
+    try: alt = float(g[6]) * (-1 if g.get(5) == 1 else 1) if 6 in g else None
+    except ZeroDivisionError: alt = None
+    try: rumbo = float(g[17]) if 17 in g else None
+    except ZeroDivisionError: rumbo = None
+    if alt is not None and math.isnan(alt): alt = None
+    if rumbo is not None and math.isnan(rumbo): rumbo = None
     return {'lat': round(lat, 6), 'lon': round(lon, 6), 'alt': round(alt) if alt is not None else None, 'rumbo': round(rumbo) if rumbo is not None else None}, fecha
 
 def dentro_mapa(lat, lon):

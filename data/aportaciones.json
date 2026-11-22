@@ -1,4 +1,23 @@
 {
- "fotos": [],
+ "fotos": [
+  {
+   "id": "cotiella-1",
+   "cima": "cotiella",
+   "autor": "Frank (Skyllion)",
+   "fecha": "2023-09-10",
+   "pie": "La cima del Cotiella: el mojón con la placa y, al fondo, el Pirineo.",
+   "w": 1600,
+   "h": 722
+  },
+  {
+   "id": "cotiella-2",
+   "cima": "cotiella",
+   "autor": "Frank (Skyllion)",
+   "fecha": "2023-09-10",
+   "pie": "El mojón de la cima del Cotiella, con su placa y el hierro.",
+   "w": 722,
+   "h": 1600
+  }
+ ],
  "comentarios": []
 }

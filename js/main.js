@@ -11,20 +11,20 @@ import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
 import { instalaNiebla } from './niebla.js?v=7';
 import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
 import { crearFauna } from './fauna.js?v=16';
-import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=86';
-import { crearPanorama } from './panorama.js?v=36';
-import { crearPlano } from './plano.js?v=4';
-import { crearUbicacion } from './ubicacion.js?v=34';
-import { crearSeguridad } from './seguridad.js?v=31';
+import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=87';
+import { crearPanorama } from './panorama.js?v=37';
+import { crearPlano } from './plano.js?v=5';
+import { crearUbicacion } from './ubicacion.js?v=35';
+import { crearSeguridad } from './seguridad.js?v=32';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
-import { crearRealidad } from './realidad.js?v=32';
-import { crearSelector } from './selector.js?v=32';
+import { crearRealidad } from './realidad.js?v=33';
+import { crearSelector } from './selector.js?v=33';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=52';
+import { t, EN_INGLES } from './i18n.js?v=53';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1289,7 +1289,7 @@ async function boot() {
     plano.abrir({ centro: pt, zoom: z, pico: p, encuadra: false, pantalla: { x: cx, y: cy }, rumbo: -camState().theta * 180 / Math.PI });
   });
   const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
-    nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.fecha) } : null; } });   // nieve del satélite para colorear el panorama
+    nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.ultima) } : null; } });   // nieve del satélite para colorear el panorama
   // — perfil de altura interactivo: un punto recorre la ruta en el mapa —
   let perfilT = 0;
   const sobrePerfil = (e) => {
@@ -1627,7 +1627,7 @@ async function boot() {
       nieveSat.on = v; b.setAttribute('aria-pressed', v); store.set('tresmiles-nieve', v ? '1' : '0');
       if (v && !(await cargaNieve())) { nieveSat.on = false; b.setAttribute('aria-pressed', false); return; }
       if (nieveSat.on !== v) return;
-      $('#nieve-tip').textContent = v && nieveSat.meta ? t('Nieve ahora · satélite del {f}', { f: fechaCorta(nieveSat.meta.fecha) }) : t('Nieve ahora (satélite)');
+      $('#nieve-tip').textContent = v && nieveSat.meta ? t('Nieve ahora · satélite hasta el {f}', { f: fechaCorta(nieveSat.meta.ultima) }) : t('Nieve ahora (satélite)');
       fundido(v ? 1 : 0);
       fichaBody.querySelectorAll('[data-act="nieve-mapa"]').forEach((c) => { c.checked = v; });
     };

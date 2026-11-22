@@ -72,8 +72,11 @@ if not usadas: sys.exit('sin imágenes')
 img = np.dstack([np.round(frac * 250).astype('uint8'), np.where(visto, 255, 0).astype('uint8'), edad])
 Image.fromarray(img, 'RGB').save(os.path.join(OUT, 'nieve.png'), optimize=True)
 fechas = sorted(u['fecha'] for u in usadas)
-# la fecha que se enseña: la de la imagen que más mapa aporta (la más reciente no siempre: puede ser una pasada casi toda nublada)
-principal = max(usadas, key=lambda u: u['px'])['fecha']
+# la fecha principal: el día que más mapa aporta, sumando todas sus escenas (la más reciente no siempre: puede ser una pasada casi toda nublada).
+# La web enseña «hasta el …» con «ultima»; «fecha» queda como dato.
+pordia = {}
+for u in usadas: pordia[u['fecha']] = pordia.get(u['fecha'], 0) + u['px']
+principal = max(pordia, key=pordia.get)
 json.dump({'fecha': principal, 'ultima': fechas[-1], 'desde': fechas[0], 'visto': round(float(visto.mean()) * 100, 1),
            'caja': [round(oeste, 7), round(sur, 7), round(este, 7), round(norte, 7)], 'ancho': W, 'alto': H,
            'escenas': usadas, 'fuente': 'Copernicus Sentinel-2 (ESA), procesado por Tresmiles'},

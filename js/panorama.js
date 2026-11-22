@@ -3,7 +3,7 @@
 // Cálculo propio con el relieve de 30 m (nivel 1) hasta FINO m y el de 120 m (nivel 4, ~1 MB) más lejos; se piden la primera vez; no toca el relieve del mapa. La visibilidad de cada cumbre se decide con una línea
 // de visión sobre ese relieve (con curvatura de la Tierra y refracción media), con tolerancia porque la malla de 120 m redondea los picos. Es orientativo.
 // Modo brújula: el panorama gira con el móvil y un nombre arriba dice a qué cumbre apuntas (DeviceOrientation; en Android «absolute», en iPhone webkitCompassHeading).
-import { t, EN_INGLES } from './i18n.js?v=52';
+import { t, EN_INGLES } from './i18n.js?v=53';
 const RT = 6371000, K_REF = 0.13, CURV = (1 - K_REF) / (2 * RT);
 const BANDAS = [4000, 12000, 30000, 60000, 1e9];   // límites de distancia de las capas (m), de cerca a lejos
 const SUELO = [null, [50, 74, 46], [98, 104, 66], [124, 124, 80], [136, 130, 122], [238, 242, 248], [72, 98, 116], null, [118, 120, 86]];   // por tipo de WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, -, musgo
@@ -412,7 +412,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       ...tr.slice(1).map((q, i) => t('Tapado por el relieve de {a} a {b}.', { a: fmtHora(tr[i][1].ms), b: fmtHora(q[0].ms) }))].join(' ');
     el.querySelector('#pan-nota').textContent = [
       t(op.desdeAqui ? 'Orientativo: relieve de 30 m hasta 12 km de ti y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).' : 'Orientativo: relieve de 30 m hasta 12 km de la cima y de 120 m más lejos; suelo de ESA WorldCover (CC BY 4.0).'),
-      nv ? t('Nieve: satélite Sentinel-2 (Copernicus) del {f}.', { f: nv.fecha }) : '',
+      nv ? t('Nieve: satélite Sentinel-2 (Copernicus), imágenes hasta el {f}.', { f: nv.fecha }) : '',
       notaSol,
       real ? t('Alturas a escala real, como en una foto.') : t('Alturas exageradas ×{x} para que se lean.', { x }),
       t('Pellizca o usa la rueda para ampliar; arrastra para moverte.'),
