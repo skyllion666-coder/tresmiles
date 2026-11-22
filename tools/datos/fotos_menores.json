@@ -2991,16 +2991,17 @@
   "pie": "La Peña Montañesa desde Aínsa."
  },
  "cotiella": {
-  "archivo": "Cotiella visto desde La Puebla de Fantova.jpg",
-  "autor": "Carlos González Sanz",
-  "licencia": "CC BY-SA 4.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Cotiella_visto_desde_La_Puebla_de_Fantova.jpg",
-  "fuente": "Wikimedia Commons",
-  "w": 640,
-  "h": 327,
-  "ruta": "img/menores/cotiella.webp",
-  "pie": "El Cotiella desde La Puebla de Fantova."
+  "archivo": "foto propia",
+  "autor": "Frank (Skyllion)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "",
+  "w": 960,
+  "h": 433,
+  "ruta": "img/menores/cotiella-frank.webp",
+  "propia": true,
+  "pie": "La cima del Cotiella: el mojón con la placa y, al fondo, el Pirineo (septiembre de 2023)."
  },
  "pico-del-aguila": {
   "archivo": "Desde los Pozos de Hielo , vista al Pico del Aguila. - panoramio.jpg",

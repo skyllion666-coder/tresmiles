@@ -340,7 +340,7 @@ async function boot() {
     b.setAttribute('aria-label', t(p.activo ? '{n}, {a} metros. Abrir ficha' : '{n}, {a} metros. Próximamente', { n: p.nombre, a: fmt(p.altitud) }));
     b.innerHTML = `<span class="pin-label">${esc(p.nombre)}<i>${fmt(p.altitud)} m${p.activo ? '' : ' · Próximamente'}</i></span><span class="pin-stem" aria-hidden="true"></span>`;
     b.addEventListener('click', () => (p.activo ? openPeak(p.id) : verPrevia(p)));
-    if (p.foto && !p.menor) b.dataset.mini = `img/mini/${p.id}.webp`;   // miniatura de la ficha dentro del círculo (se carga al acercarse)
+    if (p.foto && !p.menor) b.dataset.mini = `img/mini/${p.id}.webp?f=${p.foto}`;   // miniatura de la ficha dentro del círculo (se carga al acercarse)
     pinsEl.appendChild(b); pinEls.set(p.id, b);
   }
   const tmp = new THREE.Vector3();
@@ -1073,8 +1073,11 @@ async function boot() {
   function aportesHTML(p) {
     const en = EN_INGLES, fs = aportesFotos.filter((a) => a.cima === p.id), cs = aportesComent.filter((c) => c.cima === p.id).sort((a, b) => b.fecha.localeCompare(a.fecha));
     let h = '';
-    if (fs.length) h += `<h3>${en ? 'Photos from climbers' : 'Fotos de montañeros'}</h3>${fs.map((a) => `<figure class="fig-cima fig-aporte"><img src="img/aportes/${esc(a.id)}.jpg" width="${a.w}" height="${a.h}" alt="${esc(trA(a.pie))}" loading="lazy">
-      <figcaption>${esc(trA(a.pie))} ${t('Foto:')} ${esc(a.autor)}, ${fechaAporte(a.fecha)}.${a.lat != null ? ` ${en ? 'It has its GPS position: on the map it is the camera icon.' : 'Lleva su posición GPS: en el mapa es el icono de la cámara.'}` : ''}</figcaption></figure>`).join('')}`;
+    const fotoAp = (a) => `<figure class="fig-cima fig-aporte"><img src="img/aportes/${esc(a.id)}.jpg" width="${a.w}" height="${a.h}" alt="${esc(trA(a.pie))}" loading="lazy">
+      <figcaption>${esc(trA(a.pie))} ${t('Foto:')} ${esc(a.autor)}, ${fechaAporte(a.fecha)}.${a.lat != null ? ` ${en ? 'It has its GPS position: on the map it is the camera icon.' : 'Lleva su posición GPS: en el mapa es el icono de la cámara.'}` : ''}</figcaption></figure>`;
+    const mias = fs.filter((a) => a.propia), otras = fs.filter((a) => !a.propia);   // propia: fotos del autor de la web (más fotos de la cima); las demás, de quien las manda
+    if (mias.length) h += `<h3>${en ? 'More summit photos' : 'Más fotos de la cima'}</h3>${mias.map(fotoAp).join('')}`;
+    if (otras.length) h += `<h3>${en ? 'Photos from climbers' : 'Fotos de montañeros'}</h3>${otras.map(fotoAp).join('')}`;
     if (cs.length) h += `<h3>${en ? 'What climbers say' : 'Lo que dicen los montañeros'}</h3><ul class="comentarios">${cs.map((c) => `<li><p>${esc(trA(c.texto))}</p><small>${esc(c.autor)} · ${fechaAporte(c.fecha)}</small></li>`).join('')}</ul>
       <p class="ruta-credito">${en ? 'Mountains change: check the date of each comment. Comments are translated from Spanish; they are reviewed before being published.' : 'La montaña cambia: mira la fecha de cada comentario. Se revisan antes de publicarlos.'}</p>`;
     return h;

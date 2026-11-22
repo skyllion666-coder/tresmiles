@@ -1,22 +1,14 @@
 {
  "fotos": [
   {
-   "id": "cotiella-1",
-   "cima": "cotiella",
-   "autor": "Frank (Skyllion)",
-   "fecha": "2023-09-10",
-   "pie": "La cima del Cotiella: el mojón con la placa y, al fondo, el Pirineo.",
-   "w": 1600,
-   "h": 722
-  },
-  {
    "id": "cotiella-2",
    "cima": "cotiella",
    "autor": "Frank (Skyllion)",
    "fecha": "2023-09-10",
    "pie": "El mojón de la cima del Cotiella, con su placa y el hierro.",
    "w": 722,
-   "h": 1600
+   "h": 1600,
+   "propia": true
   },
   {
    "id": "cotiella-3",
@@ -25,16 +17,8 @@
    "fecha": "2023-09-10",
    "pie": "El vértice geodésico de la cima del Cotiella.",
    "w": 1600,
-   "h": 722
-  },
-  {
-   "id": "diente-llardana-1",
-   "cima": "diente-llardana",
-   "autor": "Frank (Skyllion)",
-   "fecha": "2023-10-01",
-   "pie": "La aguja del Diente de Llardana, de cerca.",
-   "w": 1600,
-   "h": 720
+   "h": 722,
+   "propia": true
   }
  ],
  "comentarios": []

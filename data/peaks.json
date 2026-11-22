@@ -278,8 +278,8 @@
    "grado": "F · larga, terreno suelto",
    "epoca": "Junio – octubre",
    "descripcion": "Segunda cumbre del Pirineo. Su masa piramidal vigila el valle de Eriste y buena parte del Pirineo oriental aragonés. La ruta normal es técnicamente fácil, pero larga y de pedreras, y conviene hacerla con una noche en el refugio. El track que se muestra pernocta en el refugio (junio de 2024), sube a la cumbre por el Collado Diente Llardana, con nieve, y vuelve al refugio.",
-   "foto": "posets",
-   "pie": "El Posets con uno de sus glaciares.",
+   "foto": "posets-frank",
+   "pie": "La piedra pintada de la cumbre del Posets, junto al vértice geodésico (octubre de 2023).",
    "enlace": {
     "url": "https://es.wikiloc.com/rutas-alpinismo/pico-posets-3375-desde-parking-espigantosa-pernoctando-en-refugio-angel-orus-204931142",
     "texto": "Ver la ruta en Wikiloc: Pico Posets 3375 desde parking Espigantosa, pernoctando en Refugio Angel Orus, de soylouiss"
@@ -287,10 +287,6 @@
    "rutas": [
     "posets-espigantosa"
    ],
-   "fotoCima": {
-    "foto": "pos-cima",
-    "pie": "La piedra pintada de la cumbre del Posets, junto al vértice geodésico."
-   },
    "curiosidad": "Según varias fuentes, la primera ascensión registrada fue en 1856, del inglés Henry Halkett con los guías Pierre Redonnet y Pierre Barrau; unas fuentes dan el 6 de agosto y otras el 6 de junio. Es probable que pastores locales llegaran antes. La segunda, en 1861, fue de Charles Packe. El apellido se escribe de formas distintas (Halkett o Halket).",
    "clase": "principal",
    "nombres": "Tuca de Posets · Punta de Lardana · Pico de Posets · Llardana/Posets · Tuca de Posets / Punta de Lardana"
@@ -1986,8 +1982,8 @@
    "grado": "Trepadas expuestas y tramos de mala roca (según el autor del track)",
    "epoca": "Julio – septiembre",
    "descripcion": "Aguja rocosa junto a la salida de la Canal Fonda, en la ruta normal al Posets. Desde la Espigantosa se sube por el refugio Ángel Orús y la Canal Fonda hasta el collado del Diente, y de allí se trepa a la cima.",
-   "foto": "diente-llardana",
-   "pie": "El Diente de Llardana, una aguja de roca sobre la Canal Fonda.",
+   "foto": "diente-llardana-frank",
+   "pie": "La aguja del Diente de Llardana, de cerca (octubre de 2023).",
    "enlace": {
     "url": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
     "texto": "Ver la ruta en Wikiloc: Diente de Llardana desde parking Espigantosa, de Carlos_cumbres"
@@ -1995,10 +1991,6 @@
    "rutas": [
     "llardana-espigantosa"
    ],
-   "fotoCima": {
-    "foto": "ld-cima",
-    "pie": "La cima del Diente, con las cumbres de la cresta al fondo."
-   },
    "curiosidad": "El Diente de Llardana es la aguja de roca que se levanta justo donde termina la Canal Fonda, en la ruta clásica al Posets, conocida como la «Ruta Real». La guía de Rutas Pirineos lo llama «vertiginoso» y le da 3.094 m, mientras que la lista de tresmiles y la cartografía del IGN le dan 3.085 m. La misma cartografía lo recoge también como «Tucón de la Canal Fonda». Las fuentes consultadas no recogen la historia de su primera ascensión.",
    "clase": "principal",
    "nombres": "Dien de Llardana · Tucón de la Canal o Diente de Llardana · Dien de Llardana / Tucón de la Canal Fonda"

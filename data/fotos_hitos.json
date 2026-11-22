@@ -2371,15 +2371,14 @@
   "pos": "50% 40%"
  },
  "ld-cima": {
-  "archivo": "foto del autor del track",
-  "autor": "Carlos_cumbres",
+  "archivo": "foto propia",
+  "autor": "Frank (Skyllion)",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://es.wikiloc.com/rutas-alpinismo/diente-de-llardana-desde-parking-espigantosa-285071609",
-  "fuente": "su ficha de Wikiloc",
-  "w": 1000,
-  "h": 563,
-  "pos": "50% 50%"
+  "pagina": "",
+  "w": 1100,
+  "h": 495,
+  "ruta": "img/peaks/diente-llardana-frank.jpg"
  },
  "pav-canal": {
   "archivo": "foto del autor del track",
