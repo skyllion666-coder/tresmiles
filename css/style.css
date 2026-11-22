@@ -758,6 +758,9 @@ body.selector-abierto #intro { z-index: 31; }
 .zonas-lista b { font: 600 .82rem/1.2 var(--cond); letter-spacing: .12em; text-transform: uppercase; }
 .zonas-lista span, .zonas-lista small { font: 500 .88rem/1.4 var(--sans); }
 .zona-ok { color: #2f7a43; font-weight: 600 !important; } .zona-error { color: #b0362c; }
+.zona-pasos ol { margin: .6em 0 .8em; padding-left: 1.4em; } .zona-pasos li { margin-bottom: .8em; } .zona-pasos li > .btn-ruta { display: inline-block; text-decoration: none; background: #b9772f; color: #fffbe7; } .zona-pasos li > .btn-ruta:hover { background: #8a5516; }
+.zona-pasos > .btn-suave { background: transparent; color: #8a5516; } .zona-pasos > .btn-suave:hover { background: #b9772f; color: #fffbe7; }
+.zona-pasos li small { display: block; margin-top: .3em; opacity: .8; }
 .zona-btn { justify-self: start; min-height: 40px; padding: 6px 12px; border: 1px solid var(--spruce); background: #fff; color: var(--spruce); font: 600 .78rem var(--cond); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; margin: 2px 4px 0 0; }
 .zona-btn.zona-bajar { background: var(--spruce); color: var(--cream); }
 .zona-btn.zona-borrar { border-color: #b0362c; color: #b0362c; }

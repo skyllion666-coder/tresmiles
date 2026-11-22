@@ -27,14 +27,22 @@ function abreZip(buf) {
 }
 
 // baja el paquete z (del catálogo) con avance(pct); al acabar queda en la lista
+const persiste = () => Promise.race([navigator.storage?.persist?.(), new Promise((r) => setTimeout(r, 3000))]).catch(() => {});   // Firefox pregunta al usuario: no esperar a que conteste
+
 export async function bajaWeb(z, avance, senal) {
-  try { await navigator.storage?.persist?.(); } catch {}
+  await persiste();
   // la función /paquete/ solo existe en tresmiles.pages.dev (Cloudflare Pages); desde la copia de GitHub Pages se pide allí
   const base = /\.pages\.dev$|^localhost$|^127\./.test(location.hostname) ? '' : 'https://tresmiles.pages.dev/';
-  let r;
-  try { r = await fetch(`${base}paquete/${z.id}?v=${z.version}`, { signal: senal }); }
-  catch (e) { if (senal?.aborted) throw e; throw new Error('tresmiles.pages.dev no responde (en España, durante el fútbol las operadoras bloquean Cloudflare). Prueba más tarde'); }
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  let r; const espera = new AbortController(), reloj = setTimeout(() => espera.abort(), 15000), corta = () => espera.abort();
+  senal?.addEventListener('abort', corta);
+  try { r = await fetch(`${base}paquete/${z.id}?v=${z.version}`, { signal: espera.signal }); }
+  catch (e) { if (senal?.aborted) throw e; const b = new Error('tresmiles.pages.dev no responde'); b.bloqueo = true; throw b; }   // en España, durante el fútbol las operadoras bloquean Cloudflare
+  finally { clearTimeout(reloj); }
+  if (!r.ok) { const b = new Error(`HTTP ${r.status}`); b.bloqueo = r.status >= 500; throw b; }
+  const quita = () => senal?.removeEventListener('abort', corta);
+  if (senal?.aborted) { quita(); throw new DOMException('cancelado', 'AbortError'); }
+  // a partir de aquí, cancelar corta también la lectura
+  senal?.addEventListener('abort', () => espera.abort(), { once: true }); quita();
   const total = +r.headers.get('content-length') || z.mb * 1e6, partes = []; let llevo = 0, ult = -1;
   const lector = r.body.getReader();
   for (;;) {
@@ -48,7 +56,7 @@ export async function bajaWeb(z, avance, senal) {
 
 // el .zip ya descargado a mano (p. ej. desde la Release de GitHub cuando tresmiles.pages.dev no responde): se elige en el móvil y se guarda igual
 export async function abreArchivoWeb(z, archivo) {
-  try { await navigator.storage?.persist?.(); } catch {}
+  await persiste();
   await guarda(z, await archivo.arrayBuffer());
 }
 

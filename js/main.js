@@ -20,7 +20,7 @@ import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
-import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=3';
+import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=4';
 import { crearRealidad } from './realidad.js?v=33';
 import { crearSelector } from './selector.js?v=33';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
@@ -1928,7 +1928,7 @@ async function boot() {
       try {
         await bajaWeb(z, (pct) => { avWeb[id].pct = pct; if (pct % 2 === 0) repinta(); }, ctl.signal);
         delete avWeb[id]; paqCajas.delete(id); await leePaquetes(); sonido.fx('activar'); eligePaquete().catch(() => {});
-      } catch (e) { avWeb[id] = ctl.signal.aborted ? undefined : { error: t('No se ha podido descargar: {e}', { e: String(e.message || e) }) }; if (!avWeb[id]) delete avWeb[id]; }
+      } catch (e) { avWeb[id] = ctl.signal.aborted ? undefined : e.bloqueo || e instanceof TypeError ? { manual: true } : { error: t('No se ha podido descargar: {e}', { e: String(e.message || e) }) }; if (!avWeb[id]) delete avWeb[id]; }
       repinta();
     } else if (accion === 'archivo') {   // el .zip bajado a mano desde GitHub: se elige y se guarda en el navegador
       if (avWeb[id]?.ctl) return;
@@ -1957,6 +1957,15 @@ async function boot() {
       if (EN_APP || !zonasWebPosible()) return;
       const z = zonaDe(p, await catalogoZonas); if (!z || S.active !== p.id) { hueco.innerHTML = ''; return; }
       const tiene = paqInstalados.includes(z.id), a = avWeb[z.id], vieja = tiene && listaWeb()[z.id] < z.version;
+      if (a?.manual && !tiene) {   // la descarga directa no responde (Cloudflare bloqueado durante el fútbol): bajarlo de GitHub y abrirlo
+        const en = EN_INGLES;
+        hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>${otraZona(p, z)}
+        <div class="zona-pasos"><p class="ruta-credito">${en ? 'The direct download is not responding right now (in Spain, during football matches internet providers block part of the web). Do it in two steps:' : 'Ahora mismo la descarga directa no responde (en España, durante el fútbol, las operadoras bloquean parte de internet). Hazlo en dos pasos:'}</p>
+          <ol><li><a class="btn-ruta" href="${esc(z.url)}" download>${en ? `Download ${esc(z.id)}.zip · ${z.mb} MB` : `Descargar ${esc(z.id)}.zip · ${z.mb} MB`}</a><small>${en ? 'It downloads from GitHub, like any file. Wait until it finishes.' : 'Se baja de GitHub, como cualquier archivo. Espera a que termine.'}</small></li>
+          <li><button type="button" class="btn-ruta" data-act="zona-web" data-z="archivo" data-id="${z.id}">${en ? 'Open the downloaded file' : 'Abrir el archivo descargado'}</button><small>${en ? 'Choose it in Downloads: it is saved in the browser and loads by itself.' : 'Elígelo en Descargas: se guarda en el navegador y se carga solo.'}</small></li></ol>
+          <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="bajar" data-id="${z.id}">${en ? 'Try the direct download again' : 'Probar otra vez la descarga directa'}</button></div>`;
+        return;
+      }
       hueco.innerHTML = `<h3>${t('Zona en alta calidad')}</h3>${otraZona(p, z)}
         <p class="ruta-credito">${tiene ? t('Tienes esta zona guardada en el navegador: el relieve LiDAR de 1 m y la ortofoto de 25 cm se cargan solos al acercarte.') : t('Relieve LiDAR de 1 m y ortofoto de 25 cm a lo largo de las rutas, para ver la zona como es antes de subir ({m} MB; se guarda en el navegador).', { m: z.mb })}</p>
         <div class="ruta-acciones">${a?.ctl ? `<div class="zona-barra"><i style="width:${a.pct}%"></i></div><small>${t(a.pct >= 99 ? 'Preparando…' : 'Descargando… {p} %', { p: a.pct })}</small> <button type="button" class="btn-ruta btn-suave" data-act="zona-web" data-z="cancelar" data-id="${z.id}">${t('Cancelar')}</button>`
