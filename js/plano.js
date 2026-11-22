@@ -232,6 +232,16 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     }
     for (const r of refugios() || []) lista.push({ ll: [r.lat, r.lon], z: 12, crea: () => L.marker([r.lat, r.lon], { icon: icono('pl-ref' + (r.guardado ? ' pl-guardado' : ''), `<i></i><span>${escHtml(r.nombre === 'vivac' ? t('Vivac') : r.nombre)}${r.alt ? ` · ${fmtM(r.alt)}` : ''}</span>`), title: r.nombre, zIndexOffset: 100 }) });
     for (const f of fuentes() || []) lista.push({ ll: [f.lat, f.lon], z: 14, crea: () => L.marker([f.lat, f.lon], { icon: icono('pl-fuente' + (f.tipo === 'manantial' ? ' pl-manantial' : ''), '<i></i>'), title: f.nombre || (f.tipo === 'manantial' ? t('Manantial') : t('Fuente')), interactive: false }) });
+    // nombres de los ibones con nombre (OpenStreetMap, data/lagos.json): dentro del agua; los grandes antes. Con el fondo IGN no (ya los trae impresos)
+    json('data/lagos.json').then((lagos) => {
+      for (const l of lagos) {
+        if (!l.nombre || !l.poly?.length) continue;
+        const [lon, lat] = puntoDentro(l.poly), ha = l.area / 1e4;
+        const o = { ll: [lat, lon], z: ha >= 50 ? 11 : ha >= 5 ? 13 : ha >= 1 ? 14 : 15, crea: () => L.marker([lat, lon], { icon: icono('pl-lago', `<span>${escHtml(l.nombre)}</span>`), title: l.nombre, interactive: false, zIndexOffset: -50 }) };
+        lista.push(o);
+      }
+      pon();
+    }).catch(() => {});
     for (const [nombre, lon, lat] of pueblos() || []) lista.push({ ll: [lat, lon], z: 11, crea: () => L.marker([lat, lon], { icon: icono('pl-pueblo', `<span>${escHtml(nombre)}</span>`), interactive: false, zIndexOffset: -100 }) });
     marcas = L.layerGroup().addTo(map);
     const pon = () => {
@@ -243,6 +253,24 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
       }
     };
     map.on('moveend zoomend', pon); pon();
+  }
+  // un punto dentro del polígono para poner el nombre: el centro de la franja horizontal más ancha cerca del centro (el centroide puede caer fuera en ibones con forma de media luna)
+  function puntoDentro(poly) {
+    let a = 0, cx = 0, cy = 0, y0 = Infinity, y1 = -Infinity;
+    for (let i = 0, n = poly.length; i < n; i++) {
+      const [x1, y1_] = poly[i], [x2, y2] = poly[(i + 1) % n], f = x1 * y2 - x2 * y1_;
+      a += f; cx += (x1 + x2) * f; cy += (y1_ + y2) * f; y0 = Math.min(y0, y1_); y1 = Math.max(y1, y1_);
+    }
+    const c = a ? [cx / (3 * a), cy / (3 * a)] : poly[0];
+    const cortes = (y) => { const xs = []; for (let i = 0, n = poly.length; i < n; i++) { const [xa, ya] = poly[i], [xb, yb] = poly[(i + 1) % n]; if ((ya <= y) !== (yb <= y)) xs.push(xa + ((y - ya) / (yb - ya)) * (xb - xa)); } return xs.sort((p, q) => p - q); };
+    const dentro = (x, y) => cortes(y).filter((v) => v < x).length % 2 === 1;
+    if (dentro(c[0], c[1])) return c;
+    let mejor = null, ancho = -1;
+    for (let k = 1; k < 12; k++) {
+      const y = y0 + ((y1 - y0) * k) / 12, xs = cortes(y);
+      for (let i = 0; i + 1 < xs.length; i += 2) { const w = xs[i + 1] - xs[i] - Math.abs(y - c[1]) * 0.5; if (w > ancho) { ancho = w; mejor = [(xs[i] + xs[i + 1]) / 2, y]; } }
+    }
+    return mejor ?? c;
   }
   const escHtml = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 
@@ -361,6 +389,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     el.querySelector('#pl-pend').setAttribute('aria-pressed', String(op.pend));
     el.querySelector('#pl-leyenda').hidden = !op.pend;
     el.classList.toggle('pl-con-relieve', op.fondo === 'propio');
+    el.classList.toggle('pl-fondo-ign', op.fondo === 'ign'); el.classList.toggle('pl-fondo-orto', op.fondo === 'orto');
   }
 
   function crea() {
