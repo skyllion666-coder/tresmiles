@@ -198,7 +198,7 @@ async function boot() {
   } });
   { const b = document.createElement('button'); b.type = 'button'; b.className = 'textbtn'; b.id = 'btn-ayuda'; b.setAttribute('aria-label', ayuda.L('Ayuda: cómo se usa', 'Help: how to use it'));
     b.innerHTML = `<span class="ay-q" aria-hidden="true">?</span><span class="ay-q-t">${ayuda.L('Ayuda', 'Help')}</span>`;
-    $('#btn-about').before(b); b.addEventListener('click', () => ayuda.abrir('uso')); }
+    $('header.top').appendChild(b); b.addEventListener('click', () => ayuda.abrir('uso')); }   // arriba a la izquierda, debajo de «Ver introducción»
   let vivacs3d = null;
   // leyenda de las líneas (abajo a la izquierda) y nombre de la otra subida sobre su línea
   const leyenda = document.createElement('div'); leyenda.className = 'leyenda-lineas is-hidden'; leyenda.setAttribute('aria-hidden', 'true'); document.body.appendChild(leyenda);

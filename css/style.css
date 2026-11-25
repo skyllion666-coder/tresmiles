@@ -799,7 +799,7 @@ body.selector-abierto #intro { z-index: 31; }
 .refugio-osm.refugio-vivac svg .piedras { fill: #b9b3a6; stroke: #3d3a34; stroke-width: 1.1; }   /* vivac: corro de piedras sin techo */
 
 /* leyenda de las líneas: subida continua, bajada a rayas, otra subida en su color */
-.leyenda-lineas { position: fixed; left: 12px; top: calc(env(safe-area-inset-top, 0px) + 84px); z-index: 6; display: flex; flex-direction: column; gap: 3px; padding: 5px 8px; border-radius: 6px;
+.leyenda-lineas { position: fixed; left: 12px; top: calc(env(safe-area-inset-top, 0px) + 96px); z-index: 6; display: flex; flex-direction: column; gap: 3px; padding: 5px 8px; border-radius: 6px;
   background: rgba(20, 30, 27, .55); color: #f4efe2; font: 500 .66rem/1.3 var(--cond); letter-spacing: .06em; pointer-events: none; transition: opacity .3s; max-width: 46vw; }
 .leyenda-lineas.is-hidden { opacity: 0; }
 .leyenda-lineas span { display: flex; align-items: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -943,9 +943,12 @@ body.plano-ruta #plano .leaflet-control-scale { display: none; }
 .pl-pop-b button { padding: 5px 11px; border-radius: 999px; background: var(--spruce, #2d4a43); color: var(--cream, #f7f2e4); font: 600 .74rem var(--cond); letter-spacing: .08em; text-transform: uppercase; }
 
 /* — ayuda (js/ayuda.js): botón «?», pestañas de «Acerca de», leyendas, tarjetas de la primera vez y bienvenida de la app — */
-#btn-ayuda { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; }
-#btn-ayuda .ay-q { display: inline-grid; place-items: center; width: 20px; height: 20px; border: 1.5px solid currentColor; border-radius: 50%; font: 700 .78rem/1 var(--cond); letter-spacing: 0; }
-@media (max-width: 460px) { #btn-ayuda .ay-q-t { display: none; } #btn-ayuda { margin-right: 12px; } #btn-ayuda .ay-q { width: 24px; height: 24px; font-size: .9rem; } }
+/* «? Ayuda»: arriba a la izquierda, justo debajo de «Ver introducción» (#btn-reintro, css/cine.css), con su mismo estilo */
+#btn-ayuda { position: absolute; left: var(--gutter, 20px); top: calc(max(16px, var(--sa-top, env(safe-area-inset-top))) + 32px); display: inline-flex; align-items: center; gap: 8px; font-size: .68rem; letter-spacing: .18em; opacity: .85; }
+#btn-ayuda:hover { opacity: 1; }
+#btn-ayuda .ay-q { display: inline-grid; place-items: center; width: 18px; height: 18px; border: 1.5px solid currentColor; border-radius: 50%; font: 700 .72rem/1 var(--cond); letter-spacing: 0; }
+@media (max-width: 760px) { .top #btn-ayuda { left: max(20px, var(--sa-left, env(safe-area-inset-left))); top: calc(max(14px, var(--sa-top, env(safe-area-inset-top))) + 30px); } }
+@media (max-width: 640px) { #btn-ayuda .ay-q-t { display: none; } #btn-ayuda { margin-left: -3px; } #btn-ayuda .ay-q { width: 24px; height: 24px; font-size: .88rem; } }
 #about-body .ab-tabs { position: sticky; top: -34px; z-index: 2; display: flex; gap: 2px; margin: -34px -34px 18px; padding: 14px 52px 0 26px; background: var(--cream); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
 #about-body .ab-tabs::-webkit-scrollbar { display: none; }
 #about-body .ab-tabs button { flex: none; padding: 9px 10px 8px; font: 600 .74rem var(--cond); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); border-bottom: 2px solid transparent; white-space: nowrap; }
