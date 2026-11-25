@@ -941,3 +941,66 @@ body.plano-ruta #plano .leaflet-control-scale { display: none; }
 .pl-pop b { font: 600 1.05rem var(--serif, serif); }
 .pl-pop-b { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
 .pl-pop-b button { padding: 5px 11px; border-radius: 999px; background: var(--spruce, #2d4a43); color: var(--cream, #f7f2e4); font: 600 .74rem var(--cond); letter-spacing: .08em; text-transform: uppercase; }
+
+/* — ayuda (js/ayuda.js): botón «?», pestañas de «Acerca de», leyendas, tarjetas de la primera vez y bienvenida de la app — */
+#btn-ayuda { display: inline-flex; align-items: center; gap: 6px; margin-right: 16px; }
+#btn-ayuda .ay-q { display: inline-grid; place-items: center; width: 20px; height: 20px; border: 1.5px solid currentColor; border-radius: 50%; font: 700 .78rem/1 var(--cond); letter-spacing: 0; }
+@media (max-width: 460px) { #btn-ayuda .ay-q-t { display: none; } #btn-ayuda { margin-right: 12px; } #btn-ayuda .ay-q { width: 24px; height: 24px; font-size: .9rem; } }
+#about-body .ab-tabs { position: sticky; top: -34px; z-index: 2; display: flex; gap: 2px; margin: -34px -34px 18px; padding: 14px 52px 0 26px; background: var(--cream); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+#about-body .ab-tabs::-webkit-scrollbar { display: none; }
+#about-body .ab-tabs button { flex: none; padding: 9px 10px 8px; font: 600 .74rem var(--cond); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); border-bottom: 2px solid transparent; white-space: nowrap; }
+#about-body .ab-tabs button[aria-selected="true"] { color: var(--spruce); border-color: var(--spruce); }
+.about-close { z-index: 3; }
+#about-body details.ab-pl { border-top: 1px solid var(--line); }
+#about-body details.ab-pl > summary { cursor: pointer; padding: 12px 0; font: 600 .74rem var(--cond); letter-spacing: .2em; text-transform: uppercase; color: var(--spruce); }
+#about-body details.ab-pl[open] > summary { padding-bottom: 4px; }
+#about-body .ab-buscar { width: 100%; margin: 0 0 10px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font: inherit; color: var(--ink); }
+#about-body .ay-nota, #about-body .ab-nada { color: var(--ink-2); font-size: .85rem; }
+#about-body .ay-ind { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+#about-body .ay-ind a { padding: 4px 10px; border-radius: 999px; background: var(--cream-2); font: 600 .74rem var(--cond); letter-spacing: .06em; text-decoration: none; }
+#about-body .ay-sub { margin: 14px 0 2px; font-weight: 600; color: var(--spruce); display: flex; align-items: center; gap: 6px; }
+#about-body .ay-sub svg { width: 18px; height: 18px; }
+#about-body ul.ay-botones, #about-body ul.ay-ley { list-style: none; padding-left: 0; }
+#about-body ul.ay-botones li { display: flex; gap: 12px; align-items: flex-start; margin: 10px 0; }
+#about-body .ay-ico { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--spruce); color: var(--cream); }
+#about-body .ay-ico svg { width: 20px; height: 20px; }
+#about-body ul.ay-botones li.ay-consejo { display: block; padding: 10px 12px; background: var(--cream-2); border-left: 3px solid var(--ochre); }
+.ay-probar { margin-left: 4px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--spruce); font: 600 .7rem var(--cond); letter-spacing: .1em; text-transform: uppercase; color: var(--spruce); }
+.ay-probar:hover { background: var(--spruce); color: var(--cream); }
+ul.ay-ley li { margin: 5px 0; }
+.ay-m { display: inline-block; vertical-align: middle; margin: 0 6px 2px 0; flex: none; }
+.ay-linea { width: 26px; height: 5px; border-radius: 3px; background: var(--c); box-shadow: 0 0 0 1px rgba(0,0,0,.45); }
+.ay-rayas { width: 26px; height: 5px; background: repeating-linear-gradient(90deg, var(--c) 0 6px, transparent 6px 10px); }
+.ay-mancha { width: 16px; height: 12px; border-radius: 3px; background: var(--c); box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
+.ay-grad { width: 40px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, rgba(255,120,30,.5), #ff9a2e, #ffe14a); box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
+.ay-flecha { width: 26px; text-align: center; color: #fff; font-size: .85rem; text-shadow: 0 0 2px #000, 0 0 2px #000; }
+.ay-pin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #fff; background: radial-gradient(circle at 40% 35%, #9bb3a8, #3b5a50); box-shadow: 0 0 0 1px rgba(0,0,0,.4); }
+/* leyenda de las capas encendidas: se puede tocar para abrir la ayuda */
+.leyenda-lineas { pointer-events: auto; cursor: help; }
+.leyenda-lineas.is-hidden { pointer-events: none; }
+.leyenda-lineas i.l-verde { background: #5be36f; }
+.leyenda-lineas i.l-baj.l-verde { background: repeating-linear-gradient(90deg, #5be36f 0 6px, transparent 6px 10px); }
+.leyenda-lineas i.l-senda, .leyenda-lineas i.l-pista, .leyenda-lineas i.l-ferrata { width: 14px; height: 3px; }
+.leyenda-lineas i.l-senda { background: #fff4d6; } .leyenda-lineas i.l-pista { background: #d9a866; } .leyenda-lineas i.l-ferrata { background: #ff5a3c; }
+.leyenda-lineas i.l-calor { height: 7px; background: linear-gradient(90deg, rgba(255,120,30,.55), #ff9a2e, #ffe14a); }
+.leyenda-lineas i.l-nieve { height: 8px; background: #eef3fb; }
+/* tarjeta de la primera vez que se enciende una capa */
+.ay-aviso { position: fixed; z-index: 90; left: 50%; top: calc(max(16px, var(--sa-top, env(safe-area-inset-top))) + 58px); width: min(380px, calc(100vw - 28px)); translate: -50% -10px; opacity: 0; transition: opacity .3s, translate .3s;
+  padding: 14px 16px 12px; border-radius: 12px; background: var(--cream); color: var(--ink); box-shadow: 0 8px 30px rgba(0,0,0,.35); font: 400 .88rem/1.45 var(--sans); }
+.ay-aviso.is-on { opacity: 1; translate: -50% 0; }
+.ay-aviso .ay-av-t { display: block; margin-bottom: 6px; font: 600 .78rem var(--cond); letter-spacing: .18em; text-transform: uppercase; color: var(--spruce); }
+.ay-aviso p { margin: 0 0 6px; } .ay-aviso ul { margin: 0 0 6px; padding: 0; list-style: none; }
+.ay-av-bs { display: flex; justify-content: flex-end; gap: 10px; margin-top: 8px; }
+.ay-av-bs button { padding: 7px 14px; border-radius: 999px; font: 600 .74rem var(--cond); letter-spacing: .12em; text-transform: uppercase; color: var(--spruce); }
+.ay-av-bs .ay-ok { background: var(--spruce); color: var(--cream); }
+/* bienvenida de la app */
+.ay-bienv { position: fixed; inset: 0; z-index: 95; display: grid; place-items: center; padding: 16px; background: rgba(14, 24, 21, .62); backdrop-filter: blur(2px); }
+.ay-bv-c { width: min(400px, 100%); padding: 26px 22px 16px; border-radius: 14px; background: var(--cream); color: var(--ink); text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.4); }
+.ay-bv-c svg { color: var(--spruce); }
+.ay-bv-c h2 { margin: 8px 0 8px; font: 500 1.7rem/1.1 var(--serif); color: var(--spruce); }
+.ay-bv-c p { margin: 0; font: 400 .95rem/1.5 var(--sans); }
+.ay-bv-puntos { display: flex; justify-content: center; gap: 6px; margin: 16px 0 4px; }
+.ay-bv-puntos i { width: 7px; height: 7px; border-radius: 50%; background: var(--line); } .ay-bv-puntos i.on { background: var(--spruce); }
+.ay-bv-c .ay-av-bs { justify-content: space-between; }
+.leyenda-lineas.al-lado { left: calc(var(--gutter) + 54px); }
+@media (max-width: 560px) { #about-body { padding: 30px 18px 24px; } #about-body .ab-tabs { top: -30px; margin: -30px -18px 16px; padding: 10px 50px 0 10px; } #about-body .ab-tabs button { padding: 9px 7px 8px; letter-spacing: .06em; font-size: .7rem; } }

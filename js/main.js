@@ -19,6 +19,7 @@ import { crearSeguridad } from './seguridad.js?v=32';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson } from './datos.js?v=2';
 import { crearSendas } from './sendas.js?v=1';
+import { crearAyuda } from './ayuda.js?v=1';
 import { crearVivacs } from './vivacs.js?v=2';
 import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb } from './zonasweb.js?v=4';
 import { crearRealidad } from './realidad.js?v=33';
@@ -189,9 +190,19 @@ async function boot() {
   reajustaRutas = (z) => { for (const lista of Object.values(rutas)) for (const r of lista) r.reajusta(z); sendas.reajusta(z); vivacs3d?.reajusta(); };
   // — «Sendas y pistas»: todos los caminos de OpenStreetMap sobre el relieve (js/sendas.js); botón que la pone y la quita —
   const sendas = crearSendas({ scene, geo });
+  // — ayuda de manejo y «Acerca de» con pestañas (js/ayuda.js) —
+  const ayuda = crearAyuda({ EN_APP, store, dialogo: $('#about'), cuerpo: $('#about-body'), rellenar: () => {
+    buildAbout();
+    if (EN_APP) $('#about-body').insertAdjacentHTML('beforeend', diagnosticoApp());
+    else $('#about-body').insertAdjacentHTML('beforeend', `<p class="ruta-credito" id="about-ver">Web v${esc(String(window.WEB_V || '?'))}</p>`);   // la versión, para saber si ya ha llegado la última
+  } });
+  { const b = document.createElement('button'); b.type = 'button'; b.className = 'textbtn'; b.id = 'btn-ayuda'; b.setAttribute('aria-label', ayuda.L('Ayuda: cómo se usa', 'Help: how to use it'));
+    b.innerHTML = `<span class="ay-q" aria-hidden="true">?</span><span class="ay-q-t">${ayuda.L('Ayuda', 'Help')}</span>`;
+    $('#btn-about').before(b); b.addEventListener('click', () => ayuda.abrir('uso')); }
   let vivacs3d = null;
   // leyenda de las líneas (abajo a la izquierda) y nombre de la otra subida sobre su línea
   const leyenda = document.createElement('div'); leyenda.className = 'leyenda-lineas is-hidden'; leyenda.setAttribute('aria-hidden', 'true'); document.body.appendChild(leyenda);
+  leyenda.title = EN_INGLES ? 'What the lines and colours mean' : 'Qué significa cada línea y color'; leyenda.addEventListener('click', () => ayuda.abrir('uso', 'lineas'));
   const etqSub = document.createElement('span'); etqSub.className = 'linea-etq is-hidden'; document.body.appendChild(etqSub);
   let leyendaTxt = '', leyendaT = 0; const vEtq = new THREE.Vector3();
   function leyendaLineas() {
@@ -203,13 +214,17 @@ async function boot() {
       if (ok) { etqSub.textContent = et.texto; etqSub.style.setProperty('--c', et.color); etqSub.style.transform = `translate3d(${((vEtq.x * 0.5 + 0.5) * innerWidth).toFixed(1)}px, ${((-vEtq.y * 0.5 + 0.5) * innerHeight).toFixed(1)}px, 0)`; }
     } else etqSub.classList.add('is-hidden');
     const now = performance.now(); if (now - leyendaT < 300) return; leyendaT = now;
-    const txt = (conRuta ? `<span><i class="l-sub"></i>${t('subida')}</span><span><i class="l-baj"></i>${t('bajada')}</span>` : '') + (et ? `<span><i class="l-otra" style="--c:${et.color}"></i>${esc(et.texto)}</span>` : '');
+    const L = ayuda.L, exp = S.mode === 'explore', verde = calor.on ? ' l-verde' : '';
+    const txt = (conRuta ? `<span><i class="l-sub${verde}"></i>${t('subida')}</span><span><i class="l-baj${verde}"></i>${t('bajada')}</span>` : '') + (et ? `<span><i class="l-otra" style="--c:${et.color}"></i>${esc(et.texto)}</span>` : '')
+      + (exp && sendas.activa ? `<span><i class="l-senda"></i>${L('senda', 'path')} <i class="l-pista"></i>${L('pista', 'track')} <i class="l-ferrata"></i>${L('ferrata', 'via ferrata')}</span>` : '')
+      + (exp && calor.on ? `<span><i class="l-calor"></i>${L('pocas → muchas personas', 'few → many people')}</span>` : '')
+      + (exp && nieveSat.on ? `<span><i class="l-nieve"></i>${L('nieve (satélite)', 'snow (satellite)')}</span>` : '');
     if (txt !== leyendaTxt) { leyendaTxt = txt; leyenda.innerHTML = txt; leyenda.classList.toggle('is-hidden', !txt); }
   }
   {
     const b = $('#btn-sendas');
     const pon = (v) => { sendas.poner(v); b.setAttribute('aria-pressed', v); store.set('tresmiles-sendas', v ? '1' : '0'); };
-    b.addEventListener('click', () => { sonido.fx('toque'); pon(!sendas.activa); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
+    b.addEventListener('click', () => { sonido.fx('toque'); pon(!sendas.activa); if (sendas.activa) ayuda.primeraVez('sendas'); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
     if (store.get('tresmiles-sendas') === '1') pon(true);
   }
   const leeRutas = async (p) => { for (const rid of p.rutas ?? []) {
@@ -362,7 +377,7 @@ async function boot() {
     }
     return null;
   }
-  const calor = { leer: async () => null };   // capa «Por dónde pasa la gente» (se rellena más abajo): trazas y tipo de vía en un punto
+  const calor = { leer: async () => null, on: false };   // capa «Por dónde pasa la gente» (se rellena más abajo): trazas y tipo de vía en un punto
   // con estos datos no se puede saber cuántas personas son (los puntos de las trazas privadas llegan sueltos): se dice el nivel y, en pequeño, las cifras reales
   const NIVEL_CALOR = ['Muy poco frecuentado: una o dos trazas, puede ser alguien que se perdió', 'Poco frecuentado', 'Frecuentado', 'Paso muy frecuentado'];
   const textoCalor = (c) => !c ? '' : `<b>${t(NIVEL_CALOR[c.nivel])}${c.via ? ` · ${t(c.via)}` : ''}</b><small class="pico-calor">${t('{t} trazas completas y {p} puntos sueltos (GPS de OpenStreetMap)', { t: fmt(c.trazas), p: fmt(c.puntos) })}</small>`;
@@ -838,10 +853,10 @@ async function boot() {
     if (!etiquetas.length) return;
     if (--uiT <= 0) {   // rectángulos de la interfaz fija (se refrescan de vez en cuando)
       uiT = 30; uiRects = [];
-      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-reintro, #giro-izq, #giro-der')) {
+      for (const el of document.querySelectorAll('#compass, #tools, #dock, #ficha, #filters, #vuelo-hud, #brand, #btn-about, #btn-ayuda, #btn-reintro, #giro-izq, #giro-der')) {
         const r = el.getBoundingClientRect(); if (!(r.width && r.height && r.right > 0 && r.left < W)) continue;
-        const m = el.id === 'brand' ? [14, 6, 14, 14] : el.id === 'btn-about' || el.id === 'btn-reintro' ? [6, 4, 6, 6] : [0, 0, 0, 0];   // el encabezado deja un margen: nada de nombres encima ni justo debajo
-        uiRects.push({ x: r.left - m[0], y: r.top - m[1], w: r.width + m[0] + m[2], h: r.height + m[1] + m[3], cab: el.id === 'brand' || el.id === 'btn-about' || el.id === 'btn-reintro' });
+        const m = el.id === 'brand' ? [14, 6, 14, 14] : el.id === 'btn-about' || el.id === 'btn-ayuda' || el.id === 'btn-reintro' ? [6, 4, 6, 6] : [0, 0, 0, 0];   // el encabezado deja un margen: nada de nombres encima ni justo debajo
+        uiRects.push({ x: r.left - m[0], y: r.top - m[1], w: r.width + m[0] + m[2], h: r.height + m[1] + m[3], cab: el.id === 'brand' || el.id === 'btn-about' || el.id === 'btn-ayuda' || el.id === 'btn-reintro' });
       }
     }
     const cajas = [];   // ocupado: etiquetas ya colocadas, etiqueta de la cumbre abierta y obstáculos
@@ -1290,6 +1305,7 @@ async function boot() {
     const p = S.active ? byId[S.active] : null;   // con una cumbre abierta se dibuja su ruta, pero sin mover el mapa
     // y en el mismo sitio de la pantalla, girado como el 3D (camState().theta: hacia dónde está la cámara vista desde el punto; el rumbo es el contrario)
     plano.abrir({ centro: pt, zoom: z, pico: p, encuadra: false, pantalla: { x: cx, y: cy }, rumbo: -camState().theta * 180 / Math.PI });
+    ayuda.primeraVez('plano');
   });
   const panorama = crearPanorama({ geo, meta, store: relieve, peaks, abrir: (id) => openPeak(id), esc, camara: realidad ? (res) => realidad.abrir(res) : null,
     nieve: async () => { const m = await cargaNieve(); return m && nieveSat.img ? { img: nieveSat.img, fecha: fechaCorta(m.ultima) } : null; } });   // nieve del satélite para colorear el panorama
@@ -1596,12 +1612,12 @@ async function boot() {
     };
     const fundido = (to) => { cancelAnimationFrame(tf); const v0 = K.uCalorK.value, t0 = performance.now(); const paso = (t) => { const k = Math.min(1, (t - t0) / 600); K.uCalorK.value = v0 + (to - v0) * k; COLOR_RUTA.actual.lerpColors(COLOR_RUTA.naranja, COLOR_RUTA.verde, K.uCalorK.value); if (k < 1) tf = requestAnimationFrame(paso); }; tf = requestAnimationFrame(paso); };
     const pon = async (v) => {
-      on = v; b.setAttribute('aria-pressed', on); store.set('tresmiles-calor', on ? '1' : '0');
+      on = calor.on = v; b.setAttribute('aria-pressed', on); store.set('tresmiles-calor', on ? '1' : '0');
       if (on) await carga();
       if (on !== v) return;
       fundido(on ? 1 : 0);
     };
-    b.addEventListener('click', () => { sonido.fx('toque'); pon(!on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
+    b.addEventListener('click', () => { sonido.fx('toque'); pon(!on); if (on) ayuda.primeraVez('calor'); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600); });
     if (store.get('tresmiles-calor') === '1') pon(true);
   }).catch(() => {});
 
@@ -1634,7 +1650,7 @@ async function boot() {
       fundido(v ? 1 : 0);
       fichaBody.querySelectorAll('[data-act="nieve-mapa"]').forEach((c) => { c.checked = v; });
     };
-    b.addEventListener('click', () => { sonido.fx('toque'); nieveSat.pon(!nieveSat.on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 2200); });
+    b.addEventListener('click', () => { sonido.fx('toque'); if (!nieveSat.on) ayuda.primeraVez('nieve'); nieveSat.pon(!nieveSat.on); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 2200); });
     fetch(`data/nieve/nieve.json?dv=${window.DATOS_V || 0}`, { method: 'HEAD', cache: 'no-cache' }).then((r) => { if (r.ok || EN_APP) { b.hidden = false; if (store.get('tresmiles-nieve') === '1') nieveSat.pon(true); } }).catch(() => { if (EN_APP) b.hidden = false; });
   }
   function fechaCorta(f) { return new Date(f + 'T12:00').toLocaleDateString(EN_INGLES ? 'en-GB' : 'es-ES', { day: 'numeric', month: 'long' }); }
@@ -1711,7 +1727,7 @@ async function boot() {
   }).catch(() => {});
 
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
-  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
+  if (EN_APP) { const b = $('#btn-ubicacion'); b.hidden = false; b.addEventListener('click', () => ayuda.primeraVez('ubicacion')); crearUbicacion({ scene, geo, controls, camState, applyState, flyTo, boton: b, botonPanorama: $('#btn-pan-aqui'), abrePanorama: (x, z) => panorama.abrir({ id: null, nombre: t('tu posición'), q: { x, z } }, { desdeAqui: true, brujula: true }), picos: peaks.filter((p) => !p.menor), picoAbierto: () => (S.active ? byId[S.active] : null) }); }
 
   // — «Mis zonas» (solo en la app): catálogo de paquetes de zona (data/paquetes.json, tools/publicar_paquete.py), descargar con wifi, ver y borrar —
   // en la app el catálogo de dentro de la APK se queda viejo: con conexión se lee el de la web (Cloudflare y, si falla —fútbol—, GitHub Pages; las dos dan CORS *)
@@ -2060,6 +2076,7 @@ async function boot() {
   const ajustaGiro = () => {
     const t = $('#tools').getBoundingClientRect(); if (!t.height) return;
     document.documentElement.style.setProperty('--giro-max', `${Math.max(60, Math.round(t.top - 32))}px`);
+    requestAnimationFrame(() => leyenda.classList.toggle('al-lado', $('#giro-izq').getBoundingClientRect().top < 210));   // pantallas bajas: la leyenda, a la derecha de la flecha de girar
   };
   new ResizeObserver(ajustaGiro).observe($('#tools')); addEventListener('resize', ajustaGiro);
   $('#tools').addEventListener('transitionend', ajustaGiro); new MutationObserver(ajustaGiro).observe(document.body, { attributes: true, attributeFilter: ['class'] });
@@ -2081,15 +2098,17 @@ async function boot() {
   $('#compass').addEventListener('click', () => { if (S.mode !== 'explore') return; const s = camState(); flyTo({ ...s, theta: 0 }, { dur: 1.0, shift: S.shiftTo }); });
 
   // — tutorial —
-  const hMove = $('#hint-move'), hZoom = $('#hint-zoom'); let hintTimer = [];
+  const hMove = $('#hint-move'), hZoom = $('#hint-zoom'), hTap = $('#hint-tap'); let hintTimer = [];
+  if (EN_INGLES) hTap.innerHTML = '<b>Tap a summit<br>to see its route</b><span class="rule"></span><small>Lost? The “?” button at the top explains everything</small>';
   function showHints() {
     if (store.get('tresmiles-tutorial')) return;
-    hMove.classList.add('is-on'); hintTimer.push(setTimeout(() => { hMove.classList.remove('is-on'); hZoom.classList.add('is-on'); }, 6500), setTimeout(hideHints, 13000));
+    hMove.classList.add('is-on'); hintTimer.push(setTimeout(() => { hMove.classList.remove('is-on'); hZoom.classList.add('is-on'); }, 6500),
+      setTimeout(() => { hZoom.classList.remove('is-on'); hTap.classList.add('is-on'); }, 13000), setTimeout(hideHints, 19500));
     const nextStep = () => { hMove.classList.remove('is-on'); hintTimer.push(setTimeout(() => hZoom.classList.add('is-on'), 500)); canvas.removeEventListener('pointerdown', nextStep); };
     canvas.addEventListener('pointerdown', nextStep, { once: true });
-    canvas.addEventListener('wheel', hideHints, { once: true, passive: true });
+    canvas.addEventListener('wheel', () => { if (hTap.classList.contains('is-on')) return; hintTimer.forEach(clearTimeout); hintTimer = [setTimeout(hideHints, 6500)]; hMove.classList.remove('is-on'); hZoom.classList.remove('is-on'); hTap.classList.add('is-on'); }, { once: true, passive: true });
   }
-  function hideHints() { hintTimer.forEach(clearTimeout); hintTimer = []; hMove.classList.remove('is-on'); hZoom.classList.remove('is-on'); store.set('tresmiles-tutorial', '1'); }
+  function hideHints() { hintTimer.forEach(clearTimeout); hintTimer = []; hMove.classList.remove('is-on'); hZoom.classList.remove('is-on'); hTap.classList.remove('is-on'); store.set('tresmiles-tutorial', '1'); }
 
   // — acerca de —
   const about = $('#about');
@@ -2200,7 +2219,7 @@ async function boot() {
   function irDesdeInicio(id) {
     if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); }
     S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out');
-    openPeak(id);
+    openPeak(id); ayuda.bienvenida();
   }
   (function buildIntro() {
     const lista = $('#intro-picos'), btn = $('#btn-elegir');
@@ -2232,11 +2251,7 @@ async function boot() {
       <li>Texturas en memoria: ${renderer.info.memory.textures} · geometrías: ${renderer.info.memory.geometries}</li></ul>
       <p class="ruta-credito">Últimas fotos aéreas (✓ cargada, ✗ fallo):</p><ul class="diag">${ev}</ul>`;
   }
-  $('#btn-about').addEventListener('click', () => {
-    if (EN_APP) { buildAbout(); $('#about-body').insertAdjacentHTML('beforeend', diagnosticoApp()); }
-    else if (!$('#about-ver')) $('#about-body').insertAdjacentHTML('beforeend', `<p class="ruta-credito" id="about-ver">Web v${esc(String(window.WEB_V || '?'))}</p>`);   // la versión, para saber si ya ha llegado la última
-    about.showModal();
-  });
+  $('#btn-about').addEventListener('click', () => ayuda.abrir());   // la última pestaña que se miró (o «El proyecto»)
   about.addEventListener('click', (e) => { if (e.target === about) about.close(); });
 
   // — arranque —
@@ -2250,7 +2265,7 @@ async function boot() {
 
   function startExplore() {
     S.mode = 'explore'; document.body.classList.add('is-ready'); $('#intro').classList.add('is-out');
-    flyTo(HOME, { dur: 4.2 }).then(() => { if (!S.active) showHints(); });
+    flyTo(HOME, { dur: 4.2 }).then(() => ayuda.bienvenida()).then(() => { if (!S.active) showHints(); });
   }
   $('#btn-start').addEventListener('click', () => { if (store.get('sonido') !== '0') { sonido.set(true); pintaSonido(); } startExplore(); });
 
