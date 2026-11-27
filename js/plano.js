@@ -3,7 +3,7 @@
 // curvas de nivel (más juntas cuanto más cerca) con su altitud, pendientes en colores (opcional) y sendas y pistas de OpenStreetMap.
 // Fondos con conexión: topográfico del IGN (MTN) y ortofoto PNOA. Encima: cumbres, refugios, fuentes, pueblos, la ruta de la cumbre (subida continua,
 // bajada a rayas) con su perfil, las otras subidas y tu posición. Leaflet (BSD-2) va copiado en vendor/leaflet y se carga la primera vez que se abre.
-import { t, EN_INGLES } from './i18n.js?v=53';
+import { t, EN_INGLES } from './i18n.js?v=54';
 
 const SUELO = { 1: [196, 220, 170], 2: [218, 226, 186], 3: [232, 236, 204], 4: [228, 224, 216], 5: [250, 252, 255], 6: [168, 204, 228], 8: [222, 228, 200] };   // WorldCover: bosque, matorral, pasto, roca, nieve/hielo, agua, musgo
 const PAPEL = [238, 236, 222];

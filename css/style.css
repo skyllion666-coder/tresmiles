@@ -1011,3 +1011,31 @@ ul.ay-ley li { margin: 5px 0; }
 /* leyenda en el móvil: si no cabe en una línea, parte (antes se cortaba: «ferrat», «persona»); cada muestra con su nombre va junta */
 .leyenda-lineas span { flex-wrap: wrap; white-space: normal; column-gap: 8px; row-gap: 2px; }
 .leyenda-lineas b { display: inline-flex; align-items: center; gap: 6px; font-weight: inherit; white-space: nowrap; }
+
+/* versión de la app y aviso de versión nueva (js/novedades.js) */
+#intro .app-version { margin: 8px auto 0; font: 500 .62rem var(--cond); letter-spacing: .06em; color: #f7f2e4; opacity: .75; }
+#intro .app-version button { font: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; padding: 0; background: none; border: 0; cursor: pointer; }
+#intro .descarga-app .nuevo, #aviso-app .nuevo { display: inline-block; margin-right: 8px; padding: 1px 7px; border-radius: 999px; background: #e8a33d; color: #24302c; font: 700 .62rem var(--cond); letter-spacing: .08em; animation: nuevo-late 2.4s ease-in-out infinite; }
+@keyframes nuevo-late { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+#aviso-app { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); z-index: 60; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; width: max-content; max-width: min(560px, calc(100vw - 24px));
+  padding: 10px 12px 10px 16px; border-radius: 14px; background: rgba(31,53,48,.96); color: var(--cream); box-shadow: 0 8px 30px rgba(0,0,0,.35); font: 500 .82rem/1.35 var(--sans);
+  transform: translate(-50%, 30px); opacity: 0; transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease-out; }
+#aviso-app.visible { transform: translate(-50%, 0); opacity: 1; }
+#aviso-app .aviso-txt { flex: 1 1 220px; }
+#aviso-app .aviso-txt b { color: #f3c77a; font-weight: 600; }
+#aviso-app .aviso-bajar { margin-left: 8px; color: var(--cream); font-weight: 600; }
+#aviso-app .aviso-ver { padding: 5px 12px; border-radius: 999px; background: var(--cream); color: var(--ink); font: 600 .72rem var(--cond); letter-spacing: .06em; border: 0; cursor: pointer; }
+#aviso-app .aviso-x { width: 28px; height: 28px; border: 0; background: none; color: var(--cream); font-size: 1.2rem; line-height: 1; opacity: .8; cursor: pointer; }
+#novedades-app { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 16px; background: rgba(20,28,26,.55); }
+#novedades-app[hidden] { display: none; }
+#novedades-app .nov-caja { position: relative; width: min(440px, 100%); max-height: calc(100vh - 32px); overflow: auto; padding: 22px 22px 18px; border-radius: 16px; background: var(--cream); color: var(--ink); box-shadow: 0 14px 50px rgba(0,0,0,.4); }
+#novedades-app h3 { margin: 0 28px 2px 0; font: 600 1.35rem/1.15 var(--serif); }
+#novedades-app .nov-fecha { margin: 0 0 10px; font: 500 .72rem var(--cond); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+#novedades-app ul { margin: 0 0 14px; padding-left: 18px; font: 400 .9rem/1.45 var(--sans); }
+#novedades-app li { margin-bottom: 5px; }
+#novedades-app .nov-cerrar { position: absolute; top: 10px; right: 12px; width: 32px; height: 32px; border: 0; background: none; font-size: 1.5rem; color: var(--ink-2); cursor: pointer; }
+#novedades-app .nov-bajar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0 0 6px; }
+#novedades-app .nov-btn { padding: 8px 16px; border-radius: 999px; background: var(--spruce); color: var(--cream); font: 600 .78rem var(--cond); letter-spacing: .08em; text-decoration: none; }
+#novedades-app .nov-ligera { color: var(--spruce); font: 500 .78rem var(--cond); }
+#novedades-app small { opacity: .75; margin-left: 4px; }
+#novedades-app .nov-nota { margin: 0; font: 400 .74rem var(--sans); color: var(--ink-2); }

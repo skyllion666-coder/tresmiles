@@ -17,7 +17,8 @@ import { crearPlano } from './plano.js?v=6';
 import { crearUbicacion } from './ubicacion.js?v=35';
 import { crearSeguridad } from './seguridad.js?v=32';
 import { crearPaquete } from './paquete.js?v=9';
-import { datoJson, imgRemota } from './datos.js?v=3';
+import { datoJson, imgRemota } from './datos.js?v=4';
+import { iniciaNovedades } from './novedades.js?v=1';
 import { crearSendas } from './sendas.js?v=1';
 import { crearAyuda } from './ayuda.js?v=2';
 import { crearVivacs } from './vivacs.js?v=2';
@@ -25,7 +26,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=33';
 import { crearSelector } from './selector.js?v=33';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=53';
+import { t, EN_INGLES } from './i18n.js?v=54';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1718,6 +1719,7 @@ async function boot() {
   }
 
   if (!SIN_APK) { $('#descarga-app').hidden = false; $('#descarga-minima').hidden = false; }   // enlace de la portada para bajar la app
+  iniciaNovedades({ t, EN_INGLES, store, EN_APP, SIN_APK, APK_URL, APK_MIN_URL, datoJson: json });   // versión de la app y aviso de versión nueva (js/novedades.js, data/app.json)
 
   // — contador de visitas (solo en la web): el total de GoatCounter, si la cuenta permite el contador público (Ajustes → «Allow adding visitor counts») —
   // la cuenta es compartida (Bolsa de Horas en «/», otras webs…): se cuenta «/tresmiles» (todas las visitas desde el 24-10-2026) (sin «start», GoatCounter solo da los últimos 7 días)
@@ -2134,7 +2136,7 @@ async function boot() {
       <p class="firma">Created by SKYLLION (FRANK)</p>
       ${botonPalabras()}
       ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">My areas</button> <small>High-quality packs to carry without coverage</small></p>` : ''}
-      ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 540 MB), with features only the app has: <b>Where am I</b> (GPS and compass, with north up or the map turning with you), <b>SOS</b> (send your position by WhatsApp or SMS or to 112, and whether you will get down before dark), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a> (or the <a href="${APK_MIN_URL}">light version</a>, 238 MB, without the detailed aerial photos of the summits, for phones with little space). When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
+      ${SIN_APK ? '' : `<h3>Android app</h3><p>The same website on your phone, <b>working without coverage</b> (about 510 MB), with features only the app has: <b>Where am I</b> (GPS and compass, with north up or the map turning with you), <b>SOS</b> (send your position by WhatsApp or SMS or to 112, and whether you will get down before dark), <b>Which mountains can I see</b> from your position and the <b>Camera</b> with the mountain names on top. <a href="${APK_URL}">Download the app</a> (or the <a href="${APK_MIN_URL}">light version</a>, 210 MB, without the detailed aerial photos of the summits, for phones with little space). When you open the file, Android asks for permission to install apps from outside Play Store: give it to your browser. New versions install over the old one.</p>`}
       <p>A 3D explorer of the summits above 3,000 metres in the Aragonese Pyrenees and along its border with France. It already includes ${totalActivas()} 3,000ers: about ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} with an example route, waypoints and photographs, and the rest with basic info (name, altitude, massif and location). It also has ${totalActivas(true)} summits between 2,000 and 3,000 m with simple info (name, altitude and position from OpenStreetMap, no route), shown by choosing “Below 3,000” or “All” in the selector.</p>
       <p><i>The summit descriptions and routes are still in Spanish: they are being translated.</i></p>
       <h3>Summits and routes</h3>
@@ -2178,7 +2180,7 @@ async function boot() {
       <p class="firma">Creado por SKYLLION (FRANK)</p>
       ${botonPalabras()}
       ${APP_PAQ ? `<p><button type="button" class="btn-ruta btn-suave" id="abre-zonas">${t('Mis zonas')}</button> <small>${t('Paquetes de alta calidad para llevar sin cobertura')}</small></p>` : ''}
-      ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 540 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula, con el norte arriba o con el mapa girando contigo), <b>SOS</b> (enviar tu posición por WhatsApp o SMS o al 112, y si llegas abajo antes de que anochezca), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a> (o la <a href="${APK_MIN_URL}">versión ligera</a>, 238 MB, sin las ortofotos de detalle de las cumbres, para móviles con poco espacio). Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
+      ${SIN_APK ? '' : `<h3>App para Android</h3><p>La misma web dentro del móvil y <b>sin necesidad de cobertura</b> (unos 510 MB), con funciones que solo tiene la app: <b>Dónde estoy</b> (GPS y brújula, con el norte arriba o con el mapa girando contigo), <b>SOS</b> (enviar tu posición por WhatsApp o SMS o al 112, y si llegas abajo antes de que anochezca), <b>Qué montañas veo</b> desde tu posición y la <b>Cámara</b> con los nombres de las montañas encima. <a href="${APK_URL}">Descargar la app</a> (o la <a href="${APK_MIN_URL}">versión ligera</a>, 210 MB, sin las ortofotos de detalle de las cumbres, para móviles con poco espacio). Al abrir el archivo, Android pide permiso para instalar apps de fuera de Play Store: dáselo al navegador. Las versiones nuevas se instalan encima.</p>`}
       <p>Explorador 3D de las cumbres que superan los 3.000 metros en el Pirineo aragonés y su frontera. Incluye ya ${totalActivas()} tresmiles: unas ${peaks.filter((p) => p.activo && !p.basica && !p.menor).length} con ruta de ejemplo, hitos y fotografías, y el resto con una ficha básica (nombre, altitud, macizo y situación). Además, ${totalActivas(true)} cumbres de 2.000 a 3.000 m con una ficha sencilla (nombre, altitud y posición de OpenStreetMap, sin ruta), que se ven eligiendo «Menos de 3.000» o «Todas» en el selector.</p>
       <h3>Cumbres y rutas</h3>
       <ul><li>Altitudes y nombres oficiales: Orden VMV/914/2020 (BOA n.º 192) del Gobierno de Aragón, contrastadas con tresmiles.es (CC0), Buyse (1993) y UIAA (1995).</li>
