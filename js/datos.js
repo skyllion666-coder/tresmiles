@@ -3,7 +3,7 @@
 // y, si no hay nada, lo que trae la APK. Así una ruta o subida nueva llega a la app sin instalar otra versión. En la web, lo de siempre.
 const EN_APP = /[?&]app=1\b/.test(location.search);
 const BASES = ['https://tresmiles.pages.dev/', 'https://skyllion666-coder.github.io/tresmiles/'];
-const REMOTO = /^data\/(subidas\/|rutas\/[^/]+\.json$|fuentes\.json$|hitos\.json$)/;
+const REMOTO = /^data\/(subidas\/|rutas\/[^/]+\.json$|fuentes\.json$|hitos\.json$|aportaciones\.json$)/;
 const CACHE = 'tresmiles-datos';
 const conV = (u) => u + (u.includes('?') ? '&' : '?') + 'dv=' + (window.DATOS_V || 0);
 let buena = null;   // la base que respondió la última vez (durante el fútbol, la de Cloudflare no contesta: no esperarla en cada archivo)
@@ -24,6 +24,9 @@ async function remoto(u) {
   return null;
 }
 
+// fotos que manda la gente (img/aportes/): en la app, si la foto no viene dentro de la APK (llegó después), se pide a la web
+export const imgRemota = (ruta) => EN_APP && /^img\/aportes\//.test(ruta)
+  ? ` data-p="${ruta}" onerror="const b=${JSON.stringify(BASES).replace(/"/g, "'")},i=+(this.dataset.r||0);if(i<b.length){this.dataset.r=i+1;this.src=b[i]+this.dataset.p}"` : '';
 export async function datoJson(u) {
   if (EN_APP && REMOTO.test(u) && typeof caches !== 'undefined') { const j = await remoto(u); if (j) return j; }
   const r = await fetch(conV(u), { cache: 'no-cache' });

@@ -17,7 +17,7 @@ import { crearPlano } from './plano.js?v=6';
 import { crearUbicacion } from './ubicacion.js?v=35';
 import { crearSeguridad } from './seguridad.js?v=32';
 import { crearPaquete } from './paquete.js?v=9';
-import { datoJson } from './datos.js?v=2';
+import { datoJson, imgRemota } from './datos.js?v=3';
 import { crearSendas } from './sendas.js?v=1';
 import { crearAyuda } from './ayuda.js?v=2';
 import { crearVivacs } from './vivacs.js?v=2';
@@ -620,7 +620,7 @@ async function boot() {
   }
   function fotoHito(h) {
     const f = fotosHitos[h.foto]; if (!f) return '';
-    return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="${esc(f.ruta ?? `img/hitos/${h.foto}.jpg`)}" width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
+    return `${h.pie ? `<p class="hito-pie">${esc(trH(h.pie))}</p>` : ''}<img src="${esc(f.ruta ?? `img/hitos/${h.foto}.jpg`)}"${imgRemota(f.ruta ?? '')} width="${f.w}" height="${f.h}" alt="${esc(trH(h.nombre))}" loading="lazy"${f.pos ? ` style="object-position:${esc(f.pos)}"` : ''}><small>${t('Foto:')} ${esc(f.autor)}${f.licencia ? `, <a href="${esc(f.licencia_url || f.pagina)}" target="_blank" rel="noopener">${esc(f.licencia.replace('Public domain', t('Dominio público')))}</a>` : ''}${f.pagina ? `, ${t('vía')} <a href="${esc(f.pagina)}" target="_blank" rel="noopener">${esc(t(f.fuente || 'Wikimedia Commons'))}</a>` : ''}</small>`;
   }
   function closeHitos() { clearTimeout(hitoTimer); for (const o of [...hitos, ...refugios]) { o.el.classList.remove('is-open'); o.el.querySelector('.hito-btn').setAttribute('aria-expanded', 'false'); } }
   addEventListener('pointerdown', (e) => { if (!e.target.closest?.('.hito')) closeHitos(); });
@@ -1088,7 +1088,7 @@ async function boot() {
   function aportesHTML(p) {
     const en = EN_INGLES, fs = aportesFotos.filter((a) => a.cima === p.id), cs = aportesComent.filter((c) => c.cima === p.id).sort((a, b) => b.fecha.localeCompare(a.fecha));
     let h = '';
-    const fotoAp = (a) => `<figure class="fig-cima fig-aporte"><img src="img/aportes/${esc(a.id)}.jpg" width="${a.w}" height="${a.h}" alt="${esc(trA(a.pie))}" loading="lazy">
+    const fotoAp = (a) => `<figure class="fig-cima fig-aporte"><img src="img/aportes/${esc(a.id)}.jpg"${imgRemota(`img/aportes/${a.id}.jpg`)} width="${a.w}" height="${a.h}" alt="${esc(trA(a.pie))}" loading="lazy">
       <figcaption>${esc(trA(a.pie))} ${t('Foto:')} ${esc(a.autor)}, ${fechaAporte(a.fecha)}.${a.lat != null ? ` ${en ? 'It has its GPS position: on the map it is the camera icon.' : 'Lleva su posición GPS: en el mapa es el icono de la cámara.'}` : ''}</figcaption></figure>`;
     const mias = fs.filter((a) => a.propia), otras = fs.filter((a) => !a.propia);   // propia: fotos del autor de la web (más fotos de la cima); las demás, de quien las manda
     if (mias.length) h += `<h3>${en ? 'More summit photos' : 'Más fotos de la cima'}</h3>${mias.map(fotoAp).join('')}`;
