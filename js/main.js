@@ -1226,12 +1226,12 @@ async function boot() {
   fichaBody.addEventListener('change', (e) => {
     if (e.target.dataset?.act === 'nieve-mapa') { sonido.fx('toque'); nieveSat.pon?.(e.target.checked); return; }
     if (e.target.dataset?.act !== 'tiempo-mapa') return;
-    store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque');
+    store.set('tresmiles-tiempo-mapa', e.target.checked ? '1' : '0'); sonido.fx('toque'); if (e.target.checked) salDeClaro();
     const p = byId[S.active], m = p && meteoCache.get(p.id); aplicaTiempo(p, m?.vis ?? null);   // el mismo tiempo que pintó la ficha, con su nieve en el suelo
   });
   fichaBody.addEventListener('click', (e) => {   // tocar un día de la previsión: el mapa muestra ese día
     const b = e.target.closest('[data-dia]'), p = byId[S.active]; if (!b || !p) return;
-    diaSel = { id: p.id, i: +b.dataset.dia }; sonido.fx('toque'); pintaMeteo(p);
+    diaSel = { id: p.id, i: +b.dataset.dia }; sonido.fx('toque'); salDeClaro(); pintaMeteo(p);
   });
   // — ficha plegable (ver el recorrido con el mapa libre) —
   const tab = $('#ficha-tab'), foldBtn = $('#ficha-fold');
@@ -1562,6 +1562,8 @@ async function boot() {
     setSun((S.sun + 1) % SUN.length); store.set('tresmiles-luz', String(S.sun)); const b = e.currentTarget; b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 1600);
   });
   setSun(+(store.get('tresmiles-luz') ?? 3) % SUN.length || 0);   // por defecto, la hora real
+  // la luz «Claro» quita nubes, lluvia y nieve: si se pide ver el tiempo de un día en el mapa, se pasa a la de mediodía (si no, no se vería nada)
+  function salDeClaro() { if (S.sun !== 4) return; setSun(1); store.set('tresmiles-luz', '1'); const b = $('#btn-light'); b.classList.add('show-tip'); clearTimeout(b._t); b._t = setTimeout(() => b.classList.remove('show-tip'), 2200); }
   setInterval(() => { if (S.sun === 3) setSun(3); }, 60e3);
 
   // — «Por dónde pasa la gente»: mapa de calor de las trazas GPS públicas de OpenStreetMap (tools/build_calor.py), pintado sobre el relieve por zonas —
