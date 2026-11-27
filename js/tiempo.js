@@ -120,7 +120,7 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
     }
     return cam.position.distanceTo(E);
   }
-  let despejado = false;   // luz «Claro»: sin lluvia, nieve cayendo, nubes, niebla, cielo gris ni relámpagos (la nieve del suelo sí)
+  let despejado = false;   // luz «Claro»: sin lluvia, nieve cayendo, nubes, niebla, cielo gris, relámpagos ni nieve en el suelo (el usuario quiere ver el relieve limpio)
   const est = { activo: false, c: null, w: { lluvia: 0, nieve: 0, tormenta: 0, niebla: 0 }, viento: new THREE.Vector2(), cubierto: 0, cubObj: 0, destello: 0, prox: 0, rayo: [], k: 0 };
   const aCum = new THREE.Vector3(), aNub = new THREE.Vector3();
 
@@ -182,8 +182,8 @@ export function crearTiempo({ scene, geo, movil = false, reducido = false, sonid
       if (clima) {
         const kk = Math.min(1, dt * 0.5);
         if (est.cota != null && est.activo) clima.uCota.value = est.cota;
-        clima.uCotaK.value += ((est.activo && est.cota != null ? est.nieveK ?? 1 : 0) - clima.uCotaK.value) * kk;
-        const ac = est.activo ? est.w.nieve : 0, mj = est.activo && !despejado ? est.w.lluvia : 0;
+        clima.uCotaK.value += ((est.activo && !despejado && est.cota != null ? est.nieveK ?? 1 : 0) - clima.uCotaK.value) * kk;   // «Claro»: sin nieve en el suelo, para ver bien el relieve
+        const ac = est.activo && !despejado ? est.w.nieve : 0, mj = est.activo && !despejado ? est.w.lluvia : 0;
         clima.uAcum.value = ac ? Math.min(0.5 + 0.5 * ac, clima.uAcum.value + dt * ac / 25) : Math.max(0, clima.uAcum.value - dt / 6);
         clima.uMoj.value = mj ? Math.min(0.5 + 0.5 * mj, clima.uMoj.value + dt / 12) : Math.max(0, clima.uMoj.value - dt / 6);
         if (est.c) { clima.uCliC.value.copy(est.c); clima.uCliR.value = R * 1.35; }
