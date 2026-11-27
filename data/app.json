@@ -1,12 +1,13 @@
 {
- "version": "0.44",
- "code": 44,
+ "version": "0.45",
+ "code": 45,
  "fecha": "2026-11-27",
  "mb": 510,
  "mb_minima": 210,
- "resumen": "las fotos de los montañeros llegan sin reinstalar, mapa plano sin conexión y panorama desde la cima.",
- "resumen_en": "climbers' photos arrive without reinstalling, an offline flat map and the panorama from the summit.",
+ "resumen": "la app avisa cuando hay una versión nueva, las fotos de los montañeros llegan sin reinstalar y mapa plano sin conexión.",
+ "resumen_en": "the app tells you when there is a new version, climbers' photos arrive without reinstalling and an offline flat map.",
  "novedades": [
+  "La app avisa cuando hay una versión nueva y enseña lo que trae.",
   "Las fotos y comentarios que manda la gente llegan a la app sin instalar otra versión.",
   "Mapa plano (2D) sin conexión, con curvas de nivel, sendas y pistas.",
   "Panorama desde la cima con el camino del sol de hoy, zoom y pantalla completa.",
@@ -14,6 +15,7 @@
   "Luz «Claro» para estudiar el terreno, fichas con pestañas (naturaleza, historia) y ayuda «?»."
  ],
  "novedades_en": [
+  "The app tells you when there is a new version and shows what it brings.",
   "Photos and comments sent by people reach the app without installing a new version.",
   "Offline flat map (2D) with contour lines, paths and tracks.",
   "Panorama from the summit with today's path of the sun, zoom and full screen.",
