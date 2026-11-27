@@ -19,6 +19,24 @@
    "w": 1600,
    "h": 722,
    "propia": true
+  },
+  {
+   "id": "perdido-1",
+   "cima": "perdido",
+   "autor": "Lola",
+   "fecha": "2019-08-03",
+   "pie": "Atardecer en la cima",
+   "w": 1600,
+   "h": 1067
+  },
+  {
+   "id": "perdido-2",
+   "cima": "perdido",
+   "autor": "Lola",
+   "fecha": "2019-08-03",
+   "pie": "Atardecer: el Cilindro de Marboré y el Lago Helado desde la cima",
+   "w": 640,
+   "h": 428
   }
  ],
  "comentarios": []
