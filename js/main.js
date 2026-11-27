@@ -1727,7 +1727,10 @@ async function boot() {
   const VISITAS_ANTES = 141;   // filtro «Tresmiles» del panel el 24-10-2026: 151 en total, menos las 10 que ya estaban en «/tresmiles»
   if (!EN_APP) fetch('https://skyllion.goatcounter.com/counter/%2Ftresmiles.json?start=2026-10-01').then((r) => (r.ok ? r.json() : null)).then((d) => {
     const n = Number(String(d?.count ?? '').replace(/\D/g, '') || 0) + VISITAS_ANTES; if (!n) return;
-    const el = $('#visitas'); el.textContent = t('{n} visitas', { n: new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES').format(n) }); el.title = 'Visitas a la web (GoatCounter, sin cookies)'; el.hidden = false;
+    // desde 1.000: «1K», «1,2K», «12K» (redondeado hacia abajo, nunca más de las que hay); el número exacto en el title
+    const fmt = (x, d = 0) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { maximumFractionDigits: d }).format(x);
+    const corto = n < 1000 ? fmt(n) : n < 10000 ? fmt(Math.floor(n / 100) / 10, 1) + 'K' : fmt(Math.floor(n / 1000)) + 'K';
+    const el = $('#visitas'); el.textContent = t('{n} visitas', { n: corto }); el.title = t('Visitas a la web (GoatCounter, sin cookies)') + (n >= 1000 ? ' · ' + fmt(n) : ''); el.hidden = false;
   }).catch(() => {});
 
   // — «Dónde estoy» (solo en la app): GPS y brújula (js/ubicacion.js) —
