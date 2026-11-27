@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 457;
+  window.WEB_V = 458;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -142,9 +142,25 @@
   <!-- la cuenta de GoatCounter es compartida con otras webs: Tresmiles se apunta siempre como «/tresmiles» (sin ?… ni la dirección), para poder contarla aparte -->
   <script>window.goatcounter = { path: () => '/tresmiles' };</script>
   <script data-goatcounter="https://skyllion.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <!-- cuántas veces vuelve la gente, sin saber quién es: cada navegador apunta en sí mismo cuántas veces ha entrado (tresmiles-veces; si pasa menos de 1 h no cuenta otra)
+       y se manda a GoatCounter solo el tramo como evento anónimo «tresmiles-vez-1», «-2», «-3-5», «-6-10», «-11-20», «-21+» (panel de GoatCounter → eventos) -->
+  <script>(function () {
+    var tramo;
+    try {
+      var v = JSON.parse(localStorage.getItem('tresmiles-veces') || '{}'), ahora = Date.now();
+      if (v.t && ahora - v.t < 36e5) { v.t = ahora; localStorage.setItem('tresmiles-veces', JSON.stringify(v)); return; }
+      v.n = (v.n || 0) + 1; v.t = ahora; localStorage.setItem('tresmiles-veces', JSON.stringify(v));
+      tramo = v.n <= 2 ? String(v.n) : v.n <= 5 ? '3-5' : v.n <= 10 ? '6-10' : v.n <= 20 ? '11-20' : '21+';
+    } catch (e) { return; }
+    var intentos = 0;
+    (function enviar() {
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'tresmiles-vez-' + tramo, title: 'Tresmiles: vez ' + tramo, event: true });
+      else if (intentos++ < 30) setTimeout(enviar, 1000);
+    })();
+  })();</script>
   <script>window.DATOS_V = 264;</script>
   <script type="module" src="js/i18n.js?v=54"></script>
-  <script type="module" src="js/main.js?v=457"></script>
+  <script type="module" src="js/main.js?v=458"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>
