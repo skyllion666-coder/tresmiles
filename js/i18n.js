@@ -39,7 +39,7 @@ const EN = {
   'Calidad alta: desactivada': 'High quality: off', 'Calidad alta: {n}': 'High quality: {n}', 'activada': 'on', 'desactivada': 'off',
   '¿Volver a la calidad normal? (gasta menos batería; la app se recarga)': 'Back to normal quality? (uses less battery; the app reloads)',
   '¿Activar la calidad alta? Se ve como en el ordenador, pero el móvil trabaja más y gasta más batería. La app se recarga.': 'Turn on high quality? It looks like on a computer, but the phone works harder and uses more battery. The app reloads.',
-  'Cargando la zona…': 'Loading the area…', '{n} visitas': '{n} visits', 'Visitas a la web (GoatCounter, sin cookies)': 'Visits to the website (GoatCounter, no cookies)',
+  'Cargando la zona…': 'Loading the area…', 'Compartir': 'Share', 'Enlace copiado': 'Link copied', 'Copia este enlace': 'Copy this link', 'Los tresmiles del Pirineo aragonés en 3D': 'The 3,000-metre peaks of the Aragonese Pyrenees in 3D', '{n} visitas': '{n} visits', 'Visitas a la web (GoatCounter, sin cookies)': 'Visits to the website (GoatCounter, no cookies)',
   // — filtros y «mis tresmiles» —
   'Altitud mínima:': 'Minimum altitude:', 'Macizo': 'Massif', 'Dificultad': 'Difficulty', 'Quitar filtros': 'Clear filters', 'Pendientes': 'To do', 'Subidos': 'Climbed',
   'Mis tresmiles ·': 'My 3,000ers ·', 'Se guardan en este móvil.': 'They are saved on this device.', 'Guardar copia': 'Save a backup', 'Recuperar copia': 'Restore a backup',

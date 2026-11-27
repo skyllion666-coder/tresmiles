@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <script>/* versión publicada: si el navegador muestra una copia vieja de esta página, recarga sola con la nueva (version.json no se guarda en caché) */
-  window.WEB_V = 459;
+  window.WEB_V = 460;
   fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((j) => {
     if (!(j.v > window.WEB_V)) return;
     const u = new URL(location.href); if (u.searchParams.get('r') === String(j.v)) return;   // ya se pidió esa versión: no repetir
@@ -13,6 +13,16 @@
   <title>Tresmiles del Pirineo aragonés</title>
   <meta name="description" content="Explorador 3D de los tresmiles del Pirineo aragonés: relieve real, vuelo de cámara hasta cada cumbre y ficha con ruta, desnivel y dificultad.">
   <meta name="theme-color" content="#2d4a43">
+  <!-- vista previa al compartir el enlace (WhatsApp, Telegram, Facebook…); cada cumbre tiene la suya en c/<id>.html (tools/compartir.py) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tresmiles del Pirineo aragonés">
+  <meta property="og:title" content="Los tresmiles del Pirineo aragonés">
+  <meta property="og:description" content="Mapa 3D de las cumbres de más de 3.000 metros: relieve real, vuelo hasta cada cima y ficha con la ruta, el desnivel y la dificultad.">
+  <meta property="og:url" content="https://tresmiles.pages.dev/">
+  <meta property="og:image" content="https://tresmiles.pages.dev/img/compartir.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="fonts/CormorantGaramond-VF.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/BarlowSemiCondensed-Medium.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="img/icono.svg" type="image/svg+xml">
@@ -159,8 +169,8 @@
     })();
   })();</script>
   <script>window.DATOS_V = 264;</script>
-  <script type="module" src="js/i18n.js?v=54"></script>
-  <script type="module" src="js/main.js?v=459"></script>
+  <script type="module" src="js/i18n.js?v=55"></script>
+  <script type="module" src="js/main.js?v=460"></script>
   <script defer src="js/cine.js?v=7"></script>
 </body>
 </html>

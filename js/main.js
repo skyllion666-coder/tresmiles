@@ -26,7 +26,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=33';
 import { crearSelector } from './selector.js?v=33';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=54';
+import { t, EN_INGLES } from './i18n.js?v=55';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1046,7 +1046,7 @@ async function boot() {
         ${n ? `<div><dt>Dificultad</dt><dd><span class="dif" data-n="${n}"><i><b></b><b></b><b></b></i>${esc(difName[p.dificultad])}</span><br><small>${esc(p.grado)}</small></dd></div>` : ''}
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
-      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
+      <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button> <button type="button" class="btn-ruta btn-suave" data-act="compartir">Compartir</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
       ${p.menor ? '' : `<nav class="ficha-tabs" role="tablist">${FICHA_TABS.map(([k, n]) => `<button type="button" role="tab" data-ftab="${k}" aria-selected="${k === fichaTab}"${k === 'historia' && !p.curiosidad && !p.info ? ' hidden' : ''}>${t(n)}</button>`).join('')}</nav>`}
       <section class="ft" data-tab="resumen">
       <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
@@ -1217,6 +1217,7 @@ async function boot() {
     if (act?.dataset.act === 'subida') { const sub = pintaSubidas.datos?.subidas.find((x) => x.id === act.dataset.id); subidaSel(subidaAct === sub?.id ? null : sub); return; }
     if (act?.dataset.act === 'vuelo') { iniciarVuelo(); return; }
     if (act?.dataset.act === 'panorama') { panorama.abrir(byId[S.active]); return; }
+    if (act?.dataset.act === 'compartir') { compartirCumbre(byId[S.active], act); return; }
     if (act?.dataset.act === 'vista') { vistaMahoma(act.dataset.vista); return; }
     if (act?.dataset.act === 'cerca') { vistaCima(S.active); return; }
     if (act?.dataset.act === 'hecho') { marcaHecho(S.active); return; }
@@ -1373,6 +1374,17 @@ async function boot() {
   let openTok = 0;
   const preparados = new Map(), zonaCarga = $('#zona-carga');
   const avisoCarga = (txt) => { zonaCarga.textContent = txt ?? ''; zonaCarga.hidden = !txt; };
+  // «Compartir» de la ficha: enlace a c/<id> (página fija con la vista previa de la cumbre para WhatsApp, Telegram…; tools/compartir.py), que lleva a ?directo#<id>.
+  // En el móvil abre el menú de compartir; si no hay, copia el enlace. Desde la app se comparte la web de Cloudflare.
+  async function compartirCumbre(p, boton) {
+    if (!p) return;
+    const base = EN_APP || !/^https?:$/.test(location.protocol) ? 'https://tresmiles.pages.dev/' : new URL('.', location.href).href;
+    const url = `${base}c/${p.id}${EN_INGLES ? '?lang=en' : ''}`;
+    const titulo = `${p.nombre} (${fmt(p.altitud)} m)`;
+    try { if (navigator.share) { await navigator.share({ title: titulo, text: `${titulo} · ${t('Los tresmiles del Pirineo aragonés en 3D')}`, url }); return; } } catch (e) { if (e?.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(url); } catch { prompt(t('Copia este enlace'), url); return; }
+    const txt = boton.textContent; boton.textContent = t('Enlace copiado'); setTimeout(() => { boton.textContent = txt; }, 2000);
+  }
   function cargarZona(p) {
     if (!preparados.has(p.id)) preparados.set(p.id, (async () => {
       if (p.menor && !rutaDatos[p.id]) await leeRutas(p);
