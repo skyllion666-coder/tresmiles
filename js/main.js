@@ -1408,6 +1408,14 @@ async function boot() {
     flyTo({ t: new THREE.Vector3(p.w.x, p.w.y - 300, p.w.z), theta: -0.45, phi: 1.0, r: 15000 }, { shift: { x: 0, y: 0 } });
     avisoCarga(t('{n}: próximamente', { n: p.nombre })); clearTimeout(verPrevia.t); verPrevia.t = setTimeout(() => avisoCarga(null), 2600);
   }
+  // qué cumbres mira la gente: evento anónimo «tresmiles-cumbre-<id>» en GoatCounter, una vez por cumbre y visita (sessionStorage); tools/visitas.py hace el top
+  const cumbresContadas = new Set();
+  function cuentaCumbre(p) {
+    if (cumbresContadas.has(p.id)) return; cumbresContadas.add(p.id);
+    try { const k = 'tresmiles-cumbres-vistas', v = JSON.parse(sessionStorage.getItem(k) || '[]'); if (v.includes(p.id)) return; v.push(p.id); sessionStorage.setItem(k, JSON.stringify(v)); } catch { /* sin almacenamiento: vale con el Set */ }
+    let n = 0; const enviar = () => { if (window.goatcounter?.count) window.goatcounter.count({ path: `tresmiles-cumbre-${p.id}`, title: `Tresmiles: ${p.nombre}`, event: true }); else if (n++ < 30) setTimeout(enviar, 1000); };
+    enviar();
+  }
   async function openPeak(id, { instant = false, hash = true } = {}) {
     const p = byId[id]; if (!p || !p.activo) return;
     pararVuelo(false); setList(false); if (S.detalle) { S.detalle = false; controls.minDistance = 500; }
@@ -1418,7 +1426,7 @@ async function boot() {
     S.active = id; fauna?.setCentro(p.w.x, p.w.z, p.w.y);
     if (S.plegada) { S.plegada = false; document.body.classList.remove('ficha-plegada'); fichaEl.classList.remove('is-folded'); tab.hidden = true; aplicaAltura(); }
     const conRuta = !!rutasDe(id)[0]; fichaEl.classList.toggle('con-ruta', conRuta); btnVuelo.hidden = !conRuta;
-    fichaBody.innerHTML = fichaHTML(p); muestraTab(fichaTab); fichaBody.scrollTop = 0; glosario.marca(fichaBody);
+    fichaBody.innerHTML = fichaHTML(p); muestraTab(fichaTab); fichaBody.scrollTop = 0; glosario.marca(fichaBody); cuentaCumbre(p);
     tiempo.set(null); pintaMeteo(p);
     subidaSel(null); pintaSubidas(p); pintaZona(p); glaciarSel = null; glaciares.quitar(); pintaGlaciar(p); pintaNieve(p); pintaAludes(p); pintaTerreno(p); pintaNaturaleza(p);
     $('#ficha-macizo').textContent = macizoName[p.macizo];
@@ -2183,7 +2191,7 @@ async function boot() {
       <h3>Website addresses</h3>
       <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> and, as a backup, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (the same website). In Spain, some Cloudflare addresses are blocked during football matches at weekends: if the first one does not load, use the second.</p>
       <h3>Visits</h3>
-      <p>This website uses <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, a visit counter without cookies that stores no personal data and does not follow you around other websites: it only counts how many times each page is opened. Your browser also keeps a note of how many times you have come in (only that number, on your own device), and the counter only receives the range («first time», «2», «3-5»…), never who you are.</p>
+      <p>This website uses <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, a visit counter without cookies that stores no personal data and does not follow you around other websites: it only counts how many times each page is opened. Your browser also keeps a note of how many times you have come in (only that number, on your own device), and the counter only receives the range («first time», «2», «3-5»…), never who you are. It also counts how many times each summit is opened, to know which ones people look at most (only the total for each summit).</p>
       <h3>Where people go</h3>
       <p>The footprints button lights up the places where people have passed with a GPS: faint orange for a few traces and yellow for many. Roads are shown in greyish blue and dirt tracks in sand, because many people also record GPS in the car. Tap a path to see whether it is very busy, used, rarely or very rarely used, with the real figures below: full traces (those people upload as public) and loose points (from private ones, which arrive mixed up, so the number of people cannot be known); while it is on, the example route turns green. It is made from the public GPS traces that people upload to <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: the brighter, the more traces. It helps you spot the most trodden paths, for example to get back to a known trail if you leave your route. <b>It does not say whether a passage is safe</b>: there are traces across glaciers, snowfields and gullies, and from people who also got lost. A faint glow can be a single person.</p>
       <h3>Safety</h3>
@@ -2226,7 +2234,7 @@ async function boot() {
       <h3>Direcciones de la web</h3>
       <p><a href="https://tresmiles.pages.dev/">tresmiles.pages.dev</a> y, de reserva, <a href="https://skyllion666-coder.github.io/tresmiles/">skyllion666-coder.github.io/tresmiles</a> (la misma web). En España, algunos fines de semana se bloquean direcciones de Cloudflare durante el fútbol: si la primera no carga, usa la segunda.</p>
       <h3>Visitas</h3>
-      <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página. Además, tu navegador apunta cuántas veces has entrado (solo ese número, en tu propio dispositivo), y al contador le llega solo el tramo («primera vez», «2», «3-5»…), nunca quién eres.</p>
+      <p>Esta web usa <a href="https://www.goatcounter.com" target="_blank" rel="noopener">GoatCounter</a>, un contador de visitas sin cookies que no guarda datos personales ni te sigue por otras webs: solo cuenta cuántas veces se abre cada página. Además, tu navegador apunta cuántas veces has entrado (solo ese número, en tu propio dispositivo), y al contador le llega solo el tramo («primera vez», «2», «3-5»…), nunca quién eres. También cuenta cuántas veces se abre cada cumbre, para saber cuáles se miran más (solo el total de cada una).</p>
       <h3>Por dónde pasa la gente</h3>
       <p>El botón de las huellas ilumina los sitios por donde ha pasado gente con GPS: naranja tenue si son pocas trazas y amarillo si son muchas. Las carreteras se ven en azul grisáceo y las pistas en color arena, porque mucha gente graba el GPS también en el coche. Tocando un camino dice si es un paso muy frecuentado, frecuentado, poco o muy poco, con las cifras reales debajo: trazas completas (las que la gente sube como públicas) y puntos sueltos (de las privadas, que llegan mezclados y no permiten saber cuántas personas son), y mientras está encendido, la ruta de ejemplo se pinta en verde. Está hecho con las trazas GPS públicas que la gente sube a <a href="https://www.openstreetmap.org/traces" target="_blank" rel="noopener">© OpenStreetMap</a>: cuanto más brilla, más trazas. Sirve para ver los caminos más pisados, por ejemplo para volver a una senda conocida si te sales de la ruta. <b>No dice si un paso es seguro</b>: hay trazas por glaciares, neveros y canales, y de gente que también se perdió. Un brillo débil puede ser una sola persona.</p>
       <h3>Seguridad</h3>

@@ -5,7 +5,8 @@
 - La cuenta es compartida con la Bolsa de Horas: solo se mira la ruta «/tresmiles» y los eventos «tresmiles-vez-…».
 - Cuenta: total (el mismo número que enseña la web), visitas de los últimos N días por día y comparadas con los N anteriores,
   móvil/ordenador, Android/iPhone, países, de dónde llegan (las apps como WhatsApp no dicen de dónde vienen: salen «directas»),
-  cuántas llegan por un enlace de cumbre (c/<id>, botón «Compartir») y cuántas veces vuelve la gente (tramos de index.html).
+  cuántas llegan por un enlace de cumbre (c/<id>, botón «Compartir»), cuántas veces vuelve la gente (tramos de index.html)
+  y las cumbres más miradas (eventos «tresmiles-cumbre-<id>» de openPeak en js/main.js, una vez por cumbre y visita).
 Uso: tools/visitas.py [días, por defecto 4] [--prueba]   (--prueba: lo imprime sin mandarlo). Programado en cron lunes y jueves 9:30.
 """
 import collections, datetime, json, os, sys, time, urllib.error, urllib.parse, urllib.request
@@ -93,6 +94,14 @@ def main():
             nuevas, vuelven = por.get('1', 0), tot - por.get('1', 0)
             L += ['', f'🔁 Primera vez: {nuevas} · vuelven: {vuelven}']
             L.append('  ' + ' · '.join(f'{t}.ª vez: {por[t]}' if t in ('1', '2') else f'{t} veces: {por[t]}' for t in TRAMOS if por.get(t)))
+    cumbres = [p['id'] for p in ps if p['event'] and p['path'].startswith('tresmiles-cumbre-')]
+    vistas = collections.Counter()
+    for i in range(0, len(cumbres), 80):   # en tandas, para no hacer la dirección demasiado larga
+        d = api('stats/hits', start=iso(ini), end=iso(hoy), include_paths=cumbres[i:i + 80], limit=100)
+        for h in d['hits']: vistas[(h.get('title') or h['path']).removeprefix('Tresmiles: ').removeprefix('tresmiles-cumbre-')] += h['count']
+    if vistas:
+        L += ['', f'⛰️ Cumbres más miradas ({sum(vistas.values())} fichas abiertas):']
+        L += [f'  {i}. {k}: {v}' for i, (k, v) in enumerate(vistas.most_common(10), 1)]
     texto = '\n'.join(L)
     print(texto)
     if PRUEBA: return
