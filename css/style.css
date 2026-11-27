@@ -1007,3 +1007,7 @@ ul.ay-ley li { margin: 5px 0; }
 .ay-bv-c .ay-av-bs { justify-content: space-between; }
 .leyenda-lineas.al-lado { left: calc(var(--gutter) + 54px); }
 @media (max-width: 560px) { #about-body { padding: 30px 18px 24px; } #about-body .ab-tabs { top: -30px; margin: -30px -18px 16px; padding: 10px 50px 0 10px; } #about-body .ab-tabs button { padding: 9px 7px 8px; letter-spacing: .06em; font-size: .7rem; } }
+
+/* leyenda en el móvil: si no cabe en una línea, parte (antes se cortaba: «ferrat», «persona»); cada muestra con su nombre va junta */
+.leyenda-lineas span { flex-wrap: wrap; white-space: normal; column-gap: 8px; row-gap: 2px; }
+.leyenda-lineas b { display: inline-flex; align-items: center; gap: 6px; font-weight: inherit; white-space: nowrap; }

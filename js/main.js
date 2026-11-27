@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { makeGeo, EXAG } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=32';
+import { Terrain, NCALOR } from './terrain.js?v=33';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=50';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
@@ -216,7 +216,7 @@ async function boot() {
     const now = performance.now(); if (now - leyendaT < 300) return; leyendaT = now;
     const L = ayuda.L, exp = S.mode === 'explore', verde = calor.on ? ' l-verde' : '';
     const txt = (conRuta ? `<span><i class="l-sub${verde}"></i>${t('subida')}</span><span><i class="l-baj${verde}"></i>${t('bajada')}</span>` : '') + (et ? `<span><i class="l-otra" style="--c:${et.color}"></i>${esc(et.texto)}</span>` : '')
-      + (exp && sendas.activa ? `<span><i class="l-senda"></i>${L('senda', 'path')} <i class="l-pista"></i>${L('pista', 'track')} <i class="l-ferrata"></i>${L('ferrata', 'via ferrata')}</span>` : '')
+      + (exp && sendas.activa ? `<span><b><i class="l-senda"></i>${L('senda', 'path')}</b><b><i class="l-pista"></i>${L('pista', 'track')}</b><b><i class="l-ferrata"></i>${L('ferrata', 'via ferrata')}</b></span>` : '')
       + (exp && calor.on ? `<span><i class="l-calor"></i>${L('pocas → muchas personas', 'few → many people')}</span>` : '')
       + (exp && nieveSat.on ? `<span><i class="l-nieve"></i>${L('nieve (satélite)', 'snow (satellite)')}</span>` : '');
     if (txt !== leyendaTxt) { leyendaTxt = txt; leyenda.innerHTML = txt; leyenda.classList.toggle('is-hidden', !txt); }

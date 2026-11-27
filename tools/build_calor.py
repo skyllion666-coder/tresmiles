@@ -8,6 +8,7 @@ Salida: data/calor/<zona>.png (RGB, 10 m por píxel, norte arriba; la textura de
 y data/calor/index.json (recuadro lon/lat de cada zona).
   <zona>.png — R: brillo, log de las pasadas equivalentes por píxel (trazas + puntos / PUNTOS_PASADA) con la misma escala en todas las zonas.
   G: tipo de vía de OpenStreetMap: 255 carretera o calle, 128 pista, 0 sendero o monte (la capa lo dice con otro color: mucha gente graba el GPS en el coche).
+  B: el «lomo» de los caminos (función lomo): de cerca solo se pinta eso.
   <zona>-datos.png — R: trazas completas por píxel (hasta 255), G·256 + B: puntos sueltos por píxel (hasta 65.535); sin difuminar.
 Datos © colaboradores de OpenStreetMap.
 Uso: python3 tools/build_calor.py [zona ...]   (sin zonas: todas las de ZONAS que tengan GPX)"""
@@ -25,6 +26,21 @@ REF = 60.0   # pasadas equivalentes que dan el brillo máximo (igual en todas la
 NS = '{http://www.topografix.com/GPX/1/0}'
 CARRETERA = {'motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'living_street', 'service', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link'}
 UA = {'User-Agent': 'tresmiles/1.0 (proyecto educativo)'}
+
+def lomo(cuenta, sueltos):
+    """Canal B: el «lomo» de cada camino (la línea por donde pasan más trazas), para que de cerca la capa se vea fina.
+    El brillo (R) se satura en los caminos muy pisados y el GPS rebota en las paredes, así que la mancha sale ancha (50-80 m en un barranco);
+    aquí se usa la densidad sin saturar y más suavizada (los puntos sueltos, menos fiables, pesan la mitad) y se queda con los píxeles que son
+    máximo local en alguna dirección (vecinos a 20 m), con la línea de unos 10-15 m."""
+    d = np.log1p(gaussian_filter(cuenta.astype(np.float32) + sueltos.astype(np.float32) / (2 * PUNTOS_PASADA), 1.0) * 2.2)
+    sg = 2.0   # derivadas suavizadas a ~20 m (cruzar un camino con el error del GPS)
+    dy, dx = gaussian_filter(d, sg, order=(1, 0)), gaussian_filter(d, sg, order=(0, 1))
+    hyy, hxx, hxy = gaussian_filter(d, sg, order=(2, 0)), gaussian_filter(d, sg, order=(0, 2)), gaussian_filter(d, sg, order=(1, 1))
+    # curvatura más negativa (cruzando el camino) y su dirección; es lomo donde la pendiente en esa dirección cambia de signo (a menos de medio píxel)
+    t = np.sqrt(((hxx - hyy) / 2) ** 2 + hxy ** 2); l1 = (hxx + hyy) / 2 - t
+    vx, vy = hxy, l1 - hxx; nv = np.hypot(vx, vy) + 1e-9; vx, vy = vx / nv, vy / nv
+    m = (l1 < -0.004) & (np.abs(dx * vx + dy * vy) < -l1 * 0.6) & (d >= np.log1p(2.2 * 1.0))   # al menos ~1 pasada
+    return (np.clip(gaussian_filter(m.astype(np.float32), 0.5) * 1.8, 0, 1) * 255).astype(np.uint8)   # 1-2 píxeles: unos 10-15 m
 
 def vias(zona, w, s, e, n):
     """Carreteras y pistas de OSM en el recuadro (se guardan en tools/datos/calor/<zona>_vias.json)."""
@@ -85,7 +101,7 @@ def hacer(zona):
         g = el.get('geometry'); t = el.get('tags', {}).get('highway')
         if not g: continue
         dr.line([px(c['lat'], c['lon']) for c in g], fill=128 if t == 'track' else 255, width=5)
-    rgb = np.dstack([(v * 255).astype(np.uint8), np.array(via), np.zeros((H, W), np.uint8)])
+    rgb = np.dstack([(v * 255).astype(np.uint8), np.array(via), lomo(cuenta, sueltos)])
     os.makedirs(os.path.join(ROOT, 'data/calor'), exist_ok=True)
     Image.fromarray(rgb, 'RGB').save(os.path.join(ROOT, 'data/calor', f'{zona}.png'), optimize=True)
     sc = np.minimum(sueltos, 65535)
