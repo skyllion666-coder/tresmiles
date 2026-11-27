@@ -2877,15 +2877,17 @@
   "ruta": "img/menores/punta-cabalera.webp"
  },
  "pico-d-arriel-punta-dero-saldiecho": {
-  "archivo": "Arriel.jpg",
-  "autor": "Babylas",
-  "licencia": "CC BY-SA 3.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/3.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Arriel.jpg",
-  "fuente": "Wikimedia Commons",
-  "w": 640,
-  "h": 459,
-  "ruta": "img/menores/pico-d-arriel-punta-dero-saldiecho.webp"
+  "archivo": "foto propia",
+  "autor": "Toño",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "",
+  "w": 960,
+  "h": 640,
+  "ruta": "img/menores/arriel-tono.webp",
+  "propia": true,
+  "pie": "La piedra pintada de la cima del Arriel, con el Midi d'Ossau al fondo."
  },
  "punta-suelsa": {
   "archivo": "Punta Suelza.jpg",
