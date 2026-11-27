@@ -89,15 +89,6 @@
   "w": 1100,
   "h": 825
  },
- "infiernos": {
-  "archivo": "Infierno Central.jpg",
-  "autor": "Pacopac",
-  "licencia": "CC BY-SA 4.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Infierno_Central.jpg",
-  "w": 1100,
-  "h": 660
- },
  "bachimala": {
   "archivo": "Massif de Batchimale 11.06.2008.jpg",
   "autor": "Fabrice742",
@@ -305,15 +296,6 @@
   "w": 1100,
   "h": 825
  },
- "gran-facha": {
-  "archivo": "Grande Fache.jpg",
-  "autor": "Luap78",
-  "licencia": "CC BY-SA 4.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:Grande_Fache.jpg",
-  "w": 1100,
-  "h": 825
- },
  "olas": {
   "archivo": "Macizo de Monte Perdido (8227489823).jpg",
   "autor": "Juanedc from Zaragoza, España",
@@ -440,15 +422,6 @@
   "pagina": "https://commons.wikimedia.org/wiki/File:Cauar%C3%A8re-Batoua_11.06.2008.jpg",
   "w": 1100,
   "h": 733
- },
- "mulleres": {
-  "archivo": "TUC DE MOLIÈRES - VAL D'ARAN - IB-826.jpg",
-  "autor": "Isidre blanc",
-  "licencia": "CC BY-SA 4.0",
-  "licencia_url": "https://creativecommons.org/licenses/by-sa/4.0",
-  "pagina": "https://commons.wikimedia.org/wiki/File:TUC_DE_MOLI%C3%88RES_-_VAL_D%27ARAN_-_IB-826.jpg",
-  "w": 1100,
-  "h": 825
  },
  "sabre": {
   "archivo": "foto del autor del track",
@@ -1528,16 +1501,6 @@
   "w": 675,
   "h": 900
  },
- "culfreda-central": {
-  "archivo": "foto de la ruta de Wikiloc",
-  "autor": "beatriz0509",
-  "licencia": "",
-  "licencia_url": "",
-  "pagina": "https://www.wikiloc.com/mountaineering-trails/pic-cauarere-y-picos-de-culfreda-o-batoua-desde-refugio-de-tabernes-286704126",
-  "fuente": "Wikiloc",
-  "w": 675,
-  "h": 900
- },
  "punta-de-la-brecha-superior-de-llosas": {
   "archivo": "foto de la ruta de Wikiloc",
   "autor": "Iñigo Etxegoien",
@@ -1774,5 +1737,41 @@
   "pagina": "",
   "w": 1100,
   "h": 495
+ },
+ "infiernos-tono": {
+  "archivo": "foto propia",
+  "autor": "Toño",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 1100,
+  "h": 733
+ },
+ "gran-facha-tono": {
+  "archivo": "foto propia",
+  "autor": "Toño",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 912,
+  "h": 608
+ },
+ "mulleres-tono": {
+  "archivo": "foto propia",
+  "autor": "Toño",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 1100,
+  "h": 733
+ },
+ "culfreda-central-tono": {
+  "archivo": "foto propia",
+  "autor": "Toño",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "w": 1100,
+  "h": 733
  }
 }

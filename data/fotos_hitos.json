@@ -1782,15 +1782,14 @@
   "pos": "50% 50%"
  },
  "gf-cima": {
-  "archivo": "foto del autor del track",
-  "autor": "Knes Montañeros",
+  "archivo": "foto propia",
+  "autor": "Toño",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://es.wikiloc.com/rutas-alpinismo/gran-facha-cuspide-de-bachimana-3-005-m-banos-de-panticosa-con-perros-139068392",
-  "fuente": "su ficha de Wikiloc",
-  "w": 1000,
-  "h": 750,
-  "pos": "50% 50%"
+  "pagina": "",
+  "ruta": "img/hitos/gf-cima-2.jpg",
+  "w": 912,
+  "h": 608
  },
  "ola-arrablo": {
   "archivo": "foto del autor del track",
@@ -2316,15 +2315,14 @@
   "pos": "50% 50%"
  },
  "mul-cima": {
-  "archivo": "foto del autor del track",
-  "autor": "Sr.Txatarras",
+  "archivo": "foto propia",
+  "autor": "Toño",
   "licencia": "",
   "licencia_url": "",
-  "pagina": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
-  "fuente": "su ficha de Wikiloc",
-  "w": 1000,
-  "h": 750,
-  "pos": "50% 40%"
+  "pagina": "",
+  "ruta": "img/hitos/mul-cima-2.jpg",
+  "w": 1100,
+  "h": 733
  },
  "pav-forau": {
   "archivo": "foto del autor del track",

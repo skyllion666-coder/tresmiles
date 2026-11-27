@@ -614,8 +614,8 @@
    "grado": "PD · pasos de I+/II, cresta aérea",
    "epoca": "Julio – septiembre",
    "descripcion": "Tres cumbres sobre los 3.000 m —Occidental, Central y Oriental— alzadas sobre el balneario de Panticosa; el Central, con 3.081 m, es el techo del grupo. La travesía de la Marmolera, entre el Occidental y el Central, es muy aérea y no se recomienda con vértigo; conviene llevar casco.",
-   "foto": "infiernos",
-   "pie": "Cima del Infierno Central, con su piedra de cumbre.",
+   "foto": "infiernos-tono",
+   "pie": "La cresta de los Picos del Infierno, con la Marmolera, la franja de mármol claro.",
    "enlace": {
     "url": "https://es.wikiloc.com/rutas-alpinismo/picos-del-infierno-ruta-circular-desde-banos-de-panticosa-81271168",
     "texto": "Ver la ruta en Wikiloc: Picos del Infierno, ruta circular desde Baños de Panticosa, de RUTAS por el MONTE BLOG"
@@ -1372,8 +1372,8 @@
    "grado": "PD · cresta final con pasos de I+/II",
    "epoca": "Julio – septiembre",
    "descripcion": "Cumbre fronteriza del Pirineo central, entre el valle de Tena y el valle francés de Wallon. Desde Panticosa se sube por los ibones de Bachimaña hasta el collado de la Facha y se remata por una cresta de bloques con algún paso fácil de trepada.",
-   "foto": "gran-facha",
-   "pie": "La Gran Facha (Grande Fache), con su vertiente de pedreras.",
+   "foto": "gran-facha-tono",
+   "pie": "La Virgen en su hornacina de la cima de la Gran Facha, con las piedras pintadas «Pic Grande Fache 3005».",
    "enlace": {
     "url": "https://es.wikiloc.com/rutas-alpinismo/gran-facha-cuspide-de-bachimana-3-005-m-banos-de-panticosa-con-perros-139068392",
     "texto": "Ver la ruta en Wikiloc: Gran Facha/Cúspide de Bachimaña, de Knes Montañeros"
@@ -1381,10 +1381,6 @@
    "rutas": [
     "gran-facha-panticosa"
    ],
-   "fotoCima": {
-    "foto": "gf-cima",
-    "pie": "La cima de la Gran Facha, con su mojón y dos perros del autor del track."
-   },
    "curiosidad": "En español su nombre original es Pico de Bachimaña (o Cúspide de Bachimaña), y Gran Facha es la traducción del francés Grande Fache. Según una fuente, la primera ascensión la hicieron en 1874 Henry Russell y Latour, de Cauterets; el dato procede de una sola fuente en inglés.",
    "clase": "principal",
    "nombres": "Punda dera Faxa · Pico de la Gran Facha o Cúspide Bachimaña"
@@ -1880,8 +1876,8 @@
    "grado": "F+ · senda, bloques y lanchas de granito",
    "epoca": "Julio – septiembre",
    "descripcion": "Un tresmil del extremo oriental de la Maladeta, en el límite entre Aragón y Cataluña. Desde La Besurta se sigue el valle de Aigualluts hasta el cruce de Mulleres y se sube por ibones y lanchas de granito hasta la cima.",
-   "foto": "mulleres",
-   "pie": "El Tuc de Mulleres (Molières), visto desde el valle de Arán.",
+   "foto": "mulleres-tono",
+   "pie": "El gran hito de piedras de la cima de Mulleres, sobre un mar de nubes.",
    "enlace": {
     "url": "https://es.wikiloc.com/rutas-senderismo/la-besurta-pico-mulleres-la-besurta-80876275",
     "texto": "Ver la ruta en Wikiloc: La Besurta - Pico Mulleres - La Besurta, de Sr.Txatarras"
@@ -1889,10 +1885,6 @@
    "rutas": [
     "mulleres-besurta"
    ],
-   "fotoCima": {
-    "foto": "mul-cima",
-    "pie": "El hito de piedras de la cima, con los ibones de Mulleres al fondo."
-   },
    "curiosidad": "Mulleres tiene dos nombres según el lado desde el que se mire: Mulleres en castellano y aragonés, y Molières en catalán y aranés, porque la cumbre cae justo en el límite entre Aragón y Cataluña. Según una guía, es el tresmil más oriental de la Maladeta. Su altura, además, depende de la fuente: 3.010 m en la mayoría de guías, 3.010,1 m en OpenStreetMap con datos del ICGC y 3.011 m en Wikipedia. Un sitio de montaña lo traduce como «pico de las mujeres», pero no explica el origen del nombre; las fuentes consultadas no aclaran la primera ascensión.",
    "clase": "principal",
    "nombres": "Tuca de Mulleres · Cap de Mulleres · Tuca de Mulleres o de Molières · Tuca de Mulleres / Cap de Mulleres"
@@ -3549,8 +3541,8 @@
    "clase": "secundaria",
    "nombres": "Punta Culfreda d’el Medio · Pico Central de Culfreda",
    "inv": "BAC-10",
-   "foto": "culfreda-central",
-   "pie": "El nombre del Culfreda Central, escrito en la roca de la cima.",
+   "foto": "culfreda-central-tono",
+   "pie": "Las piedras pintadas de la cima: «Batoua Central 3031 m» (Batoua es el otro nombre de Culfreda).",
    "enlace": {
     "url": "https://www.wikiloc.com/mountaineering-trails/pic-cauarere-y-picos-de-culfreda-o-batoua-desde-refugio-de-tabernes-286704126",
     "texto": "Ruta de beatriz0509 en Wikiloc"
