@@ -6,7 +6,7 @@
 Consulta GetFeatureInfo de los WMS del IGME en el punto de la cima; si no hay unidad, prueba a 60 m en 4 direcciones.
 Con --ruta, además, puntos cada ~400 m de la subida de la ruta de ejemplo (rutas[0]).
 Respuestas guardadas en ~/tresmiles-fuentes/igme/ (no se repiten consultas). Una consulta por segundo.
-Uso: python3 tools/geologia.py [--ruta] [id ...]
+Uso: python3 tools/geologia.py [--ruta] [--menores] [id ...]
 """
 import json, math, os, sys, time, urllib.request, urllib.parse
 
@@ -80,6 +80,9 @@ def en_cima(p):
 def metros(a, b): return math.hypot((a[0] - b[0]) * 111320 * math.cos(math.radians(42.7)), (a[1] - b[1]) * 111320)
 
 
+PASO_RUTA = 600 if '--menores' in sys.argv else 400   # m entre puntos de la subida (en las menores, menos consultas al IGME)
+
+
 def en_ruta(p):
     if not p.get('rutas'): return None
     f = os.path.join(RAIZ, 'data', 'rutas', p['rutas'][0] + '.json')
@@ -91,7 +94,7 @@ def en_ruta(p):
     res, sig = [], 0.0
     for x in sub:
         if x[3] >= sig:
-            u = unidad(x[0], x[1]); sig = x[3] + 400
+            u = unidad(x[0], x[1]); sig = x[3] + PASO_RUTA
             res.append(dict(d=x[3], alt=round(x[2]), u=u))
     return res
 
@@ -99,12 +102,14 @@ def en_ruta(p):
 if __name__ == '__main__':
     ruta = '--ruta' in sys.argv
     ids = {a for a in sys.argv[1:] if not a.startswith('--')}
-    picos = json.load(open(os.path.join(RAIZ, 'data', 'peaks.json')))['picos']
-    sal = os.path.join(AQUI, 'datos', 'geologia.json')
+    menores = '--menores' in sys.argv   # cumbres de data/menores.json → tools/datos/geologia_menores.json (sigue donde lo dejó)
+    picos = json.load(open(os.path.join(RAIZ, 'data', 'menores.json' if menores else 'peaks.json')))['picos']
+    sal = os.path.join(AQUI, 'datos', 'geologia_menores.json' if menores else 'geologia.json')
     previo = json.load(open(sal)) if os.path.exists(sal) else {}
     for p in picos:
         if ids and p['id'] not in ids: continue
         o = previo.get(p['id'], {})
+        if menores and not ids and 'cima' in o and (not ruta or 'ruta' in o): continue
         o['cima'] = en_cima(p)
         if ruta: o['ruta'] = en_ruta(p)
         previo[p['id']] = o

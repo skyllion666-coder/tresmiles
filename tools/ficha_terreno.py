@@ -10,6 +10,7 @@
 - Geología (IGME): roca de la cima y rocas que pisa la subida, de tools/datos/geologia.json (tools/geologia.py [--ruta]); edades y
   traducciones en tools/datos/geologia_textos.py.
 Uso: python3 tools/fetch_collados.py (una vez) → python3 tools/prominencia.py → python3 tools/geologia.py --ruta → python3 tools/ficha_terreno.py
+Menores: lo mismo con --menores en prominencia.py, geologia.py y aquí (→ data/terreno_menores.json).
 """
 import json, math, os
 import numpy as np
@@ -18,15 +19,16 @@ sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dat
 from geologia_textos import EDADES, ERAS, EN as GEO_EN, TIPOS
 
 AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.join(AQUI, '..')
-SRC = os.path.expanduser('~/Tresmiles/web/data')
+MENORES = '--menores' in sys.argv   # cumbres de data/menores.json → data/terreno_menores.json (con el relieve de toda la web, que llega a Guara)
+SRC = os.path.expanduser('~/tresmiles-fuentes/relieve_todo' if MENORES else '~/Tresmiles/web/data')
 N = json.load(open(os.path.join(SRC, 'meta.json')))['near']
 H = np.fromfile(os.path.join(SRC, 'near_h.bin'), dtype='<u2').reshape(N['nrows'], N['ncols']).astype(np.float32) * 0.1
 STEP = N['step']; MY = STEP * 111320; MX = MY * math.cos(math.radians(42.7))
 
-picos = json.load(open(os.path.join(RAIZ, 'data', 'peaks.json')))['picos']
+picos = json.load(open(os.path.join(RAIZ, 'data', 'menores.json' if MENORES else 'peaks.json')))['picos']
 P = {p['id']: p for p in picos}
-prom = {x['id']: x for x in json.load(open(os.path.join(AQUI, 'datos', 'prominencia.json')))}
-ref = json.load(open(os.path.join(AQUI, 'datos', 'prominencia_ref.json')))
+prom = {x['id']: x for x in json.load(open(os.path.join(AQUI, 'datos', 'prominencia_menores.json' if MENORES else 'prominencia.json')))}
+ref = {} if MENORES else json.load(open(os.path.join(AQUI, 'datos', 'prominencia_ref.json')))
 f_col = os.path.expanduser('~/tresmiles-fuentes/collados_osm.json')
 collados = []
 if os.path.exists(f_col):
@@ -101,6 +103,7 @@ def ruta_normal(p):
         d = b[3] - a[3]
         if d <= 0: continue
         r, c = (int(round(v)) for v in rc((a[0] + b[0]) / 2, (a[1] + b[1]) / 2))
+        if not (0 <= r < H.shape[0] and 0 <= c < H.shape[1]): continue   # tramo fuera del relieve (alguna ruta se sale del mapa)
         total += d
         if PEND[r, c] > 10:
             asp = ASPECTO[r, c]
@@ -131,7 +134,7 @@ def nombre_collado(x):
     return dict(nombre=mejor[1]['nombre'], ele=mejor[1]['ele'], m=round(mejor[0])) if mejor else None
 
 
-f_geo = os.path.join(AQUI, 'datos', 'geologia.json')
+f_geo = os.path.join(AQUI, 'datos', 'geologia_menores.json' if MENORES else 'geologia.json')
 GEO = json.load(open(f_geo)) if os.path.exists(f_geo) else {}
 faltan_en = set()
 
@@ -194,6 +197,7 @@ for p in picos:
     if x.get('prom') is not None:
         o['prom'] = x['prom']; o['col'] = x['col']; o['colLon'] = x['colLon']; o['colLat'] = x['colLat']
         o['fiable'] = 'alta' if x['prom'] >= 100 else 'media' if x['prom'] >= 30 else 'baja'
+        if x.get('malla') == '150 m' and o['fiable'] == 'alta': o['fiable'] = 'media'   # collado lejos (Guara): calculado con la malla de 150 m
         nc = nombre_collado(x)
         if nc: o['colNombre'] = nc['nombre']; o['colOsm'] = nc['ele']
         if x.get('madre') or x.get('madreNombre'):
@@ -221,7 +225,7 @@ json.dump(dict(fuentes=dict(
     geode=dict(texto='IGME, GEODE: Mapa Geológico Digital continuo de España 1:50.000', url='https://info.igme.es/cartografiadigital/geologica/Geode.aspx'),
     magna=dict(texto='IGME, MAGNA 50: Mapa Geológico de España 1:50.000, hoja {h}', url='https://info.igme.es/cartografiadigital/geologica/Magna50Hoja.aspx?language=es&id={h}'),
     ref=dict(texto='Clem Clements, «Spain – The 3000m Peaks» (Viewfinder Panoramas)', url='https://www.viewfinderpanoramas.org/reascent/Spanish_3000m_Peaks.doc')),
-    cumbres=sal), open(os.path.join(RAIZ, 'data', 'terreno.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    cumbres=sal), open(os.path.join(RAIZ, 'data', 'terreno_menores.json' if MENORES else 'terreno.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 n = len(sal)
 print(n, 'cumbres ·', sum('prom' in o for o in sal.values()), 'con prominencia ·', sum('colNombre' in o for o in sal.values()), 'collado con nombre ·',
       sum('rutaNormal' in o for o in sal.values()), 'con ruta ·', len(collados), 'collados OSM')

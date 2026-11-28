@@ -4,16 +4,17 @@
 - Por dónde pasa la subida de la ruta de ejemplo (rutas[0]): cobertura del suelo ESA WorldCover 2021 (10 m), remuestreada a la
   rejilla del relieve en data/terrain/cover (tools/build_cover.py): % de bosque, matorral, pasto, roca, nieve y hielo, agua;
   y la altitud más alta de la subida con bosque (dos puntos seguidos con arbolado).
-Uso: python3 tools/fauna_gbif.py → python3 tools/ficha_naturaleza.py
+Uso: python3 tools/fauna_gbif.py → python3 tools/ficha_naturaleza.py   (menores: los dos con --menores)
 """
-import gzip, json, math, os, re
+import gzip, json, math, os, re, sys
 import numpy as np
 
 AQUI = os.path.dirname(os.path.abspath(__file__)); RAIZ = os.path.join(AQUI, '..')
 meta = json.load(open(os.path.join(RAIZ, 'data', 'terrain', 'meta.json')))
 CH, ST = meta['chunk'], meta['step']
-picos = json.load(open(os.path.join(RAIZ, 'data', 'peaks.json')))['picos']
-gbif = json.load(open(os.path.join(AQUI, 'datos', 'gbif.json')))
+MENORES = '--menores' in sys.argv   # cumbres de data/menores.json → data/naturaleza_menores.json
+picos = json.load(open(os.path.join(RAIZ, 'data', 'menores.json' if MENORES else 'peaks.json')))['picos']
+gbif = json.load(open(os.path.join(AQUI, 'datos', 'gbif_menores.json' if MENORES else 'gbif.json')))
 CLASES = {1: 'bosque', 2: 'matorral', 3: 'pasto', 4: 'roca', 5: 'nieve', 6: 'agua', 8: 'pasto'}   # 8 musgo y líquenes: con el pasto
 _cov = {}
 
@@ -62,7 +63,7 @@ def frase(n):
 
 
 f_h = os.path.join(AQUI, 'datos', 'historia.json')
-HIST = json.load(open(f_h)) if os.path.exists(f_h) else {}   # tools/historia.py: primera ascensión según Wikipedia (es, en, fr)
+HIST = json.load(open(f_h)) if os.path.exists(f_h) and not MENORES else {}   # tools/historia.py: primera ascensión según Wikipedia (es, en, fr)
 sal = {}
 for p in picos:
     g = gbif.get(p['id'])
@@ -81,5 +82,5 @@ for p in picos:
 json.dump(dict(fuentes=dict(
     gbif=dict(texto='GBIF.org', url='https://www.gbif.org/'),
     cover=dict(texto='ESA WorldCover 2021 (10 m), CC BY 4.0', url='https://esa-worldcover.org/')), cumbres=sal),
-    open(os.path.join(RAIZ, 'data', 'naturaleza.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    open(os.path.join(RAIZ, 'data', 'naturaleza_menores.json' if MENORES else 'naturaleza.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
 print(len(sal), 'cumbres ·', sum(1 for o in sal.values() if o.get('total')), 'con observaciones ·', sum('ruta' in o for o in sal.values()), 'rutas')

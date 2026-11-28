@@ -34,7 +34,7 @@ import { crearEnciclopedia } from './enciclopedia.js?v=6';
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const fmt = (n) => new Intl.NumberFormat(document.documentElement.lang === 'en' ? 'en-GB' : 'es-ES', { useGrouping: 'always' }).format(n);   // (lang lo pone js/i18n.js, que carga antes)
-const km = (m) => new Intl.NumberFormat('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
+const km = (m) => new Intl.NumberFormat(EN_INGLES ? 'en-GB' : 'es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(m / 1000);
 const json = (u) => datoJson(u);   // rutas, subidas y fuentes: en la app, de la web si hay conexión (js/datos.js)
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -1014,6 +1014,15 @@ async function boot() {
   // pestañas de la ficha (no en las fichas sencillas): se recuerda la elegida al pasar a otra cumbre
   const FICHA_TABS = [['resumen', 'Resumen'], ['rutas', 'Rutas'], ['terreno', 'Terreno'], ['naturaleza', 'Naturaleza'], ['historia', 'Historia']];
   let fichaTab = 'resumen';
+  // una pestaña sin nada dentro (cumbre sin datos de terreno o de naturaleza) se oculta; si era la elegida, vuelve a «Resumen»
+  function muestraTabVacia() {
+    for (const k of ['terreno', 'naturaleza']) {
+      const sec = fichaBody.querySelector(`.ft[data-tab="${k}"]`), b = fichaBody.querySelector(`[data-ftab="${k}"]`);
+      if (!sec || !b) continue;
+      const vacia = ![...sec.children].some((x) => x.innerHTML.trim());
+      b.hidden = vacia; if (vacia && fichaTab === k) muestraTab('resumen');
+    }
+  }
   function muestraTab(k) {
     const b = fichaBody.querySelector(`[data-ftab="${k}"]`); if (b?.hidden) k = 'resumen';
     fichaTab = k;
@@ -1047,7 +1056,7 @@ async function boot() {
         ${p.epoca ? `<div class="wide"><dt>Mejor época</dt><dd>${esc(p.epoca)}</dd></div>` : ''}
       </dl>
       <p class="panorama-acc"><button type="button" class="btn-ruta btn-suave" data-act="panorama">Ver el panorama desde la cima</button> <button type="button" class="btn-ruta btn-suave" data-act="compartir">Compartir</button>${(cumbres.ficha()?.[p.id]?.modelo || cumbres.ficha()?.[p.id]?.ancla) ? ' <button type="button" class="btn-ruta btn-suave" data-act="cerca">Ver la cima de cerca</button>' : ''}</p>
-      ${p.menor ? '' : `<nav class="ficha-tabs" role="tablist">${FICHA_TABS.map(([k, n]) => `<button type="button" role="tab" data-ftab="${k}" aria-selected="${k === fichaTab}"${k === 'historia' && !p.curiosidad && !p.info ? ' hidden' : ''}>${t(n)}</button>`).join('')}</nav>`}
+      <nav class="ficha-tabs" role="tablist">${FICHA_TABS.map(([k, n]) => `<button type="button" role="tab" data-ftab="${k}" aria-selected="${k === fichaTab}"${k === 'historia' && !p.curiosidad && !p.info ? ' hidden' : ''}>${t(n)}</button>`).join('')}</nav>
       <section class="ft" data-tab="resumen">
       <h3>El tiempo en la cumbre</h3><div class="meteo" aria-live="polite"><p class="ruta-credito">Cargando la previsión…</p></div>
       ${figCima(p)}
@@ -1078,7 +1087,7 @@ async function boot() {
       ${p.curiosidad ? `<h3>Curiosidad</h3><p class="gl-txt">${esc(p.curiosidad)}</p>` : ''}
       ${p.info ? `<h3>Información</h3><p class="gl-txt">${esc(p.info.texto)}</p><p class="ruta-credito">${t(p.info.alIngles ? 'Texto traducido al inglés de Wikipedia en {l}' : p.info.traducido ? 'Texto traducido al castellano de Wikipedia en {l}' : 'Texto de Wikipedia en {l}', { l: t({ an: 'aragonés', ca: 'catalán', es: 'castellano' }[p.info.idioma]) })}, ${t('artículo')} «<a href="${esc(p.info.url)}" target="_blank" rel="noopener">${esc(p.info.titulo)}</a>», ${t('licencia CC BY-SA 4.0. Sus autores están en el historial del artículo.')}</p>` : ''}
       </section>
-      ${p.menor ? `<div class="aviso"><b>Ficha sencilla.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
+      ${p.menor ? `<div class="aviso"><b>Información orientativa.</b> Nombre, altitud y posición proceden de OpenStreetMap y pueden variar según la fuente. Antes de salir, consulta una guía o un mapa actual y la previsión del tiempo: la montaña implica riesgo.</div>` : `<div class="aviso"><b>Información orientativa.</b> Las cifras proceden de guías y fichas de ruta y varían según la fuente. Antes de salir, contrasta con una guía actual, el estado de la ruta y la previsión del tiempo: la alta montaña implica riesgo.</div>`}${nav}`;
   }
   // colaborar: abre el correo con el asunto y una plantilla ya puestos (foto, comentario, nombre con el que sale y permiso para publicar).
   // La dirección se arma aquí para que no esté entera en el código; los textos en inglés van aquí mismo para no tocar i18n.js (y todos sus importadores).
@@ -1830,13 +1839,14 @@ async function boot() {
   const RUMBO8 = ['norte', 'noreste', 'este', 'sureste', 'sur', 'suroeste', 'oeste', 'noroeste'];
   const rumbo8 = (az) => t(RUMBO8[Math.round(az / 45) % 8]);
   const mayus = (x) => x.charAt(0).toUpperCase() + x.slice(1);
-  let terrenoDatos;
-  const cargaTerreno = () => (terrenoDatos ??= fetch(`data/terreno.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  // las cumbres de menos de 3.000 m llevan su propio archivo (data/terreno_menores.json, tools/… --menores): solo se pide al abrir una
+  const terrenoDatos = {};
+  const cargaTerreno = (menor) => (terrenoDatos[!!menor] ??= fetch(`data/terreno${menor ? '_menores' : ''}.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
   const enlaceCima = (id, nombre) => (id && byId[id] ? `<button type="button" class="enlace-cima" data-go="${id}">${esc(byId[id].nombre)}</button>` : esc(nombre ?? ''));
   async function pintaTerreno(p) {
-    const hueco = fichaBody.querySelector('.terreno-hueco'); if (!hueco || !p || p.menor) return;
-    const d = await cargaTerreno(); if (!d || S.active !== p.id) return;
-    const o = d.cumbres[p.id]; if (!o) { hueco.innerHTML = ''; return; }
+    const hueco = fichaBody.querySelector('.terreno-hueco'); if (!hueco || !p) return;
+    const d = await cargaTerreno(p.menor); if (!d || S.active !== p.id) { if (!d) muestraTabVacia(); return; }
+    const o = d.cumbres[p.id]; if (!o) { hueco.innerHTML = ''; muestraTabVacia(); return; }
     const filas = [];
     const ref = o.ref ? ` <small>${t('(otra fuente: {m} m)', { m: fmt(o.ref.prom) })}</small>` : '';
     if (o.masAlta) filas.push([t('Prominencia'), `${t('Es la cima más alta de los Pirineos: no hay terreno más alto al que bajar.')}${o.ref ? ` <small>${t('Prominencia publicada: {m} m, contando hasta el collado que la separa de montañas más altas, muy lejos de aquí.', { m: fmt(o.ref.prom) })}</small>` : ''}`]);
@@ -1853,8 +1863,8 @@ async function boot() {
       filas.push([t('Cara más abrupta'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(ab.az)), c: fmt(ab.caida), g: ab.grados })]);
       filas.push([t('Cara más tendida'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(te.az)), c: fmt(Math.max(0, te.caida)), g: Math.max(0, te.grados) })]);
     }
-    const gc = o.geo;
-    if (gc) {
+    const gc = o.geo || (o.geoRuta?.length ? { fuente: 'geode' } : null);
+    if (gc?.desc) {
       const desc = EN_INGLES ? (gc.descEn ?? gc.desc) : gc.desc;
       const donde = gc.m ? (gc.cubierta ? t('En la cima el mapa marca {c}; la roca más cercana, a {m} m:', { c: esc(EN_INGLES ? (gc.cubiertaEn ?? gc.cubierta) : gc.cubierta.toLowerCase()), m: gc.m }) : t('A {m} m de la cima, en el lado aragonés (el mapa del IGME no cubre Francia):', { m: gc.m })) : '';
       filas.push([t('Roca de la cima'), `${donde ? `<small class="antes">${donde}</small>` : ''}<span class="gl-txt">${esc(desc)}</span>${gc.edad ? `<small>${esc(EN_INGLES ? gc.edad.en : gc.edad.es)}</small>` : ''}`]);
@@ -1871,13 +1881,13 @@ async function boot() {
     }
     hueco.innerHTML = `<h3>${t('El terreno')}</h3>
       <dl class="stats terreno">${filas.map(([a, b]) => `<div class="wide"><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>
-      <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}${gc ? ` ${t('Geología: {f}, en el punto de la cima; la subida, un punto cada 400 m.', { f: gc.fuente === 'magna' ? `<a href="${esc(d.fuentes.magna.url.replace('{h}', gc.hoja))}" target="_blank" rel="noopener">${esc(d.fuentes.magna.texto.replace('{h}', gc.hoja))}</a>` : `<a href="${esc(d.fuentes.geode.url)}" target="_blank" rel="noopener">${esc(d.fuentes.geode.texto)}</a>` })}` : ''}</p>`;
+      <p class="ruta-credito">${t('La prominencia es lo que hay que bajar desde la cima para poder subir a otra más alta; el punto más bajo de ese paso es el collado clave. Calculado con nuestro relieve (Copernicus GLO-30 y MDT05 del IGN, malla de unos 30 m): las cifras son aproximadas, de unos ±20 m. Nombres de los collados: © OpenStreetMap.')}${o.ref ? ` ${t('Otra fuente: {f}.', { f: `<a href="${esc(d.fuentes.ref.url)}" target="_blank" rel="noopener">${esc(d.fuentes.ref.texto)}</a>` })}` : ''}${gc ? ` ${t('Geología: {f}, en el punto de la cima; la subida, un punto cada 400 m.', { f: gc.fuente === 'magna' ? `<a href="${esc(d.fuentes.magna.url.replace('{h}', gc.hoja))}" target="_blank" rel="noopener">${esc(d.fuentes.magna.texto.replace('{h}', gc.hoja))}</a>` : `<a href="${esc(d.fuentes.geode.url)}" target="_blank" rel="noopener">${esc(d.fuentes.geode.texto)}</a>` }).replace('400 m', p.menor ? '600 m' : '400 m')}` : ''}</p>`;
     glosario.marca(hueco);
   }
 
   // — «Naturaleza» (data/naturaleza.json, tools/fauna_gbif.py + tools/ficha_naturaleza.py): por dónde pasa la subida (ESA WorldCover) y especies observadas cerca (GBIF) —
-  let naturaDatos;
-  const cargaNatura = () => (naturaDatos ??= fetch(`data/naturaleza.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  const naturaDatos = {};
+  const cargaNatura = (menor) => (naturaDatos[!!menor] ??= fetch(`data/naturaleza${menor ? '_menores' : ''}.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
   const COBERTURA = { bosque: 'Bosque', matorral: 'Matorral', pasto: 'Pasto', roca: 'Roca y pedregal', nieve: 'Nieve y hielo', agua: 'Agua' };
   const GRUPOS_NAT = [['aves', 'Aves'], ['mamiferos', 'Mamíferos'], ['mariposas', 'Mariposas y polillas'], ['reptiles', 'Reptiles'], ['anfibios', 'Anfibios'], ['plantas', 'Plantas']];
   const LENGUA_WP = { es: 'castellano', en: 'inglés', fr: 'francés' };
@@ -1890,9 +1900,9 @@ async function boot() {
     const b = fichaBody.querySelector('[data-ftab="historia"]'); if (b) b.hidden = false;
   }
   async function pintaNaturaleza(p) {
-    const hueco = fichaBody.querySelector('.natura-hueco'); if (!hueco || !p || p.menor) return;
-    const d = await cargaNatura(); if (!d || S.active !== p.id) return;
-    const o = d.cumbres[p.id]; if (!o || (!o.total && !o.ruta)) { hueco.innerHTML = ''; return; }
+    const hueco = fichaBody.querySelector('.natura-hueco'); if (!hueco || !p) return;
+    const d = await cargaNatura(p.menor); if (!d || S.active !== p.id) { if (!d) muestraTabVacia(); return; }
+    const o = d.cumbres[p.id]; if (!o || (!o.total && !o.ruta)) { hueco.innerHTML = ''; muestraTabVacia(); return; }
     const filas = [];
     if (o.ruta) filas.push([t('Por dónde pasa la subida'), `<span class="gl-txt">${Object.entries(o.ruta.pc).map(([k, v]) => `${t(COBERTURA[k])} ${v} %`).join(' · ')}</span>${o.ruta.bosqueHasta ? `<small>${t('En esta ruta, el bosque llega hasta unos {a} m.', { a: fmt(Math.round(o.ruta.bosqueHasta / 10) * 10) })}</small>` : ''}`]);
     for (const [k, nom] of GRUPOS_NAT) {

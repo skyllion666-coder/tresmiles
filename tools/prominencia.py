@@ -8,14 +8,16 @@ al metro) la cota L más alta tal que la zona continua de terreno ≥ L que cont
 L es la cota del collado clave. Prominencia = altitud oficial de la cima − L.
 La «cima madre» es el tresmil más alto más cercano dentro de esa zona.
 Salida: tools/datos/prominencia.json (lo lee tools/ficha_terreno.py).
-Uso: python3 tools/prominencia.py [id ...]
+Uso: python3 tools/prominencia.py [--menores] [id ...]   (--menores: las cumbres de data/menores.json; sigue donde lo dejó)
 """
 import json, math, os, sys
 import numpy as np
 from scipy import ndimage
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.expanduser('~/Tresmiles/web/data')
+MENORES = '--menores' in sys.argv   # cumbres de menos de 3.000 m (data/menores.json) → tools/datos/prominencia_menores.json
+# con --menores, el relieve de toda la web (data/terrain/h unido por bloques: llega a Guara), en ~/tresmiles-fuentes/relieve_todo
+SRC = os.path.expanduser('~/tresmiles-fuentes/relieve_todo' if MENORES else '~/Tresmiles/web/data')
 meta = json.load(open(os.path.join(SRC, 'meta.json')))
 
 
@@ -30,9 +32,12 @@ for M in MALLAS:
 OCHO = np.ones((3, 3), bool)
 
 picos = json.load(open(os.path.join(AQUI, '..', 'data', 'peaks.json')))['picos']
+menores = json.load(open(os.path.join(AQUI, '..', 'data', 'menores.json')))['picos'] if MENORES else []
+objetivo = menores if MENORES else picos
+picos = picos + menores   # vecinas y candidatas: todas
 # candidatas a cima madre: los tresmiles y los picos con nombre y altitud de OpenStreetMap
 OSM = [dict(id=None, nombre=n, lon=lo, lat=la, altitud=a) for n, lo, la, a in json.load(open(os.path.join(AQUI, '..', 'data', 'picos_osm.json'))) if a]
-CANDIDATAS = [dict(id=q['id'], nombre=q['nombre'], lon=q['lon'], lat=q['lat'], altitud=q['altitud'], clase=q['clase']) for q in picos] + OSM
+CANDIDATAS = [dict(id=q['id'], nombre=q['nombre'], lon=q['lon'], lat=q['lat'], altitud=q['altitud'], clase=q.get('clase', 'menor')) for q in picos] + OSM
 
 
 def celda(M, lon, lat):
@@ -53,8 +58,8 @@ def cima_en_malla(M, p, radio_m=None):
     r, c = celda(M, p['lon'], p['lat'])
     r, c = int(round(r)), int(round(c))
     H = M['h']; res = None
-    if 1 <= r < H.shape[0] - 1 and 1 <= c < H.shape[1] - 1 and not np.isnan(H[r, c]):
-        k = max(1, int(round(90 / (M['m']['step'] * 111000))))   # punto más alto a menos de 90 m
+    k = max(1, int(round(90 / (M['m']['step'] * 111000))))   # punto más alto a menos de 90 m
+    if k + 1 <= r < H.shape[0] - k - 1 and k + 1 <= c < H.shape[1] - k - 1 and not np.isnan(H[r, c]):   # lejos del borde de la malla
         v = np.nan_to_num(H[r - k:r + k + 1, c - k:c + k + 1], nan=-1); i = int(np.argmax(v))
         r, c = r - k + i // v.shape[1], c - k + i % v.shape[1]
         for _ in range(60):
@@ -156,7 +161,7 @@ def calcula(p):
                 _, L, hs, col, altos, z, (r0, c0) = res
                 # cima madre: tresmil más alto (altitud oficial) dentro de la zona unida, el más cercano
                 madre = None
-                for fase in (0, 1, 2):   # 0: tresmil principal más alto en el relieve; 1: cualquier cima más alta en el relieve; 2: más alta por altitud oficial
+                for fase in ((1, 2) if MENORES else (0, 1, 2)):   # 0: tresmil principal más alto en el relieve; 1: cualquier cima más alta en el relieve; 2: más alta por altitud oficial
                     for q in CANDIDATAS:
                         if q['id'] == p['id']: continue
                         if fase == 0 and (q['id'] is None or q.get('clase') != 'principal'): continue
@@ -186,11 +191,13 @@ def calcula(p):
 
 
 if __name__ == '__main__':
-    ids = set(sys.argv[1:])
-    sal = os.path.join(AQUI, 'datos', 'prominencia.json')
-    previo = {x['id']: x for x in json.load(open(sal))} if os.path.exists(sal) and ids else {}
-    for p in picos:
+    ids = set(a for a in sys.argv[1:] if not a.startswith('--'))
+    sal = os.path.join(AQUI, 'datos', 'prominencia_menores.json' if MENORES else 'prominencia.json')
+    previo = {x['id']: x for x in json.load(open(sal))} if os.path.exists(sal) and (ids or MENORES) else {}
+    for p in objetivo:
         if ids and p['id'] not in ids: continue
+        if MENORES and p['id'] in previo and not ids: continue
         r = calcula(p); previo[p['id']] = r
         print(p['id'], p['altitud'], r.get('prom'), r.get('col'), r.get('madre') or r.get('madreNombre'), r.get('nota', ''), r.get('malla'), flush=True)
-    json.dump([previo[p['id']] for p in picos if p['id'] in previo], open(sal, 'w'), ensure_ascii=False, indent=0)
+        if MENORES and len(previo) % 50 == 0: json.dump([previo[q['id']] for q in objetivo if q['id'] in previo], open(sal, 'w'), ensure_ascii=False, indent=0)   # se puede cortar y seguir
+    json.dump([previo[p['id']] for p in objetivo if p['id'] in previo], open(sal, 'w'), ensure_ascii=False, indent=0)

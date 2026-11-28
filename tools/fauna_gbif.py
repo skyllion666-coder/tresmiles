@@ -5,7 +5,7 @@ Para cada cima: registros de presencia sin problemas de coordenadas, con incerti
 las especies con más registros de cada grupo (aves, mamíferos, mariposas y polillas, reptiles, anfibios y plantas).
 Nombres: el científico de GBIF y los comunes en castellano e inglés de GBIF (/species/{key}/vernacularNames).
 Caché de respuestas en ~/tresmiles-fuentes/gbif/. Datos de GBIF.org: cada registro tiene su propia licencia (CC0, CC BY o CC BY-NC).
-Uso: python3 tools/fauna_gbif.py [id ...]
+Uso: python3 tools/fauna_gbif.py [--menores] [id ...]
 """
 import json, os, sys, time, urllib.request, urllib.parse, hashlib
 
@@ -42,12 +42,14 @@ def especie(k):
 
 
 if __name__ == '__main__':
-    ids = set(sys.argv[1:])
-    picos = json.load(open(os.path.join(RAIZ, 'data', 'peaks.json')))['picos']
-    sal = os.path.join(AQUI, 'datos', 'gbif.json')
+    ids = {a for a in sys.argv[1:] if not a.startswith('--')}
+    menores = '--menores' in sys.argv   # cumbres de data/menores.json → tools/datos/gbif_menores.json (sigue donde lo dejó)
+    picos = json.load(open(os.path.join(RAIZ, 'data', 'menores.json' if menores else 'peaks.json')))['picos']
+    sal = os.path.join(AQUI, 'datos', 'gbif_menores.json' if menores else 'gbif.json')
     res = json.load(open(sal)) if os.path.exists(sal) else {}
     for p in picos:
         if ids and p['id'] not in ids: continue
+        if menores and not ids and p['id'] in res: continue
         dla, dlo = 0.018, 0.0245   # ≈ ±2 km
         base = dict(decimalLatitude=f"{p['lat'] - dla},{p['lat'] + dla}", decimalLongitude=f"{p['lon'] - dlo},{p['lon'] + dlo}",
                     hasGeospatialIssue='false', occurrenceStatus='PRESENT', coordinateUncertaintyInMeters='0,1000', limit=0)
