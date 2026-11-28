@@ -17,6 +17,7 @@ uniform vec4 uHoles[4];
 uniform sampler2D uPaq; uniform vec4 uPaqB; uniform float uPbW;   // paquete de zona (js/paquete.js): máscara de las piezas de 1 km cargadas (el relieve general se recorta debajo) y su recuadro; uPbW: ancho del fundido de la ortofoto (0 = un cuarto de la pieza)
 uniform float uOrto; uniform sampler2D uSat; uniform vec4 uPb; uniform vec3 uOA, uOB, uOC;   // ortofoto del PNOA en una pieza de cumbre: ajuste de color y fundido con el satélite en su borde
 uniform sampler2D uCover; uniform float uRocaL; uniform vec3 uRocaT; uniform float uHasCover; uniform float uOct; uniform float uBump;
+uniform sampler2D uCong; uniform vec4 uCongB; uniform float uCongK;   // conglomerado rojizo del Prepirineo (data/terrain/conglomerado.png, tools/conglomerado.py) y su recuadro en x/z
 uniform sampler2D uGran; uniform float uGranK; uniform float uGranM;   // granito escaneado en la malla fina de las cimas de granito (uGranK = 1), uGranM: su luminancia media
 uniform float uCota, uCotaK, uAcum, uMoj, uCliR; uniform vec3 uCliC;   // tiempo real (js/tiempo.js): cota de nieve en todo el mapa, nieve que cuaja y suelo mojado alrededor de la cumbre abierta
 uniform sampler2D uNieve; uniform vec4 uNieveB; uniform float uNieveK;   // «Nieve ahora» (data/nieve, tools/nieve_ahora.py): R = fracción de nieve vista por el satélite, G = suelo visto; su recuadro en x/z; intensidad de la capa
@@ -53,9 +54,13 @@ if (distance(vWPos, cameraPosition) < 15000.) {
     vec3 det = uOrto > .5 ? (texture2D(map, vMapUv).rgb - bl) * uOB * ofk : c - bl;   // con ortofoto, solo su propio detalle y nada en el fundido (si no, el borde de la pieza sale como una raya oscura)
     c = max(c + det * (.5 + 1.3 * fc) * (1. - sl * .5) * (1. - .4 * ofk), 0.); }
 #endif
+  // conglomerado rojizo (mallos de Guara, Salto de Roldán, Vadiello…) según el mapa geológico del IGME: su roca no se agrisa y toma su ocre rojizo
+  float cg = 0.;
+  if (uCongK > .5) { vec2 cu = (vWPos.xz - uCongB.xy) / (uCongB.zw - uCongB.xy); if (cu.x > 0. && cu.y > 0. && cu.x < 1. && cu.y < 1.) cg = texture2D(uCong, cu).r; }
+  vec3 ocre = mix(vec3(1.36, .93, .62), vec3(1.46, .86, .56), vn(vWPos * .02 + 3.));   // de ocre a rojizo, a manchas
   // roca clara (granito, morrenas, pedreras): en las imágenes de verano (ortofoto y satélite) sale crema y muy brillante y se confunde con nieve → gris piedra y algo más oscura.
   // Solo los tonos claros y cálidos (r > b): el hielo y la nieve de verdad, blancos o azulados, no se tocan
-  { float lo = dot(c, LW), kq = smoothstep(.36, .68, lo) * smoothstep(.015, .08, c.r - c.b);
+  { float lo = dot(c, LW), kq = smoothstep(.36, .68, lo) * smoothstep(.015, .08, c.r - c.b) * (1. - cg);
     c = mix(c, vec3(lo) * vec3(1.01, 1., .98), .6 * kq) * (1. - .18 * kq); }
   float lm = dot(c, LW);
   float steep0 = smoothstep(.34, .62, sl);
@@ -70,10 +75,10 @@ if (distance(vWPos, cameraPosition) < 15000.) {
   float n1 = fbm(vWPos * vec3(.011, .017, .011)), n2 = fbm(vWPos * .085), n3 = vn(vWPos * .65);
   // paredes: la imagen cenital se estira en vertical; ahí se sustituye por roca procedural (mapeo triplanar, sin estiramiento) que conserva solo el brillo del satélite
   float lm2 = dot(c, LW);
-  vec3 rc = vec3(mix(min(lm2, uRocaL), uRocaL * .8, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04;
-  c = mix(c, mix(rc, vec3(dot(rc, LW)) * uRocaT, vR * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vR * .96));
+  vec3 rc = vec3(mix(min(lm2, uRocaL), uRocaL * .8, .5) * .9 + .02) * mix(vec3(1.13, 1.03, .88), vec3(.93, .98, 1.05), n1) * 1.04 * mix(vec3(1.), ocre, cg);
+  c = mix(c, mix(rc, vec3(dot(rc, LW)) * mix(uRocaT, ocre, cg), vR * .8), max(steep * (1. - nieve * .5) * (1. - tree * .5) * .78, vR * .96));
   // la roca desnuda pierde el verde de la imagen y gana grises y ocres
-  c = mix(c, vec3(dot(c, LW)) * vec3(1.05, 1., .93), rock * .5);
+  c = mix(c, vec3(dot(c, LW)) * mix(vec3(1.05, 1., .93), ocre, cg), rock * mix(.5, .8, cg));
   c *= mix(vec3(1.), mix(vec3(1.04, .98, .90), vec3(.93, .97, 1.03), n1), rock * fa * .8);
   float st = fbm(vWPos * vec3(.017, .12, .017) + 5.);   // estratos irregulares (sin bandas periódicas)
   c *= 1. + (st - .5) * .36 * smoothstep(.40, .65, sl) * fa * (1. - nieve);
@@ -109,7 +114,7 @@ if (distance(vWPos, cameraPosition) < 15000.) {
       vec3 w3 = pow(abs(normalize(vWNrm)), vec3(4.)); w3 /= w3.x + w3.y + w3.z;
       vec3 P = vWPos / 9.;
       vec3 g = texture2D(uGran, P.zy).rgb * w3.x + texture2D(uGran, P.xz).rgb * w3.y + texture2D(uGran, P.xy).rgb * w3.z;
-      c = mix(c, g / uGranM * dot(c, LW) * vec3(1.0, 1.0, 1.02), kg * .85);
+      c = mix(c, g / uGranM * dot(c, LW) * mix(vec3(1.0, 1.0, 1.02), ocre, cg), kg * .85);
     }
   }
   // nieve: sombras azuladas, ondulaciones de viento y grano brillante de cerca (solo donde el satélite ya marca nieve)
@@ -182,7 +187,7 @@ if (uBump > .5) {
 export class Terrain {
   constructor({ scene, meta, store, geo, renderer, base, movil = false }) {
     this.movil = movil; this.coberturas = new Map();
-    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() }, uCalor: { value: Array(NCALOR).fill(null) }, uCalorB: { value: Array.from({ length: NCALOR }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uCalorK: { value: 0 }, uNieve: { value: null }, uNieveB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) }, uNieveK: { value: 0 } };   // compartidos por todos los materiales del relieve
+    this.clima = { uCota: { value: 1e5 }, uCotaK: { value: 0 }, uAcum: { value: 0 }, uMoj: { value: 0 }, uCliR: { value: 3000 }, uCliC: { value: new THREE.Vector3() }, uCalor: { value: Array(NCALOR).fill(null) }, uCalorB: { value: Array.from({ length: NCALOR }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) }, uCalorK: { value: 0 }, uNieve: { value: null }, uNieveB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) }, uNieveK: { value: 0 }, uCong: { value: null }, uCongB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) }, uCongK: { value: 0 } };   // compartidos por todos los materiales del relieve
     this.holes = { value: Array.from({ length: 4 }, () => new THREE.Vector4(1e9, 1e9, 1e9, 1e9)) };
     this.paq = { uPaq: { value: null }, uPaqB: { value: new THREE.Vector4(1e9, 1e9, 1e9, 1e9) } };   // máscara del paquete de zona (js/paquete.js)
     this.meta = meta; this.store = store; this.geo = geo; this.base = base;
@@ -191,6 +196,15 @@ export class Terrain {
     this.aniso = Math.min(8, renderer.capabilities.getMaxAnisotropy());
     this.cache = new Map(); // `${id}:${stride}` -> geometría
     this.chunks = meta.tiles.map((t) => this._makeChunk(t));
+    // máscara del conglomerado rojizo (tools/conglomerado.py): un píxel por nodo de la rejilla, fila 0 al norte
+    fetch(`${base}/conglomerado.json?dv=${window.DATOS_V || 0}`).then((r) => (r.ok ? r.json() : null)).then((cm) => {
+      if (!cm) return;
+      this.loader.load(`${base}/conglomerado.png?dv=${window.DATOS_V || 0}`, (t) => {
+        t.flipY = false; t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.colorSpace = THREE.NoColorSpace; t.needsUpdate = true;
+        const a = geo.toXZ(cm.lon0 - cm.step / 2, cm.lat_n + cm.step / 2), b = geo.toXZ(cm.lon0 + (cm.w - .5) * cm.step, cm.lat_n - (cm.h - .5) * cm.step);
+        this.clima.uCong.value = t; this.clima.uCongB.value.set(a.x, a.z, b.x, b.z); this.clima.uCongK.value = 1;
+      });
+    }).catch(() => {});
     this.ready = Promise.all(this.chunks.map((c) => c.loPromise));
   }
 
