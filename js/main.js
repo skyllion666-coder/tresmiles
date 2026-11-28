@@ -2346,7 +2346,7 @@ async function boot() {
       if (!S.detalle) controls.minDistance = enHD ? 30 : 500;
       controls.update();
       const t = controls.target;
-      t.x = clamp(t.x, geo.xmin + 3000, geo.xmax - 3000); t.z = clamp(t.z, geo.zmin + 3000, geo.zmax - 3000);
+      t.x = clamp(t.x, geo.xmin + 600, geo.xmax - 600); t.z = clamp(t.z, geo.zmin + 600, geo.zmax - 600);
       t.y += (geo.heightAt(t.x, t.z) - t.y) * 0.08;
       const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle || enHD ? 15 : 120);
       if (camera.position.y < g) camera.position.y = g;
