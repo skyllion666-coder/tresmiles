@@ -12,6 +12,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 D = lambda *p: os.path.join(ROOT, 'data', 'terrain', *p)
 m = json.load(open(D('meta.json'))); det_path = D('cumbres', 'detalles.json'); det = json.load(open(det_path)); idx = json.load(open(D('cumbres', 'index.json')))
 m['nrows'] = m.get('nrows0', m['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
+if m.get('iw'): m['lon0'] += m['iw'] * m['chunk'] * m['step']; m['ncols'] = m['ncols0']   # y al oeste: x = 0 sigue en el centro de las columnas originales (tools/build_terrain_oeste.py)
 latC = m['lat0'] - ((m['nrows'] - 1) * m['step']) / 2; mLat = 111132; mLon = 111320 * math.cos(math.radians(latC))
 W = (m['ncols'] - 1) * m['step'] * mLon; Dd = (m['nrows'] - 1) * m['step'] * mLat
 fx = lambda x: m['lon0'] + (x + W / 2) / mLon; fz = lambda z: m['lat0'] - (z + Dd / 2) / mLat

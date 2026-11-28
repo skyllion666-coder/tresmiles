@@ -16,6 +16,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 T = lambda *p: os.path.join(ROOT, 'data', 'terrain', *p)
 ORIG = os.path.join(ROOT, 'tools', 'datos', 'cover_orig')
 meta = json.load(open(T('meta.json'))); idx = json.load(open(T('cumbres', 'index.json')))
+if meta.get('iw'): meta['lon0'] += meta['iw'] * meta['chunk'] * meta['step']; meta['ncols'] = meta['ncols0']   # origen al oeste (tools/build_terrain_oeste.py); OJO: los bloques nuevos no se corrigen aquí
 NR0 = meta.get('nrows0', meta['nrows']); CH = meta['chunk'] if 'chunk' in meta else 512
 latC = meta['lat0'] - ((NR0 - 1) * meta['step']) / 2; mLat = 111132; mLon = 111320 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; Dd = (NR0 - 1) * meta['step'] * mLat

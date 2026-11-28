@@ -26,10 +26,22 @@ ZONAS_NUEVAS = [
     {'id': 'z-cerler', 'nombre': 'Cerler–Castanesa', 'c': (0.58, 42.59)},
     {'id': 'z-guara', 'nombre': 'Sierra de Guara', 'c': (-0.18, 42.25)},
     {'id': 'z-exteriores', 'nombre': 'Sierras Exteriores', 'c': (-0.47, 42.31)},
+    # ampliación al oeste (tools/build_terrain_oeste.py, 28-11-2026)
+    {'id': 'z-riglos', 'nombre': 'Mallos de Riglos y Agüero', 'c': (-0.75, 42.36)},
+    {'id': 'z-jacetania', 'nombre': 'Canal de Berdún y San Juan de la Peña', 'c': (-0.70, 42.50)},
+    {'id': 'z-hecho', 'nombre': 'Valles de Hecho y Ansó', 'c': (-0.70, 42.84)},
 ]
 # Sierra de Guara y Sierras Exteriores (28-10-2026): aquí la lista baja hasta los 1.000 m (lon0, lon1, lat0, lat1); fuera de esta caja sigue en 2.000 m
-GUARA = (-0.56, 0.12, 41.99, 42.40)
+GUARA = (-0.82, 0.12, 41.99, 42.40)   # 28-11-2026: hasta -0,82 (Riglos, Agüero, Loarre)
 enGuara = lambda lo, la: GUARA[0] <= lo <= GUARA[1] and GUARA[2] <= la <= GUARA[3]
+# al sur de la Jacetania (San Juan de la Peña, sierras sobre la Canal de Berdún), solo en la franja del oeste: desde 1.200 m
+JACETANIA = (-0.82, -0.53, 42.40, 42.56)
+enJacetania = lambda lo, la: JACETANIA[0] <= lo <= JACETANIA[1] and JACETANIA[2] <= la <= JACETANIA[3]
+# los mallos de Riglos y Agüero: casi todos bajan de 1.000 m, pero son lo más conocido de la zona (nombres de OSM con altitud; sin las vías de escalada)
+MALLOS = {'Mallo Bentuso', 'Mallo Magdalena', 'Mallo Colorado', 'Mallo Tornillo', 'Mallo de la Canal', 'Mallo Arcaz', 'Mallo del Agua', 'Mallo Capaz',
+          'El Firé', 'O Pisoné/Mallo Pisón', 'Mallo Frechín', 'Mallo Gómez Laguna', 'Mallo Tornillito', 'La Visera', 'El Puro', 'Mallos de Leonar',
+          'Peña Sola', 'Peña Salinero', 'Peña Don Justo', 'Pared de los Buitres'}
+umbral = lambda n, lo, la: 600 if n in MALLOS else 1000 if enGuara(lo, la) else 1200 if enJacetania(lo, la) else 2000
 centros = {}
 for m in data['macizos']:
     ps = [p for p in data['picos'] if p['macizo'] == m['id']]
@@ -46,10 +58,10 @@ RIDS = D('tools', 'datos', 'ids_menores.json')
 fijos = json.load(open(RIDS, encoding='utf-8')) if os.path.exists(RIDS) else {}
 ids = {p['id'] for p in data['picos']} | set(fijos.values())
 # la misma cumbre con otro nombre en OSM (se queda la otra entrada): Pico de l'Aguila = Pico del Águila; Gratal = Tozal de Gratal
-DUPLICADOS = {("Pico de l'Aguila", 1611), ('Gratal', 1543)}
+DUPLICADOS = {("Pico de l'Aguila", 1611), ('Gratal', 1543), ('Table des Trois Rois', 2421), ('Achar de Forca', 2390), ('la Atalaya', 1533), ("Alto d'a Portaza", 2377)}   # 28-11: Mesa de los Tres Reyes, Peña Forca, La Atalaya, Portaza (ver NOTAS: renombres a mano en menores.json)
 out, vistos = [], []
 for nombre, lon, lat, alt in json.load(open(D('data', 'picos_osm.json'))):
-    if not ((1000 if enGuara(lon, lat) else 2000) <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
+    if not (umbral(nombre, lon, lat) <= alt < 3000 and lon0 + 0.01 < lon < lon1 - 0.01 and lat1 + 0.01 < lat < lat0 - 0.01): continue
     pt = Point(lon, lat)
     limite = ARAGON.boundary.distance(pt) * KX * 1000   # m
     if not ARAGON.contains(pt) and limite > 300: continue

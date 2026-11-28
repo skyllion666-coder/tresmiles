@@ -9,7 +9,9 @@ lon0, lat0 = meta['lon0'], meta['lat0']
 lon1, lat1 = lon0 + (meta['ncols'] - 1) * meta['step'], lat0 - (meta['nrows'] - 1) * meta['step']
 # «sur»: solo la franja nueva (al sur de la rejilla original, lat < LAT_SUR) y se fusiona con el archivo que ya hay: Overpass se atraganta con todo el mapa
 SUR = len(sys.argv) > 1 and sys.argv[1] == 'sur'; LAT_SUR = meta['lat0'] - (meta.get('nrows0', meta['nrows']) - 1) * meta['step']
-BBOX = f'{lat1:.4f},{lon0:.4f},{(LAT_SUR if SUR else lat0):.4f},{lon1:.4f}'
+# «oeste»: solo la franja añadida al oeste (tools/build_terrain_oeste.py, lon < LON_OESTE) y se fusiona igual
+OESTE = len(sys.argv) > 1 and sys.argv[1] == 'oeste'; LON_OESTE = lon0 + meta.get('iw', 0) * meta['chunk'] * meta['step']
+BBOX = f'{lat1:.4f},{lon0:.4f},{(LAT_SUR if SUR else lat0):.4f},{(LON_OESTE if OESTE else lon1):.4f}'
 Q = f'[out:json][timeout:90];node["natural"="peak"]["name"]({BBOX});out;'
 UA = {'User-Agent': 'tresmiles/1.0 (proyecto educativo)'}
 HOSTS = ('https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://overpass.private.coffee/api/interpreter')
@@ -38,6 +40,8 @@ for e in get()['elements']:
 dest = os.path.join(ROOT, 'data', 'picos_osm.json')
 if SUR:   # lo de antes, salvo lo que cae en la franja nueva
     out = [p for p in json.load(open(dest, encoding='utf-8')) if p[2] >= LAT_SUR] + out
+if OESTE:
+    out = [p for p in json.load(open(dest, encoding='utf-8')) if p[1] >= LON_OESTE] + [p for p in out if p[1] < LON_OESTE]
 out.sort(key=lambda p: -p[3])
 json.dump(out, open(dest, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print(len(out), 'picos con nombre;', sum(1 for p in out if p[3]), 'con altitud;', sum(1 for p in out if p[3] >= 3000), '≥ 3.000 m;', os.path.getsize(dest) // 1024, 'KB')

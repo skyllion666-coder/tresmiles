@@ -50,15 +50,15 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
 
   // relieve de 120 m de todo el mapa, en un sampler propio (alturas reales en metros)
   function cargaN4() {
-    return (n4 ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/h/c_${k % meta.nci}_${Math.floor(k / meta.nci)}_4.bin`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b ? new Uint16Array(b) : null)).catch(() => null))));
+    return (n4 ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(store.urlH(k % meta.nci, Math.floor(k / meta.nci), 4)).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b ? new Uint16Array(b) : null)).catch(() => null))));
   }
   // relieve de 30 m (nivel 1) de los bloques a menos de FINO m de (x0, z0): lo cercano a quien mira (y su propia altura) decide la silueta
   const FINO = 12000, dim1 = CH + 3, finos = new Map();   // finos: bloques de 30 m ya pedidos (promesa), para no repetir la descarga
   async function cargaFino(x0, z0) {
-    const fino = new Map(), pide = [], col = (x) => Math.floor((x + geo.W / 2) / geo.dx / CH), fil = (z) => Math.floor((z + geo.oz) / geo.dz / CH);
+    const fino = new Map(), pide = [], col = (x) => Math.floor((x + geo.ox) / geo.dx / CH), fil = (z) => Math.floor((z + geo.oz) / geo.dz / CH);
     for (let j = Math.max(0, fil(z0 - FINO)); j <= Math.min(meta.ncj - 1, fil(z0 + FINO)); j++) for (let i = Math.max(0, col(x0 - FINO)); i <= Math.min(meta.nci - 1, col(x0 + FINO)); i++) {
       const k = j * meta.nci + i;
-      if (!finos.has(k)) finos.set(k, fetch(`${store.base}/h/c_${i}_${j}_1.bin${store.vdesde != null && j >= store.vdesde ? `?v=${store.v}` : ''}`).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b && b.byteLength === dim1 * dim1 * 2 ? new Uint16Array(b) : null)).catch(() => null));
+      if (!finos.has(k)) finos.set(k, fetch(store.urlH(i, j, 1)).then((r) => (r.ok ? r.arrayBuffer() : null)).then((b) => (b && b.byteLength === dim1 * dim1 * 2 ? new Uint16Array(b) : null)).catch(() => null));
       pide.push(finos.get(k).then((a) => { if (a) fino.set(k, a); }));
     }
     await Promise.all(pide);
@@ -68,7 +68,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   let cob = null;
   function cargaCobertura() {
     if (typeof DecompressionStream === 'undefined') return Promise.resolve([]);
-    return (cob ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/cover/c_${k % meta.nci}_${Math.floor(k / meta.nci)}.bin.gz${meta.vcover ? `?v=${meta.vcover}` : ''}`)
+    return (cob ??= Promise.all(Array.from({ length: meta.nci * meta.ncj }, (_, k) => fetch(`${store.base}/cover/c_${store.nombre(k % meta.nci, Math.floor(k / meta.nci))}.bin.gz${meta.vcover ? `?v=${meta.vcover}` : ''}`)
       .then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null)).then((b) => (b && b.byteLength === CH * CH ? new Uint8Array(b) : null)).catch(() => null))));
   }
   // nieve del satélite: R = fracción de nieve, G = suelo visto sin nubes (tools/nieve_ahora.py); rejilla 1,5 veces la del relieve
@@ -92,7 +92,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
     return (x, z, h, r) => {
       let R = 0, G = 0, B = 0;
       for (const [ox, oz] of OFF) {
-        const fc = (x + ox * r + geo.W / 2) / geo.dx, fr = (z + oz * r + geo.oz) / geo.dz;
+        const fc = (x + ox * r + geo.ox) / geo.dx, fr = (z + oz * r + geo.oz) / geo.dz;
         let tipo = 0, n = -1;
         if (fc >= 0 && fr >= 0 && fc < maxC && fr < maxR) {
           const i = Math.floor(fc / CH), j = Math.floor(fr / CH), a = cobs[j * meta.nci + i];
@@ -111,7 +111,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
   function sampler(bloques, fino = null, ox = 0, oz = 0) {
     const maxC = meta.nci * CH, maxR = meta.ncj * CH;
     return (x, z) => {
-      let fc = (x + geo.W / 2) / geo.dx, fr = (z + geo.oz) / geo.dz;
+      let fc = (x + geo.ox) / geo.dx, fr = (z + geo.oz) / geo.dz;
       fc = fc < 0 ? 0 : fc > maxC ? maxC : fc; fr = fr < 0 ? 0 : fr > maxR ? maxR : fr;
       const i = Math.min(meta.nci - 1, Math.floor(fc / CH)), j = Math.min(meta.ncj - 1, Math.floor(fr / CH));
       const f1 = fino && Math.abs(x - ox) < FINO && Math.abs(z - oz) < FINO ? fino.get(j * meta.nci + i) : null;
@@ -177,7 +177,7 @@ export function crearPanorama({ geo, meta, store, peaks, abrir, esc, camara = nu
       const m = unicos.find((u) => Math.hypot(u.p.q.x - v.p.q.x, u.p.q.z - v.p.q.z) < 130 && Math.abs(u.p.altitud - v.p.altitud) <= 25);
       if (m) m.otros.push(v.p.nombre); else unicos.push(v);
     }
-    const origen = { lon: meta.lon0 + (x0 + geo.W / 2) / geo.mLon, lat: meta.lat0 - (z0 + geo.oz) / geo.mLat, alt: h0 - 2 };   // dónde se está (para la franja de la foto de la cámara)
+    const origen = { lon: meta.lon0 + (x0 + geo.ox) / geo.mLon, lat: meta.lat0 - (z0 + geo.oz) / geo.mLat, alt: h0 - 2 };   // dónde se está (para la franja de la foto de la cámara)
     return { sil, cols, cres, sector, origen, vis: unicos };
   }
 

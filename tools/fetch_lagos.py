@@ -9,7 +9,9 @@ lon0, lat0 = meta['lon0'], meta['lat0']
 lon1, lat1 = lon0 + (meta['ncols'] - 1) * meta['step'], lat0 - (meta['nrows'] - 1) * meta['step']
 # «sur»: solo la franja nueva (al sur de la rejilla original) y se fusiona con lo que ya hay (Overpass se atraganta con todo el mapa)
 SUR = len(sys.argv) > 1 and sys.argv[1] == 'sur'; LAT_SUR = lat0 - (meta.get('nrows0', meta['nrows']) - 1) * meta['step']
-BBOX = f'{lat1:.4f},{lon0:.4f},{(LAT_SUR if SUR else lat0):.4f},{lon1:.4f}'
+# «oeste»: solo la franja añadida al oeste (tools/build_terrain_oeste.py) y se fusiona igual
+OESTE = len(sys.argv) > 1 and sys.argv[1] == 'oeste'; LON_OESTE = lon0 + meta.get('iw', 0) * meta['chunk'] * meta['step']
+BBOX = f'{lat1:.4f},{lon0:.4f},{(LAT_SUR if SUR else lat0):.4f},{(LON_OESTE if OESTE else lon1):.4f}'
 Q = f'[out:json][timeout:180];(way["natural"="water"]["water"~"lake|reservoir|pond"]({BBOX});relation["natural"="water"]["water"~"lake|reservoir|pond"]({BBOX});way["natural"="water"][!"water"]({BBOX}););out geom;'
 UA = {'User-Agent': 'tresmiles/1.0 (proyecto educativo)'}
 
@@ -65,7 +67,7 @@ for e in get()['elements']:
 for k, (nom, lo, la, a) in enumerate(LAGOS_EXTRA):
     r = math.sqrt(a / math.pi)
     out.append(dict(id=-1 - k, nombre=nom, tipo='lake', area=a, etiqueta=True, poly=[[round(lo + r * math.cos(t) / (111320 * math.cos(math.radians(la))), 5), round(la + r * math.sin(t) / 111132, 5)] for t in [i * math.pi / 8 for i in range(16)]]))
-if SUR:
+if SUR or OESTE:
     prev = json.load(open(os.path.join(ROOT, 'data', 'lagos.json'), encoding='utf-8')); ya = {l['id'] for l in prev}
     out = prev + [l for l in out if l['id'] not in ya and l['id'] > 0]
 out.sort(key=lambda l: -l['area'])

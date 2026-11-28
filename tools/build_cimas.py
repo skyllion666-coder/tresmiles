@@ -10,6 +10,7 @@ from scipy.ndimage import map_coordinates
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 meta = json.load(open(os.path.join(ROOT, 'data/terrain/meta.json'))); peaks = {p['id']: p for p in json.load(open(os.path.join(ROOT, 'data/peaks.json')))['picos']}
 meta['nrows'] = meta.get('nrows0', meta['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
+if meta.get('iw'): meta['lon0'] += meta['iw'] * meta['chunk'] * meta['step']; meta['ncols'] = meta['ncols0']   # y al oeste: x = 0 sigue en el centro de las columnas originales (tools/build_terrain_oeste.py)
 OUT = os.path.join(ROOT, 'data/terrain/cumbres')
 latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2
 mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))

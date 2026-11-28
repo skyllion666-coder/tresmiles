@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 meta = json.load(open(os.path.join(ROOT, 'data/terrain/meta.json'))); meta['nrows'] = meta.get('nrows0', meta['nrows'])   # origen del mundo: la rejilla original (js/geo.js)
+if meta.get('iw'): meta['lon0'] += meta['iw'] * meta['chunk'] * meta['step']; meta['ncols'] = meta['ncols0']   # y al oeste: x = 0 sigue en el centro de las columnas originales (tools/build_terrain_oeste.py)
 latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2
 mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; D = (meta['nrows'] - 1) * meta['step'] * mLat

@@ -9,8 +9,11 @@ export class HeightStore {
     this.listeners = [];
     this.activas = 0;   // descargas en curso
     // el relieve se guarda un mes en la caché: el overview y los bloques de la fila `vdesde` en adelante (los que cambiaron al ampliar el mapa al sur) llevan ?v= para que nadie mezcle versiones
-    this.v = meta.v ?? 1; this.vdesde = meta.vdesde ?? 1e9;
+    this.v = meta.v ?? 1; this.vdesde = meta.vdesde ?? 1e9; this.iw = meta.iw ?? 0; this.vh0 = meta.vh0 ?? -1e9;
   }
+  // archivo de alturas del bloque i, j (nivel s): el nombre lleva i - iw (los bloques añadidos al oeste son c_-1_…, c_-2_…); los que cambiaron llevan ?v=
+  urlH(i, j, s) { const n = i - this.iw; return `${this.base}/h/c_${n}_${j}_${s}.bin${j >= this.vdesde || n < this.vh0 ? `?v=${this.v}` : ''}`; }
+  nombre(i, j) { return `${i - this.iw}_${j}`; }
 
   async init() {
     const buf = new Uint16Array(await (await fetch(`${this.base}/overview.bin?v=${this.v}`)).arrayBuffer());
@@ -29,7 +32,7 @@ export class HeightStore {
     if (c[s]) return Promise.resolve();
     if (c.esperando[s]) return c.esperando[s];
     this.activas++;
-    c.esperando[s] = fetch(`${this.base}/h/c_${i}_${j}_${s}.bin${j >= this.vdesde ? `?v=${this.v}` : ''}`).then((r) => r.arrayBuffer()).then((b) => {
+    c.esperando[s] = fetch(this.urlH(i, j, s)).then((r) => r.arrayBuffer()).then((b) => {
       c[s] = new Uint16Array(b); this.activas--; delete c.esperando[s];
       for (const f of this.listeners) f(i, j, s);
     }).catch(() => { this.activas--; delete c.esperando[s]; });

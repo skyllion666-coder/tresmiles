@@ -43,17 +43,17 @@ export class Clouds {
       const s = new THREE.Sprite(mat);
       const size = 4500 + Math.random() * 7000;
       s.scale.set(size, size * (0.45 + Math.random() * 0.2), 1);
-      s.position.set((Math.random() - 0.5) * geo.W * 1.1, 3600 + Math.random() * 1500, geo.zmin + geo.D / 2 + (Math.random() - 0.5) * geo.D * 1.1);
+      s.position.set(geo.xmin + geo.W / 2 + (Math.random() - 0.5) * geo.W * 1.1, 3600 + Math.random() * 1500, geo.zmin + geo.D / 2 + (Math.random() - 0.5) * geo.D * 1.1);
       s.userData = { base: 0.3 + Math.random() * 0.3, speed: 18 + Math.random() * 22 };
       scene.add(s); this.sprites.push(s);
     }
   }
   setTinte(color, k) { this._tinte = this._tinte ?? new THREE.Color(1, 1, 1); this._tinte.lerp(color, k); for (const s of this.sprites) s.material.color.copy(this._tinte); }
   update(dt, cam, visible = true) {
-    const lim = this.geo.W * 0.6;
+    const c = this.geo.xmin + this.geo.W / 2, lim = this.geo.W * 0.6;
     for (const s of this.sprites) {
       s.position.x += s.userData.speed * dt;
-      if (s.position.x > lim) s.position.x = -lim;
+      if (s.position.x > c + lim) s.position.x = c - lim;
       const d = s.position.distanceTo(cam.position);
       const near = THREE.MathUtils.smoothstep(d, 3500, 9000);
       s.material.opacity = visible ? s.userData.base * near : 0;

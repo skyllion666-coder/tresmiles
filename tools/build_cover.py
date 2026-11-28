@@ -6,7 +6,8 @@ Lee por HTTP solo la ventana del Pirineo aragonés (teselas N42W003 y N42E000), 
 (el relieve de cada bloque tiene 513 muestras; se guardan las 512 primeras).
 Clases: 0 sin dato · 1 arbolado · 2 matorral · 3 pradera/humedal · 4 roca o suelo desnudo · 5 nieve y hielo · 6 agua · 7 cultivo o construido · 8 musgo y líquenes
 """
-import json, os, gzip
+import json, os, gzip, sys
+SOLO_NUEVOS = '--oeste' in sys.argv   # solo los bloques añadidos al oeste (los viejos llevan la corrección de tools/cover_orto.py)
 import numpy as np, rasterio
 from rasterio.windows import from_bounds
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'terrain')
@@ -32,6 +33,8 @@ os.makedirs(os.path.join(ROOT, 'cover'), exist_ok=True)
 tot = 0
 for j in range(m['ncj']):
     for i in range(m['nci']):
+        if SOLO_NUEVOS and i >= m.get('iw', 0): continue
         blk = np.zeros((CH, CH), 'u1'); sub = out[j * CH:(j + 1) * CH, i * CH:(i + 1) * CH]; blk[:sub.shape[0], :sub.shape[1]] = sub
-        p = os.path.join(ROOT, 'cover', f'c_{i}_{j}.bin.gz'); open(p, 'wb').write(gzip.compress(blk.tobytes(), 9)); tot += os.path.getsize(p)
+        # nombre: i - iw (bloques añadidos al oeste: c_-1_…, c_-2_…)
+        p = os.path.join(ROOT, 'cover', f"c_{i - m.get('iw', 0)}_{j}.bin.gz"); open(p, 'wb').write(gzip.compress(blk.tobytes(), 9)); tot += os.path.getsize(p)
 print('clases %:', {c: round(float((out == c).mean()) * 100, 1) for c in range(9)}, 'total KB', tot // 1024)

@@ -2,7 +2,7 @@
 // de las cumbres calculados por el panorama desde tu posición (res = { sil, cres, vis } de panorama.js), y las crestas de dentro como líneas finas. Hacia dónde y cuánto inclinas el móvil sale
 // de la brújula y del giroscopio (DeviceOrientation); como la brújula puede errar 10–20°, arrastrar con el dedo desplaza la silueta hasta que case
 // con las montañas de verdad y pellizcar ajusta el ángulo de visión de la cámara (se recuerda). Pensado para el móvil en vertical.
-import { leeOrientacion } from './panorama.js?v=37';
+import { leeOrientacion } from './panorama.js?v=38';
 import { t, EN_INGLES } from './i18n.js?v=56';
 
 const RAD = Math.PI / 180, AZ_PASO = 0.25;

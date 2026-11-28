@@ -14,16 +14,18 @@ export function makeGeo(meta, store) {
   const W = (meta.ncols - 1) * dx;
   const D = (meta.nrows - 1) * dz;
   const oz = ((nrows0 - 1) * dz) / 2, zmin = -oz, zmax = D - oz;
-  const dentro = (x, z, m = 0) => Math.abs(x) <= W / 2 - m && z >= zmin + m && z <= zmax - m;   // dentro del mapa, a m metros del borde
+  // igual al oeste (tools/build_terrain_oeste.py): x = 0 es el centro de las columnas ORIGINALES (ncols0); iw bloques añadidos a la izquierda
+  const iw = meta.iw ?? 0, ox = (((meta.ncols0 ?? meta.ncols) - 1) * dx) / 2 + iw * meta.chunk * dx, xmin = -ox, xmax = W - ox;
+  const dentro = (x, z, m = 0) => x >= xmin + m && x <= xmax - m && z >= zmin + m && z <= zmax - m;   // dentro del mapa, a m metros del borde
   const hs = meta.hscale * EXAG;
 
   const toXZ = (lon, lat) => ({
-    x: (lon - meta.lon0) * mLon - W / 2,
+    x: (lon - meta.lon0) * mLon - ox,
     z: (meta.lat0 - lat) * mLat - oz,
   });
 
   // altura bilineal en coordenadas locales (m, ya exagerada), con el nivel de detalle que haya cargado en ese punto
-  const heightBase = (x, z) => store.sample((x + W / 2) / dx, (z + oz) / dz) * hs;
+  const heightBase = (x, z) => store.sample((x + ox) / dx, (z + oz) / dz) * hs;
   // piezas locales de alta resolución (js/cumbres.js): si una cubre el punto, mandan; si no, el relieve general
   let extra = null, paq = null;   // paq: piezas del paquete de zona (js/paquete.js), que mandan sobre las de cumbre
   const heightAt = (x, z) => { if (paq) { const h = paq(x, z); if (h !== undefined) return h; } if (extra) { const h = extra(x, z); if (h !== undefined) return h; } return heightBase(x, z); };
@@ -38,5 +40,5 @@ export function makeGeo(meta, store) {
     return { x: bx, y: best, z: bz };
   };
 
-  return { latC, mLat, mLon, dx, dz, W, D, oz, zmin, zmax, dentro, hs, toXZ, heightAt, heightBase, setExtra: (f) => { extra = f; }, setPaquete: (f) => { paq = f; }, summitNear };
+  return { latC, mLat, mLon, dx, dz, W, D, oz, zmin, zmax, ox, xmin, xmax, iw, dentro, hs, toXZ, heightAt, heightBase, setExtra: (f) => { extra = f; }, setPaquete: (f) => { paq = f; }, summitNear };
 }

@@ -1,20 +1,20 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
-import { makeGeo, EXAG } from './geo.js?v=3';
-import { Terrain, NCALOR } from './terrain.js?v=34';
+import { makeGeo, EXAG } from './geo.js?v=4';
+import { Terrain, NCALOR } from './terrain.js?v=35';
 import { crearVegetacion } from './vegetacion.js?v=9';
 import { crearCumbres } from './cumbres.js?v=50';
 import { crearBanderines, leerHechos, guardarHechos } from './banderines.js?v=5';
 import { crearTiempo, tipoTiempo } from './tiempo.js?v=8';
-import { HeightStore } from './heights.js?v=2';
-import { makeSky, Clouds, HORIZON } from './sky.js?v=4';
+import { HeightStore } from './heights.js?v=3';
+import { makeSky, Clouds, HORIZON } from './sky.js?v=5';
 import { instalaNiebla } from './niebla.js?v=7';
-import { crearLagos, crearAves, crearSonido } from './vida.js?v=23';
+import { crearLagos, crearAves, crearSonido } from './vida.js?v=24';
 import { crearFauna } from './fauna.js?v=16';
 import { cargarRuta, crearRuta, COLOR_RUTA } from './ruta.js?v=87';
-import { crearPanorama } from './panorama.js?v=37';
-import { crearPlano } from './plano.js?v=6';
-import { crearUbicacion } from './ubicacion.js?v=35';
+import { crearPanorama } from './panorama.js?v=38';
+import { crearPlano } from './plano.js?v=7';
+import { crearUbicacion } from './ubicacion.js?v=36';
 import { crearSeguridad } from './seguridad.js?v=32';
 import { crearPaquete } from './paquete.js?v=9';
 import { datoJson, imgRemota } from './datos.js?v=4';
@@ -272,7 +272,7 @@ async function boot() {
     if (lagos) añadirLagos(lagos.construirBloque(i, j));
     const CH = meta.chunk;
     for (const p of peaks) {
-      const pi = Math.min(meta.nci - 1, Math.floor((p.q.x + geo.W / 2) / geo.dx / CH)), pj = Math.min(meta.ncj - 1, Math.floor((p.q.z + geo.oz) / geo.dz / CH));
+      const pi = Math.min(meta.nci - 1, Math.floor((p.q.x + geo.ox) / geo.dx / CH)), pj = Math.min(meta.ncj - 1, Math.floor((p.q.z + geo.oz) / geo.dz / CH));
       if (pi === i && pj === j) p.w = geo.summitNear(p.q.x, p.q.z, nivel === 1 ? 90 : 160);
     }
   });
@@ -2345,8 +2345,8 @@ async function boot() {
       const tg = controls.target, enHD = !!paquete?.idx?.piezas?.some((d) => tg.x > d.x0 - 300 && tg.x < d.x0 + paquete.idx.lado + 300 && tg.z > d.z0 - 300 && tg.z < d.z0 + paquete.idx.lado + 300);
       if (!S.detalle) controls.minDistance = enHD ? 30 : 500;
       controls.update();
-      const t = controls.target, mx = geo.W / 2 - 3000;
-      t.x = clamp(t.x, -mx, mx); t.z = clamp(t.z, geo.zmin + 3000, geo.zmax - 3000);
+      const t = controls.target;
+      t.x = clamp(t.x, geo.xmin + 3000, geo.xmax - 3000); t.z = clamp(t.z, geo.zmin + 3000, geo.zmax - 3000);
       t.y += (geo.heightAt(t.x, t.z) - t.y) * 0.08;
       const g = geo.heightAt(camera.position.x, camera.position.z) + (S.detalle || enHD ? 15 : 120);
       if (camera.position.y < g) camera.position.y = g;

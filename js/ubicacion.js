@@ -3,7 +3,7 @@
 // Botón: 1.º toque, «Norte arriba» (te sigue con el norte arriba); 2.º, «El mapa gira contigo» (lo que tienes delante en el móvil es lo que tienes delante);
 // 3.º, apagar. Mover el mapa con el dedo deja de seguir sin cambiar de modo; el siguiente toque vuelve a seguir.
 import * as THREE from 'three';
-import { leeOrientacion } from './panorama.js?v=37';
+import { leeOrientacion } from './panorama.js?v=38';
 import { t, EN_INGLES } from './i18n.js?v=56';
 
 const RAD = Math.PI / 180;
@@ -55,7 +55,7 @@ export function crearUbicacion({ scene, geo, controls, camState, applyState, fly
     const { longitude: lon, latitude: lat, accuracy, altitude } = e.coords, q = geo.toXZ(lon, lat);
     if (!enMapa(q.x, q.z)) {
       grupo.visible = false; st.pos = null; if (botonPanorama) botonPanorama.hidden = true;
-      const fx = Math.max(0, Math.abs(q.x) - geo.W / 2), fz = Math.max(0, geo.zmin - q.z, q.z - geo.zmax);
+      const fx = Math.max(0, geo.xmin - q.x, q.x - geo.xmax), fz = Math.max(0, geo.zmin - q.z, q.z - geo.zmax);
       if (st.primera) {   // con una cumbre abierta, la distancia a ella; si no, al borde del mapa y al tresmil más cercano
         const p = picoAbierto(), cerca = p ? null : picos.reduce((m, q) => { const d = km(lat, lon, q.lat, q.lon); return !m || d < m.d ? { q, d } : m; }, null);
         avisa(p ? t('Estás fuera del mapa, a {d} km en línea recta {p}.', { d: fmtKm(km(lat, lon, p.lat, p.lon)), p: delPico(p.nombre) })

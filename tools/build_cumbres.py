@@ -11,13 +11,14 @@ from scipy.ndimage import map_coordinates
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 meta = json.load(open(os.path.join(ROOT, 'data/terrain/meta.json')))
 meta['nrows'] = meta.get('nrows0', meta['nrows'])   # el origen del mundo es la rejilla original: el mapa crece hacia el sur (ver js/geo.js y tools/build_terrain_sur.py)
+if meta.get('iw'): meta['lon0'] += meta['iw'] * meta['chunk'] * meta['step']; meta['ncols'] = meta['ncols0']   # y al oeste: x = 0 sigue en el centro de las columnas originales (tools/build_terrain_oeste.py)
 peaks = json.load(open(os.path.join(ROOT, 'data/peaks.json')))
 OUT = os.path.join(ROOT, 'data/terrain/cumbres'); os.makedirs(OUT, exist_ok=True)
 latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2
 mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; D = (meta['nrows'] - 1) * meta['step'] * mLat
 # tono de la roca de las paredes (js/terrain.js crearMaterialPieza); sin entrada, granito. Sierras Exteriores y Guara: caliza, y conglomerado en los mallos
-ROCA = {**{k: 'conglomerado' for k in ('pena-de-san-miguel', 'pena-de-l-aman', 'mallo-san-jorge')},
+ROCA = {**{k: 'conglomerado' for k in ('pena-de-san-miguel', 'pena-de-l-aman', 'mallo-san-jorge', 'mallo-pison', 'pena-sola', 'pena-rueba')},
         **{k: 'caliza' for k in ('tozal-de-guara', 'tozal-de-cubilars', 'punta-vallemona', 'cabezo-de-guara', 'pico-fraxinito', 'la-gabardiella', 'tozal-de-sevill',
                                  'pico-de-luna', 'pico-del-aguila', 'tozal-de-gratal', 'el-turbon', 'pena-montanesa-o-picon-de-libro', 'cotiella')}}
 PASO, N, R = 6.0, 280, 840.0    # N*PASO/2 = R

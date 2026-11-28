@@ -27,7 +27,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
   let rumbo = 0, mapEl = null, v0 = null, pantallaV = null;   // rumbo: hacia dónde mira la parte de arriba de la pantalla (grados desde el norte, como el 3D)
   try { Object.assign(op, JSON.parse(localStorage.getItem('tresmiles-plano') || '{}')); } catch { /* sin almacenamiento */ }
   const guarda = () => { try { localStorage.setItem('tresmiles-plano', JSON.stringify(op)); } catch { /* nada */ } };
-  const lonLat = (x, z) => [meta.lat0 - (z + geo.oz) / geo.mLat, meta.lon0 + (x + geo.W / 2) / geo.mLon];   // [lat, lon] de un punto del mapa 3D
+  const lonLat = (x, z) => [meta.lat0 - (z + geo.oz) / geo.mLat, meta.lon0 + (x + geo.ox) / geo.mLon];   // [lat, lon] de un punto del mapa 3D
 
   // — relieve: bloques de 30, 60 y 120 m (los mismos del 3D), guardados como mucho 40 —
   const bloques = new Map();
@@ -36,7 +36,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     if (!bloques.has(k)) {
       if (bloques.size > 40) bloques.delete(bloques.keys().next().value);
       const dim = CH / L + 3;
-      bloques.set(k, fetch(`${store.base}/h/c_${i}_${j}_${L}.bin${j >= (store.vdesde ?? 1e9) ? `?v=${store.v}` : ''}`).then((r) => (r.ok ? r.arrayBuffer() : null))
+      bloques.set(k, fetch(store.urlH(i, j, L)).then((r) => (r.ok ? r.arrayBuffer() : null))
         .then((b) => (b && b.byteLength === dim * dim * 2 ? new Uint16Array(b) : null)).catch(() => null));
     }
     return bloques.get(k);
@@ -44,7 +44,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
   const cobs = new Map();
   function cobertura(i, j) {
     const k = `${i}_${j}`;
-    if (!cobs.has(k)) cobs.set(k, typeof DecompressionStream === 'undefined' ? Promise.resolve(null) : fetch(`${store.base}/cover/c_${i}_${j}.bin.gz${meta.vcover ? `?v=${meta.vcover}` : ''}`)
+    if (!cobs.has(k)) cobs.set(k, typeof DecompressionStream === 'undefined' ? Promise.resolve(null) : fetch(`${store.base}/cover/c_${store.nombre(i, j)}.bin.gz${meta.vcover ? `?v=${meta.vcover}` : ''}`)
       .then((r) => (r.ok ? new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer() : null)).then((b) => (b && b.byteLength === CH * CH ? new Uint8Array(b) : null)).catch(() => null));
     return cobs.get(k);
   }
@@ -197,7 +197,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     const pxDe = (lat, lon) => [(((lon + 180) / 360) * N - x0) / k, ((1 - Math.log(Math.tan(Math.PI / 4 + (lat * RAD) / 2)) / Math.PI) / 2 * N - y0) / k];
     // recuadro de la tesela en metros del mapa 3D
     const lonA = (x0 / N) * 360 - 180, lonB = ((x0 + 256) / N) * 360 - 180, latA = Math.atan(Math.sinh(Math.PI * (1 - (2 * y0) / N))) / RAD, latB = Math.atan(Math.sinh(Math.PI * (1 - (2 * (y0 + 256)) / N))) / RAD;
-    const xA = (lonA - meta.lon0) * geo.mLon - geo.W / 2, xB = (lonB - meta.lon0) * geo.mLon - geo.W / 2, zA = (meta.lat0 - latA) * geo.mLat - geo.oz, zB = (meta.lat0 - latB) * geo.mLat - geo.oz;
+    const xA = (lonA - meta.lon0) * geo.mLon - geo.ox, xB = (lonB - meta.lon0) * geo.mLon - geo.ox, zA = (meta.lat0 - latA) * geo.mLat - geo.oz, zB = (meta.lat0 - latB) * geo.mLat - geo.oz;
     const L = idx.lado, claves = [];
     for (let j = Math.floor((zA - 50) / L); j <= Math.floor((zB + 50) / L); j++) for (let i = Math.floor((xA - 50) / L); i <= Math.floor((xB + 50) / L); i++) if (idx.hay.has(`${i}_${j}`)) claves.push(`${i}_${j}`);
     const datos = await Promise.all(claves.map(tesela));
@@ -520,7 +520,7 @@ export function crearPlano({ geo, meta, store, peaks, json, refugios = () => [],
     try { L = await cargaLeaflet(); } catch { aviso(t('No se ha podido cargar el mapa plano.')); return; }
     const [lat, lon] = centro ? lonLat(centro.x, centro.z) : [42.65, 0.3];
     if (!map) {
-      const sw = lonLat(-geo.W / 2, geo.zmax), ne = lonLat(geo.W / 2, geo.zmin);
+      const sw = lonLat(geo.xmin, geo.zmax), ne = lonLat(geo.xmax, geo.zmin);
       ponRumbo(r);
       map = L.map(mapEl, { zoomControl: true, minZoom: 9, maxZoom: 20, maxBounds: L.latLngBounds(sw, ne).pad(0.15), attributionControl: true, zoomSnap: 0,
         dragging: false, touchZoom: false, doubleClickZoom: false, scrollWheelZoom: false, boxZoom: false, keyboard: false });   // los gestos los lleva gestos() (el mapa puede estar girado)
