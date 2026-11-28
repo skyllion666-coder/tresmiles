@@ -3312,5 +3312,19 @@
   "ruta": "img/menores/monte-pueyo.webp",
   "propia": true,
   "pie": "El camino junto a la cima del Monte Pueyo (octubre de 2023)."
+ },
+ "el-puro-riglos": {
+  "archivo": "foto propia",
+  "autor": "Frank (Skyllion)",
+  "licencia": "",
+  "licencia_url": "",
+  "pagina": "",
+  "fuente": "",
+  "w": 724,
+  "h": 952,
+  "ruta": "img/menores/el-puro-riglos-frank.webp",
+  "propia": true,
+  "pie": "El Puro, la aguja de conglomerado pegada al Mallo Pisón, vista desde abajo.",
+  "pos": "50% 12%"
  }
 }
