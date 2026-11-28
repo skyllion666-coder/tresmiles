@@ -18,18 +18,19 @@ latC = meta['lat0'] - ((meta['nrows'] - 1) * meta['step']) / 2
 mLat = 111132.0; mLon = 111320.0 * math.cos(math.radians(latC))
 W = (meta['ncols'] - 1) * meta['step'] * mLon; D = (meta['nrows'] - 1) * meta['step'] * mLat
 # tono de la roca de las paredes (js/terrain.js crearMaterialPieza); sin entrada, granito. Sierras Exteriores y Guara: caliza, y conglomerado en los mallos
-ROCA = {**{k: 'conglomerado' for k in ('pena-de-san-miguel', 'pena-de-l-aman', 'mallo-san-jorge', 'mallo-pison', 'pena-sola', 'pena-rueba')},
+ROCA = {**{k: 'conglomerado' for k in ('pena-de-san-miguel', 'pena-de-l-aman', 'mallo-san-jorge', 'mallo-pison', 'pared-de-los-buitres', 'pena-sola', 'pena-rueba')},
         **{k: 'caliza' for k in ('tozal-de-guara', 'tozal-de-cubilars', 'punta-vallemona', 'cabezo-de-guara', 'pico-fraxinito', 'la-gabardiella', 'tozal-de-sevill',
                                  'pico-de-luna', 'pico-del-aguila', 'tozal-de-gratal', 'el-turbon', 'pena-montanesa-o-picon-de-libro', 'cotiella')}}
 PASO, N, R = 6.0, 280, 840.0    # N*PASO/2 = R
 toXZ = lambda lon, lat: ((lon - meta['lon0']) * mLon - W / 2, (meta['lat0'] - lat) * mLat - D / 2)
 fromXZ = lambda x, z: (meta['lon0'] + (x + W / 2) / mLon, meta['lat0'] - (z + D / 2) / mLat)
-ids = sys.argv[1:] or peaks['activos']
+ids = [a for a in sys.argv[1:] if a != '--forzar'] or peaks['activos']
 idx_path = os.path.join(OUT, 'index.json'); idx = json.load(open(idx_path)) if os.path.exists(idx_path) else {}
 byid = {p['id']: p for p in peaks['picos']}
 men = os.path.join(ROOT, 'data/menores.json')   # también las cumbres de menos de 3.000 m (ficha sencilla), p. ej. las de la Sierra de Guara
 if os.path.exists(men): byid.update({p['id']: p for p in json.load(open(men))['picos'] if p['id'] not in byid})
 for pid in ids:
+    if idx.get(pid, {}).get('lidar') and '--forzar' not in sys.argv: print(pid, 'hecha con LiDAR (tools/build_pieza_lidar.py): se deja; --forzar para rehacerla con el MDT05'); continue
     p = byid[pid]; cx, cz = toXZ(p['lon'], p['lat'])
     x0, z0 = round(cx - R), round(cz - R)
     xs = x0 + np.arange(N) * PASO; zs = z0 + np.arange(N) * PASO

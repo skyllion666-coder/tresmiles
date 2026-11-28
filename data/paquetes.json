@@ -527,7 +527,7 @@
  {
   "id": "el-puro",
   "cumbre": "el-puro",
-  "nombre": "El Puro",
+  "nombre": "El Puro · 1.095 m, cerca de Santa Eulalia la Mayor",
   "detalle": "Relieve LiDAR de 1 m y ortofoto de 25 cm",
   "mb": 34,
   "version": 1,
@@ -1033,6 +1033,22 @@
    12000.0
   ],
   "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-mallo-de-las-penas-1/mallo-de-las-penas.zip"
+ },
+ {
+  "id": "mallo-pison",
+  "cumbre": "mallo-pison",
+  "nombre": "Mallos de Riglos",
+  "detalle": "Todos los mallos de Riglos (Pisón, Puro, Firé, Visera, Colorado, Pared de los Buitres, Tornillo…), el pueblo y el Gállego. Relieve LiDAR de 1 m y ortofoto de 25 cm",
+  "mb": 199,
+  "version": 1,
+  "caja": [
+   -71000.0,
+   45000.0,
+   -65000.0,
+   51000.0
+  ],
+  "url": "https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-mallo-pison-1/mallo-pison.zip",
+  "nombreFijo": true
  },
  {
   "id": "mediodia",

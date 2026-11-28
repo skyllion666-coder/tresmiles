@@ -8,7 +8,7 @@ data/subidas/<id>.json) con piezas de 1 × 1 km alineadas a la rejilla de la web
   - frontera: donde llegan, se usan los datos del IGN de Francia (Géoplateforme, Licence Ouverte Etalab 2.0): el RGE ALTI de 1 m allí donde el MDT05 no llega
     o donde ambos coinciden (dentro de España el servicio francés rellena con datos que se desvían decenas de metros: ahí manda el MDT05), y la ortofoto
     francesa allí donde existe (Francia y la franja de la frontera, con las sombras más suaves), fundida con la del PNOA.
-Salida: data/paquetes/<cumbre>/ con index.json {cumbre, lado, piezas: [{id, x0, z0, n, paso, orto}]}.
+Salida: data/paquetes/<cumbre>/ con index.json {cumbre, lado, piezas: [{id, x0, z0, n, paso, orto}]}. Se le puede añadir a mano `roca` (tono de las paredes en js/paquete.js: granito por defecto; conglomerado en Riglos, mallo-pison); se conserva al rehacer.
 Uso: python3 tools/build_paquete.py balaitus [subidas a incluir, p. ej. 1 2] [--rehacer]   (sin subidas: la ruta de ejemplo y la primera subida)"""
 import gzip, json, math, os, subprocess, sys, tempfile, time
 import numpy as np, rasterio

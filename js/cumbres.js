@@ -93,7 +93,7 @@ export function crearCumbres({ scene, geo, terrain, movil, archivosM = movil, al
   });
 
   async function lee(id) {
-    const r = await fetch(`data/terrain/cumbres/${id}.bin.gz`);
+    const r = await fetch(`data/terrain/cumbres/${id}.bin.gz?v=${window.WEB_V || 0}`);   // con versión: al rehacer una pieza (otro n) no vale la copia vieja de la caché
     if (!r.ok || typeof DecompressionStream === 'undefined') return null;
     return new Uint16Array(await new Response(r.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
   }

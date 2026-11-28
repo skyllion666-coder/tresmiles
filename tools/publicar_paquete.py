@@ -8,7 +8,7 @@ Uso: python3 tools/publicar_paquete.py balaitus "Balaitús" "Desde La Sarra por 
 import json, os, sys, zipfile
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-pid, nombre, detalle = sys.argv[1:4]; version = int(sys.argv[4]) if len(sys.argv) > 4 else 1
+arg = [x for x in sys.argv[1:] if x != '--nombre-fijo']; pid, nombre, detalle = arg[:3]; version = int(arg[3]) if len(arg) > 3 else 1   # --nombre-fijo: no cambiarlo por el de la cumbre
 D = os.path.join(ROOT, 'data/paquetes', pid); I = os.path.join(D, 'index.json'); idx = json.load(open(I))
 L = idx['lado']
 idx['caja'] = [min(p['x0'] for p in idx['piezas']), min(p['z0'] for p in idx['piezas']), max(p['x0'] for p in idx['piezas']) + L, max(p['z0'] for p in idx['piezas']) + L]
@@ -20,14 +20,15 @@ with zipfile.ZipFile(out, 'w', zipfile.ZIP_STORED) as z:
 mb = round(os.path.getsize(out) / 1e6)
 C = os.path.join(ROOT, 'data/paquetes.json'); cat = json.load(open(C)) if os.path.exists(C) else []
 cat = [c for c in cat if c['id'] != pid] + [{'id': pid, 'cumbre': idx['cumbre'], 'nombre': nombre, 'detalle': detalle, 'mb': mb, 'version': version, 'caja': idx['caja'],
-                                             'url': f'https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-{pid}-{version}/{pid}.zip'}]
+                                             'url': f'https://github.com/skyllion666-coder/tresmiles/releases/download/paquete-{pid}-{version}/{pid}.zip',
+                                             **({'nombreFijo': True} if '--nombre-fijo' in sys.argv else {})}]
 # cumbres que se llaman igual que otra del mapa (tres «Peña Roya»…): el nombre lleva la altitud y el pueblo cercano, para no confundirlas
 MEN = {m['id']: m for m in json.load(open(os.path.join(ROOT, 'data/menores.json')))['picos']}
 cuenta = {}
 for m in MEN.values(): cuenta[m['nombre']] = cuenta.get(m['nombre'], 0) + 1
 for c in cat:
     m = MEN.get(c['cumbre'])
-    if not m: continue
+    if not m or c.get('nombreFijo'): continue   # nombreFijo: zona con nombre propio (p. ej. «Mallos de Riglos», cumbre mallo-pison)
     c['nombre'] = m['nombre']
     if cuenta[m['nombre']] > 1:
         c['nombre'] += f" · {m['altitud']:,} m".replace(',', '.') + (f", cerca de {m['cerca'].split(' (')[0]}" if m.get('cerca') else '')

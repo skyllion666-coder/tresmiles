@@ -128,7 +128,8 @@ export async function crearPaquete({ scene, geo, terrain, cumbres, veg, base, mo
       }
       const p = { d, H, x0, z0, n, paso, ch, lados, m: pasoPara(d) };
       const g = malla(p, p.m);
-      const mat = terrain.crearMaterialPieza(ch, 'granito'); mat.side = THREE.DoubleSide; const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
+      const mat = terrain.crearMaterialPieza(ch, idx.roca ?? 'granito'); mat.side = THREE.DoubleSide;   // idx.roca: tono de las paredes de la zona (conglomerado en Riglos)
+      const mesh = new THREE.Mesh(g, mat); mesh.matrixAutoUpdate = false;
       Object.assign(p, { mesh, mat });
       if (!vivo || piezas.size >= MAX + 2) { g.dispose(); mat.dispose(); return; }   // sin sitio, o el paquete se quitó mientras llegaba la pieza
       scene.add(mesh); piezas.set(d.id, p); marca(d, true); ponHuecos(p);
