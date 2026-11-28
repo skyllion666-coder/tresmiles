@@ -3,7 +3,7 @@
 // - primeraVez(capa): la primera vez que se enciende una capa (huellas, sendas, nieve, mapa plano, dónde estoy) sale una tarjeta corta con sus colores.
 // - bienvenida(): en la app, tres tarjetas la primera vez (descargar la zona, dónde estoy, SOS).
 // Textos en español e inglés aquí mismo (no pasan por i18n.js).
-import { EN_INGLES } from './i18n.js?v=56';
+import { EN_INGLES } from './i18n.js?v=57';
 
 const L = (es, en) => (EN_INGLES ? en : es);
 const PEST = 'tresmiles-acerca-pest';

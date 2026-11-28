@@ -21,12 +21,12 @@ _cov = {}
 
 def cobertura(lon, lat):
     c, r = (lon - meta['lon0']) / ST, (meta['lat0'] - lat) / ST
-    i, j = int(c // CH), int(r // CH)
+    i, j = int(c // CH) - meta.get('iw', 0), int(r // CH)   # iw: columnas de bloques añadidas al oeste (los archivos van de c_-iw_* en adelante)
     if (i, j) not in _cov:
         f = os.path.join(RAIZ, 'data', 'terrain', 'cover', f'c_{i}_{j}.bin.gz')
         _cov[(i, j)] = np.frombuffer(gzip.open(f).read(), 'u1').reshape(CH, CH) if os.path.exists(f) else None
     a = _cov[(i, j)]
-    return 0 if a is None else int(a[min(CH - 1, int(r - j * CH)), min(CH - 1, int(c - i * CH))])
+    return 0 if a is None else int(a[min(CH - 1, int(r - j * CH)), min(CH - 1, int(c - (i + meta.get('iw', 0)) * CH))])
 
 
 def metros(a, b): return math.hypot((a[0] - b[0]) * 111320 * math.cos(math.radians(42.7)), (a[1] - b[1]) * 111320)

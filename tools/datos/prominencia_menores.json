@@ -3430,6 +3430,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-bisaurin",
+"prom": 1038,
+"col": 1632,
+"colLon": -0.52569,
+"colLat": 42.79569,
+"cimaMalla": 2658.4,
+"madre": "punta-d-a-tronquera",
+"madreNombre": "Punta d'a Tronquera",
+"madreAlt": 2693,
+"madreKm": 15.2,
+"masAltoKm": 15.13,
+"malla": "30 m"
+},
+{
 "id": "somola-occidental",
 "prom": 126,
 "col": 2543,
@@ -3735,6 +3749,20 @@
 "madreAlt": 2692,
 "madreKm": 0.65,
 "masAltoKm": 0.59,
+"malla": "30 m"
+},
+{
+"id": "pico-de-aspe",
+"prom": 526,
+"col": 2114,
+"colLon": -0.60069,
+"colLat": 42.78236,
+"cimaMalla": 2588.2,
+"madre": "punta-bisaurin",
+"madreNombre": "Punta Bisaurín",
+"madreAlt": 2670,
+"madreKm": 6.69,
+"masAltoKm": 6.33,
 "malla": "30 m"
 },
 {
@@ -4256,6 +4284,34 @@
 "malla": "30 m"
 },
 {
+"id": "llena-d-a-garganta",
+"prom": 175,
+"col": 2424,
+"colLon": -0.57181,
+"colLat": 42.76264,
+"cimaMalla": 2548.8,
+"madre": "pico-de-aspe",
+"madreNombre": "Pico de Aspe",
+"madreAlt": 2640,
+"madreKm": 0.82,
+"masAltoKm": 0.61,
+"malla": "30 m"
+},
+{
+"id": "llena-del-aspe",
+"prom": 23,
+"col": 2576,
+"colLon": -0.56708,
+"colLat": 42.76375,
+"cimaMalla": 2578.3,
+"madre": "pico-de-aspe",
+"madreNombre": "Pico de Aspe",
+"madreAlt": 2640,
+"madreKm": 0.23,
+"masAltoKm": 0.2,
+"malla": "30 m"
+},
+{
 "id": "cap-dera-picada",
 "prom": 18,
 "col": 2580,
@@ -4634,6 +4690,20 @@
 "malla": "30 m"
 },
 {
+"id": "pico-d-a-garganta-de-borau",
+"prom": 236,
+"col": 2334,
+"colLon": -0.56208,
+"colLat": 42.76069,
+"cimaMalla": 2517.3,
+"madre": "pico-de-aspe",
+"madreNombre": "Pico de Aspe",
+"madreAlt": 2640,
+"madreKm": 1.33,
+"masAltoKm": 1.26,
+"malla": "30 m"
+},
+{
 "id": "pena-de-las-diez",
 "prom": 42,
 "col": 2526,
@@ -4676,6 +4746,20 @@
 "malla": "30 m"
 },
 {
+"id": "llena-d-o-bozo",
+"prom": 233,
+"col": 2333,
+"colLon": -0.57986,
+"colLat": 42.76792,
+"cimaMalla": 2551.1,
+"madre": "llena-del-aspe",
+"madreNombre": "Llena del Aspe",
+"madreAlt": 2599,
+"madreKm": 1.45,
+"masAltoKm": 1.46,
+"malla": "30 m"
+},
+{
 "id": "morron-de-los-maquis",
 "prom": null,
 "nota": "no se distingue",
@@ -4701,6 +4785,20 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "pico-seil-dera-baquo",
+"malla": "30 m"
+},
+{
+"id": "o-sombrero",
+"prom": 228,
+"col": 2334,
+"colLon": -0.56208,
+"colLat": 42.76069,
+"cimaMalla": 2540.5,
+"madre": "pico-de-aspe",
+"madreNombre": "Pico de Aspe",
+"madreAlt": 2640,
+"madreKm": 1.03,
+"masAltoKm": 0.97,
 "malla": "30 m"
 },
 {
@@ -4967,6 +5065,20 @@
 "madreAlt": 2778,
 "madreKm": 1.05,
 "masAltoKm": 0.48,
+"malla": "30 m"
+},
+{
+"id": "alto-de-fetas",
+"prom": 55,
+"col": 2484,
+"colLon": -0.63264,
+"colLat": 42.78681,
+"cimaMalla": 2513.4,
+"madre": "punta-bisaurin",
+"madreNombre": "Punta Bisaurín",
+"madreAlt": 2670,
+"madreKm": 0.76,
+"masAltoKm": 0.29,
 "malla": "30 m"
 },
 {
@@ -5313,6 +5425,20 @@
 "malla": "30 m"
 },
 {
+"id": "la-pena-mediodia",
+"prom": 115,
+"col": 2399,
+"colLon": -0.63431,
+"colLat": 42.79125,
+"cimaMalla": 2505.2,
+"madre": "punta-bisaurin",
+"madreNombre": "Punta Bisaurín",
+"madreAlt": 2670,
+"madreKm": 0.72,
+"masAltoKm": 0.4,
+"malla": "30 m"
+},
+{
 "id": "pena-blanca-alta",
 "prom": null,
 "nota": "no se distingue",
@@ -5380,6 +5506,20 @@
 "madreAlt": 2537,
 "madreKm": 0.68,
 "masAltoKm": 0.5,
+"malla": "30 m"
+},
+{
+"id": "pico-de-la-garganta-de-aisa",
+"prom": 41,
+"col": 2463,
+"colLon": -0.55875,
+"colLat": 42.75903,
+"cimaMalla": 2474.1,
+"madre": "o-sombrero",
+"madreNombre": "O Sombrero",
+"madreAlt": 2562,
+"madreKm": 0.43,
+"masAltoKm": 0.29,
 "malla": "30 m"
 },
 {
@@ -5516,6 +5656,20 @@
 "malla": "30 m"
 },
 {
+"id": "pico-l-ibon",
+"prom": 73,
+"col": 2409,
+"colLon": -0.59625,
+"colLat": 42.77625,
+"cimaMalla": 2424.6,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.34,
+"malla": "30 m"
+},
+{
 "id": "o-dedo",
 "prom": 71,
 "col": 2408,
@@ -5649,6 +5803,34 @@
 "malla": "30 m"
 },
 {
+"id": "ruabe-de-bernera",
+"prom": 189,
+"col": 2266,
+"colLon": -0.58153,
+"colLat": 42.77597,
+"cimaMalla": 2453.4,
+"madre": "llena-d-o-bozo",
+"madreNombre": "Llena d'o Bozo",
+"madreAlt": 2566,
+"madreKm": 1.35,
+"masAltoKm": 1.21,
+"malla": "30 m"
+},
+{
+"id": "bozo-de-bernera",
+"prom": 39,
+"col": 2415,
+"colLon": -0.60458,
+"colLat": 42.77819,
+"cimaMalla": 2429.0,
+"madre": "ruabe-de-bernera",
+"madreNombre": "Ruabe de Bernera",
+"madreAlt": 2455,
+"madreKm": 0.58,
+"masAltoKm": 0.45,
+"malla": "30 m"
+},
+{
 "id": "pico-mener",
 "prom": 131,
 "col": 2321,
@@ -5670,6 +5852,48 @@
 "malla": "30 m"
 },
 {
+"id": "mallos-de-lecherines",
+"prom": 74,
+"col": 2378,
+"colLon": -0.55514,
+"colLat": 42.75292,
+"cimaMalla": 2387.7,
+"madre": "pico-d-a-garganta-de-borau",
+"madreNombre": "Pico d'a Garganta de Borau",
+"madreAlt": 2570,
+"madreKm": 0.56,
+"masAltoKm": 0.37,
+"malla": "30 m"
+},
+{
+"id": "punta-aguerri",
+"prom": 271,
+"col": 2176,
+"colLon": -0.64986,
+"colLat": 42.80264,
+"cimaMalla": 2426.5,
+"madre": "punta-bisaurin",
+"madreNombre": "Punta Bisaurín",
+"madreAlt": 2670,
+"madreKm": 2.82,
+"masAltoKm": 2.52,
+"malla": "30 m"
+},
+{
+"id": "mesa-de-los-tres-reyes",
+"prom": 407,
+"col": 2039,
+"colLon": -0.73597,
+"colLat": 42.93403,
+"cimaMalla": 2429.7,
+"madre": null,
+"madreNombre": "Pic d'Anie",
+"madreAlt": 2504,
+"madreKm": 2.83,
+"masAltoKm": 2.69,
+"malla": "30 m"
+},
+{
 "id": "cornadelo",
 "prom": 266,
 "col": 2179,
@@ -5688,6 +5912,20 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "tuca-de-sillerets",
+"malla": "30 m"
+},
+{
+"id": "puntal-de-secus",
+"prom": 28,
+"col": 2414,
+"colLon": -0.63264,
+"colLat": 42.79458,
+"cimaMalla": 2438.2,
+"madre": "la-pena-mediodia",
+"madreNombre": "La Peña Mediodía",
+"madreAlt": 2514,
+"madreKm": 0.28,
+"masAltoKm": 0.29,
 "malla": "30 m"
 },
 {
@@ -5744,6 +5982,20 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "tuca-espigantosa",
+"malla": "30 m"
+},
+{
+"id": "bernera",
+"prom": 64,
+"col": 2368,
+"colLon": -0.60403,
+"colLat": 42.77597,
+"cimaMalla": 2424.9,
+"madre": "bozo-de-bernera",
+"madreNombre": "Bozo de Bernera",
+"madreAlt": 2454,
+"madreKm": 0.6,
+"masAltoKm": 0.55,
 "malla": "30 m"
 },
 {
@@ -5831,6 +6083,20 @@
 "malla": "30 m"
 },
 {
+"id": "cupula-de-secus",
+"prom": 184,
+"col": 2237,
+"colLon": -0.61653,
+"colLat": 42.79208,
+"cimaMalla": 2402.7,
+"madre": "alto-de-fetas",
+"madreNombre": "Alto de Fetás",
+"madreAlt": 2539,
+"madreKm": 2.14,
+"masAltoKm": 1.69,
+"malla": "30 m"
+},
+{
 "id": "punta-maristas",
 "prom": 318,
 "col": 2101,
@@ -5856,6 +6122,34 @@
 "madreAlt": 2519,
 "madreKm": 1.05,
 "masAltoKm": 0.32,
+"malla": "30 m"
+},
+{
+"id": "ruable-d-o-bozo",
+"prom": 107,
+"col": 2312,
+"colLon": -0.59264,
+"colLat": 42.77903,
+"cimaMalla": 2412.1,
+"madre": "pico-l-ibon",
+"madreNombre": "Pico L'ibón",
+"madreAlt": 2482,
+"madreKm": 1.27,
+"masAltoKm": 1.24,
+"malla": "30 m"
+},
+{
+"id": "puntal-de-secus-oriental",
+"prom": 53,
+"col": 2366,
+"colLon": -0.62931,
+"colLat": 42.79403,
+"cimaMalla": 2415.8,
+"madre": "puntal-de-secus",
+"madreNombre": "Puntal de Secús",
+"madreAlt": 2442,
+"madreKm": 0.36,
+"masAltoKm": 0.25,
 "malla": "30 m"
 },
 {
@@ -5933,6 +6227,34 @@
 "madreAlt": 2419,
 "madreKm": 0.69,
 "masAltoKm": 0.6,
+"malla": "30 m"
+},
+{
+"id": "lie-labata",
+"prom": 25,
+"col": 2384,
+"colLon": -0.58208,
+"colLat": 42.78042,
+"cimaMalla": 2395.0,
+"madre": "ruable-d-o-bozo",
+"madreNombre": "Ruable d'o Bozo",
+"madreAlt": 2419,
+"madreKm": 0.41,
+"masAltoKm": 0.36,
+"malla": "30 m"
+},
+{
+"id": "punta-d-o-bozo",
+"prom": 38,
+"col": 2369,
+"colLon": -0.58625,
+"colLat": 42.78125,
+"cimaMalla": 2396.9,
+"madre": "ruable-d-o-bozo",
+"madreNombre": "Ruable d'o Bozo",
+"madreAlt": 2419,
+"madreKm": 0.7,
+"masAltoKm": 0.66,
 "malla": "30 m"
 },
 {
@@ -6020,6 +6342,20 @@
 "malla": "30 m"
 },
 {
+"id": "pena-forca",
+"prom": 512,
+"col": 1878,
+"colLon": -0.74875,
+"colLat": 42.84514,
+"cimaMalla": 2377.2,
+"madre": null,
+"madreNombre": "Table des Trois Rois",
+"madreAlt": 2421,
+"madreKm": 10.75,
+"masAltoKm": 10.73,
+"malla": "30 m"
+},
+{
 "id": "pueyo-de-mondicieto",
 "prom": 199,
 "col": 2185,
@@ -6048,6 +6384,20 @@
 "malla": "30 m"
 },
 {
+"id": "castiello-dacher",
+"prom": 332,
+"col": 2052,
+"colLon": -0.66181,
+"colLat": 42.81403,
+"cimaMalla": 2345.2,
+"madre": "punta-aguerri",
+"madreNombre": "Punta Agüerri",
+"madreAlt": 2447,
+"madreKm": 2.7,
+"masAltoKm": 2.58,
+"malla": "30 m"
+},
+{
 "id": "punta-calva",
 "prom": 7,
 "col": 2373,
@@ -6062,10 +6412,52 @@
 "malla": "30 m"
 },
 {
+"id": "grande-aiguille-d-ansabere",
+"prom": 254,
+"col": 2123,
+"colLon": -0.73403,
+"colLat": 42.91458,
+"cimaMalla": 2351.4,
+"madre": null,
+"madreNombre": "Table des Trois Rois",
+"madreAlt": 2421,
+"madreKm": 2.03,
+"masAltoKm": 2.01,
+"malla": "30 m"
+},
+{
+"id": "portaza",
+"prom": 59,
+"col": 2318,
+"colLon": -0.62069,
+"colLat": 42.79347,
+"cimaMalla": 2321.0,
+"madre": "puntal-de-secus-oriental",
+"madreNombre": "Puntal de Secús Oriental",
+"madreAlt": 2419,
+"madreKm": 0.64,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
 "id": "ministirio-occidental",
 "prom": null,
 "nota": "no se distingue",
 "con": "punta-ferraturas",
+"malla": "30 m"
+},
+{
+"id": "acherito",
+"prom": 287,
+"col": 2087,
+"colLon": -0.73292,
+"colLat": 42.89792,
+"cimaMalla": 2365.7,
+"madre": null,
+"madreNombre": "Table des Trois Rois",
+"madreAlt": 2421,
+"madreKm": 3.19,
+"masAltoKm": 3.13,
 "malla": "30 m"
 },
 {
@@ -6080,6 +6472,41 @@
 "madreAlt": 2484,
 "madreKm": 0.96,
 "masAltoKm": 0.55,
+"malla": "30 m"
+},
+{
+"id": "petrechema",
+"prom": null,
+"nota": "no se distingue",
+"con": "grande-aiguille-d-ansabere",
+"malla": "30 m"
+},
+{
+"id": "rincon-de-secus",
+"prom": 24,
+"col": 2344,
+"colLon": -0.63708,
+"colLat": 42.79708,
+"cimaMalla": 2358.7,
+"madre": "puntal-de-secus",
+"madreNombre": "Puntal de Secús",
+"madreAlt": 2442,
+"madreKm": 0.55,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "budogia",
+"prom": 68,
+"col": 2300,
+"colLon": -0.73319,
+"colLat": 42.91875,
+"cimaMalla": 2350.9,
+"madre": "mesa-de-los-tres-reyes",
+"madreNombre": "Mesa de los Tres Reyes",
+"madreAlt": 2446,
+"madreKm": 0.61,
+"masAltoKm": 0.51,
 "malla": "30 m"
 },
 {
@@ -6160,6 +6587,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-alta-de-napazal",
+"prom": 41,
+"col": 2322,
+"colLon": -0.60236,
+"colLat": 42.77153,
+"cimaMalla": 2342.5,
+"madre": "bernera",
+"madreNombre": "Bernera",
+"madreAlt": 2432,
+"madreKm": 0.59,
+"masAltoKm": 0.46,
+"malla": "30 m"
+},
+{
 "id": "pico-la-llastra",
 "prom": 61,
 "col": 2300,
@@ -6181,10 +6622,38 @@
 "malla": "30 m"
 },
 {
+"id": "pico-tortiellas",
+"prom": 133,
+"col": 2225,
+"colLon": -0.54764,
+"colLat": 42.75347,
+"cimaMalla": 2328.5,
+"madre": "pico-d-a-garganta-de-borau",
+"madreNombre": "Pico d'a Garganta de Borau",
+"madreAlt": 2570,
+"madreKm": 1.13,
+"masAltoKm": 0.83,
+"malla": "30 m"
+},
+{
 "id": "turonet-de-gorgutes",
 "prom": null,
 "nota": "no se distingue",
 "con": "tuca-de-la-glera",
+"malla": "30 m"
+},
+{
+"id": "punta-d-o-ricon-d-alano",
+"prom": 110,
+"col": 2247,
+"colLon": -0.75181,
+"colLat": 42.82792,
+"cimaMalla": 2346.0,
+"madre": null,
+"madreNombre": "Achar de Forca",
+"madreAlt": 2390,
+"madreKm": 0.8,
+"masAltoKm": 0.79,
 "malla": "30 m"
 },
 {
@@ -6230,6 +6699,34 @@
 "malla": "30 m"
 },
 {
+"id": "budogia-occidental",
+"prom": 27,
+"col": 2326,
+"colLon": -0.73819,
+"colLat": 42.91903,
+"cimaMalla": 2341.5,
+"madre": "budogia",
+"madreNombre": "Budogia",
+"madreAlt": 2368,
+"madreKm": 0.43,
+"masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
+"id": "secus",
+"prom": 147,
+"col": 2206,
+"colLon": -0.65958,
+"colLat": 42.80514,
+"cimaMalla": 2342.8,
+"madre": "punta-aguerri",
+"madreNombre": "Punta Agüerri",
+"madreAlt": 2447,
+"madreKm": 1.64,
+"masAltoKm": 1.53,
+"malla": "30 m"
+},
+{
 "id": "pic-des-moines",
 "prom": 131,
 "col": 2218,
@@ -6258,6 +6755,13 @@
 "malla": "30 m"
 },
 {
+"id": "castiello-d-acher-sur",
+"prom": null,
+"nota": "no se distingue",
+"con": "castiello-dacher",
+"malla": "30 m"
+},
+{
 "id": "turbonet",
 "prom": 74,
 "col": 2272,
@@ -6269,6 +6773,20 @@
 "madreAlt": 2491,
 "madreKm": 0.75,
 "masAltoKm": 0.53,
+"malla": "30 m"
+},
+{
+"id": "pico-lecherines",
+"prom": 119,
+"col": 2225,
+"colLon": -0.54764,
+"colLat": 42.75347,
+"cimaMalla": 2338.6,
+"madre": "pico-d-a-garganta-de-borau",
+"madreNombre": "Pico d'a Garganta de Borau",
+"madreAlt": 2570,
+"madreKm": 0.74,
+"masAltoKm": 0.49,
 "malla": "30 m"
 },
 {
@@ -6286,6 +6804,41 @@
 "malla": "30 m"
 },
 {
+"id": "zerro-de-lenito",
+"prom": 147,
+"col": 2192,
+"colLon": -0.75014,
+"colLat": 42.82264,
+"cimaMalla": 2331.5,
+"madre": null,
+"madreNombre": "Achar de Forca",
+"madreAlt": 2390,
+"madreKm": 0.7,
+"masAltoKm": 0.58,
+"malla": "30 m"
+},
+{
+"id": "punta-alta-de-riguelo",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallos-de-lecherines",
+"malla": "30 m"
+},
+{
+"id": "pico-liouviella",
+"prom": 94,
+"col": 2240,
+"colLon": -0.60208,
+"colLat": 42.78764,
+"cimaMalla": 2326.6,
+"madre": "cupula-de-secus",
+"madreNombre": "Cúpula de Secús",
+"madreAlt": 2421,
+"madreKm": 0.84,
+"masAltoKm": 0.66,
+"malla": "30 m"
+},
+{
 "id": "punta-baguer",
 "prom": 28,
 "col": 2303,
@@ -6297,6 +6850,20 @@
 "madreAlt": 2347,
 "madreKm": 0.38,
 "masAltoKm": 0.37,
+"malla": "30 m"
+},
+{
+"id": "ginebral-de-gamueta",
+"prom": 168,
+"col": 2161,
+"colLon": -0.74458,
+"colLat": 42.88736,
+"cimaMalla": 2320.0,
+"madre": "acherito",
+"madreNombre": "Acherito",
+"madreAlt": 2374,
+"madreKm": 1.07,
+"masAltoKm": 0.99,
 "malla": "30 m"
 },
 {
@@ -6353,6 +6920,34 @@
 "madreAlt": 2384,
 "madreKm": 0.77,
 "masAltoKm": 0.57,
+"malla": "30 m"
+},
+{
+"id": "costatiza",
+"prom": 111,
+"col": 2211,
+"colLon": -0.66681,
+"colLat": 42.80403,
+"cimaMalla": 2306.6,
+"madre": "punta-aguerri",
+"madreNombre": "Punta Agüerri",
+"madreAlt": 2447,
+"madreKm": 1.0,
+"masAltoKm": 0.86,
+"malla": "30 m"
+},
+{
+"id": "tuca-blanca",
+"prom": 65,
+"col": 2257,
+"colLon": -0.55931,
+"colLat": 42.77014,
+"cimaMalla": 2311.1,
+"madre": "pico-de-aspe",
+"madreNombre": "Pico de Aspe",
+"madreAlt": 2640,
+"madreKm": 0.99,
+"masAltoKm": 0.32,
 "malla": "30 m"
 },
 {
@@ -6468,6 +7063,20 @@
 "malla": "30 m"
 },
 {
+"id": "foya-de-gamueta",
+"prom": 61,
+"col": 2247,
+"colLon": -0.74653,
+"colLat": 42.88597,
+"cimaMalla": 2290.4,
+"madre": "ginebral-de-gamueta",
+"madreNombre": "Ginebral de Gamueta",
+"madreAlt": 2329,
+"madreKm": 0.27,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
 "id": "pena-bllanca",
 "prom": null,
 "nota": "no se distingue",
@@ -6500,6 +7109,20 @@
 "madreAlt": 2342,
 "madreKm": 1.78,
 "masAltoKm": 1.68,
+"malla": "30 m"
+},
+{
+"id": "pico-riguelo",
+"prom": 41,
+"col": 2258,
+"colLon": -0.56153,
+"colLat": 42.74903,
+"cimaMalla": 2278.0,
+"madre": "punta-alta-de-riguelo",
+"madreNombre": "Punta Alta de Riguelo",
+"madreAlt": 2339,
+"madreKm": 0.42,
+"masAltoKm": 0.38,
 "malla": "30 m"
 },
 {
@@ -6629,6 +7252,34 @@
 "malla": "30 m"
 },
 {
+"id": "pico-netera",
+"prom": 140,
+"col": 2149,
+"colLon": -0.65319,
+"colLat": 42.80903,
+"cimaMalla": 2279.7,
+"madre": "secus",
+"madreNombre": "Secús",
+"madreAlt": 2353,
+"madreKm": 0.9,
+"masAltoKm": 0.77,
+"malla": "30 m"
+},
+{
+"id": "lenito-central",
+"prom": 27,
+"col": 2262,
+"colLon": -0.74236,
+"colLat": 42.82069,
+"cimaMalla": 2276.2,
+"madre": "zerro-de-lenito",
+"madreNombre": "Zerro de Lenito",
+"madreAlt": 2339,
+"madreKm": 0.4,
+"masAltoKm": 0.23,
+"malla": "30 m"
+},
+{
 "id": "morro-del-ubago",
 "prom": null,
 "nota": "no se distingue",
@@ -6647,6 +7298,20 @@
 "madreAlt": 2394,
 "madreKm": 1.77,
 "masAltoKm": 0.96,
+"malla": "30 m"
+},
+{
+"id": "puntal-de-lenito",
+"prom": 54,
+"col": 2231,
+"colLon": -0.73875,
+"colLat": 42.81875,
+"cimaMalla": 2270.3,
+"madre": "lenito-central",
+"madreNombre": "Lenito Central",
+"madreAlt": 2289,
+"madreKm": 0.42,
+"masAltoKm": 0.64,
 "malla": "30 m"
 },
 {
@@ -6675,6 +7340,48 @@
 "madreAlt": 2331,
 "madreKm": 2.13,
 "masAltoKm": 2.07,
+"malla": "30 m"
+},
+{
+"id": "punta-d-a-madalena",
+"prom": 244,
+"col": 2039,
+"colLon": -0.56653,
+"colLat": 42.74208,
+"cimaMalla": 2281.1,
+"madre": "punta-alta-de-riguelo",
+"madreNombre": "Punta Alta de Riguelo",
+"madreAlt": 2339,
+"madreKm": 2.06,
+"masAltoKm": 1.97,
+"malla": "30 m"
+},
+{
+"id": "pena-de-aguerri",
+"prom": 67,
+"col": 2216,
+"colLon": -0.68042,
+"colLat": 42.80153,
+"cimaMalla": 2273.4,
+"madre": "punta-aguerri",
+"madreNombre": "Punta Agüerri",
+"madreAlt": 2447,
+"madreKm": 1.16,
+"masAltoKm": 0.77,
+"malla": "30 m"
+},
+{
+"id": "las-arrallas",
+"prom": 38,
+"col": 2244,
+"colLon": -0.64597,
+"colLat": 42.80069,
+"cimaMalla": 2252.5,
+"madre": "rincon-de-secus",
+"madreNombre": "Rincón de Secús",
+"madreAlt": 2368,
+"madreKm": 0.82,
+"masAltoKm": 0.27,
 "malla": "30 m"
 },
 {
@@ -6755,6 +7462,20 @@
 "malla": "30 m"
 },
 {
+"id": "la-rueda",
+"prom": 25,
+"col": 2246,
+"colLon": -0.65708,
+"colLat": 42.80486,
+"cimaMalla": 2261.1,
+"madre": "secus",
+"madreNombre": "Secús",
+"madreAlt": 2353,
+"madreKm": 0.41,
+"masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
 "id": "comadelo",
 "prom": 44,
 "col": 2226,
@@ -6766,6 +7487,20 @@
 "madreAlt": 2445,
 "madreKm": 2.2,
 "masAltoKm": 0.84,
+"malla": "30 m"
+},
+{
+"id": "gorreta-d-os-gabachos-norte",
+"prom": 14,
+"col": 2256,
+"colLon": -0.74514,
+"colLat": 42.88375,
+"cimaMalla": 2266.3,
+"madre": "foya-de-gamueta",
+"madreNombre": "Foya de Gamueta",
+"madreAlt": 2308,
+"madreKm": 0.28,
+"masAltoKm": 0.27,
 "malla": "30 m"
 },
 {
@@ -6801,6 +7536,20 @@
 "madreAlt": 2286,
 "madreKm": 6.59,
 "masAltoKm": 6.33,
+"malla": "30 m"
+},
+{
+"id": "gorreta-d-os-gabachos",
+"prom": 77,
+"col": 2191,
+"colLon": -0.74542,
+"colLat": 42.88125,
+"cimaMalla": 2250.7,
+"madre": "gorreta-d-os-gabachos-norte",
+"madreNombre": "Gorreta d'os Gabachos Norte",
+"madreAlt": 2270,
+"madreKm": 0.34,
+"masAltoKm": 0.29,
 "malla": "30 m"
 },
 {
@@ -6843,6 +7592,13 @@
 "madreAlt": 2286,
 "madreKm": 3.93,
 "masAltoKm": 3.95,
+"malla": "30 m"
+},
+{
+"id": "mallo-gorreta",
+"prom": null,
+"nota": "no se distingue",
+"con": "gorreta-d-os-gabachos",
 "malla": "30 m"
 },
 {
@@ -6916,6 +7672,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-acue",
+"prom": 352,
+"col": 1906,
+"colLon": -0.72792,
+"colLat": 42.89292,
+"cimaMalla": 2243.9,
+"madre": "gorreta-d-os-gabachos",
+"madreNombre": "Gorreta d'os Gabachos",
+"madreAlt": 2268,
+"madreKm": 13.48,
+"masAltoKm": 13.45,
+"malla": "30 m"
+},
+{
 "id": "cerro-de-izas",
 "prom": 17,
 "col": 2240,
@@ -6958,6 +7728,20 @@
 "malla": "30 m"
 },
 {
+"id": "pico-sobarcal",
+"prom": 80,
+"col": 2177,
+"colLon": -0.73431,
+"colLat": 42.89514,
+"cimaMalla": 2233.8,
+"madre": "acherito",
+"madreNombre": "Acherito",
+"madreAlt": 2374,
+"madreKm": 0.71,
+"masAltoKm": 0.56,
+"malla": "30 m"
+},
+{
 "id": "monte-bachesango",
 "prom": 164,
 "col": 2092,
@@ -6983,6 +7767,13 @@
 "madreAlt": 2266,
 "madreKm": 0.22,
 "masAltoKm": 0.21,
+"malla": "30 m"
+},
+{
+"id": "cordon-de-la-zapatilla",
+"prom": null,
+"nota": "no se distingue",
+"con": "tuca-blanca",
 "malla": "30 m"
 },
 {
@@ -7049,6 +7840,20 @@
 "malla": "30 m"
 },
 {
+"id": "ukerdi",
+"prom": 54,
+"col": 2198,
+"colLon": -0.74736,
+"colLat": 42.92292,
+"cimaMalla": 2247.3,
+"madre": "budogia-occidental",
+"madreNombre": "Budogia Occidental",
+"madreAlt": 2353,
+"madreKm": 0.89,
+"masAltoKm": 0.47,
+"malla": "30 m"
+},
+{
 "id": "tuca-de-lluguero",
 "prom": 23,
 "col": 2228,
@@ -7074,6 +7879,13 @@
 "madreAlt": 2263,
 "madreKm": 1.19,
 "masAltoKm": 1.16,
+"malla": "30 m"
+},
+{
+"id": "mallo-de-chan-de-sastre",
+"prom": null,
+"nota": "no se distingue",
+"con": "pico-tortiellas",
 "malla": "30 m"
 },
 {
@@ -7175,6 +7987,13 @@
 "malla": "30 m"
 },
 {
+"id": "punta-gabedallo",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-acue",
+"malla": "30 m"
+},
+{
 "id": "baldetosas",
 "prom": 27,
 "col": 2211,
@@ -7259,6 +8078,20 @@
 "malla": "30 m"
 },
 {
+"id": "mouscate",
+"prom": 108,
+"col": 2124,
+"colLon": -0.73375,
+"colLat": 42.90708,
+"cimaMalla": 2221.7,
+"madre": "petrechema",
+"madreNombre": "Petrechema",
+"madreAlt": 2371,
+"madreKm": 0.82,
+"masAltoKm": 0.73,
+"malla": "30 m"
+},
+{
 "id": "ralla-de-la-poza",
 "prom": 18,
 "col": 2213,
@@ -7287,6 +8120,20 @@
 "malla": "30 m"
 },
 {
+"id": "la-zapatilla",
+"prom": 45,
+"col": 2180,
+"colLon": -0.55458,
+"colLat": 42.77347,
+"cimaMalla": 2208.1,
+"madre": "cordon-de-la-zapatilla",
+"madreNombre": "Cordón de la Zapatilla",
+"madreAlt": 2255,
+"madreKm": 0.21,
+"masAltoKm": 0.33,
+"malla": "30 m"
+},
+{
 "id": "tozal-de-suaso",
 "prom": 49,
 "col": 2173,
@@ -7298,6 +8145,20 @@
 "madreAlt": 2705,
 "madreKm": 1.08,
 "masAltoKm": 0.39,
+"malla": "30 m"
+},
+{
+"id": "mazandu",
+"prom": 29,
+"col": 2193,
+"colLon": -0.76097,
+"colLat": 42.83375,
+"cimaMalla": 2203.0,
+"madre": "punta-d-o-ricon-d-alano",
+"madreNombre": "Punta d'o Ricón d'Alano",
+"madreAlt": 2357,
+"madreKm": 0.75,
+"masAltoKm": 0.25,
 "malla": "30 m"
 },
 {
@@ -7336,6 +8197,20 @@
 "malla": "30 m"
 },
 {
+"id": "labata",
+"prom": 49,
+"col": 2170,
+"colLon": -0.57653,
+"colLat": 42.78153,
+"cimaMalla": 2195.5,
+"madre": "ruable-d-o-bozo",
+"madreNombre": "Ruable d'o Bozo",
+"madreAlt": 2419,
+"madreKm": 0.49,
+"masAltoKm": 0.24,
+"malla": "30 m"
+},
+{
 "id": "picos-de-baguer",
 "prom": null,
 "nota": "no se distingue",
@@ -7371,6 +8246,20 @@
 "malla": "30 m"
 },
 {
+"id": "pic-d-aillary",
+"prom": 199,
+"col": 2016,
+"colLon": -0.60403,
+"colLat": 42.82597,
+"cimaMalla": 2209.4,
+"madre": "punta-gabedallo",
+"madreNombre": "Punta Gabedallo",
+"madreAlt": 2240,
+"madreKm": 2.99,
+"masAltoKm": 3.06,
+"malla": "30 m"
+},
+{
 "id": "campana-d-aneou",
 "prom": 52,
 "col": 2162,
@@ -7399,10 +8288,52 @@
 "malla": "30 m"
 },
 {
+"id": "pena-de-marcanton",
+"prom": 104,
+"col": 2108,
+"colLon": -0.64875,
+"colLat": 42.81875,
+"cimaMalla": 2199.3,
+"madre": "pico-netera",
+"madreNombre": "Pico Ñetera",
+"madreAlt": 2289,
+"madreKm": 0.91,
+"masAltoKm": 0.56,
+"malla": "30 m"
+},
+{
 "id": "el-mandilar",
 "prom": null,
 "nota": "no se distingue",
 "con": "punta-narronal-2",
+"malla": "30 m"
+},
+{
+"id": "anzotiello",
+"prom": 28,
+"col": 2183,
+"colLon": -0.74819,
+"colLat": 42.87819,
+"cimaMalla": 2201.0,
+"madre": "mallo-gorreta",
+"madreNombre": "Mallo Gorreta",
+"madreAlt": 2266,
+"madreKm": 0.28,
+"masAltoKm": 0.31,
+"malla": "30 m"
+},
+{
+"id": "pic-d-arlet",
+"prom": 116,
+"col": 2091,
+"colLon": -0.61931,
+"colLat": 42.83764,
+"cimaMalla": 2201.1,
+"madre": "pic-d-aillary",
+"madreNombre": "Pic d'Aillary",
+"madreAlt": 2215,
+"madreKm": 1.26,
+"masAltoKm": 1.25,
 "malla": "30 m"
 },
 {
@@ -7497,6 +8428,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-d-oza",
+"prom": 34,
+"col": 2159,
+"colLon": -0.67764,
+"colLat": 42.82458,
+"cimaMalla": 2169.3,
+"madre": "castiello-dacher",
+"madreNombre": "Castiello d’Acher",
+"madreAlt": 2384,
+"madreKm": 1.01,
+"masAltoKm": 0.35,
+"malla": "30 m"
+},
+{
 "id": "pena-gabacha",
 "prom": null,
 "nota": "no se distingue",
@@ -7518,6 +8463,34 @@
 "malla": "30 m"
 },
 {
+"id": "pena-fumia",
+"prom": 33,
+"col": 2156,
+"colLon": -0.76042,
+"colLat": 42.82069,
+"cimaMalla": 2176.3,
+"madre": "pena-forca",
+"madreNombre": "Peña Forca",
+"madreAlt": 2390,
+"madreKm": 0.67,
+"masAltoKm": 0.23,
+"malla": "30 m"
+},
+{
+"id": "pena-blanca-7",
+"prom": 38,
+"col": 2151,
+"colLon": -0.53625,
+"colLat": 42.74569,
+"cimaMalla": 2168.9,
+"madre": "mallo-de-chan-de-sastre",
+"madreNombre": "Mallo de Chan de Sastre",
+"madreAlt": 2248,
+"madreKm": 0.66,
+"masAltoKm": 0.23,
+"malla": "30 m"
+},
+{
 "id": "pico-del-ministirio",
 "prom": 21,
 "col": 2166,
@@ -7532,6 +8505,20 @@
 "malla": "30 m"
 },
 {
+"id": "petraficha",
+"prom": 172,
+"col": 2014,
+"colLon": -0.75069,
+"colLat": 42.87486,
+"cimaMalla": 2183.7,
+"madre": "anzotiello",
+"madreNombre": "Anzotiello",
+"madreAlt": 2211,
+"madreKm": 1.3,
+"masAltoKm": 1.28,
+"malla": "30 m"
+},
+{
 "id": "pena-dero-calzin-e",
 "prom": 133,
 "col": 2049,
@@ -7543,6 +8530,20 @@
 "madreAlt": 2353,
 "madreKm": 1.25,
 "masAltoKm": 0.99,
+"malla": "30 m"
+},
+{
+"id": "punta-quimboa",
+"prom": 27,
+"col": 2155,
+"colLon": -0.74458,
+"colLat": 42.86819,
+"cimaMalla": 2182.2,
+"madre": "petraficha",
+"madreNombre": "Petraficha",
+"madreAlt": 2186,
+"madreKm": 0.48,
+"masAltoKm": 0.42,
 "malla": "30 m"
 },
 {
@@ -7585,6 +8586,34 @@
 "madreAlt": 2182,
 "madreKm": 0.33,
 "masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "pic-rouge",
+"prom": 56,
+"col": 2121,
+"colLon": -0.63181,
+"colLat": 42.84958,
+"cimaMalla": 2156.7,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.43,
+"malla": "30 m"
+},
+{
+"id": "chipeta-alto",
+"prom": 212,
+"col": 1963,
+"colLon": -0.73625,
+"colLat": 42.86042,
+"cimaMalla": 2165.6,
+"madre": "petraficha",
+"madreNombre": "Petraficha",
+"madreAlt": 2186,
+"madreKm": 1.83,
+"masAltoKm": 1.74,
 "malla": "30 m"
 },
 {
@@ -7644,6 +8673,48 @@
 "malla": "30 m"
 },
 {
+"id": "pic-lariste",
+"prom": 226,
+"col": 1942,
+"colLon": -0.66597,
+"colLat": 42.87431,
+"cimaMalla": 2154.5,
+"madre": "pic-rouge",
+"madreNombre": "Pic Rouge",
+"madreAlt": 2177,
+"madreKm": 5.27,
+"masAltoKm": 5.3,
+"malla": "30 m"
+},
+{
+"id": "pico-mesola",
+"prom": 170,
+"col": 1998,
+"colLon": -0.60403,
+"colLat": 42.76403,
+"cimaMalla": 2161.4,
+"madre": "punta-alta-de-napazal",
+"madreNombre": "Punta Alta de Napazal",
+"madreAlt": 2363,
+"madreKm": 2.75,
+"masAltoKm": 2.41,
+"malla": "30 m"
+},
+{
+"id": "pena-dalano",
+"prom": 240,
+"col": 1922,
+"colLon": -0.78736,
+"colLat": 42.83597,
+"cimaMalla": 2154.5,
+"madre": "mazandu",
+"madreNombre": "Mazandú",
+"madreAlt": 2222,
+"madreKm": 3.14,
+"masAltoKm": 2.78,
+"malla": "30 m"
+},
+{
 "id": "mallo-gran",
 "prom": null,
 "nota": "no se distingue",
@@ -7672,6 +8743,20 @@
 "malla": "30 m"
 },
 {
+"id": "cima-de-arre",
+"prom": 30,
+"col": 2127,
+"colLon": -0.60181,
+"colLat": 42.83069,
+"cimaMalla": 2155.1,
+"madre": "pic-d-arlet",
+"madreNombre": "Pic d'Arlet",
+"madreAlt": 2207,
+"madreKm": 1.05,
+"masAltoKm": 0.7,
+"malla": "30 m"
+},
+{
 "id": "pena-rapita",
 "prom": 33,
 "col": 2123,
@@ -7686,10 +8771,52 @@
 "malla": "30 m"
 },
 {
+"id": "puntal-alto-de-lo-foraton",
+"prom": 139,
+"col": 2015,
+"colLon": -0.64986,
+"colLat": 42.77681,
+"cimaMalla": 2151.9,
+"madre": "punta-bisaurin",
+"madreNombre": "Punta Bisaurín",
+"madreAlt": 2670,
+"madreKm": 2.37,
+"masAltoKm": 1.41,
+"malla": "30 m"
+},
+{
+"id": "pic-d-arri",
+"prom": 13,
+"col": 2141,
+"colLon": -0.60208,
+"colLat": 42.82875,
+"cimaMalla": 2150.7,
+"madre": "cima-de-arre",
+"madreNombre": "Cima de Arre",
+"madreAlt": 2157,
+"madreKm": 0.26,
+"masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
 "id": "grallera-calva",
 "prom": null,
 "nota": "no se distingue",
 "con": "punta-calva",
+"malla": "30 m"
+},
+{
+"id": "punta-acuta",
+"prom": 85,
+"col": 2064,
+"colLon": -0.66458,
+"colLat": 42.76958,
+"cimaMalla": 2145.6,
+"madre": "puntal-alto-de-lo-foraton",
+"madreNombre": "Puntal Alto de lo Foratón",
+"madreAlt": 2154,
+"madreKm": 2.21,
+"masAltoKm": 2.19,
 "malla": "30 m"
 },
 {
@@ -7728,6 +8855,20 @@
 "malla": "30 m"
 },
 {
+"id": "arralla-de-las-foyas",
+"prom": 143,
+"col": 2004,
+"colLon": -0.69486,
+"colLat": 42.87903,
+"cimaMalla": 2134.9,
+"madre": "pic-lariste",
+"madreNombre": "Pic Lariste",
+"madreAlt": 2168,
+"madreKm": 1.79,
+"masAltoKm": 1.82,
+"malla": "30 m"
+},
+{
 "id": "punta-de-burrambalo",
 "prom": 146,
 "col": 2000,
@@ -7739,6 +8880,20 @@
 "madreAlt": 2198,
 "madreKm": 2.41,
 "masAltoKm": 2.19,
+"malla": "30 m"
+},
+{
+"id": "pentecostes-de-alano",
+"prom": 30,
+"col": 2115,
+"colLon": -0.76903,
+"colLat": 42.83486,
+"cimaMalla": 2134.2,
+"madre": "mazandu",
+"madreNombre": "Mazandú",
+"madreAlt": 2222,
+"madreKm": 0.78,
+"masAltoKm": 0.34,
 "malla": "30 m"
 },
 {
@@ -7756,6 +8911,34 @@
 "malla": "30 m"
 },
 {
+"id": "punta-mentar",
+"prom": 41,
+"col": 2102,
+"colLon": -0.68486,
+"colLat": 42.76403,
+"cimaMalla": 2106.3,
+"madre": "punta-acuta",
+"madreNombre": "Punta Acuta",
+"madreAlt": 2149,
+"madreKm": 0.36,
+"masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
+"id": "punta-gabas",
+"prom": 34,
+"col": 2109,
+"colLon": -0.67542,
+"colLat": 42.76597,
+"cimaMalla": 2142.4,
+"madre": "punta-acuta",
+"madreNombre": "Punta Acuta",
+"madreAlt": 2149,
+"madreKm": 0.99,
+"masAltoKm": 0.98,
+"malla": "30 m"
+},
+{
 "id": "cerro-de-las-canales",
 "prom": 110,
 "col": 2031,
@@ -7767,6 +8950,34 @@
 "madreAlt": 2198,
 "madreKm": 1.1,
 "masAltoKm": 0.91,
+"malla": "30 m"
+},
+{
+"id": "pic-d-arnousse-norte",
+"prom": 35,
+"col": 2106,
+"colLon": -0.52569,
+"colLat": 42.80986,
+"cimaMalla": 2127.1,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "pico-de-arnousse",
+"prom": 64,
+"col": 2077,
+"colLon": -0.52403,
+"colLat": 42.81236,
+"cimaMalla": 2129.8,
+"madre": "pico-benou",
+"madreNombre": "Pico Bénou",
+"madreAlt": 2267,
+"madreKm": 1.11,
+"masAltoKm": 0.7,
 "malla": "30 m"
 },
 {
@@ -7798,6 +9009,20 @@
 "malla": "30 m"
 },
 {
+"id": "pic-du-lac-de-la-chourique",
+"prom": 145,
+"col": 1993,
+"colLon": -0.70125,
+"colLat": 42.88208,
+"cimaMalla": 2072.8,
+"madre": "arralla-de-las-foyas",
+"madreNombre": "Arralla de las Foyas",
+"madreAlt": 2147,
+"madreKm": 0.74,
+"masAltoKm": 0.66,
+"malla": "30 m"
+},
+{
 "id": "pico-d-enmedio-punta-estaton",
 "prom": 30,
 "col": 2107,
@@ -7823,6 +9048,13 @@
 "madreAlt": 2267,
 "madreKm": 0.67,
 "masAltoKm": 0.36,
+"malla": "30 m"
+},
+{
+"id": "cima-blanca",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-aguerri",
 "malla": "30 m"
 },
 {
@@ -7854,6 +9086,62 @@
 "malla": "30 m"
 },
 {
+"id": "a-ralla-d-alano",
+"prom": 73,
+"col": 2058,
+"colLon": -0.77153,
+"colLat": 42.82931,
+"cimaMalla": 2120.5,
+"madre": "pentecostes-de-alano",
+"madreNombre": "Pentecostés de Alano",
+"madreAlt": 2145,
+"madreKm": 0.92,
+"masAltoKm": 0.66,
+"malla": "30 m"
+},
+{
+"id": "pic-pourtet-ouvert",
+"prom": 89,
+"col": 2042,
+"colLon": -0.68236,
+"colLat": 42.88292,
+"cimaMalla": 2075.4,
+"madre": "pic-lariste",
+"madreNombre": "Pic Lariste",
+"madreAlt": 2168,
+"madreKm": 0.7,
+"masAltoKm": 0.6,
+"malla": "30 m"
+},
+{
+"id": "punta-de-las-blancas",
+"prom": 29,
+"col": 2102,
+"colLon": -0.56792,
+"colLat": 42.71931,
+"cimaMalla": 2128.3,
+"madre": "punta-d-a-madalena",
+"madreNombre": "Punta d'a Madalena",
+"madreAlt": 2283,
+"madreKm": 1.66,
+"masAltoKm": 0.67,
+"malla": "30 m"
+},
+{
+"id": "loma-verde",
+"prom": 22,
+"col": 2107,
+"colLon": -0.56069,
+"colLat": 42.77486,
+"cimaMalla": 2124.2,
+"madre": "cordon-de-la-zapatilla",
+"madreNombre": "Cordón de la Zapatilla",
+"madreAlt": 2255,
+"madreKm": 0.5,
+"masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
 "id": "a-forqueta",
 "prom": 49,
 "col": 2079,
@@ -7872,6 +9160,20 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "a-moleta",
+"malla": "30 m"
+},
+{
+"id": "mallo-d-as-foyas",
+"prom": 46,
+"col": 2080,
+"colLon": -0.70014,
+"colLat": 42.87708,
+"cimaMalla": 2118.3,
+"madre": "arralla-de-las-foyas",
+"madreNombre": "Arralla de las Foyas",
+"madreAlt": 2147,
+"madreKm": 0.35,
+"masAltoKm": 0.39,
 "malla": "30 m"
 },
 {
@@ -7914,6 +9216,34 @@
 "madreAlt": 2169,
 "madreKm": 1.62,
 "masAltoKm": 0.4,
+"malla": "30 m"
+},
+{
+"id": "petrito",
+"prom": 21,
+"col": 2097,
+"colLon": -0.60569,
+"colLat": 42.74625,
+"cimaMalla": 2115.2,
+"madre": "pico-mesola",
+"madreNombre": "Pico Mesola",
+"madreAlt": 2168,
+"madreKm": 0.36,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "punta-napazal",
+"prom": 74,
+"col": 2043,
+"colLon": -0.60375,
+"colLat": 42.74986,
+"cimaMalla": 2116.4,
+"madre": "pico-mesola",
+"madreNombre": "Pico Mesola",
+"madreAlt": 2168,
+"madreKm": 1.1,
+"masAltoKm": 1.05,
 "malla": "30 m"
 },
 {
@@ -8015,6 +9345,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-o-riste",
+"prom": 150,
+"col": 1962,
+"colLon": -0.65764,
+"colLat": 42.86042,
+"cimaMalla": 2106.8,
+"madre": "pic-rouge",
+"madreNombre": "Pic Rouge",
+"madreAlt": 2177,
+"madreKm": 2.99,
+"masAltoKm": 2.64,
+"malla": "30 m"
+},
+{
 "id": "fananizas-bajas",
 "prom": 32,
 "col": 2079,
@@ -8057,6 +9401,20 @@
 "malla": "30 m"
 },
 {
+"id": "pic-de-burcq",
+"prom": 42,
+"col": 2063,
+"colLon": -0.66181,
+"colLat": 42.86903,
+"cimaMalla": 2092.2,
+"madre": "punta-o-riste",
+"madreNombre": "Punta O Risté",
+"madreAlt": 2112,
+"madreKm": 0.39,
+"masAltoKm": 0.35,
+"malla": "30 m"
+},
+{
 "id": "punta-estibillon",
 "prom": 32,
 "col": 2072,
@@ -8071,6 +9429,20 @@
 "malla": "30 m"
 },
 {
+"id": "paquiza-linzola",
+"prom": 201,
+"col": 1903,
+"colLon": -0.76708,
+"colLat": 42.90764,
+"cimaMalla": 2099.0,
+"madre": "ukerdi",
+"madreNombre": "Ukerdi",
+"madreAlt": 2252,
+"madreKm": 2.47,
+"masAltoKm": 2.09,
+"malla": "30 m"
+},
+{
 "id": "pico-la-tira",
 "prom": 17,
 "col": 2085,
@@ -8082,6 +9454,20 @@
 "madreAlt": 2323,
 "madreKm": 1.07,
 "masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
+"id": "punta-taxeras",
+"prom": 90,
+"col": 2012,
+"colLon": -0.79236,
+"colLat": 42.84153,
+"cimaMalla": 2039.0,
+"madre": "pena-dalano",
+"madreNombre": "Peña d’Alano",
+"madreAlt": 2162,
+"madreKm": 0.5,
+"masAltoKm": 0.19,
 "malla": "30 m"
 },
 {
@@ -8169,6 +9555,48 @@
 "malla": "30 m"
 },
 {
+"id": "trasveral",
+"prom": 35,
+"col": 2062,
+"colLon": -0.79819,
+"colLat": 42.83958,
+"cimaMalla": 2083.8,
+"madre": "pena-dalano",
+"madreNombre": "Peña d’Alano",
+"madreAlt": 2162,
+"madreKm": 0.62,
+"masAltoKm": 0.47,
+"malla": "30 m"
+},
+{
+"id": "pic-pourtet-barrat",
+"prom": 75,
+"col": 2022,
+"colLon": -0.68958,
+"colLat": 42.88097,
+"cimaMalla": 2038.6,
+"madre": "pic-pourtet-ouvert",
+"madreNombre": "Pic Pourtet Ouvert",
+"madreAlt": 2131,
+"madreKm": 0.57,
+"masAltoKm": 0.56,
+"malla": "30 m"
+},
+{
+"id": "borreguil-d-a-cuca",
+"prom": 38,
+"col": 2058,
+"colLon": -0.53597,
+"colLat": 42.75542,
+"cimaMalla": 2084.9,
+"madre": "pico-tortiellas",
+"madreNombre": "Pico Tortiellas",
+"madreAlt": 2358,
+"madreKm": 1.09,
+"masAltoKm": 0.7,
+"malla": "30 m"
+},
+{
 "id": "tozal-de-san-vicenda",
 "prom": 87,
 "col": 2005,
@@ -8197,6 +9625,27 @@
 "malla": "30 m"
 },
 {
+"id": "punta-del-cuello-bozo",
+"prom": 32,
+"col": 2056,
+"colLon": -0.60569,
+"colLat": 42.75847,
+"cimaMalla": 2082.7,
+"madre": "punta-napazal",
+"madreNombre": "Punta Napazal",
+"madreAlt": 2117,
+"madreKm": 0.57,
+"masAltoKm": 0.39,
+"malla": "30 m"
+},
+{
+"id": "la-punta-valenzia",
+"prom": null,
+"nota": "no se distingue",
+"con": "cima-blanca",
+"malla": "30 m"
+},
+{
 "id": "tossal-de-la-raspa",
 "prom": 50,
 "col": 2035,
@@ -8208,6 +9657,34 @@
 "madreAlt": 2858,
 "madreKm": 2.48,
 "masAltoKm": 0.77,
+"malla": "30 m"
+},
+{
+"id": "agullas-d-alano",
+"prom": 45,
+"col": 2038,
+"colLon": -0.77819,
+"colLat": 42.83819,
+"cimaMalla": 2059.4,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "pic-de-la-chourique",
+"prom": 117,
+"col": 1965,
+"colLon": -0.72069,
+"colLat": 42.88819,
+"cimaMalla": 2043.5,
+"madre": "pic-du-lac-de-la-chourique",
+"madreNombre": "Pic du Lac de la Chourique",
+"madreAlt": 2138,
+"madreKm": 1.69,
+"masAltoKm": 1.52,
 "malla": "30 m"
 },
 {
@@ -8225,6 +9702,34 @@
 "malla": "150 m"
 },
 {
+"id": "achar-dalano",
+"prom": 119,
+"col": 1959,
+"colLon": -0.78792,
+"colLat": 42.84069,
+"cimaMalla": 2029.0,
+"madre": "punta-taxeras",
+"madreNombre": "Punta Taxeras",
+"madreAlt": 2102,
+"madreKm": 0.5,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "punta-cristian",
+"prom": 59,
+"col": 2019,
+"colLon": -0.67625,
+"colLat": 42.88125,
+"cimaMalla": 2071.2,
+"madre": "pic-lariste",
+"madreNombre": "Pic Lariste",
+"madreAlt": 2168,
+"madreKm": 0.73,
+"masAltoKm": 0.59,
+"malla": "30 m"
+},
+{
 "id": "sestral-baxo",
 "prom": 55,
 "col": 2019,
@@ -8236,6 +9741,20 @@
 "madreAlt": 2101,
 "madreKm": 0.74,
 "masAltoKm": 0.71,
+"malla": "30 m"
+},
+{
+"id": "ruzquia",
+"prom": 52,
+"col": 2022,
+"colLon": -0.80208,
+"colLat": 42.84514,
+"cimaMalla": 2063.9,
+"madre": "pena-dalano",
+"madreNombre": "Peña d’Alano",
+"madreAlt": 2162,
+"madreKm": 0.55,
+"masAltoKm": 0.37,
 "malla": "30 m"
 },
 {
@@ -8260,6 +9779,34 @@
 "malla": "30 m"
 },
 {
+"id": "sayestico",
+"prom": 12,
+"col": 2060,
+"colLon": -0.73208,
+"colLat": 42.85097,
+"cimaMalla": 2071.5,
+"madre": "chipeta-alto",
+"madreNombre": "Chipeta Alto",
+"madreAlt": 2175,
+"madreKm": 0.54,
+"masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
+"id": "quimboa-baxo",
+"prom": 127,
+"col": 1944,
+"colLon": -0.76264,
+"colLat": 42.86958,
+"cimaMalla": 2059.5,
+"madre": "punta-quimboa",
+"madreNombre": "Punta Quimboa",
+"madreAlt": 2182,
+"madreKm": 1.84,
+"masAltoKm": 1.28,
+"malla": "30 m"
+},
+{
 "id": "forqueta-dos-guertos",
 "prom": null,
 "nota": "no se distingue",
@@ -8271,6 +9818,48 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "mondiciero",
+"malla": "30 m"
+},
+{
+"id": "pena-d-o-cuello-marcon",
+"prom": 103,
+"col": 1962,
+"colLon": -0.79097,
+"colLat": 42.82792,
+"cimaMalla": 2057.8,
+"madre": "trasveral",
+"madreNombre": "Trasveral",
+"madreAlt": 2097,
+"madreKm": 1.73,
+"masAltoKm": 1.62,
+"malla": "30 m"
+},
+{
+"id": "punta-del-huerto",
+"prom": 39,
+"col": 2023,
+"colLon": -0.63514,
+"colLat": 42.81903,
+"cimaMalla": 2051.0,
+"madre": "pena-de-marcanton",
+"madreNombre": "Peña de Marcantón",
+"madreAlt": 2212,
+"madreKm": 1.18,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "cuta-baxa",
+"prom": 25,
+"col": 2037,
+"colLon": -0.68875,
+"colLat": 42.77125,
+"cimaMalla": 2059.2,
+"madre": "punta-acuta",
+"madreNombre": "Punta Acuta",
+"madreAlt": 2149,
+"madreKm": 1.1,
+"masAltoKm": 0.72,
 "malla": "30 m"
 },
 {
@@ -8344,6 +9933,48 @@
 "malla": "30 m"
 },
 {
+"id": "tobazo",
+"prom": 72,
+"col": 1977,
+"colLon": -0.54653,
+"colLat": 42.77292,
+"cimaMalla": 2036.5,
+"madre": "la-zapatilla",
+"madreNombre": "La Zapatilla",
+"madreAlt": 2225,
+"madreKm": 1.0,
+"masAltoKm": 0.49,
+"malla": "30 m"
+},
+{
+"id": "estriviella",
+"prom": 50,
+"col": 1998,
+"colLon": -0.75069,
+"colLat": 42.83542,
+"cimaMalla": 2042.2,
+"madre": "punta-d-o-ricon-d-alano",
+"madreNombre": "Punta d'o Ricón d'Alano",
+"madreAlt": 2357,
+"madreKm": 0.56,
+"masAltoKm": 0.35,
+"malla": "30 m"
+},
+{
+"id": "crestas-d-o-gallo",
+"prom": 24,
+"col": 2016,
+"colLon": -0.65125,
+"colLat": 42.76597,
+"cimaMalla": 2032.3,
+"madre": "puntal-alto-de-lo-foraton",
+"madreNombre": "Puntal Alto de lo Foratón",
+"madreAlt": 2154,
+"madreKm": 0.75,
+"masAltoKm": 0.31,
+"malla": "30 m"
+},
+{
 "id": "punta-fazera",
 "prom": 11,
 "col": 2025,
@@ -8372,6 +10003,20 @@
 "malla": "30 m"
 },
 {
+"id": "zotarola",
+"prom": 41,
+"col": 1995,
+"colLon": -0.79736,
+"colLat": 42.83514,
+"cimaMalla": 2027.7,
+"madre": "trasveral",
+"madreNombre": "Trasveral",
+"madreAlt": 2097,
+"madreKm": 0.5,
+"masAltoKm": 0.37,
+"malla": "30 m"
+},
+{
 "id": "punta-manchoya",
 "prom": 440,
 "col": 1595,
@@ -8397,6 +10042,20 @@
 "madreAlt": 2203,
 "madreKm": 2.84,
 "masAltoKm": 2.35,
+"malla": "30 m"
+},
+{
+"id": "campanil",
+"prom": 16,
+"col": 2018,
+"colLon": -0.66625,
+"colLat": 42.82792,
+"cimaMalla": 2023.3,
+"madre": "castiello-dacher",
+"madreNombre": "Castiello d’Acher",
+"madreAlt": 2384,
+"madreKm": 0.66,
+"masAltoKm": 0.29,
 "malla": "30 m"
 },
 {
@@ -8442,6 +10101,34 @@
 "malla": "30 m"
 },
 {
+"id": "sesin",
+"prom": 24,
+"col": 1998,
+"colLon": -0.55875,
+"colLat": 42.71403,
+"cimaMalla": 2021.2,
+"madre": "punta-de-las-blancas",
+"madreNombre": "Punta de las Blancas",
+"madreAlt": 2131,
+"madreKm": 0.99,
+"masAltoKm": 0.4,
+"malla": "30 m"
+},
+{
+"id": "cotdoquy",
+"prom": 50,
+"col": 1970,
+"colLon": -0.66819,
+"colLat": 42.87625,
+"cimaMalla": 2007.3,
+"madre": "punta-cristian",
+"madreNombre": "Punta Cristián",
+"madreAlt": 2078,
+"madreKm": 0.65,
+"masAltoKm": 0.6,
+"malla": "30 m"
+},
+{
 "id": "montana-de-ballabriga",
 "prom": 121,
 "col": 1896,
@@ -8453,6 +10140,48 @@
 "madreAlt": 2346,
 "madreKm": 2.92,
 "masAltoKm": 1.7,
+"malla": "30 m"
+},
+{
+"id": "pinare",
+"prom": 1,
+"col": 2016,
+"colLon": -0.77514,
+"colLat": 42.86958,
+"cimaMalla": 2018.9,
+"madre": "quimboa-baxo",
+"madreNombre": "Quimboa Baxo",
+"madreAlt": 2071,
+"madreKm": 0.74,
+"masAltoKm": 0.44,
+"malla": "30 m"
+},
+{
+"id": "pico-sayerri",
+"prom": 31,
+"col": 1985,
+"colLon": -0.57569,
+"colLat": 42.71125,
+"cimaMalla": 2012.0,
+"madre": "punta-de-las-blancas",
+"madreNombre": "Punta de las Blancas",
+"madreAlt": 2131,
+"madreKm": 1.36,
+"masAltoKm": 0.87,
+"malla": "30 m"
+},
+{
+"id": "punta-de-la-cuta",
+"prom": 75,
+"col": 1941,
+"colLon": -0.69542,
+"colLat": 42.77625,
+"cimaMalla": 2007.9,
+"madre": "cuta-baxa",
+"madreNombre": "Cuta Baxa",
+"madreAlt": 2062,
+"madreKm": 0.79,
+"masAltoKm": 0.61,
 "malla": "30 m"
 },
 {
@@ -8638,6 +10367,20 @@
 "malla": "30 m"
 },
 {
+"id": "pena-oroel",
+"prom": 902,
+"col": 867,
+"colLon": -0.48014,
+"colLat": 42.54847,
+"cimaMalla": 1764.4,
+"madre": "bacun-sur-vertice",
+"madreNombre": "Bacún Sur (Vértice)",
+"madreAlt": 2113,
+"madreKm": 17.59,
+"masAltoKm": 16.37,
+"malla": "30 m"
+},
+{
 "id": "pico-fraxinito",
 "prom": 175,
 "col": 1563,
@@ -8743,6 +10486,20 @@
 "malla": "30 m"
 },
 {
+"id": "puxilibro",
+"prom": 490,
+"col": 1105,
+"colLon": -0.47597,
+"colLat": 42.31958,
+"cimaMalla": 1593.0,
+"madre": "bones",
+"madreNombre": "Bonés",
+"madreAlt": 1608,
+"madreKm": 11.11,
+"masAltoKm": 11.0,
+"malla": "30 m"
+},
+{
 "id": "pico-de-la-calma-alta",
 "prom": 476,
 "col": 1105,
@@ -8782,6 +10539,20 @@
 "madreAlt": 1581,
 "madreKm": 3.01,
 "masAltoKm": 1.6,
+"malla": "30 m"
+},
+{
+"id": "caballera",
+"prom": 187,
+"col": 1378,
+"colLon": -0.55292,
+"colLat": 42.33347,
+"cimaMalla": 1562.8,
+"madre": "puxilibro",
+"madreNombre": "Puxilibro",
+"madreAlt": 1595,
+"madreKm": 6.64,
+"masAltoKm": 6.43,
 "malla": "30 m"
 },
 {
@@ -8841,6 +10612,62 @@
 "malla": "30 m"
 },
 {
+"id": "punta-cuculo",
+"prom": 504,
+"col": 1048,
+"colLon": -0.55208,
+"colLat": 42.50292,
+"cimaMalla": 1545.4,
+"madre": "pena-oroel",
+"madreNombre": "Peña Oroel",
+"madreAlt": 1769,
+"madreKm": 13.83,
+"masAltoKm": 13.53,
+"malla": "30 m"
+},
+{
+"id": "san-salvador",
+"prom": 172,
+"col": 1375,
+"colLon": -0.71625,
+"colLat": 42.51542,
+"cimaMalla": 1541.9,
+"madre": "punta-cuculo",
+"madreNombre": "Punta Cuculo",
+"madreAlt": 1552,
+"madreKm": 1.64,
+"masAltoKm": 1.63,
+"malla": "30 m"
+},
+{
+"id": "zerro-puzos",
+"prom": 57,
+"col": 1490,
+"colLon": -0.59208,
+"colLat": 42.34236,
+"cimaMalla": 1544.3,
+"madre": "puxilibro",
+"madreNombre": "Puxilibro",
+"madreAlt": 1595,
+"madreKm": 1.28,
+"masAltoKm": 1.05,
+"malla": "30 m"
+},
+{
+"id": "la-atalaya",
+"prom": 51,
+"col": 1491,
+"colLon": -0.72014,
+"colLat": 42.51097,
+"cimaMalla": 1499.5,
+"madre": "san-salvador",
+"madreNombre": "San Salvador",
+"madreAlt": 1547,
+"madreKm": 0.2,
+"masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
 "id": "forcas",
 "prom": null,
 "nota": "no se distingue",
@@ -8866,6 +10693,20 @@
 "madreAlt": 1552,
 "madreKm": 0.31,
 "masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
+"id": "punta-zolles",
+"prom": 33,
+"col": 1500,
+"colLon": -0.58569,
+"colLat": 42.34153,
+"cimaMalla": 1524.8,
+"madre": "zerro-puzos",
+"madreNombre": "Zerro Puzos",
+"madreAlt": 1547,
+"madreKm": 0.55,
+"masAltoKm": 0.4,
 "malla": "30 m"
 },
 {
@@ -8911,6 +10752,48 @@
 "malla": "30 m"
 },
 {
+"id": "naviella",
+"prom": 10,
+"col": 1507,
+"colLon": -0.52708,
+"colLat": 42.30681,
+"cimaMalla": 1514.9,
+"madre": "caballera",
+"madreNombre": "Caballera",
+"madreAlt": 1565,
+"madreKm": 0.73,
+"masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "la-cantera",
+"prom": 19,
+"col": 1497,
+"colLon": -0.71514,
+"colLat": 42.51042,
+"cimaMalla": 1512.4,
+"madre": "san-salvador",
+"madreNombre": "San Salvador",
+"madreAlt": 1547,
+"madreKm": 0.5,
+"masAltoKm": 0.34,
+"malla": "30 m"
+},
+{
+"id": "las-bombas",
+"prom": 23,
+"col": 1488,
+"colLon": -0.71042,
+"colLat": 42.50931,
+"cimaMalla": 1503.8,
+"madre": "la-cantera",
+"madreNombre": "la Cantera",
+"madreAlt": 1516,
+"madreKm": 0.41,
+"masAltoKm": 0.45,
+"malla": "30 m"
+},
+{
 "id": "punta-sur-2",
 "prom": 22,
 "col": 1485,
@@ -8936,6 +10819,20 @@
 "madreAlt": 1696,
 "madreKm": 0.86,
 "masAltoKm": 0.37,
+"malla": "30 m"
+},
+{
+"id": "donueso",
+"prom": 115,
+"col": 1384,
+"colLon": -0.62097,
+"colLat": 42.34208,
+"cimaMalla": 1495.0,
+"madre": "puxilibro",
+"madreNombre": "Puxilibro",
+"madreAlt": 1595,
+"madreKm": 3.72,
+"masAltoKm": 3.44,
 "malla": "30 m"
 },
 {
@@ -9009,6 +10906,20 @@
 "malla": "30 m"
 },
 {
+"id": "tozal-de-la-pardina-o-lomaplana",
+"prom": 103,
+"col": 1380,
+"colLon": -0.55514,
+"colLat": 42.33764,
+"cimaMalla": 1466.2,
+"madre": "zerro-puzos",
+"madreNombre": "Zerro Puzos",
+"madreAlt": 1547,
+"madreKm": 2.35,
+"masAltoKm": 1.27,
+"malla": "30 m"
+},
+{
 "id": "ereta-de-la-viana",
 "prom": 265,
 "col": 1212,
@@ -9023,6 +10934,34 @@
 "malla": "30 m"
 },
 {
+"id": "zerro-postillero",
+"prom": 51,
+"col": 1426,
+"colLon": -0.57431,
+"colLat": 42.33903,
+"cimaMalla": 1480.9,
+"madre": "zerro-puzos",
+"madreNombre": "Zerro Puzos",
+"madreAlt": 1547,
+"madreKm": 0.98,
+"masAltoKm": 0.5,
+"malla": "30 m"
+},
+{
+"id": "tozal-royo-o-marcovil",
+"prom": 84,
+"col": 1387,
+"colLon": -0.56181,
+"colLat": 42.33736,
+"cimaMalla": 1467.0,
+"madre": "zerro-postillero",
+"madreNombre": "Zerro Postillero",
+"madreAlt": 1477,
+"madreKm": 1.17,
+"masAltoKm": 1.07,
+"malla": "30 m"
+},
+{
 "id": "pena-vuelta",
 "prom": 11,
 "col": 1458,
@@ -9034,6 +10973,20 @@
 "madreAlt": 1599,
 "madreKm": 1.72,
 "masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "punta-d-a-tallada",
+"prom": 57,
+"col": 1412,
+"colLon": -0.61097,
+"colLat": 42.34097,
+"cimaMalla": 1462.2,
+"madre": "puxilibro",
+"madreNombre": "Puxilibro",
+"madreAlt": 1595,
+"madreKm": 1.5,
+"masAltoKm": 1.05,
 "malla": "30 m"
 },
 {
@@ -9198,6 +11151,13 @@
 "malla": "30 m"
 },
 {
+"id": "zerro-d-a-collada",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-d-a-tallada",
+"malla": "30 m"
+},
+{
 "id": "tozal-dasba",
 "prom": 146,
 "col": 1292,
@@ -9237,6 +11197,20 @@
 "madreAlt": 1532,
 "madreKm": 1.02,
 "masAltoKm": 0.29,
+"malla": "30 m"
+},
+{
+"id": "zerro-layan",
+"prom": 89,
+"col": 1344,
+"colLon": -0.64819,
+"colLat": 42.34264,
+"cimaMalla": 1430.4,
+"madre": "donueso",
+"madreNombre": "Donueso",
+"madreAlt": 1499,
+"madreKm": 0.88,
+"masAltoKm": 0.65,
 "malla": "30 m"
 },
 {
@@ -9314,6 +11288,13 @@
 "madreAlt": 1433,
 "madreKm": 0.93,
 "masAltoKm": 0.77,
+"malla": "30 m"
+},
+{
+"id": "torretones",
+"prom": null,
+"nota": "no se distingue",
+"con": "las-bombas",
 "malla": "30 m"
 },
 {
@@ -9398,6 +11379,20 @@
 "madreAlt": 1467,
 "madreKm": 1.33,
 "masAltoKm": 0.54,
+"malla": "30 m"
+},
+{
+"id": "portillo-chara",
+"prom": null,
+"nota": "no se distingue",
+"con": "puxilibro",
+"malla": "30 m"
+},
+{
+"id": "foya-pregunteria",
+"prom": null,
+"nota": "no se distingue",
+"con": "las-bombas",
 "malla": "30 m"
 },
 {
@@ -9548,6 +11543,34 @@
 "malla": "30 m"
 },
 {
+"id": "borbuse",
+"prom": 12,
+"col": 1362,
+"colLon": -0.52375,
+"colLat": 42.35736,
+"cimaMalla": 1371.5,
+"madre": "san-anton",
+"madreNombre": "San Antón",
+"madreAlt": 1484,
+"madreKm": 0.61,
+"masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
+"id": "punta-carrero",
+"prom": 67,
+"col": 1307,
+"colLon": -0.65597,
+"colLat": 42.34319,
+"cimaMalla": 1370.9,
+"madre": "zerro-layan",
+"madreNombre": "Zerro Layán",
+"madreAlt": 1433,
+"madreKm": 0.68,
+"masAltoKm": 0.55,
+"malla": "30 m"
+},
+{
 "id": "punta-de-barluangas",
 "prom": 60,
 "col": 1312,
@@ -9559,6 +11582,20 @@
 "madreAlt": 1377,
 "madreKm": 1.14,
 "masAltoKm": 0.55,
+"malla": "30 m"
+},
+{
+"id": "zerro-d-a-virxen",
+"prom": 88,
+"col": 1280,
+"colLon": -0.56264,
+"colLat": 42.32458,
+"cimaMalla": 1364.2,
+"madre": "tozal-royo-o-marcovil",
+"madreNombre": "Tozal Royo o Marcovil",
+"madreAlt": 1471,
+"madreKm": 1.91,
+"masAltoKm": 0.67,
 "malla": "30 m"
 },
 {
@@ -9587,6 +11624,34 @@
 "madreAlt": null,
 "madreKm": null,
 "masAltoKm": 0.44,
+"malla": "30 m"
+},
+{
+"id": "punta-la-fabosa",
+"prom": 9,
+"col": 1353,
+"colLon": -0.53347,
+"colLat": 42.36625,
+"cimaMalla": 1359.5,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.23,
+"malla": "30 m"
+},
+{
+"id": "garzetena-alta",
+"prom": 40,
+"col": 1321,
+"colLon": -0.66208,
+"colLat": 42.34514,
+"cimaMalla": 1357.2,
+"madre": "punta-carrero",
+"madreNombre": "Punta Carrero",
+"madreAlt": 1374,
+"madreKm": 0.44,
+"masAltoKm": 0.41,
 "malla": "30 m"
 },
 {
@@ -9629,6 +11694,20 @@
 "madreAlt": 1419,
 "madreKm": 0.89,
 "masAltoKm": 0.45,
+"malla": "30 m"
+},
+{
+"id": "pena-espaldada",
+"prom": 21,
+"col": 1326,
+"colLon": -0.55264,
+"colLat": 42.31347,
+"cimaMalla": 1342.7,
+"madre": "zerro-d-a-virxen",
+"madreNombre": "Zerro d'a Virxen",
+"madreAlt": 1368,
+"madreKm": 1.03,
+"masAltoKm": 0.7,
 "malla": "30 m"
 },
 {
@@ -9744,6 +11823,13 @@
 "malla": "30 m"
 },
 {
+"id": "pomardan",
+"prom": null,
+"nota": "no se distingue",
+"con": null,
+"malla": "30 m"
+},
+{
 "id": "puntal-de-pociviello",
 "prom": 30,
 "col": 1294,
@@ -9800,6 +11886,48 @@
 "malla": "30 m"
 },
 {
+"id": "pena-del-sol",
+"prom": null,
+"nota": "no se distingue",
+"con": "garzetena-alta",
+"malla": "30 m"
+},
+{
+"id": "cerro-paquiza",
+"prom": 26,
+"col": 1286,
+"colLon": -0.62986,
+"colLat": 42.33903,
+"cimaMalla": 1313.0,
+"madre": "zerro-d-a-collada",
+"madreNombre": "Zerro d'a Collada",
+"madreAlt": 1443,
+"madreKm": 1.14,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "zerro-larrain",
+"prom": 243,
+"col": 1068,
+"colLon": -0.53736,
+"colLat": 42.48875,
+"cimaMalla": 1311.4,
+"madre": "pena-oroel",
+"madreNombre": "Peña Oroel",
+"madreAlt": 1769,
+"madreKm": 4.12,
+"masAltoKm": 3.18,
+"malla": "30 m"
+},
+{
+"id": "punta-secuata",
+"prom": null,
+"nota": "no se distingue",
+"con": "cerro-paquiza",
+"malla": "30 m"
+},
+{
 "id": "tozal-cuco",
 "prom": 69,
 "col": 1239,
@@ -9811,6 +11939,20 @@
 "madreAlt": 1336,
 "madreKm": 2.31,
 "masAltoKm": 0.65,
+"malla": "30 m"
+},
+{
+"id": "zerro-d-a-selva",
+"prom": 61,
+"col": 1247,
+"colLon": -0.59819,
+"colLat": 42.35403,
+"cimaMalla": 1299.6,
+"madre": "puxilibro",
+"madreNombre": "Puxilibro",
+"madreAlt": 1595,
+"madreKm": 1.25,
+"masAltoKm": 0.32,
 "malla": "30 m"
 },
 {
@@ -9870,6 +12012,34 @@
 "malla": "30 m"
 },
 {
+"id": "san-vicente",
+"prom": 74,
+"col": 1220,
+"colLon": -0.66208,
+"colLat": 42.50597,
+"cimaMalla": 1292.5,
+"madre": "torretones",
+"madreNombre": "Torretones",
+"madreAlt": 1418,
+"madreKm": 3.36,
+"masAltoKm": 1.74,
+"malla": "30 m"
+},
+{
+"id": "achar-de-botartal",
+"prom": 12,
+"col": 1282,
+"colLon": -0.67986,
+"colLat": 42.50458,
+"cimaMalla": 1284.9,
+"madre": "torretones",
+"madreNombre": "Torretones",
+"madreAlt": 1418,
+"madreKm": 2.0,
+"masAltoKm": 0.25,
+"malla": "30 m"
+},
+{
 "id": "tozal-del-chuncaron",
 "prom": 11,
 "col": 1275,
@@ -9895,6 +12065,20 @@
 "madreAlt": 1504,
 "madreKm": 0.97,
 "masAltoKm": 0.38,
+"malla": "30 m"
+},
+{
+"id": "pena-del-sol-2",
+"prom": 90,
+"col": 1195,
+"colLon": -0.66181,
+"colLat": 42.33431,
+"cimaMalla": 1283.6,
+"madre": "punta-carrero",
+"madreNombre": "Punta Carrero",
+"madreAlt": 1374,
+"madreKm": 2.17,
+"masAltoKm": 1.86,
 "malla": "30 m"
 },
 {
@@ -9954,6 +12138,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-finisterre",
+"prom": 5,
+"col": 1271,
+"colLon": -0.65681,
+"colLat": 42.50903,
+"cimaMalla": 1273.1,
+"madre": "san-vicente",
+"madreNombre": "San Vicente",
+"madreAlt": 1294,
+"madreKm": 0.58,
+"masAltoKm": 0.33,
+"malla": "30 m"
+},
+{
 "id": "pena-del-rayo",
 "prom": 20,
 "col": 1251,
@@ -10010,10 +12208,45 @@
 "malla": "30 m"
 },
 {
+"id": "era-laturio",
+"prom": 21,
+"col": 1241,
+"colLon": -0.64681,
+"colLat": 42.50958,
+"cimaMalla": 1260.4,
+"madre": null,
+"madreNombre": null,
+"madreAlt": null,
+"madreKm": null,
+"masAltoKm": 0.31,
+"malla": "30 m"
+},
+{
+"id": "zerro-forcola",
+"prom": 48,
+"col": 1214,
+"colLon": -0.56681,
+"colLat": 42.35097,
+"cimaMalla": 1259.0,
+"madre": "zerro-postillero",
+"madreNombre": "Zerro Postillero",
+"madreAlt": 1477,
+"madreKm": 1.57,
+"masAltoKm": 0.47,
+"malla": "30 m"
+},
+{
 "id": "punta-del-paco",
 "prom": null,
 "nota": "no se distingue",
 "con": "basa-del-meson",
+"malla": "30 m"
+},
+{
+"id": "cerro-peiro",
+"prom": null,
+"nota": "no se distingue",
+"con": "tozal-de-la-pardina-o-lomaplana",
 "malla": "30 m"
 },
 {
@@ -10028,6 +12261,20 @@
 "madreAlt": 1344,
 "madreKm": 1.61,
 "masAltoKm": 0.31,
+"malla": "30 m"
+},
+{
+"id": "punta-barruaca",
+"prom": 149,
+"col": 1100,
+"colLon": -0.62236,
+"colLat": 42.50458,
+"cimaMalla": 1247.4,
+"madre": "era-laturio",
+"madreNombre": "Era Laturio",
+"madreAlt": 1262,
+"madreKm": 5.31,
+"masAltoKm": 5.15,
 "malla": "30 m"
 },
 {
@@ -10084,6 +12331,27 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "tozal-de-cubilars",
+"malla": "30 m"
+},
+{
+"id": "gabardiella",
+"prom": 111,
+"col": 1128,
+"colLon": -0.57069,
+"colLat": 42.49986,
+"cimaMalla": 1231.0,
+"madre": "punta-barruaca",
+"madreNombre": "Punta Barruaca",
+"madreAlt": 1249,
+"madreKm": 1.46,
+"masAltoKm": 1.11,
+"malla": "30 m"
+},
+{
+"id": "castillamon",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-cuculo",
 "malla": "30 m"
 },
 {
@@ -10157,6 +12425,34 @@
 "malla": "30 m"
 },
 {
+"id": "palomar",
+"prom": 121,
+"col": 1081,
+"colLon": -0.57958,
+"colLat": 42.50264,
+"cimaMalla": 1201.8,
+"madre": "gabardiella",
+"madreNombre": "Gabardiella",
+"madreAlt": 1239,
+"madreKm": 1.29,
+"masAltoKm": 1.07,
+"malla": "30 m"
+},
+{
+"id": "punta-solaniella",
+"prom": 69,
+"col": 1132,
+"colLon": -0.79986,
+"colLat": 42.39875,
+"cimaMalla": 1191.7,
+"madre": null,
+"madreNombre": "Punta Saosa",
+"madreAlt": 1243,
+"madreKm": 1.17,
+"masAltoKm": 0.81,
+"malla": "30 m"
+},
+{
 "id": "cerro-coton",
 "prom": 41,
 "col": 1158,
@@ -10168,6 +12464,34 @@
 "madreAlt": 1541,
 "madreKm": 3.24,
 "masAltoKm": 0.53,
+"malla": "30 m"
+},
+{
+"id": "punta-comun",
+"prom": 183,
+"col": 1008,
+"colLon": -0.78014,
+"colLat": 42.38708,
+"cimaMalla": 1184.4,
+"madre": "punta-solaniella",
+"madreNombre": "Punta Solaniella",
+"madreAlt": 1201,
+"madreKm": 4.17,
+"masAltoKm": 4.16,
+"malla": "30 m"
+},
+{
+"id": "punta-torronzuelo",
+"prom": 27,
+"col": 1164,
+"colLon": -0.63653,
+"colLat": 42.35681,
+"cimaMalla": 1186.8,
+"madre": "donueso",
+"madreNombre": "Donueso",
+"madreAlt": 1499,
+"madreKm": 1.4,
+"masAltoKm": 0.32,
 "malla": "30 m"
 },
 {
@@ -10283,6 +12607,41 @@
 "malla": "30 m"
 },
 {
+"id": "zerro-la-valle",
+"prom": 122,
+"col": 1054,
+"colLon": -0.76569,
+"colLat": 42.36319,
+"cimaMalla": 1146.9,
+"madre": "punta-comun",
+"madreNombre": "Punta Común",
+"madreAlt": 1191,
+"madreKm": 1.07,
+"masAltoKm": 0.96,
+"malla": "30 m"
+},
+{
+"id": "pena-rueba",
+"prom": null,
+"nota": "no se distingue",
+"con": "zerro-la-valle",
+"malla": "30 m"
+},
+{
+"id": "punta-la-casterella",
+"prom": 81,
+"col": 1094,
+"colLon": -0.78375,
+"colLat": 42.39347,
+"cimaMalla": 1180.3,
+"madre": "punta-solaniella",
+"madreNombre": "Punta Solaniella",
+"madreAlt": 1201,
+"madreKm": 1.58,
+"masAltoKm": 1.5,
+"malla": "30 m"
+},
+{
 "id": "tozal-de-los-moros",
 "prom": 5,
 "col": 1168,
@@ -10297,6 +12656,20 @@
 "malla": "30 m"
 },
 {
+"id": "zerro-san-cristobal",
+"prom": 200,
+"col": 973,
+"colLon": -0.69042,
+"colLat": 42.34014,
+"cimaMalla": 1167.8,
+"madre": "pena-del-sol",
+"madreNombre": "Peña del Sol",
+"madreAlt": 1313,
+"madreKm": 3.53,
+"masAltoKm": 2.9,
+"malla": "30 m"
+},
+{
 "id": "pena-picarda",
 "prom": 30,
 "col": 1139,
@@ -10308,6 +12681,34 @@
 "madreAlt": 1414,
 "madreKm": 1.26,
 "masAltoKm": 0.31,
+"malla": "30 m"
+},
+{
+"id": "punta-brasallos",
+"prom": 24,
+"col": 1143,
+"colLon": -0.70403,
+"colLat": 42.34792,
+"cimaMalla": 1161.1,
+"madre": "zerro-san-cristobal",
+"madreNombre": "Zerro San Cristóbal",
+"madreAlt": 1173,
+"madreKm": 0.63,
+"masAltoKm": 0.98,
+"malla": "30 m"
+},
+{
+"id": "pui-arraso",
+"prom": 58,
+"col": 1109,
+"colLon": -0.71486,
+"colLat": 42.35403,
+"cimaMalla": 1161.2,
+"madre": "zerro-san-cristobal",
+"madreNombre": "Zerro San Cristóbal",
+"madreAlt": 1173,
+"madreKm": 0.86,
+"masAltoKm": 0.56,
 "malla": "30 m"
 },
 {
@@ -10472,6 +12873,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-portolas",
+"prom": 22,
+"col": 1119,
+"colLon": -0.77514,
+"colLat": 42.36514,
+"cimaMalla": 1133.0,
+"madre": "punta-comun",
+"madreNombre": "Punta Común",
+"madreAlt": 1191,
+"madreKm": 0.42,
+"masAltoKm": 0.28,
+"malla": "30 m"
+},
+{
 "id": "zerro-o-molar",
 "prom": 63,
 "col": 1076,
@@ -10528,6 +12943,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-pacaguezo-o-capezon",
+"prom": 263,
+"col": 866,
+"colLon": -0.58653,
+"colLat": 42.38986,
+"cimaMalla": 1122.6,
+"madre": "zerro-d-a-selva",
+"madreNombre": "Zerro d'a Selva",
+"madreAlt": 1308,
+"madreKm": 3.51,
+"masAltoKm": 3.08,
+"malla": "30 m"
+},
+{
 "id": "pena-espluga",
 "prom": 9,
 "col": 1117,
@@ -10567,6 +12996,20 @@
 "madreAlt": 1150,
 "madreKm": 4.92,
 "masAltoKm": 3.75,
+"malla": "30 m"
+},
+{
+"id": "punta-sillon",
+"prom": 88,
+"col": 1035,
+"colLon": -0.58542,
+"colLat": 42.35347,
+"cimaMalla": 1122.2,
+"madre": "zerro-d-a-selva",
+"madreNombre": "Zerro d'a Selva",
+"madreAlt": 1308,
+"madreKm": 1.04,
+"masAltoKm": 0.53,
 "malla": "30 m"
 },
 {
@@ -10612,6 +13055,20 @@
 "malla": "30 m"
 },
 {
+"id": "puimaria",
+"prom": 76,
+"col": 1045,
+"colLon": -0.78014,
+"colLat": 42.37431,
+"cimaMalla": 1117.2,
+"madre": "punta-portolas",
+"madreNombre": "Punta Portolás",
+"madreAlt": 1141,
+"madreKm": 1.4,
+"masAltoKm": 1.41,
+"malla": "30 m"
+},
+{
 "id": "punta-pueyo",
 "prom": 67,
 "col": 1053,
@@ -10654,6 +13111,34 @@
 "malla": "30 m"
 },
 {
+"id": "pena-torcida",
+"prom": 24,
+"col": 1092,
+"colLon": -0.71931,
+"colLat": 42.35875,
+"cimaMalla": 1109.2,
+"madre": "pui-arraso",
+"madreNombre": "Pui Arraso",
+"madreAlt": 1167,
+"madreKm": 0.51,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
+"id": "punta-turol",
+"prom": 28,
+"col": 1085,
+"colLon": -0.69792,
+"colLat": 42.34597,
+"cimaMalla": 1107.2,
+"madre": "punta-brasallos",
+"madreNombre": "Punta Brasallos",
+"madreAlt": 1167,
+"madreKm": 0.65,
+"masAltoKm": 0.26,
+"malla": "30 m"
+},
+{
 "id": "punta-chugadero",
 "prom": null,
 "nota": "no se distingue",
@@ -10675,10 +13160,45 @@
 "malla": "30 m"
 },
 {
+"id": "punta-de-la-muga",
+"prom": 56,
+"col": 1051,
+"colLon": -0.62625,
+"colLat": 42.38431,
+"cimaMalla": 1106.0,
+"madre": "punta-pacaguezo-o-capezon",
+"madreNombre": "Punta Pacagüezo o Capezón",
+"madreAlt": 1129,
+"madreKm": 2.57,
+"masAltoKm": 1.23,
+"malla": "30 m"
+},
+{
 "id": "el-puro",
 "prom": null,
 "nota": "no se distingue",
 "con": "mallo-san-jorge",
+"malla": "30 m"
+},
+{
+"id": "pico-de-san-salvador",
+"prom": null,
+"nota": "no se distingue",
+"con": "pena-del-sol",
+"malla": "30 m"
+},
+{
+"id": "tozal-de-navarro",
+"prom": 65,
+"col": 1028,
+"colLon": -0.61958,
+"colLat": 42.35625,
+"cimaMalla": 1085.0,
+"madre": "punta-torronzuelo",
+"madreNombre": "Punta Torronzuelo",
+"madreAlt": 1191,
+"madreKm": 1.3,
+"masAltoKm": 0.44,
 "malla": "30 m"
 },
 {
@@ -10731,6 +13251,48 @@
 "malla": "30 m"
 },
 {
+"id": "punta-santo-roman",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-turol",
+"malla": "30 m"
+},
+{
+"id": "suertes-altas",
+"prom": 19,
+"col": 1056,
+"colLon": -0.77819,
+"colLat": 42.36875,
+"cimaMalla": 1071.8,
+"madre": "punta-portolas",
+"madreNombre": "Punta Portolás",
+"madreAlt": 1141,
+"madreKm": 0.78,
+"masAltoKm": 0.63,
+"malla": "30 m"
+},
+{
+"id": "pena-buta",
+"prom": null,
+"nota": "no se distingue",
+"con": "pena-del-sol",
+"malla": "30 m"
+},
+{
+"id": "punta-tolosana",
+"prom": 12,
+"col": 1054,
+"colLon": -0.77875,
+"colLat": 42.38375,
+"cimaMalla": 1063.2,
+"madre": "puimaria",
+"madreNombre": "Puimaria",
+"madreAlt": 1121,
+"madreKm": 0.72,
+"masAltoKm": 0.41,
+"malla": "30 m"
+},
+{
 "id": "punta-matosa",
 "prom": 26,
 "col": 1039,
@@ -10759,6 +13321,20 @@
 "malla": "30 m"
 },
 {
+"id": "tozal-del-rase",
+"prom": 58,
+"col": 996,
+"colLon": -0.61903,
+"colLat": 42.36014,
+"cimaMalla": 1068.3,
+"madre": "tozal-de-navarro",
+"madreNombre": "Tozal de Navarro",
+"madreAlt": 1093,
+"madreKm": 0.34,
+"masAltoKm": 0.34,
+"malla": "30 m"
+},
+{
 "id": "pena-de-san-cosme",
 "prom": 91,
 "col": 961,
@@ -10773,6 +13349,20 @@
 "malla": "30 m"
 },
 {
+"id": "punta-de-la-selva-o-aguilera",
+"prom": 18,
+"col": 1034,
+"colLon": -0.64264,
+"colLat": 42.38681,
+"cimaMalla": 1046.9,
+"madre": "punta-de-la-muga",
+"madreNombre": "Punta de la Muga",
+"madreAlt": 1107,
+"madreKm": 0.82,
+"masAltoKm": 0.3,
+"malla": "30 m"
+},
+{
 "id": "el-huevo",
 "prom": 9,
 "col": 1036,
@@ -10784,6 +13374,20 @@
 "madreAlt": 1052,
 "madreKm": 0.16,
 "masAltoKm": 0.16,
+"malla": "30 m"
+},
+{
+"id": "barrera-de-juan-ramon",
+"prom": null,
+"nota": "no se distingue",
+"con": "puimaria",
+"malla": "30 m"
+},
+{
+"id": "pared-de-los-buitres",
+"prom": null,
+"nota": "no se distingue",
+"con": "punta-brasallos",
 "malla": "30 m"
 },
 {
@@ -10857,6 +13461,20 @@
 "malla": "30 m"
 },
 {
+"id": "pialon-la-pinosa",
+"prom": 33,
+"col": 988,
+"colLon": -0.52764,
+"colLat": 42.32681,
+"cimaMalla": 1015.7,
+"madre": "pialon-de-marzo",
+"madreNombre": "Pialón de Marzo",
+"madreAlt": 1026,
+"madreKm": 1.4,
+"masAltoKm": 0.24,
+"malla": "30 m"
+},
+{
 "id": "pena-cagico",
 "prom": 9,
 "col": 1009,
@@ -10868,6 +13486,13 @@
 "madreAlt": 1150,
 "madreKm": 1.17,
 "masAltoKm": 0.27,
+"malla": "30 m"
+},
+{
+"id": "mallo-bentuso",
+"prom": null,
+"nota": "no se distingue",
+"con": "pena-torcida",
 "malla": "30 m"
 },
 {
@@ -10917,6 +13542,174 @@
 "prom": null,
 "nota": "no se distingue",
 "con": "pena-roya-4",
+"malla": "30 m"
+},
+{
+"id": "pialon-de-fuertes",
+"prom": null,
+"nota": "no se distingue",
+"con": "caballera",
+"malla": "30 m"
+},
+{
+"id": "pena-plana",
+"prom": 11,
+"col": 990,
+"colLon": -0.64903,
+"colLat": 42.38736,
+"cimaMalla": 999.3,
+"madre": "punta-de-la-selva-o-aguilera",
+"madreNombre": "Punta de la Selva o Aguilera",
+"madreAlt": 1052,
+"madreKm": 0.52,
+"masAltoKm": 0.28,
+"malla": "30 m"
+},
+{
+"id": "pena-don-justo",
+"prom": null,
+"nota": "no se distingue",
+"con": null,
+"malla": "30 m"
+},
+{
+"id": "mallo-magdalena",
+"prom": null,
+"nota": "no se distingue",
+"con": "zerro-san-cristobal",
+"malla": "30 m"
+},
+{
+"id": "mallo-colorado",
+"prom": 7,
+"col": 956,
+"colLon": -0.72347,
+"colLat": 42.35264,
+"cimaMalla": 967.3,
+"madre": "mallo-bentuso",
+"madreNombre": "Mallo Bentuso",
+"madreAlt": 1018,
+"madreKm": 0.2,
+"masAltoKm": 0.4,
+"malla": "30 m"
+},
+{
+"id": "mallo-tornillo",
+"prom": null,
+"nota": "no se distingue",
+"con": "pena-don-justo",
+"malla": "30 m"
+},
+{
+"id": "mallo-de-la-canal",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-magdalena",
+"malla": "30 m"
+},
+{
+"id": "mallo-arcaz",
+"prom": null,
+"nota": "no se distingue",
+"con": "pared-de-los-buitres",
+"malla": "30 m"
+},
+{
+"id": "mallo-del-agua",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-colorado",
+"malla": "30 m"
+},
+{
+"id": "mallo-capaz",
+"prom": null,
+"nota": "no se distingue",
+"con": "zerro-san-cristobal",
+"malla": "30 m"
+},
+{
+"id": "el-fire",
+"prom": 77,
+"col": 857,
+"colLon": -0.72847,
+"colLat": 42.35569,
+"cimaMalla": 866.6,
+"madre": null,
+"madreNombre": "El Macizo",
+"madreAlt": 939,
+"madreKm": 0.39,
+"masAltoKm": 0.37,
+"malla": "30 m"
+},
+{
+"id": "mallo-pison",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-colorado",
+"malla": "30 m"
+},
+{
+"id": "mallo-frechin",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-colorado",
+"malla": "30 m"
+},
+{
+"id": "pena-salinero",
+"prom": 60,
+"col": 846,
+"colLon": -0.79097,
+"colLat": 42.36236,
+"cimaMalla": 914.8,
+"madre": null,
+"madreNombre": "Punta Chotero",
+"madreAlt": 968,
+"madreKm": 0.85,
+"masAltoKm": 0.79,
+"malla": "30 m"
+},
+{
+"id": "mallo-gomez-laguna",
+"prom": null,
+"nota": "no se distingue",
+"con": "zerro-san-cristobal",
+"malla": "30 m"
+},
+{
+"id": "pena-sola",
+"prom": null,
+"nota": "no se distingue",
+"con": "pena-salinero",
+"malla": "30 m"
+},
+{
+"id": "mallo-tornillito",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-tornillo",
+"malla": "30 m"
+},
+{
+"id": "la-visera",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-colorado",
+"malla": "30 m"
+},
+{
+"id": "el-puro-riglos",
+"prom": null,
+"nota": "no se distingue",
+"con": "mallo-colorado",
+"malla": "30 m"
+},
+{
+"id": "mallos-de-leonar",
+"prom": null,
+"nota": "no se distingue",
+"con": null,
 "malla": "30 m"
 }
 ]

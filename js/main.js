@@ -26,7 +26,7 @@ import { zonasWebPosible, listaWeb, bajaWeb, abreArchivoWeb, borraWeb, fuenteWeb
 import { crearRealidad } from './realidad.js?v=33';
 import { crearSelector } from './selector.js?v=33';
 import { crearGlaciares, COLOR_EPOCA } from './glaciar.js?v=2';
-import { t, EN_INGLES } from './i18n.js?v=56';
+import { t, EN_INGLES } from './i18n.js?v=57';
 import { reglaTexto, reglaCampo } from './i18n_reglas.js?v=4';
 import { crearGlosario } from './glosario.js?v=6';
 import { crearEnciclopedia } from './enciclopedia.js?v=6';
@@ -1861,7 +1861,9 @@ async function boot() {
     if (cs.length) {
       const ab = cs[0], te = cs[cs.length - 1];
       filas.push([t('Cara más abrupta'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(ab.az)), c: fmt(ab.caida), g: ab.grados })]);
-      filas.push([t('Cara más tendida'), t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: mayus(rumbo8(te.az)), c: fmt(Math.max(0, te.caida)), g: Math.max(0, te.grados) })]);
+      const rt = mayus(rumbo8(te.az));
+      filas.push([t('Cara más tendida'), te.caida < -10 ? t('{r}: no baja: el terreno sigue subiendo {c} m en los primeros 500 m (la cima es un resalte de una ladera más alta)', { r: rt, c: fmt(-te.caida) })
+        : te.caida <= 10 ? t('{r}: casi llano en los primeros 500 m', { r: rt }) : t('{r}: baja {c} m en los primeros 500 m (≈ {g}°)', { r: rt, c: fmt(te.caida), g: te.grados })]);
     }
     const gc = o.geo || (o.geoRuta?.length ? { fuente: 'geode' } : null);
     if (gc?.desc) {

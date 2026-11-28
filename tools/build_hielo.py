@@ -15,7 +15,7 @@ def color(lon, lat, r=2):   # media de un cuadrito de (2r+1)² píxeles
     cx = (lon - M['lon0']) / ST; cy = (M['lat0'] - lat) / ST
     i, j = int(cx // CH), int(cy // CH)
     if not (0 <= i < M['nci'] and 0 <= j < M['ncj']): return None
-    im = tile(i, j); px = int((cx - i * CH) * PX); py = int((cy - j * CH) * PX); s = [0, 0, 0]; n = 0
+    im = tile(i - M.get('iw', 0), j); px = int((cx - i * CH) * PX); py = int((cy - j * CH) * PX); s = [0, 0, 0]; n = 0   # iw: los archivos de bloque empiezan en c_-iw_*
     for dx in range(-r, r + 1):
         for dy in range(-r, r + 1):
             x, y = min(max(px + dx, 0), im.width - 1), min(max(py + dy, 0), im.height - 1); p = im.getpixel((x, y)); n += 1
