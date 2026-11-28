@@ -85,6 +85,7 @@ const EN = {
   '(licencia ODbL), con altitudes del modelo Copernicus GLO-30. Es orientativo y no sustituye a un GPS ni a un mapa: comprueba el estado de los caminos antes de salir.': '(ODbL licence), with altitudes from the Copernicus GLO-30 model. It is for guidance only and does not replace a GPS or a map: check the state of the paths before you set out.',
   'Tozal de Guara desde Santa Cilia de Panzano (S-5)': 'Tozal de Guara from Santa Cilia de Panzano (S-5)',
   'Descargar el GPX y ver la ruta completa en Wikiloc ↗': 'Download the GPX and see the full route on Wikiloc ↗',
+  'Basada en la ruta de {a} (Wikiloc), corregida por Tresmiles para seguir los senderos. El track original, para descargar, está en su ficha de Wikiloc. Es orientativa y no sustituye a un GPS ni a un mapa.': 'Based on the route by {a} (Wikiloc), corrected by Tresmiles to follow the paths. The original track, to download, is on its Wikiloc page. It is for guidance only and does not replace a GPS or a map.',
   'Vista previa del recorrido sobre el mapa. El track original, para descargar, está en la ficha de Wikiloc. El trazado está simplificado y colocado sobre un modelo de relieve: es orientativo y no sustituye a un GPS ni a un mapa.': 'Preview of the route on the map. The original track, to download, is on its Wikiloc page. The line is simplified and laid over a terrain model: it is for guidance only and does not replace a GPS or a map.',
   '{n} de {t} cumbres': '{n} of {t} summits',
   // — selector de cumbres —
